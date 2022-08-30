@@ -6,7 +6,7 @@ import { serializeAxiosError } from './reducer.utils';
 import { AppThunk } from 'app/config/store';
 import { setLocale } from 'app/shared/reducers/locale';
 
-const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
+const AUTH_TOKEN_KEY = 'ph-authenticationToken';
 
 export const initialState = {
   loading: false,

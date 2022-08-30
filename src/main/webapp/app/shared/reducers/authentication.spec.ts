@@ -217,7 +217,7 @@ describe('Authentication reducer tests', () => {
       store = mockStore({ authentication: { account: { langKey: 'en' } } });
     });
     it('clears the session token on clearAuthToken', async () => {
-      const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
+      const AUTH_TOKEN_KEY = 'ph-authenticationToken';
       const loginResponse = { headers: { authorization: 'Bearer TestToken' } };
       axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
 
@@ -229,7 +229,7 @@ describe('Authentication reducer tests', () => {
       expect(Storage.local.get(AUTH_TOKEN_KEY)).toBe(undefined);
     });
     it('clears the local storage token on clearAuthToken', async () => {
-      const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
+      const AUTH_TOKEN_KEY = 'ph-authenticationToken';
       const loginResponse = { headers: { authorization: 'Bearer TestToken' } };
       axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
 

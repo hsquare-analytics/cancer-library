@@ -21,7 +21,7 @@
     "enableTranslation": true,
     "entities": ["Point"],
     "entitySuffix": "",
-    "jhiPrefix": "jhi",
+    "jhiPrefix": "ph",
     "jhipsterVersion": "7.9.2",
     "jwtSecretKey": "NmEzYzgzNjk0ODNjYWZkNzgzNGYyMDMzNWY2MmFlMmQ2MmRkNmM5M2VjZTk5ZDZjYzNkOWIwYjE0NjM3ZjgyMWJjMzEwODU3NTY3ZjFkZjU3NGIzOGUwYWU2MTI5NjZkNmU0MDg3MjYwMWNlNWJjOWI0NTMwYmNjZjMyYTg3OTA=",
     "languages": ["en", "ko"],

@@ -55,7 +55,7 @@ export const PointDeleteDialog = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="jhi-confirm-delete-point" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="ph-confirm-delete-point" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>
