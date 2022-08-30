@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
  * A Library.
  */
 @Entity
-@Table(name = "library")
+@Table(name = "ph_library")
 public class Library implements Serializable {
 
     private static final long serialVersionUID = 1L;

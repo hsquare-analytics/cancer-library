@@ -10,7 +10,7 @@
         Added the entity Library.
     -->
     <changeSet id="20220830061234-1" author="jhipster">
-        <createTable tableName="library">
+        <createTable tableName="ph_library">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -41,7 +41,7 @@
         <loadData
                   file="config/liquibase/fake-data/library.csv"
                   separator=";"
-                  tableName="library"
+                  tableName="ph_library"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
