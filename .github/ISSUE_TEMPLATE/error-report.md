@@ -30,6 +30,10 @@ Steps to reproduce the behavior:
  - Version [e.g. 22]
 
 **Additional context**
-- [ ] 에러 1
-1. 에러 상세
-1.1. 에러 상세 세부
+
+- [ ] 에러
+1. 에러 상세 1
+   1. 에러 상세 세부 1
+        - [ ] 에러 수정 작업 1
+    2.  에러 상세 세부 2
+        - [ ] 에러 수정 작업 2
