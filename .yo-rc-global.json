@@ -1,0 +1,8 @@
+{
+  "generator-jhipster:7.9.2": {
+    "promptValues": {
+      "packageName": "io.planit.cancerlibrary",
+      "nativeLanguage": "en"
+    }
+  }
+}
