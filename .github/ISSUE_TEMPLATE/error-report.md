@@ -1,7 +1,7 @@
 ---
 name: Error report
 about: Create a report to help us improve
-title: ''
+title: "[ERROR]"
 labels: "fix \U0001F41E"
 assignees: ''
 
