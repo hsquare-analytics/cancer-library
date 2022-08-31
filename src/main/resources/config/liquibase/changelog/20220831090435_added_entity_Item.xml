@@ -33,7 +33,7 @@
 
         <addForeignKeyConstraint baseColumnNames="category_id"
             baseTableName="ph_item"
-            constraintName="fk_category_id"
+            constraintName="fk_item_category_id"
             referencedColumnNames="id"
             referencedTableName="ph_category"/>
     </changeSet>
