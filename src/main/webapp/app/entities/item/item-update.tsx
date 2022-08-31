@@ -37,7 +37,7 @@ export const ItemUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    if (categories.length == 0)
+    if (categories.length === 0)
     {
       dispatch(getCategories({}));
     }
