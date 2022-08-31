@@ -5,9 +5,9 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './category.reducer';
+import { getEntity, deleteEntity } from './item.reducer';
 
-export const CategoryDeleteDialog = () => {
+export const ItemDeleteDialog = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -21,11 +21,11 @@ export const CategoryDeleteDialog = () => {
     setLoadModal(true);
   }, []);
 
-  const categoryEntity = useAppSelector(state => state.category.entity);
-  const updateSuccess = useAppSelector(state => state.category.updateSuccess);
+  const itemEntity = useAppSelector(state => state.item.entity);
+  const updateSuccess = useAppSelector(state => state.item.updateSuccess);
 
   const handleClose = () => {
-    navigate('/category' + location.search);
+    navigate('/item' + location.search);
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export const CategoryDeleteDialog = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(categoryEntity.id));
+    dispatch(deleteEntity(itemEntity.id));
   };
 
   return (
@@ -44,8 +44,8 @@ export const CategoryDeleteDialog = () => {
       <ModalHeader toggle={handleClose} data-cy="libraryDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="cancerLibraryApp.category.delete.question">
-        <Translate contentKey="cancerLibraryApp.category.delete.question" interpolate={{ id: categoryEntity.id }}>
+      <ModalBody id="cancerLibraryApp.item.delete.question">
+        <Translate contentKey="cancerLibraryApp.item.delete.question" interpolate={{ id: itemEntity.id }}>
           Are you sure you want to delete this Library?
         </Translate>
       </ModalBody>
@@ -55,7 +55,7 @@ export const CategoryDeleteDialog = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="ph-confirm-delete-category" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="ph-confirm-delete-item" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>
@@ -65,4 +65,4 @@ export const CategoryDeleteDialog = () => {
   );
 };
 
-export default CategoryDeleteDialog;
+export default ItemDeleteDialog;
