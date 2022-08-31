@@ -13,7 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
+import io.planit.cancerlibrary.domain.Library;
 import io.planit.cancerlibrary.repository.CategoryRepository;
+import io.planit.cancerlibrary.repository.LibraryRepository;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -51,6 +53,9 @@ class CategoryResourceIT {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private LibraryRepository libraryRepository;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -58,19 +63,26 @@ class CategoryResourceIT {
 
     private Category category;
 
+    private Library library;
+
     public static Category createEntity(EntityManager em) {
-        Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED);
+        Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION)
+            .activated(DEFAULT_ACTIVATED);
         return category;
     }
 
     public static Category createUpdatedEntity(EntityManager em) {
-        Category category = new Category().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED);
+        Library library = LibraryResourceIT.createUpdatedEntity(em);
+        Category category = new Category().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION)
+            .activated(UPDATED_ACTIVATED).library(library);
         return category;
     }
 
     @BeforeEach
     public void initTest() {
-        category = createEntity(em);
+        library = LibraryResourceIT.createEntity(em);
+        libraryRepository.saveAndFlush(library);
+        category = createEntity(em).library(library);
     }
 
     @Test
@@ -79,7 +91,8 @@ class CategoryResourceIT {
         int databaseSizeBeforeCreate = categoryRepository.findAll().size();
         // Create the Category
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isCreated());
 
         // Validate the Category in the database
@@ -89,6 +102,8 @@ class CategoryResourceIT {
         assertThat(testCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testCategory.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
+        assertThat(testCategory.getLibrary().getTitle()).isEqualTo(library.getTitle());
+        assertThat(testCategory.getLibrary().getDescription()).isEqualTo(library.getDescription());
     }
 
     @Test
@@ -101,7 +116,8 @@ class CategoryResourceIT {
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isBadRequest());
 
         // Validate the Category in the database
@@ -119,7 +135,8 @@ class CategoryResourceIT {
         // Create the Category, which fails.
 
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isBadRequest());
 
         List<Category> categoryList = categoryRepository.findAll();
@@ -136,7 +153,8 @@ class CategoryResourceIT {
         // Create the Category, which fails.
 
         restCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isBadRequest());
 
         List<Category> categoryList = categoryRepository.findAll();
@@ -145,7 +163,7 @@ class CategoryResourceIT {
 
     @Test
     @Transactional
-    void getAllLibraries() throws Exception {
+    void getAllCategories() throws Exception {
         // Initialize the database
         categoryRepository.saveAndFlush(category);
 
@@ -174,7 +192,10 @@ class CategoryResourceIT {
             .andExpect(jsonPath("$.id").value(category.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()));
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
+            .andExpect(jsonPath("$.library.id").value(library.getId().intValue()))
+            .andExpect(jsonPath("$.library.title").value(library.getTitle()))
+            .andExpect(jsonPath("$.library.description").value(library.getDescription()));
     }
 
     @Test
@@ -263,7 +284,8 @@ class CategoryResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
-            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Category in the database
@@ -381,7 +403,8 @@ class CategoryResourceIT {
 
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restCategoryMockMvc
-            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json").content(TestUtil.convertObjectToJsonBytes(category)))
+            .perform(patch(ENTITY_API_URL).contentType("application/merge-patch+json")
+                .content(TestUtil.convertObjectToJsonBytes(category)))
             .andExpect(status().isMethodNotAllowed());
 
         // Validate the Category in the database

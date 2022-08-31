@@ -28,6 +28,9 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activated", nullable = false)
     private Boolean activated;
 
+    @ManyToOne
+    private Library library;
+
     public Long getId() {
         return this.id;
     }
@@ -80,7 +83,18 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         this.activated = activated;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public Library getLibrary() {
+        return library;
+    }
+
+    public void setLibrary(Library library) {
+        this.library = library;
+    }
+
+    public Category library(Library library) {
+        this.setLibrary(library);
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
