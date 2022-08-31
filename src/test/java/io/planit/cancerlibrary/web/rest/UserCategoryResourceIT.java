@@ -191,30 +191,33 @@ class UserCategoryResourceIT {
             .andExpect(jsonPath("$.[*].category.id").value(hasItems(category.getId().intValue())));
     }
 
-//    @Test
-//    @Transactional
-//    void getUserCategory() throws Exception {
-//        // Initialize the database
-//        userCategoryRepository.saveAndFlush(userCategory);
-//
-//        // Get the userCategory
-//        restUserCategoryMockMvc
-//            .perform(get(ENTITY_API_URL_ID, userCategory.getId()))
-//            .andExpect(status().isOk())
-//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//            .andExpect(jsonPath("$.id").value(userCategory.getId().intValue()))
-//            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
-//            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-//            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()));
-//    }
-//
-//    @Test
-//    @Transactional
-//    void getNonExistingUserCategory() throws Exception {
-//        // Get the userCategory
-//        restUserCategoryMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
-//    }
-//
+    @Test
+    @Transactional
+    void getUserCategory() throws Exception {
+        // Initialize the database
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        // Get the userCategory
+        restUserCategoryMockMvc
+            .perform(get(ENTITY_API_URL_ID, userCategory.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.id").value(userCategory.getId().intValue()))
+            .andExpect(jsonPath("$.user.id").value(user.getId().intValue()))
+            .andExpect(jsonPath("$.category.id").value(category.getId().intValue()))
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
+            .andExpect(jsonPath("$.termColumn").value(DEFAULT_TERM_COLUMN))
+            .andExpect(jsonPath("$.termStart").value(DEFAULT_TERM_START.toString()))
+            .andExpect(jsonPath("$.termEnd").value(DEFAULT_TERM_END.toString()));
+    }
+
+    @Test
+    @Transactional
+    void getNonExistingUserCategory() throws Exception {
+        // Get the userCategory
+        restUserCategoryMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+    }
+
 //    @Test
 //    @Transactional
 //    void putNewUserCategory() throws Exception {
