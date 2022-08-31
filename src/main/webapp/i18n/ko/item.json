@@ -20,7 +20,8 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
-      "activated": "Activated"
+      "activated": "Activated",
+      "category": "Category"
     }
   }
 }

@@ -56,6 +56,9 @@ export const Item = () => {
                 <th>
                   <Translate contentKey="cancerLibraryApp.item.activated">Activated</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.item.category">Category</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -70,6 +73,7 @@ export const Item = () => {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>{item.activated ? 'true' : 'false'}</td>
+                  <td>{item.category.title}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/item/${item.id}`} color="info" size="sm" data-cy="entityDetailsButton">

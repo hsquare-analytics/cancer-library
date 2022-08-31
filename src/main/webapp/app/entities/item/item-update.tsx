@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IItem } from 'app/shared/model/item.model';
 import { getEntity, updateEntity, createEntity, reset } from './item.reducer';
+import {getEntities as getCategories} from "app/entities/category/category.reducer";
 
 export const ItemUpdate = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const ItemUpdate = () => {
   const loading = useAppSelector(state => state.item.loading);
   const updating = useAppSelector(state => state.item.updating);
   const updateSuccess = useAppSelector(state => state.item.updateSuccess);
+  const categories = useAppSelector(state => state.category.entities);
 
   const handleClose = () => {
     navigate('/item');
@@ -33,6 +35,11 @@ export const ItemUpdate = () => {
       dispatch(reset());
     } else {
       dispatch(getEntity(id));
+    }
+
+    if (categories.length == 0)
+    {
+      dispatch(getCategories({}));
     }
   }, []);
 
@@ -66,8 +73,8 @@ export const ItemUpdate = () => {
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="cancerLibraryApp.item.home.createOrEditLabel" data-cy="LibraryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.item.home.createOrEditLabel">Create or edit a Library</Translate>
+          <h2 id="cancerLibraryApp.item.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+            <Translate contentKey="cancerLibraryApp.item.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
@@ -113,6 +120,14 @@ export const ItemUpdate = () => {
                 check
                 type="checkbox"
               />
+              <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.item.category')}>
+                <option value="">-</option>
+                {categories.map(category => (
+                  <option value={category.id} key={category}>
+                    {category.title}
+                  </option>
+                ))}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
