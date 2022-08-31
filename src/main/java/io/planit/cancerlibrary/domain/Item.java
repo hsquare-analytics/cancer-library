@@ -5,8 +5,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "ph_category")
-public class Category extends AbstractAuditingEntity implements Serializable {
+@Table(name = "ph_item")
+public class Item extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,13 +30,13 @@ public class Category extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @ManyToOne(optional = false)
-    private Library library;
+    private Category category;
 
     public Long getId() {
         return this.id;
     }
 
-    public Category id(Long id) {
+    public Item id(Long id) {
         this.setId(id);
         return this;
     }
@@ -49,7 +49,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         return this.title;
     }
 
-    public Category title(String title) {
+    public Item title(String title) {
         this.setTitle(title);
         return this;
     }
@@ -62,7 +62,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         return this.description;
     }
 
-    public Category description(String description) {
+    public Item description(String description) {
         this.setDescription(description);
         return this;
     }
@@ -75,7 +75,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         return this.activated;
     }
 
-    public Category activated(Boolean activated) {
+    public Item activated(Boolean activated) {
         this.setActivated(activated);
         return this;
     }
@@ -84,16 +84,16 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         this.activated = activated;
     }
 
-    public Library getLibrary() {
-        return library;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public Category library(Library library) {
-        this.setLibrary(library);
+    public Item category(Category category) {
+        this.setCategory(category);
         return this;
     }
 
@@ -102,10 +102,10 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Category)) {
+        if (!(o instanceof Item)) {
             return false;
         }
-        return id != null && id.equals(((Category) o).id);
+        return id != null && id.equals(((Item) o).id);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "Item{" +
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
