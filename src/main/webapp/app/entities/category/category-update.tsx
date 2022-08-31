@@ -5,19 +5,22 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './category.reducer';
+import {getEntities as getLibraries} from "app/entities/library/library.reducer";
+import {languages, locales} from "app/config/translation";
 
 export const CategoryUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const { id } = useParams<'id'>();
+  const {id} = useParams<'id'>();
   const isNew = id === undefined;
 
-  const libraryEntity = useAppSelector(state => state.category.entity);
+  const categoryEntity = useAppSelector(state => state.category.entity);
   const loading = useAppSelector(state => state.category.loading);
   const updating = useAppSelector(state => state.category.updating);
   const updateSuccess = useAppSelector(state => state.category.updateSuccess);
+  const libraries = useAppSelector(state => state.library.entities);
 
   const handleClose = () => {
     navigate('/category');
@@ -29,6 +32,10 @@ export const CategoryUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    if (libraries.length === 0) {
+      dispatch(getLibraries({}));
+    }
   }, []);
 
   useEffect(() => {
@@ -39,7 +46,7 @@ export const CategoryUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...libraryEntity,
+      ...categoryEntity,
       ...values,
     };
 
@@ -54,15 +61,16 @@ export const CategoryUpdate = () => {
     isNew
       ? {}
       : {
-          ...libraryEntity,
-        };
+        ...categoryEntity,
+      };
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="cancerLibraryApp.category.home.createOrEditLabel" data-cy="LibraryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.category.home.createOrEditLabel">Create or edit a Library</Translate>
+          <h2 id="cancerLibraryApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+            <Translate contentKey="cancerLibraryApp.category.home.createOrEditLabel">Create or edit a
+              Category</Translate>
           </h2>
         </Col>
       </Row>
@@ -79,7 +87,7 @@ export const CategoryUpdate = () => {
                   readOnly
                   id="category-id"
                   label={translate('global.field.id')}
-                  validate={{ required: true }}
+                  validate={{required: true}}
                 />
               ) : null}
               <ValidatedField
@@ -89,8 +97,8 @@ export const CategoryUpdate = () => {
                 data-cy="title"
                 type="text"
                 validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 30, message: translate('entity.validation.maxlength', { max: 30 }) },
+                  required: {value: true, message: translate('entity.validation.required')},
+                  maxLength: {value: 30, message: translate('entity.validation.maxlength', {max: 30})},
                 }}
               />
               <ValidatedField
@@ -108,16 +116,26 @@ export const CategoryUpdate = () => {
                 check
                 type="checkbox"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/category" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
+              <ValidatedField type="select" name="library.id" data-cy="library" label={translate('cancerLibraryApp.category.library')}>
+                <option value="">-</option>
+                {libraries.map(library => (
+                  <option value={library.id} key={library}>
+                    {library.title}
+                  </option>
+                ))}
+              </ValidatedField>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/category" replace
+                      color="info">
+                <FontAwesomeIcon icon="arrow-left"/>
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
+                      disabled={updating}>
+                <FontAwesomeIcon icon="save"/>
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
