@@ -3,8 +3,10 @@ package io.planit.cancerlibrary.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -218,93 +220,101 @@ class UserCategoryResourceIT {
         restUserCategoryMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
-//    @Test
-//    @Transactional
-//    void putNewUserCategory() throws Exception {
-//        // Initialize the database
-//        userCategoryRepository.saveAndFlush(userCategory);
-//
-//        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
-//
-//        // Update the userCategory
-//        UserCategory updatedUserCategory = userCategoryRepository.findById(userCategory.getId()).get();
-//        // Disconnect from session so that the updates on updatedUserCategory are not directly saved in db
-//        em.detach(UserCategory);
-//        UserCategory.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED);
-//
-//        restUserCategoryMockMvc
-//            .perform(
-//                put(ENTITY_API_URL_ID, UserCategory.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(TestUtil.convertObjectToJsonBytes(UserCategory))
-//            )
-//            .andExpect(status().isOk());
-//
-//        // Validate the UserCategory in the database
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
-//        UserCategory testUserCategory = userCategorylist.get(userCategorylist.size() - 1);
-//        assertThat(UserCategory.getTitle()).isEqualTo(UPDATED_TITLE);
-//        assertThat(UserCategory.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-//        assertThat(UserCategory.getActivated()).isEqualTo(UPDATED_ACTIVATED);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void putNonExistingUserCategory() throws Exception {
-//        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
-//        userCategory.setId(count.incrementAndGet());
-//
-//        // If the entity doesn't have an ID, it will throw BadRequestAlertException
-//        restUserCategoryMockMvc
-//            .perform(
-//                put(ENTITY_API_URL_ID, userCategory.getId())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(TestUtil.convertObjectToJsonBytes(userCategory))
-//            )
-//            .andExpect(status().isBadRequest());
-//
-//        // Validate the UserCategory in the database
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void putWithIdMismatchUserCategory() throws Exception {
-//        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
-//        userCategory.setId(count.incrementAndGet());
-//
-//        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-//        restUserCategoryMockMvc
-//            .perform(
-//                put(ENTITY_API_URL_ID, count.incrementAndGet())
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(TestUtil.convertObjectToJsonBytes(userCategory))
-//            )
-//            .andExpect(status().isBadRequest());
-//
-//        // Validate the UserCategory in the database
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void putWithMissingIdPathParamUserCategory() throws Exception {
-//        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
-//        userCategory.setId(count.incrementAndGet());
-//
-//        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
-//        restUserCategoryMockMvc
-//            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
-//            .andExpect(status().isMethodNotAllowed());
-//
-//        // Validate the UserCategory in the database
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
-//    }
-//
+    @Test
+    @Transactional
+    void putNewUserCategory() throws Exception {
+        // Initialize the database
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
+
+        // Update the userCategory
+        UserCategory updatedUserCategory = userCategoryRepository.findById(userCategory.getId()).get();
+        // Disconnect from session so that the updates on updatedUserCategory are not directly saved in db
+        em.detach(userCategory);
+        Category category = CategoryResourceIT.createUpdatedEntity(em).library(library);
+        categoryRepository.saveAndFlush(category);
+
+        updatedUserCategory.category(category)
+            .activated(UPDATED_ACTIVATED).termColumn(UPDATED_TERM_COLUMN)
+            .termStart(UPDATED_TERM_START).termEnd(UPDATED_TERM_END);
+
+        restUserCategoryMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, updatedUserCategory.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(updatedUserCategory))
+            )
+            .andExpect(status().isOk());
+
+        // Validate the UserCategory in the database
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
+        UserCategory testUserCategory = userCategorylist.get(userCategorylist.size() - 1);
+        assertThat(testUserCategory.getCategory()).isEqualTo(category);
+        assertThat(testUserCategory.getUser()).isEqualTo(user);
+        assertThat(testUserCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
+        assertThat(testUserCategory.getTermColumn()).isEqualTo(UPDATED_TERM_COLUMN);
+        assertThat(testUserCategory.getTermStart()).isEqualTo(UPDATED_TERM_START);
+        assertThat(testUserCategory.getTermEnd()).isEqualTo(UPDATED_TERM_END);
+    }
+
+    @Test
+    @Transactional
+    void putNonExistingUserCategory() throws Exception {
+        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
+        userCategory.setId(count.incrementAndGet());
+
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
+        restUserCategoryMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, userCategory.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(userCategory))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the UserCategory in the database
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithIdMismatchUserCategory() throws Exception {
+        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
+        userCategory.setId(count.incrementAndGet());
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restUserCategoryMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, count.incrementAndGet())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(userCategory))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the UserCategory in the database
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
+    }
+
+    @Test
+    @Transactional
+    void putWithMissingIdPathParamUserCategory() throws Exception {
+        int databaseSizeBeforeUpdate = userCategoryRepository.findAll().size();
+        userCategory.setId(count.incrementAndGet());
+
+        // If url ID doesn't match entity ID, it will throw BadRequestAlertException
+        restUserCategoryMockMvc
+            .perform(put(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
+            .andExpect(status().isMethodNotAllowed());
+
+        // Validate the UserCategory in the database
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
+    }
+
 //    @Test
 //    @Transactional
 //    void partialUpdateUserCategoryWithPatch() throws Exception {
@@ -422,22 +432,22 @@ class UserCategoryResourceIT {
 //        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
 //        assertThat(userCategorylist).hasSize(databaseSizeBeforeUpdate);
 //    }
-//
-//    @Test
-//    @Transactional
-//    void deleteUserCategory() throws Exception {
-//        // Initialize the database
-//        userCategoryRepository.saveAndFlush(userCategory);
-//
-//        int databaseSizeBeforeDelete = userCategoryRepository.findAll().size();
-//
-//        // Delete the userCategory
-//        restUserCategoryMockMvc
-//            .perform(delete(ENTITY_API_URL_ID, userCategory.getId()).accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isNoContent());
-//
-//        // Validate the database contains one less item
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeDelete - 1);
-//    }
+
+    @Test
+    @Transactional
+    void deleteUserCategory() throws Exception {
+        // Initialize the database
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        int databaseSizeBeforeDelete = userCategoryRepository.findAll().size();
+
+        // Delete the userCategory
+        restUserCategoryMockMvc
+            .perform(delete(ENTITY_API_URL_ID, userCategory.getId()).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNoContent());
+
+        // Validate the database contains one less item
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeDelete - 1);
+    }
 }

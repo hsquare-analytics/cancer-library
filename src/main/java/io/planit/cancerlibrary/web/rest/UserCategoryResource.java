@@ -6,6 +6,7 @@ import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -13,9 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,30 +56,30 @@ public class UserCategoryResource {
             .body(result);
     }
 
-//    @PutMapping("/categories/{id}")
-//    public ResponseEntity<UserCategory> updateUserCategory(
-//        @PathVariable(value = "id", required = false) final Long id,
-//        @Valid @RequestBody UserCategory userCategory
-//    ) throws URISyntaxException {
-//        log.debug("REST request to update UserCategory : {}, {}", id, userCategory);
-//        if (userCategory.getId() == null) {
-//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-//        }
-//        if (!Objects.equals(id, userCategory.getId())) {
-//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-//        }
-//
-//        if (!userCategoryRepository.existsById(id)) {
-//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-//        }
-//
-//        UserCategory result = userCategoryRepository.save(userCategory);
-//        return ResponseEntity
-//            .ok()
-//            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategory.getId().toString()))
-//            .body(result);
-//    }
-//
+    @PutMapping("/users-categories/{id}")
+    public ResponseEntity<UserCategory> updateUserCategory(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody UserCategory userCategory
+    ) throws URISyntaxException {
+        log.debug("REST request to update UserCategory : {}, {}", id, userCategory);
+        if (userCategory.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, userCategory.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!userCategoryRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        UserCategory result = userCategoryRepository.save(userCategory);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategory.getId().toString()))
+            .body(result);
+    }
+
 //    @PatchMapping(value = "/categories/{id}", consumes = { "application/json", "application/merge-patch+json" })
 //    public ResponseEntity<UserCategory> partialUpdateUserCategory(
 //        @PathVariable(value = "id", required = false) final Long id,
@@ -131,13 +134,13 @@ public class UserCategoryResource {
         return ResponseUtil.wrapOrNotFound(userCategory);
     }
 
-//    @DeleteMapping("/categories/{id}")
-//    public ResponseEntity<Void> deleteUserCategory(@PathVariable Long id) {
-//        log.debug("REST request to delete UserCategory : {}", id);
-//        userCategoryRepository.deleteById(id);
-//        return ResponseEntity
-//            .noContent()
-//            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
-//            .build();
-//    }
+    @DeleteMapping("/users-categories/{id}")
+    public ResponseEntity<Void> deleteUserCategory(@PathVariable Long id) {
+        log.debug("REST request to delete UserCategory : {}", id);
+        userCategoryRepository.deleteById(id);
+        return ResponseEntity
+            .noContent()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
 }
