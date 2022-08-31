@@ -25,7 +25,7 @@ export const LibraryDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.library.updateSuccess);
 
   const handleClose = () => {
-    navigate('/library' + location.search);
+    navigate('/library');
   };
 
   useEffect(() => {

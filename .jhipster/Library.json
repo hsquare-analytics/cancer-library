@@ -18,7 +18,7 @@
     }
   ],
   "name": "Library",
-  "pagination": "pagination",
+  "pagination": "no",
   "readOnly": false,
   "relationships": [],
   "service": "no"
