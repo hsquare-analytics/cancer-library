@@ -128,11 +128,10 @@ public class CategoryResource {
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getAllCategories(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Categories");
-        Page<Category> page = categoryRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    public ResponseEntity<List<Category>> getAllCategories() {
+        log.debug("REST request to get all Categories");
+        List<Category> result = categoryRepository.findAll();
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/categories/{id}")

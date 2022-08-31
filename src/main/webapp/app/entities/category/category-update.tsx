@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { ICategory } from 'app/shared/model/category.model';
-import { getEntity, updateEntity, createEntity, reset } from './category.reducer';
+import React, {useEffect} from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {createEntity, getEntity, reset, updateEntity} from './category.reducer';
 
 export const CategoryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -19,13 +14,13 @@ export const CategoryUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const categoryEntity = useAppSelector(state => state.category.entity);
+  const libraryEntity = useAppSelector(state => state.category.entity);
   const loading = useAppSelector(state => state.category.loading);
   const updating = useAppSelector(state => state.category.updating);
   const updateSuccess = useAppSelector(state => state.category.updateSuccess);
 
   const handleClose = () => {
-    navigate('/category' + location.search);
+    navigate('/category');
   };
 
   useEffect(() => {
@@ -44,7 +39,7 @@ export const CategoryUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...categoryEntity,
+      ...libraryEntity,
       ...values,
     };
 
@@ -59,7 +54,7 @@ export const CategoryUpdate = () => {
     isNew
       ? {}
       : {
-          ...categoryEntity,
+          ...libraryEntity,
         };
 
   return (

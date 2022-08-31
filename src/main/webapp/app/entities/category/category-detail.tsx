@@ -18,12 +18,12 @@ export const CategoryDetail = () => {
     dispatch(getEntity(id));
   }, []);
 
-  const categoryEntity = useAppSelector(state => state.category.entity);
+  const libraryEntity = useAppSelector(state => state.library.entity);
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="categoryDetailsHeading">
-          <Translate contentKey="cancerLibraryApp.category.detail.title">Library</Translate>
+        <h2 data-cy="libraryDetailsHeading">
+          <Translate contentKey="cancerLibraryApp.library.detail.title">Library</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -31,34 +31,34 @@ export const CategoryDetail = () => {
               <Translate contentKey="global.field.id">ID</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.id}</dd>
+          <dd>{libraryEntity.id}</dd>
           <dt>
             <span id="title">
-              <Translate contentKey="cancerLibraryApp.category.title">Title</Translate>
+              <Translate contentKey="cancerLibraryApp.library.title">Title</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.title}</dd>
+          <dd>{libraryEntity.title}</dd>
           <dt>
             <span id="description">
-              <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
+              <Translate contentKey="cancerLibraryApp.library.description">Description</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.description}</dd>
+          <dd>{libraryEntity.description}</dd>
           <dt>
             <span id="activated">
-              <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
+              <Translate contentKey="cancerLibraryApp.library.activated">Activated</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.activated ? 'true' : 'false'}</dd>
+          <dd>{libraryEntity.activated ? 'true' : 'false'}</dd>
         </dl>
-        <Button tag={Link} to="/category" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/library" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/category/${categoryEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/library/${libraryEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

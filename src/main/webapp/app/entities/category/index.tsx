@@ -8,7 +8,7 @@ import CategoryDetail from './category-detail';
 import CategoryUpdate from './category-update';
 import CategoryDeleteDialog from './category-delete-dialog';
 
-const CategoryRoutes = () => (
+const LibraryRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<Category />} />
     <Route path="new" element={<CategoryUpdate />} />
@@ -20,4 +20,4 @@ const CategoryRoutes = () => (
   </ErrorBoundaryRoutes>
 );
 
-export default CategoryRoutes;
+export default LibraryRoutes;

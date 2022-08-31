@@ -25,7 +25,7 @@ export const CategoryDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.category.updateSuccess);
 
   const handleClose = () => {
-    navigate('/category' + location.search);
+    navigate('/category');
   };
 
   useEffect(() => {
@@ -41,12 +41,12 @@ export const CategoryDeleteDialog = () => {
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="libraryDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="categoryDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
       <ModalBody id="cancerLibraryApp.category.delete.question">
         <Translate contentKey="cancerLibraryApp.category.delete.question" interpolate={{ id: categoryEntity.id }}>
-          Are you sure you want to delete this Library?
+          Are you sure you want to delete this Category?
         </Translate>
       </ModalBody>
       <ModalFooter>
