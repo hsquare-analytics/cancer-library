@@ -20,6 +20,9 @@
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -27,17 +30,24 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+            baseTableName="ph_item"
+            constraintName="fk_category_id"
+            referencedColumnNames="id"
+            referencedTableName="ph_category"/>
     </changeSet>
 
     <changeSet id="20220830090435-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/category.csv"
+                  file="config/liquibase/fake-data/item.csv"
                   separator=";"
                   tableName="ph_item"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
             <column name="description" type="string"/>
+            <column name="category_id" type="numeric"/>
             <column name="activated" type="boolean"/>
             <column name="created_by" type="string"/>
             <column name="last_modified_by" type="string"/>
