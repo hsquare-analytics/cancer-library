@@ -34,6 +34,7 @@ public class UserCategory extends AbstractAuditingEntity implements Serializable
     @Column(nullable = false)
     private boolean activated = false;
 
+    @NotNull
     @Size(min = 3, max = 50)
     @Column(name = "term_column", nullable = false)
     private String termColumn;

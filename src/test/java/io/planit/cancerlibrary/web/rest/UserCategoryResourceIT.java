@@ -1,7 +1,12 @@
 package io.planit.cancerlibrary.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import io.planit.cancerlibrary.IntegrationTest;
@@ -18,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,7 +122,8 @@ class UserCategoryResourceIT {
         int databaseSizeBeforeCreate = userCategoryRepository.findAll().size();
         // Create the UserCategory
         restUserCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(userCategory)))
             .andExpect(status().isCreated());
 
         // Validate the UserCategory in the database
@@ -131,75 +138,59 @@ class UserCategoryResourceIT {
         assertThat(testUserCategory.getTermEnd()).isEqualTo(DEFAULT_TERM_END);
     }
 
-//    @Test
-//    @Transactional
-//    void createUserCategoryWithExistingId() throws Exception {
-//        // Create the UserCategory with an existing ID
-//        userCategory.setId(1L);
-//
-//        int databaseSizeBeforeCreate = userCategoryRepository.findAll().size();
-//
-//        // An entity with an existing ID cannot be created, so this API call must fail
-//        restUserCategoryMockMvc
-//            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
-//            .andExpect(status().isBadRequest());
-//
-//        // Validate the UserCategory in the database
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeCreate);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void checkTitleIsRequired() throws Exception {
-//        int databaseSizeBeforeTest = userCategoryRepository.findAll().size();
-//        // set the field null
-//        userCategory.setTitle(null);
-//
-//        // Create the UserCategory, which fails.
-//
-//        restUserCategoryMockMvc
-//            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
-//            .andExpect(status().isBadRequest());
-//
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeTest);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void checkActivatedIsRequired() throws Exception {
-//        int databaseSizeBeforeTest = userCategoryRepository.findAll().size();
-//        // set the field null
-//        userCategory.setActivated(null);
-//
-//        // Create the UserCategory, which fails.
-//
-//        restUserCategoryMockMvc
-//            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userCategory)))
-//            .andExpect(status().isBadRequest());
-//
-//        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-//        assertThat(userCategorylist).hasSize(databaseSizeBeforeTest);
-//    }
-//
-//    @Test
-//    @Transactional
-//    void getAllLibraries() throws Exception {
-//        // Initialize the database
-//        userCategoryRepository.saveAndFlush(userCategory);
-//
-//        // Get all the userCategorylist
-//        restUserCategoryMockMvc
-//            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
-//            .andExpect(status().isOk())
-//            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-//            .andExpect(jsonPath("$.[*].id").value(hasItem(userCategory.getId().intValue())))
-//            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-//            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-//            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())));
-//    }
-//
+    @Test
+    @Transactional
+    void createUserCategoryWithExistingId() throws Exception {
+        // Create the UserCategory with an existing ID
+        userCategory.setId(1L);
+
+        int databaseSizeBeforeCreate = userCategoryRepository.findAll().size();
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restUserCategoryMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(userCategory)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the UserCategory in the database
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkTermColumnIsRequired() throws Exception {
+        int databaseSizeBeforeTest = userCategoryRepository.findAll().size();
+        // set the field null
+        userCategory.setTermColumn(null);
+
+        // Create the UserCategory, which fails.
+
+        restUserCategoryMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(userCategory)))
+            .andExpect(status().isBadRequest());
+
+        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
+        assertThat(userCategorylist).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void getAllLibraries() throws Exception {
+        // Initialize the database
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        // Get all the userCategorylist
+        restUserCategoryMockMvc
+            .perform(get(ENTITY_API_URL + "?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItems(userCategory.getId().intValue())))
+            .andExpect(jsonPath("$.[*].user.id").value(hasItems(user.getId().intValue())))
+            .andExpect(jsonPath("$.[*].category.id").value(hasItems(category.getId().intValue())));
+    }
+
 //    @Test
 //    @Transactional
 //    void getUserCategory() throws Exception {

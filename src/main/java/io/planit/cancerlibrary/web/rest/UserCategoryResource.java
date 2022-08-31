@@ -121,14 +121,14 @@ public class UserCategoryResource {
 //            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategory.getId().toString())
 //        );
 //    }
-//
-//    @GetMapping("/categories")
-//    public ResponseEntity<List<UserCategory>> getAllCategories() {
-//        log.debug("REST request to get all Categories");
-//        List<UserCategory> result = userCategoryRepository.findAll();
-//        return ResponseEntity.ok().body(result);
-//    }
-//
+
+    @GetMapping("/users-categories")
+    public ResponseEntity<List<UserCategory>> getAllUsersCategories() {
+        log.debug("REST request to get all UsersCategories");
+        List<UserCategory> result = userCategoryRepository.findAll();
+        return ResponseEntity.ok().body(result);
+    }
+
 //    @GetMapping("/categories/{id}")
 //    public ResponseEntity<UserCategory> getUserCategory(@PathVariable Long id) {
 //        log.debug("REST request to get UserCategory : {}", id);
