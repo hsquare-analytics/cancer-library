@@ -25,7 +25,7 @@ export const ItemUpdate = () => {
   const updateSuccess = useAppSelector(state => state.item.updateSuccess);
 
   const handleClose = () => {
-    navigate('/item' + location.search);
+    navigate('/item');
   };
 
   useEffect(() => {

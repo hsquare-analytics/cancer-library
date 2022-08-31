@@ -22,7 +22,6 @@ describe('Entities reducer tests', () => {
     errorMessage: null,
     entities: [],
     entity: defaultValue,
-    totalItems: 0,
     updating: false,
     updateSuccess: false,
   };
@@ -110,7 +109,7 @@ describe('Entities reducer tests', () => {
 
   describe('Successes', () => {
     it('should fetch all entities', () => {
-      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }], headers: { 'x-total-count': 123 } };
+      const payload = { data: [{ 1: 'fake1' }, { 2: 'fake2' }] };
       expect(
         reducer(undefined, {
           type: getEntities.fulfilled.type,
@@ -119,7 +118,6 @@ describe('Entities reducer tests', () => {
       ).toEqual({
         ...initialState,
         loading: false,
-        totalItems: payload.headers['x-total-count'],
         entities: payload.data,
       });
     });
@@ -180,7 +178,7 @@ describe('Entities reducer tests', () => {
       axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches FETCH_CATEGORY_LIST actions', async () => {
+    it('dispatches FETCH_LIBRARY_LIST actions', async () => {
       const expectedActions = [
         {
           type: getEntities.pending.type,
@@ -195,7 +193,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches FETCH_CATEGORY actions', async () => {
+    it('dispatches FETCH_LIBRARY actions', async () => {
       const expectedActions = [
         {
           type: getEntity.pending.type,
@@ -210,7 +208,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
-    it('dispatches CREATE_CATEGORY actions', async () => {
+    it('dispatches CREATE_LIBRARY actions', async () => {
       const expectedActions = [
         {
           type: createEntity.pending.type,
@@ -229,7 +227,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches UPDATE_CATEGORY actions', async () => {
+    it('dispatches UPDATE_LIBRARY actions', async () => {
       const expectedActions = [
         {
           type: updateEntity.pending.type,
@@ -248,7 +246,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches PARTIAL_UPDATE_CATEGORY actions', async () => {
+    it('dispatches PARTIAL_UPDATE_LIBRARY actions', async () => {
       const expectedActions = [
         {
           type: partialUpdateEntity.pending.type,
@@ -267,7 +265,7 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches DELETE_CATEGORY actions', async () => {
+    it('dispatches DELETE_LIBRARY actions', async () => {
       const expectedActions = [
         {
           type: deleteEntity.pending.type,

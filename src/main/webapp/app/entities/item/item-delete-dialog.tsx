@@ -25,7 +25,7 @@ export const ItemDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.item.updateSuccess);
 
   const handleClose = () => {
-    navigate('/item' + location.search);
+    navigate('/item');
   };
 
   useEffect(() => {
@@ -41,12 +41,12 @@ export const ItemDeleteDialog = () => {
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="libraryDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="itemDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
       <ModalBody id="cancerLibraryApp.item.delete.question">
         <Translate contentKey="cancerLibraryApp.item.delete.question" interpolate={{ id: itemEntity.id }}>
-          Are you sure you want to delete this Library?
+          Are you sure you want to delete this Item?
         </Translate>
       </ModalBody>
       <ModalFooter>

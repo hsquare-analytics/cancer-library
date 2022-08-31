@@ -11,16 +11,15 @@ const initialState: EntityState<IItem> = {
   entities: [],
   entity: defaultValue,
   updating: false,
-  totalItems: 0,
   updateSuccess: false,
 };
 
-const apiUrl = 'api/categories';
+const apiUrl = 'api/items';
 
 // Actions
 
 export const getEntities = createAsyncThunk('item/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+  const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
   return axios.get<IItem[]>(requestUrl);
 });
 
@@ -76,7 +75,7 @@ export const deleteEntity = createAsyncThunk(
 
 // slice
 
-export const ItemSlice = createEntitySlice({
+export const LibrarySlice = createEntitySlice({
   name: 'item',
   initialState,
   extraReducers(builder) {
@@ -91,13 +90,12 @@ export const ItemSlice = createEntitySlice({
         state.entity = {};
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
-        const { data, headers } = action.payload;
+        const { data } = action.payload;
 
         return {
           ...state,
           loading: false,
           entities: data,
-          totalItems: parseInt(headers['x-total-count'], 10),
         };
       })
       .addMatcher(isFulfilled(createEntity, updateEntity, partialUpdateEntity), (state, action) => {
@@ -119,7 +117,7 @@ export const ItemSlice = createEntitySlice({
   },
 });
 
-export const { reset } = ItemSlice.actions;
+export const { reset } = LibrarySlice.actions;
 
 // Reducer
-export default ItemSlice.reducer;
+export default LibrarySlice.reducer;
