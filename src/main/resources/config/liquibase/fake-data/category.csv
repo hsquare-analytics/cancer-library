@@ -1,11 +1,11 @@
-id;title;description;activated;created_by;last_modified_by
-1;Executive driver architectures;District Cotton;false;system;system
-2;e-business repurpose Skyway;facilitate;true;system;system
-3;Concrete Facilitator;withdrawal Wooden parallelism;false;system;system
-4;facilitate Strategist Car;impactful Cambridgeshire;false;system;system
-5;empowering Throughway Cambridg;JBOD;true;system;system
-6;Technician Oklahoma regional;pixel Account;false;system;system
-7;withdrawal;Multi-tiered innovative area;false;system;system
-8;Extended solid;Automotive compressing Tuna;true;system;system
-9;index Plastic optimizing;projection;false;system;system
-10;Berkshire Pizza navigate;IB;true;system;system
+"id";"title";"description";"activated";"library_id";"created_by";"last_modified_by"
+"1";"Executive driver architectures";"District Cotton";"false";"1";"system";"system"
+"2";"e-business repurpose Skyway";"facilitate";"true";"2";"system";"system"
+"3";"Concrete Facilitator";"withdrawal Wooden parallelism";"false";"3";"system";"system"
+"4";"facilitate Strategist Car";"impactful Cambridgeshire";"false";"4";"system";"system"
+"5";"empowering Throughway Cambridg";"JBOD";"true";"5";"system";"system"
+"6";"Technician Oklahoma regional";"pixel Account";"false";"1";"system";"system"
+"7";"withdrawal";"Multi-tiered innovative area";"false";"2";"system";"system"
+"8";"Extended solid";"Automotive compressing Tuna";"true";"3";"system";"system"
+"9";"index Plastic optimizing";"projection";"false";"4";"system";"system"
+"10";"Berkshire Pizza navigate";"IB";"true";"5";"system";"system"

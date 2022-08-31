@@ -20,6 +20,9 @@
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
+            <column name="library_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -27,6 +30,12 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="library_id"
+            baseTableName="ph_category"
+            constraintName="fk_library_id"
+            referencedColumnNames="id"
+            referencedTableName="ph_library"/>
     </changeSet>
 
     <changeSet id="20220830061235-1-data" author="jhipster" context="faker">
@@ -38,7 +47,10 @@
             <column name="id" type="numeric"/>
             <column name="title" type="string"/>
             <column name="description" type="string"/>
+            <column name="library_id" type="numeric"/>
             <column name="activated" type="boolean"/>
+            <column name="created_by" type="string"/>
+            <column name="last_modified_by" type="string"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>
