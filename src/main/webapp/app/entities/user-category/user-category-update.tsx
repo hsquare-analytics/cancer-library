@@ -5,7 +5,8 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './user-category.reducer';
-import {getEntities as getLibraries} from "app/entities/library/library.reducer";
+import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
+import {getEntities as getCategories} from "app/entities/category/category.reducer";
 import {languages, locales} from "app/config/translation";
 
 export const UserCategoryUpdate = () => {
@@ -16,11 +17,12 @@ export const UserCategoryUpdate = () => {
   const {id} = useParams<'id'>();
   const isNew = id === undefined;
 
-  const categoryEntity = useAppSelector(state => state.category.entity);
-  const loading = useAppSelector(state => state.category.loading);
-  const updating = useAppSelector(state => state.category.updating);
-  const updateSuccess = useAppSelector(state => state.category.updateSuccess);
-  const libraries = useAppSelector(state => state.library.entities);
+  const userCategoryEntity = useAppSelector(state => state.userCategory.entity);
+  const loading = useAppSelector(state => state.userCategory.loading);
+  const updating = useAppSelector(state => state.userCategory.updating);
+  const updateSuccess = useAppSelector(state => state.userCategory.updateSuccess);
+  const users = useAppSelector(state => state.userManagement.users);
+  const categories = useAppSelector(state => state.category.entities);
 
   const handleClose = () => {
     navigate('/user-category');
@@ -33,8 +35,12 @@ export const UserCategoryUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    if (libraries.length === 0) {
-      dispatch(getLibraries({}));
+    if (users.length === 0) {
+      dispatch(getUsers({}));
+    }
+
+    if (categories.length == 0) {
+      dispatch(getCategories({}));
     }
   }, []);
 
@@ -46,8 +52,10 @@ export const UserCategoryUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...categoryEntity,
+      ...userCategoryEntity,
       ...values,
+      "termStart" : new Date(values.termStart),
+      "termEnd" : new Date(values.termEnd)
     };
 
     if (isNew) {
@@ -61,7 +69,7 @@ export const UserCategoryUpdate = () => {
     isNew
       ? {}
       : {
-        ...categoryEntity,
+        ...userCategoryEntity,
       };
 
   return (
@@ -85,46 +93,57 @@ export const UserCategoryUpdate = () => {
                   name="id"
                   required
                   readOnly
-                  id="category-id"
+                  id="user-category-id"
                   label={translate('global.field.id')}
                   validate={{required: true}}
                 />
               ) : null}
+              <ValidatedField type="select" name="user.id" data-cy="user"
+                              label={translate('cancerLibraryApp.userCategory.user')}
+                              validate={{required: true}}
+              >
+                <option value="">-</option>
+                {users.map(user => (
+                  <option value={user.id} key={user}>
+                    {user.login}
+                  </option>
+                ))}
+              </ValidatedField>
+              <ValidatedField type="select" name="category.id" data-cy="category"
+                              label={translate('cancerLibraryApp.userCategory.category')}
+                              validate={{required: true}}
+              >
+                <option value="">-</option>
+                {categories.map(category => (
+                  <option value={category.id} key={category}>
+                    {category.title}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField
-                label={translate('cancerLibraryApp.category.title')}
-                id="category-title"
-                name="title"
-                data-cy="title"
-                type="text"
-                validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
-                  maxLength: {value: 30, message: translate('entity.validation.maxlength', {max: 30})},
-                }}
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.category.description')}
-                id="category-description"
-                name="description"
-                data-cy="description"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.category.activated')}
+                label={translate('cancerLibraryApp.userCategory.activated')}
                 id="category-activated"
                 name="activated"
                 data-cy="activated"
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="library.id" data-cy="library"
-                              label={translate('cancerLibraryApp.category.library')}>
-                <option value="">-</option>
-                {libraries.map(library => (
-                  <option value={library.id} key={library}>
-                    {library.title}
-                  </option>
-                ))}
-              </ValidatedField>
+              <ValidatedField
+                label={translate('cancerLibraryApp.userCategory.termStart')}
+                id="user-category-activated"
+                name="termStart"
+                data-cy="termStart"
+                type="datetime-local"
+                validate={{required: true}}
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.userCategory.termEnd')}
+                id="user-category-activated"
+                name="termEnd"
+                data-cy="termEnd"
+                type="datetime-local"
+                validate={{required: true}}
+              />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/user-category" replace
                       color="info">
                 <FontAwesomeIcon icon="arrow-left"/>

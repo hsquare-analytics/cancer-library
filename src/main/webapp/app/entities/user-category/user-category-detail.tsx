@@ -7,7 +7,7 @@ import { Translate, TextFormat } from 'react-jhipster';
 
 
 import {getEntity} from './user-category.reducer';
-import {APP_DATE_FORMAT} from "app/config/constants";
+import {APP_DATE_FORMAT, APP_LOCAL_DATETIME_FORMAT} from "app/config/constants";
 
 export const UserCategoryDetail = () => {
   const dispatch = useAppDispatch();
@@ -57,7 +57,7 @@ export const UserCategoryDetail = () => {
           </dt>
           <dd>
             {userCategoryEntity.termStart?
-            <TextFormat value={userCategoryEntity.termStart} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+            <TextFormat value={userCategoryEntity.termStart} type="date" format={APP_LOCAL_DATETIME_FORMAT} blankOnInvalid />
             :null}
           </dd>
           <dt>
@@ -67,7 +67,7 @@ export const UserCategoryDetail = () => {
           </dt>
           <dd>
             {userCategoryEntity.termEnd?
-              <TextFormat value={userCategoryEntity.termEnd} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+              <TextFormat value={userCategoryEntity.termEnd} type="date" format={APP_LOCAL_DATETIME_FORMAT} blankOnInvalid />
               :null}
           </dd>
         </dl>

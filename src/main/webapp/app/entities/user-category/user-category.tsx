@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, TextFormat} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './user-category.reducer';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_LOCAL_DATETIME_FORMAT} from "app/config/constants";
 
 export const UserCategory = () => {
   const dispatch = useAppDispatch();
@@ -76,8 +77,12 @@ export const UserCategory = () => {
                   <td>{userCategory.user.login}</td>
                   <td>{userCategory.category.title}</td>
                   <td>{userCategory.activated ? 'true' : 'false'}</td>
-                  <td>{userCategory.termStart}</td>
-                  <td>{userCategory.termEnd}</td>
+                  <td>
+                    {userCategory.termStart ? <TextFormat value={userCategory.termStart} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
+                  </td>
+                  <td>
+                    {userCategory.termEnd ? <TextFormat value={userCategory.termEnd} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/user-category/${userCategory.id}`} color="info" size="sm" data-cy="entityDetailsButton">

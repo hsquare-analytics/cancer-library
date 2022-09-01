@@ -11,7 +11,7 @@ import UserCategoryDeleteDialog from './user-category-delete-dialog';
 const UserCategoryRoutes = () => (
   <ErrorBoundaryRoutes>
     <Route index element={<UserCategory />} />
-    {/*<Route path="new" element={<CategoryUpdate />} />*/}
+    <Route path="new" element={<UserCategoryUpdate />} />
     <Route path=":id">
       <Route index element={<UserCategoryDetail />} />
       <Route path="edit" element={<UserCategoryUpdate />} />
