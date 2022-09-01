@@ -5,6 +5,7 @@ import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.InstantService;
 import java.util.List;
@@ -46,14 +47,18 @@ public class NavigationController {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
-        String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
-        User user = userRepository.findOneByLogin(login).orElseThrow();
+        List<UserCategory> userCategories;
+        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            userCategories = userCategoryRepository.findAll();
+        } else {
+            String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
+            User user = userRepository.findOneByLogin(login).orElseThrow();
 
-        List<Category> result = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(),
-            instantService.getCurrentTime()).stream().map(UserCategory::getCategory).collect(
-            Collectors.toList());
+            userCategories = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(),
+                instantService.getCurrentTime());
+        }
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
     }
 
 }

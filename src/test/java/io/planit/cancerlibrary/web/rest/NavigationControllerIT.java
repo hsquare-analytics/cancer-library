@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,20 +14,20 @@ import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.LibraryRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.InstantService;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
 @AutoConfigureMockMvc
-@WithMockUser(username = "testuser")
 class NavigationControllerIT {
 
     private static final String API_URL = "/api/navigations";
@@ -73,10 +74,29 @@ class NavigationControllerIT {
     }
 
     @Test
+    @WithMockUser(username = "testuser", authorities = AuthoritiesConstants.USER)
+    @Transactional
     void getAllPersonalNavigationsInBetweenValidTerm() throws Exception {
         // given
-        BDDMockito.given(instantService.getCurrentTime()).willReturn(userCategory.getTermEnd().minusMillis(10));
+        given(instantService.getCurrentTime()).willReturn(userCategory.getTermEnd().minusMillis(10));
 
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        // when, then
+        restNavigationMockMvc
+            .perform(get(API_URL))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.[0].id").value(category.getId()))
+            .andExpect(jsonPath("$.[0].title").value(category.getTitle()))
+            .andExpect(jsonPath("$.[0].description").value(category.getDescription()));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", authorities = AuthoritiesConstants.ADMIN)
+    @Transactional
+    void getAllIfAdminUser() throws Exception {
+        // given
+        given(instantService.getCurrentTime()).willReturn(userCategory.getTermEnd().minusMillis(10));
         userCategoryRepository.saveAndFlush(userCategory);
 
         // when, then
