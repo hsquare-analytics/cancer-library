@@ -47,9 +47,6 @@ class UserCategoryResourceIT {
     private static final Boolean DEFAULT_ACTIVATED = false;
     private static final Boolean UPDATED_ACTIVATED = true;
 
-    private static final String DEFAULT_TERM_COLUMN = "AAAAAAAAAA";
-    private static final String UPDATED_TERM_COLUMN = "BBBBBBBBBB";
-
     private static final Instant DEFAULT_TERM_START = Instant.parse("2019-01-01T00:00:00.000Z");
     private static final Instant UPDATED_TERM_START = Instant.parse("2022-01-01T00:00:00.000Z");
 
@@ -90,7 +87,6 @@ class UserCategoryResourceIT {
 
     public static UserCategory createEntity(EntityManager em) {
         UserCategory userCategory = new UserCategory().activated(DEFAULT_ACTIVATED)
-            .termColumn(DEFAULT_TERM_COLUMN)
             .termStart(DEFAULT_TERM_START)
             .termEnd(DEFAULT_TERM_END);
         return userCategory;
@@ -98,7 +94,6 @@ class UserCategoryResourceIT {
 
     public static UserCategory createUpdatedEntity(EntityManager em) {
         UserCategory userCategory = new UserCategory().activated(UPDATED_ACTIVATED)
-            .termColumn(UPDATED_TERM_COLUMN)
             .termStart(UPDATED_TERM_START)
             .termEnd(UPDATED_TERM_END);
         return userCategory;
@@ -135,7 +130,6 @@ class UserCategoryResourceIT {
         assertThat(testUserCategory.getUser().getId()).isEqualTo(user.getId());
         assertThat(testUserCategory.getCategory().getId()).isEqualTo(category.getId());
         assertThat(testUserCategory.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
-        assertThat(testUserCategory.getTermColumn()).isEqualTo(DEFAULT_TERM_COLUMN);
         assertThat(testUserCategory.getTermStart()).isEqualTo(DEFAULT_TERM_START);
         assertThat(testUserCategory.getTermEnd()).isEqualTo(DEFAULT_TERM_END);
     }
@@ -157,24 +151,6 @@ class UserCategoryResourceIT {
         // Validate the UserCategory in the database
         List<UserCategory> userCategorylist = userCategoryRepository.findAll();
         assertThat(userCategorylist).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkTermColumnIsRequired() throws Exception {
-        int databaseSizeBeforeTest = userCategoryRepository.findAll().size();
-        // set the field null
-        userCategory.setTermColumn(null);
-
-        // Create the UserCategory, which fails.
-
-        restUserCategoryMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(TestUtil.convertObjectToJsonBytes(userCategory)))
-            .andExpect(status().isBadRequest());
-
-        List<UserCategory> userCategorylist = userCategoryRepository.findAll();
-        assertThat(userCategorylist).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -208,7 +184,6 @@ class UserCategoryResourceIT {
             .andExpect(jsonPath("$.user.id").value(user.getId().intValue()))
             .andExpect(jsonPath("$.category.id").value(category.getId().intValue()))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
-            .andExpect(jsonPath("$.termColumn").value(DEFAULT_TERM_COLUMN))
             .andExpect(jsonPath("$.termStart").value(DEFAULT_TERM_START.toString()))
             .andExpect(jsonPath("$.termEnd").value(DEFAULT_TERM_END.toString()));
     }
@@ -236,8 +211,9 @@ class UserCategoryResourceIT {
         categoryRepository.saveAndFlush(category);
 
         updatedUserCategory.category(category)
-            .activated(UPDATED_ACTIVATED).termColumn(UPDATED_TERM_COLUMN)
-            .termStart(UPDATED_TERM_START).termEnd(UPDATED_TERM_END);
+            .activated(UPDATED_ACTIVATED)
+            .termStart(UPDATED_TERM_START)
+            .termEnd(UPDATED_TERM_END);
 
         restUserCategoryMockMvc
             .perform(
@@ -254,7 +230,6 @@ class UserCategoryResourceIT {
         assertThat(testUserCategory.getCategory()).isEqualTo(category);
         assertThat(testUserCategory.getUser()).isEqualTo(user);
         assertThat(testUserCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
-        assertThat(testUserCategory.getTermColumn()).isEqualTo(UPDATED_TERM_COLUMN);
         assertThat(testUserCategory.getTermStart()).isEqualTo(UPDATED_TERM_START);
         assertThat(testUserCategory.getTermEnd()).isEqualTo(UPDATED_TERM_END);
     }

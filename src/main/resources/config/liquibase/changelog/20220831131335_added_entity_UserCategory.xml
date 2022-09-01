@@ -20,9 +20,6 @@
             <column name="activated" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="term_column" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
             <column name="term_start" type="timestamp" defaultValueDate="${now}">
                 <constraints nullable="false"/>
             </column>
@@ -59,7 +56,6 @@
             <column name="user_id" type="numeric"/>
             <column name="category_id" type="numeric"/>
             <column name="activated" type="boolean"/>
-            <column name="term_column" type="string"/>
             <column name="created_by" type="string"/>
             <column name="last_modified_by" type="string"/>
         </loadData>

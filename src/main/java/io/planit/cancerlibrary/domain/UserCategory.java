@@ -34,11 +34,6 @@ public class UserCategory extends AbstractAuditingEntity implements Serializable
     @Column(nullable = false)
     private boolean activated = false;
 
-    @NotNull
-    @Size(min = 3, max = 50)
-    @Column(name = "term_column", nullable = false)
-    private String termColumn;
-
     @Column(name = "term_start")
     private Instant termStart;
 
@@ -92,19 +87,6 @@ public class UserCategory extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public String getTermColumn() {
-        return termColumn;
-    }
-
-    public void setTermColumn(String termColumn) {
-        this.termColumn = termColumn;
-    }
-
-    public UserCategory termColumn(String termColumn) {
-        this.termColumn = termColumn;
-        return this;
-    }
-
     public Instant getTermStart() {
         return termStart;
     }
@@ -155,7 +137,6 @@ public class UserCategory extends AbstractAuditingEntity implements Serializable
             ", user=" + user +
             ", category=" + category +
             ", activated=" + activated +
-            ", termColumn='" + termColumn + '\'' +
             ", termStart=" + termStart +
             ", termEnd=" + termEnd +
             '}';
