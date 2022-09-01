@@ -9,9 +9,9 @@ import reducer, {getCategories, reset} from './navigation.reducer';
 describe('User category selector module reducer tests', () => {
   function isEmpty(element): boolean {
     if (element instanceof Array) {
-      return element.length == 0;
+      return element.length === 0;
     } else {
-      return Object.keys(element).length == 0;
+      return Object.keys(element).length === 0;
     }
   }
 

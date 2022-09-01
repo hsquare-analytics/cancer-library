@@ -18,8 +18,8 @@ export const Navigation = () => {
 
   return (
     <div className="navigation-container">
-      {categoryList.length != 0 ? categoryList.map(category => {
-        return <div>{category.title}</div>
+      {categoryList.length !== 0 ? categoryList.map(category => {
+        return <div key={category}>{category.title}</div>
       }) : "empty category"}
     </div>
   );

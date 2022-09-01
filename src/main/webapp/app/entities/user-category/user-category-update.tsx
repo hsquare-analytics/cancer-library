@@ -39,7 +39,7 @@ export const UserCategoryUpdate = () => {
       dispatch(getUsers({}));
     }
 
-    if (categories.length == 0) {
+    if (categories.length === 0) {
       dispatch(getCategories({}));
     }
   }, []);

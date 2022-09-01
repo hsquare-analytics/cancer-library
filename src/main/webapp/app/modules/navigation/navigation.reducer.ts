@@ -30,7 +30,7 @@ export const Navigation = createSlice({
       return initialState
     }
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder
     .addMatcher(isFulfilled(getCategories), (state, action) => {
       const {data} = action.payload;
