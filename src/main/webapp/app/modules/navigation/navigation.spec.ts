@@ -1,3 +1,9 @@
+import axios from 'axios';
+
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
+
 import reducer, {getCategories, reset} from './navigation.reducer';
 
 describe('User category selector module reducer tests', () => {
@@ -85,5 +91,28 @@ describe('User category selector module reducer tests', () => {
   describe('Actions', () => {
     let store;
     const resolvedObject = {value: 'whatever'};
+
+    beforeEach(() => {
+      const mockStore = configureStore([thunk]);
+      store = mockStore({});
+      axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+    });
+
+    it('dispatches FETCH_CATEGORY_LIST actions', async () => {
+      const expectedActions = [
+        {
+          type: getCategories.pending.type
+        },
+        {
+          type: getCategories.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(getCategories());
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
   });
 });
