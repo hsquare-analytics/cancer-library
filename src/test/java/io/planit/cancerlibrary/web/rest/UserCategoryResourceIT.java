@@ -1,7 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,7 +24,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +48,8 @@ class UserCategoryResourceIT {
     private static final Instant DEFAULT_TERM_START = Instant.parse("2019-01-01T00:00:00.000Z");
     private static final Instant UPDATED_TERM_START = Instant.parse("2022-01-01T00:00:00.000Z");
 
-    private static final Instant DEFAULT_TERM_END = Instant.parse("2019-01-01T00:00:00.000Z");
-    private static final Instant UPDATED_TERM_END = Instant.parse("2022-01-01T00:00:00.000Z");
+    private static final Instant DEFAULT_TERM_END = Instant.parse("2019-12-31T00:00:00.000Z");
+    private static final Instant UPDATED_TERM_END = Instant.parse("2022-12-01T00:00:00.000Z");
 
     private static final String ENTITY_API_URL = "/api/users-categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -86,23 +84,21 @@ class UserCategoryResourceIT {
     private Category category;
 
     public static UserCategory createEntity(EntityManager em , User user, Category category) {
-        UserCategory userCategory = new UserCategory()
+        return new UserCategory()
             .user(user)
             .category(category)
             .activated(DEFAULT_ACTIVATED)
             .termStart(DEFAULT_TERM_START)
             .termEnd(DEFAULT_TERM_END);
-        return userCategory;
     }
 
     public static UserCategory createUpdatedEntity(EntityManager em, User user, Category category) {
-        UserCategory userCategory = new UserCategory()
+        return new UserCategory()
             .user(user)
             .category(category)
             .activated(UPDATED_ACTIVATED)
             .termStart(UPDATED_TERM_START)
             .termEnd(UPDATED_TERM_END);
-        return userCategory;
     }
 
     @BeforeEach
@@ -189,7 +185,7 @@ class UserCategoryResourceIT {
             .andExpect(jsonPath("$.id").value(userCategory.getId().intValue()))
             .andExpect(jsonPath("$.user.id").value(user.getId().intValue()))
             .andExpect(jsonPath("$.category.id").value(category.getId().intValue()))
-            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.termStart").value(DEFAULT_TERM_START.toString()))
             .andExpect(jsonPath("$.termEnd").value(DEFAULT_TERM_END.toString()));
     }
