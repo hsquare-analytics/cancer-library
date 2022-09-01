@@ -14,7 +14,7 @@ const initialState: userCategorySelectorType = {
   errorMessage: null,
 }
 
-const apiUrl = 'api/navigation';
+const apiUrl = 'api/navigations';
 
 export const getCategories = createAsyncThunk('navigation/fetch_category_list', async () => {
   const requestUrl = `${apiUrl}`;

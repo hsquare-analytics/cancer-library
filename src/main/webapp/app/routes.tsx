@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, useLocation } from 'react-router-dom';
+import {Route, useLocation} from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import Login from 'app/modules/login/login';
@@ -13,8 +13,9 @@ import EntitiesRoutes from 'app/entities/routes';
 import PrivateRoute from 'app/shared/auth/private-route';
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
-import { AUTHORITIES } from 'app/config/constants';
-import { sendActivity } from 'app/config/websocket-middleware';
+import {AUTHORITIES} from 'app/config/constants';
+import {sendActivity} from 'app/config/websocket-middleware';
+import Navigation from "app/modules/navigation/navigation";
 
 const loading = <div>loading ...</div>;
 
@@ -36,42 +37,50 @@ const AppRoutes = () => {
   return (
     <div className="view-routes">
       <ErrorBoundaryRoutes>
-        <Route index element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="logout" element={<Logout />} />
+        <Route index element={<Home/>}/>
+        <Route path="login" element={<Login/>}/>
+        <Route path="logout" element={<Logout/>}/>
         <Route path="account">
           <Route
             path="*"
             element={
               <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
-                <Account />
+                <Account/>
               </PrivateRoute>
             }
           />
-          <Route path="register" element={<Register />} />
-          <Route path="activate" element={<Activate />} />
+          <Route path="register" element={<Register/>}/>
+          <Route path="activate" element={<Activate/>}/>
           <Route path="reset">
-            <Route path="request" element={<PasswordResetInit />} />
-            <Route path="finish" element={<PasswordResetFinish />} />
+            <Route path="request" element={<PasswordResetInit/>}/>
+            <Route path="finish" element={<PasswordResetFinish/>}/>
           </Route>
         </Route>
         <Route
           path="admin/*"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
-              <Admin />
+              <Admin/>
             </PrivateRoute>
           }
         />
         <Route
+          path="navigation"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
+              <Navigation/>
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
           path="*"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER]}>
-              <EntitiesRoutes />
+              <EntitiesRoutes/>
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="*" element={<PageNotFound/>}/>
       </ErrorBoundaryRoutes>
     </div>
   );
