@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
@@ -7,6 +8,7 @@ import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.InstantService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,21 +34,24 @@ public class NavigationController {
 
     private final InstantService instantService;
 
-    public NavigationController(UserRepository userRepository, UserCategoryRepository userCategoryRepository, InstantService instantService) {
+    public NavigationController(UserRepository userRepository, UserCategoryRepository userCategoryRepository,
+        InstantService instantService) {
         this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
         this.instantService = instantService;
     }
 
     @GetMapping("/navigations")
-    public ResponseEntity<List<UserCategory>> getAccessibleCategory() {
+    public ResponseEntity<List<Category>> getAccessibleCategory() {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
         User user = userRepository.findOneByLogin(login).orElseThrow();
 
-        List<UserCategory> result = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(), instantService.getCurrentTime());
+        List<Category> result = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(),
+            instantService.getCurrentTime()).stream().map(UserCategory::getCategory).collect(
+            Collectors.toList());
 
         return ResponseEntity.ok(result);
     }

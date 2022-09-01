@@ -83,8 +83,8 @@ class NavigationControllerIT {
         restNavigationMockMvc
             .perform(get(API_URL))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.[0].id").value(userCategory.getId()))
-            .andExpect(jsonPath("$.[0].termStart").value(userCategory.getTermStart().toString()))
-            .andExpect(jsonPath("$.[0].termEnd").value(userCategory.getTermEnd().toString()));
+            .andExpect(jsonPath("$.[0].id").value(category.getId()))
+            .andExpect(jsonPath("$.[0].title").value(category.getTitle()))
+            .andExpect(jsonPath("$.[0].description").value(category.getDescription()));
     }
 }
