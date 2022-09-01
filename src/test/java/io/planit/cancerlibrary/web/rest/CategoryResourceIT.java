@@ -65,14 +65,13 @@ class CategoryResourceIT {
 
     private Library library;
 
-    public static Category createEntity(EntityManager em) {
+    public static Category createEntity(EntityManager em, Library library) {
         Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION)
-            .activated(DEFAULT_ACTIVATED);
+            .activated(DEFAULT_ACTIVATED).library(library);
         return category;
     }
 
-    public static Category createUpdatedEntity(EntityManager em) {
-        Library library = LibraryResourceIT.createUpdatedEntity(em);
+    public static Category createUpdatedEntity(EntityManager em, Library library) {
         Category category = new Category().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION)
             .activated(UPDATED_ACTIVATED).library(library);
         return category;
@@ -82,7 +81,7 @@ class CategoryResourceIT {
     public void initTest() {
         library = LibraryResourceIT.createEntity(em);
         libraryRepository.saveAndFlush(library);
-        category = createEntity(em).library(library);
+        category = createEntity(em, library);
     }
 
     @Test

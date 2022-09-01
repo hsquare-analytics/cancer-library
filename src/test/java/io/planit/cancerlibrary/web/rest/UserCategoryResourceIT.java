@@ -85,15 +85,21 @@ class UserCategoryResourceIT {
 
     private Category category;
 
-    public static UserCategory createEntity(EntityManager em) {
-        UserCategory userCategory = new UserCategory().activated(DEFAULT_ACTIVATED)
+    public static UserCategory createEntity(EntityManager em , User user, Category category) {
+        UserCategory userCategory = new UserCategory()
+            .user(user)
+            .category(category)
+            .activated(DEFAULT_ACTIVATED)
             .termStart(DEFAULT_TERM_START)
             .termEnd(DEFAULT_TERM_END);
         return userCategory;
     }
 
-    public static UserCategory createUpdatedEntity(EntityManager em) {
-        UserCategory userCategory = new UserCategory().activated(UPDATED_ACTIVATED)
+    public static UserCategory createUpdatedEntity(EntityManager em, User user, Category category) {
+        UserCategory userCategory = new UserCategory()
+            .user(user)
+            .category(category)
+            .activated(UPDATED_ACTIVATED)
             .termStart(UPDATED_TERM_START)
             .termEnd(UPDATED_TERM_END);
         return userCategory;
@@ -107,10 +113,10 @@ class UserCategoryResourceIT {
         library = LibraryResourceIT.createEntity(em);
         libraryRepository.saveAndFlush(library);
 
-        category = CategoryResourceIT.createEntity(em).library(library);
+        category = CategoryResourceIT.createEntity(em, library);
         categoryRepository.saveAndFlush(category);
 
-        userCategory = createEntity(em).user(user).category(category);
+        userCategory = createEntity(em, user, category);
     }
 
     @Test
@@ -207,7 +213,7 @@ class UserCategoryResourceIT {
         UserCategory updatedUserCategory = userCategoryRepository.findById(userCategory.getId()).get();
         // Disconnect from session so that the updates on updatedUserCategory are not directly saved in db
         em.detach(userCategory);
-        Category category = CategoryResourceIT.createUpdatedEntity(em).library(library);
+        Category category = CategoryResourceIT.createUpdatedEntity(em, library);
         categoryRepository.saveAndFlush(category);
 
         updatedUserCategory.category(category)

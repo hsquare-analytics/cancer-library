@@ -68,29 +68,27 @@ class ItemResourceIT {
 
     private Item item;
 
-    private Library library;
-
     private Category category;
 
-    public static Item createEntity(EntityManager em) {
-        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED);
+    public static Item createEntity(EntityManager em, Category category) {
+        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).category(category);
         return item;
     }
 
-    public static Item createUpdatedEntity(EntityManager em) {
-        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED);
+    public static Item createUpdatedEntity(EntityManager em, Category category) {
+        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).category(category);
         return item;
     }
 
     @BeforeEach
     public void initTest() {
-        library = LibraryResourceIT.createEntity(em);
+        Library library = LibraryResourceIT.createEntity(em);
         libraryRepository.saveAndFlush(library);
 
-        category = CategoryResourceIT.createEntity(em).library(library);
+        category = CategoryResourceIT.createEntity(em, library);
         categoryRepository.saveAndFlush(category);
 
-        item = createEntity(em).category(category);
+        item = createEntity(em, category);
     }
 
     @Test
