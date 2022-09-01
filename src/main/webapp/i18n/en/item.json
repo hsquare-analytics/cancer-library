@@ -2,7 +2,7 @@
   "cancerLibraryApp": {
     "item": {
       "home": {
-        "title": "Categories",
+        "title": "Items",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Item",
         "createOrEditLabel": "Create or edit a Item",
