@@ -14,15 +14,15 @@ const initialState: userCategorySelectorType = {
   errorMessage: null,
 }
 
-const apiUrl = 'api/user-category-selector';
+const apiUrl = 'api/navigation';
 
-export const getCategories = createAsyncThunk('user_category_selector/fetch_category_list', async () => {
+export const getCategories = createAsyncThunk('navigation/fetch_category_list', async () => {
   const requestUrl = `${apiUrl}`;
   return axios.get<ICategory[]>(requestUrl);
 })
 
-const name = 'userCategorySelector'
-export const UserCategorySelectorSlice = createSlice({
+const name = 'navigation'
+export const Navigation = createSlice({
   name,
   initialState,
   reducers: {
@@ -51,6 +51,6 @@ export const UserCategorySelectorSlice = createSlice({
   }
 });
 
-export const {reset} = UserCategorySelectorSlice.actions;
+export const {reset} = Navigation.actions;
 
-export default UserCategorySelectorSlice.reducer;
+export default Navigation.reducer;

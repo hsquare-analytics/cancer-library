@@ -1,4 +1,4 @@
-import reducer, {getCategories, reset} from './user-category-selector.reducer';
+import reducer, {getCategories, reset} from './navigation.reducer';
 
 describe('User category selector module reducer tests', () => {
   function isEmpty(element): boolean {
