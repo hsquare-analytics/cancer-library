@@ -39,7 +39,6 @@ Navbar styles
 ========================================================================== */
 .jh-navbar {
   background-color: #353d47;
-  padding: 0.2em 1em;
   .profile-image {
     margin: -10px 0px;
     height: 40px;
@@ -74,6 +73,18 @@ Navbar styles
       color: #fff;
     }
   }
+
+  &.fixed-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1030;
+    height: 100%;
+    align-items: start;
+    .container-fluid {
+      flex-direction: column;
+    }
+  }
 }
 .navbar-brand {
   overflow: hidden;
@@ -99,13 +110,13 @@ Navbar styles
     width: auto;
     display: inline-block;
     img {
-      height: 45px;
+      height: 25px;
     }
   }
 }
 
 .brand-title {
-  font-size: 24px;
+  font-size: 15px;
   color: $header-color;
   &:hover {
     color: $header-color-hover;
