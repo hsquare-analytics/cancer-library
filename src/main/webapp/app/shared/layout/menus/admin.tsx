@@ -7,16 +7,16 @@ import {Translate, translate} from 'react-jhipster';
 
 const adminMenuItems = () => (
   <>
-    <MenuItem icon="users" to="/admin/library">
+    <MenuItem icon="database" to="/admin/library">
       <Translate contentKey="global.menu.admin.library">Library management</Translate>
     </MenuItem>
-    <MenuItem icon="users" to="/admin/category">
-      <Translate contentKey="global.menu.admin.category">Category management</Translate>
+    <MenuItem icon="table" to="/admin/table">
+      <Translate contentKey="global.menu.admin.category">Table management</Translate>
     </MenuItem>
-    <MenuItem icon="users" to="/admin/item">
-      <Translate contentKey="global.menu.admin.item">Category management</Translate>
+    <MenuItem icon="columns" to="/admin/item">
+      <Translate contentKey="global.menu.admin.item">Column management</Translate>
     </MenuItem>
-    <MenuItem icon="users" to="/admin/user-category">
+    <MenuItem icon="user-plus" to="/admin/user-category">
       <Translate contentKey="global.menu.admin.user-category">User Category management</Translate>
     </MenuItem>
     <MenuItem icon="users" to="/admin/user-management">
