@@ -55,14 +55,14 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.library?.title}</dd>
         </dl>
-        <Button tag={Link} to="/category" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="./category" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/category/${categoryEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`./category/${categoryEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

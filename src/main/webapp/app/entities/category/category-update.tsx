@@ -6,7 +6,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './category.reducer';
 import {getEntities as getLibraries} from "app/entities/library/library.reducer";
-import {languages, locales} from "app/config/translation";
 
 export const CategoryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ export const CategoryUpdate = () => {
   const libraries = useAppSelector(state => state.library.entities);
 
   const handleClose = () => {
-    navigate('/category');
+    navigate('/admin/category');
   };
 
   useEffect(() => {
