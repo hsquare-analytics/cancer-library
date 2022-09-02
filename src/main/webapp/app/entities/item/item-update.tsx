@@ -130,7 +130,7 @@ export const ItemUpdate = () => {
                 data-cy="itemAttribute.type"
                 type="text"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/item" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

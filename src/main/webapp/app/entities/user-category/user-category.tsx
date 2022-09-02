@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {Translate, TextFormat} from 'react-jhipster';
+import {TextFormat, Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './user-category.reducer';
-import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_LOCAL_DATETIME_FORMAT} from "app/config/constants";
+import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const UserCategory = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ export const UserCategory = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="cancerLibraryApp.userCategory.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/user-category/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="cancerLibraryApp.userCategory.home.createLabel">Create new Category</Translate>
@@ -70,7 +70,7 @@ export const UserCategory = () => {
               {userCategoryList.map((userCategory, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/user-category/${userCategory.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`./${userCategory.id}`} color="link" size="sm">
                       {userCategory.id}
                     </Button>
                   </td>
@@ -85,19 +85,19 @@ export const UserCategory = () => {
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/user-category/${userCategory.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`./${userCategory.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/user-category/${userCategory.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`./${userCategory.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/user-category/${userCategory.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`./${userCategory.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>

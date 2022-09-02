@@ -3,11 +3,11 @@ import {Link, useParams} from 'react-router-dom';
 import {Button, Col, Row} from 'reactstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
-import { Translate, TextFormat } from 'react-jhipster';
+import {TextFormat, Translate} from 'react-jhipster';
 
 
 import {getEntity} from './user-category.reducer';
-import {APP_DATE_FORMAT, APP_LOCAL_DATETIME_FORMAT} from "app/config/constants";
+import {APP_LOCAL_DATETIME_FORMAT} from "app/config/constants";
 
 export const UserCategoryDetail = () => {
   const dispatch = useAppDispatch();
@@ -71,14 +71,14 @@ export const UserCategoryDetail = () => {
               :null}
           </dd>
         </dl>
-        <Button tag={Link} to="/user-category" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/admin/user-category" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/user-category/${userCategoryEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/admin/user-category/${userCategoryEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

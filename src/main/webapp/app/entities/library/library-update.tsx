@@ -108,7 +108,7 @@ export const LibraryUpdate = () => {
                 check
                 type="checkbox"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/library" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/library" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">

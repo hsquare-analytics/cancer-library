@@ -123,7 +123,7 @@ export const CategoryUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/category" replace
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/category" replace
                       color="info">
                 <FontAwesomeIcon icon="arrow-left"/>
                 &nbsp;

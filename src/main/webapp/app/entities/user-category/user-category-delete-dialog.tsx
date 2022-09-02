@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './user-category.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {deleteEntity, getEntity} from './user-category.reducer';
 
 export const UserCategoryDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const UserCategoryDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.userCategory.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-category');
+    navigate('/admin/user-category');
   };
 
   useEffect(() => {

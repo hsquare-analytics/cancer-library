@@ -7,7 +7,6 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './user-category.reducer';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {getEntities as getCategories} from "app/entities/category/category.reducer";
-import {languages, locales} from "app/config/translation";
 
 export const UserCategoryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +24,7 @@ export const UserCategoryUpdate = () => {
   const categories = useAppSelector(state => state.category.entities);
 
   const handleClose = () => {
-    navigate('/user-category');
+    navigate('/admin/user-category');
   };
 
   useEffect(() => {
@@ -144,7 +143,7 @@ export const UserCategoryUpdate = () => {
                 type="datetime-local"
                 validate={{required: true}}
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/user-category" replace
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/user-category" replace
                       color="info">
                 <FontAwesomeIcon icon="arrow-left"/>
                 &nbsp;
