@@ -22,7 +22,7 @@ export const ItemUpdate = () => {
   const categories = useAppSelector(state => state.category.entities);
 
   const handleClose = () => {
-    navigate('/item');
+    navigate('/admin/item');
   };
 
   useEffect(() => {
