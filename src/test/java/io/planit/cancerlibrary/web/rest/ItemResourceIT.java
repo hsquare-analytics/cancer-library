@@ -15,6 +15,7 @@ import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Library;
+import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.LibraryRepository;
@@ -45,6 +46,9 @@ class ItemResourceIT {
     private static final Boolean DEFAULT_ACTIVATED = false;
     private static final Boolean UPDATED_ACTIVATED = true;
 
+    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_TYPE = "AAAAAAAAAA";
+
     private static final String ENTITY_API_URL = "/api/items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -71,12 +75,12 @@ class ItemResourceIT {
     private Category category;
 
     public static Item createEntity(EntityManager em, Category category) {
-        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).category(category);
+        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).category(category).itemAttribute(new ItemAttribute().type(DEFAULT_TYPE));
         return item;
     }
 
     public static Item createUpdatedEntity(EntityManager em, Category category) {
-        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).category(category);
+        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).category(category).itemAttribute(new ItemAttribute().type(UPDATED_TYPE));
         return item;
     }
 
@@ -110,6 +114,7 @@ class ItemResourceIT {
         assertThat(testItem.getCategory().getId()).isEqualTo(category.getId());
         assertThat(testItem.getCategory().getTitle()).isEqualTo(category.getTitle());
         assertThat(testItem.getCategory().getDescription()).isEqualTo(category.getDescription());
+        assertThat(testItem.getItemAttribute().getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -178,7 +183,9 @@ class ItemResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(item.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())));
+            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
+            .andExpect(jsonPath("$.[*].itemAttribute.type").value(hasItem(DEFAULT_TYPE)))
+        ;
     }
 
     @Test

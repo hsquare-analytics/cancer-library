@@ -1,11 +1,25 @@
 package io.planit.cancerlibrary.domain;
 
+import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "ph_item")
+@SecondaryTable(name = "ph_item_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
 public class Item extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +45,10 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @ManyToOne(optional = false)
     private Category category;
+
+    @Embedded
+    @AttributeOverride(name = "type", column = @Column(table = "ph_item_attribute"))
+    private ItemAttribute itemAttribute;
 
     public Long getId() {
         return this.id;
@@ -94,6 +112,19 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     public Item category(Category category) {
         this.setCategory(category);
+        return this;
+    }
+
+    public ItemAttribute getItemAttribute() {
+        return itemAttribute;
+    }
+
+    public void setItemAttribute(ItemAttribute itemAttribute) {
+        this.itemAttribute = itemAttribute;
+    }
+
+    public Item itemAttribute(ItemAttribute itemAttribute) {
+        this.setItemAttribute(itemAttribute);
         return this;
     }
 
