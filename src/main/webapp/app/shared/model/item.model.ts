@@ -6,6 +6,7 @@ export interface IItem {
   description?: string | null;
   activated?: boolean;
   category?: ICategory;
+  itemAttribute?: {type: string};
 }
 
 export const defaultValue: Readonly<IItem> = {
