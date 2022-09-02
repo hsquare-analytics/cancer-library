@@ -15,7 +15,7 @@ import { Item } from 'devextreme-react/form';
 // Dev Extreme CSS
 import 'devextreme/dist/css/dx.material.lime.light.compact.css'
 
-import { getEntities, createEntity } from './point.reducer';
+import { getEntities, createEntity, deleteEntity, updateEntity } from './point.reducer';
 
 import { cloneDeep } from 'lodash'
 import { IPoint } from "app/shared/model/point.model";
@@ -40,6 +40,8 @@ export const Point = () => {
 
   const [pointListCopy, setPointListCopy] = useState(copyItem(pointList))
 
+  const [isEditing, setIsEditing] = useState(false)
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
@@ -50,17 +52,36 @@ export const Point = () => {
     );
   };
 
-  const createEntities = (data : IPoint) => {
-    dispatch(createEntity(
-      data
-    ))
+  const onRowInsert = (e) => {
+    const data : IPoint = e.data;
+    dispatch(createEntity(data))
   }
 
-  const onRowInsert = (e) => {
-    console.log(e.data)
+  const onRowDelete = (e) => {
     const data : IPoint = e.data;
+    dispatch(deleteEntity(data.id))
+  }
 
-    createEntities(data)
+  const onStartEditing = (e) => {
+    setIsEditing(true);
+  }
+
+  const onEditCanceled = (e) => {
+    setIsEditing(false);
+  }
+
+  const getNewData = (object, property) => {
+    return object.newData.hasOwnProperty(property) ? object.newData[property] : object.oldData[property];
+  }
+
+  const onRowUpdate = (e) => {
+    let data : IPoint = {};
+    data.id = e.oldData.id;
+    data.title = getNewData(e, 'title')
+    data.description = getNewData(e, 'description')
+
+    dispatch(updateEntity(data))
+    setIsEditing(false);
   }
 
   const sortEntities = () => {
@@ -121,8 +142,10 @@ export const Point = () => {
         defaultColumns={['id', 'title', 'description']}
         showBorders={true}
         onRowInserting={onRowInsert}
-        onRowUpdating={(e) => console.log("onRowUpdating")}
-        onEditCanceled={(e) => console.log("onEditCanceled")}
+        onRowUpdating={onRowUpdate}
+        onRowRemoved={onRowDelete}
+        onEditingStart={onStartEditing}
+        onEditCanceled={onEditCanceled}
       >
         <Paging enabled={false} />
         <Editing
@@ -144,6 +167,11 @@ export const Point = () => {
               colCount={2}
               colSpan={2}
             >
+              {
+                isEditing && (
+                  <Item dataField={"id"} disabled/>
+                )
+              }
               <Item dataField={"title"} />
               <Item dataField={"description"}/>
             </Item>

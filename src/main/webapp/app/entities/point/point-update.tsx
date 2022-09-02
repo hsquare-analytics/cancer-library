@@ -48,6 +48,8 @@ export const PointUpdate = () => {
       ...values,
     };
 
+    console.log(entity)
+
     if (isNew) {
       dispatch(createEntity(entity));
     } else {
