@@ -205,7 +205,8 @@ class ItemResourceIT {
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
             .andExpect(jsonPath("$.category.id").value(category.getId().intValue()))
             .andExpect(jsonPath("$.category.title").value(category.getTitle()))
-            .andExpect(jsonPath("$.category.description").value(category.getDescription()));
+            .andExpect(jsonPath("$.category.description").value(category.getDescription()))
+            .andExpect(jsonPath("$.itemAttribute.type").value(DEFAULT_TYPE));
     }
 
     @Test
@@ -227,7 +228,7 @@ class ItemResourceIT {
         Item updatedItem = itemRepository.findById(item.getId()).get();
         // Disconnect from session so that the updates on updatedItem are not directly saved in db
         em.detach(updatedItem);
-        updatedItem.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED);
+        updatedItem.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).itemAttribute(new ItemAttribute().type(UPDATED_TYPE));
 
         restItemMockMvc
             .perform(
@@ -244,6 +245,7 @@ class ItemResourceIT {
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testItem.getActivated()).isEqualTo(UPDATED_ACTIVATED);
+        assertThat(testItem.getItemAttribute().getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test
