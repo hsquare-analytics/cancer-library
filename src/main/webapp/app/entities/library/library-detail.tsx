@@ -49,14 +49,14 @@ export const LibraryDetail = () => {
           </dt>
           <dd>{libraryEntity.activated ? 'true' : 'false'}</dd>
         </dl>
-        <Button tag={Link} to="./library" replace color="info" data-cy="entityDetailsBackButton">
+        <Button tag={Link} to="/admin/library" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`./library/${libraryEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/admin/library/${libraryEntity.id}/edit`} replace color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>
