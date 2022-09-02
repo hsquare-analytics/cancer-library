@@ -1,16 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IPoint } from 'app/shared/model/point.model';
-import { getEntities } from './point.reducer';
+// Dev Extreme
+import { DataGrid,  Form, Editing, Paging, Popup } from 'devextreme-react/data-grid';
+import { Item } from 'devextreme-react/form';
+
+// Dev Extreme CSS
+import 'devextreme/dist/css/dx.material.lime.light.compact.css'
+
+import { getEntities, createEntity } from './point.reducer';
+
+import { cloneDeep } from 'lodash'
+import { IPoint } from "app/shared/model/point.model";
 
 export const Point = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +34,12 @@ export const Point = () => {
   const loading = useAppSelector(state => state.point.loading);
   const totalItems = useAppSelector(state => state.point.totalItems);
 
+  const copyItem = (origin) => {
+    return cloneDeep(origin);
+  }
+
+  const [pointListCopy, setPointListCopy] = useState(copyItem(pointList))
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
@@ -35,6 +49,19 @@ export const Point = () => {
       })
     );
   };
+
+  const createEntities = (data : IPoint) => {
+    dispatch(createEntity(
+      data
+    ))
+  }
+
+  const onRowInsert = (e) => {
+    console.log(e.data)
+    const data : IPoint = e.data;
+
+    createEntities(data)
+  }
 
   const sortEntities = () => {
     getAllEntities();
@@ -63,6 +90,11 @@ export const Point = () => {
     }
   }, [location.search]);
 
+  useEffect(() => {
+    const temp = copyItem(pointList);
+    setPointListCopy(temp)
+  }, [pointList])
+
   const sort = p => () => {
     setPaginationState({
       ...paginationState,
@@ -83,6 +115,41 @@ export const Point = () => {
 
   return (
     <div>
+      <DataGrid
+        dataSource={pointListCopy}
+        keyExpr='id'
+        defaultColumns={['id', 'title', 'description']}
+        showBorders={true}
+        onRowInserting={onRowInsert}
+        onRowUpdating={(e) => console.log("onRowUpdating")}
+        onEditCanceled={(e) => console.log("onEditCanceled")}
+      >
+        <Paging enabled={false} />
+        <Editing
+          mode="popup"
+          allowUpdating={true}
+          allowAdding={true}
+          allowDeleting={true}
+        >
+          <Popup
+            title={'Point DevExtrem Test'}
+            showTitle={true}
+            width={700}
+            height={525}
+          />
+
+          <Form>
+            <Item
+              itemType="group"
+              colCount={2}
+              colSpan={2}
+            >
+              <Item dataField={"title"} />
+              <Item dataField={"description"}/>
+            </Item>
+          </Form>
+        </Editing>
+      </DataGrid>
       <h2 id="point-heading" data-cy="PointHeading">
         <Translate contentKey="cancerLibraryApp.point.home.title">Points</Translate>
         <div className="d-flex justify-content-end">
