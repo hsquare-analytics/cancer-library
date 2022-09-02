@@ -28,7 +28,7 @@ export const UserAuthorizedCategories = () => {
   >
     {
       categoryList.length !== 0 ? categoryList.map(category => {
-        return <MenuItem icon="asterisk" to={`data-editor/${category.title}`}>
+        return <MenuItem key={category} icon="asterisk" to={`data-editor/${category.title}`}>
           {category.title}
         </MenuItem>
       }) : null}
