@@ -66,7 +66,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="data-editor/:categoryTitle"
+          path="data-editor/:categoryId"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
               <DataEditor/>

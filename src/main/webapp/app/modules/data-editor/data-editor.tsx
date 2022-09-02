@@ -2,7 +2,7 @@ import React from 'react';
 import {useParams} from 'react-router-dom';
 
 export const DataEditor = () => {
-  const { categoryTitle } = useParams<'categoryTitle'>();
+  const { categoryId } = useParams<'categoryId'>();
 
   return (
     <div>
@@ -10,7 +10,7 @@ export const DataEditor = () => {
        Data Editor
       </h2>
       <p>
-        {categoryTitle}
+        category id: {categoryId}
       </p>
     </div>
   );
