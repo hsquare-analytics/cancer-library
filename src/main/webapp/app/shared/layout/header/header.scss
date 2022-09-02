@@ -54,7 +54,8 @@ Navbar styles
     margin-left: 0.15em;
   }
   ul.navbar-nav {
-    padding: 1em;
+    padding-top: 0.8em;
+    width: 160px;
     .nav-item {
       margin-left: 0.5rem;
     }
@@ -93,6 +94,7 @@ Navbar styles
 .jh-navbar .navbar-nav .nav-link {
   padding-right: 0;
   padding-left: 0;
+  height: 50px;
 }
 
 .navbar-version {
