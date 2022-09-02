@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './library.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {deleteEntity, getEntity} from './library.reducer';
 
 export const LibraryDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const LibraryDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.library.updateSuccess);
 
   const handleClose = () => {
-    navigate('/library');
+    navigate('/admin/library');
   };
 
   useEffect(() => {

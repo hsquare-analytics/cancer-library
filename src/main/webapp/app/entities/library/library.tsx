@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { Translate } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { ILibrary } from 'app/shared/model/library.model';
-import { getEntities } from './library.reducer';
+import React, {useEffect} from 'react';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Button, Table} from 'reactstrap';
+import {Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {getEntities} from './library.reducer';
 
 export const Library = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +32,7 @@ export const Library = () => {
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
             <Translate contentKey="cancerLibraryApp.library.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="/library/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
             <Translate contentKey="cancerLibraryApp.library.home.createLabel">Create new Library</Translate>
@@ -67,7 +63,7 @@ export const Library = () => {
               {libraryList.map((library, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/library/${library.id}`} color="link" size="sm">
+                    <Button tag={Link} to={`./${library.id}`} color="link" size="sm">
                       {library.id}
                     </Button>
                   </td>
@@ -76,19 +72,19 @@ export const Library = () => {
                   <td>{library.activated ? 'true' : 'false'}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/library/${library.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`./${library.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/library/${library.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`./${library.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
-                      <Button tag={Link} to={`/library/${library.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`./${library.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>
