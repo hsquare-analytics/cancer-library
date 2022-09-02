@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IItem } from 'app/shared/model/item.model';
-import { getEntity, updateEntity, createEntity, reset } from './item.reducer';
+import React, {useEffect} from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Button, Col, Row} from 'reactstrap';
+import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {createEntity, getEntity, reset, updateEntity} from './item.reducer';
 import {getEntities as getCategories} from "app/entities/category/category.reducer";
 
 export const ItemUpdate = () => {
@@ -128,6 +123,13 @@ export const ItemUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.type')}
+                id="item-type"
+                name="itemAttribute.type"
+                data-cy="itemAttribute.type"
+                type="text"
+              />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

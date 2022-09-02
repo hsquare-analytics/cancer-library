@@ -49,11 +49,17 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.activated ? 'true' : 'false'}</dd>
           <dt>
-            <span id="activated">
+            <span id="category">
               <Translate contentKey="cancerLibraryApp.item.category">Category</Translate>
             </span>
           </dt>
           <dd>{itemEntity.category?.title}</dd>
+          <dt>
+            <span id="type">
+              <Translate contentKey="cancerLibraryApp.item.type">Type</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.itemAttribute?.type}</dd>
         </dl>
         <Button tag={Link} to="/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
