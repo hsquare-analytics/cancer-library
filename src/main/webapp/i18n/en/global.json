@@ -15,7 +15,7 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "categories": {
-        "main": "Categories"
+        "main": "Table list"
       },
       "account": {
         "main": "Account",
