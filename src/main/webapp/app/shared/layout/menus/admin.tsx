@@ -10,7 +10,7 @@ const adminMenuItems = () => (
     <MenuItem icon="database" to="/admin/library">
       <Translate contentKey="global.menu.admin.library">Library management</Translate>
     </MenuItem>
-    <MenuItem icon="table" to="/admin/table">
+    <MenuItem icon="table" to="/admin/category">
       <Translate contentKey="global.menu.admin.category">Table management</Translate>
     </MenuItem>
     <MenuItem icon="columns" to="/admin/item">
