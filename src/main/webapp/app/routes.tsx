@@ -61,6 +61,7 @@ const AppRoutes = () => {
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
               <Admin/>
+              <EntitiesRoutes/>
             </PrivateRoute>
           }
         />
@@ -72,14 +73,6 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         ></Route>
-        <Route
-          path="*"
-          element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.USER]}>
-              <EntitiesRoutes/>
-            </PrivateRoute>
-          }
-        />
         <Route path="*" element={<PageNotFound/>}/>
       </ErrorBoundaryRoutes>
     </div>
