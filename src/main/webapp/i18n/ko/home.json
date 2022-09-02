@@ -1,11 +1,11 @@
 {
   "home": {
-    "title": "Java Hipster 에 오신 것을 환영합니다!",
-    "subtitle": "이것은 당신의 홈페이지입니다.",
+    "title": "SNUH의 암 라이브러리 어플리케이션 입니다.",
+    "subtitle": "권한을 할당받은 테이블을 선택하고 편집할 수 있습니다.",
     "logged": {
       "message": "\"{{username}}\"(으)로 로그인하셨습니다."
     },
-    "question": "JHipster에 질문이 있다면:",
+    "question": "암 라이브러리 어플리케이션 질문이 있다면:",
     "link": {
       "homepage": "JHipster 홈페이지",
       "stackoverflow": "JHipster Stack Overflow",

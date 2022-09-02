@@ -1,12 +1,12 @@
 {
   "cancerLibraryApp": {
-    "library": {
+    "userCategory": {
       "home": {
-        "title": "UserCategoy",
+        "title": "UserCategory",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new User Category",
         "createOrEditLabel": "Create or edit a User Category",
-        "notFound": "No Categories found"
+        "notFound": "No user categories found"
       },
       "created": "A new User Category is created with identifier {{ param }}",
       "updated": "A User Category is updated with identifier {{ param }}",

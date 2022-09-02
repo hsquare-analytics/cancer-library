@@ -1,12 +1,12 @@
 {
   "cancerLibraryApp": {
-    "library": {
+    "category": {
       "home": {
         "title": "Categories",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Category",
         "createOrEditLabel": "Create or edit a Category",
-        "notFound": "No Categories found"
+        "notFound": "No Libraries found"
       },
       "created": "A new Category is created with identifier {{ param }}",
       "updated": "A Category is updated with identifier {{ param }}",
