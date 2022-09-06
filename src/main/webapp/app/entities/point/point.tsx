@@ -27,7 +27,7 @@ import { Button as ButtonDevExtreme } from 'devextreme-react/button';
 // Dev Extreme CSS
 import 'devextreme/dist/css/dx.material.lime.light.compact.css'
 
-import { getEntities, createEntity, updateEntity } from './point.reducer';
+import {getEntities, createEntity, updateEntity, deleteEntity} from './point.reducer';
 
 import { cloneDeep } from 'lodash'
 
@@ -90,6 +90,10 @@ export const Point = () => {
     dispatch(updateEntity(data))
   }
 
+  const onRowRemove = (e) => {
+    dispatch(deleteEntity(e.data.id))
+  }
+
   const sortEntities = () => {
     getAllEntities();
     const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
@@ -141,6 +145,7 @@ export const Point = () => {
         onInitNewRow={onInitNewRow}
         onRowInserting={onRowInsert}
         onRowUpdating={onRowUpdate}
+        onRowRemoved={onRowRemove}
       >
         <Toolbar>
           <ItemToolbar location="before">
@@ -166,7 +171,7 @@ export const Point = () => {
           mode="popup"
           allowUpdating={true}
           allowAdding={true}
-          allowDeleting={false}
+          allowDeleting={true}
         >
           <Popup
             showTitle={true}
