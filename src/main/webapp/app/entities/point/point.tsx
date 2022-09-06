@@ -1,19 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Translate, getSortState } from 'react-jhipster';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IPoint } from 'app/shared/model/point.model';
-import { getEntities } from './point.reducer';
+import { IPoint } from "app/shared/model/point.model";
+
+// Dev Extreme
+import { DataGrid,
+  Form,
+  Editing,
+  Paging,
+  Popup,
+  Toolbar,
+  Item as ItemToolbar,
+  Column,
+  SearchPanel,
+  FilterRow,
+  LoadPanel,
+} from 'devextreme-react/data-grid';
+import { Item as ItemFrom }  from 'devextreme-react/form';
+import { Button as ButtonDevExtreme } from 'devextreme-react/button';
+
+// Dev Extreme CSS
+import 'devextreme/dist/css/dx.material.lime.light.compact.css'
+
+import {getEntities, createEntity, updateEntity, deleteEntity} from './point.reducer';
+
+import { cloneDeep } from 'lodash'
+
+// Page SCSS
+import './point.scss'
 
 export const Point = () => {
   const dispatch = useAppDispatch();
+  const popupRef = useRef(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,8 +46,13 @@ export const Point = () => {
   );
 
   const pointList = useAppSelector(state => state.point.entities);
-  const loading = useAppSelector(state => state.point.loading);
-  const totalItems = useAppSelector(state => state.point.totalItems);
+  const errorMessage = useAppSelector(state => state.point.errorMessage);
+
+  const copyItem = (origin) => {
+    return cloneDeep(origin);
+  }
+
+  const [pointListCopy, setPointListCopy] = useState(copyItem(pointList))
 
   const getAllEntities = () => {
     dispatch(
@@ -36,6 +64,36 @@ export const Point = () => {
     );
   };
 
+  const onInitNewRow = (e) => {
+    e.component.option('editing.popup.title', 'new data')
+  }
+
+  const onEditingStart = (e) => {
+    e.component.option('editing.popup.title', e.data.id)
+  }
+
+  const onRowInsert = (e) => {
+    const data : IPoint = e.data;
+    dispatch(createEntity(data));
+  }
+
+  const getNewData = (object, property) => {
+    return object.newData.hasOwnProperty(property) ? object.newData[property] : object.oldData[property];
+  }
+
+  const onRowUpdate = (e) => {
+    let data : IPoint = {};
+    data.id = e.oldData.id;
+    data.title = getNewData(e, 'title')
+    data.description = getNewData(e, 'description')
+
+    dispatch(updateEntity(data))
+  }
+
+  const onRowRemove = (e) => {
+    dispatch(deleteEntity(e.data.id))
+  }
+
   const sortEntities = () => {
     getAllEntities();
     const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
@@ -43,6 +101,10 @@ export const Point = () => {
       navigate(`${location.pathname}${endURL}`);
     }
   };
+
+  useEffect(() => {
+    console.log(errorMessage)
+  }, [errorMessage]);
 
   useEffect(() => {
     sortEntities();
@@ -63,19 +125,10 @@ export const Point = () => {
     }
   }, [location.search]);
 
-  const sort = p => () => {
-    setPaginationState({
-      ...paginationState,
-      order: paginationState.order === ASC ? DESC : ASC,
-      sort: p,
-    });
-  };
-
-  const handlePagination = currentPage =>
-    setPaginationState({
-      ...paginationState,
-      activePage: currentPage,
-    });
+  useEffect(() => {
+    const temp = copyItem(pointList);
+    setPointListCopy(temp)
+  }, [pointList])
 
   const handleSyncList = () => {
     sortEntities();
@@ -83,111 +136,64 @@ export const Point = () => {
 
   return (
     <div>
-      <h2 id="point-heading" data-cy="PointHeading">
-        <Translate contentKey="cancerLibraryApp.point.home.title">Points</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="cancerLibraryApp.point.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="/point/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="cancerLibraryApp.point.home.createLabel">Create new Point</Translate>
-          </Link>
-        </div>
-      </h2>
-      <div className="table-responsive">
-        {pointList && pointList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th className="hand" onClick={sort('id')}>
-                  <Translate contentKey="cancerLibraryApp.point.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="cancerLibraryApp.point.title">Title</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('description')}>
-                  <Translate contentKey="cancerLibraryApp.point.description">Description</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {pointList.map((point, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`/point/${point.id}`} color="link" size="sm">
-                      {point.id}
-                    </Button>
-                  </td>
-                  <td>{point.title}</td>
-                  <td>{point.description}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/point/${point.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/point/${point.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/point/${point.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="cancerLibraryApp.point.home.notFound">No Points found</Translate>
+      <DataGrid
+        dataSource={pointListCopy}
+        keyExpr='id'
+        showBorders={true}
+        showColumnLines={true}
+        onEditingStart={onEditingStart}
+        onInitNewRow={onInitNewRow}
+        onRowInserting={onRowInsert}
+        onRowUpdating={onRowUpdate}
+        onRowRemoved={onRowRemove}
+      >
+        <Toolbar>
+          <ItemToolbar location="before">
+            <div className='informer'>
+              <h2 className='count'>{pointList.length}</h2>
+              <span>Total Count</span>
             </div>
-          )
-        )}
-      </div>
-      {totalItems ? (
-        <div className={pointList && pointList.length > 0 ? '' : 'd-none'}>
-          <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
-          </div>
-          <div className="justify-content-center d-flex">
-            <JhiPagination
-              activePage={paginationState.activePage}
-              onSelect={handlePagination}
-              maxButtons={5}
-              itemsPerPage={paginationState.itemsPerPage}
-              totalItems={totalItems}
+          </ItemToolbar>
+          <ItemToolbar location="after">
+            <ButtonDevExtreme
+              icon='refresh'
+              onClick={handleSyncList}
             />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
+          </ItemToolbar>
+          <ItemToolbar name='addRowButton' />
+          <ItemToolbar name='applyFilterButton' />
+        </Toolbar>
+        <Paging enabled={true} pageSize={15} defaultPageSize={15}/>
+        <SearchPanel visible={true} />
+        <FilterRow visible={true} />
+        <LoadPanel enabled={true} />
+        <Editing
+          mode="popup"
+          allowUpdating={true}
+          allowAdding={true}
+          allowDeleting={true}
+        >
+          <Popup
+            showTitle={true}
+            width={700}
+            height={525}
+            hideOnOutsideClick={true}
+          />
+          <Form>
+            <ItemFrom
+              itemType="group"
+              colCount={2}
+              colSpan={2}
+            >
+              <ItemFrom dataField={"title"} />
+              <ItemFrom dataField={"description"}/>
+            </ItemFrom>
+          </Form>
+        </Editing>
+        <Column dataField={'id'} alignment={'left'} />
+        <Column dataField={'title'} alignment='center' caption='title' />
+        <Column dataField={'description'} alignment='center' caption='description' />
+      </DataGrid>
     </div>
   );
 };
