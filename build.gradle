@@ -125,27 +125,7 @@ project.ext.diffChangelogFile = "src/main/resources/config/liquibase/changelog/"
 
 liquibase {
     activities {
-        main {
-            driver "org.h2.Driver"
-            url "jdbc:h2:file:./build/h2db/db/cancerlibraryapp"
-            username "CancerLibraryApp"
-            password ""
-            changeLogFile "src/main/resources/config/liquibase/master.xml"
-            defaultSchemaName ""
-            logLevel "debug"
-            classpath "src/main/resources/"
-        }
-        diffLog {
-            driver "org.h2.Driver"
-            url "jdbc:h2:file:./build/h2db/db/cancerlibraryapp"
-            username "CancerLibraryApp"
-            password ""
-            changeLogFile project.ext.diffChangelogFile
-            referenceUrl "hibernate:spring:io.planit.cancerlibrary.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-            defaultSchemaName ""
-            logLevel "debug"
-            classpath "$buildDir/classes/java/main"
-        }
+
     }
 
     runList = project.ext.runList
@@ -247,6 +227,17 @@ dependencies {
     liquibaseRuntime sourceSets.main.compileClasspath
     liquibaseRuntime "org.liquibase.ext:liquibase-hibernate5:${liquibaseHibernate5Version}"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+
+    // property encryptor
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+    // external database
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // database pool control
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+
+    implementation 'org.projectlombok:lombok'
 }
 
 if (project.hasProperty("gae")) {
