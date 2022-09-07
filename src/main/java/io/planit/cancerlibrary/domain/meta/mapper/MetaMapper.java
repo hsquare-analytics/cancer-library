@@ -6,6 +6,6 @@ import java.util.List;
 
 @Mapper
 public interface MetaMapper<T> {
-    List<T> getMetaList();
-    T getMeta();
+    List<T> getMetaList(String type);
+    T getMeta(String type);
 }

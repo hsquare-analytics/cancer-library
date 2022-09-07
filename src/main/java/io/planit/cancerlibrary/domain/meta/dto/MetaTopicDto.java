@@ -8,7 +8,8 @@ import java.util.StringJoiner;
 
 @Getter
 @Setter
-public class MetaSubjectDto {
+public class MetaTopicDto {
+    private int subjectId;
     private int id;
     private int seq;
     private String name;
@@ -19,6 +20,7 @@ public class MetaSubjectDto {
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner(" ");
+        sj.add(String.valueOf(subjectId));
         sj.add(String.valueOf(id));
         sj.add(String.valueOf(seq));
         sj.add(name);
