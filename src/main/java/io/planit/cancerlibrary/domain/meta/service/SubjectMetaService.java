@@ -1,10 +1,7 @@
 package io.planit.cancerlibrary.domain.meta.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.planit.cancerlibrary.core.sql.utils.ConvertUtils;
 import io.planit.cancerlibrary.domain.meta.constant.MetaDataType;
 import io.planit.cancerlibrary.domain.meta.dto.MetaSubjectDto;
-import io.planit.cancerlibrary.domain.meta.mapper.MetaMapper;
 import io.planit.cancerlibrary.domain.meta.mapper.MetaSubjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
