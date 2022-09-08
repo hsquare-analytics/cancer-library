@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.domain.meta.mapper;
+package io.planit.cancerlibrary.core.sql.utils;
 
 import java.util.Arrays;
 import java.util.Locale;

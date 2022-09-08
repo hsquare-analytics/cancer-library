@@ -1,10 +1,9 @@
 package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.sample.service.CommonSampleService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -14,10 +13,9 @@ import java.util.Map;
 @SpringBootTest(properties = {
     "jasypt.encryptor.password=test1127!@"
 })
+@Slf4j
 @ActiveProfiles("local")
 public class SampleTest {
-    private final Logger log = LoggerFactory.getLogger(SampleTest.class);
-
     @Autowired
     private CommonSampleService commonSampleService;
 
