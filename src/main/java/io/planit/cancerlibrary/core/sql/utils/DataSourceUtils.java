@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.core.sql.datasource;
+package io.planit.cancerlibrary.core.sql.utils;
 
 public class DataSourceUtils {
     private static String innerUniqueDbKey;

@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import io.planit.cancerlibrary.core.sql.datasource.dto.DataSourceDto;
 import io.planit.cancerlibrary.core.sql.datasource.dto.InMemoryDataSourceDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.AutoMappingBehavior;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
@@ -20,6 +21,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -34,7 +36,7 @@ import java.util.*;
 public class DataSourceConfig {
     private final ConfigurableApplicationContext applicationContext;
 
-    @Value("${spring.database.hikari.maximum-pool-size}")
+    @Value("${spring.datasource.hikari.maximum-pool-size}")
     private int maxPoolSize;
 
     private DataSource createDataSource(String driverClassName, String url, String userName, String password) {
@@ -98,10 +100,10 @@ public class DataSourceConfig {
     @Bean("serverSqlSessionFactory")
     @Primary
     public SqlSessionFactory serverSqlSessionFactory(@Autowired @Qualifier("serverDataSource") DataSource dataSource) throws Exception {
-        return createSqlSessionFactoryBean(dataSource, "mapper/server/*.xml").getObject();
+        return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/server/*.xml").getObject();
     }
 
-    @Bean
+    @Bean("serverSqlSession")
     @Primary
     public SqlSession serverSession(@Autowired @Qualifier("serverSqlSessionFactory") SqlSessionFactory factory) {
         return new SqlSessionTemplate(factory);
@@ -109,6 +111,7 @@ public class DataSourceConfig {
 
     @Bean("clientDataSource")
     @Qualifier("clientDataSource")
+    @DependsOn("DataSourceInitializer")
     public DataSource clientDataSource() {
         List<DataSourceDto> dataSourceList = InMemoryDataSourceDto.getDataSourceList();
 
@@ -131,7 +134,7 @@ public class DataSourceConfig {
 
     @Bean("clientSqlSessionFactory")
     public SqlSessionFactory clientSqlSessionFactory(@Autowired @Qualifier("clientDataSource") DataSource dataSource) throws Exception {
-        return createSqlSessionFactoryBean(dataSource, "mapper/client/*.xml").getObject();
+        return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/client/*.xml").getObject();
     }
 
     @Bean("clientSqlSession")
