@@ -78,11 +78,12 @@ export const Point = () => {
   }
 
   const getNewData = (object, property) => {
-    return object.newData.hasOwnProperty(property) ? object.newData[property] : object.oldData[property];
+    return object.newData[property];
+    //return object.newData.hasOwnProperty(property) ? object.newData[property] : object.oldData[property];
   }
 
   const onRowUpdate = (e) => {
-    let data : IPoint = {};
+    const data : IPoint = {};
     data.id = e.oldData.id;
     data.title = getNewData(e, 'title')
     data.description = getNewData(e, 'description')
@@ -103,7 +104,7 @@ export const Point = () => {
   };
 
   useEffect(() => {
-    console.log(errorMessage)
+    //console.log(errorMessage)
   }, [errorMessage]);
 
   useEffect(() => {
