@@ -234,6 +234,7 @@ dependencies {
 
     // external database
     runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'com.h2database:h2'
 
     // database pool control
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'

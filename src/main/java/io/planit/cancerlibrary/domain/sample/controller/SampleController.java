@@ -30,7 +30,7 @@ public class SampleController {
     public ResponseEntity<Boolean> sample() throws Exception {
         log.debug("SAMPLE QUERY TEST");
 
-        DataSourceUtils.setInnerUniqueDbKey("LOCALSTANDALONE");
+        DataSourceUtils.setInnerUniqueDbKey("LOCALH2");
         String one = clientSqlSession.selectOne("get");
         log.info(one);
 
