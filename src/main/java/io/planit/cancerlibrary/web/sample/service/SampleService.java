@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.domain.sample.service;
+package io.planit.cancerlibrary.web.sample.service;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package io.planit.cancerlibrary.core.sql.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
-import io.planit.cancerlibrary.core.sql.datasource.dto.DataSourceDto;
-import io.planit.cancerlibrary.core.sql.datasource.dto.InMemoryDataSourceDto;
+import io.planit.cancerlibrary.core.sql.datasource.entity.ClientDataSourceEntity;
+import io.planit.cancerlibrary.core.sql.datasource.entity.InMemoryDataSourceEntities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.AutoMappingBehavior;
@@ -16,13 +16,10 @@ import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -33,7 +30,9 @@ import java.util.*;
 
 @Configuration
 @RequiredArgsConstructor
-public class DataSourceConfig {
+@Slf4j
+public class ClientDataSourceConfig {
+
     private final ConfigurableApplicationContext applicationContext;
 
     @Value("${spring.datasource.hikari.maximum-pool-size}")
@@ -50,6 +49,7 @@ public class DataSourceConfig {
             .build();
 
         dataSource.setMaximumPoolSize(maxPoolSize);
+        dataSource.setAutoCommit(true);
 
         return dataSource;
     }
@@ -88,57 +88,35 @@ public class DataSourceConfig {
         return factoryBean;
     }
 
-    /* Server Section */
-    @Bean("serverDataSource")
-    @Qualifier("serverDataSource")
-    @ConfigurationProperties(prefix="spring.datasource.hikari")
-    @Primary
-    public DataSource serverDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }
+    /*
+     * Client DataSource Section
+     */
+    @Bean("clientSqlSessionFactory")
+    public SqlSessionFactory clientDataSource() throws Exception {
+        List<ClientDataSourceEntity> dataSourceEntities = InMemoryDataSourceEntities.getDataSourceList();
 
-    @Bean("serverSqlSessionFactory")
-    @Primary
-    public SqlSessionFactory serverSqlSessionFactory(@Autowired @Qualifier("serverDataSource") DataSource dataSource) throws Exception {
-        return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/server/*.xml").getObject();
-    }
+        Map<Object, Object> targetDataSource = new HashMap<>();
 
-    @Bean("serverSqlSession")
-    @Primary
-    public SqlSession serverSession(@Autowired @Qualifier("serverSqlSessionFactory") SqlSessionFactory factory) {
-        return new SqlSessionTemplate(factory);
-    }
-
-    @Bean("clientDataSource")
-    @Qualifier("clientDataSource")
-    @DependsOn("DataSourceInitializer")
-    public DataSource clientDataSource() {
-        List<DataSourceDto> dataSourceList = InMemoryDataSourceDto.getDataSourceList();
-
-        Map<Object, Object> targetSource = new HashMap<>();
-
-        dataSourceList.forEach(dataSourceDto -> {
-            targetSource.put(
-                dataSourceDto.getUniqueDbKey(),
+        dataSourceEntities.forEach(dataSourceEntity -> {
+            targetDataSource.put(
+                dataSourceEntity.getUniqueDbKey(),
                 createDataSource(
-                    dataSourceDto.getDriverNm(),
-                    dataSourceDto.getJdbcUrl(),
-                    dataSourceDto.getUserNm(),
-                    dataSourceDto.getUserPw()
+                    dataSourceEntity.getDriverClassName(),
+                    dataSourceEntity.getUrl(),
+                    dataSourceEntity.getUsername(),
+                    dataSourceEntity.getPassword()
                 )
             );
         });
 
-        return applicationContext.getBean(AbstractRoutingDataSource.class, targetSource);
-    }
+        DataSource dataSource =  applicationContext.getBean(AbstractRoutingDataSource.class, targetDataSource);
 
-    @Bean("clientSqlSessionFactory")
-    public SqlSessionFactory clientSqlSessionFactory(@Autowired @Qualifier("clientDataSource") DataSource dataSource) throws Exception {
+
         return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/client/*.xml").getObject();
     }
 
     @Bean("clientSqlSession")
-    public SqlSession clientSqlSession(@Autowired @Qualifier("clientSqlSessionFactory") SqlSessionFactory factory) {
+    public SqlSession clientSession(@Autowired @Qualifier("clientSqlSessionFactory") SqlSessionFactory factory) {
         return new SqlSessionTemplate(factory);
     }
 }
