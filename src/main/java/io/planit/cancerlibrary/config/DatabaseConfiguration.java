@@ -13,8 +13,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.h2.H2ConfigurationHelper;
 
-@Configuration
-@EnableJpaRepositories({ "io.planit.cancerlibrary.repository" })
+@Configuration("h2DatabaseConfigure")
+@EnableJpaRepositories(
+    basePackages = { "io.planit.cancerlibrary.repository" },
+    entityManagerFactoryRef = "serverEntityManagerFactory",
+    transactionManagerRef = "serverTransactionManagerFactory"
+)
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {

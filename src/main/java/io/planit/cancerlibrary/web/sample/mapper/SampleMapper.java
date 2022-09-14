@@ -1,7 +1,6 @@
-package io.planit.cancerlibrary.domain.sample.mapper;
+package io.planit.cancerlibrary.web.sample.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
 
 import java.util.Map;
