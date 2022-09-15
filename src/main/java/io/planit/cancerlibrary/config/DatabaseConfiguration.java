@@ -17,7 +17,7 @@ import tech.jhipster.config.h2.H2ConfigurationHelper;
 @EnableJpaRepositories(
     basePackages = { "io.planit.cancerlibrary.repository" },
     entityManagerFactoryRef = "serverEntityManagerFactory",
-    transactionManagerRef = "serverTransactionManagerFactory"
+    transactionManagerRef = "serverTransactionManager"
 )
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
