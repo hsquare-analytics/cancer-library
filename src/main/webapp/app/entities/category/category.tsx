@@ -1,10 +1,41 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, getSortState , translate} from 'react-jhipster';
+
+import { ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {getEntities} from './category.reducer';
+
+import {ICategory} from "app/shared/model/category.model";
+
+// Dev Extreme
+import {
+  DataGrid,
+  Form,
+  Editing,
+  Paging,
+  Popup,
+  Toolbar,
+  Item as ItemToolBar,
+  Column,
+  SearchPanel,
+  FilterRow,
+  LoadPanel,
+} from 'devextreme-react/data-grid';
+import {Item as ItemFrom } from 'devextreme-react/form';
+
+// DevExtreme CSS
+import 'devextreme/dist/css/dx.material.lime.light.compact.css'
+
+import { getEntities, createEntity, updateEntity, deleteEntity} from "./category.reducer";
+import { getEntities as getLibraries } from "app/entities/library/library.reducer";
+
+import { cloneDeep } from 'lodash' ;
+
+// Category Css
+import './category.scss'
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -12,102 +43,238 @@ export const Category = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [ paginationState, setPaginationState] = useState(
+    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
+  );
+
   const categoryList = useAppSelector(state => state.category.entities);
-  const loading = useAppSelector(state => state.category.loading);
+  const libraryList = useAppSelector(state => state.library.entities);
+
+  const copyItem = (origin) => {
+    return cloneDeep(origin);
+  }
+
+  const [categoryListCopy, setCategoryListCopy] = useState(copyItem(categoryList))
+
+  const getAllCategoryEntities = () => {
+    dispatch(
+      getEntities({
+        page: paginationState.activePage -1,
+        size: paginationState.itemsPerPage,
+        sort: `${paginationState.sort},${paginationState.order}`,
+      })
+    )
+  }
+
+  const getAllLibraryEntities = () => {
+    if (libraryList.length === 0 ) {
+      dispatch(getLibraries({}))
+    }
+  }
+
+  const onRowInsert = (e) => {
+    const data : ICategory = e.data;
+
+    if ( typeof data.activated === 'undefined' || data.activated == null) {
+      data.activated = true;
+    }
+
+    dispatch(createEntity(data));
+  }
+
+  const getNewData = (object, property) => {
+    return object.newData[property];
+  }
+
+  const onRowUpdate = (e) => {
+    const data : ICategory = {} ;
+    data.id = e.oldData.id;
+    data.title = getNewData(e, 'title');
+    data.description = getNewData(e, 'description');
+    data.library = getNewData(e, 'library');
+    data.activated = getNewData(e, 'activated');
+  }
+
+  const onRowRemove = (e) => {
+    dispatch(deleteEntity(e.data.id));
+  }
+
+  const renderTitleHeader = (data) => {
+    let key = "warning.empty-value";
+    switch(data.column.caption) {
+      case "library.title" :
+        key = "cancerLibraryApp.library.title";
+        break;
+      case "library.id" :
+        key = "cancerLibraryApp.library.id";
+        break;
+      case "library.description" :
+        key = "cancerLibraryApp.library.description";
+        break;
+      case "library.activated" :
+        key = "cancerLibraryApp.library.activated";
+        break;
+      case "id" :
+        key = "cancerLibraryApp.category.id"
+        break;
+      case "title" :
+        key = "cancerLibraryApp.category.title"
+        break;
+      case "description" :
+        key = "cancerLibraryApp.category.description"
+        break;
+      case "activated" :
+        key = "cancerLibraryApp.category.activated"
+        break;
+    }
+    return <Translate contentKey={key}>Empty</Translate>
+  }
+
+  const sortEntities = () => {
+    getAllCategoryEntities();
+    getAllLibraryEntities();
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    if (location.search !== endURL) {
+      navigate(`${location.pathname}${endURL}`);
+    }
+  }
 
   useEffect(() => {
-    dispatch(getEntities({}));
-  }, []);
+    sortEntities();
+  }, [paginationState.activePage, paginationState.order, paginationState.sort]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const page = params.get('page');
+    const sort = params.get(SORT);
+    if (page && sort) {
+      const sortSplit = sort.split(',');
+      setPaginationState({
+        ...paginationState,
+        activePage: +page,
+        sort: sortSplit[0],
+        order: sortSplit[1],
+      });
+    }
+  }, [location.search]);
+
+  useEffect(() => {
+    const temp = copyItem(categoryList);
+    setCategoryListCopy(temp);
+  }, [categoryList])
 
   const handleSyncList = () => {
-    dispatch(getEntities({}));
+    sortEntities();
   };
+
+  const onToolbarPreparing = (e) => {
+    let toolbarItems = e.toolbarOptions.items;
+
+    toolbarItems.forEach((item) => {
+      switch (item.name) {
+        case "refreshRowButton" :
+          item.showText="always";
+          item.location="after";
+          item.widget="dxButton";
+          item.options= {
+            icon: "refresh",
+            text: translate('cancerLibraryApp.category.home.refreshListLabel'),
+            onClick : handleSyncList
+          }
+          break;
+        case "addRowButton" :
+          item.showText="always";
+          item.location="after";
+          item.widget="dxButton";
+          item.options = {
+            icon: "add",
+            text: "Add",
+            elementAttr : {
+              class : "me-2"
+            },
+            onClick : () => { e.component.addRow() }
+          }
+      }
+    });
+  }
+
+    const onEditingStart = (e) => {
+      e.component.option("editing.popup.title" , typeof e.data.title !== 'undefined' ? e.data.title : translate("cancerLibraryApp.category.home.createLabel"));
+
+      e.data.activated = typeof e.data.activated !== 'undefined' ? e.data.activated : false;
+    }
+
 
   return (
     <div>
       <h2 id="category-heading" data-cy="CategoryHeading">
         <Translate contentKey="cancerLibraryApp.category.home.title">Categories</Translate>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="cancerLibraryApp.category.home.refreshListLabel">Refresh List</Translate>
-          </Button>
-          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="cancerLibraryApp.category.home.createLabel">Create new Category</Translate>
-          </Link>
-        </div>
       </h2>
-      <div className="table-responsive">
-        {categoryList && categoryList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.title">Title</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.library">Library</Translate>
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {categoryList.map((category, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`./${category.id}`} color="link" size="sm">
-                      {category.id}
-                    </Button>
-                  </td>
-                  <td>{category.title}</td>
-                  <td>{category.description}</td>
-                  <td>{category.activated ? 'true' : 'false'}</td>
-                  <td>{category.library.title}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`./${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button tag={Link} to={`./${category.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button tag={Link} to={`./${category.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="cancerLibraryApp.category.home.notFound">No Categoies found</Translate>
+      <br />
+      <DataGrid
+        dataSource = {categoryListCopy}
+        keyExpr = 'id'
+        showBorders={true}
+        showColumnLines={true}
+        onRowInserting={onRowInsert}
+        onRowUpdating={onRowUpdate}
+        onRowRemoved={onRowRemove}
+        onToolbarPreparing={onToolbarPreparing}
+        onEditingStart={onEditingStart}
+        onInitNewRow={onEditingStart}
+        >
+        <Toolbar>
+          <ItemToolBar location="before">
+            <div className="informer">
+              <h2 className="count">{categoryList.length}</h2>
+              <span>
+                <Translate contentKey="global.table.header.total-count"> Total Count </Translate>
+              </span>
             </div>
-          )
-        )}
-      </div>
+          </ItemToolBar>
+          <ItemToolBar name="refreshRowButton"/>
+          <ItemToolBar name="addRowButton"/>
+        </Toolbar>
+        <Paging enabled={true} pageSize={10} defaultPageSize={10} />
+        <SearchPanel visible={true} />
+        <FilterRow visible={true} />
+        <LoadPanel enabled={true} />
+        <Editing
+          mode="popup"
+          allowUpdating={true}
+          allowDeleting={true}
+          allowAdding={true}
+        >
+          <Popup showTitle={true} width={700} height={525} hideOnOutsideClick={true} />
+          {/*<Form>*/}
+          {/*  <ItemFrom itemType="group" colCount={2} colSpan={2}>*/}
+          {/*    <ItemFrom dataField={"title"}/>*/}
+          {/*    <ItemFrom dataField={"description"} />*/}
+          {/*    <ItemFrom dataField={"activated"} caption="activated" editorType="dxCheckBox" />*/}
+          {/*    <ItemFrom dataField={"library.title"} editorType="dxSelectBox" editorOptions={{"items" : libraryList.map(libraryList => libraryList.title )}} />*/}
+          {/*  </ItemFrom>*/}
+          {/*  <ItemFrom itemType="group" colCount={2} colSpan={2}>*/}
+          {/*    <ItemFrom dataField={"id"}/>*/}
+          {/*    <ItemFrom dataField={"title"} />*/}
+          {/*  </ItemFrom>*/}
+          {/*</Form>*/}
+          <Form>
+            <ItemFrom itemType="group" caption={"Category"} colCount={2} colSpan={2} >
+              <ItemFrom dataField="activated"/>
+            </ItemFrom>
+          </Form>
+        </Editing>
+        <Column dataField={'id'} alignment={'left'} caption='id' width={100} headerCellRender={renderTitleHeader}/>
+        <Column dataField={'title'} alignment="center" caption='title' headerCellRender={renderTitleHeader}/>
+        <Column dataField={'description'} alignment="center" caption="description" headerCellRender={renderTitleHeader}/>
+        <Column dataField={'activated'} alignment="center" caption="activated" headerCellRender={renderTitleHeader} />
+        <Column caption={'Library'}>
+          <Column dataField={'library.id'} caption="library.id" headerCellRender={renderTitleHeader} />
+          <Column dataField={'library.title'} caption="library.title" headerCellRender={renderTitleHeader}/>
+          <Column dataField={'library.description'} caption="library.description" headerCellRender={renderTitleHeader}/>
+          <Column dataField={'library.activated'} caption="library.activated" headerCellRender={renderTitleHeader}/>
+        </Column>
+      </DataGrid>
     </div>
   );
 };

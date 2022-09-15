@@ -1,0 +1,39 @@
+// Point variables
+
+.dx-datagrid-header-panel {
+  padding : 0;
+  background-color: rgba(85, 149, 222, 0.6);
+
+  .dx-toolbar {
+    margin: 0;
+    padding-right: 20px;
+    background-color: transparent;
+  }
+
+  .dx-toolbar-items-container {
+    height: 70px;
+  }
+
+  .dx-toolbar-before {
+    .dx-toolbar-item:last-child {
+      padding-right: 10px;
+    }
+  }
+
+  .dx-button {
+    margin : auto 0;
+  }
+}
+
+.informer {
+  height: 70px;
+  width: 130px;
+  text-align: center;
+  color: #000000;
+
+  .count {
+    padding-top : 15px;
+    line-height: 27px;
+    margin: 0;
+  }
+}

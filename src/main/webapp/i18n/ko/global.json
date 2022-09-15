@@ -56,6 +56,9 @@
       "email.label": "이메일",
       "email.placeholder": "이메일을 입력하세요"
     },
+    "table": {
+      "header.total-count" : "총 갯수"
+    },
     "messages": {
       "info": {
         "authenticated": {
@@ -136,6 +139,9 @@
       "clear": "Clear filter",
       "clearAll": "Clear all filters"
     }
+  },
+  "warning" : {
+    "empty-value" : "Empty Value"
   },
   "error": {
     "internalServerError": "Internal server error",

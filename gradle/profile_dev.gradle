@@ -29,6 +29,7 @@ springBoot {
 
 bootRun {
     args = ["--spring.profiles.active=${profiles}"]
+    systemProperty "jasypt.encryptor.password", findProperty("jasypt.encryptor.password")
 }
 
 task webapp(type: NpmTask) {
