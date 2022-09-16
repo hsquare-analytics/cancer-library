@@ -2,21 +2,13 @@ package io.planit.cancerlibrary.core.sql.datasource;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.AutoMappingBehavior;
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.type.JdbcType;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -27,8 +19,10 @@ import java.util.*;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class ServerDataSourceConfig {
-    private final Environment environment;
+
+    private final Environment env;
 
     @Bean("serverDataSource")
     @Qualifier("serverDataSource")
@@ -46,19 +40,58 @@ public class ServerDataSourceConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 
         em.setDataSource(dataSource);
-        em.setPackagesToScan("io.planit.cancerlibrary.core.sql.datasource.entity",
-            "io.planit.cancerlibrary.domain");
+        em.setPackagesToScan(
+            "io.planit.cancerlibrary.core.sql.datasource.entity",
+            "io.planit.cancerlibrary.domain",
+            "io.planit.cancerlibrary.repository.timezone"
+        );
+
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         HashMap<String, Object> properties = new HashMap<>();
         properties.put(
-            "hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto")
+            "hibernate.jdbc.time_zone" , env.getProperty("spring.jpa.properties.hibernate.jdbc.time_zone", "UTC")
+        );
+        properties.put(
+            "hibernate.id.new_generator_mappings" , env.getProperty("spring.jpa.properties.hibernate.id.new_generator_mappings", "true")
+        );
+        properties.put(
+            "hibernate.connection.provider_disables_autocommit" , env.getProperty("spring.jpa.properties.hibernate.connection.provider_disables_autocommit", "true")
+        );
+        properties.put(
+            "hibernate.cache.use_second_level_cache" , env.getProperty("spring.jpa.properties.hibernate.cache.use_second_level_cache", "false")
+        );
+        properties.put(
+            "hibernate.cache.use_query_cache" , env.getProperty("spring.jpa.properties.hibernate.cache.use_query_cache", "false")
+        );
+        properties.put(
+            "hibernate.generate_statistics", env.getProperty("spring.jpa.properties.hibernate.generate_statistics", "false")
+        );
+        properties.put(
+            "hibernate.jdbc.batch_size", env.getProperty("sprig.jpa.properties.hibernate.jdbc.batch_size", "25")
+        );
+        properties.put(
+            "hibernate.order_inserts", env.getProperty("spring.jpa.properties.hibernate.order_inserts", "true")
+        );
+        properties.put(
+            "hibernate.order_updates", env.getProperty("spring.jpa.properties.hibernate.order_updates", "true")
+        );
+        properties.put(
+            "hibernate.query.fail_on_pagination_over_collection_fetch", env.getProperty("spring.jpa.properties.hibernate.query.fail_on_pagination_over_collection_fetch", "true")
+        );
+        properties.put(
+            "hibernate.query.in_clause_parameter_padding", env.getProperty("spring.jpa.properties.hibernate.query.in_clause_parameter_padding", "true")
+        );
+        properties.put(
+            "hibernate.ddl-auto", env.getProperty("spring.jpa.hibernate.ddl-auto", "none")
         );
 
         properties.put(
-            "hibernate.dialect", environment.getProperty("hibernate.dialect")
+            "hibernate.physical_naming_strategy", env.getProperty("spring.jpa.hibernate.naming.physical-strategy", "org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy")
         );
-
+        properties.put(
+            "hibernate.implicit_naming_strategy", env.getProperty("spring.jpa.hibernate.naming.implicit-strategy", "org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy")
+        );
         em.setJpaPropertyMap(properties);
 
         return em;

@@ -14,7 +14,6 @@ import javax.annotation.Resource;
 @SpringBootTest(properties = {
     "jasypt.encryptor.password=test1127!@"
 })
-@ActiveProfiles("local")
 public class JasyptConfigTest {
     private final Logger log = LoggerFactory.getLogger(JasyptConfigTest.class);
 

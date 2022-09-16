@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { CancerLibraryApp.class, AsyncSyncConfiguration.class })
+@SpringBootTest(classes = { CancerLibraryApp.class, AsyncSyncConfiguration.class }, properties = "jasypt.encryptor.password=test1127!@")
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {
