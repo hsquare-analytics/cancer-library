@@ -24,7 +24,7 @@ import {
   FilterRow,
   LoadPanel,
 } from 'devextreme-react/data-grid';
-import {Item as ItemFrom } from 'devextreme-react/form';
+import {Item as ItemForm } from 'devextreme-react/form';
 
 // DevExtreme CSS
 import 'devextreme/dist/css/dx.material.lime.light.compact.css'
@@ -93,6 +93,8 @@ export const Category = () => {
     data.description = getNewData(e, 'description');
     data.library = getNewData(e, 'library');
     data.activated = getNewData(e, 'activated');
+
+    console.log(data)
   }
 
   const onRowRemove = (e) => {
@@ -246,22 +248,21 @@ export const Category = () => {
           allowAdding={true}
         >
           <Popup showTitle={true} width={700} height={525} hideOnOutsideClick={true} />
-          {/*<Form>*/}
-          {/*  <ItemFrom itemType="group" colCount={2} colSpan={2}>*/}
-          {/*    <ItemFrom dataField={"title"}/>*/}
-          {/*    <ItemFrom dataField={"description"} />*/}
-          {/*    <ItemFrom dataField={"activated"} caption="activated" editorType="dxCheckBox" />*/}
-          {/*    <ItemFrom dataField={"library.title"} editorType="dxSelectBox" editorOptions={{"items" : libraryList.map(libraryList => libraryList.title )}} />*/}
-          {/*  </ItemFrom>*/}
-          {/*  <ItemFrom itemType="group" colCount={2} colSpan={2}>*/}
-          {/*    <ItemFrom dataField={"id"}/>*/}
-          {/*    <ItemFrom dataField={"title"} />*/}
-          {/*  </ItemFrom>*/}
-          {/*</Form>*/}
           <Form>
-            <ItemFrom itemType="group" caption={"Category"} colCount={2} colSpan={2} >
-              <ItemFrom dataField="activated"/>
-            </ItemFrom>
+            <ItemForm itemType="group" colCount={2} colSpan={2}>
+              <ItemForm dataField={"title"}/>
+              <ItemForm dataField={"description"} />
+              <ItemForm dataField={"activated"} caption="activated" editorType="dxCheckBox" />
+              <ItemForm dataField={"library.id"}
+                        editorType="dxSelectBox"
+                        editorOptions={
+                          {"dataSource": libraryList,
+                            "displayExpr" : "title",
+                            "valueExpr" : "id",
+                          }
+                        }
+              />
+            </ItemForm>
           </Form>
         </Editing>
         <Column dataField={'id'} alignment={'left'} caption='id' width={100} headerCellRender={renderTitleHeader}/>
