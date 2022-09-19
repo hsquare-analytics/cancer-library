@@ -25,4 +25,5 @@
     <include file="config/liquibase/changelog/20220902090435_added_entity_Item_attribute.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220915105235_added_db_routing_entity.xml" relativeToChangelogFile="false" />
     <include file="config/liquibase/changelog/20220919041201_added_entity_Subject.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20220919112401_added_entity_Topic.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
