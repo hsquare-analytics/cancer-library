@@ -49,20 +49,27 @@ export const Topic = () => {
                   <Translate contentKey="cancerLibraryApp.topic.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.topic.seq">Seq</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.topic.name">Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.topic.title">Title</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cancerLibraryApp.topic.activated">Activated</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.topic.loadDtm">Load DTM</Translate>
+                  <Translate contentKey="cancerLibraryApp.topic.orderNo">Order No</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.topic.subject.name">Subject Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.topic.subject.title">Subject Title</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.topic.createdDate">Created Date</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.topic.lastModifiedBy">Last Modified By</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.topic.lastModifiedDate">Last Modified Date</Translate>
+                </th>
+
                 <th />
               </tr>
             </thead>
@@ -74,12 +81,19 @@ export const Topic = () => {
                       {topic.id}
                     </Button>
                   </td>
-                  <td>{topic.seq}</td>
-                  <td>{topic.name}</td>
+                  <td>{topic.title}</td>
                   <td>{topic.activated ? 'true' : 'false'}</td>
-                  <td>{topic.loadDtm ? <TextFormat value={topic.loadDtm} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</td>
-                  <td>{topic.subject.name}</td>
-
+                  <td>{topic.orderNo}</td>
+                  <td>{topic.subject.title}</td>
+                  <td>
+                    {topic.createdDate ? <TextFormat value={topic.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
+                  </td>
+                  <td>{topic.lastModifiedBy}</td>
+                  <td>
+                    {topic.lastModifiedDate ? (
+                      <TextFormat value={topic.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+                    ) : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`./${topic.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -90,20 +90,10 @@ export const TopicUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('cancerLibraryApp.topic.seq')}
-                id="topic-seq"
-                name="seq"
-                data-cy="seq"
-                type="number"
-                validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
-                }}
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.topic.name')}
-                id="topic-name"
-                name="name"
-                data-cy="name"
+                label={translate('cancerLibraryApp.topic.title')}
+                id="topic-title"
+                name="title"
+                data-cy="title"
                 type="text"
                 validate={{
                   required: {value: true, message: translate('entity.validation.required')},
@@ -118,11 +108,21 @@ export const TopicUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="subject.id" data-cy="subject" label={translate('cancerLibraryApp.topic.subject.name')}>
+              <ValidatedField
+                label={translate('cancerLibraryApp.topic.orderNo')}
+                id="topic-orderNo"
+                name="orderNo"
+                data-cy="orderNo"
+                type="number"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
+              />
+              <ValidatedField type="select" name="subject.id" data-cy="subject" label={translate('cancerLibraryApp.topic.subject.title')}>
                 <option value="">-</option>
                 {subjects.map(subject => (
                   <option value={subject.id} key={subject}>
-                    {subject.name}
+                    {subject.title}
                   </option>
                 ))}
               </ValidatedField>

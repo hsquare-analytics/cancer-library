@@ -17,7 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "ph_topic")
-public class Topic implements Serializable {
+public class Topic extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,21 +28,17 @@ public class Topic implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "seq", length = 30, nullable = false)
-    private Integer seq;
-
-    @NotNull
     @Size(max = 50)
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "title", length = 30, nullable = false)
+    private String title;
 
     @NotNull
     @Column(name = "activated")
     private Boolean activated;
 
-    @CreatedDate
-    @Column(name = "load_dtm", updatable = false)
-    private Instant loadDtm = Instant.now();
+    @NotNull
+    @Column(name = "orderNo", nullable = false)
+    private Integer orderNo;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -61,29 +57,17 @@ public class Topic implements Serializable {
         return this;
     }
 
-    public Integer getSeq() {
-        return seq;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Topic seq(Integer seq) {
-        this.seq = seq;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Topic name(String name) {
-        this.name = name;
+    public Topic title(String title) {
+        this.title = title;
         return this;
     }
 
@@ -100,12 +84,17 @@ public class Topic implements Serializable {
         return this;
     }
 
-    public Instant getLoadDtm() {
-        return loadDtm;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setLoadDtm(Instant loadDtm) {
-        this.loadDtm = loadDtm;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Topic orderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+        return this;
     }
 
     public Subject getSubject() {
@@ -129,23 +118,23 @@ public class Topic implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Topic subject = (Topic) o;
-        return id.equals(subject.id) && seq.equals(subject.seq) && name.equals(subject.name) && activated.equals(
-            subject.activated);
+        Topic topic = (Topic) o;
+        return Objects.equals(id, topic.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, seq, name, activated);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Topic{" +
             "id=" + id +
-            ", seq='" + seq + '\'' +
-            ", name='" + name + '\'' +
+            ", title='" + title + '\'' +
             ", activated=" + activated +
+            ", orderNo=" + orderNo +
+            ", subject=" + subject +
             '}';
     }
 }

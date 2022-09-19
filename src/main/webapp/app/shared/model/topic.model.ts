@@ -2,9 +2,9 @@ import {ISubject} from "app/shared/model/subject.model";
 
 export interface ITopic {
   id?: number;
-  seq?: number;
-  name?: string;
+  title?: string;
   activated?: boolean;
+  orderNo?: number;
   loadDtm?: Date;
   subject?: ISubject;
 }

@@ -101,8 +101,8 @@ public class TopicResource {
         Optional<Topic> result = topicRepository
             .findById(topic.getId())
             .map(existingTopic -> {
-                if (topic.getName() != null) {
-                    existingTopic.setName(topic.getName());
+                if (topic.getTitle() != null) {
+                    existingTopic.setTitle(topic.getTitle());
                 }
                 if (topic.getActivated() != null) {
                     existingTopic.setActivated(topic.getActivated());

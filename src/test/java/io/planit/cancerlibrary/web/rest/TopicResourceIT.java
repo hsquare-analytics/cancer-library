@@ -34,11 +34,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class TopicResourceIT {
 
-    private static final Integer DEFAULT_SEQ = 1;
-    private static final Integer UPDATED_SEQ = 2;
+    private static final Integer DEFAULT_ORDER_NO = 1;
+    private static final Integer UPDATED_ORDER_NO = 2;
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final boolean DEFAULT_ACTIVATED = true;
     private static final boolean UPDATED_ACTIVATED = false;
@@ -66,12 +66,12 @@ class TopicResourceIT {
     private Subject subject;
 
     public static Topic createEntity(EntityManager em, Subject subject) {
-        Topic topic = new Topic().seq(DEFAULT_SEQ).name(DEFAULT_NAME).activated(DEFAULT_ACTIVATED).subject(subject);
+        Topic topic = new Topic().orderNo(DEFAULT_ORDER_NO).title(DEFAULT_TITLE).activated(DEFAULT_ACTIVATED).subject(subject);
         return topic;
     }
 
     public static Topic createUpdatedEntity(EntityManager em, Subject subject) {
-        Topic topic = new Topic().seq(UPDATED_SEQ).name(UPDATED_NAME).activated(UPDATED_ACTIVATED).subject(subject);
+        Topic topic = new Topic().orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).activated(UPDATED_ACTIVATED).subject(subject);
         return topic;
     }
 
@@ -93,8 +93,8 @@ class TopicResourceIT {
         List<Topic> topicList = topicRepository.findAll();
         assertThat(topicList).hasSize(databaseSizeBeforeCreate + 1);
         Topic testTopic = topicList.get(topicList.size() - 1);
-        assertThat(testTopic.getSeq()).isEqualTo(DEFAULT_SEQ);
-        assertThat(testTopic.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testTopic.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
+        assertThat(testTopic.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testTopic.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testTopic.getSubject().getId()).isEqualTo(subject.getId());
     }
@@ -132,7 +132,7 @@ class TopicResourceIT {
     @Transactional
     void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = topicRepository.findAll().size();
-        topic.setName(null);
+        topic.setTitle(null);
 
         restTopicMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(topic)))
@@ -152,8 +152,8 @@ class TopicResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(topic.getId().intValue())))
-            .andExpect(jsonPath("$.[*].seq").value(hasItem(DEFAULT_SEQ)))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)))
             .andExpect(jsonPath("$.[*].subject.id").value(hasItem(topic.getSubject().getId().intValue())));
     }
@@ -168,8 +168,8 @@ class TopicResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(topic.getId().intValue()))
-            .andExpect(jsonPath("$.seq").value(topic.getSeq().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.orderNo").value(topic.getOrderNo().intValue()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED))
             .andExpect(jsonPath("$.subject.id").value(topic.getSubject().getId().intValue()));
         ;
@@ -193,7 +193,7 @@ class TopicResourceIT {
         Subject updatedSubject = SubjectResourceIT.createUpdatedEntity(em);
         subjectRepository.saveAndFlush(updatedSubject);
         em.detach(updatedTopic);
-        updatedTopic.seq(UPDATED_SEQ).name(UPDATED_NAME).activated(UPDATED_ACTIVATED).subject(updatedSubject);
+        updatedTopic.orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).activated(UPDATED_ACTIVATED).subject(updatedSubject);
 
         restTopicMockMvc
             .perform(
@@ -206,8 +206,8 @@ class TopicResourceIT {
         List<Topic> topicList = topicRepository.findAll();
         assertThat(topicList).hasSize(databaseSizeBeforeUpdate);
         Topic testTopic = topicList.get(topicList.size() - 1);
-        assertThat(testTopic.getSeq()).isEqualTo(UPDATED_SEQ);
-        assertThat(testTopic.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testTopic.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
+        assertThat(testTopic.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testTopic.getActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testTopic.getSubject().getId()).isEqualTo(updatedSubject.getId());
     }
@@ -285,7 +285,7 @@ class TopicResourceIT {
         List<Topic> topicList = topicRepository.findAll();
         assertThat(topicList).hasSize(databaseSizeBeforeUpdate);
         Topic testTopic = topicList.get(topicList.size() - 1);
-        assertThat(testTopic.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testTopic.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testTopic.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
@@ -299,7 +299,7 @@ class TopicResourceIT {
         Topic partialUpdatedTopic = new Topic();
         partialUpdatedTopic.setId(topic.getId());
 
-        partialUpdatedTopic.name(UPDATED_NAME).activated(UPDATED_ACTIVATED);
+        partialUpdatedTopic.title(UPDATED_TITLE).activated(UPDATED_ACTIVATED);
 
         restTopicMockMvc
             .perform(
@@ -312,7 +312,7 @@ class TopicResourceIT {
         List<Topic> topicList = topicRepository.findAll();
         assertThat(topicList).hasSize(databaseSizeBeforeUpdate);
         Topic testTopic = topicList.get(topicList.size() - 1);
-        assertThat(testTopic.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testTopic.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testTopic.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 

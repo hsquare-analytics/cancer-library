@@ -49,7 +49,7 @@ export const Subject = () => {
                   <Translate contentKey="cancerLibraryApp.subject.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.subject.title">Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.subject.title">Title</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cancerLibraryApp.subject.activated">Activated</Translate>

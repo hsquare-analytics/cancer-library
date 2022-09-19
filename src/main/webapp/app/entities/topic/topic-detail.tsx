@@ -22,7 +22,7 @@ export const TopicDetail = () => {
     <Row>
       <Col md="8">
         <h2 data-cy="libraryDetailsHeading">
-          <Translate contentKey="cancerLibraryApp.topic.detail.title">Subject</Translate>
+          <Translate contentKey="cancerLibraryApp.topic.detail.title">Topic</Translate>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -32,13 +32,8 @@ export const TopicDetail = () => {
           </dt>
           <dd>{topicEntity.id}</dd>
           <dt>
-            <span id="seq">
-              <Translate contentKey="cancerLibraryApp.topic.seq">Seq</Translate>
-            </span>
-          </dt>
-          <dt>
-            <span id="name">
-              <Translate contentKey="cancerLibraryApp.topic.name">Name</Translate>
+            <span id="title">
+              <Translate contentKey="cancerLibraryApp.topic.title">Name</Translate>
             </span>
           </dt>
           <dd>{topicEntity.name}</dd>
@@ -49,17 +44,39 @@ export const TopicDetail = () => {
           </dt>
           <dd>{topicEntity.activated ? 'true' : 'false'}</dd>
           <dt>
-            <span id="loadDtm">
-              <Translate contentKey="cancerLibraryApp.topic.loadDtm">loadDtm</Translate>
+            <span id="orderNo">
+              <Translate contentKey="cancerLibraryApp.topic.orderNo">Order No</Translate>
             </span>
           </dt>
-          <dd>{topicEntity.loadDtm ? <TextFormat value={topicEntity.loadDtm} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
+          <dd>{topicEntity.orderNo}</dd>
           <dt>
-            <span id="subject-name">
-              <Translate contentKey="cancerLibraryApp.topic.subject.name">subject name</Translate>
+            <span id="subject-title">
+              <Translate contentKey="cancerLibraryApp.topic.subject.title">subject title</Translate>
             </span>
           </dt>
-          <dd>{topicEntity.subject?.name}</dd>
+          <dd>{topicEntity.subject?.title}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.topic.createdBy">Created By</Translate>
+          </dt>
+          <dd>{topicEntity.createdBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.topic.createdDate">Created Date</Translate>
+          </dt>
+          <dd>{topicEntity.createdDate ?
+            <TextFormat value={topicEntity.createdDate} type="date" format={APP_DATE_FORMAT}
+                        blankOnInvalid/> : null}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.topic.lastModifiedBy">Last Modified By</Translate>
+          </dt>
+          <dd>{topicEntity.lastModifiedBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.topic.lastModifiedDate">Last Modified Date</Translate>
+          </dt>
+          <dd>
+            {topicEntity.lastModifiedDate ? (
+              <TextFormat value={topicEntity.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
+            ) : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/admin/topic" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}
