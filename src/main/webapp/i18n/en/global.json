@@ -40,7 +40,8 @@
         "library": "Library Management",
         "category": "Category Management",
         "item": "Item Management",
-        "user-category": "User Category Management"
+        "user-category": "User Category Management",
+        "subject": "Subject Management"
       },
       "language": "Language"
     },
