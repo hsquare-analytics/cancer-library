@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, TextFormat} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './category.reducer';
+import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -48,25 +49,31 @@ export const Category = () => {
                   <Translate contentKey="cancerLibraryApp.category.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.seq">SEQ</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.title">title</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.name">Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.tableName">Table Name</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.indexDate">Index Date</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.dateColumn">Date Column</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.loadDtm">Load Dtm</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.orderNo">Order No</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.topic.name">Topic Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.createdDate">Created Date</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedBy">Last Modified By</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedDate">Last Modified Date</Translate>
                 </th>
                 <th />
               </tr>
@@ -79,13 +86,21 @@ export const Category = () => {
                       {category.id}
                     </Button>
                   </td>
-                  <td>{category.seq}</td>
-                  <td>{category.name}</td>
-                  <td>{category.tableName}</td>
-                  <td>{category.indexDate}</td>
+                  <td>{category.title}</td>
+                  <td>{category.description}</td>
+                  <td>{category.dateColumn}</td>
                   <td>{category.activated ? 'true' : 'false'}</td>
-                  <td>{category.loadDtm}</td>
-                  <td>{category.topic.name}</td>
+                  <td>{category.orderNo}</td>
+                  <td>{category.topic.title}</td>
+                  <td>
+                    {category.createdDate ? <TextFormat value={category.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
+                  </td>
+                  <td>{category.lastModifiedBy}</td>
+                  <td>
+                    {category.lastModifiedDate ? (
+                      <TextFormat value={category.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+                    ) : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`./${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -11,25 +11,29 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="seq" type="bigint">
+            <column name="title" type="varchar(30)">
                 <constraints nullable="false" />
             </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false" />
+            <column name="description" type="varchar(255)">
             </column>
-            <column name="table_name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="index_date" type="varchar(255)">
+            <column name="date_column" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="load_dtm" type="timestamp"/>
+            <column name="order_no" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <column name="topic_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="topic_id"
@@ -46,11 +50,11 @@
                   tableName="ph_category"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="seq" type="numeric"/>
-            <column name="name" type="string"/>
-            <column name="table_name" type="string"/>
-            <column name="index_date" type="string"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
+            <column name="date_column" type="string"/>
             <column name="activated" type="boolean"/>
+            <column name="order_no" type="numeric"/>
             <column name="topic_id" type="numeric"/>
         </loadData>
     </changeSet>

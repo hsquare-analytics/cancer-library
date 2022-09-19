@@ -90,20 +90,10 @@ export const CategoryUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('cancerLibraryApp.category.seq')}
-                id="category-seq"
-                name="seq"
-                data-cy="seq"
-                type="number"
-                validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
-                }}
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.category.name')}
-                id="category-name"
-                name="name"
-                data-cy="name"
+                label={translate('cancerLibraryApp.category.title')}
+                id="category-title"
+                name="title"
+                data-cy="title"
                 type="text"
                 validate={{
                   required: {value: true, message: translate('entity.validation.required')},
@@ -111,17 +101,21 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.tableName')}
-                id="category-tableName"
-                name="tableName"
-                data-cy="tableName"
+                label={translate('cancerLibraryApp.category.description')}
+                id="category-description"
+                name="description"
+                data-cy="description"
                 type="text"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                  maxLength: {value: 30, message: translate('entity.validation.maxlength', {max: 30})},
+                }}
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.indexDate')}
-                id="category-indexDate"
-                name="indexDate"
-                data-cy="indexDate"
+                label={translate('cancerLibraryApp.category.dateColumn')}
+                id="category-dateColumn"
+                name="dateColumn"
+                data-cy="dateColumn"
                 type="text"
               />
               <ValidatedField
@@ -132,11 +126,22 @@ export const CategoryUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="topic.id" data-cy="topic" label={translate('cancerLibraryApp.category.topic.name')}>
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.orderNo')}
+                id="category-orderNo"
+                name="orderNo"
+                data-cy="orderNo"
+                type="number"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
+              />
+              <ValidatedField type="select" name="topic.id" data-cy="topic"
+                              label={translate('cancerLibraryApp.category.topic.title')}>
                 <option value="">-</option>
                 {topics.map(topic => (
                   <option value={topic.id} key={topic}>
-                    {topic.name}
+                    {topic.title}
                   </option>
                 ))}
               </ValidatedField>

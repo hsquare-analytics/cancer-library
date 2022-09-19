@@ -18,13 +18,16 @@
         "title": "Category"
       },
       "id": "ID",
-      "seq": "Sequence",
-      "name": "Name",
-      "tableName": "Table Name",
-      "indexDate": "Index Date",
+      "title": "Title",
+      "description": "Description",
+      "dateColumn": "Date Column",
       "activated": "Activated",
-      "loadDtm": "Load Dtm",
-      "topic.name": "Topic Name"
+      "orderNo": "Order No",
+      "topic.title": "Topic Title",
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified date"
     }
   }
 }

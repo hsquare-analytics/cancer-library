@@ -38,20 +38,20 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CategoryResourceIT {
 
-    private static final Integer DEFAULT_SEQ = 1;
-    private static final Integer UPDATED_SEQ = 1;
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_TABLE_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_TABLE_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TABLE_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_TABLE_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_INDEX_DATE = "AAAAAAAAAA";
-    private static final String UPDATED_INDEX_DATE = "BBBBBBBBBB";
+    private static final String DEFAULT_DATE_COLUMN = "AAAAAAAAAA";
+    private static final String UPDATED_DATE_COLUMN = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_ACTIVATED = false;
     private static final Boolean UPDATED_ACTIVATED = true;
+
+    private static final Integer DEFAULT_ORDER_NO = 1;
+    private static final Integer UPDATED_ORDER_NO = 1;
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -81,14 +81,14 @@ class CategoryResourceIT {
     private Subject subject;
 
     public static Category createEntity(EntityManager em, Topic topic) {
-        Category category = new Category().seq(DEFAULT_SEQ).name(DEFAULT_NAME).tableName(DEFAULT_TABLE_NAME).
-            indexDate(DEFAULT_INDEX_DATE).activated(DEFAULT_ACTIVATED).topic(topic);
+        Category category = new Category().orderNo(DEFAULT_ORDER_NO).title(DEFAULT_TITLE).description(DEFAULT_TABLE_DESCRIPTION).
+            dateColumn(DEFAULT_DATE_COLUMN).activated(DEFAULT_ACTIVATED).topic(topic);
         return category;
     }
 
     public static Category createUpdatedEntity(EntityManager em, Topic topic) {
-        Category category = new Category().seq(UPDATED_SEQ).name(UPDATED_NAME).tableName(UPDATED_TABLE_NAME).
-            indexDate(UPDATED_INDEX_DATE).activated(UPDATED_ACTIVATED).topic(topic);
+        Category category = new Category().orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).
+            dateColumn(UPDATED_DATE_COLUMN).activated(UPDATED_ACTIVATED).topic(topic);
         return category;
     }
 
@@ -115,10 +115,10 @@ class CategoryResourceIT {
         List<Category> categoryList = categoryRepository.findAll();
         assertThat(categoryList).hasSize(databaseSizeBeforeCreate + 1);
         Category testCategory = categoryList.get(categoryList.size() - 1);
-        assertThat(testCategory.getSeq()).isEqualTo(DEFAULT_SEQ);
-        assertThat(testCategory.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCategory.getTableName()).isEqualTo(DEFAULT_TABLE_NAME);
-        assertThat(testCategory.getIndexDate()).isEqualTo(DEFAULT_INDEX_DATE);
+        assertThat(testCategory.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
+        assertThat(testCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_TABLE_DESCRIPTION);
+        assertThat(testCategory.getDateColumn()).isEqualTo(DEFAULT_DATE_COLUMN);
         assertThat(testCategory.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
     }
 
@@ -143,10 +143,10 @@ class CategoryResourceIT {
 
     @Test
     @Transactional
-    void checkNameIsRequired() throws Exception {
+    void checkTitleIsRequired() throws Exception {
         int databaseSizeBeforeTest = categoryRepository.findAll().size();
         // set the field null
-        category.setName(null);
+        category.setTitle(null);
 
         // Create the Category, which fails.
 
@@ -171,8 +171,8 @@ class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(category.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].tableName").value(hasItem(DEFAULT_TABLE_NAME)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_TABLE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())));
     }
 
@@ -188,8 +188,8 @@ class CategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(category.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.tableName").value(DEFAULT_TABLE_NAME))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.description").value(DEFAULT_TABLE_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
             .andExpect(jsonPath("$.topic.id").value(topic.getId().intValue()));
     }
@@ -216,7 +216,7 @@ class CategoryResourceIT {
         Category updatedCategory = categoryRepository.findById(category.getId()).get();
         // Disconnect from session so that the updates on updatedCategory are not directly saved in db
         em.detach(updatedCategory);
-        updatedCategory.name(UPDATED_NAME).tableName(UPDATED_TABLE_NAME).activated(UPDATED_ACTIVATED).topic(updatedTopic);
+        updatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED).topic(updatedTopic);
 
         restCategoryMockMvc
             .perform(
@@ -230,8 +230,8 @@ class CategoryResourceIT {
         List<Category> categoryList = categoryRepository.findAll();
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
-        assertThat(testCategory.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCategory.getTableName()).isEqualTo(UPDATED_TABLE_NAME);
+        assertThat(testCategory.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCategory.getDescription()).isEqualTo(UPDATED_TABLE_DESCRIPTION);
         assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testCategory.getTopic().getId()).isEqualTo(updatedTopic.getId().intValue());
     }
@@ -319,9 +319,9 @@ class CategoryResourceIT {
         List<Category> categoryList = categoryRepository.findAll();
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
-        assertThat(testCategory.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCategory.getTableName()).isEqualTo(DEFAULT_TABLE_NAME);
-        assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
+        assertThat(testCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_TABLE_DESCRIPTION);
+        assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED.booleanValue());
     }
 
     @Test
@@ -336,7 +336,7 @@ class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.name(UPDATED_NAME).tableName(UPDATED_TABLE_NAME).activated(UPDATED_ACTIVATED);
+        partialUpdatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED);
 
         restCategoryMockMvc
             .perform(
@@ -350,9 +350,9 @@ class CategoryResourceIT {
         List<Category> categoryList = categoryRepository.findAll();
         assertThat(categoryList).hasSize(databaseSizeBeforeUpdate);
         Category testCategory = categoryList.get(categoryList.size() - 1);
-        assertThat(testCategory.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCategory.getTableName()).isEqualTo(UPDATED_TABLE_NAME);
-        assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
+        assertThat(testCategory.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCategory.getDescription()).isEqualTo(UPDATED_TABLE_DESCRIPTION);
+        assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED.booleanValue());
     }
 
     @Test

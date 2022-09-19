@@ -102,15 +102,14 @@ public class CategoryResource {
         Optional<Category> result = categoryRepository
             .findById(category.getId())
             .map(existingCategory -> {
-                if (category.getName() != null) {
-                    existingCategory.setName(category.getName());
+                if (category.getTitle() != null) {
+                    existingCategory.setTitle(category.getTitle());
                 }
-                if (category.getTableName() != null) {
-                    existingCategory.setTableName(category.getTableName());
+                if (category.getDescription() != null) {
+                    existingCategory.setDescription(category.getDescription());
                 }
-                if (category.isActivated() != null) {
-                    existingCategory.setActivated(category.isActivated());
-                }
+
+                existingCategory.setActivated(category.isActivated());
 
                 return existingCategory;
             })

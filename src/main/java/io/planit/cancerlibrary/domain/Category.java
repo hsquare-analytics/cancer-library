@@ -9,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "ph_category")
-public class Category implements Serializable {
+public class Category extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,29 +20,26 @@ public class Category implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "seq", nullable = false)
-    private Integer seq;
+    @Size(max = 30)
+    @Column(name = "title", length = 30, nullable = false)
+    private String title;
 
     @NotNull
     @Size(max = 30)
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "description", length = 30, nullable = false)
+    private String description;
 
     @NotNull
-    @Column(name = "table_name")
-    private String tableName;
-
-    @NotNull
-    @Column(name = "index_date")
-    private String indexDate;
+    @Column(name = "date_column")
+    private String dateColumn;
 
     @NotNull
     @Column(name = "activated", nullable = false)
     private boolean activated;
 
-    @CreatedDate
-    @Column(name = "load_dtm", updatable = false)
-    private Instant loadDtm = Instant.now();
+    @NotNull
+    @Column(name = "order_no", nullable = false)
+    private Integer orderNo;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -62,81 +59,68 @@ public class Category implements Serializable {
         return this;
     }
 
-    public Integer getSeq() {
-        return seq;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Category seq(Integer seq) {
-        this.seq = seq;
+    public Category title(String title) {
+        this.title = title;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-
-    public Category name(String name) {
-        this.name = name;
+    public Category description(String description) {
+        this.description = description;
         return this;
     }
 
-    public String getTableName() {
-        return tableName;
+    public String getDateColumn() {
+        return dateColumn;
     }
 
-    public void setTableName(String tableName) {
-        this.tableName = tableName;
+    public void setDateColumn(String dateColumn) {
+        this.dateColumn = dateColumn;
     }
 
-    public Category tableName(String tableName) {
-        this.tableName = tableName;
-        return this;
-    }
-    public String getIndexDate() {
-        return indexDate;
-    }
-
-    public void setIndexDate(String indexDate) {
-        this.indexDate = indexDate;
-    }
-
-    public Category indexDate(String indexDate) {
-        this.indexDate = indexDate;
+    public Category dateColumn(String dateColumn) {
+        this.dateColumn = dateColumn;
         return this;
     }
 
-    public Boolean isActivated() {
+    public boolean isActivated() {
         return activated;
     }
 
-    public void setActivated(Boolean activated) {
+    public void setActivated(boolean activated) {
         this.activated = activated;
     }
 
-    public Category activated(Boolean activated) {
+    public Category activated(boolean activated) {
         this.activated = activated;
         return this;
     }
 
-    public Instant getLoadDtm() {
-        return loadDtm;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setLoadDtm(Instant loadDtm) {
-        this.loadDtm = loadDtm;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public Category loadDtm(Instant loadDtm) {
-        this.loadDtm = loadDtm;
+    public Category orderNo(Integer orderNo) {
+        this.orderNo = orderNo;
         return this;
     }
 
@@ -162,7 +146,7 @@ public class Category implements Serializable {
             return false;
         }
         Category category = (Category) o;
-        return id.equals(category.id);
+        return Objects.equals(id, category.id);
     }
 
     @Override
@@ -174,12 +158,11 @@ public class Category implements Serializable {
     public String toString() {
         return "Category{" +
             "id=" + id +
-            ", seq=" + seq +
-            ", name='" + name + '\'' +
-            ", tableName='" + tableName + '\'' +
-            ", indexDate='" + indexDate + '\'' +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
+            ", dateColumn='" + dateColumn + '\'' +
             ", activated=" + activated +
-            ", loadDtm=" + loadDtm +
+            ", orderNo=" + orderNo +
             ", topic=" + topic +
             '}';
     }

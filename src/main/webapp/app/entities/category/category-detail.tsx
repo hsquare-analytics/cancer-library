@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {Button, Col, Row} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, TextFormat} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 import {getEntity} from './category.reducer';
+import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const CategoryDetail = () => {
   const dispatch = useAppDispatch();
@@ -31,29 +32,23 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.id}</dd>
           <dt>
-            <span id="seq">
-              <Translate contentKey="cancerLibraryApp.category.seq">Sequence</Translate>
+            <span id="title">
+              <Translate contentKey="cancerLibraryApp.category.title">Title</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.seq}</dd>
+          <dd>{categoryEntity.title}</dd>
           <dt>
-            <span id="name">
-              <Translate contentKey="cancerLibraryApp.category.name">Name</Translate>
+            <span id="description">
+              <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.name}</dd>
+          <dd>{categoryEntity.description}</dd>
           <dt>
-            <span id="tableName">
-              <Translate contentKey="cancerLibraryApp.category.tableName">Table Name</Translate>
+            <span id="dateColumn">
+              <Translate contentKey="cancerLibraryApp.category.dateColumn">Date Column</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.tableName}</dd>
-          <dt>
-            <span id="indexDate">
-              <Translate contentKey="cancerLibraryApp.category.indexDate">Index Date</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.indexDate}</dd>
+          <dd>{categoryEntity.dateColumn}</dd>
           <dt>
             <span id="activated">
               <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
@@ -61,11 +56,37 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.activated ? 'true' : 'false'}</dd>
           <dt>
+            <span id="orderNo">
+              <Translate contentKey="cancerLibraryApp.category.orderNo">Order No</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.orderNo}</dd>
+          <dt>
             <span id="topic-name">
-              <Translate contentKey="cancerLibraryApp.category.topic.name">Topic Name</Translate>
+              <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>
             </span>
           </dt>
           <dd>{categoryEntity.topic?.name}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.createdBy">Created By</Translate>
+          </dt>
+          <dd>{categoryEntity.createdBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.createdDate">Created Date</Translate>
+          </dt>
+          <dd>{categoryEntity.createdDate ? <TextFormat value={categoryEntity.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.lastModifiedBy">Last Modified By</Translate>
+          </dt>
+          <dd>{categoryEntity.lastModifiedBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.lastModifiedDate">Last Modified Date</Translate>
+          </dt>
+          <dd>
+            {categoryEntity.lastModifiedDate ? (
+              <TextFormat value={categoryEntity.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+            ) : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/admin/category" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}
