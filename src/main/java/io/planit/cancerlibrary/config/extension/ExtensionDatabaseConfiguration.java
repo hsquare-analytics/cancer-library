@@ -1,8 +1,6 @@
-package io.planit.cancerlibrary.core.sql.datasource;
+package io.planit.cancerlibrary.config.extension;
 
 import com.zaxxer.hikari.HikariDataSource;
-import io.planit.cancerlibrary.core.sql.datasource.entity.ClientDataSourceEntity;
-import io.planit.cancerlibrary.core.sql.datasource.entity.InMemoryDataSourceEntities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.AutoMappingBehavior;
@@ -12,31 +10,45 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-public class ClientDataSourceConfig {
+@EnableTransactionManagement
+@MapperScan(value = {"io.planit.cancerLibrary.dao.extension"}, sqlSessionFactoryRef = "extensionSqlSessionFactory")
+public class ExtensionDatabaseConfiguration {
+    private final ConfigurableApplicationContext context;
 
-    private final ConfigurableApplicationContext applicationContext;
-
-    @Value("${spring.datasource.hikari.maximum-pool-size}")
+    @Value("${extension.maximum-pool-size:2}")
     private int maxPoolSize;
+
+    @Value("${extension.multi-routing:false}")
+    private Boolean isMultiRouting;
+
+    @Value("${extension.auto-commit:true}")
+    private Boolean isAutoCommit;
 
     private DataSource createDataSource(String driverClassName, String url, String userName, String password) {
         HikariDataSource dataSource = DataSourceBuilder
@@ -48,8 +60,8 @@ public class ClientDataSourceConfig {
             .password(password)
             .build();
 
+        dataSource.setAutoCommit(isAutoCommit);
         dataSource.setMaximumPoolSize(maxPoolSize);
-        dataSource.setAutoCommit(true);
 
         return dataSource;
     }
@@ -86,37 +98,24 @@ public class ClientDataSourceConfig {
         factoryBean.setMapperLocations(resources);
 
         return factoryBean;
+
     }
 
-    /*
-     * Client DataSource Section
-     */
-    @Bean("clientSqlSessionFactory")
-    public SqlSessionFactory clientDataSource() throws Exception {
-        List<ClientDataSourceEntity> dataSourceEntities = InMemoryDataSourceEntities.getDataSourceList();
-
-        Map<Object, Object> targetDataSource = new HashMap<>();
-
-        dataSourceEntities.forEach(dataSourceEntity -> {
-            targetDataSource.put(
-                dataSourceEntity.getUniqueDbKey(),
-                createDataSource(
-                    dataSourceEntity.getDriverClassName(),
-                    dataSourceEntity.getUrl(),
-                    dataSourceEntity.getUsername(),
-                    dataSourceEntity.getPassword()
-                )
-            );
-        });
-
-        DataSource dataSource =  applicationContext.getBean(AbstractRoutingDataSource.class, targetDataSource);
-
-
-        return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/client/*.xml").getObject();
+    @Bean("extensionDataSource")
+    @ConfigurationProperties("extension.datasource")
+    public DataSource extensionDataSource() {
+        return DataSourceBuilder.create()
+            .type(HikariDataSource.class)
+            .build();
     }
 
-    @Bean("clientSqlSession")
-    public SqlSession clientSession(@Autowired @Qualifier("clientSqlSessionFactory") SqlSessionFactory factory) {
-        return new SqlSessionTemplate(factory);
+    @Bean("extensionSessionFactory")
+    public SqlSessionFactory extensionSessionFactory(@Qualifier("extensionDataSource") DataSource dataSource) throws Exception {
+       return createSqlSessionFactoryBean(dataSource, "mybatis/mapper/client/*.xml").getObject();
+    }
+
+    @Bean("extensionSession")
+    public SqlSession extensionSession(@Autowired @Qualifier("extensionSessionFactory") SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
