@@ -42,7 +42,8 @@
         "item": "Item Management",
         "user-category": "User Category Management",
         "subject": "Subject Management",
-        "topic": "Topic Management"
+        "topic": "Topic Management",
+        "group": "Group Management"
       },
       "language": "Language"
     },

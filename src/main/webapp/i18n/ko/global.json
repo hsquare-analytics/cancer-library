@@ -42,7 +42,8 @@
         "item": "아이템 설정",
         "user-category": "사용자 카테고리 권한 설정",
         "subject": "Subject 설정",
-        "topic": "Topic 설정"
+        "topic": "Topic 설정",
+        "group": "Group 설정"
       },
       "language": "언어"
     },

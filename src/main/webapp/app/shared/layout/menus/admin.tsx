@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {NavDropdown} from './menu-components';
 import {Translate, translate} from 'react-jhipster';
 
-const adminMenuItems = () => (
+const AdminMenuItems = () => (
   <>
     <MenuItem icon="database" to="/admin/subject">
       <Translate contentKey="global.menu.admin.subject">Subject management</Translate>
@@ -14,7 +14,10 @@ const adminMenuItems = () => (
       <Translate contentKey="global.menu.admin.topic">Topic management</Translate>
     </MenuItem>
     <MenuItem icon="table" to="/admin/category">
-      <Translate contentKey="global.menu.admin.category">Table management</Translate>
+      <Translate contentKey="global.menu.admin.category">Category management</Translate>
+    </MenuItem>
+    <MenuItem icon="table" to="/admin/group">
+      <Translate contentKey="global.menu.admin.group">Group management</Translate>
     </MenuItem>
     <MenuItem icon="users" to="/admin/user-management">
       <Translate contentKey="global.menu.admin.userManagement">User management</Translate>
@@ -52,7 +55,7 @@ const databaseItem = () => (
 
 export const AdminMenu = ({ showOpenAPI, showDatabase }) => (
   <NavDropdown icon="users-cog" name={translate('global.menu.admin.main')} id="admin-menu" data-cy="adminMenu">
-    {adminMenuItems()}
+    {AdminMenuItems()}
     {showOpenAPI && openAPIItem()}
 
     {showDatabase && databaseItem()}

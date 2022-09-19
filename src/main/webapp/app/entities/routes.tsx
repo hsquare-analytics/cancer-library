@@ -8,6 +8,7 @@ import Item from "./item";
 import UserCategory from "./user-category";
 import Subject from "app/entities/subject";
 import Topic from "app/entities/topic";
+import Group from "app/entities/group";
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -20,6 +21,7 @@ export default () => {
         <Route path="library/*" element={<Library />} />
         <Route path="category/*" element={<Category />} />
         <Route path="item/*" element={<Item />} />
+        <Route path="group/*" element={<Group />} />
         <Route path="user-category/*" element={<UserCategory />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
