@@ -17,12 +17,12 @@
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220919041201_added_entity_Subject.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20220919112401_added_entity_Topic.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20220830061235_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220830041201_added_entity_Point.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220830061234_added_entity_Library.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20220830061235_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220831090435_added_entity_Item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220831131335_added_entity_UserCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220902090435_added_entity_Item_attribute.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20220919041201_added_entity_Subject.xml" relativeToChangelogFile="false" />
-    <include file="config/liquibase/changelog/20220919112401_added_entity_Topic.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>

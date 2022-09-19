@@ -11,31 +11,32 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="varchar(30)">
+            <column name="seq" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(255)">
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false" />
+            </column>
+            <column name="table_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="index_date" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="library_id" type="bigint">
+            <column name="load_dtm" type="timestamp"/>
+            <column name="topic_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_date" type="timestamp"/>
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="library_id"
+        <addForeignKeyConstraint baseColumnNames="topic_id"
             baseTableName="ph_category"
-            constraintName="fk_category_library_id"
+            constraintName="fk_category_topic_id"
             referencedColumnNames="id"
-            referencedTableName="ph_library"/>
+            referencedTableName="ph_topic"/>
     </changeSet>
 
     <changeSet id="20220830061235-1-data" author="jhipster" context="faker">
@@ -45,12 +46,12 @@
                   tableName="ph_category"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="title" type="string"/>
-            <column name="description" type="string"/>
-            <column name="library_id" type="numeric"/>
+            <column name="seq" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="table_name" type="string"/>
+            <column name="index_date" type="string"/>
             <column name="activated" type="boolean"/>
-            <column name="created_by" type="string"/>
-            <column name="last_modified_by" type="string"/>
+            <column name="topic_id" type="numeric"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>
