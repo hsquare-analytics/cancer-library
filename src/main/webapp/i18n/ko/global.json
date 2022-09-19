@@ -37,13 +37,12 @@
         "database": "데이터베이스",
         "userManagement": "사용자 관리",
         "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
-        "library": "라이브러리 설정",
-        "category": "카테고리 설정",
-        "item": "아이템 설정",
-        "user-category": "사용자 카테고리 권한 설정",
         "subject": "Subject 설정",
         "topic": "Topic 설정",
-        "group": "Group 설정"
+        "category": "Category 설정",
+        "group": "Group 설정",
+        "item": "Item 설정",
+        "user-category": "사용자 카테고리 권한 설정"
       },
       "language": "언어"
     },

@@ -37,13 +37,12 @@
         "apidocs": "API",
         "database": "Database",
         "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
-        "library": "Library Management",
-        "category": "Category Management",
-        "item": "Item Management",
-        "user-category": "User Category Management",
         "subject": "Subject Management",
         "topic": "Topic Management",
-        "group": "Group Management"
+        "category": "Category Management",
+        "group": "Group Management",
+        "item": "Item Management",
+        "user-category": "User Category Management"
       },
       "language": "Language"
     },
