@@ -1,6 +1,5 @@
 package io.planit.cancerlibrary.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -9,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -16,8 +16,8 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
-@Table(name = "ph_subject")
-public class Subject implements Serializable {
+@Table(name = "ph_topic")
+public class Topic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,10 @@ public class Subject implements Serializable {
     @Column(name = "load_dtm", updatable = false)
     private Instant loadDtm = Instant.now();
 
+    @NotNull
+    @ManyToOne(optional = false)
+    private Subject subject;
+
     public Long getId() {
         return id;
     }
@@ -52,7 +56,7 @@ public class Subject implements Serializable {
         this.id = id;
     }
 
-    public Subject id(Long id) {
+    public Topic id(Long id) {
         this.id = id;
         return this;
     }
@@ -65,7 +69,7 @@ public class Subject implements Serializable {
         this.seq = seq;
     }
 
-    public Subject seq(Integer seq) {
+    public Topic seq(Integer seq) {
         this.seq = seq;
         return this;
     }
@@ -78,7 +82,7 @@ public class Subject implements Serializable {
         this.name = name;
     }
 
-    public Subject name(String name) {
+    public Topic name(String name) {
         this.name = name;
         return this;
     }
@@ -91,7 +95,7 @@ public class Subject implements Serializable {
         this.activated = activated;
     }
 
-   public Subject activated(Boolean activated) {
+   public Topic activated(Boolean activated) {
         this.activated = activated;
         return this;
     }
@@ -104,6 +108,19 @@ public class Subject implements Serializable {
         this.loadDtm = loadDtm;
     }
 
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Topic subject(Subject subject) {
+        this.subject = subject;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,7 +129,7 @@ public class Subject implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Subject subject = (Subject) o;
+        Topic subject = (Topic) o;
         return id.equals(subject.id) && seq.equals(subject.seq) && name.equals(subject.name) && activated.equals(
             subject.activated);
     }
@@ -124,7 +141,7 @@ public class Subject implements Serializable {
 
     @Override
     public String toString() {
-        return "Subject{" +
+        return "Topic{" +
             "id=" + id +
             ", seq='" + seq + '\'' +
             ", name='" + name + '\'' +
