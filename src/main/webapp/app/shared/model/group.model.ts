@@ -2,9 +2,9 @@ import {ICategory} from "app/shared/model/category.model";
 
 export interface IGroup {
   id?: number;
-  seq?: number;
-  name?: string;
+  title?: string;
   activated?: boolean;
+  orderNo?: number;
   category?: ICategory;
   createdBy?: string;
   createdDate?: Date | null;

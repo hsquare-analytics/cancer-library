@@ -28,17 +28,17 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "seq", length = 30, nullable = false)
-    private Integer seq;
-
-    @NotNull
     @Size(max = 50)
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "title", length = 30, nullable = false)
+    private String title;
 
     @NotNull
     @Column(name = "activated")
     private Boolean activated;
+
+    @NotNull
+    @Column(name = "order_no", nullable = false)
+    private Integer orderNo;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -57,29 +57,29 @@ public class Group extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public Integer getSeq() {
-        return seq;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Group seq(Integer seq) {
-        this.seq = seq;
+    public Group title(String title) {
+        this.title = title;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public Group name(String name) {
-        this.name = name;
+    public Group orderNo(Integer orderNo) {
+        this.orderNo = orderNo;
         return this;
     }
 
@@ -124,5 +124,16 @@ public class Group extends AbstractAuditingEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+            "id=" + id +
+            ", title='" + title + '\'' +
+            ", activated=" + activated +
+            ", orderNo=" + orderNo +
+            ", category=" + category +
+            '}';
     }
 }

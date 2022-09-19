@@ -50,16 +50,16 @@ export const Group = () => {
                 <Translate contentKey="cancerLibraryApp.group.id">ID</Translate>
               </th>
               <th>
-                <Translate contentKey="cancerLibraryApp.group.seq">Seq</Translate>
-              </th>
-              <th>
-                <Translate contentKey="cancerLibraryApp.group.name">Name</Translate>
+                <Translate contentKey="cancerLibraryApp.group.title">Title</Translate>
               </th>
               <th>
                 <Translate contentKey="cancerLibraryApp.group.activated">Activated</Translate>
               </th>
               <th>
-                <Translate contentKey="cancerLibraryApp.group.category.name">Category Name</Translate>
+                <Translate contentKey="cancerLibraryApp.group.orderNo">Order No</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.group.category.title">Category Title</Translate>
               </th>
               <th>
                 <Translate contentKey="cancerLibraryApp.group.createdDate">Created Date</Translate>
@@ -81,10 +81,10 @@ export const Group = () => {
                     {group.id}
                   </Button>
                 </td>
-                <td>{group.seq}</td>
-                <td>{group.name}</td>
+                <td>{group.title}</td>
                 <td>{group.activated ? 'true' : 'false'}</td>
-                <td>{group.category?.name}</td>
+                <td>{group.orderNo}</td>
+                <td>{group.category?.title}</td>
                 <td>
                   {group.createdDate ? <TextFormat value={group.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
                 </td>

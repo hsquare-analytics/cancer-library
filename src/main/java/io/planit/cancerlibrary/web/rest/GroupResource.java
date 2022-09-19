@@ -101,8 +101,8 @@ public class GroupResource {
         Optional<Group> result = groupRepository
             .findById(group.getId())
             .map(existingGroup -> {
-                if (group.getName() != null) {
-                    existingGroup.setName(group.getName());
+                if (group.getTitle() != null) {
+                    existingGroup.setTitle(group.getTitle());
                 }
                 if (group.getActivated() != null) {
                     existingGroup.setActivated(group.getActivated());

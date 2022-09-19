@@ -11,14 +11,14 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="seq" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar(50)">
+            <column name="title" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
             <column name="activated" type="boolean">
                 <constraints nullable="true" />
+            </column>
+            <column name="order_no" type="bigint">
+                <constraints nullable="false"/>
             </column>
             <column name="category_id" type="bigint">
                 <constraints nullable="false" />
@@ -46,9 +46,9 @@
                   tableName="ph_group"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="seq" type="numeric"/>
-            <column name="name" type="string"/>
+            <column name="title" type="string"/>
             <column name="activated" type="boolean"/>
+            <column name="order_no" type="numeric"/>
             <column name="category_id" type="numeric"/>
         </loadData>
     </changeSet>

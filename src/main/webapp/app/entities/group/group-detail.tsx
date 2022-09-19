@@ -32,17 +32,11 @@ export const GroupDetail = () => {
           </dt>
           <dd>{groupEntity.id}</dd>
           <dt>
-            <span id="seq">
-              <Translate contentKey="cancerLibraryApp.group.seq">Seq</Translate>
+            <span id="title">
+              <Translate contentKey="cancerLibraryApp.group.title">Title</Translate>
             </span>
           </dt>
-          <dd>{groupEntity.seq}</dd>
-          <dt>
-            <span id="name">
-              <Translate contentKey="cancerLibraryApp.group.name">Name</Translate>
-            </span>
-          </dt>
-          <dd>{groupEntity.name}</dd>
+          <dd>{groupEntity.title}</dd>
           <dt>
             <span id="activated">
               <Translate contentKey="cancerLibraryApp.group.activated">Activated</Translate>
@@ -50,8 +44,14 @@ export const GroupDetail = () => {
           </dt>
           <dd>{groupEntity.activated ? 'true' : 'false'}</dd>
           <dt>
-            <span id="category-name">
-              <Translate contentKey="cancerLibraryApp.group.category.name">category name</Translate>
+            <span id="orderNo">
+              <Translate contentKey="cancerLibraryApp.group.orderNo">Order No</Translate>
+            </span>
+          </dt>
+          <dd>{groupEntity.orderNo}</dd>
+          <dt>
+            <span id="category-title">
+              <Translate contentKey="cancerLibraryApp.group.category.title">category title</Translate>
             </span>
           </dt>
           <dd>{groupEntity.category?.name}</dd>
