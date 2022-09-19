@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20220919041201-1" author="jhipster">
+        <createTable tableName="ph_subject">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="seq" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="activated" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="load_dtm" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20220919041201-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/subject.csv"
+                  separator=";"
+                  tableName="ph_subject"
+                  usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="seq" type="numeric"/>
+            <column name="name" type="string"/>
+            <column name="activated" type="boolean"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
