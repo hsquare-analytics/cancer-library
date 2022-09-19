@@ -1,12 +1,15 @@
 package io.planit.cancerlibrary.domain;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "ph_category")
-public class Category extends AbstractAuditingEntity implements Serializable {
+public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,83 +20,136 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
-    @Column(name = "title", length = 30, nullable = false)
-    private String title;
+    @Column(name = "seq", nullable = false)
+    private Integer seq;
 
-    @Column(name = "description")
-    private String description;
+    @NotNull
+    @Size(max = 30)
+    @Column(name = "name", length = 30, nullable = false)
+    private String name;
+
+    @NotNull
+    @Column(name = "table_name")
+    private String tableName;
+
+    @NotNull
+    @Column(name = "index_date")
+    private String indexDate;
 
     @NotNull
     @Column(name = "activated", nullable = false)
-    private Boolean activated;
+    private boolean activated;
+
+    @CreatedDate
+    @Column(name = "load_dtm", updatable = false)
+    private Instant loadDtm = Instant.now();
 
     @NotNull
     @ManyToOne(optional = false)
-    private Library library;
+    private Topic topic;
+
 
     public Long getId() {
-        return this.id;
-    }
-
-    public Category id(Long id) {
-        this.setId(id);
-        return this;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
-    }
-
-    public Category title(String title) {
-        this.setTitle(title);
+    public Category id(Long id) {
+        this.id = id;
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public Integer getSeq() {
+        return seq;
     }
 
-    public String getDescription() {
-        return this.description;
+    public void setSeq(Integer seq) {
+        this.seq = seq;
     }
 
-    public Category description(String description) {
-        this.setDescription(description);
+    public Category seq(Integer seq) {
+        this.seq = seq;
         return this;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getName() {
+        return name;
     }
 
-    public Boolean getActivated() {
-        return this.activated;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Category activated(Boolean activated) {
-        this.setActivated(activated);
+
+    public Category name(String name) {
+        this.name = name;
         return this;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
+    }
+
+    public Category tableName(String tableName) {
+        this.tableName = tableName;
+        return this;
+    }
+    public String getIndexDate() {
+        return indexDate;
+    }
+
+    public void setIndexDate(String indexDate) {
+        this.indexDate = indexDate;
+    }
+
+    public Category indexDate(String indexDate) {
+        this.indexDate = indexDate;
+        return this;
+    }
+
+    public Boolean isActivated() {
+        return activated;
     }
 
     public void setActivated(Boolean activated) {
         this.activated = activated;
     }
 
-    public Library getLibrary() {
-        return library;
+    public Category activated(Boolean activated) {
+        this.activated = activated;
+        return this;
     }
 
-    public void setLibrary(Library library) {
-        this.library = library;
+    public Instant getLoadDtm() {
+        return loadDtm;
     }
 
-    public Category library(Library library) {
-        this.setLibrary(library);
+    public void setLoadDtm(Instant loadDtm) {
+        this.loadDtm = loadDtm;
+    }
+
+    public Category loadDtm(Instant loadDtm) {
+        this.loadDtm = loadDtm;
+        return this;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
+
+    public Category topic(Topic topic) {
+        this.topic = topic;
         return this;
     }
 
@@ -102,24 +158,29 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Category)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((Category) o).id);
+        Category category = (Category) o;
+        return id.equals(category.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Category{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", activated='" + getActivated() + "'" +
-            "}";
+            "id=" + id +
+            ", seq=" + seq +
+            ", name='" + name + '\'' +
+            ", tableName='" + tableName + '\'' +
+            ", indexDate='" + indexDate + '\'' +
+            ", activated=" + activated +
+            ", loadDtm=" + loadDtm +
+            ", topic=" + topic +
+            '}';
     }
 }

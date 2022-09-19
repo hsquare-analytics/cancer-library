@@ -31,17 +31,29 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.id}</dd>
           <dt>
-            <span id="title">
-              <Translate contentKey="cancerLibraryApp.category.title">Title</Translate>
+            <span id="seq">
+              <Translate contentKey="cancerLibraryApp.category.seq">Sequence</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.title}</dd>
+          <dd>{categoryEntity.seq}</dd>
           <dt>
-            <span id="description">
-              <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
+            <span id="name">
+              <Translate contentKey="cancerLibraryApp.category.name">Name</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.description}</dd>
+          <dd>{categoryEntity.name}</dd>
+          <dt>
+            <span id="tableName">
+              <Translate contentKey="cancerLibraryApp.category.tableName">Table Name</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.tableName}</dd>
+          <dt>
+            <span id="indexDate">
+              <Translate contentKey="cancerLibraryApp.category.indexDate">Index Date</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.indexDate}</dd>
           <dt>
             <span id="activated">
               <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
@@ -49,11 +61,11 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.activated ? 'true' : 'false'}</dd>
           <dt>
-            <span id="library">
-              <Translate contentKey="cancerLibraryApp.category.library">Library</Translate>
+            <span id="topic-name">
+              <Translate contentKey="cancerLibraryApp.category.topic.name">Topic Name</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.library?.title}</dd>
+          <dd>{categoryEntity.topic?.name}</dd>
         </dl>
         <Button tag={Link} to="/admin/category" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}

@@ -13,9 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
@@ -107,14 +102,14 @@ public class CategoryResource {
         Optional<Category> result = categoryRepository
             .findById(category.getId())
             .map(existingCategory -> {
-                if (category.getTitle() != null) {
-                    existingCategory.setTitle(category.getTitle());
+                if (category.getName() != null) {
+                    existingCategory.setName(category.getName());
                 }
-                if (category.getDescription() != null) {
-                    existingCategory.setDescription(category.getDescription());
+                if (category.getTableName() != null) {
+                    existingCategory.setTableName(category.getTableName());
                 }
-                if (category.getActivated() != null) {
-                    existingCategory.setActivated(category.getActivated());
+                if (category.isActivated() != null) {
+                    existingCategory.setActivated(category.isActivated());
                 }
 
                 return existingCategory;

@@ -13,17 +13,8 @@ const adminMenuItems = () => (
     <MenuItem icon="database" to="/admin/topic">
       <Translate contentKey="global.menu.admin.topic">Topic management</Translate>
     </MenuItem>
-    <MenuItem icon="database" to="/admin/library">
-      <Translate contentKey="global.menu.admin.library">Library management</Translate>
-    </MenuItem>
     <MenuItem icon="table" to="/admin/category">
       <Translate contentKey="global.menu.admin.category">Table management</Translate>
-    </MenuItem>
-    <MenuItem icon="columns" to="/admin/item">
-      <Translate contentKey="global.menu.admin.item">Column management</Translate>
-    </MenuItem>
-    <MenuItem icon="user-plus" to="/admin/user-category">
-      <Translate contentKey="global.menu.admin.user-category">User Category management</Translate>
     </MenuItem>
     <MenuItem icon="users" to="/admin/user-management">
       <Translate contentKey="global.menu.admin.userManagement">User management</Translate>

@@ -1,11 +1,14 @@
-import {ILibrary} from "app/shared/model/library.model";
+import {ITopic} from "app/shared/model/topic.model";
 
 export interface ICategory {
   id?: number;
-  title?: string;
-  description?: string | null;
+  seq?: number;
+  name?: string;
+  tableName?: string;
+  indexDate?: string | null;
   activated?: boolean;
-  library?: ILibrary;
+  loadDtm?: Date;
+  topic?: ITopic;
 }
 
 export const defaultValue: Readonly<ICategory> = {

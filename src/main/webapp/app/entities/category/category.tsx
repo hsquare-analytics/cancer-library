@@ -48,16 +48,25 @@ export const Category = () => {
                   <Translate contentKey="cancerLibraryApp.category.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.title">Title</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.seq">SEQ</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.name">Name</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.category.tableName">Table Name</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.category.indexDate">Index Date</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.category.library">Library</Translate>
+                  <Translate contentKey="cancerLibraryApp.category.loadDtm">Load Dtm</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.category.topic.name">Topic Name</Translate>
                 </th>
                 <th />
               </tr>
@@ -70,10 +79,13 @@ export const Category = () => {
                       {category.id}
                     </Button>
                   </td>
-                  <td>{category.title}</td>
-                  <td>{category.description}</td>
+                  <td>{category.seq}</td>
+                  <td>{category.name}</td>
+                  <td>{category.tableName}</td>
+                  <td>{category.indexDate}</td>
                   <td>{category.activated ? 'true' : 'false'}</td>
-                  <td>{category.library.title}</td>
+                  <td>{category.loadDtm}</td>
+                  <td>{category.topic.name}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`./${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">

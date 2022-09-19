@@ -5,7 +5,7 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './category.reducer';
-import {getEntities as getLibraries} from "app/entities/library/library.reducer";
+import {getEntities as getTopics} from "app/entities/topic/topic.reducer";
 
 export const CategoryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ export const CategoryUpdate = () => {
   const loading = useAppSelector(state => state.category.loading);
   const updating = useAppSelector(state => state.category.updating);
   const updateSuccess = useAppSelector(state => state.category.updateSuccess);
-  const libraries = useAppSelector(state => state.library.entities);
+  const topics = useAppSelector(state => state.topic.entities);
 
   const handleClose = () => {
     navigate('/admin/category');
@@ -32,8 +32,8 @@ export const CategoryUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    if (libraries.length === 0) {
-      dispatch(getLibraries({}));
+    if (topics.length === 0) {
+      dispatch(getTopics({}));
     }
   }, []);
 
@@ -90,10 +90,20 @@ export const CategoryUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('cancerLibraryApp.category.title')}
-                id="category-title"
-                name="title"
-                data-cy="title"
+                label={translate('cancerLibraryApp.category.seq')}
+                id="category-seq"
+                name="seq"
+                data-cy="seq"
+                type="number"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.name')}
+                id="category-name"
+                name="name"
+                data-cy="name"
                 type="text"
                 validate={{
                   required: {value: true, message: translate('entity.validation.required')},
@@ -101,10 +111,17 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.description')}
-                id="category-description"
-                name="description"
-                data-cy="description"
+                label={translate('cancerLibraryApp.category.tableName')}
+                id="category-tableName"
+                name="tableName"
+                data-cy="tableName"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.indexDate')}
+                id="category-indexDate"
+                name="indexDate"
+                data-cy="indexDate"
                 type="text"
               />
               <ValidatedField
@@ -115,11 +132,11 @@ export const CategoryUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="library.id" data-cy="library" label={translate('cancerLibraryApp.category.library')}>
+              <ValidatedField type="select" name="topic.id" data-cy="topic" label={translate('cancerLibraryApp.category.topic.name')}>
                 <option value="">-</option>
-                {libraries.map(library => (
-                  <option value={library.id} key={library}>
-                    {library.title}
+                {topics.map(topic => (
+                  <option value={topic.id} key={topic}>
+                    {topic.name}
                   </option>
                 ))}
               </ValidatedField>

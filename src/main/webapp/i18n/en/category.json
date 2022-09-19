@@ -18,10 +18,13 @@
         "title": "Category"
       },
       "id": "ID",
-      "title": "Title",
-      "description": "Description",
+      "seq": "Sequence",
+      "name": "Name",
+      "tableName": "Table Name",
+      "indexDate": "Index Date",
       "activated": "Activated",
-      "library": "Library"
+      "loadDtm": "Load Dtm",
+      "topic.name": "Topic Name"
     }
   }
 }
