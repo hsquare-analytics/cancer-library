@@ -4,26 +4,9 @@ import {useParams} from 'react-router-dom';
 import {Translate, getSortState, translate} from 'react-jhipster'
 import {overridePaginationStateWithQueryParams} from "app/shared/util/entity-utils";
 
-// Dev Extreme
-import {
-  DataGrid,
-  Form,
-  Editing,
-  Paging,
-  Popup,
-  Toolbar,
-  Item as ItemToolBar,
-  Column,
-  SearchPanel,
-  FilterRow,
-  LoadPanel,
-} from 'devextreme-react/data-grid';
-import {Item as ItemForm } from 'devextreme-react/form';
-
-// DevExtreme CSS
-import 'devextreme/dist/css/dx.material.lime.light.compact.css'
 
 import { cloneDeep } from 'lodash' ;
+import {DxDataGridTemplate} from "app/entities/devextream-datagrid/datagrid-template";
 
 export const DataEditor = () => {
   const { categoryId } = useParams<'categoryId'>();
@@ -97,42 +80,6 @@ export const DataEditor = () => {
         category id: {categoryId}
       </p>
       <br />
-      <DataGrid
-        dataSource={dataList}
-        showBorders={true}
-        showColumnLines={true}
-        onRowInserting={onRowInsert}
-        onRowUpdating={onRowUpdate}
-        onRowRemoving={onRowRemove}
-        onToolbarPreparing={onToolbarPreparing}
-        onEditingStart={onEditingStart}
-        onInitNewRow={onEditingStart}
-      >
-        <Toolbar>
-          <ItemToolBar location="before">
-            <div className="informer">
-              {/* check data count */}
-              <h2 className="count">0</h2>
-              <span>
-                <Translate contentKey=""> Total Count </Translate>
-              </span>
-            </div>
-          </ItemToolBar>
-          <ItemToolBar name="refreshRowButton"/>
-          <ItemToolBar name="addRowButton" />
-        </Toolbar>
-        <Paging enabled={true} pageSize={10} defaultPageSize={10} />
-        <SearchPanel visible={true}/>
-        <FilterRow visible={true}/>
-        <Editing
-          mode="popup"
-          allowUpdating={true}
-          allowDeleting={true}
-          allowAdding={true}
-          >
-          <Popup showTitle={true} width={700} height={525} hideOnOutsideClick={true}/>
-        </Editing>
-      </DataGrid>
     </div>
   );
 };
