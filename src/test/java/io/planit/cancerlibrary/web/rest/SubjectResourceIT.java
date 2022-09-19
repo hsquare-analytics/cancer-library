@@ -32,11 +32,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class SubjectResourceIT {
 
-    private static final Integer DEFAULT_SEQ = 1;
-    private static final Integer UPDATED_SEQ = 2;
+    private static final Integer DEFAULT_ORDER_NO = 1;
+    private static final Integer UPDATED_ORDER_NO = 2;
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final boolean DEFAULT_ACTIVATED = true;
     private static final boolean UPDATED_ACTIVATED = false;
@@ -59,12 +59,12 @@ class SubjectResourceIT {
     private Subject subject;
 
     public static Subject createEntity(EntityManager em) {
-        Subject subject = new Subject().seq(DEFAULT_SEQ).name(DEFAULT_NAME).activated(DEFAULT_ACTIVATED);
+        Subject subject = new Subject().orderNo(DEFAULT_ORDER_NO).title(DEFAULT_TITLE).activated(DEFAULT_ACTIVATED);
         return subject;
     }
 
     public static Subject createUpdatedEntity(EntityManager em) {
-        Subject subject = new Subject().seq(UPDATED_SEQ).name(UPDATED_NAME).activated(UPDATED_ACTIVATED);
+        Subject subject = new Subject().orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).activated(UPDATED_ACTIVATED);
         return subject;
     }
 
@@ -84,9 +84,9 @@ class SubjectResourceIT {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeCreate + 1);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getSeq()).isEqualTo(DEFAULT_SEQ);
-        assertThat(testSubject.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testSubject.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testSubject.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
+        assertThat(testSubject.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
     }
 
     @Test
@@ -106,9 +106,9 @@ class SubjectResourceIT {
 
     @Test
     @Transactional
-    void checkNameIsRequired() throws Exception {
+    void checkTitleIsRequired() throws Exception {
         int databaseSizeBeforeTest = subjectRepository.findAll().size();
-        subject.setName(null);
+        subject.setTitle(null);
 
         restSubjectMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(subject)))
@@ -128,8 +128,8 @@ class SubjectResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(subject.getId().intValue())))
-            .andExpect(jsonPath("$.[*].seq").value(hasItem(DEFAULT_SEQ)))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED)));
     }
 
@@ -143,8 +143,8 @@ class SubjectResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(subject.getId().intValue()))
-            .andExpect(jsonPath("$.seq").value(subject.getSeq().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.orderNo").value(subject.getOrderNo().intValue()))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED));
     }
 
@@ -164,7 +164,7 @@ class SubjectResourceIT {
 
         Subject updatedSubject = subjectRepository.findById(subject.getId()).get();
         em.detach(updatedSubject);
-        updatedSubject.seq(UPDATED_SEQ).name(UPDATED_NAME).activated(UPDATED_ACTIVATED);
+        updatedSubject.orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).activated(UPDATED_ACTIVATED);
 
         restSubjectMockMvc
             .perform(
@@ -177,8 +177,8 @@ class SubjectResourceIT {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getSeq()).isEqualTo(UPDATED_SEQ);
-        assertThat(testSubject.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testSubject.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
+        assertThat(testSubject.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testSubject.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
@@ -255,7 +255,7 @@ class SubjectResourceIT {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testSubject.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testSubject.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 
@@ -269,7 +269,7 @@ class SubjectResourceIT {
         Subject partialUpdatedSubject = new Subject();
         partialUpdatedSubject.setId(subject.getId());
 
-        partialUpdatedSubject.name(UPDATED_NAME).activated(UPDATED_ACTIVATED);
+        partialUpdatedSubject.title(UPDATED_TITLE).activated(UPDATED_ACTIVATED);
 
         restSubjectMockMvc
             .perform(
@@ -282,7 +282,7 @@ class SubjectResourceIT {
         List<Subject> subjectList = subjectRepository.findAll();
         assertThat(subjectList).hasSize(databaseSizeBeforeUpdate);
         Subject testSubject = subjectList.get(subjectList.size() - 1);
-        assertThat(testSubject.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testSubject.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testSubject.getActivated()).isEqualTo(UPDATED_ACTIVATED);
     }
 

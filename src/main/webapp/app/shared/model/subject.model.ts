@@ -1,11 +1,18 @@
 export interface ISubject {
   id?: number;
-  seq?: number;
-  name?: string;
+  title?: string;
   activated?: boolean;
-  loadDtm?: Date;
+  orderNo?: number;
+  createdBy?: string;
+  createdDate?: Date | null;
+  lastModifiedBy?: string;
+  lastModifiedDate?: Date | null;
 }
 
 export const defaultValue: Readonly<ISubject> = {
   activated: false,
+  createdBy: '',
+  createdDate: null,
+  lastModifiedBy: '',
+  lastModifiedDate: null,
 };

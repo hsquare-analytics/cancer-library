@@ -32,16 +32,11 @@ export const SubjectDetail = () => {
           </dt>
           <dd>{subjectEntity.id}</dd>
           <dt>
-            <span id="seq">
-              <Translate contentKey="cancerLibraryApp.subject.seq">Seq</Translate>
-            </span>
-          </dt>
-          <dt>
             <span id="name">
-              <Translate contentKey="cancerLibraryApp.subject.name">Name</Translate>
+              <Translate contentKey="cancerLibraryApp.subject.title">Title</Translate>
             </span>
           </dt>
-          <dd>{subjectEntity.name}</dd>
+          <dd>{subjectEntity.title}</dd>
           <dt>
             <span id="activated">
               <Translate contentKey="cancerLibraryApp.subject.activated">Activated</Translate>
@@ -49,11 +44,31 @@ export const SubjectDetail = () => {
           </dt>
           <dd>{subjectEntity.activated ? 'true' : 'false'}</dd>
           <dt>
-            <span id="loadDtm">
-              <Translate contentKey="cancerLibraryApp.subject.loadDtm">loadDtm</Translate>
+            <span id="orderNo">
+              <Translate contentKey="cancerLibraryApp.subject.orderNo">Order No</Translate>
             </span>
           </dt>
-          <dd>{subjectEntity.loadDtm ? <TextFormat value={subjectEntity.loadDtm} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
+          <dd>{subjectEntity.orderNo}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.createdBy">Created By</Translate>
+          </dt>
+          <dd>{subjectEntity.createdBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.createdDate">Created Date</Translate>
+          </dt>
+          <dd>{subjectEntity.createdDate ? <TextFormat value={subjectEntity.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.lastModifiedBy">Last Modified By</Translate>
+          </dt>
+          <dd>{subjectEntity.lastModifiedBy}</dd>
+          <dt>
+            <Translate contentKey="cancerLibraryApp.group.lastModifiedDate">Last Modified Date</Translate>
+          </dt>
+          <dd>
+            {subjectEntity.lastModifiedDate ? (
+              <TextFormat value={subjectEntity.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+            ) : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/admin/subject" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}

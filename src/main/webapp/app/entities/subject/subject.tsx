@@ -49,16 +49,22 @@ export const Subject = () => {
                   <Translate contentKey="cancerLibraryApp.subject.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.subject.seq">Seq</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.subject.name">Name</Translate>
+                  <Translate contentKey="cancerLibraryApp.subject.title">Name</Translate>
                 </th>
                 <th>
                   <Translate contentKey="cancerLibraryApp.subject.activated">Activated</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="cancerLibraryApp.subject.loadDtm">Load DTM</Translate>
+                  <Translate contentKey="cancerLibraryApp.subject.orderNo">Order No</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.createdDate">Created Date</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedBy">Last Modified By</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedDate">Last Modified Date</Translate>
                 </th>
                 <th />
               </tr>
@@ -71,11 +77,18 @@ export const Subject = () => {
                       {subject.id}
                     </Button>
                   </td>
-                  <td>{subject.seq}</td>
-                  <td>{subject.name}</td>
+                  <td>{subject.title}</td>
                   <td>{subject.activated ? 'true' : 'false'}</td>
-                  <td>{subject.loadDtm ? <TextFormat value={subject.loadDtm} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</td>
-
+                  <td>{subject.orderNo}</td>
+                  <td>
+                    {subject.createdDate ? <TextFormat value={subject.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
+                  </td>
+                  <td>{subject.lastModifiedBy}</td>
+                  <td>
+                    {subject.lastModifiedDate ? (
+                      <TextFormat value={subject.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
+                    ) : null}
+                  </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`./${subject.id}`} color="info" size="sm" data-cy="entityDetailsButton">

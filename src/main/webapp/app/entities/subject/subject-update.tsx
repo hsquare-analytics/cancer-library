@@ -90,20 +90,10 @@ export const SubjectUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('cancerLibraryApp.subject.seq')}
-                id="subject-seq"
-                name="seq"
-                data-cy="seq"
-                type="number"
-                validate={{
-                  required: {value: true, message: translate('entity.validation.required')},
-                }}
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.subject.name')}
-                id="subject-name"
-                name="name"
-                data-cy="name"
+                label={translate('cancerLibraryApp.subject.title')}
+                id="subject-title"
+                name="title"
+                data-cy="title"
                 type="text"
                 validate={{
                   required: {value: true, message: translate('entity.validation.required')},
@@ -117,6 +107,16 @@ export const SubjectUpdate = () => {
                 data-cy="activated"
                 check
                 type="checkbox"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.subject.orderNo')}
+                id="subject-orderNo"
+                name="orderNo"
+                data-cy="orderNo"
+                type="number"
+                validate={{
+                  required: {value: true, message: translate('entity.validation.required')},
+                }}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/subject" replace
                       color="info">

@@ -1,8 +1,6 @@
 package io.planit.cancerlibrary.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +11,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name = "ph_subject")
-public class Subject implements Serializable {
+public class Subject extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,21 +25,18 @@ public class Subject implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "seq", length = 30, nullable = false)
-    private Integer seq;
-
-    @NotNull
     @Size(max = 50)
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "title", length = 30, nullable = false)
+    private String title;
 
     @NotNull
     @Column(name = "activated")
     private Boolean activated;
 
-    @CreatedDate
-    @Column(name = "load_dtm", updatable = false)
-    private Instant loadDtm = Instant.now();
+    @NotNull
+    @Column(name = "order_no", length = 30, nullable = false)
+    private Integer orderNo;
+
 
     public Long getId() {
         return id;
@@ -57,29 +51,29 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public Integer getSeq() {
-        return seq;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setSeq(Integer seq) {
-        this.seq = seq;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public Subject seq(Integer seq) {
-        this.seq = seq;
+    public Subject orderNo(Integer orderNo) {
+        this.orderNo = orderNo;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Subject name(String name) {
-        this.name = name;
+    public Subject title(String title) {
+        this.title = title;
         return this;
     }
 
@@ -96,14 +90,6 @@ public class Subject implements Serializable {
         return this;
     }
 
-    public Instant getLoadDtm() {
-        return loadDtm;
-    }
-
-    public void setLoadDtm(Instant loadDtm) {
-        this.loadDtm = loadDtm;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -113,22 +99,13 @@ public class Subject implements Serializable {
             return false;
         }
         Subject subject = (Subject) o;
-        return id.equals(subject.id) && seq.equals(subject.seq) && name.equals(subject.name) && activated.equals(
-            subject.activated);
+        return Objects.equals(id, subject.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, seq, name, activated);
+        return Objects.hash(id);
     }
 
-    @Override
-    public String toString() {
-        return "Subject{" +
-            "id=" + id +
-            ", seq='" + seq + '\'' +
-            ", name='" + name + '\'' +
-            ", activated=" + activated +
-            '}';
-    }
+
 }

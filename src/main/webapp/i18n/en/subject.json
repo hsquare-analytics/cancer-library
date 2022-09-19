@@ -18,10 +18,13 @@
         "title": "Subject"
       },
       "id": "ID",
-      "seq": "Seq",
-      "name": "Name",
+      "title": "Title",
       "activated": "Activated",
-      "loadDtm": "loadDtm"
+      "orderNo": "orderNo",
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified date"
     }
   }
 }

@@ -105,8 +105,8 @@ public class SubjectResource {
         Optional<Subject> result = subjectRepository
             .findById(subject.getId())
             .map(existingSubject -> {
-                if (subject.getName() != null) {
-                    existingSubject.setName(subject.getName());
+                if (subject.getTitle() != null) {
+                    existingSubject.setTitle(subject.getTitle());
                 }
                 if (subject.getActivated() != null) {
                     existingSubject.setActivated(subject.getActivated());

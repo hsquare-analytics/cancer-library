@@ -7,8 +7,17 @@ export interface IItem {
   activated?: boolean;
   category?: ICategory;
   itemAttribute?: {type: string};
+  createdBy?: string;
+  createdDate?: Date | null;
+  lastModifiedBy?: string;
+  lastModifiedDate?: Date | null;
+
 }
 
 export const defaultValue: Readonly<IItem> = {
   activated: false,
+  createdBy: '',
+  createdDate: null,
+  lastModifiedBy: '',
+  lastModifiedDate: null,
 };
