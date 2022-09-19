@@ -89,12 +89,12 @@ export const Category = () => {
   const onRowUpdate = (e) => {
     const data : ICategory = {} ;
     data.id = e.oldData.id;
-    data.title = getNewData(e, 'title');
-    data.description = getNewData(e, 'description');
-    data.library = getNewData(e, 'library');
-    data.activated = getNewData(e, 'activated');
+    data.title = typeof getNewData(e, 'title') === 'undefined' ? e.oldData.title : getNewData(e, 'title');
+    data.description = typeof getNewData(e, 'description') === 'undefined' ? e.oldData.description : getNewData(e, 'description');
+    data.library = typeof getNewData(e, 'library') === 'undefined' ? e.oldData.library : getNewData(e, 'library');
+    data.activated = typeof getNewData(e, 'activated') === 'undefined' ? e.oldData.activated : getNewData(e, 'activated');
 
-    console.log(data)
+    dispatch(updateEntity(data))
   }
 
   const onRowRemove = (e) => {
@@ -102,6 +102,7 @@ export const Category = () => {
   }
 
   const renderTitleHeader = (data) => {
+    console.log(data)
     let key = "warning.empty-value";
     switch(data.column.caption) {
       case "library.title" :
@@ -250,8 +251,8 @@ export const Category = () => {
           <Popup showTitle={true} width={700} height={525} hideOnOutsideClick={true} />
           <Form>
             <ItemForm itemType="group" colCount={2} colSpan={2}>
-              <ItemForm dataField={"title"}/>
-              <ItemForm dataField={"description"} />
+              <ItemForm dataField={"title"} colSpan={2}/>
+              <ItemForm dataField={"description"} colSpan={2}/>
               <ItemForm dataField={"activated"} caption="activated" editorType="dxCheckBox" />
               <ItemForm dataField={"library.id"}
                         editorType="dxSelectBox"
@@ -261,6 +262,7 @@ export const Category = () => {
                             "valueExpr" : "id",
                           }
                         }
+
               />
             </ItemForm>
           </Form>
@@ -270,10 +272,10 @@ export const Category = () => {
         <Column dataField={'description'} alignment="center" caption="description" headerCellRender={renderTitleHeader}/>
         <Column dataField={'activated'} alignment="center" caption="activated" headerCellRender={renderTitleHeader} />
         <Column caption={'Library'}>
-          <Column dataField={'library.id'} caption="library.id" headerCellRender={renderTitleHeader} />
+          {/*<Column dataField={'library.id'} caption="library.id" headerCellRender={renderTitleHeader} />*/}
           <Column dataField={'library.title'} caption="library.title" headerCellRender={renderTitleHeader}/>
-          <Column dataField={'library.description'} caption="library.description" headerCellRender={renderTitleHeader}/>
-          <Column dataField={'library.activated'} caption="library.activated" headerCellRender={renderTitleHeader}/>
+          {/*<Column dataField={'library.description'} caption="library.description" headerCellRender={renderTitleHeader}/>*/}
+          {/*<Column dataField={'library.activated'} caption="library.activated" headerCellRender={renderTitleHeader}/>*/}
         </Column>
       </DataGrid>
     </div>
