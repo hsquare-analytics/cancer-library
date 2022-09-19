@@ -1,11 +1,11 @@
-import {ICategory} from "app/shared/model/category.model";
+import {IGroup} from "app/shared/model/group.model";
 
 export interface IItem {
   id?: number;
   title?: string;
   description?: string | null;
   activated?: boolean;
-  category?: ICategory;
+  group?: IGroup;
   itemAttribute?: {type: string};
   createdBy?: string;
   createdDate?: Date | null;

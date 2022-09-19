@@ -11,8 +11,10 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(30)">
+            <column name="title" type="varchar(30)">
                 <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(30)">
             </column>
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
@@ -45,7 +47,8 @@
                   tableName="ph_item"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="name" type="string"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
             <column name="activated" type="boolean"/>
             <column name="order_no" type="numeric"/>
             <column name="group_id" type="numeric"/>

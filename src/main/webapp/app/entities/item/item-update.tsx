@@ -5,7 +5,7 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './item.reducer';
-import {getEntities as getCategories} from "app/entities/category/category.reducer";
+import {getEntities as getGroups} from "app/entities/group/group.reducer";
 
 export const ItemUpdate = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ export const ItemUpdate = () => {
   const loading = useAppSelector(state => state.item.loading);
   const updating = useAppSelector(state => state.item.updating);
   const updateSuccess = useAppSelector(state => state.item.updateSuccess);
-  const categories = useAppSelector(state => state.category.entities);
+  const groups = useAppSelector(state => state.group.entities);
 
   const handleClose = () => {
     navigate('/admin/item');
@@ -32,9 +32,9 @@ export const ItemUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    if (categories.length === 0)
+    if (groups.length === 0)
     {
-      dispatch(getCategories({}));
+      dispatch(getGroups({}));
     }
   }, []);
 
@@ -115,11 +115,11 @@ export const ItemUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.item.category')}>
+              <ValidatedField type="select" name="group.id" data-cy="group" label={translate('cancerLibraryApp.item.group.title')}>
                 <option value="">-</option>
-                {categories.map(category => (
-                  <option value={category.id} key={category}>
-                    {category.title}
+                {groups.map(group => (
+                  <option value={group.id} key={group}>
+                    {group.title}
                   </option>
                 ))}
               </ValidatedField>

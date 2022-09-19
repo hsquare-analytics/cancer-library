@@ -109,8 +109,8 @@ public class ItemResource {
         Optional<Item> result = itemRepository
             .findById(item.getId())
             .map(existingItem -> {
-                if (item.getName() != null) {
-                    existingItem.setName(item.getName());
+                if (item.getTitle() != null) {
+                    existingItem.setTitle(item.getTitle());
                 }
                 if (item.getOrderNo() != null) {
                     existingItem.setOrderNo(item.getOrderNo());

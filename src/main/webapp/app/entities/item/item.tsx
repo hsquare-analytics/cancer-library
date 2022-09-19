@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, TextFormat} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './item.reducer';
+import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const Item = () => {
   const dispatch = useAppDispatch();
@@ -29,11 +30,12 @@ export const Item = () => {
         <Translate contentKey="cancerLibraryApp.item.home.title">Items</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
             <Translate contentKey="cancerLibraryApp.item.home.refreshListLabel">Refresh List</Translate>
           </Button>
-          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
+          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
+                data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus"/>
             &nbsp;
             <Translate contentKey="cancerLibraryApp.item.home.createLabel">Create new Item</Translate>
           </Link>
@@ -43,65 +45,80 @@ export const Item = () => {
         {itemList && itemList.length > 0 ? (
           <Table responsive>
             <thead>
-              <tr>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.title">Title</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.activated">Activated</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.category">Category</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.item.type">Type</Translate>
-                </th>
-                <th />
-              </tr>
+            <tr>
+              <th>
+                <Translate contentKey="cancerLibraryApp.item.id">ID</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.item.title">Title</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.item.description">Description</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.item.activated">Activated</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.item.group.title">Group</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.subject.createdDate">Created Date</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.subject.lastModifiedBy">Last Modified By</Translate>
+              </th>
+              <th>
+                <Translate contentKey="cancerLibraryApp.subject.lastModifiedDate">Last Modified Date</Translate>
+              </th>
+              <th/>
+            </tr>
             </thead>
             <tbody>
-              {itemList.map((item, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`./${item.id}`} color="link" size="sm">
-                      {item.id}
-                    </Button>
-                  </td>
-                  <td>{item.title}</td>
-                  <td>{item.description}</td>
-                  <td>{item.activated ? 'true' : 'false'}</td>
-                  <td>{item.category.title}</td>
-                  <td>{item.itemAttribute.type}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`./${item.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
+            {itemList.map((item, i) => (
+              <tr key={`entity-${i}`} data-cy="entityTable">
+                <td>
+                  <Button tag={Link} to={`./${item.id}`} color="link" size="sm">
+                    {item.id}
+                  </Button>
+                </td>
+                <td>{item.title}</td>
+                <td>{item.description}</td>
+                <td>{item.activated ? 'true' : 'false'}</td>
+                <td>{item.group?.title}</td>
+                <td>
+                  {item.createdDate ?
+                    <TextFormat value={item.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/> : null}
+                </td>
+                <td>{item.lastModifiedBy}</td>
+                <td>
+                  {item.lastModifiedDate ? (
+                    <TextFormat value={item.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
+                  ) : null}
+                </td>
+                <td className="text-end">
+                  <div className="btn-group flex-btn-group-container">
+                    <Button tag={Link} to={`./${item.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <FontAwesomeIcon icon="eye"/>{' '}
+                      <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
-                      </Button>
-                      <Button tag={Link} to={`./${item.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
+                    </Button>
+                    <Button tag={Link} to={`./${item.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <FontAwesomeIcon icon="pencil-alt"/>{' '}
+                      <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
-                      </Button>
-                      <Button tag={Link} to={`./${item.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
+                    </Button>
+                    <Button tag={Link} to={`./${item.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <FontAwesomeIcon icon="trash"/>{' '}
+                      <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>
                         </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
             </tbody>
           </Table>
         ) : (

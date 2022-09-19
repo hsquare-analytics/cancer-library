@@ -21,7 +21,7 @@
       "title": "Title",
       "description": "Description",
       "activated": "Activated",
-      "category": "Category",
+      "group.title": "Group Title",
       "type": "Type"
     }
   }

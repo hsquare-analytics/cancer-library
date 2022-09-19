@@ -50,10 +50,10 @@ export const ItemDetail = () => {
           <dd>{itemEntity.activated ? 'true' : 'false'}</dd>
           <dt>
             <span id="category">
-              <Translate contentKey="cancerLibraryApp.item.category">Category</Translate>
+              <Translate contentKey="cancerLibraryApp.item.group.title">Group Title</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.category?.title}</dd>
+          <dd>{itemEntity.group?.title}</dd>
           <dt>
             <span id="type">
               <Translate contentKey="cancerLibraryApp.item.type">Type</Translate>

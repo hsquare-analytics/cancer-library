@@ -33,8 +33,11 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Size(max = 30)
-    @Column(name = "name", length = 30, nullable = false)
-    private String name;
+    @Column(name = "title", length = 30, nullable = false)
+    private String title;
+
+    @Column(name = "description")
+    private String description;
 
     @NotNull
     @Column(name = "activated", nullable = false)
@@ -65,16 +68,29 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Item name(String name) {
-        this.setName(name);
+    public Item title(String title) {
+        this.setTitle(title);
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Item description(String description) {
+        this.setDescription(description);
         return this;
     }
 
@@ -151,7 +167,8 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "Item{" +
             "id=" + id +
-            ", name='" + name + '\'' +
+            ", title='" + title + '\'' +
+            ", description='" + description + '\'' +
             ", activated=" + activated +
             ", orderNo=" + orderNo +
             ", group=" + group +

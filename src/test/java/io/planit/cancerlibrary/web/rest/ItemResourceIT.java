@@ -43,8 +43,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ItemResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_ACTIVATED = true;
     private static final Boolean UPDATED_ACTIVATED = false;
@@ -83,12 +86,12 @@ class ItemResourceIT {
     private Item item;
 
     public static Item createEntity(EntityManager em, Group group) {
-        Item item = new Item().name(DEFAULT_NAME).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).group(group);
+        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).group(group);
         return item;
     }
 
     public static Item createUpdatedEntity(EntityManager em, Group group) {
-        Item item = new Item().name(UPDATED_NAME).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).group(group);
+        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).group(group);
         return item;
     }
 
@@ -118,7 +121,8 @@ class ItemResourceIT {
         List<Item> itemList = itemRepository.findAll();
         assertThat(itemList).hasSize(databaseSizeBeforeCreate + 1);
         Item testItem = itemList.get(itemList.size() - 1);
-        assertThat(testItem.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testItem.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testItem.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testItem.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testItem.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
     }
@@ -143,7 +147,7 @@ class ItemResourceIT {
     @Transactional
     void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = itemRepository.findAll().size();
-        item.setName(null);
+        item.setTitle(null);
 
 
         restItemMockMvc
@@ -165,7 +169,8 @@ class ItemResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(item.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)));
     }
 
@@ -179,7 +184,8 @@ class ItemResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(item.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO));
     }
 
@@ -198,7 +204,7 @@ class ItemResourceIT {
 
         Item updatedItem = itemRepository.findById(item.getId()).get();
         em.detach(updatedItem);
-        updatedItem.name(UPDATED_NAME).orderNo(UPDATED_ORDER_NO);
+        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO);
 
         restItemMockMvc
             .perform(
@@ -211,7 +217,7 @@ class ItemResourceIT {
         List<Item> itemList = itemRepository.findAll();
         assertThat(itemList).hasSize(databaseSizeBeforeUpdate);
         Item testItem = itemList.get(itemList.size() - 1);
-        assertThat(testItem.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
     }
 
@@ -289,7 +295,7 @@ class ItemResourceIT {
         List<Item> itemList = itemRepository.findAll();
         assertThat(itemList).hasSize(databaseSizeBeforeUpdate);
         Item testItem = itemList.get(itemList.size() - 1);
-        assertThat(testItem.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testItem.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
     }
 
@@ -303,7 +309,7 @@ class ItemResourceIT {
         Item partialUpdatedItem = new Item();
         partialUpdatedItem.setId(item.getId());
 
-        partialUpdatedItem.name(UPDATED_NAME).orderNo(UPDATED_ORDER_NO);
+        partialUpdatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO);
 
         restItemMockMvc
             .perform(
@@ -316,7 +322,7 @@ class ItemResourceIT {
         List<Item> itemList = itemRepository.findAll();
         assertThat(itemList).hasSize(databaseSizeBeforeUpdate);
         Item testItem = itemList.get(itemList.size() - 1);
-        assertThat(testItem.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
     }
 
