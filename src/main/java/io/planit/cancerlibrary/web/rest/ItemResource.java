@@ -32,6 +32,9 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
+/**
+ * REST controller for managing {@link Item}.
+ */
 @RestController
 @RequestMapping("/api")
 @Transactional
@@ -64,10 +67,8 @@ public class ItemResource {
     }
 
     @PutMapping("/items/{id}")
-    public ResponseEntity<Item> updateItem(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Item item
-    ) throws URISyntaxException {
+    public ResponseEntity<Item> updateItem(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Item item)
+        throws URISyntaxException {
         log.debug("REST request to update Item : {}, {}", id, item);
         if (item.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -86,6 +87,7 @@ public class ItemResource {
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, item.getId().toString()))
             .body(result);
     }
+
 
     @PatchMapping(value = "/items/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Item> partialUpdateItem(
@@ -107,14 +109,11 @@ public class ItemResource {
         Optional<Item> result = itemRepository
             .findById(item.getId())
             .map(existingItem -> {
-                if (item.getTitle() != null) {
-                    existingItem.setTitle(item.getTitle());
+                if (item.getName() != null) {
+                    existingItem.setName(item.getName());
                 }
-                if (item.getDescription() != null) {
-                    existingItem.setDescription(item.getDescription());
-                }
-                if (item.getActivated() != null) {
-                    existingItem.setActivated(item.getActivated());
+                if (item.getOrderNo() != null) {
+                    existingItem.setOrderNo(item.getOrderNo());
                 }
 
                 return existingItem;
@@ -127,6 +126,7 @@ public class ItemResource {
         );
     }
 
+
     @GetMapping("/items")
     public ResponseEntity<List<Item>> getAllItems(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Items");
@@ -135,12 +135,14 @@ public class ItemResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+
     @GetMapping("/items/{id}")
     public ResponseEntity<Item> getItem(@PathVariable Long id) {
         log.debug("REST request to get Item : {}", id);
         Optional<Item> item = itemRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(item);
     }
+
 
     @DeleteMapping("/items/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {

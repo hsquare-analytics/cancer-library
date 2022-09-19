@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -32,19 +33,20 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Size(max = 30)
-    @Column(name = "title", length = 30, nullable = false)
-    private String title;
-
-    @Column(name = "description")
-    private String description;
+    @Column(name = "name", length = 30, nullable = false)
+    private String name;
 
     @NotNull
     @Column(name = "activated", nullable = false)
     private Boolean activated;
 
     @NotNull
+    @Column(name = "order_no", nullable = false)
+    private Integer orderNo;
+
+    @NotNull
     @ManyToOne(optional = false)
-    private Category category;
+    private Group group;
 
     @Embedded
     @AttributeOverride(name = "type", column = @Column(table = "ph_item_attribute"))
@@ -63,30 +65,17 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getName() {
+        return name;
     }
 
-    public Item title(String title) {
-        this.setTitle(title);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Item name(String name) {
+        this.setName(name);
         return this;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Item description(String description) {
-        this.setDescription(description);
-        return this;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Boolean getActivated() {
@@ -102,16 +91,29 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         this.activated = activated;
     }
 
-    public Category getCategory() {
-        return category;
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
-    public Item category(Category category) {
-        this.setCategory(category);
+    public Item orderNo(Integer orderNo) {
+        this.setOrderNo(orderNo);
+        return this;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Item group(Group group) {
+        this.setGroup(group);
         return this;
     }
 
@@ -133,24 +135,27 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Item)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        return id != null && id.equals(((Item) o).id);
+        Item item = (Item) o;
+        return Objects.equals(id, item.id);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return "Item{" +
-            "id=" + getId() +
-            ", title='" + getTitle() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", activated='" + getActivated() + "'" +
-            "}";
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", activated=" + activated +
+            ", orderNo=" + orderNo +
+            ", group=" + group +
+            ", itemAttribute=" + itemAttribute +
+            '}';
     }
 }

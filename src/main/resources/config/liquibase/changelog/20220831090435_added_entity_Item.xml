@@ -11,16 +11,16 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="varchar(30)">
+            <column name="name" type="varchar(30)">
                 <constraints nullable="false" />
-            </column>
-            <column name="description" type="varchar(255)">
-                <constraints nullable="true" />
             </column>
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="category_id" type="bigint">
+            <column name="order_no" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="group_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="created_by" type="varchar(50)">
@@ -31,11 +31,11 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="category_id"
+        <addForeignKeyConstraint baseColumnNames="group_id"
             baseTableName="ph_item"
-            constraintName="fk_item_category_id"
+            constraintName="fk_item_group_id"
             referencedColumnNames="id"
-            referencedTableName="ph_category"/>
+            referencedTableName="ph_group"/>
     </changeSet>
 
     <changeSet id="20220830090435-1-data" author="jhipster" context="faker">
@@ -45,12 +45,10 @@
                   tableName="ph_item"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="title" type="string"/>
-            <column name="description" type="string"/>
-            <column name="category_id" type="numeric"/>
+            <column name="name" type="string"/>
             <column name="activated" type="boolean"/>
-            <column name="created_by" type="string"/>
-            <column name="last_modified_by" type="string"/>
+            <column name="order_no" type="numeric"/>
+            <column name="group_id" type="numeric"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>
