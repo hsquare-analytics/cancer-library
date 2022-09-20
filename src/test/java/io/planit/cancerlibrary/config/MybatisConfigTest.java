@@ -3,7 +3,7 @@ package io.planit.cancerlibrary.config;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.dao.TestMapper;
+import io.planit.cancerlibrary.mapper.TestMapper;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;

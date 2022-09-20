@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.dao;
+package io.planit.cancerlibrary.mapper;
 
 import java.util.List;
 import java.util.Map;
