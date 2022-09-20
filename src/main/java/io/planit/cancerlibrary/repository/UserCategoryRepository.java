@@ -13,5 +13,10 @@ import org.springframework.stereotype.Repository;
 public interface UserCategoryRepository extends JpaRepository<UserCategory, Long> {
 
     @Query("select uc from UserCategory uc where uc.user.id= :userId and uc.termStart <= :currentTime and uc.termEnd >= :currentTime")
-    List<UserCategory> findAllByUserIdAndCurrentTime(@Param("userId") Long userId, @Param("currentTime") Instant currentTime);
+    List<UserCategory> findAllByUserIdAndCurrentTime(@Param("userId") Long userId,
+        @Param("currentTime") Instant currentTime);
+
+    @Query("select uc from UserCategory uc where uc.user.id= :userId and uc.category.id = :categoryId and uc.termStart <= :currentTime and uc.termEnd >= :currentTime")
+    List<UserCategory> findAllByUserIdAndAndCategoryIdCurrentTime(@Param("userId") Long userId,
+        @Param("categoryId") Long categoryId, @Param("currentTime") Instant currentTime);
 }
