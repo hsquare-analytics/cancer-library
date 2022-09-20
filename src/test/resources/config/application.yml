@@ -17,6 +17,14 @@ spring:
   application:
     name: CancerLibraryApp
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:cancerlibraryapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    name:
+    username:
+    password:
+    hikari:
+      auto-commit: false
   liquibase:
     contexts: test
   jackson:
@@ -90,3 +98,8 @@ management:
   health:
     mail:
       enabled: false
+
+mybatis.datasource.driver-class-name: org.h2.Driver
+mybatis.datasource.jdbc-url: jdbc:h2:mem:cancerlibraryapp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+mybatis.datasource.username: CancerLibraryApp
+mybatis.datasource.password:
