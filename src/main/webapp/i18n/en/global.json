@@ -42,7 +42,7 @@
         "category": "Category Management",
         "group": "Group Management",
         "item": "Item Management",
-        "user-category": "User Category Management"
+        "userCategory": "User Category Management"
       },
       "language": "Language"
     },

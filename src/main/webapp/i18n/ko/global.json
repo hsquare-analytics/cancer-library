@@ -42,7 +42,7 @@
         "category": "Category 설정",
         "group": "Group 설정",
         "item": "Item 설정",
-        "user-category": "사용자 카테고리 권한 설정"
+        "userCategory": "사용자 카테고리 권한 설정"
       },
       "language": "언어"
     },

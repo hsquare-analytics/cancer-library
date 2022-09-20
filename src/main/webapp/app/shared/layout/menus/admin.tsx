@@ -25,6 +25,9 @@ const AdminMenuItems = () => (
     <MenuItem icon="users" to="/admin/user-management">
       <Translate contentKey="global.menu.admin.userManagement">User management</Translate>
     </MenuItem>
+    <MenuItem icon="users" to="/admin/user-category">
+      <Translate contentKey="global.menu.admin.userCategory">User Category management</Translate>
+    </MenuItem>
     <MenuItem icon="eye" to="/admin/tracker">
       <Translate contentKey="global.menu.admin.tracker">User tracker</Translate>
     </MenuItem>
