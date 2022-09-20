@@ -1,22 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import DataGrid from 'devextreme-react/data-grid';
-import {customers} from "app/modules/data-editor/test";
-
-const columns = ['CompanyName', 'City', 'State', 'Phone', 'Fax'];
+import {useAppDispatch, useAppSelector} from "app/config/store";
+import {getDatasourceByCategoryId, reset} from "app/modules/data-editor/data-editor.reducer";
 
 export const DataEditor = () => {
+  const dispatch = useAppDispatch();
+
+  const datasource = useAppSelector(state => state.dataEditorReducer.datasource);
+  const loading = useAppSelector(state => state.dataEditorReducer.loading);
+
   const {categoryId} = useParams<'categoryId'>();
+
+  useEffect(() => {
+    dispatch(getDatasourceByCategoryId(Number(categoryId)));
+    return () => {
+      reset();
+    }
+  }, [categoryId]);
 
   return (
     <div>
-      <h2 id="configuration-page-heading" data-cy="configurationPageHeading" >
+      <h2 id="configuration-page-heading" data-cy="configurationPageHeading">
         Data Editor
       </h2>
       <DataGrid
-        dataSource={customers}
-        keyExpr="ID"
-        defaultColumns={columns}
+        dataSource={datasource}
+        // defaultColumns={columns}
         showBorders={true}
         filterRow={{visible: true}}
         headerFilter={{visible: true}}
@@ -36,6 +46,7 @@ export const DataEditor = () => {
         height={'90vh'}
         scrolling={{mode: 'virtual'}}
         selection={{mode: 'multiple'}}
+        loadPanel={{enabled: loading}}
       />
     </div>
   );

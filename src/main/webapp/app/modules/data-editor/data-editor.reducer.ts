@@ -16,13 +16,13 @@ const initialState: userCategorySelectorType = {
 
 const apiUrl = 'api/datasources';
 
-export const getDatasourceByCategoryId = createAsyncThunk('navigation/fetch_category_list', async (categoryId: number) => {
+export const getDatasourceByCategoryId = createAsyncThunk('datasource/fetch_datasource_list', async (categoryId: number) => {
   const requestUrl = `${apiUrl}/${categoryId}`;
   return axios.get<ICategory[]>(requestUrl);
 })
 
 const name = 'datasource'
-export const Navigation = createSlice({
+export const DataEditor = createSlice({
   name,
   initialState,
   reducers: {
@@ -51,6 +51,6 @@ export const Navigation = createSlice({
   }
 });
 
-export const {reset} = Navigation.actions;
+export const {reset} = DataEditor.actions;
 
-export default Navigation.reducer;
+export default DataEditor.reducer;
