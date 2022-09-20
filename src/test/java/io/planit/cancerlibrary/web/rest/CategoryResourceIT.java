@@ -13,11 +13,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Library;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.LibraryRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
 import java.util.List;
@@ -36,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class CategoryResourceIT {
+public class CategoryResourceIT {
 
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";

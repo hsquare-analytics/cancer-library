@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class SubjectResourceIT {
+public class SubjectResourceIT {
 
     private static final Integer DEFAULT_ORDER_NO = 1;
     private static final Integer UPDATED_ORDER_NO = 2;
