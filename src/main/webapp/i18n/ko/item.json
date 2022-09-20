@@ -21,6 +21,7 @@
       "title": "Title",
       "description": "Description",
       "activated": "Activated",
+      "orderNo": "orderNo",
       "group.title": "Group Title",
       "type": "Type"
     }

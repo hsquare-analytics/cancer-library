@@ -20,7 +20,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="order_no" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="group_id" type="bigint">
                 <constraints nullable="false" />

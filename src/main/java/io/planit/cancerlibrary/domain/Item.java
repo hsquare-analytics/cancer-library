@@ -43,8 +43,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @Column(name = "activated", nullable = false)
     private Boolean activated;
 
-    @NotNull
-    @Column(name = "order_no", nullable = false)
+    @Column(name = "order_no")
     private Integer orderNo;
 
     @NotNull
