@@ -34,6 +34,7 @@ public class SqlBuilderService {
     }
 
     public SQL getSelectAllQueryByUserIdAndCategoryId(Long userId, Long categoryId) {
+        log.debug("Request to get select all query by userId: {} and categoryId: {}", userId, categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
