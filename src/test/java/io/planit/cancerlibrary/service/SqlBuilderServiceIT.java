@@ -97,10 +97,12 @@ public class SqlBuilderServiceIT {
             .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        SQL sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), category.getId());
+        String sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), category.getId());
 
-        String result = sql.toString().toUpperCase(Locale.ROOT).replace("\n", " ").replace("\r", " ");
-        String expected = String.format("SELECT %s, %s FROM %s WHERE (TERM_START <= %s AND TERM_END >= %s)", item1.getTitle(), item2.getTitle(), category.getTitle(), userCategory.getTermStart().toString(), userCategory.getTermEnd().toString()).toUpperCase(Locale.ROOT);
+        String result = sql;
+        String expected = String.format("SELECT %s, %s FROM %s WHERE %s BETWEEN '%s' AND '%s')",
+                item1.getTitle(), item2.getTitle(), category.getTitle(), category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd())
+            .toUpperCase(Locale.ROOT);
 
         assertThat(result).isEqualTo(expected);
     }

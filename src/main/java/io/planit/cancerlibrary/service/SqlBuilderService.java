@@ -8,6 +8,7 @@ import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class SqlBuilderService {
         this.userCategoryRepository = userCategoryRepository;
     }
 
-    public SQL getSelectAllQueryByUserIdAndCategoryId(Long userId, Long categoryId) {
+    public String getSelectAllQueryByUserIdAndCategoryId(Long userId, Long categoryId) {
         log.debug("Request to get select all query by userId: {} and categoryId: {}", userId, categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
@@ -44,14 +45,23 @@ public class SqlBuilderService {
 
         SQL result = new SQL() {{
             itemList.forEach(item -> {
-                SELECT(item.getTitle().toUpperCase());
+                SELECT(item.getTitle());
             });
-            FROM(category.getTitle().toUpperCase());
-            userCategories.forEach(userCategory -> {
-                WHERE("TERM_START <= " + userCategory.getTermStart());
-                WHERE("TERM_END >= " + userCategory.getTermEnd());
-            });
+            FROM(category.getTitle());
+
+            String dateColumn = category.getDateColumn();
+
+            if (dateColumn != null && !dateColumn.isEmpty()) {
+                userCategories.forEach(userCategory -> {
+                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'",
+                        category.getDateColumn(),
+                        userCategory.getTermStart(), userCategory.getTermEnd());
+                    WHERE(betweenClaues);
+                });
+            }
         }};
-        return result;
+
+        log.debug("Executed final query: {} ", result);
+        return result.toString().toUpperCase(Locale.ROOT).replace("\n", " ").replace("\r", " ");
     }
 }
