@@ -10,7 +10,8 @@ export interface IItem extends IAbstractAuditing {
   description?: string;
   activated?: boolean;
   group?: IGroup;
-  itemAttribute?: { type: string };
+  itemAttribute?: { dataType: string };
+  itemProperty?: { visibleIndex: number };
 }
 
 export const defaultValue: Readonly<IItem> = {
@@ -19,6 +20,7 @@ export const defaultValue: Readonly<IItem> = {
   description: '',
   activated: false,
   group: null,
-  itemAttribute: {type: ''},
+  itemAttribute: {dataType: ''},
+  itemProperty: {visibleIndex: 0},
   ...abstractAuditingDefaultValue
 };

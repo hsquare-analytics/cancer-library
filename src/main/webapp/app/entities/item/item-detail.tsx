@@ -56,10 +56,16 @@ export const ItemDetail = () => {
           <dd>{itemEntity.group?.title}</dd>
           <dt>
             <span id="type">
-              <Translate contentKey="cancerLibraryApp.item.type">Type</Translate>
+              <Translate contentKey="cancerLibraryApp.item.itemAttribute.dataType">Data Type</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.itemAttribute?.type}</dd>
+          <dd>{itemEntity.itemAttribute.dataType}</dd>
+          <dt>
+            <span id="type">
+              <Translate contentKey="cancerLibraryApp.item.itemProperty.visibleIndex">Visible Index</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.itemProperty.visibleIndex}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -23,7 +23,12 @@
       "activated": "Activated",
       "orderNo": "orderNo",
       "group.title": "Group Title",
-      "type": "Type"
+      "itemAttribute": {
+        "dataType": "Data Type"
+      },
+      "itemProperty": {
+        "visibleIndex": "Visible Index"
+      }
     }
   }
 }
