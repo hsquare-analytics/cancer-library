@@ -3,7 +3,7 @@ package io.planit.cancerlibrary.config;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.mapper.TestMapper;
+import io.planit.cancerlibrary.mapper.TestMember;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MybatisConfigTest {
 
     @Autowired
-    private TestMapper testMapper;
+    private TestMember testMember;
 
     @Test
     public void contextLoad() {
-        List<Map> userList = testMapper.findUserList();
+        List<Map> userList = testMember.findAll();
         assertThat(userList).isNotNull();
     }
 }

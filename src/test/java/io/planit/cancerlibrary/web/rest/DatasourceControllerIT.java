@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -143,8 +144,24 @@ public class DatasourceControllerIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].title").value(contains(DEFAULT_COLUMN_NAME_ARRAY)));
-        ;
     }
 
 
+    @Test
+    @Transactional
+    @Sql(scripts = "classpath:config/sql/test_member.sql")
+    public void testDatasourceRowupdate() {
+
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().group(group).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+        UserCategory userCategory = new UserCategory().user(user).category(category)
+            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
+            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        userCategoryRepository.saveAndFlush(userCategory);
+    }
 }

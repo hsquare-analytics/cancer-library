@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.planit.cancerlibrary.mapper.TestMapper">
-    <select id="findUserList" resultType="map">
-        SELECT * FROM PH_USER;
+<mapper namespace="io.planit.cancerlibrary.mapper.TestMember">
+    <select id="findAll" resultType="map">
+        SELECT * FROM TEST_MEMBER;
     </select>
 </mapper>
