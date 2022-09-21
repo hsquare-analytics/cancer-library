@@ -181,7 +181,10 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(item.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)));
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
+            .andExpect(jsonPath("$.[*].itemProperty.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
+            .andExpect(jsonPath("$.[*].itemAttribute.type").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getType())))
+        ;
     }
 
     @Test
@@ -196,7 +199,10 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.id").value(item.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO));
+            .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
+            .andExpect(jsonPath("$.itemProperty.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
+            .andExpect(jsonPath("$.itemAttribute.type").value(DEFAULT_ITEM_ATTRIBUTE.getType()))
+        ;
     }
 
     @Test
@@ -214,7 +220,7 @@ public class ItemResourceIT {
 
         Item updatedItem = itemRepository.findById(item.getId()).get();
         em.detach(updatedItem);
-        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO);
+        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).itemProperty(UPDATED_ITEM_PROPERTY).itemAttribute(UPDATED_ITEM_ATTRIBUTE);
 
         restItemMockMvc
             .perform(
@@ -229,6 +235,8 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
+        assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getVisibleIndex());
+        assertThat(testItem.getItemAttribute().getType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getType());
     }
 
     @Test
