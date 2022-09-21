@@ -60,8 +60,8 @@ public class ItemResourceIT {
     private static final String ENTITY_API_URL = "/api/items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().type("AAAAAAAAAA");
-    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().type("BBBBBBBBBB");
+    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("AAAAAAAAAA");
+    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("BBBBBBBBBB");
 
     private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1);
     private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2);
@@ -134,7 +134,7 @@ public class ItemResourceIT {
         assertThat(testItem.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testItem.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
         assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getVisibleIndex());
-        assertThat(testItem.getItemAttribute().getType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getType());
+        assertThat(testItem.getItemAttribute().getDataType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getDataType());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].itemProperty.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
-            .andExpect(jsonPath("$.[*].itemAttribute.type").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getType())))
+            .andExpect(jsonPath("$.[*].itemAttribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
         ;
     }
 
@@ -201,7 +201,7 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
             .andExpect(jsonPath("$.itemProperty.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
-            .andExpect(jsonPath("$.itemAttribute.type").value(DEFAULT_ITEM_ATTRIBUTE.getType()))
+            .andExpect(jsonPath("$.itemAttribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
         ;
     }
 
@@ -236,7 +236,7 @@ public class ItemResourceIT {
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
         assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getVisibleIndex());
-        assertThat(testItem.getItemAttribute().getType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getType());
+        assertThat(testItem.getItemAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
     }
 
     @Test

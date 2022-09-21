@@ -56,7 +56,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     private Group group;
 
     @Embedded
-    @AttributeOverride(name = "type", column = @Column(table = "ph_item_attribute"))
+    @AttributeOverride(name = "dataType", column = @Column(table = "ph_item_attribute"))
     private ItemAttribute itemAttribute;
 
     @Embedded

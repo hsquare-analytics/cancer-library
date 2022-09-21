@@ -5,18 +5,18 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class ItemAttribute implements Serializable {
-    private String type;
+    private String dataType;
 
-    public String getType() {
-        return type;
+    public String getDataType() {
+        return dataType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 
-    public ItemAttribute type(String type) {
-        this.setType(type);
+    public ItemAttribute dataType(String dataType) {
+        this.setDataType(dataType);
         return this;
     }
 }

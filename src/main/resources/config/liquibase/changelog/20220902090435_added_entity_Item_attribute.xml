@@ -9,7 +9,7 @@
             <column name="item_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="type" type="varchar(30)">
+            <column name="data_type" type="varchar(30)">
                 <constraints nullable="false" />
             </column>
         </createTable>
@@ -28,7 +28,7 @@
                   tableName="ph_item_attribute">
                   usePreparedStatements="true">
             <column name="item_id" type="numeric"/>
-            <column name="type" type="string"/>
+            <column name="data_type" type="string"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>
