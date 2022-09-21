@@ -1,19 +1,24 @@
 import {IGroup} from "app/shared/model/group.model";
 import {
-  IAbstractAuditing,
-  defaultValue as abstractAuditingDefaultValue
+  defaultValue as abstractAuditingDefaultValue,
+  IAbstractAuditing
 } from "app/shared/model/abstract-auditing.model";
 
 export interface IItem extends IAbstractAuditing {
-  id?: number;
+  id?: any;
   title?: string;
-  description?: string | null;
+  description?: string;
   activated?: boolean;
   group?: IGroup;
   itemAttribute?: { type: string };
 }
 
 export const defaultValue: Readonly<IItem> = {
+  id: '',
+  title: '',
+  description: '',
   activated: false,
+  group: null,
+  itemAttribute: {type: ''},
   ...abstractAuditingDefaultValue
 };

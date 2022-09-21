@@ -1,9 +1,8 @@
-import {ILibrary} from "app/shared/model/library.model";
 import {IUser} from "app/shared/model/user.model";
 import {ICategory} from "app/shared/model/category.model";
 
 export interface IUserCategory {
-  id?: number;
+  id?: any;
   user?: IUser;
   category?: ICategory;
   activated?: boolean;
@@ -12,7 +11,10 @@ export interface IUserCategory {
 }
 
 export const defaultValue: Readonly<IUserCategory> = {
+  id: '',
+  user: null,
+  category: null,
   activated: false,
-  termStart: new Date(Date.now()),
-  termEnd: new Date(Date.now()),
+  termStart: null,
+  termEnd: null,
 };

@@ -1,12 +1,12 @@
 import {ISubject} from "app/shared/model/subject.model";
 import {
-  IAbstractAuditing,
-  defaultValue as abstractAuditingDefaultValue
+  defaultValue as abstractAuditingDefaultValue,
+  IAbstractAuditing
 } from "app/shared/model/abstract-auditing.model";
 
 
 export interface ITopic extends IAbstractAuditing {
-  id?: number;
+  id?: any;
   title?: string;
   activated?: boolean;
   orderNo?: number;
@@ -14,6 +14,10 @@ export interface ITopic extends IAbstractAuditing {
 }
 
 export const defaultValue: Readonly<ITopic> = {
-  activated: false,
+  id : '',
+  title : '',
+  activated : false,
+  orderNo : 0,
+  subject : null,
   ...abstractAuditingDefaultValue
 };
