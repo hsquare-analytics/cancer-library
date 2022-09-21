@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20220921101301-1" author="jhipster">
+        <createTable tableName="ph_item_property">
+            <column name="item_id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="visible_index" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="item_id"
+            baseTableName="ph_item_property"
+            constraintName="fk_item_property_item_id"
+            referencedColumnNames="id"
+            referencedTableName="ph_item"/>
+    </changeSet>
+
+    <changeSet id="20220921101301-1-data" author="jhipster" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/item_property.csv"
+                  separator=";"
+                  tableName="ph_item_property"
+                  usePreparedStatements="true">
+            <column name="item_id" type="numeric"/>
+            <column name="visible_index" type="numeric"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
