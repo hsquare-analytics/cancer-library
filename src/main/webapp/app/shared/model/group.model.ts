@@ -1,21 +1,18 @@
 import {ICategory} from "app/shared/model/category.model";
+import {
+  IAbstractAuditing,
+  defaultValue as abstractAuditingDefaultValue
+} from "app/shared/model/abstract-auditing.model";
 
-export interface IGroup {
+export interface IGroup extends IAbstractAuditing {
   id?: number;
   title?: string;
   activated?: boolean;
   orderNo?: number;
   category?: ICategory;
-  createdBy?: string;
-  createdDate?: Date | null;
-  lastModifiedBy?: string;
-  lastModifiedDate?: Date | null;
 }
 
 export const defaultValue: Readonly<IGroup> = {
   activated: false,
-  createdBy: '',
-  createdDate: null,
-  lastModifiedBy: '',
-  lastModifiedDate: null,
+  ...abstractAuditingDefaultValue
 };

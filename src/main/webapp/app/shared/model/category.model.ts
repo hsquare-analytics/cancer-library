@@ -1,6 +1,10 @@
 import {ITopic} from "app/shared/model/topic.model";
+import {
+  IAbstractAuditing,
+  defaultValue as abstractAuditingDefaultValue
+} from "app/shared/model/abstract-auditing.model";
 
-export interface ICategory {
+export interface ICategory extends IAbstractAuditing {
   id?: number;
   title?: string;
   description?: string;
@@ -8,16 +12,9 @@ export interface ICategory {
   activated?: boolean;
   orderNo?: number;
   topic?: ITopic;
-  createdBy?: string;
-  createdDate?: Date | null;
-  lastModifiedBy?: string;
-  lastModifiedDate?: Date | null;
 }
 
 export const defaultValue: Readonly<ICategory> = {
   activated: false,
-  createdBy: '',
-  createdDate: null,
-  lastModifiedBy: '',
-  lastModifiedDate: null,
+  ...abstractAuditingDefaultValue
 };
