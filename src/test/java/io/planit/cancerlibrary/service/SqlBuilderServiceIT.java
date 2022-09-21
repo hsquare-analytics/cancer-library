@@ -24,9 +24,9 @@ import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Locale;
 import javax.persistence.EntityManager;
-import org.apache.ibatis.jdbc.SQL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +101,28 @@ public class SqlBuilderServiceIT {
 
         String result = sql;
         String expected = String.format("SELECT %s, %s FROM %s WHERE %s BETWEEN '%s' AND '%s')",
-                item1.getTitle(), item2.getTitle(), category.getTitle(), category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd())
+                item1.getTitle(), item2.getTitle(), category.getTitle(), category.getDateColumn(),
+                userCategory.getTermStart(), userCategory.getTermEnd())
             .toUpperCase(Locale.ROOT);
+
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
+    @Transactional
+    public void testInsertSql() {
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        String result = sqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
+            put("column1", "test1");
+            put("column2", "test2");
+        }});
+
+        String expected = "INSERT INTO AAAAAAAAAA (column1, column2) VALUES ('test1', 'test2')";
 
         assertThat(result).isEqualTo(expected);
     }

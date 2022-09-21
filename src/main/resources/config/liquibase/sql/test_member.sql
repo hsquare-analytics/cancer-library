@@ -10,6 +10,19 @@ CREATE TABLE test_member (
 	primary key (idx)
 );
 
+CREATE TABLE test_member_updated (
+    seq INT,
+    idx INT,
+    name VARCHAR(50),
+    birth DATE,
+    city VARCHAR(50),
+    gender VARCHAR(50),
+    join_dt DATE,
+    mail VARCHAR(50),
+    login_ip VARCHAR(20),
+    primary key (seq)
+);
+
 INSERT INTO test_member (idx, name, birth, city, gender, join_dt, mail, login_ip) VALUES (1, 'Graddon', '1970-02-17', 'Paço', 'F', '2016-07-25', 'hgraddon0@ox.ac.uk', '147.253.135.109');
 INSERT INTO test_member (idx, name, birth, city, gender, join_dt, mail, login_ip) VALUES (2, 'Fanshawe', '1984-06-09', 'Kalampáka', 'F', '2017-10-01', 'jfanshawe1@liveinternet.ru', '251.115.97.32');
 INSERT INTO test_member (idx, name, birth, city, gender, join_dt, mail, login_ip) VALUES (3, 'Strother', '1974-06-17', 'Palmas De Gran Canaria, Las', 'F', '2020-01-04', 'hstrother2@desdev.cn', '25.167.238.132');

@@ -8,7 +8,7 @@ import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import java.time.Instant;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class SqlBuilderService {
         List<UserCategory> userCategories = userCategoryRepository.findAllByUserIdAndAndCategoryIdCurrentTime(userId,
             categoryId, Instant.now());
 
-        SQL result = new SQL() {{
+        SQL sql = new SQL() {{
             itemList.forEach(item -> {
                 SELECT(item.getTitle());
             });
@@ -61,12 +61,33 @@ public class SqlBuilderService {
             }
         }};
 
-        log.debug("Executed final query: {} ", result);
-        return result.toString().toUpperCase(Locale.ROOT).replace("\n", " ").replace("\r", " ");
+        log.debug("executed final sql: {} ", sql);
+        return sql.toString();
+    }
+
+    public String getInsertSQL(Long categoryId, Map<String, String> map) {
+        log.debug("Request to get insert query by categoryId: {}", categoryId);
+        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        SQL sql = new SQL() {{
+            INSERT_INTO(category.getTitle() + "_updated");
+            itemList.forEach(item -> {
+                VALUES(item.getTitle(), String.format("'%s'", map.get(item.getTitle())));
+            });
+        }};
+
+        log.debug("executed final sql: {} ", sql);
+        return sql.toString();
     }
 
     public List<Item> getItemListByCategoryId(Long categoryId) {
         log.debug("Request to get item list by categoryId: {}", categoryId);
         return itemRepository.findAllByGroupCategoryId(categoryId);
+    }
+
+    private String transformSqlToString(SQL sql) {
+        return sql.toString().replace("\n", " ").replace("\r", "");
     }
 }
