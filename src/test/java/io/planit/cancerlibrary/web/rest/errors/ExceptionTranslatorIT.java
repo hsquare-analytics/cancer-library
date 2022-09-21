@@ -10,7 +10,6 @@ import io.planit.cancerlibrary.IntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -114,5 +113,15 @@ class ExceptionTranslatorIT {
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("$.message").value("error.http.500"))
             .andExpect(jsonPath("$.title").value("Internal Server Error"));
+    }
+
+    @Test
+    void testSqlGrammerException() throws Exception {
+        mockMvc
+            .perform(get("/api/exception-translator-test/bad-sql-grammar-exception"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+            .andExpect(jsonPath("$.message").value("error.http.400"))
+            .andExpect(jsonPath("$.title").value("Bad Request"));
     }
 }
