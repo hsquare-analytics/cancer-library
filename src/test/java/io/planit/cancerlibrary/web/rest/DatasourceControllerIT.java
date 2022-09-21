@@ -31,14 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-@Sql({"classpath:sql/member_info_test_db.sql"})
 public class DatasourceControllerIT {
 
     @Autowired
@@ -72,7 +70,7 @@ public class DatasourceControllerIT {
 
     private Group group;
 
-    private String DEFAULT_TABLE = "member_info";
+    private String DEFAULT_TABLE = "test_member";
 
     private String DEFAULT_COLUMN_IDX = "idx";
 
