@@ -9,6 +9,8 @@ type userCategorySelectorType = {
   items: IItem[];
   loading: boolean,
   errorMessage: string | null;
+  updating: boolean;
+  updateSuccess: boolean;
 };
 
 const initialState: userCategorySelectorType = {
@@ -17,6 +19,8 @@ const initialState: userCategorySelectorType = {
   items: [],
   loading: false,
   errorMessage: null,
+  updating: false,
+  updateSuccess: false,
 }
 
 const apiUrl = 'api';

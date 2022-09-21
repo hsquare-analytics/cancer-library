@@ -26,6 +26,8 @@ describe('User category selector module reducer tests', () => {
     items: [],
     loading: false,
     errorMessage: null,
+    updating: false,
+    updateSuccess: false,
   }
 
   function testInitialState(state) {
@@ -33,7 +35,9 @@ describe('User category selector module reducer tests', () => {
       loading: false,
       errorMessage: null,
     });
+    expect(isEmpty(state.category));
     expect(isEmpty(state.datasource));
+    expect(isEmpty(state.items));
   }
 
   function testMultipleTypes(types, payload, testFunction, error?) {
@@ -44,7 +48,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Common', () => {
     it('should return the initial state', () => {
-      testInitialState(reducer(undefined, {type: ''}));
+      testInitialState(reducer(undefined, {type: 'unknown'}));
     });
   });
 
