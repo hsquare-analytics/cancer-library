@@ -20,7 +20,11 @@ CREATE TABLE test_member_updated (
     join_dt DATE,
     mail VARCHAR(50),
     login_ip VARCHAR(20),
-    primary key (seq)
+    CREATED_BY         CHARACTER VARYING(50),
+    CREATED_DATE       TIMESTAMP,
+    LAST_MODIFIED_BY   CHARACTER VARYING(50),
+    LAST_MODIFIED_DATE TIMESTAMP,
+    STATUS VARCHAR(50)
 );
 
 create sequence mybatis_sequence_generator;
