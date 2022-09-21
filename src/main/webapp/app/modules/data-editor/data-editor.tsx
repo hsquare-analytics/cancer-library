@@ -36,13 +36,13 @@ export const DataEditor = () => {
     e.cancel = new Promise<void>((resolve, reject) => {
       let row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       axios
-      .put(`api/datasource/${categoryId}`, row)
+      .post(`api/datasource/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
-          toast.info('update success');
+          toast.success('Data Submitted Successfully');
           resolve();
         } else {
-          toast.error('fail');
+          toast.error('Data Submission Failed');
           reject('update fail');
         }
       })

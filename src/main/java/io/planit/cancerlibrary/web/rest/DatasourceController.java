@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,19 +51,20 @@ public class DatasourceController {
 
         String sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), categoryId);
 
-        List<Map> result = datasourceMapper.executeSqlSelect(new SQLAdapter(sql));
+        List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
         return ResponseEntity.ok().body(result);
     }
 
-    @PutMapping("/datasource/{categoryId}")
-    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-        @RequestBody Map map) {
-        log.debug("REST request to get Datasource by category id: {}", categoryId);
+    @PostMapping("/datasource/{categoryId}")
+    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId, @RequestBody Map map) {
+        log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
-        List<Map> result = datasourceMapper.executeSqlSelect(new SQLAdapter("select * from ph_user"));
+        String sql = sqlBuilderService.getInsertSQL(categoryId, map);
 
-        return ResponseEntity.ok().body(1);
+        Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(sql));
+
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/datasource/{categoryId}/item-list")

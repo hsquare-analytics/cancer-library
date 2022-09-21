@@ -3,7 +3,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.planit.cancerlibrary.mapper.DatasourceMapper">
-    <select id="executeSqlSelect" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter" resultType="io.planit.cancerlibrary.mapper.LowerKeyMap">
+    <select id="executeSelectSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter" resultType="io.planit.cancerlibrary.mapper.LowerKeyMap">
         ${sql}
     </select>
+
+    <insert id="executeInsertSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter">
+        ${sql}
+    </insert>
 </mapper>
