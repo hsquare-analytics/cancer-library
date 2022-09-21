@@ -45,7 +45,7 @@ export const getCategoryById = createAsyncThunk('datasource/fetch_category', asy
 export const updateDatasourceRow  = createAsyncThunk(
   'datasource/update_datasource_row',
   async (rowInfo: {categoryId: number, row: any[]}, thunkAPI) => {
-    const result = await axios.put<IUser>(`${apiUrl}/categories/${rowInfo.categoryId}`, rowInfo.row);
+    const result = await axios.put<IUser>(`${apiUrl}/datasource/${rowInfo.categoryId}`, rowInfo.row);
     thunkAPI.dispatch(getCategoryById(rowInfo.categoryId));
     return result;
   },

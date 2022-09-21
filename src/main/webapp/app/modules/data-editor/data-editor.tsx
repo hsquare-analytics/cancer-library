@@ -8,6 +8,9 @@ import {
   getItemListByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
+import {cleanEntity} from "app/shared/util/entity-utils";
+import axios from "axios";
+import {toast} from 'react-toastify';
 
 export const DataEditor = () => {
   const dispatch = useAppDispatch();
@@ -28,6 +31,24 @@ export const DataEditor = () => {
       reset();
     }
   }, [categoryId]);
+
+  const onRowUpdating = e => {
+    e.cancel = new Promise<void>((resolve, reject) => {
+      let row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+      axios
+      .put(`api/datasource/${categoryId}`, row)
+      .then(({data}) => {
+        if (data >= 1) {
+          toast.info('update success');
+          resolve();
+        } else {
+          toast.error('fail');
+          reject('update fail');
+        }
+      })
+      .catch(e => reject(e));
+    });
+  };
 
   return (
     <div>
@@ -51,8 +72,7 @@ export const DataEditor = () => {
           allowUpdating: true,
         }}
         // onRowRemoving={onRowRemoving}
-        // onRowUpdating={onRowUpdating}
-        // export={{enabled: true, fileName: today() + '_' + linker.file?.originFilename}}
+        onRowUpdating={onRowUpdating}
         height={'90vh'}
         scrolling={{mode: 'virtual'}}
         selection={{mode: 'multiple'}}
