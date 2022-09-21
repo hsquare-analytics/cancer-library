@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class DxColumnProperty implements Serializable {
+public class ItemProperty implements Serializable {
 
     private Integer visibleIndex;
 
@@ -16,7 +16,7 @@ public class DxColumnProperty implements Serializable {
         this.visibleIndex = visibleIndex;
     }
 
-    public DxColumnProperty visibleIndex(Integer visibleIndex) {
+    public ItemProperty visibleIndex(Integer visibleIndex) {
         this.setVisibleIndex(visibleIndex);
         return this;
     }

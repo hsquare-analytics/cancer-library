@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
+import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
+import javax.persistence.SecondaryTables;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,7 +22,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "ph_item")
-@SecondaryTable(name = "ph_item_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
+@SecondaryTables({
+    @SecondaryTable(name = "ph_item_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id")),
+    @SecondaryTable(name = "ph_item_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
+})
 public class Item extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,6 +58,10 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @Embedded
     @AttributeOverride(name = "type", column = @Column(table = "ph_item_attribute"))
     private ItemAttribute itemAttribute;
+
+    @Embedded
+    @AttributeOverride(name = "visibleIndex", column = @Column(table = "ph_item_property"))
+    private ItemProperty itemProperty;
 
     public Long getId() {
         return this.id;
@@ -142,6 +151,19 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     public Item itemAttribute(ItemAttribute itemAttribute) {
         this.setItemAttribute(itemAttribute);
+        return this;
+    }
+
+    public ItemProperty getItemProperty() {
+        return itemProperty;
+    }
+
+    public void setItemProperty(ItemProperty itemProperty) {
+        this.itemProperty = itemProperty;
+    }
+
+    public Item itemProperty(ItemProperty itemProperty) {
+        this.setItemProperty(itemProperty);
         return this;
     }
 

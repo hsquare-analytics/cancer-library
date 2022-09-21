@@ -17,6 +17,8 @@ import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
+import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
+import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
@@ -58,6 +60,12 @@ public class ItemResourceIT {
     private static final String ENTITY_API_URL = "/api/items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
+    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().type("AAAAAAAAAA");
+    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().type("BBBBBBBBBB");
+
+    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1);
+    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2);
+
     private static Random random = new Random();
     private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
@@ -86,12 +94,12 @@ public class ItemResourceIT {
     private Item item;
 
     public static Item createEntity(EntityManager em, Group group) {
-        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).group(group);
+        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).group(group).itemProperty(DEFAULT_ITEM_PROPERTY).itemAttribute(DEFAULT_ITEM_ATTRIBUTE);
         return item;
     }
 
     public static Item createUpdatedEntity(EntityManager em, Group group) {
-        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).group(group);
+        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).group(group).itemProperty(UPDATED_ITEM_PROPERTY).itemAttribute(UPDATED_ITEM_ATTRIBUTE);
         return item;
     }
 
@@ -125,6 +133,8 @@ public class ItemResourceIT {
         assertThat(testItem.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testItem.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testItem.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
+        assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getVisibleIndex());
+        assertThat(testItem.getItemAttribute().getType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getType());
     }
 
     @Test
