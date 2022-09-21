@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
@@ -37,8 +38,9 @@ public class DatasourceController {
         this.datasourceMapper = datasourceMapper;
     }
 
-    @GetMapping("/datasources/{categoryId}")
-    public ResponseEntity<List<Map>> getDatasourceByCategoryId(@PathVariable(value = "categoryId") final Long categoryId) {
+    @GetMapping("/datasource/{categoryId}")
+    public ResponseEntity<List<Map>> getDatasourceByCategoryId(
+        @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
         String login = SecurityUtils.getCurrentUserLogin()
@@ -52,4 +54,12 @@ public class DatasourceController {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/datasource/{categoryId}/item-list")
+    public ResponseEntity<List<Item>> getItemListByCategoryId( @PathVariable(value = "categoryId") final Long categoryId) {
+        log.debug("REST request to get Item List by category id: {}", categoryId);
+
+        List<Item> result = sqlBuilderService.getItemListByCategoryId(categoryId);
+
+        return ResponseEntity.ok().body(result);
+    }
 }

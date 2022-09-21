@@ -1,7 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
+import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import io.planit.cancerlibrary.IntegrationTest;
@@ -19,9 +21,9 @@ import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
-import io.planit.cancerlibrary.service.SqlBuilderService;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,12 +31,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
+@Sql({"classpath:sql/member_info_test_db.sql"})
 public class DatasourceControllerIT {
 
     @Autowired
@@ -64,21 +68,24 @@ public class DatasourceControllerIT {
     @Autowired
     private UserCategoryRepository userCategoryRepository;
 
-    @Autowired
-    private SqlBuilderService sqlBuilderService;
-
     private Category category;
 
     private Group group;
 
-    private String DEFAULT_TABLE = "ph_user";
+    private String DEFAULT_TABLE = "member_info";
 
-    private String DEFAULT_COLUMN_1 = "id";
+    private String DEFAULT_COLUMN_IDX = "idx";
 
-    private String DEFAULT_COLUMN_2 = "login";
+    private String DEFAULT_COLUMN_NAME = "name";
 
-    private static final String ENTITY_API_URL = "/api/datasource";
-    private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
+    private String DEFAULT_COLUMN_BIRTH = "birth";
+
+    private String DEFAULT_COLUMN_CITY = "cty";
+
+    private String DEFAULT_COLUMN_GENDER = "gender";
+
+    private String[] DEFAULT_COLUMN_NAME_ARRAY = {"idx", "name", "birth", "city", "gender", "join_dt", "mail",
+        "login_ip"};
 
     @BeforeEach
     void initTest() {
@@ -97,9 +104,9 @@ public class DatasourceControllerIT {
 
     @Test
     @Transactional
-    public void testFetchDataByCategoryId() throws  Exception{
-        Item item1 = new Item().group(group).title(DEFAULT_COLUMN_1).activated(true);
-        Item item2 = new Item().group(group).title(DEFAULT_COLUMN_2).activated(true);
+    public void testFetchDataByCategoryId() throws Exception {
+        Item item1 = new Item().group(group).title(DEFAULT_COLUMN_IDX).activated(true);
+        Item item2 = new Item().group(group).title(DEFAULT_COLUMN_NAME).activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
@@ -112,9 +119,33 @@ public class DatasourceControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc
-            .perform(get(ENTITY_API_URL_ID, category.getId()))
+            .perform(get("/api/datasource/{id}", category.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
+    }
+
+    @Test
+    @Transactional
+    public void testFetchColumnListByCategoryId() throws Exception {
+
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().group(group).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+        UserCategory userCategory = new UserCategory().user(user).category(category)
+            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
+            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        userCategoryRepository.saveAndFlush(userCategory);
+
+        restDatasourceMockMvc
+            .perform(get("/api/datasource/{categoryId}/item-list", category.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].title").value(contains(DEFAULT_COLUMN_NAME_ARRAY)));
+        ;
     }
 
 

@@ -64,4 +64,9 @@ public class SqlBuilderService {
         log.debug("Executed final query: {} ", result);
         return result.toString().toUpperCase(Locale.ROOT).replace("\n", " ").replace("\r", " ");
     }
+
+    public List<Item> getItemListByCategoryId(Long categoryId) {
+        log.debug("Request to get item list by categoryId: {}", categoryId);
+        return itemRepository.findAllByGroupCategoryId(categoryId);
+    }
 }
