@@ -3,6 +3,12 @@ export const AUTHORITIES = {
   USER: 'ROLE_USER',
 };
 
+export const STATUS_LIST = {
+  PENDING : 'STATUS_PENDING',
+  DECLINED : 'STATUS_DECLINED',
+  APPROVED : 'STATUS_APPROVED',
+}
+
 export const messages = {
   DATA_ERROR_ALERT: 'Internal Error',
 };
