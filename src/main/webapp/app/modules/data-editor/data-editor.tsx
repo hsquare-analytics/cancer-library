@@ -54,8 +54,8 @@ export const DataEditor = () => {
           itemList.map(item => <Column
               key={item}
               dataField={item.title}
-              caption={item.itemProperty.caption}
-              visibleIndex={item.itemProperty.visibleIndex}
+              caption={item.itemProperty?.caption}
+              visibleIndex={item.itemProperty?.visibleIndex}
               // format={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.format}
               // visible={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.visible}
               // caption={columnLabel[key]}
