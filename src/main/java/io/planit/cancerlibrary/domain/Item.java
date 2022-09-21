@@ -5,6 +5,7 @@ import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -60,7 +61,8 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     private ItemAttribute itemAttribute;
 
     @Embedded
-    @AttributeOverride(name = "visibleIndex", column = @Column(table = "ph_item_property"))
+    @AttributeOverrides({@AttributeOverride(name = "visibleIndex", column = @Column(table = "ph_item_property")),
+        @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))})
     private ItemProperty itemProperty;
 
     public Long getId() {

@@ -27,7 +27,8 @@
         "dataType": "Data Type"
       },
       "itemProperty": {
-        "visibleIndex": "Visible Index"
+        "visibleIndex": "Visible Index",
+        "caption": "caption"
       }
     }
   }

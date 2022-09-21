@@ -61,11 +61,17 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.itemAttribute.dataType}</dd>
           <dt>
-            <span id="type">
+            <span id="visibleIndex">
               <Translate contentKey="cancerLibraryApp.item.itemProperty.visibleIndex">Visible Index</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.itemProperty.visibleIndex}</dd>
+          <dd>{itemEntity.itemProperty.caption}</dd>
+          <dt>
+            <span id="caption">
+              <Translate contentKey="cancerLibraryApp.item.itemProperty.caption">Visible Index</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.itemProperty.caption}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
