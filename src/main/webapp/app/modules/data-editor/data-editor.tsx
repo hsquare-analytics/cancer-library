@@ -2,20 +2,28 @@ import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getDatasourceByCategoryId, getItemListByCategoryId, reset} from "app/modules/data-editor/data-editor.reducer";
+import {
+  getCategoryById,
+  getDatasourceByCategoryId,
+  getItemListByCategoryId,
+  reset
+} from "app/modules/data-editor/data-editor.reducer";
 
 export const DataEditor = () => {
   const dispatch = useAppDispatch();
 
   const datasource = useAppSelector(state => state.dataEditorReducer.datasource);
   const itemList = useAppSelector(state => state.dataEditorReducer.items);
+  const category = useAppSelector(state => state.dataEditorReducer.category);
   const loading = useAppSelector(state => state.dataEditorReducer.loading);
 
   const {categoryId} = useParams<'categoryId'>();
 
   useEffect(() => {
-    dispatch(getDatasourceByCategoryId(Number(categoryId)));
-    dispatch(getItemListByCategoryId(Number(categoryId)));
+    const id = Number(categoryId);
+    dispatch(getDatasourceByCategoryId(id));
+    dispatch(getItemListByCategoryId(id));
+    dispatch(getCategoryById(id));
     return () => {
       reset();
     }
@@ -24,7 +32,7 @@ export const DataEditor = () => {
   return (
     <div>
       <h2 id="configuration-page-heading" data-cy="configurationPageHeading">
-        Data Editor
+        {category.title}
       </h2>
       <DataGrid
         dataSource={datasource}

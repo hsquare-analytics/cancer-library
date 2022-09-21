@@ -4,7 +4,12 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getDatasourceByCategoryId, getItemListByCategoryId, reset} from './data-editor.reducer';
+import reducer, {
+  getCategoryById,
+  getDatasourceByCategoryId,
+  getItemListByCategoryId,
+  reset
+} from './data-editor.reducer';
 
 describe('User category selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -16,6 +21,7 @@ describe('User category selector module reducer tests', () => {
   }
 
   const initialState = {
+    category: {},
     datasource: [],
     items: [],
     loading: false,
@@ -44,7 +50,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getDatasourceByCategoryId.pending.type, getItemListByCategoryId.pending.type], {}, state => {
+      testMultipleTypes([getDatasourceByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -61,7 +67,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getDatasourceByCategoryId.rejected.type, getItemListByCategoryId.rejected.type],
+      testMultipleTypes([getDatasourceByCategoryId.rejected.type, getItemListByCategoryId.rejected.type, getCategoryById.rejected.type],
         'some message',
         state => {
           expect(state).toMatchObject({
@@ -87,6 +93,7 @@ describe('User category selector module reducer tests', () => {
         datasource: payload.data,
       });
     });
+
     it('should fetch item list', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
@@ -97,6 +104,19 @@ describe('User category selector module reducer tests', () => {
         ...initialState,
         loading: false,
         items: payload.data,
+      });
+    });
+
+    it('should fetch category', () => {
+      const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
+
+      expect(reducer(undefined, {
+        type: getCategoryById.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        loading: false,
+        category: payload.data,
       });
     });
   });
@@ -140,6 +160,23 @@ describe('User category selector module reducer tests', () => {
       ];
 
       await store.dispatch(getItemListByCategoryId(1));
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches FETCH_CATEGORY actions', async () => {
+      const expectedActions = [
+        {
+          type: getCategoryById.pending.type
+        },
+        {
+          type: getCategoryById.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(getCategoryById(1));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);

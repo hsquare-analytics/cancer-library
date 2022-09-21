@@ -1,8 +1,10 @@
 import axios from 'axios';
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import {IItem} from "app/shared/model/item.model";
+import {ICategory} from "app/shared/model/category.model";
 
 type userCategorySelectorType = {
+  category: ICategory;
   datasource: object[];
   items: IItem[];
   loading: boolean,
@@ -10,22 +12,28 @@ type userCategorySelectorType = {
 };
 
 const initialState: userCategorySelectorType = {
+  category: {} as ICategory,
   datasource: [],
   items: [],
   loading: false,
   errorMessage: null,
 }
 
-const apiUrl = 'api/datasource';
+const apiUrl = 'api';
 
 export const getDatasourceByCategoryId = createAsyncThunk('datasource/fetch_datasource_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/${categoryId}`;
+  const requestUrl = `${apiUrl}/datasource/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
 export const getItemListByCategoryId = createAsyncThunk('datasource/fetch_item_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/${categoryId}/item-list`;
+  const requestUrl = `${apiUrl}/datasource/${categoryId}/item-list`;
   return axios.get<IItem[]>(requestUrl);
+});
+
+export const getCategoryById = createAsyncThunk('datasource/fetch_category', async (categoryId: number) => {
+  const requestUrl = `${apiUrl}/categories/${categoryId}`;
+  return axios.get<ICategory>(requestUrl);
 });
 
 
@@ -56,11 +64,19 @@ export const DataEditor = createSlice({
         items: data,
       }
     })
-    .addMatcher(isPending(getDatasourceByCategoryId, getItemListByCategoryId), (state) => {
+    .addMatcher(isFulfilled(getCategoryById), (state, action) => {
+      const {data} = action.payload;
+      return {
+        ...state,
+        loading: false,
+        category: data,
+      }
+    })
+    .addMatcher(isPending(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getDatasourceByCategoryId, getItemListByCategoryId), (state, action) => {
+    .addMatcher(isRejected(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state, action) => {
       state.loading = false;
       state.errorMessage = action.error.message;
     });
