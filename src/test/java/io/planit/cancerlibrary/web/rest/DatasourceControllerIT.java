@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.web.rest;
 
 import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -112,14 +113,11 @@ public class DatasourceControllerIT {
 
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category)
-            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
-            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
+            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc
-            .perform(get("/api/datasource/{id}", category.getId()))
-            .andExpect(status().isOk())
+        restDatasourceMockMvc.perform(get("/api/datasource/{id}", category.getId())).andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -134,15 +132,12 @@ public class DatasourceControllerIT {
 
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category)
-            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
-            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
+            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc
-            .perform(get("/api/datasource/{categoryId}/item-list", category.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+        restDatasourceMockMvc.perform(get("/api/datasource/{categoryId}/item-list", category.getId()))
+            .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].title").value(contains(DEFAULT_COLUMN_NAME_ARRAY)));
     }
 
@@ -150,8 +145,7 @@ public class DatasourceControllerIT {
     @Test
     @Transactional
     @Sql(scripts = "classpath:config/sql/test_member.sql")
-    public void testDatasourceRowupdate() {
-
+    public void testDatasourceRowupdate() throws Exception {
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().group(group).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
@@ -159,9 +153,15 @@ public class DatasourceControllerIT {
 
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category)
-            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
-            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
+            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
+
+        restDatasourceMockMvc.perform(
+                put("/api/datasource/{categoryId}", category.getId())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
+            .andExpect(status().isOk());
+
     }
 }

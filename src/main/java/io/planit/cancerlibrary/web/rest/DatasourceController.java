@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,13 +51,24 @@ public class DatasourceController {
 
         String sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), categoryId);
 
-        List<Map> result = datasourceMapper.excuteSqlSelect(new SQLAdapter(sql));
+        List<Map> result = datasourceMapper.executeSqlSelect(new SQLAdapter(sql));
 
         return ResponseEntity.ok().body(result);
     }
 
+    @PutMapping("/datasource/{categoryId}")
+    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+        @RequestBody Map map) {
+        log.debug("REST request to get Datasource by category id: {}", categoryId);
+
+        List<Map> result = datasourceMapper.executeSqlSelect(new SQLAdapter("select * from ph_user"));
+
+        return ResponseEntity.ok().body(1);
+    }
+
     @GetMapping("/datasource/{categoryId}/item-list")
-    public ResponseEntity<List<Item>> getItemListByCategoryId( @PathVariable(value = "categoryId") final Long categoryId) {
+    public ResponseEntity<List<Item>> getItemListByCategoryId(
+        @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);
 
         List<Item> result = sqlBuilderService.getItemListByCategoryId(categoryId);
