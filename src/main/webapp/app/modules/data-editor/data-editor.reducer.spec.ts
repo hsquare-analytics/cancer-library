@@ -8,7 +8,8 @@ import reducer, {
   getCategoryById,
   getDatasourceByCategoryId,
   getItemListByCategoryId,
-  reset
+  reset,
+  updateDatasourceRow
 } from './data-editor.reducer';
 
 describe('User category selector module reducer tests', () => {
@@ -62,8 +63,18 @@ describe('User category selector module reducer tests', () => {
       });
     });
 
+    it('should set state to updating', () => {
+      testMultipleTypes([updateDatasourceRow.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          updating: true,
+        });
+      });
+    });
+
     it('should reset the state', () => {
-      expect(reducer({...initialState, loading: true}, reset())).toEqual({
+      expect(reducer({...initialState, updating: true, updateSuccess: true, loading: true}, reset())).toEqual({
         ...initialState
       });
     });
@@ -71,8 +82,11 @@ describe('User category selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getDatasourceByCategoryId.rejected.type, getItemListByCategoryId.rejected.type, getCategoryById.rejected.type],
-        'some message',
+      testMultipleTypes([
+          getDatasourceByCategoryId.rejected.type, getItemListByCategoryId.rejected.type,
+          getCategoryById.rejected.type, updateDatasourceRow.rejected.type
+        ],
+        { message: 'something happened' },
         state => {
           expect(state).toMatchObject({
             errorMessage: 'error message',
@@ -123,6 +137,15 @@ describe('User category selector module reducer tests', () => {
         category: payload.data,
       });
     });
+
+    it('should set state to successful update', () => {
+      testMultipleTypes([updateDatasourceRow.fulfilled.type], { data: 'some handsome user' }, state => {
+        expect(state).toMatchObject({
+          updating: false,
+          updateSuccess: true,
+        });
+      });
+    })
   });
 
   describe('Actions', () => {

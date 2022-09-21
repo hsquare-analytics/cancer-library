@@ -2,6 +2,8 @@ import axios from 'axios';
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
+import {IUser} from "app/shared/model/user.model";
+import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 
 type userCategorySelectorType = {
   category: ICategory;
@@ -40,6 +42,15 @@ export const getCategoryById = createAsyncThunk('datasource/fetch_category', asy
   return axios.get<ICategory>(requestUrl);
 });
 
+export const updateDatasourceRow  = createAsyncThunk(
+  'datasource/update_datasource_row',
+  async (rowInfo: {categoryId: number, row: any[]}, thunkAPI) => {
+    const result = await axios.put<IUser>(`${apiUrl}/categories/${rowInfo.categoryId}`, rowInfo.row);
+    thunkAPI.dispatch(getCategoryById(rowInfo.categoryId));
+    return result;
+  },
+  { serializeError: serializeAxiosError }
+);
 
 const name = 'datasource'
 export const DataEditor = createSlice({
@@ -76,12 +87,24 @@ export const DataEditor = createSlice({
         category: data,
       }
     })
+    .addMatcher(isFulfilled(updateDatasourceRow), (state, action) => {
+      state.updating = false;
+      state.loading = false;
+      state.updateSuccess = true;
+    })
     .addMatcher(isPending(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state, action) => {
+    .addMatcher(isPending(updateDatasourceRow), (state) => {
+      state.errorMessage = null;
+      state.updateSuccess = false;
+      state.updating = true;
+    })
+    .addMatcher(isRejected(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById, updateDatasourceRow), (state, action) => {
       state.loading = false;
+      state.updating = false;
+      state.updateSuccess = false;
       state.errorMessage = action.error.message;
     });
   }
