@@ -142,7 +142,7 @@ public class SqlBuilderServiceIT {
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
         assertThat(result).contains("(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
-        assertThat(result).contains("VALUES ('test1', 'test2', " + user.getLogin() + ", 2020-01-01T00:00:00Z, " + user.getLogin() + ", 2020-01-01T00:00:00Z, STATUS_PENDING)");
+        assertThat(result).contains("VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_PENDING')");
     }
 }
 
