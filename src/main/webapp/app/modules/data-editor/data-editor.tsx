@@ -92,6 +92,7 @@ export const DataEditor = () => {
             />
           )
         }
+        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}/>
       </DataGrid>
     </div>
   );

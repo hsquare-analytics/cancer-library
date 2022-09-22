@@ -39,7 +39,7 @@ public class DatasourceController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
-        String sql = sqlBuilderService.getSelectSQL(categoryId);
+        String sql = sqlBuilderService.getUnionSelectSQL(categoryId).toString();
 
         List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 

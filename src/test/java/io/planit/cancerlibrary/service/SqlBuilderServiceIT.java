@@ -24,6 +24,7 @@ import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +90,7 @@ public class SqlBuilderServiceIT {
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    public void testSelectAllQuery() {
+    public void testUnionSelectAllQuery() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -106,10 +107,27 @@ public class SqlBuilderServiceIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         // when
-        String result = sqlBuilderService.getSelectSQL(category.getId());
+        String result = sqlBuilderService.getUnionSelectSQL(category.getId()).toString();
 
         // then
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2");
+//        SELECT *
+//            FROM (SELECT COLUMN1, COLUMN2, STATUS
+//                FROM AAAAAAAAAA_UPDATED
+//                WHERE (SEQ IN (SELECT MAX(seq)
+//                    FROM AAAAAAAAAA_UPDATED
+//                    WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))
+//                    GROUP BY IDX) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z') UNION SELECT COLUMN1, COLUMN2, NULL AS STATUS
+//        FROM AAAAAAAAAA
+//        WHERE (IDX NOT IN (SELECT IDX
+//            FROM AAAAAAAAAA_UPDATED
+//            WHERE (SEQ IN (SELECT MAX(seq)
+//                FROM AAAAAAAAAA_UPDATED
+//                WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))
+//                GROUP BY IDX))) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z')) AS T
+        String originTableName = category.getTitle().toUpperCase();
+        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
+
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS");
         assertThat(result).contains("FROM " + category.getTitle().toUpperCase());
 
         String whereClause = String.format("WHERE (%s BETWEEN '%s' AND '%s')", category.getDateColumn(),
@@ -138,7 +156,7 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = sqlBuilderService.getUpdatedListSQL(category.getId()).toString();
+        String result = sqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
 
         // then
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
@@ -161,10 +179,9 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = sqlBuilderService.getOriginExcludeUpdatedSQL(category.getId()).toString();
+        String result = sqlBuilderService.getOriginExcludeUpdatedSQL(category, Arrays.asList(item1, item2), null).toString();
 
         // then
-
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
 

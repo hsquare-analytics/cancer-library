@@ -13,6 +13,7 @@ import io.planit.cancerlibrary.security.SecurityUtils;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.collections4.ListUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class SqlBuilderService {
         this.timeService = timeService;
     }
 
-    public String getSelectSQL(Long categoryId) {
+    public SQL getUnionSelectSQL(Long categoryId) {
         log.debug("Request to get select all query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
@@ -60,56 +61,41 @@ public class SqlBuilderService {
             user.getId(),
             categoryId, Instant.now());
 
+        SQL updatedListSQL = getUpdatedListSQL(category, itemList, userCategories);
+        SQL originExcludeUpdatedSQL = getOriginExcludeUpdatedSQL(category, itemList, userCategories);
+
         SQL sql = new SQL() {{
-            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
-            FROM(category.getTitle().toUpperCase());
-
-            String dateColumn = category.getDateColumn();
-
-            if (dateColumn != null && !dateColumn.isEmpty()) {
-                userCategories.forEach(userCategory -> {
-                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'",
-                        category.getDateColumn(),
-                        userCategory.getTermStart(), userCategory.getTermEnd());
-                    WHERE(betweenClaues);
-                });
-            }
+            SELECT("*");
+            FROM("(" + updatedListSQL.toString() + " UNION " + originExcludeUpdatedSQL.toString() + ") AS T");
         }};
 
         log.debug("Assembled final sql: {} ", sql);
-        return sql.toString();
+        return sql;
     }
 
-    public SQL getUpdatedListSQL(Long categoryId) {
-        log.debug("Request to get updated list query by categoryId: {}", categoryId);
-
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
-
+    public SQL getUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
         String updatedTableName = category.getTitle().toUpperCase() + UPDATED_TABLE_SUFFIX;
-
-        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
 
         SQL sql = new SQL() {{
             itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
             SELECT("STATUS");
             FROM(updatedTableName);
             WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName) + ")");
+
+            if (category.getDateColumn() != null && !category.getDateColumn().isEmpty()) {
+                ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
+                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
+                    WHERE(betweenClaues);
+                });
+            }
         }};
 
         return sql;
     }
 
-    public SQL getOriginExcludeUpdatedSQL(Long categoryId) {
-        log.debug("Request to get updated list query by categoryId: {}", categoryId);
-
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
-
+    public SQL getOriginExcludeUpdatedSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = originTableName + UPDATED_TABLE_SUFFIX;
-
-        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
 
         SQL EXCLUDE_IDX_SUBQUERY = new SQL() {{
             SELECT("IDX");
@@ -122,6 +108,13 @@ public class SqlBuilderService {
             SELECT("NULL AS STATUS");
             FROM(originTableName);
             WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
+
+            if (category.getDateColumn() != null && !category.getDateColumn().isEmpty()) {
+                ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
+                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
+                    WHERE(betweenClaues);
+                });
+            }
         }};
 
         return sql;
