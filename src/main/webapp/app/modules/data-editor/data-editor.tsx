@@ -93,7 +93,7 @@ export const DataEditor = () => {
             />
           )
         }
-        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}>
+        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
             <Lookup dataSource={Object.values(STATUS_LIST)} />
         </Column>
       </DataGrid>
