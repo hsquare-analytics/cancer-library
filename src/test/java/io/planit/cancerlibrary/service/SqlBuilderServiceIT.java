@@ -130,12 +130,22 @@ public class SqlBuilderServiceIT {
     @Test
     @Transactional
     public void testGetUpdatedListSQL() {
-        String result = sqlBuilderService.getUpdatedListSQL().toString();
+        // given
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
 
-        assertThat(result).contains("SELECT IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, STATUS");
-        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = sqlBuilderService.getUpdatedListSQL(category.getId()).toString();
+
+        // then
+        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2");
+        assertThat(result).contains(String.format("FROM %s", updatedTableName));
         assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
-        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains(String.format("FROM %s", updatedTableName));
         assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
         assertThat(result).contains("GROUP BY IDX))");
     }

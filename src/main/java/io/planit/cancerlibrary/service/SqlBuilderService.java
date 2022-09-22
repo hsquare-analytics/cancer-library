@@ -35,6 +35,8 @@ public class SqlBuilderService {
 
     private final TimeService timeService;
 
+    private final String UPDATED_TABLE_SUFFIX = "_UPDATED";
+
     public SqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
         UserRepository userRepository, UserCategoryRepository userCategoryRepository, TimeService timeService) {
         this.categoryRepository = categoryRepository;
@@ -78,11 +80,20 @@ public class SqlBuilderService {
         return sql.toString();
     }
 
-    public SQL getUpdatedListSQL() {
+    public SQL getUpdatedListSQL(Long categoryId) {
+        log.debug("Request to get updated list query by categoryId: {}", categoryId);
+
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        String updatedTableName = category.getTitle().toUpperCase() + UPDATED_TABLE_SUFFIX;
+
+        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+
         SQL sql = new SQL() {{
-            SELECT("IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, STATUS");
-            FROM("TEST_MEMBER_UPDATED");
-            WHERE("SEQ IN (" + getTableMaxSeqListSQL("TEST_MEMBER_UPDATED") + ")");
+            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            FROM(updatedTableName);
+            WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName) + ")");
         }};
 
         return sql;
