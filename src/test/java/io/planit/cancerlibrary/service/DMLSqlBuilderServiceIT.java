@@ -133,5 +133,35 @@ public class DMLSqlBuilderServiceIT {
         assertThat(result).contains(String.format("FROM %s" , category.getTitle() + "_UPDATED"));
         assertThat(result).contains("WHERE (IDX = 'test_idx')");
     }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "test_login", authorities = "ROLE_USER")
+    public void testUpdateSql() {
+        // given
+        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        User user = UserResourceIT.createEntity(em);
+        user.setLogin("test_login");
+        userRepository.saveAndFlush(user);
+
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = dmlSqlBuilderService.getUpdateSQL(category.getId(), new HashMap<>() {{
+            put("idx", "test_idx");
+            put("column1", "test1");
+            put("column2", "test2");
+            put("status", "STATUS_APPROVED");
+        }}).toString();
+
+        // then
+        assertThat(result).contains("UPDATE " + category.getTitle() + "_updated");
+        assertThat(result).contains("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'");
+        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+    }
 }
 

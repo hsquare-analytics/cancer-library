@@ -80,4 +80,30 @@ public class DMLSqlBuilderService {
         log.debug("Assembled final sql: {} ", sql);
         return sql;
     }
+
+    public SQL getUpdateSQL(Long categoryId, Map<String, String> map) {
+        log.debug("Request to get update query by categoryId: {}", categoryId);
+
+        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        String login = SecurityUtils.getCurrentUserLogin()
+            .orElseThrow(() -> new RuntimeException("Current user login not found"));
+        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+
+        SQL sql = new SQL() {{
+            UPDATE(category.getTitle() + "_updated");
+            itemList.forEach(
+                item -> SET(String.format("%s = '%s'", item.getTitle().toUpperCase(), map.get(item.getTitle()))));
+
+            SET(String.format("LAST_MODIFIED_BY = '%s'", user.getLogin()));
+            SET(String.format("LAST_MODIFIED_DATE = '%s'", timeService.getCurrentTime()));
+            SET(String.format("STATUS = '%s'", map.get("status")));
+            WHERE(String.format("IDX = '%s'", map.get("idx")));
+        }};
+
+        log.debug("Assembled final sql: {} ", sql);
+        return sql;
+    }
 }
