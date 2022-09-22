@@ -35,7 +35,7 @@ export const DataEditor = () => {
 
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {
-      let row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+      const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       axios
       .post(`api/datasource/${categoryId}`, row)
       .then(({data}) => {
@@ -48,7 +48,7 @@ export const DataEditor = () => {
           reject('update fail');
         }
       })
-      .catch(e => reject(e));
+      .catch(err => reject(err));
     });
   };
 
