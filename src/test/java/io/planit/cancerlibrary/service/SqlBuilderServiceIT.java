@@ -101,8 +101,8 @@ public class SqlBuilderServiceIT {
 
         String result = sqlBuilderService.getSelectSQL(category.getId());
 
-        assertThat(result).contains("SELECT column1, column2");
-        assertThat(result).contains("FROM " + category.getTitle());
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2");
+        assertThat(result).contains("FROM " + category.getTitle().toUpperCase());
 
         String whereClause = String.format("WHERE (%s BETWEEN '%s' AND '%s')", category.getDateColumn(),
             userCategory.getTermStart(), userCategory.getTermEnd());
@@ -111,7 +111,12 @@ public class SqlBuilderServiceIT {
 
     @Test
     @Transactional
+    @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testInsertSql() {
+        User user = UserResourceIT.createEntity(em);
+        user.setLogin("test_login");
+        userRepository.saveAndFlush(user);
+
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
 
@@ -123,9 +128,13 @@ public class SqlBuilderServiceIT {
             put("column2", "test2");
         }});
 
-        String expected = "INSERT INTO AAAAAAAAAA (column1, column2) VALUES ('test1', 'test2')";
+//        INSERT INTO AAAAAAAAAA_updated
+//            (column1, column2, created_by, created_date, last_modified_by, last_modified_date)
+//        VALUES ('test1', 'test2', 1, 2022-09-22T00:27:28.273476Z, 1, 2022-09-22T00:27:28.274117Z)
+        assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
+        assertThat(result).contains("(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
+        assertThat(result).contains("VALUES ('test1', 'test2', " + user.getLogin());
 
-        assertThat(result).isEqualTo(expected);
     }
 }
 

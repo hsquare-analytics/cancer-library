@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.service;
 
+import io.planit.cancerlibrary.config.StatusConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;
@@ -55,8 +56,8 @@ public class SqlBuilderService {
             categoryId, Instant.now());
 
         SQL sql = new SQL() {{
-            itemList.forEach(item -> SELECT(item.getTitle()));
-            FROM(category.getTitle());
+            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            FROM(category.getTitle().toUpperCase());
 
             String dateColumn = category.getDateColumn();
 
@@ -80,14 +81,19 @@ public class SqlBuilderService {
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
+        String login = SecurityUtils.getCurrentUserLogin()
+            .orElseThrow(() -> new RuntimeException("Current user login not found"));
+        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+
         SQL sql = new SQL() {{
             INSERT_INTO(category.getTitle() + "_updated");
-            itemList.forEach(item -> VALUES(item.getTitle(), String.format("'%s'", map.get(item.getTitle()))));
+            itemList.forEach(item -> VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle()))));
 
-            VALUES("created_by", "1");
-            VALUES("created_date", Instant.now().toString());
-            VALUES("last_modified_by", "1");
-            VALUES("last_modified_date", Instant.now().toString());
+            VALUES("CREATED_BY", user.getLogin());
+            VALUES("CREATED_DATE", Instant.now().toString());
+            VALUES("LAST_MODIFIED_BY", user.getLogin());
+            VALUES("LAST_MODIFIED_DATE", Instant.now().toString());
+            VALUES("STATUS", StatusConstants.PENDING);
         }};
 
         log.debug("executed final sql: {} ", sql);
