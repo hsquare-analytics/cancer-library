@@ -56,7 +56,7 @@ export const DataEditor = () => {
         {category.title}
       </h2>
       <DataGrid
-        dataSource={datasource}
+        dataSource={JSON.parse(JSON.stringify(datasource))}
         // defaultColumns={columns}
         showBorders={true}
         filterRow={{visible: true}}
