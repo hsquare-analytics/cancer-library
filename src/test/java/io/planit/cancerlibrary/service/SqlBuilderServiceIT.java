@@ -25,11 +25,11 @@ import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
-import java.util.Locale;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
@@ -83,6 +83,7 @@ public class SqlBuilderServiceIT {
 
     @Test
     @Transactional
+    @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testSelectAllQuery() {
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -91,21 +92,21 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         User user = UserResourceIT.createEntity(em);
+        user.setLogin("test_login");
         userRepository.saveAndFlush(user);
         UserCategory userCategory = new UserCategory().user(user).category(category)
             .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
             .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        String sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), category.getId());
+        String result = sqlBuilderService.getSelectSQL(category.getId());
 
-        String result = sql;
-        String expected = String.format("SELECT %s, %s FROM %s WHERE %s BETWEEN '%s' AND '%s')",
-                item1.getTitle(), item2.getTitle(), category.getTitle(), category.getDateColumn(),
-                userCategory.getTermStart(), userCategory.getTermEnd())
-            .toUpperCase(Locale.ROOT);
+        assertThat(result).contains("SELECT column1, column2");
+        assertThat(result).contains("FROM " + category.getTitle());
 
-        assertThat(result).isEqualTo(expected);
+        String whereClause = String.format("WHERE (%s BETWEEN '%s' AND '%s')", category.getDateColumn(),
+            userCategory.getTermStart(), userCategory.getTermEnd());
+        assertThat(result).contains(whereClause);
     }
 
     @Test

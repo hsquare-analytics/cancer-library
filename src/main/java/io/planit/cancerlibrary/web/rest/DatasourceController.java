@@ -1,11 +1,8 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
-import io.planit.cancerlibrary.repository.UserRepository;
-import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.SqlBuilderService;
 import java.util.List;
 import java.util.Map;
@@ -27,15 +24,12 @@ public class DatasourceController {
 
     private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
 
-    private final UserRepository userRepository;
-
     private final SqlBuilderService sqlBuilderService;
 
     private final DatasourceMapper datasourceMapper;
 
-    public DatasourceController(UserRepository userRepository, SqlBuilderService sqlBuilderService,
+    public DatasourceController(SqlBuilderService sqlBuilderService,
         DatasourceMapper datasourceMapper) {
-        this.userRepository = userRepository;
         this.sqlBuilderService = sqlBuilderService;
         this.datasourceMapper = datasourceMapper;
     }
@@ -45,11 +39,7 @@ public class DatasourceController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
-        String login = SecurityUtils.getCurrentUserLogin()
-            .orElseThrow(() -> new RuntimeException("Current user login not found"));
-        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
-
-        String sql = sqlBuilderService.getSelectAllQueryByUserIdAndCategoryId(user.getId(), categoryId);
+        String sql = sqlBuilderService.getSelectSQL(categoryId);
 
         List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
@@ -57,7 +47,8 @@ public class DatasourceController {
     }
 
     @PostMapping("/datasource/{categoryId}")
-    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId, @RequestBody Map map) {
+    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+        @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
         String sql = sqlBuilderService.getInsertSQL(categoryId, map);

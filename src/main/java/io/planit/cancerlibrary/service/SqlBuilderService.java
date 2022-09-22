@@ -2,10 +2,13 @@ package io.planit.cancerlibrary.service;
 
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
+import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
+import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.security.SecurityUtils;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -25,28 +28,34 @@ public class SqlBuilderService {
 
     private final ItemRepository itemRepository;
 
+    private final UserRepository userRepository;
+
     private final UserCategoryRepository userCategoryRepository;
 
     public SqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserCategoryRepository userCategoryRepository) {
+        UserRepository userRepository, UserCategoryRepository userCategoryRepository) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
     }
 
-    public String getSelectAllQueryByUserIdAndCategoryId(Long userId, Long categoryId) {
-        log.debug("Request to get select all query by userId: {} and categoryId: {}", userId, categoryId);
+    public String getSelectSQL(Long categoryId) {
+        log.debug("Request to get select all query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        List<UserCategory> userCategories = userCategoryRepository.findAllByUserIdAndAndCategoryIdCurrentTime(userId,
+        String login = SecurityUtils.getCurrentUserLogin()
+            .orElseThrow(() -> new RuntimeException("Current user login not found"));
+        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<UserCategory> userCategories = userCategoryRepository.findAllByUserIdAndAndCategoryIdCurrentTime(
+            user.getId(),
             categoryId, Instant.now());
 
         SQL sql = new SQL() {{
-            itemList.forEach(item -> {
-                SELECT(item.getTitle());
-            });
+            itemList.forEach(item -> SELECT(item.getTitle()));
             FROM(category.getTitle());
 
             String dateColumn = category.getDateColumn();
@@ -61,7 +70,7 @@ public class SqlBuilderService {
             }
         }};
 
-        log.debug("executed final sql: {} ", sql);
+        log.debug("Executed final sql: {} ", sql);
         return sql.toString();
     }
 
@@ -73,9 +82,12 @@ public class SqlBuilderService {
 
         SQL sql = new SQL() {{
             INSERT_INTO(category.getTitle() + "_updated");
-            itemList.forEach(item -> {
-                VALUES(item.getTitle(), String.format("'%s'", map.get(item.getTitle())));
-            });
+            itemList.forEach(item -> VALUES(item.getTitle(), String.format("'%s'", map.get(item.getTitle()))));
+
+            VALUES("created_by", "1");
+            VALUES("created_date", Instant.now().toString());
+            VALUES("last_modified_by", "1");
+            VALUES("last_modified_date", Instant.now().toString());
         }};
 
         log.debug("executed final sql: {} ", sql);
