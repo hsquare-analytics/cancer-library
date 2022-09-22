@@ -142,7 +142,7 @@ public class SqlBuilderServiceIT {
 
         // then
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2");
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS");
         assertThat(result).contains(String.format("FROM %s", updatedTableName));
         assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
         assertThat(result).contains(String.format("FROM %s", updatedTableName));
@@ -153,14 +153,27 @@ public class SqlBuilderServiceIT {
     @Test
     @Transactional
     public void testGetOriginExcludeUpdatedListSQL() {
-        String result = sqlBuilderService.getOriginExcludeUpdatedSQL().toString();
+        // given
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
 
-        assertThat(result).contains("SELECT IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, NULL AS STATUS");
-        assertThat(result).contains("FROM TEST_MEMBER");
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = sqlBuilderService.getOriginExcludeUpdatedSQL(category.getId()).toString();
+
+        // then
+
+        String originTableName = category.getTitle().toUpperCase();
+        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
+
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2, NULL AS STATUS");
+        assertThat(result).contains(String.format("FROM %s", originTableName));
         assertThat(result).contains("WHERE (IDX NOT IN (SELECT IDX");
-        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains(String.format("FROM %s", updatedTableName));
         assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
-        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains(String.format("FROM %s", updatedTableName));
         assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
         assertThat(result).contains("GROUP BY IDX))))");
 

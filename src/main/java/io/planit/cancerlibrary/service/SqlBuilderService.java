@@ -92,6 +92,7 @@ public class SqlBuilderService {
 
         SQL sql = new SQL() {{
             itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            SELECT("STATUS");
             FROM(updatedTableName);
             WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName) + ")");
         }};
@@ -99,16 +100,27 @@ public class SqlBuilderService {
         return sql;
     }
 
-    public SQL getOriginExcludeUpdatedSQL() {
+    public SQL getOriginExcludeUpdatedSQL(Long categoryId) {
+        log.debug("Request to get updated list query by categoryId: {}", categoryId);
+
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        String originTableName = category.getTitle().toUpperCase();
+        String updatedTableName = originTableName + UPDATED_TABLE_SUFFIX;
+
+        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+
         SQL EXCLUDE_IDX_SUBQUERY = new SQL() {{
             SELECT("IDX");
-            FROM("TEST_MEMBER_UPDATED");
-            WHERE("SEQ IN (" + getTableMaxSeqListSQL("TEST_MEMBER_UPDATED")+ ")");
+            FROM(updatedTableName);
+            WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName)+ ")");
         }};
 
         SQL sql = new SQL() {{
-            SELECT("IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, NULL AS STATUS");
-            FROM("TEST_MEMBER");
+            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            SELECT("NULL AS STATUS");
+            FROM(originTableName);
             WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
         }};
 
