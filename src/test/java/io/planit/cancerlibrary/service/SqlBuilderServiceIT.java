@@ -119,6 +119,45 @@ public class SqlBuilderServiceIT {
 
     @Test
     @Transactional
+    public void testGetUpdatedMaxSeqSQL() {
+        String result = sqlBuilderService.getUpdatedMaxSeqListSQL().toString();
+        assertThat(result).contains("SELECT MAX(seq)");
+        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
+        assertThat(result).contains("GROUP BY IDX");
+    }
+
+    @Test
+    @Transactional
+    public void testGetUpdatedListSQL() {
+        String result = sqlBuilderService.getUpdatedListSQL().toString();
+
+        assertThat(result).contains("SELECT IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, STATUS");
+        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
+        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
+        assertThat(result).contains("GROUP BY IDX))");
+    }
+
+    @Test
+    @Transactional
+    public void testGetOriginExcludeUpdatedListSQL() {
+        String result = sqlBuilderService.getOriginExcludeUpdatedSQL().toString();
+
+        assertThat(result).contains("SELECT IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, NULL AS STATUS");
+        assertThat(result).contains("FROM TEST_MEMBER");
+        assertThat(result).contains("WHERE (IDX NOT IN (SELECT IDX");
+        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
+        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
+        assertThat(result).contains("GROUP BY IDX))))");
+
+    }
+
+    @Test
+    @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testInsertSql() {
         // given
@@ -141,8 +180,10 @@ public class SqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
-        assertThat(result).contains("(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
-        assertThat(result).contains("VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_PENDING')");
+        assertThat(result).contains(
+            "(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
+        assertThat(result).contains(
+            "VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_PENDING')");
     }
 }
 

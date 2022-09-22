@@ -78,6 +78,43 @@ public class SqlBuilderService {
         return sql.toString();
     }
 
+    public SQL getUpdatedListSQL() {
+        SQL sql = new SQL() {{
+            SELECT("IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, STATUS");
+            FROM("TEST_MEMBER_UPDATED");
+            WHERE("SEQ IN (" + getUpdatedMaxSeqListSQL() + ")");
+        }};
+
+        return sql;
+    }
+
+    public SQL getOriginExcludeUpdatedSQL() {
+        SQL EXCLUDE_IDX_SUBQUERY = new SQL() {{
+            SELECT("IDX");
+            FROM("TEST_MEMBER_UPDATED");
+            WHERE("SEQ IN (" + getUpdatedMaxSeqListSQL()+ ")");
+        }};
+
+        SQL sql = new SQL() {{
+            SELECT("IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, NULL AS STATUS");
+            FROM("TEST_MEMBER");
+            WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
+        }};
+
+        return sql;
+    }
+
+    public SQL getUpdatedMaxSeqListSQL() {
+        SQL sql = new SQL() {{
+            SELECT("MAX(seq)");
+            FROM("TEST_MEMBER_UPDATED");
+            WHERE("STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING')");
+            GROUP_BY("IDX");
+        }};
+
+        return sql;
+    }
+
     public String getInsertSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
