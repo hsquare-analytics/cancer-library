@@ -52,8 +52,11 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL() {{
             INSERT_INTO(category.getTitle() + "_updated");
-            itemList.forEach(
-                item -> VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle()))));
+            itemList.forEach(item -> {
+                if (map.containsKey(item.getTitle())) {
+                    VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle())));
+                }
+            });
 
             VALUES("CREATED_BY", String.format("'%s'", user.getLogin()));
             VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()));

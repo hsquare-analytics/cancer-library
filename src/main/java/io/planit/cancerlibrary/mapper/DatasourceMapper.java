@@ -13,4 +13,7 @@ public interface DatasourceMapper {
 
     @MapKey("id")
     Integer executeInsertSQL(SQLAdapter sqlAdapter);
+
+    @MapKey("id")
+    Integer executeUpdateSQL(SQLAdapter sqlAdapter);
 }
