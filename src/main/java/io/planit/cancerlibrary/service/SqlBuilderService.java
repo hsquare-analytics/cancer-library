@@ -82,7 +82,7 @@ public class SqlBuilderService {
         SQL sql = new SQL() {{
             SELECT("IDX, NAME, BIRTH, CITY, GENDER, JOIN_DT, MAIL, LOGIN_IP, STATUS");
             FROM("TEST_MEMBER_UPDATED");
-            WHERE("SEQ IN (" + getUpdatedMaxSeqListSQL() + ")");
+            WHERE("SEQ IN (" + getTableMaxSeqListSQL("TEST_MEMBER_UPDATED") + ")");
         }};
 
         return sql;
@@ -92,7 +92,7 @@ public class SqlBuilderService {
         SQL EXCLUDE_IDX_SUBQUERY = new SQL() {{
             SELECT("IDX");
             FROM("TEST_MEMBER_UPDATED");
-            WHERE("SEQ IN (" + getUpdatedMaxSeqListSQL()+ ")");
+            WHERE("SEQ IN (" + getTableMaxSeqListSQL("TEST_MEMBER_UPDATED")+ ")");
         }};
 
         SQL sql = new SQL() {{
@@ -104,10 +104,10 @@ public class SqlBuilderService {
         return sql;
     }
 
-    public SQL getUpdatedMaxSeqListSQL() {
+    public SQL getTableMaxSeqListSQL(String tableName) {
         SQL sql = new SQL() {{
             SELECT("MAX(seq)");
-            FROM("TEST_MEMBER_UPDATED");
+            FROM(tableName);
             WHERE("STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING')");
             GROUP_BY("IDX");
         }};

@@ -120,9 +120,9 @@ public class SqlBuilderServiceIT {
     @Test
     @Transactional
     public void testGetUpdatedMaxSeqSQL() {
-        String result = sqlBuilderService.getUpdatedMaxSeqListSQL().toString();
+        String result = sqlBuilderService.getTableMaxSeqListSQL("TBL_TEST").toString();
         assertThat(result).contains("SELECT MAX(seq)");
-        assertThat(result).contains("FROM TEST_MEMBER_UPDATED");
+        assertThat(result).contains("FROM TBL_TEST");
         assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
         assertThat(result).contains("GROUP BY IDX");
     }
