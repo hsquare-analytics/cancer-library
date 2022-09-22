@@ -3,7 +3,8 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
-import io.planit.cancerlibrary.service.SqlBuilderService;
+import io.planit.cancerlibrary.service.DMLSqlBuilderService;
+import io.planit.cancerlibrary.service.UnionSqlBuilderService;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -25,14 +26,18 @@ public class DatasourceController {
 
     private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
 
-    private final SqlBuilderService sqlBuilderService;
+    private final UnionSqlBuilderService unionSqlBuilderService;
+
+    private final DMLSqlBuilderService dmlSqlBuilderService;
 
     private final DatasourceMapper datasourceMapper;
 
-    public DatasourceController(SqlBuilderService sqlBuilderService,
+    public DatasourceController(UnionSqlBuilderService unionSqlBuilderService,
+        DMLSqlBuilderService dmlSqlBuilderService,
         DatasourceMapper datasourceMapper) {
-        this.sqlBuilderService = sqlBuilderService;
+        this.unionSqlBuilderService = unionSqlBuilderService;
         this.datasourceMapper = datasourceMapper;
+        this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
     @GetMapping("/datasource/{categoryId}")
@@ -40,7 +45,7 @@ public class DatasourceController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
-        SQL sql = sqlBuilderService.getUnionSelectSQL(categoryId);
+        SQL sql = unionSqlBuilderService.getUnionSelectSQL(categoryId);
 
         List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
@@ -52,7 +57,7 @@ public class DatasourceController {
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
-        SQL sql = sqlBuilderService.getInsertSQL(categoryId, map);
+        SQL sql = dmlSqlBuilderService.getInsertSQL(categoryId, map);
 
         Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(sql));
 
@@ -64,7 +69,7 @@ public class DatasourceController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);
 
-        List<Item> result = sqlBuilderService.getItemListByCategoryId(categoryId);
+        List<Item> result = unionSqlBuilderService.getItemListByCategoryId(categoryId);
 
         return ResponseEntity.ok().body(result);
     }

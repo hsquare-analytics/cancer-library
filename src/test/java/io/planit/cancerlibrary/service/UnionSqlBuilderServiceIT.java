@@ -25,18 +25,15 @@ import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.HashMap;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
-public class SqlBuilderServiceIT {
+public class UnionSqlBuilderServiceIT {
 
     @Autowired
     private EntityManager em;
@@ -63,14 +60,11 @@ public class SqlBuilderServiceIT {
     private UserCategoryRepository userCategoryRepository;
 
     @Autowired
-    private SqlBuilderService sqlBuilderService;
+    private UnionSqlBuilderService unionSqlBuilderService;
 
     private Category category;
 
     private Group group;
-
-    @MockBean
-    TimeService timeService;
 
     @BeforeEach
     void initTest() {
@@ -107,7 +101,7 @@ public class SqlBuilderServiceIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         // when
-        String result = sqlBuilderService.getUnionSelectSQL(category.getId()).toString();
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
 
         // then
 //        SELECT *
@@ -138,7 +132,7 @@ public class SqlBuilderServiceIT {
     @Test
     @Transactional
     public void testGetUpdatedMaxSeqSQL() {
-        String result = sqlBuilderService.getTableMaxSeqListSQL("TBL_TEST").toString();
+        String result = unionSqlBuilderService.getTableMaxSeqListSQL("TBL_TEST").toString();
         assertThat(result).contains("SELECT MAX(seq)");
         assertThat(result).contains("FROM TBL_TEST");
         assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
@@ -156,7 +150,7 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = sqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
+        String result = unionSqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
 
         // then
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
@@ -179,7 +173,7 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = sqlBuilderService.getOriginExcludeUpdatedSQL(category, Arrays.asList(item1, item2), null).toString();
+        String result = unionSqlBuilderService.getOriginExcludeUpdatedSQL(category, Arrays.asList(item1, item2), null).toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
@@ -194,36 +188,6 @@ public class SqlBuilderServiceIT {
         assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
         assertThat(result).contains("GROUP BY IDX))))");
 
-    }
-
-    @Test
-    @Transactional
-    @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    public void testInsertSql() {
-        // given
-        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
-        User user = UserResourceIT.createEntity(em);
-        user.setLogin("test_login");
-        userRepository.saveAndFlush(user);
-
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
-
-        itemRepository.saveAndFlush(item1);
-        itemRepository.saveAndFlush(item2);
-
-        // when
-        String result = sqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
-            put("column1", "test1");
-            put("column2", "test2");
-        }}).toString();
-
-        // then
-        assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
-        assertThat(result).contains(
-            "(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
-        assertThat(result).contains(
-            "VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_PENDING')");
     }
 }
 
