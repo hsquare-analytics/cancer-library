@@ -131,7 +131,7 @@ public class SqlBuilderService {
         return sql;
     }
 
-    public String getInsertSQL(Long categoryId, Map<String, String> map) {
+    public SQL getInsertSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
@@ -154,7 +154,7 @@ public class SqlBuilderService {
         }};
 
         log.debug("Assembled final sql: {} ", sql);
-        return sql.toString();
+        return sql;
     }
 
     public List<Item> getItemListByCategoryId(Long categoryId) {

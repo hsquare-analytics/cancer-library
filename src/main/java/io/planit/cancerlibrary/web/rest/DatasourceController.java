@@ -6,6 +6,7 @@ import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.service.SqlBuilderService;
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class DatasourceController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
-        String sql = sqlBuilderService.getUnionSelectSQL(categoryId).toString();
+        SQL sql = sqlBuilderService.getUnionSelectSQL(categoryId);
 
         List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
@@ -51,7 +52,7 @@ public class DatasourceController {
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
-        String sql = sqlBuilderService.getInsertSQL(categoryId, map);
+        SQL sql = sqlBuilderService.getInsertSQL(categoryId, map);
 
         Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(sql));
 

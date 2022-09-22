@@ -1,10 +1,13 @@
 package io.planit.cancerlibrary.mapper;
 
+import org.apache.ibatis.jdbc.SQL;
+
 public class SQLAdapter {
     String sql;
 
-    public SQLAdapter(String sql) {
-        this.sql = sql;
+    public SQLAdapter(SQL sql) {
+        this.sql = sql.toString();
+
     }
 
     public String getSql() {
@@ -14,4 +17,5 @@ public class SQLAdapter {
     public void setSql(String sql) {
         this.sql = sql;
     }
+
 }

@@ -216,7 +216,7 @@ public class SqlBuilderServiceIT {
         String result = sqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
             put("column1", "test1");
             put("column2", "test2");
-        }});
+        }}).toString();
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
