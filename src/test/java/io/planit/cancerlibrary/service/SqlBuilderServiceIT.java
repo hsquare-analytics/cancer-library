@@ -28,7 +28,9 @@ import java.util.HashMap;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +68,9 @@ public class SqlBuilderServiceIT {
 
     private Group group;
 
+    @MockBean
+    TimeService timeService;
+
     @BeforeEach
     void initTest() {
         Subject subject = SubjectResourceIT.createEntity(em);
@@ -85,6 +90,7 @@ public class SqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testSelectAllQuery() {
+        // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
 
@@ -99,8 +105,10 @@ public class SqlBuilderServiceIT {
             .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
+        // when
         String result = sqlBuilderService.getSelectSQL(category.getId());
 
+        // then
         assertThat(result).contains("SELECT COLUMN1, COLUMN2");
         assertThat(result).contains("FROM " + category.getTitle().toUpperCase());
 
@@ -113,6 +121,8 @@ public class SqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testInsertSql() {
+        // given
+        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
@@ -123,18 +133,16 @@ public class SqlBuilderServiceIT {
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
 
+        // when
         String result = sqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
             put("column1", "test1");
             put("column2", "test2");
         }});
 
-//        INSERT INTO AAAAAAAAAA_updated
-//            (column1, column2, created_by, created_date, last_modified_by, last_modified_date)
-//        VALUES ('test1', 'test2', 1, 2022-09-22T00:27:28.273476Z, 1, 2022-09-22T00:27:28.274117Z)
+        // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
         assertThat(result).contains("(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
-        assertThat(result).contains("VALUES ('test1', 'test2', " + user.getLogin());
-
+        assertThat(result).contains("VALUES ('test1', 'test2', " + user.getLogin() + ", 2020-01-01T00:00:00Z, " + user.getLogin() + ", 2020-01-01T00:00:00Z, STATUS_PENDING)");
     }
 }
 

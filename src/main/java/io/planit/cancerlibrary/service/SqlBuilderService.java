@@ -33,12 +33,15 @@ public class SqlBuilderService {
 
     private final UserCategoryRepository userCategoryRepository;
 
+    private final TimeService timeService;
+
     public SqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserRepository userRepository, UserCategoryRepository userCategoryRepository) {
+        UserRepository userRepository, UserCategoryRepository userCategoryRepository, TimeService timeService) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
+        this.timeService = timeService;
     }
 
     public String getSelectSQL(Long categoryId) {
@@ -87,12 +90,13 @@ public class SqlBuilderService {
 
         SQL sql = new SQL() {{
             INSERT_INTO(category.getTitle() + "_updated");
-            itemList.forEach(item -> VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle()))));
+            itemList.forEach(
+                item -> VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle()))));
 
             VALUES("CREATED_BY", user.getLogin());
-            VALUES("CREATED_DATE", Instant.now().toString());
+            VALUES("CREATED_DATE", timeService.getCurrentTime().toString());
             VALUES("LAST_MODIFIED_BY", user.getLogin());
-            VALUES("LAST_MODIFIED_DATE", Instant.now().toString());
+            VALUES("LAST_MODIFIED_DATE", timeService.getCurrentTime().toString());
             VALUES("STATUS", StatusConstants.PENDING);
         }};
 
