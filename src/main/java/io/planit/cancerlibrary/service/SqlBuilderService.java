@@ -93,11 +93,11 @@ public class SqlBuilderService {
             itemList.forEach(
                 item -> VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle()))));
 
-            VALUES("CREATED_BY", user.getLogin());
-            VALUES("CREATED_DATE", timeService.getCurrentTime().toString());
-            VALUES("LAST_MODIFIED_BY", user.getLogin());
-            VALUES("LAST_MODIFIED_DATE", timeService.getCurrentTime().toString());
-            VALUES("STATUS", StatusConstants.PENDING);
+            VALUES("CREATED_BY", String.format("'%s'", user.getLogin()));
+            VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()));
+            VALUES("LAST_MODIFIED_BY", String.format("'%s'", user.getLogin()));
+            VALUES("LAST_MODIFIED_DATE", String.format("'%s'", timeService.getCurrentTime()));
+            VALUES("STATUS", String.format("'%s'", StatusConstants.PENDING));
         }};
 
         log.debug("executed final sql: {} ", sql);
@@ -107,9 +107,5 @@ public class SqlBuilderService {
     public List<Item> getItemListByCategoryId(Long categoryId) {
         log.debug("Request to get item list by categoryId: {}", categoryId);
         return itemRepository.findAllByGroupCategoryId(categoryId);
-    }
-
-    private String transformSqlToString(SQL sql) {
-        return sql.toString().replace("\n", " ").replace("\r", "");
     }
 }
