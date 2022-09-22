@@ -52,6 +52,30 @@ export const DataEditor = () => {
     });
   };
 
+  const onToolbarPreparing = e => {
+    e.toolbarOptions.items.unshift({
+        location: 'after',
+        widget: 'dxButton',
+        options: {
+          icon: 'upload',
+          onClick: e => {
+            console.log(e);
+            console.log("on upload click");
+          }
+        }
+      },
+      {
+        location: 'after',
+        widget: 'dxButton',
+        options: {
+          icon: 'refresh',
+          onClick: () => {
+            dispatch(getDatasourceByCategoryId(Number(categoryId)));
+          }
+        }
+      });
+  }
+
   return (
     <div>
       <h2 id="configuration-page-heading" data-cy="configurationPageHeading">
@@ -79,6 +103,7 @@ export const DataEditor = () => {
         scrolling={{mode: 'virtual'}}
         selection={{mode: 'multiple'}}
         loadPanel={{enabled: loading}}
+        onToolbarPreparing={onToolbarPreparing}
       >
         {
           itemList.map(item => <Column
@@ -95,7 +120,7 @@ export const DataEditor = () => {
           )
         }
         <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
-            <Lookup dataSource={Object.values(STATUS_LIST)} />
+          <Lookup dataSource={Object.values(STATUS_LIST)}/>
         </Column>
       </DataGrid>
     </div>
