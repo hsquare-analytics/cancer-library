@@ -41,6 +41,7 @@ export const DataEditor = () => {
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
+          e.oldData['status'] = STATUS_LIST.PENDING;
           resolve();
         } else {
           toast.error('Data Submission Failed');
