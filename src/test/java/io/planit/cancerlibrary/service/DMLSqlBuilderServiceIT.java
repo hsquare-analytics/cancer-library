@@ -109,5 +109,29 @@ public class DMLSqlBuilderServiceIT {
         assertThat(result).contains(
             "VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_PENDING')");
     }
+
+    @Test
+    @Transactional
+    public void testReadSql() {
+        // given
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = dmlSqlBuilderService.getReadSQL(category.getId(), new HashMap<>() {{
+            put("idx", "test_idx");
+        }}).toString();
+
+        // then
+        assertThat(result).contains("SELECT *");
+        assertThat(result).contains(String.format("FROM %s" , category.getTitle() + "_UPDATED"));
+        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+    }
 }
 
