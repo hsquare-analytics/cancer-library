@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import DataGrid, {Column} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getCategoryById,
@@ -11,6 +11,7 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import {STATUS_LIST} from "app/config/constants";
 
 export const DataEditor = () => {
   const dispatch = useAppDispatch();
@@ -92,7 +93,9 @@ export const DataEditor = () => {
             />
           )
         }
-        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}/>
+        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}>
+            <Lookup dataSource={Object.values(STATUS_LIST)} />
+        </Column>
       </DataGrid>
     </div>
   );
