@@ -106,4 +106,18 @@ public class DMLSqlBuilderService {
         log.debug("Assembled final sql: {} ", sql);
         return sql;
     }
+
+    public SQL getDeleteSQL(Long categoryId, Map<String, String> map) {
+        log.debug("Request to get delete query by categoryId: {}", categoryId);
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        SQL sql = new SQL() {{
+            DELETE_FROM(category.getTitle() + "_UPDATED");
+            WHERE(String.format("IDX = '%s'", map.get("idx")));
+        }};
+
+        log.debug("Assembled final sql: {} ", sql);
+        return sql;
+    }
 }

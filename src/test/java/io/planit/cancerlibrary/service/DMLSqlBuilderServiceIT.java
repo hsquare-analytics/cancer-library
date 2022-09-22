@@ -163,5 +163,26 @@ public class DMLSqlBuilderServiceIT {
         assertThat(result).contains("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'");
         assertThat(result).contains("WHERE (IDX = 'test_idx')");
     }
+
+    public void testDeleteSql() {
+        // given
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = dmlSqlBuilderService.getDeleteSQL(category.getId(), new HashMap<>() {{
+            put("idx", "test_idx");
+        }}).toString();
+
+        // then
+        assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED");
+        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+    }
 }
 
