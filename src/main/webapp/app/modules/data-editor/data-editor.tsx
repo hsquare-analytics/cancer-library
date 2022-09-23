@@ -43,6 +43,7 @@ export const DataEditor = () => {
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
+          e.oldData['status'] = STATUS_LIST.PENDING;
           resolve();
         } else {
           toast.error('Data Submission Failed');
@@ -120,8 +121,7 @@ export const DataEditor = () => {
             />
           )
         }
-        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}
-                allowEditing={isAdmin ? true : false}>
+        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
           <Lookup dataSource={Object.values(STATUS_LIST)}/>
         </Column>
       </DataGrid>
