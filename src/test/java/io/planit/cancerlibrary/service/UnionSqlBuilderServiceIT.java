@@ -131,16 +131,6 @@ public class UnionSqlBuilderServiceIT {
 
     @Test
     @Transactional
-    public void testGetUpdatedMaxSeqSQL() {
-        String result = unionSqlBuilderService.getTableMaxSeqListSQL("TBL_TEST").toString();
-        assertThat(result).contains("SELECT MAX(seq)");
-        assertThat(result).contains("FROM TBL_TEST");
-        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
-        assertThat(result).contains("GROUP BY IDX");
-    }
-
-    @Test
-    @Transactional
     public void testGetUpdatedListSQL() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
@@ -156,15 +146,11 @@ public class UnionSqlBuilderServiceIT {
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
         assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS");
         assertThat(result).contains(String.format("FROM %s", updatedTableName));
-        assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
-        assertThat(result).contains(String.format("FROM %s", updatedTableName));
-        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
-        assertThat(result).contains("GROUP BY IDX))");
     }
 
     @Test
     @Transactional
-    public void testGetOriginExcludeUpdatedListSQL() {
+    public void testGetNotUpdatedListSQL() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -173,7 +159,7 @@ public class UnionSqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = unionSqlBuilderService.getOriginExcludeUpdatedSQL(category, Arrays.asList(item1, item2), null).toString();
+        String result = unionSqlBuilderService.getNotUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
@@ -182,11 +168,7 @@ public class UnionSqlBuilderServiceIT {
         assertThat(result).contains("SELECT COLUMN1, COLUMN2, NULL AS STATUS");
         assertThat(result).contains(String.format("FROM %s", originTableName));
         assertThat(result).contains("WHERE (IDX NOT IN (SELECT IDX");
-        assertThat(result).contains(String.format("FROM %s", updatedTableName));
-        assertThat(result).contains("WHERE (SEQ IN (SELECT MAX(seq)");
-        assertThat(result).contains(String.format("FROM %s", updatedTableName));
-        assertThat(result).contains("WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))");
-        assertThat(result).contains("GROUP BY IDX))))");
+        assertThat(result).contains(String.format("FROM %s))", updatedTableName));
 
     }
 }

@@ -57,11 +57,11 @@ public class UnionSqlBuilderService {
             categoryId, Instant.now());
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, userCategories);
-        SQL originExcludeUpdatedSQL = getOriginExcludeUpdatedSQL(category, itemList, userCategories);
+        SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, userCategories);
 
         SQL sql = new SQL() {{
             SELECT("*");
-            FROM("(" + updatedListSQL.toString() + " UNION " + originExcludeUpdatedSQL.toString() + ") AS T");
+            FROM("(" + updatedListSQL.toString() + " UNION " + notUpdatedListSQL.toString() + ") AS T");
         }};
 
         log.debug("Assembled final sql: {} ", sql);
@@ -75,7 +75,6 @@ public class UnionSqlBuilderService {
             itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
             SELECT("STATUS");
             FROM(updatedTableName);
-            WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName) + ")");
 
             if (category.getDateColumn() != null && !category.getDateColumn().isEmpty()) {
                 ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
@@ -88,14 +87,13 @@ public class UnionSqlBuilderService {
         return sql;
     }
 
-    public SQL getOriginExcludeUpdatedSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
+    public SQL getNotUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = originTableName + UPDATED_TABLE_SUFFIX;
 
         SQL EXCLUDE_IDX_SUBQUERY = new SQL() {{
             SELECT("IDX");
             FROM(updatedTableName);
-            WHERE("SEQ IN (" + getTableMaxSeqListSQL(updatedTableName)+ ")");
         }};
 
         SQL sql = new SQL() {{
@@ -110,17 +108,6 @@ public class UnionSqlBuilderService {
                     WHERE(betweenClaues);
                 });
             }
-        }};
-
-        return sql;
-    }
-
-    public SQL getTableMaxSeqListSQL(String tableName) {
-        SQL sql = new SQL() {{
-            SELECT("MAX(seq)");
-            FROM(tableName);
-            WHERE("STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING')");
-            GROUP_BY("IDX");
         }};
 
         return sql;
