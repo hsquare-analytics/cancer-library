@@ -38,12 +38,13 @@ export const DataEditor = () => {
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+      row['status'] = STATUS_LIST.SUBMITTED;
       axios
       .post(`api/datasource/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
-          e.oldData['status'] = STATUS_LIST.PENDING;
+          e.oldData['status'] = STATUS_LIST.SUBMITTED;
           resolve();
         } else {
           toast.error('Data Submission Failed');
