@@ -56,13 +56,7 @@ export const DataEditor = () => {
   };
 
   const onToolbarPreparing = e => {
-    e.toolbarOptions.items.unshift({
-        location: 'after',
-        widget: 'dxButton',
-        options: {
-          icon: 'upload',
-        }
-      },
+    e.toolbarOptions.items.unshift(
       {
         location: 'after',
         widget: 'dxButton',
