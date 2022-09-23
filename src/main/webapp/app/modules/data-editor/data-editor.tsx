@@ -11,7 +11,8 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {STATUS_LIST} from "app/config/constants";
+import {AUTHORITIES, STATUS_LIST} from "app/config/constants";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const DataEditor = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ export const DataEditor = () => {
   const itemList = useAppSelector(state => state.dataEditorReducer.items);
   const category = useAppSelector(state => state.dataEditorReducer.category);
   const loading = useAppSelector(state => state.dataEditorReducer.loading);
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const {categoryId} = useParams<'categoryId'>();
 
@@ -41,7 +43,6 @@ export const DataEditor = () => {
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
-          e.oldData['status'] = STATUS_LIST.PENDING;
           resolve();
         } else {
           toast.error('Data Submission Failed');
@@ -119,7 +120,8 @@ export const DataEditor = () => {
             />
           )
         }
-        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
+        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150}
+                allowEditing={isAdmin ? true : false}>
           <Lookup dataSource={Object.values(STATUS_LIST)}/>
         </Column>
       </DataGrid>
