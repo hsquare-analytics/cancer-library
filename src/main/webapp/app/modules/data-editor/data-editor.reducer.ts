@@ -38,7 +38,7 @@ export const getDatasourceApprovalByCategoryId = createAsyncThunk('datasource/fe
 });
 
 export const getItemListByCategoryId = createAsyncThunk('datasource/fetch_item_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/datasource-editor/${categoryId}/item-list`;
+  const requestUrl = `${apiUrl}/datasource-meta/categories/${categoryId}/item-list`;
   return axios.get<IItem[]>(requestUrl);
 });
 

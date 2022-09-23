@@ -1,6 +1,5 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
@@ -70,15 +69,5 @@ public class DatasourceEditorController {
             Integer result = datasourceMapper.executeUpdateSQL(new SQLAdapter(updateSQL));
             return ResponseEntity.ok().body(result);
         }
-    }
-
-    @GetMapping("/datasource-editor/{categoryId}/item-list")
-    public ResponseEntity<List<Item>> getItemListByCategoryId(
-        @PathVariable(value = "categoryId") final Long categoryId) {
-        log.debug("REST request to get Item List by category id: {}", categoryId);
-
-        List<Item> result = unionSqlBuilderService.getItemListByCategoryId(categoryId);
-
-        return ResponseEntity.ok().body(result);
     }
 }
