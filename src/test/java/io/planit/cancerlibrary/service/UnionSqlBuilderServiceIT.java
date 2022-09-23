@@ -109,14 +109,14 @@ public class UnionSqlBuilderServiceIT {
 //                FROM AAAAAAAAAA_UPDATED
 //                WHERE (SEQ IN (SELECT MAX(seq)
 //                    FROM AAAAAAAAAA_UPDATED
-//                    WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))
+//                    WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_SUBMITTED'))
 //                    GROUP BY IDX) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z') UNION SELECT COLUMN1, COLUMN2, NULL AS STATUS
 //        FROM AAAAAAAAAA
 //        WHERE (IDX NOT IN (SELECT IDX
 //            FROM AAAAAAAAAA_UPDATED
 //            WHERE (SEQ IN (SELECT MAX(seq)
 //                FROM AAAAAAAAAA_UPDATED
-//                WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_PENDING'))
+//                WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_SUBMITTED'))
 //                GROUP BY IDX))) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z')) AS T
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
