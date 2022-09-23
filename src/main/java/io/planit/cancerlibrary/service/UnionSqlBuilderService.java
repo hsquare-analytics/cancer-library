@@ -76,12 +76,12 @@ public class UnionSqlBuilderService {
             SELECT("STATUS");
             FROM(updatedTableName);
 
-            if (category.getDateColumn() != null && !category.getDateColumn().isEmpty()) {
-                ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
-                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
-                    WHERE(betweenClaues);
-                });
-            }
+            ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
+                String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
+                    userCategory.getTermStart(), userCategory.getTermEnd());
+                OR();
+                WHERE(betweenClaues);
+            });
         }};
 
         return sql;
@@ -102,12 +102,12 @@ public class UnionSqlBuilderService {
             FROM(originTableName);
             WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
 
-            if (category.getDateColumn() != null && !category.getDateColumn().isEmpty()) {
-                ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
-                    String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
-                    WHERE(betweenClaues);
-                });
-            }
+            ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
+                String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
+                    userCategory.getTermStart(), userCategory.getTermEnd());
+                OR();
+                WHERE(betweenClaues);
+            });
         }};
 
         return sql;
