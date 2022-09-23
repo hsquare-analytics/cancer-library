@@ -7,7 +7,10 @@ public class SQLAdapter {
 
     public SQLAdapter(SQL sql) {
         this.sql = sql.toString();
+    }
 
+    public SQLAdapter(String sql) {
+        this.sql = sql;
     }
 
     public String getSql() {

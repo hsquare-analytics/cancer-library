@@ -98,7 +98,11 @@ public class DMLSqlBuilderService {
         SQL sql = new SQL() {{
             UPDATE(category.getTitle() + "_updated");
             itemList.forEach(
-                item -> SET(String.format("%s = '%s'", item.getTitle().toUpperCase(), map.get(item.getTitle()))));
+                item -> {
+                    if (map.containsKey(item.getTitle())) {
+                        SET(String.format("%s = '%s'", item.getTitle().toUpperCase(), map.get(item.getTitle())));
+                    }
+                });
 
             SET(String.format("LAST_MODIFIED_BY = '%s'", user.getLogin()));
             SET(String.format("LAST_MODIFIED_DATE = '%s'", timeService.getCurrentTime()));

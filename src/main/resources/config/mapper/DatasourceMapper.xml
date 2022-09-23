@@ -10,4 +10,8 @@
     <insert id="executeInsertSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter">
         ${sql}
     </insert>
+
+    <update id="executeUpdateSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter">
+        ${sql}
+    </update>
 </mapper>

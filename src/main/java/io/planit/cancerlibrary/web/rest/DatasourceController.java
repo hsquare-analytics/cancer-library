@@ -57,11 +57,19 @@ public class DatasourceController {
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
-        SQL sql = dmlSqlBuilderService.getInsertSQL(categoryId, map);
+        SQL readSQL = dmlSqlBuilderService.getReadSQL(categoryId, map);
 
-        Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(sql));
+        List<Map> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
 
-        return ResponseEntity.ok().body(result);
+        if (founded.isEmpty()) {
+            SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, map);
+            Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(insertSQL));
+            return ResponseEntity.ok().body(result);
+        } else {
+            SQL updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, map);
+            Integer result = datasourceMapper.executeUpdateSQL(new SQLAdapter(updateSQL));
+            return ResponseEntity.ok().body(result);
+        }
     }
 
     @GetMapping("/datasource/{categoryId}/item-list")

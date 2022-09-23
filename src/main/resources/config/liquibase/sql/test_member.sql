@@ -11,7 +11,6 @@ CREATE TABLE test_member (
 );
 
 CREATE TABLE test_member_updated (
-    seq INT NOT NULL AUTO_INCREMENT,
     idx INT,
     name VARCHAR(50),
     birth DATE,
@@ -24,7 +23,8 @@ CREATE TABLE test_member_updated (
     CREATED_DATE       TIMESTAMP,
     LAST_MODIFIED_BY   CHARACTER VARYING(50),
     LAST_MODIFIED_DATE TIMESTAMP,
-    STATUS VARCHAR(50)
+    STATUS VARCHAR(50),
+    primary key (idx)
 );
 
 create sequence mybatis_sequence_generator;
