@@ -84,6 +84,20 @@ public class DMLSqlBuilderService {
         return sql;
     }
 
+    public SQL getReadAllSQL(Long categoryId) {
+        log.debug("Request to get read all query by categoryId: {}", categoryId);
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        SQL sql = new SQL() {{
+            SELECT("*");
+            FROM(category.getTitle() + "_UPDATED");
+        }};
+
+        log.debug("Assembled final sql: {} ", sql);
+        return sql;
+    }
+
     public SQL getUpdateSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 

@@ -136,6 +136,17 @@ public class DMLSqlBuilderServiceIT {
 
     @Test
     @Transactional
+    public void testReadAllSql() {
+        // when
+        String result = dmlSqlBuilderService.getReadAllSQL(category.getId()).toString();
+
+        // then
+        assertThat(result).contains("SELECT *");
+        assertThat(result).contains(String.format("FROM %s" , category.getTitle() + "_UPDATED"));
+    }
+
+    @Test
+    @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     public void testUpdateSql() {
         // given
