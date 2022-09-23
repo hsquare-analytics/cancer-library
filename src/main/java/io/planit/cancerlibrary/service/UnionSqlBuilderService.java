@@ -11,7 +11,7 @@ import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import java.time.Instant;
 import java.util.List;
-import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,12 +76,9 @@ public class UnionSqlBuilderService {
             SELECT("STATUS");
             FROM(updatedTableName);
 
-            ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
-                String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
-                    userCategory.getTermStart(), userCategory.getTermEnd());
-                OR();
-                WHERE(betweenClaues);
-            });
+            if (CollectionUtils.isNotEmpty(userCategoryList)) {
+                WHERE(getDateClause(category, userCategoryList));
+            }
         }};
 
         return sql;
@@ -102,15 +99,27 @@ public class UnionSqlBuilderService {
             FROM(originTableName);
             WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
 
-            ListUtils.emptyIfNull(userCategoryList).forEach(userCategory -> {
-                String betweenClaues = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
-                    userCategory.getTermStart(), userCategory.getTermEnd());
-                OR();
-                WHERE(betweenClaues);
-            });
+            if (CollectionUtils.isNotEmpty(userCategoryList)) {
+                WHERE(getDateClause(category, userCategoryList));
+            }
         }};
 
         return sql;
+    }
+
+    private String getDateClause(Category category, List<UserCategory> userCategoryList) {
+        String dateClauses = "(";
+        for (int i = 0; i < userCategoryList.size(); i++) {
+            UserCategory userCategory = userCategoryList.get(i);
+            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
+            if (i == 0) {
+                dateClauses += betweenClause;
+            } else {
+                dateClauses += " OR " + betweenClause;
+            }
+        }
+        dateClauses = dateClauses + ")";
+        return dateClauses;
     }
 
     public List<Item> getItemListByCategoryId(Long categoryId) {

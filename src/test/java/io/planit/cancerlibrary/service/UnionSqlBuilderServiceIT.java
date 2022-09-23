@@ -169,7 +169,6 @@ public class UnionSqlBuilderServiceIT {
         assertThat(result).contains(String.format("FROM %s", originTableName));
         assertThat(result).contains("WHERE (IDX NOT IN (SELECT IDX");
         assertThat(result).contains(String.format("FROM %s))", updatedTableName));
-
     }
 }
 
