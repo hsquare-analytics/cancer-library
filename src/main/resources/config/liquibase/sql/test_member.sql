@@ -4,7 +4,7 @@ CREATE TABLE test_member (
 	birth DATE,
 	city VARCHAR(50),
 	gender VARCHAR(50),
-	join_dt DATE,
+	join_dt DATETIME,
 	mail VARCHAR(50),
 	login_ip VARCHAR(20),
 	primary key (idx)
@@ -16,7 +16,7 @@ CREATE TABLE test_member_updated (
     birth DATE,
     city VARCHAR(50),
     gender VARCHAR(50),
-    join_dt DATE,
+    join_dt DATETIME,
     mail VARCHAR(50),
     login_ip VARCHAR(20),
     CREATED_BY         CHARACTER VARYING(50),
