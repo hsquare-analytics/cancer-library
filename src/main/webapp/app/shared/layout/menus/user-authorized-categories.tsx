@@ -4,6 +4,7 @@ import {NavDropdown} from './menu-components';
 import MenuItem from "app/shared/layout/menus/menu-item";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
+import _ from "lodash";
 
 export const UserAuthorizedCategories = () => {
 
@@ -27,7 +28,7 @@ export const UserAuthorizedCategories = () => {
     style={{maxHeight: '80vh', overflow: 'auto'}}
   >
     {
-      categoryList.length !== 0 ? [...categoryList].sort((a, b) => a.id - b.id).map(category => {
+      categoryList.length !== 0 ? _.uniqBy([...categoryList], 'id').sort((a, b) => a.id - b.id).map(category => {
         return <MenuItem key={category} icon="asterisk" to={`data-editor/${category.id}`}>
           {category.title}
         </MenuItem>
