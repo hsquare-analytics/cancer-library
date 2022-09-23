@@ -2,6 +2,8 @@ import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
+import {translate} from 'react-jhipster';
+
 import {
   getCategoryById,
   getDatasourceByCategoryId,
@@ -110,7 +112,7 @@ export const DataEditor = () => {
             />
           )
         }
-        <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
+        <Column caption={translate('datasource.column.status')} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
           <Lookup dataSource={Object.values(STATUS_LIST)}/>
         </Column>
       </DataGrid>
