@@ -14,9 +14,8 @@
         "user-category": "User Category",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
-      "categories": {
-        "main": "테이블 목록"
-      },
+      "editable-categories": "편집 테이블 목록",
+      "approval-categories": "승인 테이블 목록",
       "account": {
         "main": "계정",
         "settings": "설정",

@@ -9,6 +9,7 @@ import {Brand, Home} from './header-components';
 import {AccountMenu, AdminMenu, LocaleMenu, UserAuthorizedCategories} from '../menus';
 import {useAppDispatch} from 'app/config/store';
 import {setLocale} from 'app/shared/reducers/locale';
+import {AdminAuthorizedCategories} from "app/shared/layout/menus/admin-authorized-categories";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -56,6 +57,7 @@ const Header = (props: IHeaderProps) => {
             {props.isAuthenticated && <UserAuthorizedCategories/>}
             {props.isAuthenticated && props.isAdmin && (
               <>
+                <AdminAuthorizedCategories/>
                 <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
                 <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange}/>
               </>

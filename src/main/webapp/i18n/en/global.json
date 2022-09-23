@@ -14,9 +14,8 @@
         "user-category": "User Category",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
-      "categories": {
-        "main": "Table list"
-      },
+      "editable-categories": "Editable Categories",
+      "approval-categories": "Approval Categories",
       "account": {
         "main": "Account",
         "settings": "Settings",
