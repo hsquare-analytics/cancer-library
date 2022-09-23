@@ -34,7 +34,7 @@ public class DatasourceApprovalController {
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
-    @GetMapping("/datasource-approval/{categoryId}")
+    @GetMapping("/datasource-approval/categories/{categoryId}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<Map>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {

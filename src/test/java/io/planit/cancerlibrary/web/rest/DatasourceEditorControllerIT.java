@@ -122,7 +122,7 @@ public class DatasourceEditorControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource-editor/{id}", category.getId())).andExpect(status().isOk())
+        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryDd}", category.getId())).andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -141,7 +141,7 @@ public class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/{categoryId}", category.getId())
+                post("/api/datasource-editor/categories/{categoryId}", category.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
@@ -169,7 +169,7 @@ public class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/{categoryId}", category.getId())
+                post("/api/datasource-editor/categories/{categoryId}", category.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());

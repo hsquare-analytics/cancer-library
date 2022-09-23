@@ -28,12 +28,12 @@ const initialState: userCategorySelectorType = {
 const apiUrl = 'api';
 
 export const getDatasourceEditorByCategoryId = createAsyncThunk('datasource/fetch_datasource_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/datasource-editor/${categoryId}`;
+  const requestUrl = `${apiUrl}/datasource-editor/categories/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
 export const getDatasourceApprovalByCategoryId = createAsyncThunk('datasource/fetch_datasource_approval_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/datasource-approval/${categoryId}`;
+  const requestUrl = `${apiUrl}/datasource-approval/categories/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
@@ -50,7 +50,7 @@ export const getCategoryById = createAsyncThunk('datasource/fetch_category', asy
 export const updateDatasourceEditorRow = createAsyncThunk(
   'datasource/update_datasource_row',
   async (rowInfo: { categoryId: number, row: any[] }, thunkAPI) => {
-    const result = await axios.put<IUser>(`${apiUrl}/datasource-editor/${rowInfo.categoryId}`, rowInfo.row);
+    const result = await axios.put<IUser>(`${apiUrl}/datasource-editor/categories/${rowInfo.categoryId}`, rowInfo.row);
     thunkAPI.dispatch(getCategoryById(rowInfo.categoryId));
     return result;
   },

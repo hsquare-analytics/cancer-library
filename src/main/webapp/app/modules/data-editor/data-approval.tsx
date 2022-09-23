@@ -39,7 +39,7 @@ export const DataApproval = () => {
     e.cancel = new Promise<void>((resolve, reject) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       axios
-      .post(`api/datasource-editor/${categoryId}`, row)
+      .post(`api/datasource-editor/categories/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');

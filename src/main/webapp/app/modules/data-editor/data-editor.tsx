@@ -42,7 +42,7 @@ export const DataEditor = () => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       row['status'] = STATUS_LIST.SUBMITTED;
       axios
-      .post(`api/datasource-editor/${categoryId}`, row)
+      .post(`api/datasource-editor/categories/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');

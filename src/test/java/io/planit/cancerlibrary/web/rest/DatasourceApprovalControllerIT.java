@@ -70,7 +70,7 @@ public class DatasourceApprovalControllerIT {
             new SQLAdapter("INSERT INTO TEST_MEMBER_UPDATED (IDX, NAME) VALUES (10001, 'ZERO')"));
 
         restAdminDatasourceMockMvc
-            .perform(get("/api/datasource-approval/{id}", category.getId()))
+            .perform(get("/api/datasource-approval/categories/{id}", category.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].idx").value(hasItem(10001)))

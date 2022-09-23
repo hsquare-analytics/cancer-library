@@ -39,7 +39,7 @@ public class DatasourceEditorController {
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
-    @GetMapping("/datasource-editor/{categoryId}")
+    @GetMapping("/datasource-editor/categories/{categoryId}")
     public ResponseEntity<List<Map>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
@@ -51,7 +51,7 @@ public class DatasourceEditorController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/datasource-editor/{categoryId}")
+    @PostMapping("/datasource-editor/categories/{categoryId}")
     public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
