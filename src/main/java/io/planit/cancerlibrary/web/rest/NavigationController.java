@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
+import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -29,14 +30,19 @@ public class NavigationController {
     @Value("cancerLibraryApp")
     private String applicationName;
 
+    private final CategoryRepository categoryRepository;
+
     private final UserRepository userRepository;
 
     private final UserCategoryRepository userCategoryRepository;
 
     private final InstantService instantService;
 
-    public NavigationController(UserRepository userRepository, UserCategoryRepository userCategoryRepository,
+    public NavigationController(
+        CategoryRepository categoryRepository,
+        UserRepository userRepository, UserCategoryRepository userCategoryRepository,
         InstantService instantService) {
+        this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
         this.instantService = instantService;
@@ -47,18 +53,22 @@ public class NavigationController {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
-        List<UserCategory> userCategories;
         if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
-            userCategories = userCategoryRepository.findAll();
+            List<Category> categoryList = categoryRepository.findAll();
+
+            return ResponseEntity.ok(categoryList);
         } else {
+            List<UserCategory> userCategories;
             String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
             User user = userRepository.findOneByLogin(login).orElseThrow();
 
             userCategories = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(),
                 instantService.getCurrentTime());
+
+            return ResponseEntity.ok(
+                userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
         }
 
-        return ResponseEntity.ok(userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
     }
 
 }
