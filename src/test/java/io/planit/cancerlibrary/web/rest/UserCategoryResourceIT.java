@@ -41,8 +41,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class UserCategoryResourceIT {
 
-    private static final Boolean DEFAULT_ACTIVATED = false;
-    private static final Boolean UPDATED_ACTIVATED = true;
+    private static final Boolean DEFAULT_ACTIVATED = true;
+    private static final Boolean UPDATED_ACTIVATED = false;
 
     private static final Instant DEFAULT_TERM_START = Instant.parse("2019-01-01T00:00:00.000Z");
     private static final Instant UPDATED_TERM_START = Instant.parse("2022-01-01T00:00:00.000Z");

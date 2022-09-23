@@ -57,9 +57,8 @@ public class NavigationController {
 
             return ResponseEntity.ok(categoryList);
         } else {
-            List<UserCategory> userCategories;
             String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
-            userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLogin(login);
+            List<UserCategory> userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLogin(login);
 
             return ResponseEntity.ok(userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
         }

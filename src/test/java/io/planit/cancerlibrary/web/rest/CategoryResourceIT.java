@@ -79,14 +79,14 @@ public class CategoryResourceIT {
     private Subject subject;
 
     public static Category createEntity(EntityManager em, Topic topic) {
-        Category category = new Category().orderNo(DEFAULT_ORDER_NO).title(DEFAULT_TITLE).description(DEFAULT_TABLE_DESCRIPTION).
-            dateColumn(DEFAULT_DATE_COLUMN).activated(DEFAULT_ACTIVATED).topic(topic);
+        Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_TABLE_DESCRIPTION).
+            dateColumn(DEFAULT_DATE_COLUMN).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).topic(topic);
         return category;
     }
 
     public static Category createUpdatedEntity(EntityManager em, Topic topic) {
-        Category category = new Category().orderNo(UPDATED_ORDER_NO).title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).
-            dateColumn(UPDATED_DATE_COLUMN).activated(UPDATED_ACTIVATED).topic(topic);
+        Category category = new Category().title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).
+            dateColumn(UPDATED_DATE_COLUMN).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).topic(topic);
         return category;
     }
 
@@ -214,7 +214,8 @@ public class CategoryResourceIT {
         Category updatedCategory = categoryRepository.findById(category.getId()).get();
         // Disconnect from session so that the updates on updatedCategory are not directly saved in db
         em.detach(updatedCategory);
-        updatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED).topic(updatedTopic);
+        updatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED)
+            .topic(updatedTopic);
 
         restCategoryMockMvc
             .perform(
