@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @Transactional
-public class DatasourceController {
+public class DatasourceEditorController {
 
     private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
 
@@ -32,7 +32,7 @@ public class DatasourceController {
 
     private final DatasourceMapper datasourceMapper;
 
-    public DatasourceController(UnionSqlBuilderService unionSqlBuilderService,
+    public DatasourceEditorController(UnionSqlBuilderService unionSqlBuilderService,
         DMLSqlBuilderService dmlSqlBuilderService,
         DatasourceMapper datasourceMapper) {
         this.unionSqlBuilderService = unionSqlBuilderService;
@@ -40,7 +40,7 @@ public class DatasourceController {
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
-    @GetMapping("/datasource/{categoryId}")
+    @GetMapping("/datasource-editor/{categoryId}")
     public ResponseEntity<List<Map>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
@@ -52,7 +52,7 @@ public class DatasourceController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/datasource/{categoryId}")
+    @PostMapping("/datasource-editor/{categoryId}")
     public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
@@ -72,7 +72,7 @@ public class DatasourceController {
         }
     }
 
-    @GetMapping("/datasource/{categoryId}/item-list")
+    @GetMapping("/datasource-editor/{categoryId}/item-list")
     public ResponseEntity<List<Item>> getItemListByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);

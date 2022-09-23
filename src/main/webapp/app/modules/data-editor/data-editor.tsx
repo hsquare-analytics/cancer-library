@@ -6,7 +6,7 @@ import {translate} from 'react-jhipster';
 
 import {
   getCategoryById,
-  getDatasourceByCategoryId,
+  getDatasourceEditorByCategoryId,
   getItemListByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
@@ -29,7 +29,7 @@ export const DataEditor = () => {
 
   useEffect(() => {
     const id = Number(categoryId);
-    dispatch(getDatasourceByCategoryId(id));
+    dispatch(getDatasourceEditorByCategoryId(id));
     dispatch(getItemListByCategoryId(id));
     dispatch(getCategoryById(id));
     return () => {
@@ -42,7 +42,7 @@ export const DataEditor = () => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       row['status'] = STATUS_LIST.SUBMITTED;
       axios
-      .post(`api/datasource/${categoryId}`, row)
+      .post(`api/datasource-editor/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
@@ -64,7 +64,7 @@ export const DataEditor = () => {
         widget: 'dxButton',
         options: {
           icon: 'refresh',
-          onClick: () => dispatch(getDatasourceByCategoryId(Number(categoryId)))
+          onClick: () => dispatch(getDatasourceEditorByCategoryId(Number(categoryId)))
         }
       });
   }

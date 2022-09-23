@@ -43,7 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class DatasourceControllerIT {
+public class DatasourceEditorControllerIT {
 
     @Autowired
     private EntityManager em;
@@ -124,7 +124,7 @@ public class DatasourceControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource/{id}", category.getId())).andExpect(status().isOk())
+        restDatasourceMockMvc.perform(get("/api/datasource-editor/{id}", category.getId())).andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -143,7 +143,7 @@ public class DatasourceControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource/{categoryId}/item-list", category.getId()))
+        restDatasourceMockMvc.perform(get("/api/datasource-editor/{categoryId}/item-list", category.getId()))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].title").value(contains(DEFAULT_COLUMN_NAME_ARRAY)));
     }
@@ -165,7 +165,7 @@ public class DatasourceControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource/{categoryId}", category.getId())
+                post("/api/datasource-editor/{categoryId}", category.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
@@ -193,7 +193,7 @@ public class DatasourceControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource/{categoryId}", category.getId())
+                post("/api/datasource-editor/{categoryId}", category.getId())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());

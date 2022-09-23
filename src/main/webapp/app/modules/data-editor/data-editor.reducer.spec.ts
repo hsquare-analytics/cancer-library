@@ -7,10 +7,10 @@ import sinon from 'sinon';
 import reducer, {
   getCategoryById,
   getDatasourceApprovalByCategoryId,
-  getDatasourceByCategoryId,
+  getDatasourceEditorByCategoryId,
   getItemListByCategoryId,
   reset,
-  updateDatasourceRow
+  updateDatasourceEditorRow
 } from './data-editor.reducer';
 
 describe('User category selector module reducer tests', () => {
@@ -56,7 +56,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getDatasourceByCategoryId.pending.type, getDatasourceApprovalByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
+      testMultipleTypes([getDatasourceEditorByCategoryId.pending.type, getDatasourceApprovalByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -65,7 +65,7 @@ describe('User category selector module reducer tests', () => {
     });
 
     it('should set state to updating', () => {
-      testMultipleTypes([updateDatasourceRow.pending.type], {}, state => {
+      testMultipleTypes([updateDatasourceEditorRow.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -84,10 +84,10 @@ describe('User category selector module reducer tests', () => {
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes([
-          getDatasourceByCategoryId.rejected.type,
+          getDatasourceEditorByCategoryId.rejected.type,
           getDatasourceApprovalByCategoryId.rejected.type,
           getItemListByCategoryId.rejected.type,
-          getCategoryById.rejected.type, updateDatasourceRow.rejected.type
+          getCategoryById.rejected.type, updateDatasourceEditorRow.rejected.type
         ],
         {message: 'something happened'},
         state => {
@@ -104,10 +104,10 @@ describe('User category selector module reducer tests', () => {
   describe('Successes', () => {
     it('should fetch datasource', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
-      testMultipleTypes([getDatasourceByCategoryId.fulfilled.type, getDatasourceApprovalByCategoryId.fulfilled.type], payload,
+      testMultipleTypes([getDatasourceEditorByCategoryId.fulfilled.type, getDatasourceApprovalByCategoryId.fulfilled.type], payload,
         state => {
           expect(reducer(undefined, {
-            type: getDatasourceByCategoryId.fulfilled.type,
+            type: getDatasourceEditorByCategoryId.fulfilled.type,
             payload,
           })).toEqual({
             ...initialState,
@@ -145,7 +145,7 @@ describe('User category selector module reducer tests', () => {
     });
 
     it('should set state to successful update', () => {
-      testMultipleTypes([updateDatasourceRow.fulfilled.type], {data: 'some handsome user'}, state => {
+      testMultipleTypes([updateDatasourceEditorRow.fulfilled.type], {data: 'some handsome user'}, state => {
         expect(state).toMatchObject({
           updating: false,
           updateSuccess: true,
@@ -167,15 +167,15 @@ describe('User category selector module reducer tests', () => {
     it('dispatches FETCH_DATASOURCE actions', async () => {
       const expectedActions = [
         {
-          type: getDatasourceByCategoryId.pending.type
+          type: getDatasourceEditorByCategoryId.pending.type
         },
         {
-          type: getDatasourceByCategoryId.fulfilled.type,
+          type: getDatasourceEditorByCategoryId.fulfilled.type,
           payload: resolvedObject
         }
       ];
 
-      await store.dispatch(getDatasourceByCategoryId(1));
+      await store.dispatch(getDatasourceEditorByCategoryId(1));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
