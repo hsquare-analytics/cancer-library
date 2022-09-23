@@ -2,14 +2,11 @@ package io.planit.cancerlibrary.service;
 
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
-import java.time.Instant;
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.jdbc.SQL;
@@ -28,17 +25,14 @@ public class UnionSqlBuilderService {
 
     private final ItemRepository itemRepository;
 
-    private final UserRepository userRepository;
-
     private final UserCategoryRepository userCategoryRepository;
 
     private final String UPDATED_TABLE_SUFFIX = "_UPDATED";
 
     public UnionSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserRepository userRepository, UserCategoryRepository userCategoryRepository, TimeService timeService) {
+        UserCategoryRepository userCategoryRepository) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
-        this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
     }
 
@@ -50,11 +44,9 @@ public class UnionSqlBuilderService {
 
         String login = SecurityUtils.getCurrentUserLogin()
             .orElseThrow(() -> new RuntimeException("Current user login not found"));
-        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<UserCategory> userCategories = userCategoryRepository.findAllByUserIdAndAndCategoryIdCurrentTime(
-            user.getId(),
-            categoryId, Instant.now());
+        List<UserCategory> userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLoginAndCategoryId(
+            login, categoryId);
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, userCategories);
         SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, userCategories);
@@ -111,7 +103,8 @@ public class UnionSqlBuilderService {
         String dateClauses = "(";
         for (int i = 0; i < userCategoryList.size(); i++) {
             UserCategory userCategory = userCategoryList.get(i);
-            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(), userCategory.getTermStart(), userCategory.getTermEnd());
+            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
+                userCategory.getTermStart(), userCategory.getTermEnd());
             if (i == 0) {
                 dateClauses += betweenClause;
             } else {

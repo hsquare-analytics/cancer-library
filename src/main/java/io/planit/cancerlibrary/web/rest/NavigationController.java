@@ -1,7 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
@@ -60,13 +59,9 @@ public class NavigationController {
         } else {
             List<UserCategory> userCategories;
             String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
-            User user = userRepository.findOneByLogin(login).orElseThrow();
+            userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLogin(login);
 
-            userCategories = userCategoryRepository.findAllByUserIdAndCurrentTime(user.getId(),
-                instantService.getCurrentTime());
-
-            return ResponseEntity.ok(
-                userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
+            return ResponseEntity.ok(userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
         }
 
     }
