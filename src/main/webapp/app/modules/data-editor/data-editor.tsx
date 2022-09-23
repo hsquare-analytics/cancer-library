@@ -6,7 +6,7 @@ import {translate} from 'react-jhipster';
 
 import {
   getCategoryById,
-  getDatasourceEditorByCategoryId,
+  getEditorDatasourceByCategoryId,
   getItemListByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
@@ -29,7 +29,7 @@ export const DataEditor = () => {
 
   useEffect(() => {
     const id = Number(categoryId);
-    dispatch(getDatasourceEditorByCategoryId(id));
+    dispatch(getEditorDatasourceByCategoryId(id));
     dispatch(getItemListByCategoryId(id));
     dispatch(getCategoryById(id));
     return () => {
@@ -64,7 +64,7 @@ export const DataEditor = () => {
         widget: 'dxButton',
         options: {
           icon: 'refresh',
-          onClick: () => dispatch(getDatasourceEditorByCategoryId(Number(categoryId)))
+          onClick: () => dispatch(getEditorDatasourceByCategoryId(Number(categoryId)))
         }
       });
   }

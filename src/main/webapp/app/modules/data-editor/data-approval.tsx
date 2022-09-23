@@ -4,7 +4,7 @@ import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getCategoryById,
-  getDatasourceApprovalByCategoryId,
+  getApprovalDatasourceByCategoryId,
   getItemListByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
@@ -27,7 +27,7 @@ export const DataApproval = () => {
 
   useEffect(() => {
     const id = Number(categoryId);
-    dispatch(getDatasourceApprovalByCategoryId(id));
+    dispatch(getApprovalDatasourceByCategoryId(id));
     dispatch(getItemListByCategoryId(id));
     dispatch(getCategoryById(id));
     return () => {
@@ -66,7 +66,7 @@ export const DataApproval = () => {
         widget: 'dxButton',
         options: {
           icon: 'refresh',
-          onClick: () => dispatch(getDatasourceApprovalByCategoryId(Number(categoryId)))
+          onClick: () => dispatch(getApprovalDatasourceByCategoryId(Number(categoryId)))
         }
       });
   }

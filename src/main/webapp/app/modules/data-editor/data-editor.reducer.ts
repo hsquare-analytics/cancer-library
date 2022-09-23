@@ -27,17 +27,17 @@ const initialState: userCategorySelectorType = {
 
 const apiUrl = 'api';
 
-export const getDatasourceEditorByCategoryId = createAsyncThunk('datasource/fetch_datasource_list', async (categoryId: number) => {
+export const getEditorDatasourceByCategoryId = createAsyncThunk('datasource/fetch_editor_datasource_list', async (categoryId: number) => {
   const requestUrl = `${apiUrl}/datasource-editor/categories/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
-export const getDatasourceApprovalByCategoryId = createAsyncThunk('datasource/fetch_datasource_approval_list', async (categoryId: number) => {
+export const getApprovalDatasourceByCategoryId = createAsyncThunk('datasource/fetch_approval_datasource_list', async (categoryId: number) => {
   const requestUrl = `${apiUrl}/datasource-approval/categories/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
-export const getItemListByCategoryId = createAsyncThunk('datasource/fetch_item_list', async (categoryId: number) => {
+export const getItemListByCategoryId = createAsyncThunk('datasource/fetch_meta_item_list', async (categoryId: number) => {
   const requestUrl = `${apiUrl}/datasource-meta/categories/${categoryId}/item-list`;
   return axios.get<IItem[]>(requestUrl);
 });
@@ -47,7 +47,7 @@ export const getCategoryById = createAsyncThunk('datasource/fetch_category', asy
   return axios.get<ICategory>(requestUrl);
 });
 
-export const updateDatasourceEditorRow = createAsyncThunk(
+export const updateEditorDatasourceRow = createAsyncThunk(
   'datasource/update_datasource_row',
   async (rowInfo: { categoryId: number, row: any[] }, thunkAPI) => {
     const result = await axios.put<IUser>(`${apiUrl}/datasource-editor/categories/${rowInfo.categoryId}`, rowInfo.row);
@@ -57,7 +57,7 @@ export const updateDatasourceEditorRow = createAsyncThunk(
   {serializeError: serializeAxiosError}
 );
 
-const name = 'datasource'
+const name = 'data-editor'
 export const DataEditor = createSlice({
   name,
   initialState,
@@ -68,7 +68,7 @@ export const DataEditor = createSlice({
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isFulfilled(getDatasourceEditorByCategoryId, getDatasourceApprovalByCategoryId), (state, action) => {
+    .addMatcher(isFulfilled(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
@@ -92,21 +92,21 @@ export const DataEditor = createSlice({
         category: data,
       }
     })
-    .addMatcher(isFulfilled(updateDatasourceEditorRow), (state, action) => {
+    .addMatcher(isFulfilled(updateEditorDatasourceRow), (state, action) => {
       state.updating = false;
       state.loading = false;
       state.updateSuccess = true;
     })
-    .addMatcher(isPending(getDatasourceEditorByCategoryId, getDatasourceApprovalByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
+    .addMatcher(isPending(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
-    .addMatcher(isPending(updateDatasourceEditorRow), (state) => {
+    .addMatcher(isPending(updateEditorDatasourceRow), (state) => {
       state.errorMessage = null;
       state.updateSuccess = false;
       state.updating = true;
     })
-    .addMatcher(isRejected(getDatasourceEditorByCategoryId, getDatasourceApprovalByCategoryId, getItemListByCategoryId, getCategoryById, updateDatasourceEditorRow), (state, action) => {
+    .addMatcher(isRejected(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId, getItemListByCategoryId, getCategoryById, updateEditorDatasourceRow), (state, action) => {
       state.loading = false;
       state.updating = false;
       state.updateSuccess = false;
