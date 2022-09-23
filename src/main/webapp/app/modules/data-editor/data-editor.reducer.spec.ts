@@ -6,6 +6,7 @@ import sinon from 'sinon';
 
 import reducer, {
   getCategoryById,
+  getDatasourceApprovalByCategoryId,
   getDatasourceByCategoryId,
   getItemListByCategoryId,
   reset,
@@ -55,7 +56,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getDatasourceByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
+      testMultipleTypes([getDatasourceByCategoryId.pending.type, getDatasourceApprovalByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -83,10 +84,12 @@ describe('User category selector module reducer tests', () => {
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes([
-          getDatasourceByCategoryId.rejected.type, getItemListByCategoryId.rejected.type,
+          getDatasourceByCategoryId.rejected.type,
+          getDatasourceApprovalByCategoryId.rejected.type,
+          getItemListByCategoryId.rejected.type,
           getCategoryById.rejected.type, updateDatasourceRow.rejected.type
         ],
-        { message: 'something happened' },
+        {message: 'something happened'},
         state => {
           expect(state).toMatchObject({
             errorMessage: 'error message',
@@ -101,15 +104,18 @@ describe('User category selector module reducer tests', () => {
   describe('Successes', () => {
     it('should fetch datasource', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
-
-      expect(reducer(undefined, {
-        type: getDatasourceByCategoryId.fulfilled.type,
-        payload,
-      })).toEqual({
-        ...initialState,
-        loading: false,
-        datasource: payload.data,
-      });
+      testMultipleTypes([getDatasourceByCategoryId.fulfilled.type, getDatasourceApprovalByCategoryId.fulfilled.type], payload,
+        state => {
+          expect(reducer(undefined, {
+            type: getDatasourceByCategoryId.fulfilled.type,
+            payload,
+          })).toEqual({
+            ...initialState,
+            loading: false,
+            datasource: payload.data,
+          });
+        }
+      )
     });
 
     it('should fetch item list', () => {
@@ -139,7 +145,7 @@ describe('User category selector module reducer tests', () => {
     });
 
     it('should set state to successful update', () => {
-      testMultipleTypes([updateDatasourceRow.fulfilled.type], { data: 'some handsome user' }, state => {
+      testMultipleTypes([updateDatasourceRow.fulfilled.type], {data: 'some handsome user'}, state => {
         expect(state).toMatchObject({
           updating: false,
           updateSuccess: true,

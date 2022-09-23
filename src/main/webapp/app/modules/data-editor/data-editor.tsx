@@ -60,10 +60,6 @@ export const DataEditor = () => {
         widget: 'dxButton',
         options: {
           icon: 'upload',
-          onClick: e => {
-            console.log(e);
-            console.log("on upload click");
-          }
         }
       },
       {
@@ -71,9 +67,7 @@ export const DataEditor = () => {
         widget: 'dxButton',
         options: {
           icon: 'refresh',
-          onClick: () => {
-            dispatch(getDatasourceByCategoryId(Number(categoryId)));
-          }
+          onClick: () => dispatch(getDatasourceByCategoryId(Number(categoryId)))
         }
       });
   }

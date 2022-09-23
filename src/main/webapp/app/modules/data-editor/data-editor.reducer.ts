@@ -32,6 +32,11 @@ export const getDatasourceByCategoryId = createAsyncThunk('datasource/fetch_data
   return axios.get<any[]>(requestUrl);
 });
 
+export const getDatasourceApprovalByCategoryId = createAsyncThunk('datasource/fetch_datasource_approval_list', async (categoryId: number) => {
+  const requestUrl = `${apiUrl}/datasource-approval/${categoryId}`;
+  return axios.get<any[]>(requestUrl);
+});
+
 export const getItemListByCategoryId = createAsyncThunk('datasource/fetch_item_list', async (categoryId: number) => {
   const requestUrl = `${apiUrl}/datasource/${categoryId}/item-list`;
   return axios.get<IItem[]>(requestUrl);
@@ -42,14 +47,14 @@ export const getCategoryById = createAsyncThunk('datasource/fetch_category', asy
   return axios.get<ICategory>(requestUrl);
 });
 
-export const updateDatasourceRow  = createAsyncThunk(
+export const updateDatasourceRow = createAsyncThunk(
   'datasource/update_datasource_row',
-  async (rowInfo: {categoryId: number, row: any[]}, thunkAPI) => {
+  async (rowInfo: { categoryId: number, row: any[] }, thunkAPI) => {
     const result = await axios.put<IUser>(`${apiUrl}/datasource/${rowInfo.categoryId}`, rowInfo.row);
     thunkAPI.dispatch(getCategoryById(rowInfo.categoryId));
     return result;
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 const name = 'datasource'
@@ -63,7 +68,7 @@ export const DataEditor = createSlice({
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isFulfilled(getDatasourceByCategoryId), (state, action) => {
+    .addMatcher(isFulfilled(getDatasourceByCategoryId, getDatasourceApprovalByCategoryId), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
@@ -92,7 +97,7 @@ export const DataEditor = createSlice({
       state.loading = false;
       state.updateSuccess = true;
     })
-    .addMatcher(isPending(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
+    .addMatcher(isPending(getDatasourceByCategoryId, getDatasourceApprovalByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
@@ -101,7 +106,7 @@ export const DataEditor = createSlice({
       state.updateSuccess = false;
       state.updating = true;
     })
-    .addMatcher(isRejected(getDatasourceByCategoryId, getItemListByCategoryId, getCategoryById, updateDatasourceRow), (state, action) => {
+    .addMatcher(isRejected(getDatasourceByCategoryId, getDatasourceApprovalByCategoryId, getItemListByCategoryId, getCategoryById, updateDatasourceRow), (state, action) => {
       state.loading = false;
       state.updating = false;
       state.updateSuccess = false;
