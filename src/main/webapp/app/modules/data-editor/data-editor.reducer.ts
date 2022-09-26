@@ -32,8 +32,8 @@ export const getEditorDatasourceByCategoryId = createAsyncThunk('datasource/fetc
   return axios.get<any[]>(requestUrl);
 });
 
-export const getApprovalDatasourceByCategoryId = createAsyncThunk('datasource/fetch_approval_datasource_list', async (categoryId: number) => {
-  const requestUrl = `${apiUrl}/datasource-approval/categories/${categoryId}`;
+export const getReviewDatasourceByCategoryId = createAsyncThunk('datasource/fetch_review_datasource_list', async (categoryId: number) => {
+  const requestUrl = `${apiUrl}/datasource-review/categories/${categoryId}`;
   return axios.get<any[]>(requestUrl);
 });
 
@@ -68,7 +68,7 @@ export const DataEditor = createSlice({
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isFulfilled(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId), (state, action) => {
+    .addMatcher(isFulfilled(getEditorDatasourceByCategoryId, getReviewDatasourceByCategoryId), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
@@ -97,7 +97,7 @@ export const DataEditor = createSlice({
       state.loading = false;
       state.updateSuccess = true;
     })
-    .addMatcher(isPending(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
+    .addMatcher(isPending(getEditorDatasourceByCategoryId, getReviewDatasourceByCategoryId, getItemListByCategoryId, getCategoryById), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
@@ -106,7 +106,7 @@ export const DataEditor = createSlice({
       state.updateSuccess = false;
       state.updating = true;
     })
-    .addMatcher(isRejected(getEditorDatasourceByCategoryId, getApprovalDatasourceByCategoryId, getItemListByCategoryId, getCategoryById, updateEditorDatasourceRow), (state, action) => {
+    .addMatcher(isRejected(getEditorDatasourceByCategoryId, getReviewDatasourceByCategoryId, getItemListByCategoryId, getCategoryById, updateEditorDatasourceRow), (state, action) => {
       state.loading = false;
       state.updating = false;
       state.updateSuccess = false;

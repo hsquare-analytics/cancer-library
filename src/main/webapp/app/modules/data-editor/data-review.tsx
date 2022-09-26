@@ -3,9 +3,9 @@ import {useParams} from 'react-router-dom';
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
-  getApprovalDatasourceByCategoryId,
   getCategoryById,
   getItemListByCategoryId,
+  getReviewDatasourceByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
 import {cleanEntity} from "app/shared/util/entity-utils";
@@ -14,7 +14,7 @@ import {toast} from 'react-toastify';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 
-export const DataApproval = () => {
+export const DataReview = () => {
   const dispatch = useAppDispatch();
 
   const datasource = useAppSelector(state => state.dataEditorReducer.datasource);
@@ -27,7 +27,7 @@ export const DataApproval = () => {
 
   useEffect(() => {
     const id = Number(categoryId);
-    dispatch(getApprovalDatasourceByCategoryId(id));
+    dispatch(getReviewDatasourceByCategoryId(id));
     dispatch(getItemListByCategoryId(id));
     dispatch(getCategoryById(id));
     return () => {
@@ -66,7 +66,7 @@ export const DataApproval = () => {
         widget: 'dxButton',
         options: {
           icon: 'refresh',
-          onClick: () => dispatch(getApprovalDatasourceByCategoryId(Number(categoryId)))
+          onClick: () => dispatch(getReviewDatasourceByCategoryId(Number(categoryId)))
         }
       });
   }
@@ -122,4 +122,4 @@ export const DataApproval = () => {
   );
 };
 
-export default DataApproval;
+export default DataReview;

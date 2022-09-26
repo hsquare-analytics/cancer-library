@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @Transactional
-public class DatasourceApprovalController {
+public class DatasourceReviewController {
 
     private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
 
@@ -28,13 +28,13 @@ public class DatasourceApprovalController {
 
     private final DatasourceMapper datasourceMapper;
 
-    public DatasourceApprovalController(DMLSqlBuilderService dmlSqlBuilderService,
+    public DatasourceReviewController(DMLSqlBuilderService dmlSqlBuilderService,
         DatasourceMapper datasourceMapper) {
         this.datasourceMapper = datasourceMapper;
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
-    @GetMapping("/datasource-approval/categories/{categoryId}")
+    @GetMapping("/datasource-review/categories/{categoryId}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<Map>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {

@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-public class DatasourceApprovalControllerIT {
+public class DatasourceReviewControllerIT {
 
     @Autowired
     private EntityManager em;

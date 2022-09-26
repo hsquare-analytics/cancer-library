@@ -6,9 +6,9 @@ import sinon from 'sinon';
 
 import reducer, {
   getCategoryById,
-  getApprovalDatasourceByCategoryId,
   getEditorDatasourceByCategoryId,
   getItemListByCategoryId,
+  getReviewDatasourceByCategoryId,
   reset,
   updateEditorDatasourceRow
 } from './data-editor.reducer';
@@ -56,7 +56,7 @@ describe('User category selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getEditorDatasourceByCategoryId.pending.type, getApprovalDatasourceByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
+      testMultipleTypes([getEditorDatasourceByCategoryId.pending.type, getReviewDatasourceByCategoryId.pending.type, getItemListByCategoryId.pending.type, getCategoryById.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -85,7 +85,7 @@ describe('User category selector module reducer tests', () => {
     it('should set a message in errorMessage', () => {
       testMultipleTypes([
           getEditorDatasourceByCategoryId.rejected.type,
-          getApprovalDatasourceByCategoryId.rejected.type,
+          getReviewDatasourceByCategoryId.rejected.type,
           getItemListByCategoryId.rejected.type,
           getCategoryById.rejected.type, updateEditorDatasourceRow.rejected.type
         ],
@@ -104,7 +104,7 @@ describe('User category selector module reducer tests', () => {
   describe('Successes', () => {
     it('should fetch datasource', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
-      testMultipleTypes([getEditorDatasourceByCategoryId.fulfilled.type, getApprovalDatasourceByCategoryId.fulfilled.type], payload,
+      testMultipleTypes([getEditorDatasourceByCategoryId.fulfilled.type, getReviewDatasourceByCategoryId.fulfilled.type], payload,
         state => {
           expect(reducer(undefined, {
             type: getEditorDatasourceByCategoryId.fulfilled.type,

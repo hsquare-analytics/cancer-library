@@ -30,7 +30,7 @@ export const AdminAuthorizedCategories = () => {
   >
     {
       categoryList.length !== 0 ? categoryList.map(category => {
-        return <MenuItem key={category} icon="asterisk" to={`admin/data-approval/${category.id}`}>
+        return <MenuItem key={category} icon="asterisk" to={`admin/data-review/${category.id}`}>
           {category.title}
         </MenuItem>
       }) : null}
