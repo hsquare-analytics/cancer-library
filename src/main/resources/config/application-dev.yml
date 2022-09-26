@@ -30,14 +30,24 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
-    username: CancerLibraryApp
-    password:
-    hikari:
-      poolName: Hikari
-      auto-commit: false
+  jpa-config:
+    datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
+      username: CancerLibraryApp
+      password:
+      hikari:
+        poolName: Hikari
+        auto-commit: false
+  mybatis-config:
+    datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
+      username: CancerLibraryApp
+      password:
+      hikari:
+        poolName: Hikari
+        auto-commit: true
   h2:
     console:
       # disable spring boot built-in h2-console since we start it manually with correct configuration
@@ -123,9 +133,3 @@ jhipster:
 
 # application:
 application:
-
-# mybatis
-mybatis.datasource.driver-class-name: org.h2.Driver
-mybatis.datasource.jdbc-url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
-mybatis.datasource.username: CancerLibraryApp
-mybatis.datasource.password:
