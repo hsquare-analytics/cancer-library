@@ -11,10 +11,9 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {APP_DX_DATE_FORMAT, AUTHORITIES} from "app/config/constants";
+import {APP_DX_DATE_FORMAT, AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {translate} from "react-jhipster";
-import {REVIEW_COLUMN_LIST} from "app/modules/data-editor/data-editor.constants";
 
 
 export const DataReview = () => {
@@ -127,7 +126,11 @@ export const DataReview = () => {
                 dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
         <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'} minWidth={150}
                 allowEditing={true}>
-          <Lookup dataSource={Object.values(REVIEW_COLUMN_LIST)} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
+          <Lookup dataSource={[
+            {id: 1, valueExpr: REVIEW_LIST.SUBMITTED, displayExpr: translate('datasource.review.submitted')},
+            {id: 2, valueExpr: REVIEW_LIST.DECLINED, displayExpr: translate('datasource.review.declined')},
+            {id: 3, valueExpr: REVIEW_LIST.APPROVED, displayExpr: translate('datasource.review.approved')},
+          ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
         </Column>
       </DataGrid>
     </div>
