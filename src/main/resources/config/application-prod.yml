@@ -138,3 +138,9 @@ jhipster:
 # ===================================================================
 
 # application:
+
+# mybatis
+mybatis.datasource.driver-class-name: org.postgresql.Driver
+mybatis.datasource.jdbc-url: jdbc:postgresql://localhost:5432/CancerLibraryApp
+mybatis.datasource.username: CancerLibraryApp
+mybatis.datasource.password:
