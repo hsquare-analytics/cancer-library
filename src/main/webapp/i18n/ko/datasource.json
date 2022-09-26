@@ -1,7 +1,11 @@
 {
   "datasource": {
     "column": {
-      "status": "Status"
+      "createdBy": "생성자",
+      "createdDate": "생성일",
+      "lastModifiedBy": "최종 수정자",
+      "lastModifiedDate": "최종 수정일",
+      "status": "상태"
     }
   }
 }
