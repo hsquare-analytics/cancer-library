@@ -32,18 +32,23 @@ spring:
     livereload:
       enabled: false
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/CancerLibraryApp
-    username: CancerLibraryApp
-    password:
-    hikari:
-      poolName: Hikari
+    jpa:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:postgresql://localhost:5432/CancerLibraryApp
+      username: CancerLibraryApp
+      password:
       auto-commit: false
+    mybatis:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:postgresql://localhost:5432/CancerLibraryApp
+      username: CancerLibraryApp
+      password:
+      auto-commit: true
   jpa:
     database-platform: tech.jhipster.domain.util.FixedPostgreSQL10Dialect
   # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
   liquibase:
-    contexts: prod
+    contexts: prod, faker
   mail:
     host: localhost
     port: 25
@@ -138,9 +143,3 @@ jhipster:
 # ===================================================================
 
 # application:
-
-# mybatis
-mybatis.datasource.driver-class-name: org.postgresql.Driver
-mybatis.datasource.jdbc-url: jdbc:postgresql://localhost:5432/CancerLibraryApp
-mybatis.datasource.username: CancerLibraryApp
-mybatis.datasource.password:

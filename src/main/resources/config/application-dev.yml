@@ -30,17 +30,17 @@ spring:
   jackson:
     serialization:
       indent-output: true
-  jpa-config:
-    datasource:
+  datasource:
+    jpa:
       type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
       username: CancerLibraryApp
       password:
-      hikari:
-        poolName: Hikari
-        auto-commit: false
-  mybatis-config:
-    datasource:
+      auto-commit: false
+#      hikari:
+#        poolName: Hikari
+#        auto-commit: false
+    mybatis:
       type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:h2:file:./build/h2db/db/cancerlibraryapp;DB_CLOSE_DELAY=-1
       username: CancerLibraryApp
