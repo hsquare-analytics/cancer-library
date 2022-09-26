@@ -11,7 +11,7 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
+import {APP_DX_DATE_FORMAT, AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const DataReview = () => {
@@ -114,6 +114,10 @@ export const DataReview = () => {
             />
           )
         }
+        <Column caption="생성인" dataField={"created_by"} alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption="생성일" dataField={"created_date"} dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption="최종 수정인" dataField={"last_modified_by"} alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption="취종 수정일" dataField={"last_modified_date"} dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
         <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={true}>
           <Lookup dataSource={Object.values(REVIEW_LIST)}/>
         </Column>
