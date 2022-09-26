@@ -11,9 +11,11 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {APP_DX_DATE_FORMAT, AUTHORITIES, REVIEW_LIST} from "app/config/constants";
+import {APP_DX_DATE_FORMAT, AUTHORITIES} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {translate} from "react-jhipster";
+import {REVIEW_COLUMN_LIST} from "app/modules/data-editor/data-editor.constants";
+
 
 export const DataReview = () => {
   const dispatch = useAppDispatch();
@@ -115,12 +117,17 @@ export const DataReview = () => {
             />
           )
         }
-        <Column caption={translate("datasource.column.createdBy")} dataField={"created_by"} alignment={"center"} minWidth={150} allowEditing={false}/>
-        <Column caption={translate("datasource.column.createdDate")} dataField={"created_date"} dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
-        <Column caption={translate("datasource.column.lastModifiedBy")} dataField={"last_modified_by"} alignment={"center"} minWidth={150} allowEditing={false}/>
-        <Column caption={translate("datasource.column.lastModifiedDate")}  dataField={"last_modified_date"} dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
-        <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={true}>
-          <Lookup dataSource={Object.values(REVIEW_LIST)}/>
+        <Column caption={translate("datasource.column.createdBy")} dataField={"created_by"} alignment={"center"}
+                minWidth={150} allowEditing={false}/>
+        <Column caption={translate("datasource.column.createdDate")} dataField={"created_date"} dataType="date"
+                format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption={translate("datasource.column.lastModifiedBy")} dataField={"last_modified_by"}
+                alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption={translate("datasource.column.lastModifiedDate")} dataField={"last_modified_date"}
+                dataType="date" format={APP_DX_DATE_FORMAT} alignment={"center"} minWidth={150} allowEditing={false}/>
+        <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'} minWidth={150}
+                allowEditing={true}>
+          <Lookup dataSource={Object.values(REVIEW_COLUMN_LIST)} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
         </Column>
       </DataGrid>
     </div>
