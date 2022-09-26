@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.service;
 
-import io.planit.cancerlibrary.config.StatusConstants;
+import io.planit.cancerlibrary.config.ReviewConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;
@@ -51,7 +51,7 @@ public class DMLSqlBuilderService {
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
         SQL sql = new SQL() {{
-            INSERT_INTO(category.getTitle() + "_updated");
+            INSERT_INTO(category.getTitle() + UPDATED_TABLE_SUFFIX);
             itemList.forEach(item -> {
                 if (map.containsKey(item.getTitle())) {
                     VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle())));
@@ -62,7 +62,7 @@ public class DMLSqlBuilderService {
             VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()));
             VALUES("LAST_MODIFIED_BY", String.format("'%s'", user.getLogin()));
             VALUES("LAST_MODIFIED_DATE", String.format("'%s'", timeService.getCurrentTime()));
-            VALUES("STATUS", String.format("'%s'", StatusConstants.PENDING));
+            VALUES("STATUS", String.format("'%s'", ReviewConstants.SUBMITTED));
         }};
 
         log.debug("Assembled final sql: {} ", sql);
@@ -76,7 +76,7 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL() {{
             SELECT("*");
-            FROM(category.getTitle() + "_UPDATED");
+            FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
             WHERE(String.format("IDX = '%s'", map.get("idx")));
         }};
 
@@ -91,7 +91,7 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL() {{
             SELECT("*");
-            FROM(category.getTitle() + "_UPDATED");
+            FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
         }};
 
         log.debug("Assembled final sql: {} ", sql);
@@ -110,7 +110,7 @@ public class DMLSqlBuilderService {
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
         SQL sql = new SQL() {{
-            UPDATE(category.getTitle() + "_updated");
+            UPDATE(category.getTitle() + UPDATED_TABLE_SUFFIX);
             itemList.forEach(
                 item -> {
                     if (map.containsKey(item.getTitle())) {
@@ -134,7 +134,7 @@ public class DMLSqlBuilderService {
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
         SQL sql = new SQL() {{
-            DELETE_FROM(category.getTitle() + "_UPDATED");
+            DELETE_FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
             WHERE(String.format("IDX = '%s'", map.get("idx")));
         }};
 

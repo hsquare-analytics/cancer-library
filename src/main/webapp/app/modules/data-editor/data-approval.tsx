@@ -3,15 +3,15 @@ import {useParams} from 'react-router-dom';
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
-  getCategoryById,
   getApprovalDatasourceByCategoryId,
+  getCategoryById,
   getItemListByCategoryId,
   reset
 } from "app/modules/data-editor/data-editor.reducer";
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {AUTHORITIES, STATUS_LIST} from "app/config/constants";
+import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const DataApproval = () => {
@@ -115,7 +115,7 @@ export const DataApproval = () => {
           )
         }
         <Column caption={"상태"} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={true}>
-          <Lookup dataSource={Object.values(STATUS_LIST)}/>
+          <Lookup dataSource={Object.values(REVIEW_LIST)}/>
         </Column>
       </DataGrid>
     </div>

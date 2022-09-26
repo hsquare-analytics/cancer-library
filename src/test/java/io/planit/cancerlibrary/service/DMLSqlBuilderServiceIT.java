@@ -170,7 +170,7 @@ public class DMLSqlBuilderServiceIT {
         }}).toString();
 
         // then
-        assertThat(result).contains("UPDATE " + category.getTitle() + "_updated");
+        assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED");
         assertThat(result).contains("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'");
         assertThat(result).contains("WHERE (IDX = 'test_idx')");
     }

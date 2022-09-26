@@ -13,7 +13,7 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {AUTHORITIES, STATUS_LIST} from "app/config/constants";
+import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const DataEditor = () => {
@@ -40,13 +40,13 @@ export const DataEditor = () => {
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-      row['status'] = STATUS_LIST.SUBMITTED;
+      row['status'] = REVIEW_LIST.SUBMITTED;
       axios
       .post(`api/datasource-editor/categories/${categoryId}`, row)
       .then(({data}) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
-          e.oldData['status'] = STATUS_LIST.SUBMITTED;
+          e.oldData['status'] = REVIEW_LIST.SUBMITTED;
           resolve();
         } else {
           toast.error('Data Submission Failed');
@@ -113,7 +113,7 @@ export const DataEditor = () => {
           )
         }
         <Column caption={translate('datasource.column.status')} dataField={"status"} alignment={'center'} minWidth={150} allowEditing={false}>
-          <Lookup dataSource={Object.values(STATUS_LIST)}/>
+          <Lookup dataSource={Object.values(REVIEW_LIST)}/>
         </Column>
       </DataGrid>
     </div>
