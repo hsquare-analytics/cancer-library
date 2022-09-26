@@ -5,6 +5,9 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.util.Objects;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +30,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class JpaConfiguration {
 
+    private final JpaProperties jpaProperties;
+
+    private final HibernateProperties hibernateProperties;
+
+    public JpaConfiguration(JpaProperties jpaProperties, HibernateProperties hibernateProperties) {
+        this.jpaProperties = jpaProperties;
+        this.hibernateProperties = hibernateProperties;
+    }
+
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.jpa")
     public HikariConfig jpaHikariConfig() {
@@ -35,21 +47,26 @@ public class JpaConfiguration {
 
     @Bean
     @Primary
-    public DataSource jpaDatasource() throws Exception {
+    public DataSource jpaDatasource() {
         DataSource dataSource = new HikariDataSource(jpaHikariConfig());
         return dataSource;
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean jpaEntityManagerFactory(EntityManagerFactoryBuilder builder, @Qualifier("jpaDatasource") DataSource dataSource) {
+        var properties = hibernateProperties.determineHibernateProperties(
+            jpaProperties.getProperties(), new HibernateSettings());
+
         return builder
             .dataSource(dataSource)
-            .packages("io.planit.cancerlibrary.domain")
+            .properties(properties)
+            .packages("io.planit.cancerlibrary")
             .build();
     }
 
     @Bean
-    public PlatformTransactionManager jpaTransactionManager( @Qualifier("jpaEntityManagerFactory") LocalContainerEntityManagerFactoryBean jpaEntityManagerFactory) {
+    public PlatformTransactionManager jpaTransactionManager(
+        @Qualifier("jpaEntityManagerFactory") LocalContainerEntityManagerFactoryBean jpaEntityManagerFactory) {
         return new JpaTransactionManager(Objects.requireNonNull(jpaEntityManagerFactory.getObject()));
     }
 }
