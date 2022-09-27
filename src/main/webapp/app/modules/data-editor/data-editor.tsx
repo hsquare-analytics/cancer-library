@@ -13,8 +13,7 @@ import {
 import {cleanEntity} from "app/shared/util/entity-utils";
 import axios from "axios";
 import {toast} from 'react-toastify';
-import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
-import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {REVIEW_LIST} from "app/config/constants";
 
 export const DataEditor = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +22,6 @@ export const DataEditor = () => {
   const itemList = useAppSelector(state => state.dataEditorReducer.items);
   const category = useAppSelector(state => state.dataEditorReducer.category);
   const loading = useAppSelector(state => state.dataEditorReducer.loading);
-  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
 
   const {categoryId} = useParams<'categoryId'>();
 
@@ -67,10 +65,18 @@ export const DataEditor = () => {
           onClick: () => dispatch(getEditorDatasourceByCategoryId(Number(categoryId)))
         }
       });
+
+    // e.toolbarOptions.items.forEach(item => {
+    //   if (item.name === 'searchPanel') {
+    //     item.location = 'after';
+    //     item.sortOrder = 0;
+    //     item.sortIndex = 0;
+    //   }
+    // });
   }
 
   return (
-    <div>
+    <div className="data-editor-wrapper">
       <h2 id="configuration-page-heading" data-cy="configurationPageHeading">
         {category.title}
       </h2>
