@@ -21,6 +21,10 @@
       "title": "Title",
       "description": "Description",
       "dateColumn": "Date Column",
+      "property" : {
+        "dateColumn" : "Date Column",
+        "caption" : "Caption"
+      },
       "activated": "Activated",
       "orderNo": "Order No",
       "topic.title": "Topic Title",

@@ -11,6 +11,7 @@ export interface ICategory extends IAbstractAuditing {
   dateColumn?: string;
   activated?: boolean;
   orderNo?: number;
+  property?: { dateColumn?: string, caption?: string };
   topic?: ITopic;
 }
 
@@ -21,6 +22,7 @@ export const defaultValue: Readonly<ICategory> = {
   dateColumn: '',
   orderNo: 0,
   activated: false,
+  property: {dateColumn: '', caption: ''},
   topic: null,
   ...abstractAuditingDefaultValue
 };

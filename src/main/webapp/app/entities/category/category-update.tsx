@@ -136,6 +136,20 @@ export const CategoryUpdate = () => {
                   required: {value: true, message: translate('entity.validation.required')},
                 }}
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.property.dateColumn')}
+                id="category-property"
+                name="property.dateColumn"
+                data-cy="property.dateColumn"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.property.caption')}
+                id="category-property"
+                name="property.caption"
+                data-cy="property.caption"
+                type="text"
+              />
               <ValidatedField type="select" name="topic.id" data-cy="topic"
                               label={translate('cancerLibraryApp.category.topic.title')}>
                 <option value="">-</option>

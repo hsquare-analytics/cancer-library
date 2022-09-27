@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import {Button, Col, Row} from 'reactstrap';
-import {Translate, TextFormat} from 'react-jhipster';
+import {TextFormat, Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 
@@ -61,6 +61,18 @@ export const CategoryDetail = () => {
             </span>
           </dt>
           <dd>{categoryEntity.orderNo}</dd>
+          <dt>
+            <span id="property-dateColumn">
+              <Translate contentKey="cancerLibraryApp.category.property.dateColumn">Date Column</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.property.dateColumn}</dd>
+          <dt>
+            <span id="property-caption">
+              <Translate contentKey="cancerLibraryApp.category.property.caption">Caption</Translate>
+            </span>
+          </dt>
+          <dd>{categoryEntity.property.caption}</dd>
           <dt>
             <span id="topic-name">
               <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>
