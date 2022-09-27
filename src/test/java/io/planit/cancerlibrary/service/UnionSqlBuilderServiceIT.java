@@ -67,6 +67,10 @@ class UnionSqlBuilderServiceIT {
 
     private Group group;
 
+    private Item item1;
+
+    private Item item2;
+
     @BeforeEach
     void initTest() {
         Subject subject = SubjectResourceIT.createEntity(em);
@@ -80,6 +84,12 @@ class UnionSqlBuilderServiceIT {
 
         group = GroupResourceIT.createEntity(em, category);
         groupRepository.saveAndFlush(group);
+
+        item1 = new Item().group(group).title("column1").activated(true);
+        item2 = new Item().group(group).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
     }
 
     @Test
@@ -87,12 +97,6 @@ class UnionSqlBuilderServiceIT {
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUnionSelectAllQuery() {
         // given
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
-
-        itemRepository.saveAndFlush(item1);
-        itemRepository.saveAndFlush(item2);
-
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
@@ -104,61 +108,29 @@ class UnionSqlBuilderServiceIT {
         String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
 
         // then
-//        SELECT *
-//            FROM (SELECT COLUMN1, COLUMN2, STATUS
-//                FROM AAAAAAAAAA_UPDATED
-//                WHERE (SEQ IN (SELECT MAX(seq)
-//                    FROM AAAAAAAAAA_UPDATED
-//                    WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_SUBMITTED'))
-//                    GROUP BY IDX) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z') UNION SELECT COLUMN1, COLUMN2, NULL AS STATUS
-//        FROM AAAAAAAAAA
-//        WHERE (IDX NOT IN (SELECT IDX
-//            FROM AAAAAAAAAA_UPDATED
-//            WHERE (SEQ IN (SELECT MAX(seq)
-//                FROM AAAAAAAAAA_UPDATED
-//                WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_SUBMITTED'))
-//                GROUP BY IDX))) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z')) AS T
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS")
-            .contains("FROM " + category.getTitle().toUpperCase());
-
-        String whereClause = String.format("WHERE (%s BETWEEN '%s' AND '%s')", category.getDateColumn(),
-            userCategory.getTermStart(), userCategory.getTermEnd());
-        assertThat(result).contains(whereClause);
+        assertUpdateListSQL(result, updatedTableName);
+        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
+        assertThat(result).contains("UNION");
     }
 
     @Test
     @Transactional
     void testGetUpdatedListSQL() {
-        // given
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
-
-        itemRepository.saveAndFlush(item1);
-        itemRepository.saveAndFlush(item2);
-
         // when
         String result = unionSqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null)
             .toString();
 
         // then
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
-        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
-            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
+        assertUpdateListSQL(result, updatedTableName);
     }
 
     @Test
     @Transactional
     void testGetNotUpdatedListSQL() {
-        // given
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
-
-        itemRepository.saveAndFlush(item1);
-        itemRepository.saveAndFlush(item2);
-
         // when
         String result = unionSqlBuilderService.getNotUpdatedListSQL(category, Arrays.asList(item1, item2), null)
             .toString();
@@ -167,10 +139,19 @@ class UnionSqlBuilderServiceIT {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
+        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
+    }
+
+    private void assertUpdateListSQL(String result, String updatedTableName) {
+        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
+            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
+    }
+
+    private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
                 String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
             .contains(String.format("FROM %s", originTableName)).contains("WHERE (IDX NOT IN (SELECT IDX")
-            .contains(String.format("FROM %s))", updatedTableName));
+            .contains(String.format("FROM %s)", updatedTableName));
     }
 }
 
