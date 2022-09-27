@@ -4,22 +4,22 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class ItemProperty implements Serializable {
+public class CategoryProperty implements Serializable {
 
-    private Integer visibleIndex;
+    private String dateColumn;
 
     private String caption;
 
-    public Integer getVisibleIndex() {
-        return visibleIndex;
+    public String getDateColumn() {
+        return dateColumn;
     }
 
-    public void setVisibleIndex(Integer visibleIndex) {
-        this.visibleIndex = visibleIndex;
+    public void setDateColumn(String dateColumn) {
+        this.dateColumn = dateColumn;
     }
 
-    public ItemProperty visibleIndex(Integer visibleIndex) {
-        this.setVisibleIndex(visibleIndex);
+    public CategoryProperty dateColumn(String dateColumn) {
+        this.setDateColumn(dateColumn);
         return this;
     }
 
@@ -31,7 +31,7 @@ public class ItemProperty implements Serializable {
         this.caption = caption;
     }
 
-    public ItemProperty caption(String caption) {
+    public CategoryProperty caption(String caption) {
         this.setCaption(caption);
         return this;
     }

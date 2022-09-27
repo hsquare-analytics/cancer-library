@@ -111,6 +111,8 @@ public class CategoryResource {
 
                 existingCategory.setActivated(category.isActivated());
 
+                existingCategory.property(category.getProperty());
+
                 return existingCategory;
             })
             .map(categoryRepository::save);
