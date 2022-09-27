@@ -11,5 +11,6 @@
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_diagnosis.sql" />
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_examination.sql" />
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_surgery.sql" />
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_medicine.sql" />
     </changeSet>
 </databaseChangeLog>
