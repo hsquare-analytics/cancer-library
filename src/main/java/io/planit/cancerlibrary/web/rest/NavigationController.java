@@ -7,7 +7,6 @@ import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
-import io.planit.cancerlibrary.service.InstantService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -35,16 +34,12 @@ public class NavigationController {
 
     private final UserCategoryRepository userCategoryRepository;
 
-    private final InstantService instantService;
-
     public NavigationController(
         CategoryRepository categoryRepository,
-        UserRepository userRepository, UserCategoryRepository userCategoryRepository,
-        InstantService instantService) {
+        UserRepository userRepository, UserCategoryRepository userCategoryRepository) {
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
         this.userCategoryRepository = userCategoryRepository;
-        this.instantService = instantService;
     }
 
     @GetMapping("/navigations")

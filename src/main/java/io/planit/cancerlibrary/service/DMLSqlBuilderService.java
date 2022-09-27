@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.service;
 
-import io.planit.cancerlibrary.config.ReviewConstants;
+import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;

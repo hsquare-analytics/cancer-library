@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.config;
+package io.planit.cancerlibrary.constant;
 
 public final class ReviewConstants {
 
