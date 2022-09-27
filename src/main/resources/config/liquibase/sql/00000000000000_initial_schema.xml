@@ -9,5 +9,6 @@
     <changeSet id="20220921131335-2" author="zero" context="hospital">
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_sujin.sql" />
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_diagnosis.sql" />
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_examination.sql" />
     </changeSet>
 </databaseChangeLog>
