@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.constant.DatasourceConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
@@ -33,7 +34,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
-public class UnionSqlBuilderServiceIT {
+class UnionSqlBuilderServiceIT {
 
     @Autowired
     private EntityManager em;
@@ -84,7 +85,7 @@ public class UnionSqlBuilderServiceIT {
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    public void testUnionSelectAllQuery() {
+    void testUnionSelectAllQuery() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -95,9 +96,8 @@ public class UnionSqlBuilderServiceIT {
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category)
-            .activated(true).termStart(Instant.now().minus(30, ChronoUnit.DAYS))
-            .termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
+        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
+            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
         // when
@@ -119,10 +119,10 @@ public class UnionSqlBuilderServiceIT {
 //                WHERE (STATUS IN ('STATUS_APPROVED', 'STATUS_SUBMITTED'))
 //                GROUP BY IDX))) AND AAAAAAAAAA BETWEEN '2022-08-23T05:44:42.421785Z' AND '2022-10-22T05:44:42.421923Z')) AS T
         String originTableName = category.getTitle().toUpperCase();
-        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
+        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS");
-        assertThat(result).contains("FROM " + category.getTitle().toUpperCase());
+        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS")
+            .contains("FROM " + category.getTitle().toUpperCase());
 
         String whereClause = String.format("WHERE (%s BETWEEN '%s' AND '%s')", category.getDateColumn(),
             userCategory.getTermStart(), userCategory.getTermEnd());
@@ -131,7 +131,7 @@ public class UnionSqlBuilderServiceIT {
 
     @Test
     @Transactional
-    public void testGetUpdatedListSQL() {
+    void testGetUpdatedListSQL() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -140,17 +140,18 @@ public class UnionSqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = unionSqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
+        String result = unionSqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null)
+            .toString();
 
         // then
-        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2, STATUS");
-        assertThat(result).contains(String.format("FROM %s", updatedTableName));
+        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
+        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
+            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
     }
 
     @Test
     @Transactional
-    public void testGetNotUpdatedListSQL() {
+    void testGetNotUpdatedListSQL() {
         // given
         Item item1 = new Item().group(group).title("column1").activated(true);
         Item item2 = new Item().group(group).title("column2").activated(true);
@@ -159,16 +160,17 @@ public class UnionSqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = unionSqlBuilderService.getNotUpdatedListSQL(category, Arrays.asList(item1, item2), null).toString();
+        String result = unionSqlBuilderService.getNotUpdatedListSQL(category, Arrays.asList(item1, item2), null)
+            .toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
-        String updatedTableName = category.getTitle().toUpperCase() + "_UPDATED";
+        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
-        assertThat(result).contains("SELECT COLUMN1, COLUMN2, NULL AS STATUS");
-        assertThat(result).contains(String.format("FROM %s", originTableName));
-        assertThat(result).contains("WHERE (IDX NOT IN (SELECT IDX");
-        assertThat(result).contains(String.format("FROM %s))", updatedTableName));
+        assertThat(result).contains(
+                String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
+            .contains(String.format("FROM %s", originTableName)).contains("WHERE (IDX NOT IN (SELECT IDX")
+            .contains(String.format("FROM %s))", updatedTableName));
     }
 }
 
