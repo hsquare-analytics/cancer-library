@@ -44,12 +44,6 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.description}</dd>
           <dt>
-            <span id="dateColumn">
-              <Translate contentKey="cancerLibraryApp.category.dateColumn">Date Column</Translate>
-            </span>
-          </dt>
-          <dd>{categoryEntity.dateColumn}</dd>
-          <dt>
             <span id="activated">
               <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
             </span>

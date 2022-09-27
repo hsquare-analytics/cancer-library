@@ -8,7 +8,6 @@ export interface ICategory extends IAbstractAuditing {
   id?: any;
   title?: string;
   description?: string;
-  dateColumn?: string;
   activated?: boolean;
   orderNo?: number;
   property?: { dateColumn?: string, caption?: string };
@@ -19,7 +18,6 @@ export const defaultValue: Readonly<ICategory> = {
   id: '',
   title: '',
   description: '',
-  dateColumn: '',
   orderNo: 0,
   activated: false,
   property: {dateColumn: '', caption: ''},

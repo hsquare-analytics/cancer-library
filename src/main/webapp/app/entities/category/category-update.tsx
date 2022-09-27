@@ -112,13 +112,6 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.dateColumn')}
-                id="category-dateColumn"
-                name="dateColumn"
-                data-cy="dateColumn"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('cancerLibraryApp.category.activated')}
                 id="category-activated"
                 name="activated"

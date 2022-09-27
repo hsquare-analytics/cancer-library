@@ -20,7 +20,6 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
-      "dateColumn": "Date Column",
       "property" : {
         "dateColumn" : "Date Column",
         "caption" : "Caption"
