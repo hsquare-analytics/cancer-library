@@ -64,8 +64,9 @@ public class UnionSqlBuilderService {
         String updatedTableName = category.getTitle().toUpperCase() + UPDATED_TABLE_SUFFIX;
 
         SQL sql = new SQL() {{
-            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            SELECT("IDX");
             SELECT("STATUS");
+            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
             FROM(updatedTableName);
 
             if (CollectionUtils.isNotEmpty(userCategoryList)) {
@@ -86,8 +87,9 @@ public class UnionSqlBuilderService {
         }};
 
         SQL sql = new SQL() {{
-            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
+            SELECT("IDX");
             SELECT("NULL AS STATUS");
+            itemList.forEach(item -> SELECT(item.getTitle().toUpperCase()));
             FROM(originTableName);
             WHERE("IDX NOT IN (" + EXCLUDE_IDX_SUBQUERY + ")");
 
