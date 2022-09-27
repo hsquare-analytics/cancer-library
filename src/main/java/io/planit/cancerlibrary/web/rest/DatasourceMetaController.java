@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.service.UnionSqlBuilderService;
+import io.planit.cancerlibrary.repository.ItemRepository;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 public class DatasourceMetaController {
 
-    private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
+    private final Logger log = LoggerFactory.getLogger(DatasourceMetaController.class);
 
-    private final UnionSqlBuilderService unionSqlBuilderService;
+    private final ItemRepository itemRepository;
 
-    public DatasourceMetaController(UnionSqlBuilderService unionSqlBuilderService) {
-        this.unionSqlBuilderService = unionSqlBuilderService;
+    public DatasourceMetaController(ItemRepository itemRepository) {
+        this.itemRepository = itemRepository;
     }
 
     @GetMapping("/datasource-meta/categories/{categoryId}/item-list")
@@ -30,7 +30,7 @@ public class DatasourceMetaController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);
 
-        List<Item> result = unionSqlBuilderService.getItemListByCategoryId(categoryId);
+        List<Item> result = itemRepository.findAllByGroupCategoryId(categoryId);
 
         return ResponseEntity.ok().body(result);
     }
