@@ -8,5 +8,6 @@
     </changeSet>
     <changeSet id="20220921131335-2" author="zero" context="pseudo">
         <sqlFile dbms="h2" path="config/liquibase/sql/pseudo/test_examination.sql" />
+        <sqlFile dbms="h2" path="config/liquibase/sql/pseudo/test_diagnosis.sql" />
     </changeSet>
 </databaseChangeLog>
