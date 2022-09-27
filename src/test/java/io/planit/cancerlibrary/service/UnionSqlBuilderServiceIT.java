@@ -25,7 +25,6 @@ import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -92,10 +91,40 @@ class UnionSqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
     }
 
+    private void assertUpdateListSQL(String result, String updatedTableName) {
+        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
+            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
+    }
+
+    private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
+        assertThat(result).contains(
+                String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
+            .contains(String.format("FROM %s", originTableName))
+            .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN, DatasourceConstants.IDX_COLUMN))
+            .contains(String.format("FROM %s)", updatedTableName));
+    }
+
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUnionSelectAllQuery() {
+        // when
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
+
+        // then
+        String originTableName = category.getTitle().toUpperCase();
+        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
+
+        assertUpdateListSQL(result, updatedTableName);
+        assertThat(result).contains("UNION");
+        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
+    }
+
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "test_login", authorities = "ROLE_USER")
+    void testGetUpdatedListSQLHaveWhereCondition() {
         // given
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
@@ -112,46 +141,12 @@ class UnionSqlBuilderServiceIT {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         assertUpdateListSQL(result, updatedTableName);
-        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
         assertThat(result).contains("UNION");
-    }
-
-    @Test
-    @Transactional
-    void testGetUpdatedListSQL() {
-        // when
-        String result = unionSqlBuilderService.getUpdatedListSQL(category, Arrays.asList(item1, item2), null)
-            .toString();
-
-        // then
-        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
-        assertUpdateListSQL(result, updatedTableName);
-    }
-
-    @Test
-    @Transactional
-    void testGetNotUpdatedListSQL() {
-        // when
-        String result = unionSqlBuilderService.getNotUpdatedListSQL(category, Arrays.asList(item1, item2), null)
-            .toString();
-
-        // then
-        String originTableName = category.getTitle().toUpperCase();
-        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
-
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-    }
-
-    private void assertUpdateListSQL(String result, String updatedTableName) {
-        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
-            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
-    }
-
-    private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
-            .contains(String.format("FROM %s", originTableName)).contains("WHERE (IDX NOT IN (SELECT IDX")
-            .contains(String.format("FROM %s)", updatedTableName));
+            String.format("(%s BETWEEN '%s' AND '%s')", userCategory.getCategory().getDateColumn(),
+                userCategory.getTermStart(), userCategory.getTermEnd()));
     }
+
 }
 

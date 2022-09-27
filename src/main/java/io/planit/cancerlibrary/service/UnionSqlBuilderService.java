@@ -52,14 +52,14 @@ public class UnionSqlBuilderService {
 
         SQL sql = new SQL();
         sql.SELECT("*")
-            .FROM(String.format("(%s\nUNION\n%s) AS T", updatedListSQL.toString(), notUpdatedListSQL.toString()))
+            .FROM(String.format("(%s%nUNION%n%s) AS T", updatedListSQL, notUpdatedListSQL))
             .ORDER_BY(DatasourceConstants.IDX_COLUMN);
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;
     }
 
-    public SQL getUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
+    private SQL getUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         SQL sql = new SQL();
@@ -74,7 +74,7 @@ public class UnionSqlBuilderService {
         return sql;
     }
 
-    public SQL getNotUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
+    private SQL getNotUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = originTableName + DatasourceConstants.UPDATED_SUFFIX;
 
