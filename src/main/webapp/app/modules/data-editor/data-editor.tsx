@@ -101,7 +101,7 @@ export const DataEditor = () => {
         {
           itemList.map(item => <Column
               key={item}
-              dataField={item.title}
+              dataField={item.title.toLowerCase()}
               caption={item.itemProperty?.caption}
               visibleIndex={item.itemProperty?.visibleIndex}
               // format={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.format}
