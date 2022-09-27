@@ -97,7 +97,7 @@ public class UnionSqlBuilderService {
         StringBuilder dateClauses = new StringBuilder("(");
         for (int i = 0; i < userCategoryList.size(); i++) {
             UserCategory userCategory = userCategoryList.get(i);
-            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getDateColumn(),
+            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getProperty().getDateColumn(),
                 userCategory.getTermStart(), userCategory.getTermEnd());
             if (i == 0) {
                 dateClauses.append(betweenClause);

@@ -4,7 +4,6 @@ import io.planit.cancerlibrary.domain.embedded.CategoryProperty;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
-import javax.persistence.SecondaryTables;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,9 +20,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "ph_category")
-@SecondaryTables({
-    @SecondaryTable(name = "ph_category_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "category_id")),
-})
+@SecondaryTable(name = "ph_category_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "category_id"))
 public class Category extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,10 +42,6 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     private String description;
 
     @NotNull
-    @Column(name = "date_column")
-    private String dateColumn;
-
-    @NotNull
     @Column(name = "activated", nullable = false)
     private boolean activated;
 
@@ -58,9 +50,8 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     private Integer orderNo;
 
     @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "dateColumn", column = @Column(name = "date_column", table = "ph_category_property")),
-        @AttributeOverride(name = "caption", column = @Column(table = "ph_category_property"))})
+    @AttributeOverride(name = "dateColumn", column = @Column(name = "date_column", table = "ph_category_property"))
+    @AttributeOverride(name = "caption", column = @Column(table = "ph_category_property"))
     private CategoryProperty property;
 
     @NotNull
@@ -104,19 +95,6 @@ public class Category extends AbstractAuditingEntity implements Serializable {
 
     public Category description(String description) {
         this.description = description;
-        return this;
-    }
-
-    public String getDateColumn() {
-        return dateColumn;
-    }
-
-    public void setDateColumn(String dateColumn) {
-        this.dateColumn = dateColumn;
-    }
-
-    public Category dateColumn(String dateColumn) {
-        this.dateColumn = dateColumn;
         return this;
     }
 
@@ -195,7 +173,6 @@ public class Category extends AbstractAuditingEntity implements Serializable {
             "id=" + id +
             ", title='" + title + '\'' +
             ", description='" + description + '\'' +
-            ", dateColumn='" + dateColumn + '\'' +
             ", activated=" + activated +
             ", orderNo=" + orderNo +
             ", property=" + property +

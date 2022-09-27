@@ -144,7 +144,7 @@ class UnionSqlBuilderServiceIT {
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
         assertThat(result).contains(
-            String.format("(%s BETWEEN '%s' AND '%s')", userCategory.getCategory().getDateColumn(),
+            String.format("(%s BETWEEN '%s' AND '%s')", userCategory.getCategory().getProperty().getDateColumn(),
                 userCategory.getTermStart(), userCategory.getTermEnd()));
     }
 

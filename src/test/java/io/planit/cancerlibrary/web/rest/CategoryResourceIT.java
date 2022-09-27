@@ -52,8 +52,10 @@ public class CategoryResourceIT {
     private static final Integer DEFAULT_ORDER_NO = 1;
     private static final Integer UPDATED_ORDER_NO = 1;
 
-    private static final CategoryProperty DEFAULT_PROPERTY = new CategoryProperty().dateColumn("AAAAAAAAA").caption("AAAAAAAAA");
-    private static final CategoryProperty UPDATED_PROPERTY = new CategoryProperty().dateColumn("BBBBBBBBB").caption("BBBBBBBBB");
+    private static final CategoryProperty DEFAULT_PROPERTY = new CategoryProperty().dateColumn("AAAAAAAAA")
+        .caption("AAAAAAAAA");
+    private static final CategoryProperty UPDATED_PROPERTY = new CategoryProperty().dateColumn("BBBBBBBBB")
+        .caption("BBBBBBBBB");
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -84,14 +86,14 @@ public class CategoryResourceIT {
 
     public static Category createEntity(EntityManager em, Topic topic) {
         Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_TABLE_DESCRIPTION).
-            dateColumn(DEFAULT_DATE_COLUMN).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).property(DEFAULT_PROPERTY)
+            activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).property(DEFAULT_PROPERTY)
             .topic(topic);
         return category;
     }
 
     public static Category createUpdatedEntity(EntityManager em, Topic topic) {
         Category category = new Category().title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).
-            dateColumn(UPDATED_DATE_COLUMN).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO)
+            activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO)
             .property(UPDATED_PROPERTY).topic(topic);
         return category;
     }
@@ -122,7 +124,6 @@ public class CategoryResourceIT {
         assertThat(testCategory.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
         assertThat(testCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_TABLE_DESCRIPTION);
-        assertThat(testCategory.getDateColumn()).isEqualTo(DEFAULT_DATE_COLUMN);
         assertThat(testCategory.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testCategory.getProperty().getDateColumn()).isEqualTo(DEFAULT_PROPERTY.getDateColumn());
         assertThat(testCategory.getProperty().getCaption()).isEqualTo(DEFAULT_PROPERTY.getCaption());
@@ -181,7 +182,7 @@ public class CategoryResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_TABLE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
             .andExpect(jsonPath("$.[*].property.dateColumn").value(hasItem(DEFAULT_PROPERTY.getDateColumn())))
-            .andExpect(jsonPath("$.[*].property.caption").value(hasItem(DEFAULT_PROPERTY.getCaption()))) ;
+            .andExpect(jsonPath("$.[*].property.caption").value(hasItem(DEFAULT_PROPERTY.getCaption())));
     }
 
     @Test
@@ -349,7 +350,8 @@ public class CategoryResourceIT {
         Category partialUpdatedCategory = new Category();
         partialUpdatedCategory.setId(category.getId());
 
-        partialUpdatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED).property(UPDATED_PROPERTY);
+        partialUpdatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED)
+            .property(UPDATED_PROPERTY);
 
         restCategoryMockMvc
             .perform(
