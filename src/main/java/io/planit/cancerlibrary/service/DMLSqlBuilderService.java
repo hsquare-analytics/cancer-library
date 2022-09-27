@@ -51,10 +51,13 @@ public class DMLSqlBuilderService {
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
         SQL sql = new SQL() {{
+            VALUES("IDX", String.format("'%s'", map.get("idx")));
+
             INSERT_INTO(category.getTitle() + UPDATED_TABLE_SUFFIX);
             itemList.forEach(item -> {
-                if (map.containsKey(item.getTitle())) {
-                    VALUES(item.getTitle().toUpperCase(), String.format("'%s'", map.get(item.getTitle())));
+                String mapKey = item.getTitle().toLowerCase();
+                if (map.containsKey(mapKey)) {
+                    VALUES(item.getTitle(), String.format("'%s'", map.get(mapKey)));
                 }
             });
 
@@ -113,8 +116,9 @@ public class DMLSqlBuilderService {
             UPDATE(category.getTitle() + UPDATED_TABLE_SUFFIX);
             itemList.forEach(
                 item -> {
-                    if (map.containsKey(item.getTitle())) {
-                        SET(String.format("%s = '%s'", item.getTitle().toUpperCase(), map.get(item.getTitle())));
+                    String mapKey = item.getTitle().toLowerCase();
+                    if (map.containsKey(mapKey)) {
+                        SET(String.format("%s = '%s'", item.getTitle(), map.get(mapKey)));
                     }
                 });
 
