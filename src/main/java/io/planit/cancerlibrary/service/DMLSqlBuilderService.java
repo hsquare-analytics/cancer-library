@@ -1,5 +1,12 @@
 package io.planit.cancerlibrary.service;
 
+import static io.planit.cancerlibrary.constant.DatasourceConstants.IDX_COLUMN;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.SQL_EQUAL_SYNTAX;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.STATUS_COLUMN;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.UPDATED_SUFFIX;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.parameterization;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.sqlization;
+
 import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
@@ -30,8 +37,6 @@ public class DMLSqlBuilderService {
 
     private final TimeService timeService;
 
-    private final String UPDATED_TABLE_SUFFIX = "_UPDATED";
-
     public DMLSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
         UserRepository userRepository, TimeService timeService) {
         this.categoryRepository = categoryRepository;
@@ -50,23 +55,22 @@ public class DMLSqlBuilderService {
             .orElseThrow(() -> new RuntimeException("Current user login not found"));
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        SQL sql = new SQL() {{
-            VALUES("IDX", String.format("'%s'", map.get("idx")));
+        SQL sql = new SQL();
+        sql.VALUES(IDX_COLUMN, String.format("'%s'", map.get(parameterization(IDX_COLUMN))))
+            .INSERT_INTO(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
-            INSERT_INTO(category.getTitle() + UPDATED_TABLE_SUFFIX);
-            itemList.forEach(item -> {
-                String mapKey = item.getTitle().toLowerCase();
-                if (map.containsKey(mapKey)) {
-                    VALUES(item.getTitle(), String.format("'%s'", map.get(mapKey)));
-                }
-            });
+        itemList.forEach(item -> {
+            String mapKey = parameterization(item.getTitle());
+            if (map.containsKey(mapKey)) {
+                sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
+            }
+        });
 
-            VALUES("CREATED_BY", String.format("'%s'", user.getLogin()));
-            VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()));
-            VALUES("LAST_MODIFIED_BY", String.format("'%s'", user.getLogin()));
-            VALUES("LAST_MODIFIED_DATE", String.format("'%s'", timeService.getCurrentTime()));
-            VALUES("STATUS", String.format("'%s'", ReviewConstants.SUBMITTED));
-        }};
+        sql.VALUES("CREATED_BY", String.format("'%s'", user.getLogin()))
+            .VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()))
+            .VALUES("LAST_MODIFIED_BY", String.format("'%s'", user.getLogin()))
+            .VALUES("LAST_MODIFIED_DATE", String.format("'%s'", timeService.getCurrentTime()))
+            .VALUES("STATUS", String.format("'%s'", ReviewConstants.SUBMITTED));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;
@@ -77,11 +81,10 @@ public class DMLSqlBuilderService {
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        SQL sql = new SQL() {{
-            SELECT("*");
-            FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
-            WHERE(String.format("IDX = '%s'", map.get("idx")));
-        }};
+        SQL sql = new SQL().
+            SELECT("*").
+            FROM(sqlization(category.getTitle() + UPDATED_SUFFIX)).
+            WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;
@@ -92,10 +95,7 @@ public class DMLSqlBuilderService {
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        SQL sql = new SQL() {{
-            SELECT("*");
-            FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
-        }};
+        SQL sql = new SQL().SELECT("*").FROM(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;
@@ -112,21 +112,19 @@ public class DMLSqlBuilderService {
             .orElseThrow(() -> new RuntimeException("Current user login not found"));
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        SQL sql = new SQL() {{
-            UPDATE(category.getTitle() + UPDATED_TABLE_SUFFIX);
-            itemList.forEach(
-                item -> {
-                    String mapKey = item.getTitle().toLowerCase();
-                    if (map.containsKey(mapKey)) {
-                        SET(String.format("%s = '%s'", item.getTitle(), map.get(mapKey)));
-                    }
-                });
+        SQL sql = new SQL();
+        sql.UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
+        itemList.forEach(item -> {
+            String mapKey = parameterization(item.getTitle());
+            if (map.containsKey(mapKey)) {
+                sql.SET(String.format(SQL_EQUAL_SYNTAX, sqlization(item.getTitle()), map.get(mapKey)));
+            }
+        });
 
-            SET(String.format("LAST_MODIFIED_BY = '%s'", user.getLogin()));
-            SET(String.format("LAST_MODIFIED_DATE = '%s'", timeService.getCurrentTime()));
-            SET(String.format("STATUS = '%s'", map.get("status")));
-            WHERE(String.format("IDX = '%s'", map.get("idx")));
-        }};
+        sql.SET(String.format("LAST_MODIFIED_BY = '%s'", user.getLogin()))
+            .SET(String.format("LAST_MODIFIED_DATE = '%s'", timeService.getCurrentTime()))
+            .SET(String.format(SQL_EQUAL_SYNTAX, STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
+            .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;
@@ -137,10 +135,9 @@ public class DMLSqlBuilderService {
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        SQL sql = new SQL() {{
-            DELETE_FROM(category.getTitle() + UPDATED_TABLE_SUFFIX);
-            WHERE(String.format("IDX = '%s'", map.get("idx")));
-        }};
+        SQL sql = new SQL()
+            .DELETE_FROM(sqlization(category.getTitle() + UPDATED_SUFFIX))
+            .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get("idx")));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql;

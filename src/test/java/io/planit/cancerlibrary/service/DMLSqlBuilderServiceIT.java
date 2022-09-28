@@ -32,7 +32,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
-public class DMLSqlBuilderServiceIT {
+class DMLSqlBuilderServiceIT {
 
     @Autowired
     private EntityManager em;
@@ -83,7 +83,7 @@ public class DMLSqlBuilderServiceIT {
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    public void testInsertSql() {
+    void testInsertSql() {
         // given
         BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
         User user = UserResourceIT.createEntity(em);
@@ -98,21 +98,21 @@ public class DMLSqlBuilderServiceIT {
 
         // when
         String result = dmlSqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
+            put("idx", "idx_test");
             put("column1", "test1");
             put("column2", "test2");
         }}).toString();
 
         // then
-        assertThat(result).contains("INSERT INTO " + category.getTitle() + "_updated");
-        assertThat(result).contains(
-            "(COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)");
-        assertThat(result).contains(
-            "VALUES ('test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'STATUS_SUBMITTED')");
+        assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
+            .contains("(IDX, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
+            .contains(
+                "VALUES ('idx_test', 'test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'REVIEW_SUBMITTED')");
     }
 
     @Test
     @Transactional
-    public void testReadSql() {
+    void testReadSql() {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -129,26 +129,24 @@ public class DMLSqlBuilderServiceIT {
         }}).toString();
 
         // then
-        assertThat(result).contains("SELECT *");
-        assertThat(result).contains(String.format("FROM %s" , category.getTitle() + "_UPDATED"));
-        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"))
+            .contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
     @Transactional
-    public void testReadAllSql() {
+    void testReadAllSql() {
         // when
         String result = dmlSqlBuilderService.getReadAllSQL(category.getId()).toString();
 
         // then
-        assertThat(result).contains("SELECT *");
-        assertThat(result).contains(String.format("FROM %s" , category.getTitle() + "_UPDATED"));
+        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"));
     }
 
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    public void testUpdateSql() {
+    void testUpdateSql() {
         // given
         BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
         User user = UserResourceIT.createEntity(em);
@@ -170,9 +168,10 @@ public class DMLSqlBuilderServiceIT {
         }}).toString();
 
         // then
-        assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED");
-        assertThat(result).contains("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'");
-        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+        assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
+            .contains(
+                "SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'")
+        .contains("WHERE (IDX = 'test_idx')");
     }
 
     public void testDeleteSql() {
