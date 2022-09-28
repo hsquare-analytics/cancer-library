@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-public class DatasourceReviewControllerIT {
+class DatasourceReviewControllerIT {
 
     @Autowired
     private EntityManager em;
@@ -56,7 +56,7 @@ public class DatasourceReviewControllerIT {
         Topic topic = TopicResourceIT.createEntity(em, subject);
         topicRepository.saveAndFlush(topic);
 
-        category = CategoryResourceIT.createEntity(em, topic).title("test_member");
+        category = CategoryResourceIT.createEntity(em, topic).title("ph_test");
         categoryRepository.saveAndFlush(category);
     }
 
@@ -65,12 +65,12 @@ public class DatasourceReviewControllerIT {
 
     @Test
     @Transactional
-    public void testFetchDatasourceByCategoryId() throws Exception {
+    void testFetchDatasourceByCategoryId() throws Exception {
         datasourceMapper.executeInsertSQL(
-            new SQLAdapter("INSERT INTO TEST_MEMBER_UPDATED (IDX, NAME) VALUES (10001, 'ZERO')"));
+            new SQLAdapter("INSERT INTO PH_TEST_UPDATED (IDX, NAME) VALUES (10001, 'ZERO')"));
 
         restAdminDatasourceMockMvc
-            .perform(get("/api/datasource-approval/categories/{id}", category.getId()))
+            .perform(get("/api/datasource-review/categories/{id}", category.getId()).contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].idx").value(hasItem(10001)))

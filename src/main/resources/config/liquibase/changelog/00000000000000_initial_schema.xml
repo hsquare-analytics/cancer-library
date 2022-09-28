@@ -118,4 +118,32 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet author="jhipster" id="00000000000003" context="test">
+        <createTable tableName="ph_test">
+            <column name="idx" type="bigint"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="birth" type="varchar(50)"/>
+            <column name="cty" type="varchar(50)"/>
+            <column name="gender" type="varchar(50)"/>
+            <column name="join_dt" type="varchar(50)"/>
+            <column name="mail" type="varchar(50)"/>
+            <column name="login_ip" type="varchar(50)"/>
+        </createTable>
+        <createTable tableName="ph_test_updated">
+            <column name="idx" type="bigint"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="birth" type="varchar(50)"/>
+            <column name="cty" type="varchar(50)"/>
+            <column name="gender" type="varchar(50)"/>
+            <column name="join_dt" type="varchar(50)"/>
+            <column name="mail" type="varchar(50)"/>
+            <column name="login_ip" type="varchar(50)"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
