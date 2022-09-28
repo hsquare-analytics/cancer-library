@@ -9,6 +9,14 @@ insert into ph_category (id, title, activated, order_no, topic_id, created_by, c
                          last_modified_date)
 values (2705, 'test_medicine', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
+insert into ph_category_property (category_id, date_column, caption)
+values (2705, 'idx_dt', 'test_caption');
+
+insert into PH_USER_CATEGORY (ID, USER_ID, CATEGORY_ID, ACTIVATED, TERM_START, TERM_END, CREATED_BY, CREATED_DATE,
+                              LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+values (2705, 2, 2705, true, '2000-01-01 00:00:00', '2022-12-31 00:00:00', 'system', '2019-01-01 00:00:00', 'system',
+        '2019-01-01 00:00:00');
+
 insert into ph_group (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                       last_modified_date)
 values (2705, 'test_medicine_group', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
@@ -36,8 +44,8 @@ CREATE TABLE TEST_MEDICINE (
                               SEX_TP_CD Varchar,
                               PT_BRDY_DT Varchar,
                               HSP_TP_CD Varchar,
-                              IDX_DT Date,
-                              ORD_DT Date,
+                              IDX_DT TIMESTAMP,
+                              ORD_DT TIMESTAMP,
                               PRSC_DAYS Numeric,
                               ENG_MDPR_NM Varchar,
                               AGE_CD_YY Varchar,
@@ -54,8 +62,8 @@ CREATE TABLE TEST_MEDICINE_UPDATED
     SEX_TP_CD Varchar,
     PT_BRDY_DT Varchar,
     HSP_TP_CD Varchar,
-    IDX_DT Date,
-    ORD_DT Date,
+    IDX_DT TIMESTAMP,
+    ORD_DT TIMESTAMP,
     PRSC_DAYS Numeric,
     ENG_MDPR_NM Varchar,
     AGE_CD_YY Varchar,

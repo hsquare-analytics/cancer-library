@@ -10,6 +10,14 @@ insert into ph_category (id, title, activated, order_no, topic_id, created_by, c
                          last_modified_date)
 values (2703, 'test_examination', true, 1, 2703, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
+insert into ph_category_property (category_id, date_column, caption)
+values (2703, 'idx_dt', 'test_caption');
+
+insert into PH_USER_CATEGORY (ID, USER_ID, CATEGORY_ID, ACTIVATED, TERM_START, TERM_END, CREATED_BY, CREATED_DATE,
+                              LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+values (2703, 2, 2703, true, '2019-01-01 00:00:00', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00', 'system',
+        '2019-01-01 00:00:00');
+
 insert into ph_group (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                       last_modified_date)
 values (2703, 'test_examination_group', true, 1, 2703, 'system', '2019-01-01 00:00:00', 'system',
@@ -65,7 +73,7 @@ CREATE TABLE TEST_EXAMINATION
     SEX_TP_CD       Varchar,
     PT_BRDY_DT      Varchar,
     HSP_TP_CD       Varchar,
-    IDX_DT          Date,
+    IDX_DT          TIMESTAMP,
     IMPL_DTM        Timestamp,
     EXM_NM          Varchar,
     ORD_CTG_NM      Varchar,
@@ -83,7 +91,7 @@ CREATE TABLE TEST_EXAMINATION_UPDATED
     SEX_TP_CD          Varchar,
     PT_BRDY_DT         Varchar,
     HSP_TP_CD          Varchar,
-    IDX_DT             Date,
+    IDX_DT             TIMESTAMP,
     IMPL_DTM           Timestamp,
     EXM_NM             Varchar,
     ORD_CTG_NM         Varchar,

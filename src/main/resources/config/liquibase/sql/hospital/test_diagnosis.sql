@@ -9,6 +9,14 @@ insert into ph_category (id, title, activated, order_no, topic_id, created_by, c
                          last_modified_date)
 values (2702, 'test_diagnosis', true, 1, 2702, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
+insert into ph_category_property (category_id, date_column, caption)
+values (2702, 'idx_dt', 'test_caption');
+
+insert into PH_USER_CATEGORY (ID, USER_ID, CATEGORY_ID, ACTIVATED, TERM_START, TERM_END, CREATED_BY, CREATED_DATE,
+                              LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+values (2702, 2, 2702, true, '2000-01-01 00:00:00', '2022-12-31 00:00:00', 'system', '2019-01-01 00:00:00', 'system',
+        '2019-01-01 00:00:00');
+
 insert into ph_group (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                       last_modified_date)
 values (2702, 'test_diagnosis_group', true, 1, 2702, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
@@ -35,9 +43,9 @@ CREATE TABLE TEST_DIAGNOSIS (
                           SEX_TP_CD Varchar,
                           PT_BRDY_DT Varchar,
                           HSP_TP_CD Varchar,
-                          IDX_DT Date,
-                          DGNS_REG_DT Date,
-                          DGNS_STR_DT Date,
+                          IDX_DT TIMESTAMP,
+                          DGNS_REG_DT TIMESTAMP,
+                          DGNS_STR_DT TIMESTAMP,
                           MED_DEPT_NM Varchar,
                           CD_ENG_NM Varchar,
                           AGE_CD_YY Varchar,
@@ -53,9 +61,9 @@ CREATE TABLE TEST_DIAGNOSIS_UPDATED
     SEX_TP_CD          Varchar,
     PT_BRDY_DT         Varchar,
     HSP_TP_CD          Varchar,
-    IDX_DT             Date,
-    DGNS_REG_DT        Date,
-    DGNS_STR_DT        Date,
+    IDX_DT             TIMESTAMP,
+    DGNS_REG_DT        TIMESTAMP,
+    DGNS_STR_DT        TIMESTAMP,
     MED_DEPT_NM        Varchar,
     CD_ENG_NM          Varchar,
     AGE_CD_YY          Varchar,
@@ -67,6 +75,7 @@ CREATE TABLE TEST_DIAGNOSIS_UPDATED
     STATUS             VARCHAR(50),
     primary key (idx)
 );
+
 
 
 INSERT INTO TEST_DIAGNOSIS(IDX, PACT_ID, PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, DGNS_REG_DT, DGNS_STR_DT, MED_DEPT_NM, CD_ENG_NM, AGE_CD_YY, MAIN_SKNS_YN) VALUES (1, '0018442964', 'G010349135884', '윤**', 'M', '1940-01', '01', '2018-09-19', '2018-09-21', '2018-09-19', '외과', 'Other specified diseases of stomach and  duodenum', '78', 'Y');

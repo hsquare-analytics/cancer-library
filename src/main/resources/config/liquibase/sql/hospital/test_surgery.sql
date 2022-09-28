@@ -9,6 +9,14 @@ insert into ph_category (id, title, activated, order_no, topic_id, created_by, c
                          last_modified_date)
 values (2704, 'test_surgery', true, 1, 2704, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
+insert into ph_category_property (category_id, date_column, caption)
+values (2704, 'idx_dt', 'test_caption');
+
+-- insert into PH_USER_CATEGORY (ID, USER_ID, CATEGORY_ID, ACTIVATED, TERM_START, TERM_END, CREATED_BY, CREATED_DATE,
+--                               LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+-- values (1, 2, 2704, true, '2000-01-01 00:00:00', '2022-12-31 00:00:00', 'system', '2019-01-01 00:00:00', 'system',
+--         '2019-01-01 00:00:00');
+
 insert into ph_group (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                       last_modified_date)
 values (2704, 'test_surgery_group', true, 1, 2704, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
@@ -36,9 +44,9 @@ CREATE TABLE TEST_SURGERY (
                               SEX_TP_CD Varchar,
                               PT_BRDY_DT Varchar,
                               HSP_TP_CD Varchar,
-                              IDX_DT Date,
+                              IDX_DT TIMESTAMP,
 
-                              OP_EXPT_DT Date,
+                              OP_EXPT_DT TIMESTAMP,
                               MED_DEPT_NM Varchar,
                               OP_VOC_NM Varchar,
                               AGE_CD_YY Varchar,
@@ -56,8 +64,8 @@ CREATE TABLE TEST_SURGERY_UPDATED
     SEX_TP_CD Varchar,
     PT_BRDY_DT Varchar,
     HSP_TP_CD Varchar,
-    IDX_DT Date,
-    OP_EXPT_DT Date,
+    IDX_DT TIMESTAMP,
+    OP_EXPT_DT TIMESTAMP,
     MED_DEPT_NM Varchar,
     OP_VOC_NM Varchar,
     AGE_CD_YY Varchar,
