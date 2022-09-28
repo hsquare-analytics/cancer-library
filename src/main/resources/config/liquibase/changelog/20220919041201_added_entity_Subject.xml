@@ -17,7 +17,7 @@
             <column name="activated" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="order_no" type="bigint">
+            <column name="order_no" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="created_by" type="varchar(50)">

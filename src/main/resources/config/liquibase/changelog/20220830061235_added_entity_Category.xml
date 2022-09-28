@@ -17,7 +17,7 @@
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="order_no" type="bigint">
+            <column name="order_no" type="int">
                 <constraints nullable="false" />
             </column>
             <column name="topic_id" type="bigint">

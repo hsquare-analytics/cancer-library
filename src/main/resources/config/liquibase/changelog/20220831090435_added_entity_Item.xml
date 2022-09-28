@@ -19,7 +19,7 @@
             <column name="activated" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="order_no" type="bigint">
+            <column name="order_no" type="int">
                 <constraints nullable="true" />
             </column>
             <column name="group_id" type="bigint">

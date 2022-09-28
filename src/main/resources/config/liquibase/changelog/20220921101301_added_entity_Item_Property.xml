@@ -9,7 +9,7 @@
             <column name="item_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="visible_index" type="bigint"/>
+            <column name="visible_index" type="int"/>
             <column name="caption" type="varchar(50)"/>
         </createTable>
 
