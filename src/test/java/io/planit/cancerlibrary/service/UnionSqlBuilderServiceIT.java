@@ -11,17 +11,20 @@ import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserCategory;
+import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
+import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.GroupResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
+import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -57,7 +60,7 @@ class UnionSqlBuilderServiceIT {
     private UserRepository userRepository;
 
     @Autowired
-    private UserCategoryRepository userCategoryRepository;
+    private UserPatientRepository userPatientRepository;
 
     @Autowired
     private UnionSqlBuilderService unionSqlBuilderService;
@@ -100,7 +103,8 @@ class UnionSqlBuilderServiceIT {
         assertThat(result).contains(
                 String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
             .contains(String.format("FROM %s", originTableName))
-            .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN, DatasourceConstants.IDX_COLUMN))
+            .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
+                DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s)", updatedTableName));
     }
 
@@ -129,9 +133,10 @@ class UnionSqlBuilderServiceIT {
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
-            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
-        userCategoryRepository.saveAndFlush(userCategory);
+        UserPatient userPatient1 = UserPatientResourceIT.createEntity(em, user).patientNo("test1");
+        UserPatient userPatient2 = UserPatientResourceIT.createEntity(em, user).patientNo("test2");
+        userPatientRepository.saveAndFlush(userPatient1);
+        userPatientRepository.saveAndFlush(userPatient2);
 
         // when
         String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
@@ -143,9 +148,7 @@ class UnionSqlBuilderServiceIT {
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-        assertThat(result).contains(
-            String.format("(%s BETWEEN '%s' AND '%s')", userCategory.getCategory().getProperty().getDateColumn(),
-                userCategory.getTermStart(), userCategory.getTermEnd()));
+        assertThat(result).contains(String.format("PT_NO IN ('%s', '%s')", userPatient1.getPatientNo(), userPatient2.getPatientNo()));
     }
 
 }

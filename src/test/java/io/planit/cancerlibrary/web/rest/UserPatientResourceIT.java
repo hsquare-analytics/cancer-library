@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class UserPatientResourceIT {
+public class UserPatientResourceIT {
 
     private static final String DEFAULT_PATIENT_NO = "AAAAAAAAA";
     private static final String UPDATED_PATIENT_NO = "BBBBBBBBB";

@@ -3,12 +3,13 @@ package io.planit.cancerlibrary.service;
 import io.planit.cancerlibrary.constant.DatasourceConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.UserCategory;
+import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
+import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -26,13 +27,13 @@ public class UnionSqlBuilderService {
 
     private final ItemRepository itemRepository;
 
-    private final UserCategoryRepository userCategoryRepository;
+    private final UserPatientRepository userPatientRepository;
 
     public UnionSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserCategoryRepository userCategoryRepository) {
+        UserPatientRepository userPatientRepository) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
-        this.userCategoryRepository = userCategoryRepository;
+        this.userPatientRepository = userPatientRepository;
     }
 
     public SQL getUnionSelectSQL(Long categoryId) {
@@ -44,11 +45,10 @@ public class UnionSqlBuilderService {
         String login = SecurityUtils.getCurrentUserLogin()
             .orElseThrow(() -> new RuntimeException("Current user login not found"));
 
-        List<UserCategory> userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLoginAndCategoryId(
-            login, categoryId);
+        List<UserPatient> userPatients = userPatientRepository.findAllByUserLogin(login);
 
-        SQL updatedListSQL = getUpdatedListSQL(category, itemList, userCategories);
-        SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, userCategories);
+        SQL updatedListSQL = getUpdatedListSQL(category, itemList, userPatients);
+        SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, userPatients);
 
         SQL sql = new SQL();
         sql.SELECT("*")
@@ -59,7 +59,7 @@ public class UnionSqlBuilderService {
         return sql;
     }
 
-    private SQL getUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
+    private SQL getUpdatedListSQL(Category category, List<Item> itemList, List<UserPatient> userPatientList) {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         SQL sql = new SQL();
@@ -67,14 +67,14 @@ public class UnionSqlBuilderService {
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
-        if (CollectionUtils.isNotEmpty(userCategoryList)) {
-            sql.WHERE(getDateClause(category, userCategoryList));
+        if (CollectionUtils.isNotEmpty(userPatientList)) {
+            sql.WHERE(getPatientCondition(userPatientList));
         }
 
         return sql;
     }
 
-    private SQL getNotUpdatedListSQL(Category category, List<Item> itemList, List<UserCategory> userCategoryList) {
+    private SQL getNotUpdatedListSQL(Category category, List<Item> itemList, List<UserPatient> userPatientList) {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = originTableName + DatasourceConstants.UPDATED_SUFFIX;
 
@@ -86,26 +86,19 @@ public class UnionSqlBuilderService {
         sql.FROM(originTableName)
             .WHERE(String.format("%s NOT IN (%s)", DatasourceConstants.IDX_COLUMN, excludeIdxSubquery));
 
-        if (CollectionUtils.isNotEmpty(userCategoryList)) {
-            sql.WHERE(getDateClause(category, userCategoryList));
+        if (CollectionUtils.isNotEmpty(userPatientList)) {
+            sql.WHERE(getPatientCondition(userPatientList));
         }
 
         return sql;
     }
 
-    private String getDateClause(Category category, List<UserCategory> userCategoryList) {
-        StringBuilder dateClauses = new StringBuilder("(");
-        for (int i = 0; i < userCategoryList.size(); i++) {
-            UserCategory userCategory = userCategoryList.get(i);
-            String betweenClause = String.format("%s BETWEEN '%s' AND '%s'", category.getProperty().getDateColumn(),
-                userCategory.getTermStart(), userCategory.getTermEnd());
-            if (i == 0) {
-                dateClauses.append(betweenClause);
-            } else {
-                dateClauses.append(String.format(" OR %s", betweenClause));
-            }
-        }
-        dateClauses = dateClauses.append(")");
-        return dateClauses.toString();
+    private String getPatientCondition(List<UserPatient> userPatientList) {
+
+        String commaSeparatedPatientNo = userPatientList.stream().map(UserPatient::getPatientNo)
+            .map(patientNo -> String.format("'%s'", patientNo))
+            .collect(Collectors.joining(", "));
+
+        return String.format("PT_NO IN (%s)", commaSeparatedPatientNo);
     }
 }
