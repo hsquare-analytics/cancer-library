@@ -19,7 +19,11 @@
       },
       "id": "ID",
       "user.login": "User",
-      "patientNo": "Patient No"
+      "patientNo": "Patient No",
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified date"
     }
   }
 }

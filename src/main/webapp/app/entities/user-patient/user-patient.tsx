@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {getSortState, JhiItemCount, JhiPagination, Translate} from 'react-jhipster';
+import {getSortState, JhiItemCount, JhiPagination, Translate, TextFormat} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
 import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './user-patient.reducer';
+import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const UserPatient = () => {
   const dispatch = useAppDispatch();
@@ -98,16 +99,25 @@ export const UserPatient = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                <th>
                   <Translate contentKey="cancerLibraryApp.userPatient.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('title')}>
+                <th>
                   <Translate contentKey="cancerLibraryApp.userPatient.user.login">User Login</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('description')}>
+                <th>
                   <Translate contentKey="cancerLibraryApp.userPatient.patientNo">Patient No:</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th />
+                  <th>
+                      <Translate contentKey="cancerLibraryApp.userPatient.createdDate">Created Date</Translate>
+                  </th>
+                  <th>
+                      <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedBy">Last Modified By</Translate>
+                  </th>
+                  <th>
+                      <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedDate">Last Modified Date</Translate>
+                  </th>
+                  <th />
               </tr>
             </thead>
             <tbody>
@@ -120,6 +130,16 @@ export const UserPatient = () => {
                   </td>
                   <td>{userPatient.user.login}</td>
                   <td>{userPatient.patientNo}</td>
+                    <td>
+                        {userPatient.createdDate ?
+                            <TextFormat value={userPatient.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/> : null}
+                    </td>
+                    <td>{userPatient.lastModifiedBy}</td>
+                    <td>
+                        {userPatient.lastModifiedDate ? (
+                            <TextFormat value={userPatient.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
+                        ) : null}
+                    </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/admin/user-patient/${userPatient.id}`} color="info" size="sm" data-cy="entityDetailsButton">

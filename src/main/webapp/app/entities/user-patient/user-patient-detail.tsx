@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate } from 'react-jhipster';
+import { Translate, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -44,6 +44,21 @@ export const UserPatientDetail = () => {
             </span>
           </dt>
           <dd>{userPatientEntity.patientNo}</dd>
+            <dt>
+                <Translate contentKey="cancerLibraryApp.userPatient.createdBy">Created By</Translate>
+            </dt>
+            <dd>{userPatientEntity.createdBy}</dd>
+            <dt>
+                <Translate contentKey="cancerLibraryApp.userPatient.createdDate">Created Date</Translate>
+            </dt>
+            <dd>{userPatientEntity.createdDate ? <TextFormat value={userPatientEntity.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}</dd>
+            <dt>
+                <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedBy">Last Modified By</Translate>
+            </dt>
+            <dd>{userPatientEntity.lastModifiedBy}</dd>
+            <dt>
+                <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedDate">Last Modified Date</Translate>
+            </dt>
         </dl>
         <Button tag={Link} to="/admin/user-patient" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
