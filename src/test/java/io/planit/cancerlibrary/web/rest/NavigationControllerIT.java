@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @IntegrationTest
 @AutoConfigureMockMvc
+@WithMockUser
 class NavigationControllerIT {
 
     private static final String API_URL = "/api/navigations";
@@ -39,12 +40,6 @@ class NavigationControllerIT {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserCategoryRepository userCategoryRepository;
 
     @Autowired
     private EntityManager em;
@@ -64,19 +59,11 @@ class NavigationControllerIT {
     }
 
     @Test
-    @WithMockUser(username = "testuser", authorities = AuthoritiesConstants.USER)
     @Transactional
-    void testGetActiveUserCategoryOfAuthorityUSER() throws Exception {
+    void testGetActiveUserCategory() throws Exception {
         // given
-        Category category = CategoryResourceIT.createEntity(em, topic);
+        Category category = CategoryResourceIT.createEntity(em, topic).activated(true);
         categoryRepository.saveAndFlush(category);
-
-        User user = UserResourceIT.createEntity(em);
-        user.setLogin("testuser");
-        userRepository.saveAndFlush(user);
-
-        UserCategory userCategory = UserCategoryResourceIT.createEntity(em, user, category);
-        userCategoryRepository.saveAndFlush(userCategory);
 
         // when, then
         restNavigationMockMvc
@@ -87,49 +74,4 @@ class NavigationControllerIT {
             .andExpect(jsonPath("$.[0].description").value(category.getDescription()));
     }
 
-    @Test
-    @WithMockUser(username = "testuser", authorities = AuthoritiesConstants.USER)
-    @Transactional
-    void testGetNonActiveUserCategoryOfAuthorityUSER() throws Exception {
-        // given
-        Category category = CategoryResourceIT.createEntity(em, topic);
-        categoryRepository.saveAndFlush(category);
-
-        User user = UserResourceIT.createEntity(em);
-        user.setLogin("testuser");
-        userRepository.saveAndFlush(user);
-
-        UserCategory userCategory = UserCategoryResourceIT.createEntity(em, user, category).activated(false);
-        userCategoryRepository.saveAndFlush(userCategory);
-
-        // when, then
-        restNavigationMockMvc
-            .perform(get(API_URL))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").isEmpty());
-    }
-
-    @Test
-    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    @Transactional
-    void testGetUserCategoryOfAuthorityADMIN() throws Exception {
-        // given
-        Category category = CategoryResourceIT.createEntity(em, topic);
-        categoryRepository.saveAndFlush(category);
-
-        User user = UserResourceIT.createEntity(em);
-        user.setLogin("testuser");
-        userRepository.saveAndFlush(user);
-
-        UserCategory userCategory = UserCategoryResourceIT.createEntity(em, user, category);
-        userCategoryRepository.saveAndFlush(userCategory);
-
-        // when, then
-        restNavigationMockMvc
-            .perform(get(API_URL))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.[0].id").value(category.getId()))
-            .andExpect(jsonPath("$.[0].title").value(category.getTitle()))
-            .andExpect(jsonPath("$.[0].description").value(category.getDescription()));
-    }
 }

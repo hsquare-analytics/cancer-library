@@ -1,17 +1,11 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
-import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,21 +19,10 @@ public class NavigationController {
 
     private final Logger log = LoggerFactory.getLogger(NavigationController.class);
 
-    @Value("cancerLibraryApp")
-    private String applicationName;
-
     private final CategoryRepository categoryRepository;
 
-    private final UserRepository userRepository;
-
-    private final UserCategoryRepository userCategoryRepository;
-
-    public NavigationController(
-        CategoryRepository categoryRepository,
-        UserRepository userRepository, UserCategoryRepository userCategoryRepository) {
+    public NavigationController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.userRepository = userRepository;
-        this.userCategoryRepository = userCategoryRepository;
     }
 
     @GetMapping("/navigations")
@@ -47,17 +30,7 @@ public class NavigationController {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
-        if (SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
-            List<Category> categoryList = categoryRepository.findAll();
-
-            return ResponseEntity.ok(categoryList);
-        } else {
-            String login = SecurityUtils.getCurrentUserLogin().orElseThrow();
-            List<UserCategory> userCategories = userCategoryRepository.findAllByActivatedTrueAndUserLogin(login);
-
-            return ResponseEntity.ok(userCategories.stream().map(UserCategory::getCategory).collect(Collectors.toList()));
-        }
-
+        List<Category> categoryList = categoryRepository.findAllByActivatedTrue();
+        return ResponseEntity.ok(categoryList);
     }
-
 }
