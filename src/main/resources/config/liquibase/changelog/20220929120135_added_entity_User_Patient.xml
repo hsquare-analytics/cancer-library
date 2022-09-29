@@ -6,6 +6,9 @@
 
     <changeSet id="20220929120135-1" author="jhipster">
         <createTable tableName="ph_user_patient">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -19,8 +22,6 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
-
-        <addPrimaryKey columnNames="user_id, patient_no" tableName="ph_user_patient"/>
     </changeSet>
 
     <changeSet id="20220929120135-1-data" author="jhipster" context="faker">
@@ -29,6 +30,7 @@
                   separator=";"
                   tableName="ph_user_patient">
                   usePreparedStatements="true">
+            <column name="id" type="numeric"/>
             <column name="user_id" type="numeric"/>
             <column name="patient_no" type="varchar(50)"/>
         </loadData>

@@ -1,4 +1,4 @@
-user_id;patient_no;created_by;last_modified_by
-1;patient1;system;system
-2;patient2;system;system
-3;patient3;system;system
+id;user_id;patient_no;created_by;last_modified_by
+1;1;patient1;system;system
+2;2;patient2;system;system
+3;3;patient3;system;system
