@@ -10,11 +10,18 @@
 
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    hikari:
-      poolName: Hikari
+    jpa:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:tc:postgresql:13.2:///cancerlibraryapp?TC_TMPFS=/testtmpfs:rw
+      username: CancerLibraryApp
+      password:
       auto-commit: false
-      maximum-pool-size: 1
+    mybatis:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:tc:postgresql:13.2:///cancerlibraryapp?TC_TMPFS=/testtmpfs:rw
+      username: CancerLibraryApp
+      password:
+      auto-commit: true
   jpa:
     database-platform: tech.jhipster.domain.util.FixedPostgreSQL10Dialect
     open-in-view: false

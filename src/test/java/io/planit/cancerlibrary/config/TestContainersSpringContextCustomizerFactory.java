@@ -46,9 +46,9 @@ public class TestContainersSpringContextCustomizerFactory implements ContextCust
                             throw new RuntimeException(e);
                         }
                     }
-                    testValues = testValues.and("spring.datasource.url=" + prodTestContainer.getTestContainer().getJdbcUrl() + "");
-                    testValues = testValues.and("spring.datasource.username=" + prodTestContainer.getTestContainer().getUsername());
-                    testValues = testValues.and("spring.datasource.password=" + prodTestContainer.getTestContainer().getPassword());
+                    testValues = testValues.and("spring.datasource.jpa.jdbc-url=" + prodTestContainer.getTestContainer().getJdbcUrl() + "");
+                    testValues = testValues.and("spring.datasource.jpa.username=" + prodTestContainer.getTestContainer().getUsername());
+                    testValues = testValues.and("spring.datasource.jpa.password=" + prodTestContainer.getTestContainer().getPassword());
                 }
             }
             testValues.applyTo(context);
