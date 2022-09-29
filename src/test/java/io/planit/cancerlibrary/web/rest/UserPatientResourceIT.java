@@ -37,7 +37,7 @@ class UserPatientResourceIT {
     private static final String DEFAULT_PATIENT_NO = "AAAAAAAAA";
     private static final String UPDATED_PATIENT_NO = "BBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/users-patients";
+    private static final String ENTITY_API_URL = "/api/user-patients";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();

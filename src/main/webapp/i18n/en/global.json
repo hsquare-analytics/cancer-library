@@ -12,7 +12,8 @@
         "category": "Category",
         "item": "Item",
         "user-category": "User Category",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+         "user-patient": "User Patient",
+         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "editable-categories": "Editable Categories",
       "approval-categories": "Approval Categories",

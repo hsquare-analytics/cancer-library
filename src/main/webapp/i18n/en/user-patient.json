@@ -1,0 +1,25 @@
+{
+  "cancerLibraryApp": {
+    "userPatient": {
+      "home": {
+        "title": "UserPatients",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new UserPatient",
+        "createOrEditLabel": "Create or edit a UserPatient",
+        "notFound": "No UserPatients found"
+      },
+      "created": "A new UserPatient is created with identifier {{ param }}",
+      "updated": "A UserPatient is updated with identifier {{ param }}",
+      "deleted": "A UserPatient is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete UserPatient {{ id }}?"
+      },
+      "detail": {
+        "title": "UserPatient"
+      },
+      "id": "ID",
+      "user.login": "User",
+      "patientNo": "Patient No"
+    }
+  }
+}

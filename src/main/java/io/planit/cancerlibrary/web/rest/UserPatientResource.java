@@ -43,7 +43,7 @@ public class UserPatientResource {
         this.userPatientRepository = userPatientRepository;
     }
 
-    @PostMapping("/users-patients")
+    @PostMapping("/user-patients")
     public ResponseEntity<UserPatient> createUserPatient(@Valid @RequestBody UserPatient userPatient) throws URISyntaxException {
         log.debug("REST request to save UserPatient : {}", userPatient);
         if (userPatient.getId() != null) {
@@ -51,16 +51,16 @@ public class UserPatientResource {
         }
         UserPatient result = userPatientRepository.save(userPatient);
         return ResponseEntity
-            .created(new URI("/api/users-patients/" + result.getId()))
+            .created(new URI("/api/user-patients/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    @PutMapping("/users-patients/{id}")
+    @PutMapping("/user-patients/{id}")
     public ResponseEntity<UserPatient> updateUserPatient(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody UserPatient userPatient
-    ) throws URISyntaxException {
+    )  {
         log.debug("REST request to update UserPatient : {}, {}", id, userPatient);
         if (userPatient.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -81,21 +81,21 @@ public class UserPatientResource {
     }
 
 
-    @GetMapping("/users-patients")
+    @GetMapping("/user-patients")
     public ResponseEntity<List<UserPatient>> getAllUsersCategories() {
         log.debug("REST request to get all UsersCategories");
         List<UserPatient> result = userPatientRepository.findAll();
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/users-patients/{id}")
+    @GetMapping("/user-patients/{id}")
     public ResponseEntity<UserPatient> getUserPatient(@PathVariable Long id) {
         log.debug("REST request to get UserPatient : {}", id);
         Optional<UserPatient> userPatient = userPatientRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(userPatient);
     }
 
-    @DeleteMapping("/users-patients/{id}")
+    @DeleteMapping("/user-patients/{id}")
     public ResponseEntity<Void> deleteUserPatient(@PathVariable Long id) {
         log.debug("REST request to delete UserPatient : {}", id);
         userPatientRepository.deleteById(id);
