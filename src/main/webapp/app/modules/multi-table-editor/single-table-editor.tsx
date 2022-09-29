@@ -1,0 +1,117 @@
+import React, {useEffect, useState} from "react";
+import DataGrid, {Column, Item, Lookup, Toolbar} from 'devextreme-react/data-grid';
+import {ICategory} from "app/shared/model/category.model";
+import axios from "axios";
+import {REVIEW_LIST} from "app/config/constants";
+import {cleanEntity} from "app/shared/util/entity-utils";
+import {toast} from 'react-toastify';
+import {translate} from 'react-jhipster';
+
+
+export interface ISignleTableEditor {
+    category: ICategory;
+}
+
+export const SingleTableEditor = (props: ISignleTableEditor) => {
+
+    const {category} = props;
+
+    const [datasource, setDatasource] = useState([]);
+    const [itemList, setItemList] = useState([]);
+
+    useEffect(() => {
+        axios.get<any[]>(`/api/datasource-editor/categories/${category.id}`).then(({data}) => {
+            setDatasource(data);
+        });
+
+        axios.get<any[]>(`/api/datasource-meta/categories/${category.id}/item-list`).then(({data}) => {
+            setItemList(data);
+        });
+
+    }, [JSON.stringify(category)]);
+
+    const onRowUpdating = e => {
+        e.cancel = new Promise<void>((resolve, reject) => {
+            const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+            row['status'] = REVIEW_LIST.SUBMITTED;
+            axios
+            .post(`api/datasource-editor/categories/${category.id}`, row)
+            .then(({data}) => {
+                if (data >= 1) {
+                    toast.success('Data Submitted Successfully');
+                    e.oldData['status'] = REVIEW_LIST.SUBMITTED;
+                    resolve();
+                } else {
+                    toast.error('Data Submission Failed');
+                    reject('update fail');
+                }
+            })
+            .catch(err => reject(err));
+        });
+    };
+
+
+    return itemList.length > 0 ? (
+        <div className="data-editor-wrapper mb-4">
+            <DataGrid
+                dataSource={JSON.parse(JSON.stringify(datasource))}
+                // defaultColumns={columns}
+                showBorders={true}
+                filterRow={{visible: true}}
+                headerFilter={{visible: true}}
+                searchPanel={{visible: true}}
+                allowColumnResizing={true}
+                // paging={{ enabled: true, pageSize: ITEMS_PER_PAGE }}
+                pager={{displayMode: 'compact', showNavigationButtons: true}}
+                columnChooser={{enabled: true, mode: 'select', allowSearch: true, width: 500, height: 500}}
+                editing={{
+                    mode: 'popup',
+                    // allowAdding: true,
+                    allowUpdating: true,
+                }}
+                // onRowRemoving={onRowRemoving}
+                onRowUpdating={onRowUpdating}
+                height={'25vh'}
+                scrolling={{mode: 'virtual'}}
+                selection={{mode: 'multiple'}}
+            >
+                <Toolbar>
+                    <Item location="before">
+                        <div className="informer">
+                            <h4 className="count">{category.title.toUpperCase()}</h4>
+                        </div>
+                    </Item>
+                </Toolbar>
+                {
+                    itemList.map(item => <Column
+                            key={item}
+                            dataField={item.title.toLowerCase()}
+                            caption={item.itemProperty?.caption}
+                            visibleIndex={item.itemProperty?.visibleIndex}
+                            // format={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.format}
+                            // visible={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.visible}
+                            // caption={columnLabel[key]}
+                            alignment={'center'}
+                            minWidth={150}
+                        />
+                    )
+                }
+                <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'}
+                        minWidth={150}
+                        allowEditing={false}>
+                    <Lookup dataSource={[
+                        {
+                            id: 1,
+                            valueExpr: REVIEW_LIST.SUBMITTED,
+                            displayExpr: translate('datasource.review.submitted')
+                        },
+                        {id: 2, valueExpr: REVIEW_LIST.DECLINED, displayExpr: translate('datasource.review.declined')},
+                        {id: 3, valueExpr: REVIEW_LIST.APPROVED, displayExpr: translate('datasource.review.approved')},
+                    ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
+                </Column>
+            </DataGrid>
+        </div>
+    ) : null;
+}
+
+export default SingleTableEditor;

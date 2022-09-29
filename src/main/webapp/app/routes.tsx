@@ -16,6 +16,7 @@ import PageNotFound from 'app/shared/error/page-not-found';
 import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
 import DataEditor from "app/modules/data-editor/data-editor";
+import MultiTableEditor from "app/modules/multi-table-editor/multi-table-editor";
 
 const loading = <div>loading ...</div>;
 
@@ -70,6 +71,14 @@ const AppRoutes = () => {
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
               <DataEditor/>
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="multi-table-editor"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
+              <MultiTableEditor/>
             </PrivateRoute>
           }
         ></Route>

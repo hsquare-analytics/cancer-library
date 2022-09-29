@@ -6,7 +6,7 @@ import {Collapse, Nav, Navbar, NavbarToggler} from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
 import {Brand, Home} from './header-components';
-import {AccountMenu, AdminMenu, LocaleMenu, UserAuthorizedCategories} from '../menus';
+import {AccountMenu, AdminMenu, LocaleMenu, UserAuthorizedCategories, MuitiTableEditorMenu} from '../menus';
 import {useAppDispatch} from 'app/config/store';
 import {setLocale} from 'app/shared/reducers/locale';
 import {AdminAuthorizedCategories} from "app/shared/layout/menus/admin-authorized-categories";
@@ -54,6 +54,7 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ms-auto flex-column" navbar>
             <Home/>
+            <MuitiTableEditorMenu/>
             {props.isAuthenticated && <UserAuthorizedCategories/>}
             {props.isAuthenticated && props.isAdmin && (
               <>
