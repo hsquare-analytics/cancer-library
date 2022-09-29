@@ -67,12 +67,6 @@ class UnionSqlBuilderServiceIT {
 
     private Category category;
 
-    private Group group;
-
-    private Item item1;
-
-    private Item item2;
-
     @BeforeEach
     void initTest() {
         Subject subject = SubjectResourceIT.createEntity(em);
@@ -84,11 +78,11 @@ class UnionSqlBuilderServiceIT {
         category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
 
-        group = GroupResourceIT.createEntity(em, category);
+        Group group = GroupResourceIT.createEntity(em, category);
         groupRepository.saveAndFlush(group);
 
-        item1 = new Item().group(group).title("column1").activated(true);
-        item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().group(group).title("column1").activated(true);
+        Item item2 = new Item().group(group).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
@@ -128,7 +122,7 @@ class UnionSqlBuilderServiceIT {
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    void testGetUpdatedListSQLHaveWhereCondition() {
+    void testUnionSelectAllQueryWithSpecificPatientCondition() {
         // given
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
