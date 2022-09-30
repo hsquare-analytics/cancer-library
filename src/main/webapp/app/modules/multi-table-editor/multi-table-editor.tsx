@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
-import SingleTableEditor from "app/modules/multi-table-editor/single-table-editor";
+import AccordionEditor from "app/modules/multi-table-editor/accordion-editor";
 
 export const MultiTableEditor = () => {
 
@@ -15,7 +15,7 @@ export const MultiTableEditor = () => {
 
     return (
         <div>
-            {categories.map(category=><SingleTableEditor category={category}/>)}
+            {categories.map(category=><AccordionEditor category={category}/>)}
         </div>
     );
 }

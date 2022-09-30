@@ -16,7 +16,7 @@ export interface ISignleTableEditor {
   category: ICategory;
 }
 
-export const SingleTableEditor = (props: ISignleTableEditor) => {
+export const AccordionEditor = (props: ISignleTableEditor) => {
 
   const {category} = props;
 
@@ -124,4 +124,4 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
   ) : null;
 }
 
-export default SingleTableEditor;
+export default AccordionEditor;
