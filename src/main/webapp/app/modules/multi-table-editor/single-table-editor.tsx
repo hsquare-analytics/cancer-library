@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import DataGrid, {Column, Item, Lookup, Toolbar} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 import {REVIEW_LIST} from "app/config/constants";
@@ -84,7 +84,7 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
             }}
             // onRowRemoving={onRowRemoving}
             onRowUpdating={onRowUpdating}
-            height={'25vh'}
+            height={'40vh'}
             scrolling={{mode: 'virtual'}}
             selection={{mode: 'multiple'}}
           >
