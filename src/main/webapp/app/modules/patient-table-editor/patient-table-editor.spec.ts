@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getPatients, reset} from './patient-editor.reducer';
+import reducer, {getPatients, reset} from './patient-table-editor.reducer';
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {

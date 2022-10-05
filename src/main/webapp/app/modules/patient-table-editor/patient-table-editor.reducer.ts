@@ -19,8 +19,8 @@ export const getPatients = createAsyncThunk('patient-editor/fetch_patient_list',
   return axios.get<IPatient[]>(requestUrl);
 })
 
-const name = 'patient-editor'
-export const PatientEditor = createSlice({
+const name = 'patient-table-editor'
+export const PatientTableEditor = createSlice({
   name,
   initialState,
   reducers: {
@@ -49,6 +49,6 @@ export const PatientEditor = createSlice({
   }
 });
 
-export const {reset} = PatientEditor.actions;
+export const {reset} = PatientTableEditor.actions;
 
-export default PatientEditor.reducer;
+export default PatientTableEditor.reducer;

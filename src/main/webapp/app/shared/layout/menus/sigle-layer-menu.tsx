@@ -5,12 +5,12 @@ import {NavItem, NavLink} from 'reactstrap';
 import {NavLink as Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export const MuitiTableEditorMenu = () => (
+export const SingleLayerMenu = () => (
   <NavItem>
-    <NavLink tag={Link} to="/multi-table-editor" className="d-flex align-items-center">
+    <NavLink tag={Link} to="/patient-table-editor" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home"/>
       <span>
-        <Translate contentKey="global.menu.multi-table-editor">Multi Table Editor</Translate>
+        <Translate contentKey="global.menu.patient-table-editor">Patient Table Editor</Translate>
       </span>
     </NavLink>
   </NavItem>
