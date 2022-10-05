@@ -23,13 +23,9 @@ public class UnionSqlBuilderService {
 
     private final ItemRepository itemRepository;
 
-    private final UserPatientRepository userPatientRepository;
-
-    public UnionSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserPatientRepository userPatientRepository) {
+    public UnionSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
-        this.userPatientRepository = userPatientRepository;
     }
 
     public SQL getUnionSelectSQL(Long categoryId, String patientNo) {
