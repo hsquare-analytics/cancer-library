@@ -10,5 +10,7 @@ public interface PatientMapper {
     @MapKey("id")
     List<PatientDTO> findAll();
 
+    List<PatientDTO> findAllByPatientNos(List<String> patientNos);
+
     int insert(PatientDTO patient);
 }
