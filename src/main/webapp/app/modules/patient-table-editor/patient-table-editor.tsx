@@ -5,7 +5,7 @@ import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
 import PatientTableEditorColumn from "./patient-table-editor.column";
-import {Popup, Position, ToolbarItem} from 'devextreme-react/popup';
+import {Popup} from 'devextreme-react/popup';
 import MultiTableEditor from "app/modules/patient-table-editor/multi-table-editor/multi-table-editor";
 import ScrollView from 'devextreme-react/scroll-view';
 
@@ -28,7 +28,6 @@ export const PatientTableEditor = () => {
 
   return (
     <div>
-      <h1>{patientNo}</h1>
       <Popup
         showTitle={false}
         visible={popupVisible}
