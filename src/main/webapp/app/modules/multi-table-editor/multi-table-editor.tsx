@@ -8,14 +8,14 @@ export const MultiTableEditor = () => {
   const categories = useAppSelector(state => state.navigation.categories);
 
   useEffect(() => {
-    if (categories.length == 0) {
+    if (categories.length === 0) {
       getCategories();
     }
   }, []);
 
   return (
     <div>
-      {categories.map((category, index) => <AccordionEditor category={category} expanded={index == 0}/>)}
+      {categories.map((category, index) => <AccordionEditor key={category} category={category} expanded={index === 0}/>)}
     </div>
   );
 }
