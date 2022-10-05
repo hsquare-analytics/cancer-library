@@ -4,10 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="20220921131335-2" author="zero" context="hospital">
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_visit.sql" />
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_diagnosis.sql" />
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_examination.sql" />
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_surgery.sql" />
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_medicine.sql" />
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_visit.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_diagnosis.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_examination.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_surgery.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_medicine.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_patient.sql"/>
     </changeSet>
 </databaseChangeLog>
