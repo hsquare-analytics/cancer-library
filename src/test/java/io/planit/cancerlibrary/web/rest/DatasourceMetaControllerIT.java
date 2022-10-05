@@ -60,12 +60,6 @@ public class DatasourceMetaControllerIT {
     @Autowired
     private ItemRepository itemRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserCategoryRepository userCategoryRepository;
-
     private Category category;
 
     private Group group;
@@ -108,12 +102,6 @@ public class DatasourceMetaControllerIT {
             Item item = new Item().group(group).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
-
-        User user = UserResourceIT.createEntity(em);
-        userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
-            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
-        userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(get("/api/datasource-meta/categories/{categoryId}/item-list", category.getId()))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
