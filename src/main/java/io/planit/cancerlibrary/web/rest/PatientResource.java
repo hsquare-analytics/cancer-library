@@ -1,13 +1,15 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.mapper.PatientMapper;
+import io.planit.cancerlibrary.service.dto.PatientDTO;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +29,20 @@ public class PatientResource {
     }
 
     @PostMapping("/patients")
-    public ResponseEntity<Integer> createPatient(@RequestBody Map<String, Object> patientMap)
+    public ResponseEntity<Integer> createPatient(@RequestBody PatientDTO patientDTO)
         throws URISyntaxException {
-        log.debug("REST request to save Patient : {}", patientMapper);
+        log.debug("REST request to save Patient : {}", patientDTO);
 
-        int result = patientMapper.insert(patientMap);
+        int result = patientMapper.insert(patientDTO);
 
         return ResponseEntity.created(new URI("/api/patients/" + result)).body(result);
+    }
+
+    @GetMapping(("/patients"))
+    public ResponseEntity<List<PatientDTO>> getAllPatients() {
+        log.debug("REST request to get all Patients");
+
+        List<PatientDTO> result = patientMapper.findAll();
+        return ResponseEntity.ok().body(result);
     }
 }
