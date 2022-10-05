@@ -107,7 +107,7 @@ class UnionSqlBuilderServiceIT {
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUnionSelectAllQuery() {
         // when
-        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), "test").toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
@@ -133,7 +133,7 @@ class UnionSqlBuilderServiceIT {
         userPatientRepository.saveAndFlush(userPatient2);
 
         // when
-        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId()).toString();
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), "test_patient_no").toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
@@ -142,7 +142,7 @@ class UnionSqlBuilderServiceIT {
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-        assertThat(result).contains(String.format("PT_NO IN ('%s', '%s')", userPatient1.getPatientNo(), userPatient2.getPatientNo()));
+        assertThat(result).contains(String.format("PT_NO IN ('test_patient_no')"));
     }
 
 }

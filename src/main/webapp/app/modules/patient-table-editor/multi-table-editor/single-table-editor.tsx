@@ -26,15 +26,16 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
   const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
-    axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patientNo}`).then(({data}) => {
-      setDatasource(data);
-    });
+    if (patientNo && category) {
+      axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patientNo}`).then(({data}) => {
+        setDatasource(data);
+      });
 
-    axios.get<any[]>(`/api/datasource-meta/categories/${category.id}/item-list`).then(({data}) => {
-      setItemList(data);
-    });
-
-  }, [JSON.stringify(category)]);
+      axios.get<any[]>(`/api/datasource-meta/categories/${category.id}/item-list`).then(({data}) => {
+        setItemList(data);
+      });
+    }
+  }, [patientNo, JSON.stringify(category)]);
 
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {

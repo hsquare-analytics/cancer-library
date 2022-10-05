@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 public class DatasourceEditorController {
 
-    private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
+    private final Logger log = LoggerFactory.getLogger(DatasourceEditorController.class);
 
     private final UnionSqlBuilderService unionSqlBuilderService;
 
@@ -41,10 +41,10 @@ public class DatasourceEditorController {
 
     @GetMapping("/datasource-editor/categories/{categoryId}")
     public ResponseEntity<List<Map>> getDatasourceByCategoryId(
-        @PathVariable(value = "categoryId") final Long categoryId) {
+        @PathVariable(value = "categoryId") final Long categoryId, String patientNo) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
-        SQL sql = unionSqlBuilderService.getUnionSelectSQL(categoryId);
+        SQL sql = unionSqlBuilderService.getUnionSelectSQL(categoryId, patientNo);
 
         List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
