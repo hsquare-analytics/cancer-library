@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.planit.cancerlibrary.mapper.PatientMapper">
+    <select id="findAll" resultType="io.planit.cancerlibrary.mapper.LowerKeyMap">
+        SELECT *
+        FROM TEST_PATIENT;
+    </select>
+
+    <insert id="insert" parameterType="map">
+        INSERT INTO TEST_PATIENT (PACT_ID, PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+        VALUES (#{pactId}, #{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy}, #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate});
+    </insert>
+</mapper>

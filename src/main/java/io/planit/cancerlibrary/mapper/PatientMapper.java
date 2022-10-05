@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface TestMember {
+public interface PatientMapper {
     @MapKey("id")
     List<Map> findAll();
+
+    int insert(Map patient);
 }
