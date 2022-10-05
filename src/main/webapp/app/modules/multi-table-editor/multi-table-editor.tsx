@@ -5,19 +5,19 @@ import AccordionEditor from "app/modules/multi-table-editor/accordion-editor";
 
 export const MultiTableEditor = () => {
 
-    const categories = useAppSelector(state => state.navigation.categories);
+  const categories = useAppSelector(state => state.navigation.categories);
 
-    useEffect(() => {
-        if (categories.length == 0) {
-            getCategories();
-        }
-    }, []);
+  useEffect(() => {
+    if (categories.length == 0) {
+      getCategories();
+    }
+  }, []);
 
-    return (
-        <div>
-            {categories.map(category=><AccordionEditor category={category}/>)}
-        </div>
-    );
+  return (
+    <div>
+      {categories.map((category, index) => <AccordionEditor category={category} expanded={index == 0}/>)}
+    </div>
+  );
 }
 
 export default MultiTableEditor;

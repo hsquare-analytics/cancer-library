@@ -14,11 +14,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export interface ISignleTableEditor {
   category: ICategory;
+  expanded: boolean;
 }
 
 export const AccordionEditor = (props: ISignleTableEditor) => {
 
-  const {category} = props;
+  const {category, expanded} = props;
 
   const [datasource, setDatasource] = useState([]);
   const [itemList, setItemList] = useState([]);
@@ -56,7 +57,7 @@ export const AccordionEditor = (props: ISignleTableEditor) => {
 
 
   return itemList.length > 0 ? (
-    <Accordion>
+    <Accordion defaultExpanded={expanded}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel1a-content"
