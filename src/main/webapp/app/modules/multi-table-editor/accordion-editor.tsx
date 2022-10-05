@@ -63,7 +63,7 @@ export const AccordionEditor = (props: ISignleTableEditor) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>{category.title}</Typography>
+        <Typography>{`${category.title.toUpperCase()} ${category.property ? ' - ' + category.property?.caption : ''}`}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
