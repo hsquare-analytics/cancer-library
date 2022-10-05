@@ -10,7 +10,7 @@ insert into ph_category (id, title, activated, order_no, topic_id, created_by, c
 values (2701, 'test_visit', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
 insert into ph_category_property (category_id, date_column, caption)
-values (2701, 'med_dt', 'test_caption');
+values (2701, 'med_dt', '수진 기록');
 
 insert into PH_USER_CATEGORY (ID, USER_ID, CATEGORY_ID, ACTIVATED, TERM_START, TERM_END, CREATED_BY, CREATED_DATE,
                               LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
