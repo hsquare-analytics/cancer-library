@@ -6,10 +6,9 @@ import {Collapse, Nav, Navbar, NavbarToggler} from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
 import {Brand, Home} from './header-components';
-import {AccountMenu, AdminMenu, LocaleMenu, UserAuthorizedCategories, MuitiTableEditorMenu} from '../menus';
+import {AccountMenu, AdminMenu, AuthorizedCategories, LocaleMenu, MuitiTableEditorMenu} from '../menus';
 import {useAppDispatch} from 'app/config/store';
 import {setLocale} from 'app/shared/reducers/locale';
-import {AdminAuthorizedCategories} from "app/shared/layout/menus/admin-authorized-categories";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -55,10 +54,10 @@ const Header = (props: IHeaderProps) => {
           <Nav id="header-tabs" className="ms-auto flex-column" navbar>
             <Home/>
             <MuitiTableEditorMenu/>
-            {props.isAuthenticated && <UserAuthorizedCategories/>}
+            {props.isAuthenticated && <AuthorizedCategories routerPath={"data-editor"} titleTranslationKey={"global.menu.editable-categories"}/>}
             {props.isAuthenticated && props.isAdmin && (
               <>
-                <AdminAuthorizedCategories/>
+                <AuthorizedCategories routerPath={"admin/data-review"} titleTranslationKey={"global.menu.approval-categories"}/>
                 <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
                 <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange}/>
               </>

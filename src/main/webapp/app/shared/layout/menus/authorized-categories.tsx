@@ -6,7 +6,14 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
 import _ from "lodash";
 
-export const UserAuthorizedCategories = () => {
+export interface IUserAuthorizedCategoriesProps {
+  titleTranslationKey: string;
+  routerPath: string;
+}
+
+export const AuthorizedCategories = (props: IUserAuthorizedCategoriesProps) => {
+
+  const {routerPath, titleTranslationKey} = props;
 
   const dispatch = useAppDispatch();
 
@@ -22,14 +29,14 @@ export const UserAuthorizedCategories = () => {
 
   return <NavDropdown
     icon="th-list"
-    name={translate('global.menu.editable-categories')}
+    name={translate(titleTranslationKey)}
     id="entity-menu"
     data-cy="entity"
     style={{maxHeight: '80vh', overflow: 'auto'}}
   >
     {
       categoryList.length !== 0 ? _.uniqBy([...categoryList], 'id').sort((a, b) => a.id - b.id).map(category => {
-        return <MenuItem key={category} icon="asterisk" to={`data-editor/${category.id}`}>
+        return <MenuItem key={category} icon="asterisk" to={`${routerPath}/${category.id}`}>
           {category.title}
         </MenuItem>
       }) : null}
