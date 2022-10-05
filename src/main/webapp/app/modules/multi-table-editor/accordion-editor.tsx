@@ -13,19 +13,20 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export interface ISignleTableEditor {
+  patientNo: string;
   category: ICategory;
   expanded: boolean;
 }
 
 export const AccordionEditor = (props: ISignleTableEditor) => {
 
-  const {category, expanded} = props;
+  const {patientNo, category, expanded} = props;
 
   const [datasource, setDatasource] = useState([]);
   const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
-    axios.get<any[]>(`/api/datasource-editor/categories/${category.id}`).then(({data}) => {
+    axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patientNo}`).then(({data}) => {
       setDatasource(data);
     });
 

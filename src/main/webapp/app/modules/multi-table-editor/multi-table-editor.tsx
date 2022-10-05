@@ -3,7 +3,12 @@ import {useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
 import AccordionEditor from "app/modules/multi-table-editor/accordion-editor";
 
-export const MultiTableEditor = () => {
+export interface IMultiTableEditorProps {
+  patientNo: string;
+}
+
+export const MultiTableEditor = (props: IMultiTableEditorProps) => {
+  const {patientNo} = props;
 
   const categories = useAppSelector(state => state.navigation.categories);
 
@@ -15,7 +20,10 @@ export const MultiTableEditor = () => {
 
   return (
     <div>
-      {categories.map((category, index) => <AccordionEditor key={category} category={category} expanded={index === 0}/>)}
+      {categories.map((category, index) => <AccordionEditor key={category}
+                                                            category={category}
+                                                            patientNo={patientNo}
+                                                            expanded={index === 0}/>)}
     </div>
   );
 }
