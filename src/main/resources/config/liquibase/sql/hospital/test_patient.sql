@@ -6,6 +6,10 @@ CREATE TABLE TEST_PATIENT (
                           PT_BRDY_DT Varchar,
                           HSP_TP_CD Varchar,
                           IDX_DT Date,
+                          CREATED_BY         CHARACTER VARYING(50),
+                          CREATED_DATE       TIMESTAMP,
+                          LAST_MODIFIED_BY   CHARACTER VARYING(50),
+                          LAST_MODIFIED_DATE TIMESTAMP,
                           STATUS Varchar
 );
 INSERT INTO TEST_PATIENT(PACT_ID, PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS) VALUES ('0008294746', 'G010323613895', '김**', 'F', '1949-09', '01', '2016-12-26', null);
