@@ -59,7 +59,7 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
 
 
   return itemList.length > 0 ? (
-    <Accordion defaultExpanded={expanded}>
+    <Accordion defaultExpanded={true}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel1a-content"
@@ -87,7 +87,7 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
             }}
             // onRowRemoving={onRowRemoving}
             onRowUpdating={onRowUpdating}
-            height={'40vh'}
+            // height={'40vh'}
             scrolling={{mode: 'virtual'}}
             selection={{mode: 'multiple'}}
           >
