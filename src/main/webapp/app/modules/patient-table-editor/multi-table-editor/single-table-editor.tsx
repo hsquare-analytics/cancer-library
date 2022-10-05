@@ -18,7 +18,7 @@ export interface ISignleTableEditor {
   expanded: boolean;
 }
 
-export const AccordionEditor = (props: ISignleTableEditor) => {
+export const SingleTableEditor = (props: ISignleTableEditor) => {
 
   const {patientNo, category, expanded} = props;
 
@@ -126,4 +126,4 @@ export const AccordionEditor = (props: ISignleTableEditor) => {
   ) : null;
 }
 
-export default AccordionEditor;
+export default SingleTableEditor;

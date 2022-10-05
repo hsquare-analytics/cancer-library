@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
-import AccordionEditor from "app/modules/multi-table-editor/accordion-editor";
+import SingleTableEditor from "app/modules/patient-table-editor/multi-table-editor/single-table-editor";
 
 export interface IMultiTableEditorProps {
   patientNo: string;
@@ -20,10 +20,10 @@ export const MultiTableEditor = (props: IMultiTableEditorProps) => {
 
   return (
     <div>
-      {categories.map((category, index) => <AccordionEditor key={category}
-                                                            category={category}
-                                                            patientNo={patientNo}
-                                                            expanded={index === 0}/>)}
+      {categories.map((category, index) => <SingleTableEditor key={category}
+                                                              category={category}
+                                                              patientNo={patientNo}
+                                                              expanded={index === 0}/>)}
     </div>
   );
 }

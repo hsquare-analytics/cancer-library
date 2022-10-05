@@ -6,7 +6,7 @@ import {REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
 import PatientTableEditorColumn from "./patient-table-editor.column";
 import { Popup, Position, ToolbarItem } from 'devextreme-react/popup';
-import MultiTableEditor from "app/modules/multi-table-editor/multi-table-editor";
+import MultiTableEditor from "app/modules/patient-table-editor/multi-table-editor/multi-table-editor";
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
