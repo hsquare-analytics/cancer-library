@@ -51,7 +51,7 @@ public class PatientResourceIT {
 
     private PatientDTO patient;
 
-    public static PatientDTO createEntity() {
+    public static PatientDTO createEntityDTO() {
         return new PatientDTO().pactId(DEFAULT_PACT_ID)
             .ptNo(DEFAULT_PT_NO)
             .ptNm(DEFAULT_PT_NM)
@@ -68,7 +68,7 @@ public class PatientResourceIT {
 
     @BeforeEach
     void initTest() {
-        patient = createEntity();
+        patient = createEntityDTO();
     }
 
     @Test
