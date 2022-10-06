@@ -20,10 +20,7 @@ export const MultiTableEditor = (props: IMultiTableEditorProps) => {
 
   return (
     <div>
-      {categories.map((category) => <SingleTableEditor key={category}
-                                                             category={category}
-                                                              patientNo={patientNo}
-                                                              />)}
+      {categories.map(category => <SingleTableEditor key={category.title} category={category} patientNo={patientNo}/>)}
     </div>
   );
 }

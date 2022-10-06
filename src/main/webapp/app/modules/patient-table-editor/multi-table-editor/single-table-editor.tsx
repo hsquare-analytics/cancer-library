@@ -86,8 +86,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               allowUpdating: true,
             }}
             onRowUpdating={onRowUpdating}
+            scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           >
-
             {
               itemList.map(item => <Column
                   key={item}
@@ -95,12 +95,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   caption={item.itemProperty?.caption}
                   visibleIndex={item.itemProperty?.visibleIndex}
                   alignment={'center'}
-                  minWidth={150}
                 />
               )
             }
-            <Column dataField="last_modified_by" caption={translate('datasource.column.lastModifiedBy')} alignment={"center"}/>
-            <Column dataField="last_modified_date" caption={translate('datasource.column.lastModifiedDate')} alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"}/>
+            <Column dataField="last_modified_by" caption={translate('datasource.column.lastModifiedBy')}
+                    alignment={"center"} allowEditing={false}/>
+            <Column dataField="last_modified_date" caption={translate('datasource.column.lastModifiedDate')}
+                    alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}/>
           </DataGrid>
         </Typography>
       </AccordionDetails>
