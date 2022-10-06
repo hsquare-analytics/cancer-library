@@ -5,7 +5,6 @@ import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.UserPatientRepository;
 import java.util.List;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UnionSqlBuilderService {
 
-    private Logger log = LoggerFactory.getLogger(UnionSqlBuilderService.class);
+    private final Logger log = LoggerFactory.getLogger(UnionSqlBuilderService.class);
 
     private final CategoryRepository categoryRepository;
 
@@ -50,7 +49,7 @@ public class UnionSqlBuilderService {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         SQL sql = new SQL();
-        sql.SELECT(DatasourceConstants.IDX_COLUMN).SELECT(DatasourceConstants.STATUS_COLUMN);
+        sql.SELECT(DatasourceConstants.IDX_COLUMN);
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
@@ -65,8 +64,7 @@ public class UnionSqlBuilderService {
 
         SQL excludeIdxSubquery = new SQL().SELECT(DatasourceConstants.IDX_COLUMN).FROM(updatedTableName);
 
-        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN)
-            .SELECT(String.format("NULL AS %s", DatasourceConstants.STATUS_COLUMN));
+        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN);
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(originTableName)
             .WHERE(String.format("%s NOT IN (%s)", DatasourceConstants.IDX_COLUMN, excludeIdxSubquery));

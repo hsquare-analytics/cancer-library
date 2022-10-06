@@ -10,14 +10,12 @@ import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
@@ -26,8 +24,6 @@ import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -89,13 +85,13 @@ class UnionSqlBuilderServiceIT {
     }
 
     private void assertUpdateListSQL(String result, String updatedTableName) {
-        assertThat(result).contains(String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN,
-            DatasourceConstants.STATUS_COLUMN)).contains(String.format("FROM %s", updatedTableName));
+        assertThat(result).contains(String.format("SELECT %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN))
+            .contains(String.format("FROM %s", updatedTableName));
     }
 
     private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN, "NULL AS STATUS"))
+                String.format("SELECT %s, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", originTableName))
             .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
                 DatasourceConstants.IDX_COLUMN))
@@ -142,7 +138,7 @@ class UnionSqlBuilderServiceIT {
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-        assertThat(result).contains(String.format("PT_NO IN ('test_patient_no')"));
+        assertThat(result).contains("PT_NO IN ('test_patient_no')");
     }
 
 }
