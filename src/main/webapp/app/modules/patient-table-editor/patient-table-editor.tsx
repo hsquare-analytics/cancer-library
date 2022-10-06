@@ -53,6 +53,18 @@ export const PatientTableEditor = () => {
     });
   }
 
+  const onStatusChangeButtonClick = (status: string) => {
+    axios.patch(`api/patients/${patient.ptNo}`, {...patient, status})
+    .then(({data}) => {
+      if (data >= 1) {
+        toast.success('Updated Successfully');
+      } else {
+        toast.error('Data Submission Failed');
+      }
+    })
+    .catch(err => toast.error(err));
+  }
+
   return (
     <div>
       <Popup
@@ -70,9 +82,14 @@ export const PatientTableEditor = () => {
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard patient={patient}/>
           <Stack direction="row-reverse" spacing={2}>
-            <Button variant="contained" color="error">거부</Button>
-            <Button variant="contained" color="success">승인</Button>
-            <Button variant="contained" color="info">제출</Button>
+            <Button variant="contained" color="error"
+                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
+            <Button variant="contained" color="success"
+                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}
+            >승인</Button>
+            <Button variant="contained" color="info"
+                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}
+            >제출</Button>
           </Stack>
           <MultiTableEditor patient={patient}/>
         </ScrollView>
