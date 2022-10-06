@@ -12,10 +12,11 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
+import {IPatient} from "app/shared/model/patient.model";
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
-  const [patientNo, setPatientNo] = useState(null);
+  const [patient, setPatient] = useState<IPatient>(null);
 
   const dispatch = useAppDispatch();
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
@@ -25,7 +26,9 @@ export const PatientTableEditor = () => {
   }, []);
 
   const onRowDblClick = (e) => {
-    setPatientNo(e.data.ptNo);
+    axios.get(`/api/patients/${e.data.ptNo}`).then(({data}) => {
+      setPatient(data);
+    });
     setPopupVisible(!popupVisible);
   }
 
@@ -56,15 +59,15 @@ export const PatientTableEditor = () => {
         closeOnOutsideClick={true}
         onHiding={() => {
           setPopupVisible(false)
-          setPatientNo(null);
+          setPatient(null);
         }}
         resizeEnabled={true}
         height={'95vh'}
         width={'95vw'}
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
-          <PatientProfileCard patientNo={patientNo}/>
-          <MultiTableEditor patientNo={patientNo}/>
+          <PatientProfileCard patient={patient}/>
+          <MultiTableEditor patient={patient}/>
         </ScrollView>
       </Popup>
       <DataGrid

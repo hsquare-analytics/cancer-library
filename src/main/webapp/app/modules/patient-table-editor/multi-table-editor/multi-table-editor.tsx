@@ -2,13 +2,14 @@ import React, {useEffect} from "react";
 import {useAppSelector} from "app/config/store";
 import {getCategories} from "app/modules/navigation/navigation.reducer";
 import SingleTableEditor from "app/modules/patient-table-editor/multi-table-editor/single-table-editor";
+import {IPatient} from "app/shared/model/patient.model";
 
 export interface IMultiTableEditorProps {
-  patientNo: string;
+  patient: IPatient;
 }
 
 export const MultiTableEditor = (props: IMultiTableEditorProps) => {
-  const {patientNo} = props;
+  const {patient} = props;
 
   const categories = useAppSelector(state => state.navigation.categories);
 
@@ -20,7 +21,7 @@ export const MultiTableEditor = (props: IMultiTableEditorProps) => {
 
   return (
     <div>
-      {categories.map(category => <SingleTableEditor key={category.title} category={category} patientNo={patientNo}/>)}
+      {categories.map(category => <SingleTableEditor key={category.title} category={category} patient={patient}/>)}
     </div>
   );
 }

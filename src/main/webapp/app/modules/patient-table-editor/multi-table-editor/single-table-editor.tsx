@@ -11,9 +11,10 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
+import {IPatient} from "app/shared/model/patient.model";
 
 export interface ISingleTableEditor {
-  patientNo: string;
+  patient: IPatient;
   category: ICategory;
 }
 
@@ -23,14 +24,14 @@ export const getCategoryTypography = (category: ICategory) => {
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
 
-  const {patientNo, category} = props;
+  const {patient, category} = props;
 
   const [datasource, setDatasource] = useState([]);
   const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
-    if (patientNo && category) {
-      axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patientNo}`).then(({data}) => {
+    if (patient && category) {
+      axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patient.ptNo}`).then(({data}) => {
         setDatasource(data);
       });
 
@@ -38,7 +39,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         setItemList(data);
       });
     }
-  }, [patientNo, JSON.stringify(category)]);
+  }, [JSON.stringify(patient), JSON.stringify(category)]);
 
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {

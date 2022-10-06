@@ -9,6 +9,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {IPatient} from "app/shared/model/patient.model";
 
 const card = (
   <React.Fragment>
@@ -35,7 +36,7 @@ const card = (
 );
 
 export interface IPatientProfileCard {
-  patientNo: string;
+  patient: IPatient;
 }
 
 export const PatientProfileCard = (props: IPatientProfileCard) => {
