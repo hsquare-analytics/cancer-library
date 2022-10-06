@@ -49,7 +49,7 @@ public class UnionSqlBuilderService {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         SQL sql = new SQL();
-        sql.SELECT(DatasourceConstants.IDX_COLUMN);
+        sql.SELECT(DatasourceConstants.IDX_COLUMN, DatasourceConstants.LAST_MODIFIED_BY, DatasourceConstants.LAST_MODIFIED_DATE);
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
@@ -64,7 +64,7 @@ public class UnionSqlBuilderService {
 
         SQL excludeIdxSubquery = new SQL().SELECT(DatasourceConstants.IDX_COLUMN).FROM(updatedTableName);
 
-        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN);
+        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN, "NULL AS LAST_MODIFIED_BY", "NULL AS LAST_MODIFIED_DATE");
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(originTableName)
             .WHERE(String.format("%s NOT IN (%s)", DatasourceConstants.IDX_COLUMN, excludeIdxSubquery));
