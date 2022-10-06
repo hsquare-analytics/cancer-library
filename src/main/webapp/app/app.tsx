@@ -16,6 +16,12 @@ import ErrorBoundary from 'app/shared/error/error-boundary';
 import {AUTHORITIES} from 'app/config/constants';
 import AppRoutes from 'app/routes';
 import 'devextreme/dist/css/dx.material.blue.light.css';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const theme = createTheme({
+  palette: {mode: 'light'},
+});
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
@@ -38,26 +44,30 @@ export const App = () => {
   const paddingLeft = '210px';
   return (
     <BrowserRouter basename={baseHref}>
-      <div className="app-container" style={{ paddingTop, paddingLeft }}>
-        <ToastContainer position={toast.POSITION.TOP_CENTER} className="toastify-container" toastClassName="toastify-toast" />
-        <ErrorBoundary>
-          <Header
-            isAuthenticated={isAuthenticated}
-            isAdmin={isAdmin}
-            currentLocale={currentLocale}
-            ribbonEnv={ribbonEnv}
-            isInProduction={isInProduction}
-            isOpenAPIEnabled={isOpenAPIEnabled}
-          />
-        </ErrorBoundary>
-        <div className="container-fluid view-container" id="app-view-container">
-          <Card className="jh-card">
-            <ErrorBoundary>
-              <AppRoutes />
-            </ErrorBoundary>
-          </Card>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
+        <div className="app-container" style={{paddingTop, paddingLeft}}>
+          <ToastContainer position={toast.POSITION.TOP_CENTER} className="toastify-container"
+                          toastClassName="toastify-toast"/>
+          <ErrorBoundary>
+            <Header
+              isAuthenticated={isAuthenticated}
+              isAdmin={isAdmin}
+              currentLocale={currentLocale}
+              ribbonEnv={ribbonEnv}
+              isInProduction={isInProduction}
+              isOpenAPIEnabled={isOpenAPIEnabled}
+            />
+          </ErrorBoundary>
+          <div className="container-fluid view-container" id="app-view-container">
+            <Card className="jh-card">
+              <ErrorBoundary>
+                <AppRoutes/>
+              </ErrorBoundary>
+            </Card>
+          </div>
         </div>
-      </div>
+      </ThemeProvider>
     </BrowserRouter>
   );
 };
