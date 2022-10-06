@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getPatients, reset} from './patient-table-editor.reducer';
+import reducer, {getItemListByCategoryId, getPatients, reset} from './patient-table-editor.reducer';
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -16,6 +16,7 @@ describe('User Patient selector module reducer tests', () => {
   }
 
   const initialState = {
+    itemListMap: {} as any,
     patients: [],
     loading: false,
     errorMessage: null,
@@ -26,6 +27,7 @@ describe('User Patient selector module reducer tests', () => {
       loading: false,
       errorMessage: null,
     });
+    expect(isEmpty(state.itemListMap));
     expect(isEmpty(state.patients));
   }
 
@@ -43,7 +45,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getPatients.pending.type], {}, state => {
+      testMultipleTypes([getPatients.pending.type, getItemListByCategoryId.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -60,7 +62,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getPatients.rejected.type],
+      testMultipleTypes([getPatients.rejected.type, getItemListByCategoryId.rejected.type],
         'some message',
         state => {
           expect(state).toMatchObject({
@@ -74,7 +76,7 @@ describe('User Patient selector module reducer tests', () => {
   });
 
   describe('Successes', () => {
-    it('should fetch all entities', () => {
+    it('should fetch all patients', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
       expect(reducer(undefined, {
@@ -84,6 +86,21 @@ describe('User Patient selector module reducer tests', () => {
         ...initialState,
         loading: false,
         patients: payload.data,
+      });
+    });
+
+    it('should fetch all item list and save as key map', () => {
+      const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
+
+      expect(reducer(undefined, {
+        type: getItemListByCategoryId.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        loading: false,
+        itemListMap: {
+          fakeId: payload.data
+        },
       });
     });
   });
@@ -98,7 +115,7 @@ describe('User Patient selector module reducer tests', () => {
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
-    it('dispatches FETCH_CATEGORY_LIST actions', async () => {
+    it('dispatches FETCH_PATIENT_LIST actions', async () => {
       const expectedActions = [
         {
           type: getPatients.pending.type
@@ -110,6 +127,23 @@ describe('User Patient selector module reducer tests', () => {
       ];
 
       await store.dispatch(getPatients());
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches FETCH_ITEM_LIST_BY_CATEGORYID actions', async () => {
+      const expectedActions = [
+        {
+          type: getItemListByCategoryId.pending.type
+        },
+        {
+          type: getItemListByCategoryId.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(getItemListByCategoryId(1));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
