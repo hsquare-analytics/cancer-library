@@ -97,19 +97,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 />
               )
             }
-            <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'}
-                    minWidth={150}
-                    allowEditing={false}>
-              <Lookup dataSource={[
-                {
-                  id: 1,
-                  valueExpr: REVIEW_LIST.SUBMITTED,
-                  displayExpr: translate('datasource.review.submitted')
-                },
-                {id: 2, valueExpr: REVIEW_LIST.DECLINED, displayExpr: translate('datasource.review.declined')},
-                {id: 3, valueExpr: REVIEW_LIST.APPROVED, displayExpr: translate('datasource.review.approved')},
-              ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
-            </Column>
           </DataGrid>
         </Typography>
       </AccordionDetails>
