@@ -8,7 +8,9 @@ import PatientTableEditorColumn from "./patient-table-editor.column";
 import {Popup} from 'devextreme-react/popup';
 import MultiTableEditor from "app/modules/patient-table-editor/multi-table-editor/multi-table-editor";
 import ScrollView from 'devextreme-react/scroll-view';
-
+import {cleanEntity} from "app/shared/util/entity-utils";
+import {toast} from 'react-toastify';
+import axios from "axios";
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -27,7 +29,22 @@ export const PatientTableEditor = () => {
   }
 
   const onRowUpdating = (e) => {
-    console.log(e)
+      e.cancel = new Promise<void>((resolve, reject) => {
+        const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+        axios
+        .patch(`api/patients/${row.ptNo}`, row)
+        .then(({data}) => {
+          if (data >= 1) {
+            toast.success('Updated Successfully');
+            e.oldData['status'] = REVIEW_LIST.SUBMITTED;
+            resolve();
+          } else {
+            toast.error('Data Submission Failed');
+            reject('Updated Fail');
+          }
+        })
+        .catch(err => reject(err));
+      });
   }
 
   return (

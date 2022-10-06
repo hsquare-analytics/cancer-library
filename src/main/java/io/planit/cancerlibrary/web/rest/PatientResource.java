@@ -2,18 +2,26 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
+import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PatientResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientResource.class);
+
+    private static final String ENTITY_NAME = "patient";
 
     private final PatientMapper patientMapper;
 
@@ -44,5 +54,37 @@ public class PatientResource {
 
         List<PatientDTO> result = patientMapper.findAll();
         return ResponseEntity.ok().body(result);
+    }
+
+    @PatchMapping(value = "/patients/{ptNo}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<Integer> partialUpdatePatient(
+        @PathVariable(value = "ptNo") final String ptNo,
+        @NotNull @RequestBody PatientDTO patientDTO
+    ) {
+        log.debug("REST request to update Patient partially : {}, {}", ptNo, patientDTO);
+
+        if (patientDTO.getPtNo() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+
+        if (!Objects.equals(ptNo, patientDTO.getPtNo())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!patientMapper.existsByPatientNo(ptNo)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<Integer> result = patientMapper.findByPatientNo(ptNo)
+            .map(existPatient -> {
+                if (patientDTO.getStatus() != null) {
+                    existPatient.setStatus(patientDTO.getStatus());
+                }
+                return existPatient;
+            }).map(patientMapper::update);
+
+        return result.map(updated -> ResponseEntity.ok().body(updated))
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
     }
 }

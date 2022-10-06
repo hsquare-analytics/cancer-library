@@ -23,4 +23,21 @@
         VALUES (#{pactId}, #{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
                 #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate});
     </insert>
+
+    <select id="existsByPatientNo" resultType="boolean">
+        SELECT COUNT(*)
+        FROM TEST_PATIENT
+        WHERE PT_NO = #{patientNo};
+    </select>
+
+    <select id="findByPatientNo" resultType="io.planit.cancerlibrary.service.dto.PatientDTO">
+        SELECT *
+        FROM TEST_PATIENT
+        WHERE PT_NO = #{patientNo};
+    </select>
+
+    <update id="update" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
+        UPDATE TEST_PATIENT
+        SET STATUS = #{status} WHERE PT_NO = #{ptNo};
+    </update>
 </mapper>
