@@ -40,18 +40,30 @@ export interface IPatientProfileCard {
 }
 
 export const PatientProfileCard = (props: IPatientProfileCard) => {
+  const {patient} = props;
+
   return (
-    <Accordion defaultExpanded={true} >
+    <Accordion defaultExpanded={true}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>환자 정보</Typography>
+        <Typography>환자 정보 {patient ? ` - ${patient.ptNm} (${patient.ptNo})` : ''}</Typography>
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
         <Box>
-          <Card variant="outlined">{card}</Card>
+          <Card variant="outlined" sx={{display: "flex"}}>
+            {patient ? Object.entries(patient).map(([key, value]) => <CardContent>
+                <Typography color="text.secondary">
+                  {key}
+                </Typography>
+                <Typography component="span" color="text.default">
+                  {value}
+                </Typography>
+              </CardContent>
+            ) : null}
+          </Card>
         </Box>
       </AccordionDetails>
     </Accordion>
