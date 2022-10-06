@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {IPatient} from "app/shared/model/patient.model";
-import {useAppSelector} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
+import {getItemListByCategoryId} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 
 export interface ISingleTableEditor {
   patient: IPatient;
@@ -24,11 +25,12 @@ export const getCategoryTypography = (category: ICategory) => {
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
+  const dispatch = useAppDispatch();
+  const itemListMap = useAppSelector(state => state.patientTableEditor.itemListMap);
 
   const {patient, category} = props;
 
   const [datasource, setDatasource] = useState([]);
-  const [itemList, setItemList] = useState([]);
 
   const login = useAppSelector(state => state.authentication.account.login);
 
@@ -38,9 +40,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         setDatasource(data);
       });
 
-      axios.get<any[]>(`/api/datasource-meta/categories/${category.id}/item-list`).then(({data}) => {
-        setItemList(data);
-      });
+      if (!itemListMap[category.id]) {
+        dispatch(getItemListByCategoryId(category.id));
+      }
     }
   }, [JSON.stringify(patient), JSON.stringify(category)]);
 
@@ -66,8 +68,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   };
 
+  const canRender: () => boolean = () => category && itemListMap && itemListMap[category.id] && itemListMap[category.id].length > 0;
 
-  return itemList.length > 0 ? (
+  return canRender() ? (
     <Accordion defaultExpanded={true}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon/>}
@@ -93,7 +96,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           >
             {
-              itemList.map(item => <Column
+              itemListMap[category.id].map(item => <Column
                   key={item}
                   dataField={item.title.toLowerCase()}
                   caption={item.itemProperty?.caption}
