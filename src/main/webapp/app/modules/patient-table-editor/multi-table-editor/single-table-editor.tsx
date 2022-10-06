@@ -10,6 +10,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {translate} from 'react-jhipster';
 
 export interface ISingleTableEditor {
   patientNo: string;
@@ -49,6 +50,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
           e.oldData['status'] = REVIEW_LIST.SUBMITTED;
+          e.oldData['last_modified_by'] = "test";
+          e.oldData['last_modified_date'] = new Date();
           resolve();
         } else {
           toast.error('Data Submission Failed');
@@ -96,6 +99,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 />
               )
             }
+            <Column dataField="last_modified_by" caption={translate('datasource.column.lastModifiedBy')} alignment={"center"}/>
+            <Column dataField="last_modified_date" caption={translate('datasource.column.lastModifiedDate')} alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"}/>
           </DataGrid>
         </Typography>
       </AccordionDetails>
