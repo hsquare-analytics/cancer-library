@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findAllByGroupCategoryId(Long id);
+
+    List<Item> findAllByActivatedTrueAndGroupCategoryId(Long id);
 }

@@ -30,7 +30,7 @@ public class DatasourceMetaController {
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);
 
-        List<Item> result = itemRepository.findAllByGroupCategoryId(categoryId);
+        List<Item> result = itemRepository.findAllByActivatedTrueAndGroupCategoryId(categoryId);
 
         return ResponseEntity.ok().body(result);
     }
