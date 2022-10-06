@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class PatientDTO {
 
-    private String pactId;
     private String ptNo;
     private String ptNm;
     private String sexTpCd;
@@ -17,19 +16,6 @@ public class PatientDTO {
     private Instant createdDate;
     private String lastModifiedBy;
     private Instant lastModifiedDate;
-
-    public String getPactId() {
-        return pactId;
-    }
-
-    public void setPactId(String pactId) {
-        this.pactId = pactId;
-    }
-
-    public PatientDTO pactId(String pactId) {
-        this.pactId = pactId;
-        return this;
-    }
 
     public String getPtNo() {
         return ptNo;

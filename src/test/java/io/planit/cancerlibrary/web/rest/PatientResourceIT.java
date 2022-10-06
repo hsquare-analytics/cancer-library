@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 public class PatientResourceIT {
 
-    private static final String DEFAULT_PACT_ID = "AAAAAAAAAA";
     private static final String DEFAULT_PT_NO = "AAAAAAAAAA";
     private static final String DEFAULT_PT_NM = "AAAAAAAAAA";
     private static final String DEFAULT_SEX_TP_CD = "AAAAAAAAAA";
@@ -44,7 +43,6 @@ public class PatientResourceIT {
     private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
     private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.now();
 
-    private static final String UPDATED_PACT_ID = "BBBBBBBBBB";
     private static final String UPDATED_PT_NO = "BBBBBBBBBB";
     private static final String UPDATED_PT_NM = "BBBBBBBBBB";
     private static final String UPDATED_SEX_TP_CD = "BBBBBBBBBB";
@@ -67,7 +65,7 @@ public class PatientResourceIT {
     private PatientDTO patient;
 
     public static PatientDTO createPatientDTO() {
-        return new PatientDTO().pactId(DEFAULT_PACT_ID)
+        return new PatientDTO()
             .ptNo(DEFAULT_PT_NO)
             .ptNm(DEFAULT_PT_NM)
             .sexTpCd(DEFAULT_SEX_TP_CD)
@@ -82,7 +80,7 @@ public class PatientResourceIT {
     }
 
     public static PatientDTO createUpdatedPatientDTO() {
-        return new PatientDTO().pactId(UPDATED_PACT_ID)
+        return new PatientDTO()
             .ptNo(UPDATED_PT_NO)
             .ptNm(UPDATED_PT_NM)
             .sexTpCd(UPDATED_SEX_TP_CD)
@@ -113,7 +111,6 @@ public class PatientResourceIT {
         List<PatientDTO> patientList = patientMapper.findAll();
         assertThat(patientList).hasSize(databaseSizeBeforeCreate + 1);
         PatientDTO testPatient = patientList.get(patientList.size() - 1);
-        assertThat(testPatient.getPactId()).isEqualTo(DEFAULT_PACT_ID);
         assertThat(testPatient.getPtNo()).isEqualTo(DEFAULT_PT_NO);
         assertThat(testPatient.getPtNm()).isEqualTo(DEFAULT_PT_NM);
         assertThat(testPatient.getSexTpCd()).isEqualTo(DEFAULT_SEX_TP_CD);
@@ -134,7 +131,6 @@ public class PatientResourceIT {
             .perform(get(ENTITY_API_URL))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].pactId").value(hasItem(DEFAULT_PACT_ID)))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(DEFAULT_PT_NO)))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(DEFAULT_PT_NM)))
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(DEFAULT_SEX_TP_CD)))
@@ -180,7 +176,6 @@ public class PatientResourceIT {
         restPatientMockMvc.perform(get(ENTITY_API_URL + "/{ptNo}", patient.getPtNo()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.pactId").value(DEFAULT_PACT_ID))
             .andExpect(jsonPath("$.ptNo").value(DEFAULT_PT_NO))
             .andExpect(jsonPath("$.ptNm").value(DEFAULT_PT_NM)) ;
     }
