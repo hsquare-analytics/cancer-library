@@ -9,10 +9,24 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {IPatient} from "app/shared/model/patient.model";
 import {translate} from "react-jhipster";
+import Chip from '@mui/material/Chip';
+import {REVIEW_LIST} from "app/config/constants";
 
 export interface IPatientProfileCard {
   patient: IPatient;
 }
+
+const patientStatusChip = (status: string) => {
+  switch (status) {
+    case REVIEW_LIST.DECLINED:
+      return <Chip label="승인 거부" color="error"/>;
+    case REVIEW_LIST.APPROVED:
+      return <Chip label="승인 완료" color="success"/>;
+    case REVIEW_LIST.SUBMITTED:
+      return <Chip label="승인 대기" color="warning"/>;
+  }
+}
+
 
 export const PatientProfileCard = (props: IPatientProfileCard) => {
   const {patient} = props;
@@ -24,7 +38,9 @@ export const PatientProfileCard = (props: IPatientProfileCard) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>환자 정보 {patient ? ` - ${patient.ptNm} (${patient.ptNo})` : ''}</Typography>
+        <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>환자
+          정보 {patient ? ` - ${patient.ptNm} (${patient.ptNo})` : ''}</Typography>
+        {patient && patientStatusChip(patient.status)}
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
         <Box>

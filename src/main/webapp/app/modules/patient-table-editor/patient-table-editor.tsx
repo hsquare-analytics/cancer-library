@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getPatients} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
-import {REVIEW_LIST} from "app/config/constants";
+import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
 import PatientTableEditorColumn from "./patient-table-editor.column";
 import {Popup} from 'devextreme-react/popup';
@@ -15,12 +15,15 @@ import PatientProfileCard from "app/modules/patient-table-editor/patient-profile
 import {IPatient} from "app/shared/model/patient.model";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [patient, setPatient] = useState<IPatient>(null);
 
   const dispatch = useAppDispatch();
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
+
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
 
   useEffect(() => {
@@ -28,10 +31,14 @@ export const PatientTableEditor = () => {
   }, []);
 
   const onRowDblClick = (e) => {
-    axios.get(`/api/patients/${e.data.ptNo}`).then(({data}) => {
+    getPatientInfo(e.data.ptNo);
+    setPopupVisible(!popupVisible);
+  }
+
+  const getPatientInfo = (ptNo: string) => {
+    return axios.get(`/api/patients/${ptNo}`).then(({data}) => {
       setPatient(data);
     });
-    setPopupVisible(!popupVisible);
   }
 
   const onRowUpdating = (e) => {
@@ -57,7 +64,9 @@ export const PatientTableEditor = () => {
     axios.patch(`api/patients/${patient.ptNo}`, {...patient, status})
     .then(({data}) => {
       if (data >= 1) {
-        toast.success('Updated Successfully');
+        getPatientInfo(patient.ptNo).then(() => {
+          toast.success('Updated Successfully');
+        });
       } else {
         toast.error('Data Submission Failed');
       }
@@ -82,14 +91,12 @@ export const PatientTableEditor = () => {
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard patient={patient}/>
           <Stack direction="row-reverse" spacing={2}>
-            <Button variant="contained" color="error"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
-            <Button variant="contained" color="success"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}
-            >승인</Button>
-            <Button variant="contained" color="info"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}
-            >제출</Button>
+            {isAdmin ? (<> <Button variant="contained" color="error"
+                                   onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
+                <Button variant="contained" color="success"
+                        onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
+            ) : <Button variant="contained" color="info"
+                        onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
           </Stack>
           <MultiTableEditor patient={patient}/>
         </ScrollView>
