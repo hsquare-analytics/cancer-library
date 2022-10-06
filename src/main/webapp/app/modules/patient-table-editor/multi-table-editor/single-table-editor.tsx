@@ -12,15 +12,18 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export interface ISignleTableEditor {
+export interface ISingleTableEditor {
   patientNo: string;
   category: ICategory;
-  expanded: boolean;
 }
 
-export const SingleTableEditor = (props: ISignleTableEditor) => {
+export const getCategoryTypography = (category: ICategory) => {
+  return <Typography>{`${category.title.toUpperCase()} ${category.property ? ' - ' + category.property?.caption : ''}`}</Typography>
+}
 
-  const {patientNo, category, expanded} = props;
+export const SingleTableEditor = (props: ISingleTableEditor) => {
+
+  const {patientNo, category} = props;
 
   const [datasource, setDatasource] = useState([]);
   const [itemList, setItemList] = useState([]);
@@ -65,31 +68,22 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>{`${category.title.toUpperCase()} ${category.property ? ' - ' + category.property?.caption : ''}`}</Typography>
+        {getCategoryTypography(category)}
       </AccordionSummary>
       <AccordionDetails>
         <Typography>
           <DataGrid
             dataSource={JSON.parse(JSON.stringify(datasource))}
-            // defaultColumns={columns}
             showBorders={true}
             filterRow={{visible: true}}
             headerFilter={{visible: true}}
-            // searchPanel={{visible: true}}
             allowColumnResizing={true}
-            // paging={{ enabled: true, pageSize: ITEMS_PER_PAGE }}
             pager={{displayMode: 'compact', showNavigationButtons: true}}
-            // columnChooser={{enabled: true, mode: 'select', allowSearch: true, width: 500, height: 500}}
             editing={{
               mode: 'popup',
-              // allowAdding: true,
               allowUpdating: true,
             }}
-            // onRowRemoving={onRowRemoving}
             onRowUpdating={onRowUpdating}
-            // height={'40vh'}
-            scrolling={{mode: 'virtual'}}
-            selection={{mode: 'multiple'}}
           >
 
             {
@@ -98,9 +92,6 @@ export const SingleTableEditor = (props: ISignleTableEditor) => {
                   dataField={item.title.toLowerCase()}
                   caption={item.itemProperty?.caption}
                   visibleIndex={item.itemProperty?.visibleIndex}
-                  // format={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.format}
-                  // visible={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.visible}
-                  // caption={columnLabel[key]}
                   alignment={'center'}
                   minWidth={150}
                 />

@@ -26,6 +26,10 @@ export const PatientTableEditor = () => {
     setPopupVisible(!popupVisible);
   }
 
+  const onRowUpdating = (e) => {
+    console.log(e)
+  }
+
   return (
     <div>
       <Popup
@@ -40,32 +44,28 @@ export const PatientTableEditor = () => {
         height={'95vh'}
         width={'95vw'}
       >
-        <ScrollView width='100%' height='100%'>
+        <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <MultiTableEditor patientNo={patientNo}/>
         </ScrollView>
       </Popup>
       <DataGrid
         dataSource={JSON.parse(JSON.stringify(patientList))}
-        // defaultColumns={columns}
         showBorders={true}
         filterRow={{visible: true}}
         headerFilter={{visible: true}}
         searchPanel={{visible: true}}
         allowColumnResizing={true}
-        // paging={{ enabled: true, pageSize: ITEMS_PER_PAGE }}
         pager={{displayMode: 'compact', showNavigationButtons: true}}
-        // columnChooser={{enabled: true, mode: 'select', allowSearch: true, width: 500, height: 500}}
         editing={{
           mode: 'row',
           allowAdding: false,
           allowUpdating: true,
         }}
-        // onRowRemoving={onRowRemoving}
-        // onRowUpdating={onRowUpdating}
+        onRowUpdating={onRowUpdating}
         onRowDblClick={onRowDblClick}
         height={'95vh'}
         scrolling={{mode: 'virtual'}}
-        // selection={{mode: 'multiple'}}
+        selection={{mode: 'multiple'}}
       >
 
         {
@@ -75,9 +75,6 @@ export const PatientTableEditor = () => {
               caption={item.caption}
               visibleIndex={item.visibleIndex}
               allowEditing={false}
-              // format={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.format}
-              // visible={filteredCictionaryList.find(data => data.title == key)?.dxColumn?.visible}
-              // caption={columnLabel[key]}
               alignment={'center'}
               minWidth={150}
             />
