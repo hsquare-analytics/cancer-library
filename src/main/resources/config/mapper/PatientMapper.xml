@@ -38,6 +38,7 @@
 
     <update id="update" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
         UPDATE TEST_PATIENT
-        SET STATUS = #{status} WHERE PT_NO = #{ptNo};
+        SET STATUS = #{status}, LAST_MODIFIED_BY = #{lastModifiedBy}, LAST_MODIFIED_DATE = #{lastModifiedDate}
+        WHERE PT_NO = #{ptNo};
     </update>
 </mapper>

@@ -1,10 +1,12 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.mapper.PatientMapper;
+import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -85,11 +87,15 @@ public class PatientResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+
         Optional<Integer> result = patientMapper.findByPatientNo(ptNo)
             .map(existPatient -> {
                 if (patientDTO.getStatus() != null) {
                     existPatient.setStatus(patientDTO.getStatus());
                 }
+                existPatient.setLastModifiedBy(login);
+                existPatient.setLastModifiedDate(Instant.now());
                 return existPatient;
             }).map(patientMapper::update);
 
