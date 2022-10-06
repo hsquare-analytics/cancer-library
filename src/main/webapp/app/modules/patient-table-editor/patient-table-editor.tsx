@@ -11,6 +11,7 @@ import ScrollView from 'devextreme-react/scroll-view';
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import axios from "axios";
+import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -29,22 +30,22 @@ export const PatientTableEditor = () => {
   }
 
   const onRowUpdating = (e) => {
-      e.cancel = new Promise<void>((resolve, reject) => {
-        const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-        axios
-        .patch(`api/patients/${row.ptNo}`, row)
-        .then(({data}) => {
-          if (data >= 1) {
-            toast.success('Updated Successfully');
-            e.oldData['status'] = REVIEW_LIST.SUBMITTED;
-            resolve();
-          } else {
-            toast.error('Data Submission Failed');
-            reject('Updated Fail');
-          }
-        })
-        .catch(err => reject(err));
-      });
+    e.cancel = new Promise<void>((resolve, reject) => {
+      const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
+      axios
+      .patch(`api/patients/${row.ptNo}`, row)
+      .then(({data}) => {
+        if (data >= 1) {
+          toast.success('Updated Successfully');
+          e.oldData['status'] = REVIEW_LIST.SUBMITTED;
+          resolve();
+        } else {
+          toast.error('Data Submission Failed');
+          reject('Updated Fail');
+        }
+      })
+      .catch(err => reject(err));
+    });
   }
 
   return (
@@ -62,6 +63,7 @@ export const PatientTableEditor = () => {
         width={'95vw'}
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
+          <PatientProfileCard patientNo={patientNo}/>
           <MultiTableEditor patientNo={patientNo}/>
         </ScrollView>
       </Popup>

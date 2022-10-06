@@ -18,7 +18,7 @@ export interface ISingleTableEditor {
 }
 
 export const getCategoryTypography = (category: ICategory) => {
-  return <Typography>{`${category.title.toUpperCase()} ${category.property ? ' - ' + category.property?.caption : ''}`}</Typography>
+  return <Typography>{`${category.property ? category.property?.caption + ' - ' : ''} ${category.title.toUpperCase()} `}</Typography>
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
@@ -72,7 +72,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       >
         {getCategoryTypography(category)}
       </AccordionSummary>
-      <AccordionDetails>
+      <AccordionDetails sx={{padding: "8px 0"}}>
         <Typography>
           <DataGrid
             dataSource={JSON.parse(JSON.stringify(datasource))}
