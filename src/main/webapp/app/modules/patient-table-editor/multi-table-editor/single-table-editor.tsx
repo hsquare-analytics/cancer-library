@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
-import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 import {REVIEW_LIST} from "app/config/constants";
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
-import {translate} from 'react-jhipster';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
