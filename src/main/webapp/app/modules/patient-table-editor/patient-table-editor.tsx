@@ -94,7 +94,7 @@ export const PatientTableEditor = () => {
           PatientTableEditorColumn.map(item => <Column
               key={item.dataField}
               dataField={item.dataField}
-              caption={item.caption}
+              caption={translate("cancerLibraryApp.patient." + item.dataField)}
               visibleIndex={item.visibleIndex}
               allowEditing={false}
               alignment={'center'}

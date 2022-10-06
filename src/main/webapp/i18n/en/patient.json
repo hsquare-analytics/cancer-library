@@ -1,0 +1,17 @@
+{
+  "cancerLibraryApp": {
+    "patient": {
+      "ptNo": "ptNo",
+      "ptNm": "ptNm",
+      "sexTpCd": "sex tp cd",
+      "ptBrdyDt": "pt birth dt",
+      "hspTpCd": "hsp tp cd",
+      "idxDt": "idx dt",
+      "status": "status",
+      "createdBy": "created by",
+      "createdDate": "created date",
+      "lastModifiedBy": "last modified by",
+      "lastModifiedDate": "last modified date"
+    }
+  }
+}

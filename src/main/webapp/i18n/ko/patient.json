@@ -1,0 +1,17 @@
+{
+  "cancerLibraryApp": {
+    "patient": {
+      "ptNo": "환자번호",
+      "ptNm": "환자명",
+      "sexTpCd": "성별 코드",
+      "ptBrdyDt": "생일 코드",
+      "hspTpCd": "병원 코드",
+      "idxDt": "등록일",
+      "status": "상태",
+      "createdBy": "생성자",
+      "createdDate": "생성일",
+      "lastModifiedBy": "수정자",
+      "lastModifiedDate": "수정일"
+    }
+  }
+}
