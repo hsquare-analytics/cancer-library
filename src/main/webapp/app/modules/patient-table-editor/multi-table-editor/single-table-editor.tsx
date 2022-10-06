@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {IPatient} from "app/shared/model/patient.model";
+import {useAppSelector} from "app/config/store";
 
 export interface ISingleTableEditor {
   patient: IPatient;
@@ -28,6 +29,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const [datasource, setDatasource] = useState([]);
   const [itemList, setItemList] = useState([]);
+
+  const login = useAppSelector(state => state.authentication.account.login);
 
   useEffect(() => {
     if (patient && category) {
@@ -51,7 +54,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         if (data >= 1) {
           toast.success('Data Submitted Successfully');
           e.oldData['status'] = REVIEW_LIST.SUBMITTED;
-          e.oldData['last_modified_by'] = "test";
+          e.oldData['last_modified_by'] = login;
           e.oldData['last_modified_date'] = new Date();
           resolve();
         } else {
