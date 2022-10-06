@@ -29,7 +29,7 @@ export const PatientProfileCard = (props: IPatientProfileCard) => {
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
         <Box>
           <Card variant="outlined" sx={{display: "flex"}}>
-            {patient ? Object.entries(patient).map(([key, value]) => <CardContent>
+            {patient ? Object.entries(patient).map(([key, value]) => <CardContent key={key}>
                 <Typography color="text.secondary">
                   {translate("cancerLibraryApp.patient." + key)}
                 </Typography>
