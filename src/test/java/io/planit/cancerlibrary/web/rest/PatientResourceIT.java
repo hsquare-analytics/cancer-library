@@ -169,4 +169,19 @@ public class PatientResourceIT {
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
     }
+
+    @Test
+    @Transactional
+    void testGetPatientDTO() throws Exception {
+        // given
+        patientMapper.insert(patient);
+
+        // when, then
+        restPatientMockMvc.perform(get(ENTITY_API_URL + "/{ptNo}", patient.getPtNo()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.pactId").value(DEFAULT_PACT_ID))
+            .andExpect(jsonPath("$.ptNo").value(DEFAULT_PT_NO))
+            .andExpect(jsonPath("$.ptNm").value(DEFAULT_PT_NM)) ;
+    }
 }

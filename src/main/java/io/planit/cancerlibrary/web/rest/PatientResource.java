@@ -56,6 +56,16 @@ public class PatientResource {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/patients/{ptNo}")
+     public ResponseEntity<PatientDTO> getPatient(@PathVariable String ptNo) {
+        log.debug("REST request to get Patient : {}", ptNo);
+
+        Optional<PatientDTO> result = patientMapper.findByPatientNo(ptNo);
+        return result.map(patient-> ResponseEntity.ok().body(patient))
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+     }
+
     @PatchMapping(value = "/patients/{ptNo}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<Integer> partialUpdatePatient(
         @PathVariable(value = "ptNo") final String ptNo,
@@ -85,6 +95,5 @@ public class PatientResource {
 
         return result.map(updated -> ResponseEntity.ok().body(updated))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
     }
 }
