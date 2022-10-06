@@ -13,6 +13,8 @@ import {toast} from 'react-toastify';
 import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 import {IPatient} from "app/shared/model/patient.model";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -67,6 +69,11 @@ export const PatientTableEditor = () => {
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard patient={patient}/>
+          <Stack direction="row-reverse" spacing={2}>
+            <Button variant="contained" color="error">거부</Button>
+            <Button variant="contained" color="success">승인</Button>
+            <Button variant="contained" color="info">제출</Button>
+          </Stack>
           <MultiTableEditor patient={patient}/>
         </ScrollView>
       </Popup>
@@ -88,6 +95,7 @@ export const PatientTableEditor = () => {
         height={'95vh'}
         scrolling={{mode: 'virtual'}}
         selection={{mode: 'multiple'}}
+        hoverStateEnabled={true}
       >
 
         {
