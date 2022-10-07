@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CategoryControllerIT {
 
-    private static final String API_URL = "/api/categories/accessible-category-list";
+    private static final String API_URL = "/api/categories/usable-category-list";
 
     @Autowired
     private SubjectRepository subjectRepository;

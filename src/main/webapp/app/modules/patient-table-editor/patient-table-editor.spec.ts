@@ -5,9 +5,9 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
 import reducer, {
-  getAccessibleCategories,
-  getAccessibleItems,
   getAccessiblePatients,
+  getUsableCategories,
+  getUsableItems,
   reset
 } from './patient-table-editor.reducer';
 
@@ -51,7 +51,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getAccessiblePatients.pending.type, getAccessibleItems.pending.type, getAccessibleCategories.pending.type], {}, state => {
+      testMultipleTypes([getAccessiblePatients.pending.type, getUsableItems.pending.type, getUsableCategories.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -68,7 +68,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getAccessiblePatients.rejected.type, getAccessibleItems.rejected.type, getAccessibleCategories.rejected.type],
+      testMultipleTypes([getAccessiblePatients.rejected.type, getUsableItems.rejected.type, getUsableCategories.rejected.type],
         'some message',
         state => {
           expect(state).toMatchObject({
@@ -99,7 +99,7 @@ describe('User Patient selector module reducer tests', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
       expect(reducer(undefined, {
-        type: getAccessibleCategories.fulfilled.type,
+        type: getUsableCategories.fulfilled.type,
         payload,
       })).toEqual({
         ...initialState,
@@ -112,7 +112,7 @@ describe('User Patient selector module reducer tests', () => {
       const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
 
       expect(reducer(undefined, {
-        type: getAccessibleItems.fulfilled.type,
+        type: getUsableItems.fulfilled.type,
         payload,
       })).toEqual({
         ...initialState,
@@ -154,15 +154,15 @@ describe('User Patient selector module reducer tests', () => {
     it('dispatches FETCH_CATEGORY_LIST actions', async () => {
       const expectedActions = [
         {
-          type: getAccessibleCategories.pending.type
+          type: getUsableCategories.pending.type
         },
         {
-          type: getAccessibleCategories.fulfilled.type,
+          type: getUsableCategories.fulfilled.type,
           payload: resolvedObject
         }
       ];
 
-      await store.dispatch(getAccessibleCategories());
+      await store.dispatch(getUsableCategories());
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
@@ -171,15 +171,15 @@ describe('User Patient selector module reducer tests', () => {
     it('dispatches FETCH_ITEM_LIST_BY_CATEGORYID actions', async () => {
       const expectedActions = [
         {
-          type: getAccessibleItems.pending.type
+          type: getUsableItems.pending.type
         },
         {
-          type: getAccessibleItems.fulfilled.type,
+          type: getUsableItems.fulfilled.type,
           payload: resolvedObject
         }
       ];
 
-      await store.dispatch(getAccessibleItems(1));
+      await store.dispatch(getUsableItems(1));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);

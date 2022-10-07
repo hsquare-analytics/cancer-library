@@ -20,18 +20,18 @@ const initialState: userPatientSelectorType = {
   errorMessage: null,
 }
 
-export const getAccessiblePatients = createAsyncThunk('patient-table-editor/fetch_patient_list', async () => {
+export const getAccessiblePatients = createAsyncThunk('patient-table-editor/fetch_accesible_patient_list', async () => {
   const requestUrl = `api/patients/accessible-patient-list`;
   return axios.get<IPatient[]>(requestUrl);
 })
 
-export const getAccessibleItems = createAsyncThunk('patient-table-editor/fetch_item_list', async (categoryId: number) => {
+export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usable_item_list', async (categoryId: number) => {
   const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
   return axios.get<IItem[]>(requestUrl);
 });
 
-export const getAccessibleCategories = createAsyncThunk('patient-table-editor/fetch_accessible_categories', async () => {
-  const requestUrl = `api/categories/accessible-category-list`;
+export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_usable_category_list', async () => {
+  const requestUrl = `api/categories/usable-category-list`;
   return axios.get<IItem[]>(requestUrl);
 });
 
@@ -54,7 +54,7 @@ export const PatientTableEditor = createSlice({
         patients: data,
       }
     })
-    .addMatcher(isFulfilled(getAccessibleCategories), (state, action) => {
+    .addMatcher(isFulfilled(getUsableCategories), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
@@ -62,7 +62,7 @@ export const PatientTableEditor = createSlice({
         categories: data,
       }
     })
-    .addMatcher(isFulfilled(getAccessibleItems), (state, action) => {
+    .addMatcher(isFulfilled(getUsableItems), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
@@ -73,11 +73,11 @@ export const PatientTableEditor = createSlice({
         }
       }
     })
-    .addMatcher(isPending(getAccessiblePatients, getAccessibleItems, getAccessibleCategories), (state) => {
+    .addMatcher(isPending(getAccessiblePatients, getUsableItems, getUsableCategories), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getAccessiblePatients, getAccessibleItems, getAccessibleCategories), (state, action) => {
+    .addMatcher(isRejected(getAccessiblePatients, getUsableItems, getUsableCategories), (state, action) => {
       state.loading = false;
       state.errorMessage = action.error.message;
     });

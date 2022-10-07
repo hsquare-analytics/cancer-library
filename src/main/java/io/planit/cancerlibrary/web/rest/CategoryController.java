@@ -25,8 +25,8 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/categories/accessible-category-list")
-    public ResponseEntity<List<Category>> getAccessibleCategory() {
+    @GetMapping("/categories/usable-category-list")
+    public ResponseEntity<List<Category>> getUsableCategory() {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
