@@ -56,26 +56,35 @@ export const PatientTableEditor = createSlice({
       const {data} = action.payload;
       return {
         ...state,
-        loading: false,
         patients: data,
+        loadingContainer: {
+          ...state.loadingContainer,
+          patients: false
+        }
       }
     })
     .addMatcher(isFulfilled(getUsableCategories), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
-        loading: false,
         categories: data,
+        loadingContainer: {
+          ...state.loadingContainer,
+          categories: false
+        }
       }
     })
     .addMatcher(isFulfilled(getUsableItems), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
-        loading: false,
         itemContainer: {
           ...state.itemContainer,
           [data[0].group.category.id]: data
+        },
+        loadingContainer: {
+          ...state.loadingContainer,
+          items: false
         }
       }
     })

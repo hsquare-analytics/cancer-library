@@ -138,8 +138,11 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        loading: false,
         patients: payload.data,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          patients: false,
+        }
       });
     });
 
@@ -151,8 +154,11 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        loading: false,
         categories: payload.data,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          categories: false,
+        }
       });
     });
 
@@ -164,10 +170,13 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        loading: false,
         itemContainer: {
           fakeId: payload.data
         },
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          items: false,
+        }
       });
     });
   });
