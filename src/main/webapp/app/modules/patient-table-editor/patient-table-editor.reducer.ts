@@ -23,7 +23,7 @@ export const getPatients = createAsyncThunk('patient-table-editor/fetch_patient_
 })
 
 export const getItemListByCategoryId = createAsyncThunk('patient-table-editor/fetch_item_list', async (categoryId: number) => {
-  const requestUrl = `api/datasource-meta/categories/${categoryId}/item-list`;
+  const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
   return axios.get<IItem[]>(requestUrl);
 });
 

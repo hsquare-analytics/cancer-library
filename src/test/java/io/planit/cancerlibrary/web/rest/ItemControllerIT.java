@@ -12,17 +12,11 @@ import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class DatasourceMetaControllerIT {
+class ItemControllerIT {
 
     @Autowired
     private EntityManager em;
@@ -96,14 +90,14 @@ public class DatasourceMetaControllerIT {
 
     @Test
     @Transactional
-    public void testFetchColumnListByCategoryId() throws Exception {
+    void testFetchColumnListByCategoryId() throws Exception {
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().group(group).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
 
-        restDatasourceMockMvc.perform(get("/api/datasource-meta/categories/{categoryId}/item-list", category.getId()))
+        restDatasourceMockMvc.perform(get("/api/items/usable-item-list").param("categoryId", category.getId().toString()))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].title").value(contains(DEFAULT_COLUMN_NAME_ARRAY)));
     }
