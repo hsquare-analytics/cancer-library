@@ -8,14 +8,9 @@ import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
-import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class NavigationControllerIT {
+class CategoryControllerIT {
 
-    private static final String API_URL = "/api/navigations";
+    private static final String API_URL = "/api/categories/accessible-category-list";
 
     @Autowired
     private SubjectRepository subjectRepository;

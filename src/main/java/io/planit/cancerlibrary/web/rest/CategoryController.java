@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @Transactional
-public class NavigationController {
+public class CategoryController {
 
-    private final Logger log = LoggerFactory.getLogger(NavigationController.class);
+    private final Logger log = LoggerFactory.getLogger(CategoryController.class);
 
     private final CategoryRepository categoryRepository;
 
-    public NavigationController(CategoryRepository categoryRepository) {
+    public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/navigations")
+    @GetMapping("/categories/accessible-category-list")
     public ResponseEntity<List<Category>> getAccessibleCategory() {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
