@@ -8,8 +8,9 @@ type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
   dataSourceContainer: { [key: string]: any[] },
   dataSourceLoadedCount: number,
+  itemListLoadedCount: number,
   loadingContainer: {
-    patients: boolean, categories: boolean, items: boolean
+    patients: boolean, categories: boolean
   },
   patients: IPatient[];
   categories: ICategory[];
@@ -20,10 +21,10 @@ const initialState: userPatientSelectorType = {
   itemContainer: {} as any,
   dataSourceContainer: {} as any,
   dataSourceLoadedCount: 0,
+  itemListLoadedCount: 0,
   loadingContainer: {
     patients: false,
     categories: false,
-    items: false,
   },
   patients: [],
   categories: [],
@@ -63,6 +64,12 @@ export const PatientTableEditor = createSlice({
         ...state,
         dataSourceLoadedCount: 0,
       }
+    },
+    resetItemListLoadedCount(state) {
+      return  {
+        ...state,
+        itemListLoadedCount: 0,
+      }
     }
   },
   extraReducers(builder) {
@@ -97,10 +104,7 @@ export const PatientTableEditor = createSlice({
           ...state.itemContainer,
           [data[0].group.category.id]: data
         },
-        loadingContainer: {
-          ...state.loadingContainer,
-          items: false
-        }
+        itemListLoadedCount: state.itemListLoadedCount + 1
       }
     })
     .addMatcher(isFulfilled(getDataSources), (state, action) => {
@@ -122,10 +126,6 @@ export const PatientTableEditor = createSlice({
       state.loadingContainer.categories = true;
       state.errorMessage = null;
     })
-    .addMatcher(isPending(getUsableItems), (state) => {
-      state.loadingContainer.items = true;
-      state.errorMessage = null;
-    })
     .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
       state.errorMessage = action.error.message;
       state.loadingContainer.patients = false;
@@ -133,15 +133,10 @@ export const PatientTableEditor = createSlice({
     .addMatcher(isRejected(getUsableCategories), (state, action) => {
       state.errorMessage = action.error.message;
       state.loadingContainer.categories = false;
-    })
-    .addMatcher(isRejected(getUsableItems), (state, action) => {
-      state.errorMessage = action.error.message;
-      state.loadingContainer.items = false;
-    })
-    ;
+    });
   }
 });
 
-export const {reset, resetDataSourceLoadedCount} = PatientTableEditor.actions;
+export const {reset, resetDataSourceLoadedCount, resetItemListLoadedCount} = PatientTableEditor.actions;
 
 export default PatientTableEditor.reducer;

@@ -10,7 +10,8 @@ import reducer, {
   getUsableCategories,
   getUsableItems,
   reset,
-  resetDataSourceLoadedCount
+  resetDataSourceLoadedCount,
+  resetItemListLoadedCount
 } from './patient-table-editor.reducer';
 
 describe('User Patient selector module reducer tests', () => {
@@ -26,10 +27,10 @@ describe('User Patient selector module reducer tests', () => {
     itemContainer: {} as any,
     dataSourceContainer: {} as any,
     dataSourceLoadedCount: 0,
+    itemListLoadedCount: 0,
     loadingContainer: {
       patients: false,
       categories: false,
-      items: false,
     },
     patients: [],
     categories: [],
@@ -41,20 +42,14 @@ describe('User Patient selector module reducer tests', () => {
       loadingContainer: {
         patients: false,
         categories: false,
-        items: false,
       },
       errorMessage: null,
     });
     expect(isEmpty(state.itemContainer));
+    expect(isNaN(state.itemListLoadedCount));
     expect(isEmpty(state.dataSourceContainer));
     expect(isNaN(state.dataSourceLoadedCount));
     expect(isEmpty(state.patients));
-  }
-
-  function testMultipleTypes(types, payload, testFunction, error?) {
-    types.forEach(e => {
-      testFunction(reducer(undefined, {type: e, payload, error}))
-    });
   }
 
   describe('Common', () => {
@@ -80,15 +75,6 @@ describe('User Patient selector module reducer tests', () => {
           categories: true,
         }
       });
-
-      expect(reducer(undefined, {type: getUsableItems.pending.type})).toMatchObject({
-        errorMessage: null,
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          items: true,
-        }
-      });
-
     });
 
     it('should reset the state', () => {
@@ -96,16 +82,24 @@ describe('User Patient selector module reducer tests', () => {
         ...initialState, loadingContainer: {
           patients: true,
           categories: true,
-          items: true,
         }
       }, reset())).toEqual({
         ...initialState
       });
     });
-    it('should reset loaded count', () => {
+
+    it('should reset datasource loaded count', () => {
       expect(reducer({
-        ...initialState, dataSourceLoadedCount: 1
+        ...initialState, dataSourceLoadedCount: 0
       }, resetDataSourceLoadedCount())).toEqual({
+        ...initialState
+      });
+    });
+
+    it('should reset datasource loaded count', () => {
+      expect(reducer({
+        ...initialState, itemListLoadedCount: 0
+      }, resetItemListLoadedCount())).toEqual({
         ...initialState
       });
     });
@@ -130,14 +124,6 @@ describe('User Patient selector module reducer tests', () => {
         loadingContainer: {
           ...initialState.loadingContainer,
           categories: false,
-        }
-      });
-
-      expect(reducer(undefined, {type: getUsableItems.rejected.type, payload, error})).toMatchObject({
-        errorMessage: 'error message',
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          items: false,
         }
       });
 
@@ -188,10 +174,7 @@ describe('User Patient selector module reducer tests', () => {
         itemContainer: {
           fakeId: payload.data
         },
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          items: false,
-        }
+        itemListLoadedCount: 1,
       });
     });
 
