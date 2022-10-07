@@ -16,6 +16,7 @@ import {IPatient} from "app/shared/model/patient.model";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {hasAnyAuthority} from "app/shared/auth/private-route";
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
@@ -25,6 +26,8 @@ export const PatientTableEditor = () => {
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
 
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
+
+  const loading = useAppSelector(state => state.patientTableEditor.loadingContainer.patients);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
@@ -74,7 +77,7 @@ export const PatientTableEditor = () => {
     .catch(err => toast.error(err));
   }
 
-  return (
+  return !loading ? (
     <div>
       <Popup
         showTitle={false}
@@ -149,7 +152,7 @@ export const PatientTableEditor = () => {
         </Column>
       </DataGrid>
     </div>
-  );
+  ) : <CircularProgress/>;
 };
 
 export default PatientTableEditor;
