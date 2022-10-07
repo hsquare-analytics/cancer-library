@@ -22,15 +22,23 @@ describe('User Patient selector module reducer tests', () => {
 
   const initialState = {
     itemContainer: {} as any,
+    loadingContainer: {
+      patients: false,
+      categories: false,
+      items: false
+    },
     patients: [],
     categories: [],
-    loading: false,
     errorMessage: null,
   }
 
   function testInitialState(state) {
     expect(state).toMatchObject({
-      loading: false,
+      loadingContainer: {
+        patients: false,
+        categories: false,
+        items: false
+      },
       errorMessage: null,
     });
     expect(isEmpty(state.itemContainer));
@@ -51,16 +59,39 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getAccessiblePatients.pending.type, getUsableItems.pending.type, getUsableCategories.pending.type], {}, state => {
-        expect(state).toMatchObject({
-          errorMessage: null,
-          loading: true,
-        });
+      expect(reducer(undefined, {type: getAccessiblePatients.pending.type})).toMatchObject({
+        errorMessage: null,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          patients: true,
+        }
+      });
+
+      expect(reducer(undefined, {type: getUsableCategories.pending.type})).toMatchObject({
+        errorMessage: null,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          categories: true,
+        }
+      });
+
+      expect(reducer(undefined, {type: getUsableItems.pending.type})).toMatchObject({
+        errorMessage: null,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          items: true,
+        }
       });
     });
 
     it('should reset the state', () => {
-      expect(reducer({...initialState, loading: true}, reset())).toEqual({
+      expect(reducer({
+        ...initialState, loadingContainer: {
+          patients: true,
+          categories: true,
+          items: true
+        }
+      }, reset())).toEqual({
         ...initialState
       });
     });
@@ -68,21 +99,38 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getAccessiblePatients.rejected.type, getUsableItems.rejected.type, getUsableCategories.rejected.type],
-        'some message',
-        state => {
-          expect(state).toMatchObject({
-            errorMessage: 'error message',
-            loading: false,
-          })
-        },
-        {message: 'error message'}
-      )
+
+      const payload = 'some message';
+      const error = {message: 'error message'};
+
+      expect(reducer(undefined, {type: getAccessiblePatients.rejected.type, payload, error})).toMatchObject({
+        errorMessage: 'error message',
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          patients: false,
+        }
+      });
+
+      expect(reducer(undefined, {type: getUsableCategories.rejected.type, payload, error})).toMatchObject({
+        errorMessage: 'error message',
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          categories: false,
+        }
+      });
+
+      expect(reducer(undefined, {type: getUsableItems.rejected.type, payload, error})).toMatchObject({
+        errorMessage: 'error message',
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          items: false,
+        }
+      });
     });
   });
 
   describe('Successes', () => {
-    it('should fetch all patients', () => {
+    it('should fetch accessible patients', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
       expect(reducer(undefined, {
@@ -95,7 +143,7 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
-    it('should fetch accessible categories', () => {
+    it('should fetch usable categories', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
       expect(reducer(undefined, {
@@ -108,7 +156,7 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
-    it('should fetch all item list and save as key map', () => {
+    it('should fetch usable items', () => {
       const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
 
       expect(reducer(undefined, {

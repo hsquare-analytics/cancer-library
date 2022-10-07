@@ -6,17 +6,23 @@ import {ICategory} from "app/shared/model/category.model";
 
 type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
+  loadingContainer: {
+    patients: boolean, categories: boolean, items: boolean
+  },
   patients: IPatient[];
   categories: ICategory[];
-  loading: boolean,
   errorMessage: string | null;
 };
 
 const initialState: userPatientSelectorType = {
   itemContainer: {} as any,
+  loadingContainer: {
+    patients: false,
+    categories: false,
+    items: false
+  },
   patients: [],
   categories: [],
-  loading: false,
   errorMessage: null,
 }
 
@@ -73,14 +79,31 @@ export const PatientTableEditor = createSlice({
         }
       }
     })
-    .addMatcher(isPending(getAccessiblePatients, getUsableItems, getUsableCategories), (state) => {
-      state.loading = true;
+    .addMatcher(isPending(getAccessiblePatients), (state) => {
+      state.loadingContainer.patients = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getAccessiblePatients, getUsableItems, getUsableCategories), (state, action) => {
-      state.loading = false;
+    .addMatcher(isPending(getUsableCategories), (state) => {
+      state.loadingContainer.categories = true;
+      state.errorMessage = null;
+    })
+    .addMatcher(isPending(getUsableItems), (state) => {
+      state.loadingContainer.items = true;
+      state.errorMessage = null;
+    })
+    .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
       state.errorMessage = action.error.message;
-    });
+      state.loadingContainer.patients = false;
+    })
+    .addMatcher(isRejected(getUsableCategories), (state, action) => {
+      state.errorMessage = action.error.message;
+      state.loadingContainer.categories = false;
+    })
+    .addMatcher(isRejected(getUsableItems), (state, action) => {
+      state.errorMessage = action.error.message;
+      state.loadingContainer.items = false;
+    })
+    ;
   }
 });
 
