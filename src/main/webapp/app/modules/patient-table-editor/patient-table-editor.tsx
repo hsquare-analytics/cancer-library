@@ -22,7 +22,7 @@ export const PatientTableEditor = () => {
   const [patient, setPatient] = useState<IPatient>(null);
 
   const dispatch = useAppDispatch();
-  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
+  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
 
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
 
