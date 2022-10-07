@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
@@ -11,12 +11,9 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
-import {IPatient} from "app/shared/model/patient.model";
-import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getUsableItems} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {useAppSelector} from "app/config/store";
 
 export interface ISingleTableEditor {
-  patient: IPatient;
   category: ICategory;
 }
 
@@ -25,26 +22,12 @@ export const getCategoryTypography = (category: ICategory) => {
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
-  const dispatch = useAppDispatch();
+  const dataSourceContainer = useAppSelector(state => state.patientTableEditor.dataSourceContainer);
   const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
 
-  const {patient, category} = props;
-
-  const [datasource, setDatasource] = useState([]);
+  const {category} = props;
 
   const login = useAppSelector(state => state.authentication.account.login);
-
-  useEffect(() => {
-    if (patient && category) {
-      axios.get<any[]>(`/api/datasource-editor/categories/${category.id}?patientNo=${patient.ptNo}`).then(({data}) => {
-        setDatasource(data);
-      });
-
-      if (!itemContainer[category.id]) {
-        dispatch(getUsableItems(category.id));
-      }
-    }
-  }, [JSON.stringify(patient), JSON.stringify(category)]);
 
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {
@@ -68,7 +51,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   };
 
-  const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && itemContainer[category.id].length > 0;
+  const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
     <Accordion defaultExpanded={true}>
@@ -82,7 +65,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       <AccordionDetails sx={{padding: "8px 0"}}>
         <Typography>
           <DataGrid
-            dataSource={JSON.parse(JSON.stringify(datasource))}
+            dataSource={JSON.parse(JSON.stringify(dataSourceContainer[category.id]))}
             showBorders={true}
             filterRow={{visible: true}}
             headerFilter={{visible: true}}

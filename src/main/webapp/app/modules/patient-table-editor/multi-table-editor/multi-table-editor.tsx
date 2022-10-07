@@ -1,31 +1,25 @@
-import React, {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "app/config/store";
+import React from "react";
+import {useAppSelector} from "app/config/store";
 import SingleTableEditor from "app/modules/patient-table-editor/multi-table-editor/single-table-editor";
-import {IPatient} from "app/shared/model/patient.model";
-import {getUsableCategories} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import CircularProgress from '@mui/material/CircularProgress';
 
-export interface IMultiTableEditorProps {
-  patient: IPatient;
-}
+import Box from '@mui/material/Box';
 
-export const MultiTableEditor = (props: IMultiTableEditorProps) => {
-  const dispatch = useAppDispatch();
-
-  const {patient} = props;
-
+export const MultiTableEditor = () => {
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
-  useEffect(() => {
-    if (categories.length === 0) {
-      dispatch(getUsableCategories());
-    }
-  }, []);
+  const itemListLoadedCount = useAppSelector(state => state.patientTableEditor.itemListLoadedCount);
+  const dataSourceLoadedCount = useAppSelector(state => state.patientTableEditor.dataSourceLoadedCount);
 
-  return (
+  const loading = !categories || categories.length === 0 || itemListLoadedCount !== categories.length || dataSourceLoadedCount !== categories.length;
+
+  return !loading ? (
     <div>
-      {categories.map(category => <SingleTableEditor key={category.title} category={category} patient={patient}/>)}
+      {categories.map(category => <SingleTableEditor key={category.id} category={category}/>)}
     </div>
-  );
+  ) : <Box >
+    <CircularProgress/>
+  </Box>;
 }
 
 export default MultiTableEditor;

@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getAccessiblePatients,} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {
+  getAccessiblePatients,
+  getDataSources,
+  getUsableCategories,
+  getUsableItems,
+  resetDataSourceLoadedCount,
+  resetItemListLoadedCount,
+} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -24,14 +31,44 @@ export const PatientTableEditor = () => {
 
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
-
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
-
   const loading = useAppSelector(state => state.patientTableEditor.loadingContainer.patients);
+  const categories = useAppSelector(state => state.patientTableEditor.categories);
+  const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
+
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
   }, []);
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(getUsableCategories());
+    }
+  }, []);
+
+  useEffect(() => {
+    for (const category of categories) {
+      if (!itemContainer[category.id]) {
+        dispatch(getUsableItems(category.id));
+      }
+    }
+    return () => {
+      dispatch(resetItemListLoadedCount());
+    }
+  }, [JSON.stringify(categories)]);
+
+  useEffect(() => {
+    if (patient) {
+      for (const category of categories) {
+        dispatch(getDataSources({categoryId: category.id, patientNo: patient.ptNo}));
+      }
+    }
+
+    return () => {
+      dispatch(resetDataSourceLoadedCount());
+    }
+  }, [JSON.stringify(patient)]);
 
   const onRowDblClick = (e) => {
     getPatientInfo(e.data.ptNo);
@@ -101,7 +138,9 @@ export const PatientTableEditor = () => {
             ) : <Button variant="contained" color="info"
                         onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
           </Stack>
-          <MultiTableEditor patient={patient}/>
+          <div>
+            <MultiTableEditor/>
+          </div>
         </ScrollView>
       </Popup>
       <DataGrid
