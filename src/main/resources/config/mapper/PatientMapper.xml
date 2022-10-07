@@ -18,9 +18,9 @@
     </select>
 
     <insert id="insert" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
-        INSERT INTO TEST_PATIENT (PACT_ID, PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY,
+        INSERT INTO TEST_PATIENT (PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY,
                                   CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
-        VALUES (#{pactId}, #{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
+        VALUES (#{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
                 #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate});
     </insert>
 

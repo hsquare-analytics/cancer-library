@@ -12,6 +12,7 @@ import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class DatasourcePatientControllerIT {
+class PatientControllerIT {
 
     @Autowired
     private EntityManager em;
@@ -57,10 +58,9 @@ class DatasourcePatientControllerIT {
         UserPatient userPatient = new UserPatient().user(user).patientNo(patientDTO.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
-        restDatasourcePatientMockMvc.perform(get("/api/datasource-patient/accessible-patient-list"))
+        restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].pactId").value(hasItem(patientDTO.getPactId())))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(patientDTO.getSexTpCd())))
@@ -68,4 +68,24 @@ class DatasourcePatientControllerIT {
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(patientDTO.getHspTpCd())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(patientDTO.getStatus())));
     }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "reviewer", authorities = AuthoritiesConstants.REVIEWER)
+    void testFetchAccessiblePatientListWithReviewer() throws Exception {
+        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
+        patientMapper.insert(patientDTO);
+
+
+        restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
+            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
+            .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(patientDTO.getSexTpCd())))
+            .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(patientDTO.getPtBrdyDt())))
+            .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(patientDTO.getHspTpCd())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(patientDTO.getStatus())));
+    }
+
 }

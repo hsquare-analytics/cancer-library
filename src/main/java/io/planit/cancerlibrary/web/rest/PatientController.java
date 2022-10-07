@@ -19,21 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 @Transactional
-public class DatasourcePatientController {
+public class PatientController {
 
-    private final Logger log = LoggerFactory.getLogger(DatasourcePatientController.class);
+    private final Logger log = LoggerFactory.getLogger(PatientController.class);
 
     private final UserPatientRepository userPatientRepository;
 
     private final PatientMapper patientMapper;
 
-    public DatasourcePatientController(UserPatientRepository userPatientRepository,
+    public PatientController(UserPatientRepository userPatientRepository,
         PatientMapper patientMapper) {
         this.userPatientRepository = userPatientRepository;
         this.patientMapper = patientMapper;
     }
 
-    @GetMapping("/datasource-patient/accessible-patient-list")
+    @GetMapping("/patients/accessible-patient-list")
     public ResponseEntity<List<PatientDTO>> getAccessiblePatientList() {
         log.debug("REST request to get accessible patient list");
 

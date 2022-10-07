@@ -18,7 +18,7 @@ const initialState: userPatientSelectorType = {
 }
 
 export const getPatients = createAsyncThunk('patient-table-editor/fetch_patient_list', async () => {
-  const requestUrl = `api/datasource-patient/accessible-patient-list`;
+  const requestUrl = `api/patients/accessible-patient-list`;
   return axios.get<IPatient[]>(requestUrl);
 })
 
