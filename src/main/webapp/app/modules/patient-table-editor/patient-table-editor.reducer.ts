@@ -6,8 +6,9 @@ import {ICategory} from "app/shared/model/category.model";
 
 type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
+  dataSourceContainer: { [key: string]: any[] },
   loadingContainer: {
-    patients: boolean, categories: boolean, items: boolean
+    patients: boolean, categories: boolean, items: boolean, dataSources: boolean
   },
   patients: IPatient[];
   categories: ICategory[];
@@ -16,10 +17,12 @@ type userPatientSelectorType = {
 
 const initialState: userPatientSelectorType = {
   itemContainer: {} as any,
+  dataSourceContainer: {} as any,
   loadingContainer: {
     patients: false,
     categories: false,
-    items: false
+    items: false,
+    dataSources: false
   },
   patients: [],
   categories: [],
@@ -39,6 +42,11 @@ export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usabl
 export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_usable_category_list', async () => {
   const requestUrl = `api/categories/usable-category-list`;
   return axios.get<IItem[]>(requestUrl);
+});
+
+export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
+  const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
+  return axios.get<any>(requestUrl);
 });
 
 const name = 'patient-table-editor'
@@ -88,6 +96,20 @@ export const PatientTableEditor = createSlice({
         }
       }
     })
+    .addMatcher(isFulfilled(getDataSources), (state, action) => {
+      const {data} = action.payload;
+      return {
+        ...state,
+        dataSourceContainer: {
+          ...state.dataSourceContainer,
+          [data.categoryId]: data.dataSource
+        },
+        loadingContainer: {
+          ...state.loadingContainer,
+          dataSources: false
+        }
+      }
+    })
     .addMatcher(isPending(getAccessiblePatients), (state) => {
       state.loadingContainer.patients = true;
       state.errorMessage = null;
@@ -98,6 +120,10 @@ export const PatientTableEditor = createSlice({
     })
     .addMatcher(isPending(getUsableItems), (state) => {
       state.loadingContainer.items = true;
+      state.errorMessage = null;
+    })
+    .addMatcher(isPending(getDataSources), (state) => {
+      state.loadingContainer.dataSources = true;
       state.errorMessage = null;
     })
     .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
@@ -111,6 +137,10 @@ export const PatientTableEditor = createSlice({
     .addMatcher(isRejected(getUsableItems), (state, action) => {
       state.errorMessage = action.error.message;
       state.loadingContainer.items = false;
+    })
+    .addMatcher(isRejected(getDataSources), (state, action) => {
+      state.errorMessage = action.error.message;
+      state.loadingContainer.dataSources = false;
     })
     ;
   }

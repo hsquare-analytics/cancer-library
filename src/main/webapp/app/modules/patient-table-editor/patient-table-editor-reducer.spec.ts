@@ -6,6 +6,7 @@ import sinon from 'sinon';
 
 import reducer, {
   getAccessiblePatients,
+  getDataSources,
   getUsableCategories,
   getUsableItems,
   reset
@@ -22,10 +23,12 @@ describe('User Patient selector module reducer tests', () => {
 
   const initialState = {
     itemContainer: {} as any,
+    dataSourceContainer: {} as any,
     loadingContainer: {
       patients: false,
       categories: false,
-      items: false
+      items: false,
+      dataSources: false
     },
     patients: [],
     categories: [],
@@ -37,11 +40,13 @@ describe('User Patient selector module reducer tests', () => {
       loadingContainer: {
         patients: false,
         categories: false,
-        items: false
+        items: false,
+        dataSources: false
       },
       errorMessage: null,
     });
     expect(isEmpty(state.itemContainer));
+    expect(isEmpty(state.dataSourceContainer));
     expect(isEmpty(state.patients));
   }
 
@@ -82,6 +87,14 @@ describe('User Patient selector module reducer tests', () => {
           items: true,
         }
       });
+
+      expect(reducer(undefined, {type: getDataSources.pending.type})).toMatchObject({
+        errorMessage: null,
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          dataSources: true,
+        }
+      });
     });
 
     it('should reset the state', () => {
@@ -89,7 +102,8 @@ describe('User Patient selector module reducer tests', () => {
         ...initialState, loadingContainer: {
           patients: true,
           categories: true,
-          items: true
+          items: true,
+          dataSources: true
         }
       }, reset())).toEqual({
         ...initialState
@@ -124,6 +138,14 @@ describe('User Patient selector module reducer tests', () => {
         loadingContainer: {
           ...initialState.loadingContainer,
           items: false,
+        }
+      });
+
+      expect(reducer(undefined, {type: getDataSources.rejected.type, payload, error})).toMatchObject({
+        errorMessage: 'error message',
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          dataSources: false,
         }
       });
     });
@@ -176,6 +198,25 @@ describe('User Patient selector module reducer tests', () => {
         loadingContainer: {
           ...initialState.loadingContainer,
           items: false,
+        }
+      });
+    });
+
+    it('should fetch dataSources', () => {
+      const payload = {data: {categoryId: 'fakeId', dataSource: [{1: 'fake1', 2: 'fake2'}]}};
+
+      expect(reducer(undefined, {
+        type: getDataSources.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        dataSourceContainer: {
+          ...initialState.dataSourceContainer,
+          fakeId: payload.data.dataSource
+        },
+        loadingContainer: {
+          ...initialState.loadingContainer,
+          dataSources: false,
         }
       });
     });
