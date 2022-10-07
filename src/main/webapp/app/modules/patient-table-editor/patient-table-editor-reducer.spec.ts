@@ -9,7 +9,8 @@ import reducer, {
   getDataSources,
   getUsableCategories,
   getUsableItems,
-  reset
+  reset,
+  resetDataSourceLoadedCount
 } from './patient-table-editor.reducer';
 
 describe('User Patient selector module reducer tests', () => {
@@ -98,6 +99,13 @@ describe('User Patient selector module reducer tests', () => {
           items: true,
         }
       }, reset())).toEqual({
+        ...initialState
+      });
+    });
+    it('should reset loaded count', () => {
+      expect(reducer({
+        ...initialState, dataSourceLoadedCount: 1
+      }, resetDataSourceLoadedCount())).toEqual({
         ...initialState
       });
     });

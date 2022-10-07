@@ -57,6 +57,12 @@ export const PatientTableEditor = createSlice({
   reducers: {
     reset() {
       return initialState
+    },
+    resetDataSourceLoadedCount(state) {
+      return  {
+        ...state,
+        dataSourceLoadedCount: 0,
+      }
     }
   },
   extraReducers(builder) {
@@ -136,6 +142,6 @@ export const PatientTableEditor = createSlice({
   }
 });
 
-export const {reset} = PatientTableEditor.actions;
+export const {reset, resetDataSourceLoadedCount} = PatientTableEditor.actions;
 
 export default PatientTableEditor.reducer;
