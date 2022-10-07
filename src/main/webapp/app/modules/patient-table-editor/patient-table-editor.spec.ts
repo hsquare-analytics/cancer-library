@@ -21,7 +21,7 @@ describe('User Patient selector module reducer tests', () => {
   }
 
   const initialState = {
-    itemListMap: {} as any,
+    itemContainer: {} as any,
     patients: [],
     categories: [],
     loading: false,
@@ -33,7 +33,7 @@ describe('User Patient selector module reducer tests', () => {
       loading: false,
       errorMessage: null,
     });
-    expect(isEmpty(state.itemListMap));
+    expect(isEmpty(state.itemContainer));
     expect(isEmpty(state.patients));
   }
 
@@ -117,7 +117,7 @@ describe('User Patient selector module reducer tests', () => {
       })).toEqual({
         ...initialState,
         loading: false,
-        itemListMap: {
+        itemContainer: {
           fakeId: payload.data
         },
       });

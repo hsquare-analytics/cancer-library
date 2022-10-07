@@ -5,7 +5,7 @@ import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
 
 type userPatientSelectorType = {
-  itemListMap: { [key: string]: IItem[] },
+  itemContainer: { [key: string]: IItem[] },
   patients: IPatient[];
   categories: ICategory[];
   loading: boolean,
@@ -13,7 +13,7 @@ type userPatientSelectorType = {
 };
 
 const initialState: userPatientSelectorType = {
-  itemListMap: {} as any,
+  itemContainer: {} as any,
   patients: [],
   categories: [],
   loading: false,
@@ -67,8 +67,8 @@ export const PatientTableEditor = createSlice({
       return {
         ...state,
         loading: false,
-        itemListMap: {
-          ...state.itemListMap,
+        itemContainer: {
+          ...state.itemContainer,
           [data[0].group.category.id]: data
         }
       }

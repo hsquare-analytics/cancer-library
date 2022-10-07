@@ -26,7 +26,7 @@ export const getCategoryTypography = (category: ICategory) => {
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dispatch = useAppDispatch();
-  const itemListMap = useAppSelector(state => state.patientTableEditor.itemListMap);
+  const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
 
   const {patient, category} = props;
 
@@ -40,7 +40,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         setDatasource(data);
       });
 
-      if (!itemListMap[category.id]) {
+      if (!itemContainer[category.id]) {
         dispatch(getUsableItems(category.id));
       }
     }
@@ -68,7 +68,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   };
 
-  const canRender: () => boolean = () => category && itemListMap && itemListMap[category.id] && itemListMap[category.id].length > 0;
+  const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && itemContainer[category.id].length > 0;
 
   return canRender() ? (
     <Accordion defaultExpanded={true}>
@@ -96,7 +96,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           >
             {
-              itemListMap[category.id].map(item => <Column
+              itemContainer[category.id].map(item => <Column
                   key={item}
                   dataField={item.title.toLowerCase()}
                   caption={item.itemProperty?.caption}
