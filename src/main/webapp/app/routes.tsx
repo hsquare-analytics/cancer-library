@@ -15,7 +15,6 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
-import DataEditor from "app/modules/data-editor/data-editor";
 import PatientTableEditor from "app/modules/patient-table-editor/patient-table-editor";
 
 const loading = <div>loading ...</div>;
@@ -66,14 +65,6 @@ const AppRoutes = () => {
             </PrivateRoute>
           }
         />
-        <Route
-          path="data-editor/:categoryId"
-          element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]}>
-              <DataEditor/>
-            </PrivateRoute>
-          }
-        ></Route>
         <Route
           path="patient-table-editor"
           element={

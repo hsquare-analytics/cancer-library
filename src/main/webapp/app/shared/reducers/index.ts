@@ -14,7 +14,6 @@ import settings from 'app/modules/account/settings/settings.reducer';
 import passwordReset from 'app/modules/account/password-reset/password-reset.reducer';
 import entitiesReducers from 'app/entities/entities-reducers';
 import navigation from "app/modules/navigation/navigation.reducer";
-import dataEditorReducer from "app/modules/data-editor/data-editor.reducer";
 import patientTableEditor from "app/modules/patient-table-editor/patient-table-editor.reducer";
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
@@ -33,7 +32,6 @@ const rootReducer: ReducersMapObject = {
   navigation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   ...entitiesReducers,
-  dataEditorReducer,
   patientTableEditor
 };
 

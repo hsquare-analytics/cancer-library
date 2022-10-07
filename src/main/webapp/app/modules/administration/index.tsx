@@ -9,7 +9,6 @@ import Metrics from './metrics/metrics';
 import Configuration from './configuration/configuration';
 import Docs from './docs/docs';
 import Tracker from './tracker/tracker';
-import DataReview from "app/modules/data-editor/data-review";
 
 const AdministrationRoutes = () => (
   <div>
@@ -21,7 +20,6 @@ const AdministrationRoutes = () => (
       <Route path="configuration" element={<Configuration />} />
       <Route path="logs" element={<Logs />} />
       <Route path="docs" element={<Docs />} />
-      <Route path="data-review/:categoryId" element={<DataReview />} />
     </ErrorBoundaryRoutes>
   </div>
 );
