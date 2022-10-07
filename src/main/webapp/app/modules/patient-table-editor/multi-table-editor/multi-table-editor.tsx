@@ -17,7 +17,7 @@ export const MultiTableEditor = () => {
     <div>
       {categories.map(category => <SingleTableEditor key={category.id} category={category}/>)}
     </div>
-  ) : <Box >
+  ) : <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
     <CircularProgress/>
   </Box>;
 }
