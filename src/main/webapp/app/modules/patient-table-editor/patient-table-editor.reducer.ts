@@ -7,8 +7,9 @@ import {ICategory} from "app/shared/model/category.model";
 type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
   dataSourceContainer: { [key: string]: any[] },
+  dataSourceLoadedCount: number,
   loadingContainer: {
-    patients: boolean, categories: boolean, items: boolean, dataSources: boolean
+    patients: boolean, categories: boolean, items: boolean
   },
   patients: IPatient[];
   categories: ICategory[];
@@ -18,11 +19,11 @@ type userPatientSelectorType = {
 const initialState: userPatientSelectorType = {
   itemContainer: {} as any,
   dataSourceContainer: {} as any,
+  dataSourceLoadedCount: 0,
   loadingContainer: {
     patients: false,
     categories: false,
     items: false,
-    dataSources: false
   },
   patients: [],
   categories: [],
@@ -104,10 +105,7 @@ export const PatientTableEditor = createSlice({
           ...state.dataSourceContainer,
           [data.categoryId]: data.dataSource
         },
-        loadingContainer: {
-          ...state.loadingContainer,
-          dataSources: false
-        }
+        dataSourceLoadedCount: state.dataSourceLoadedCount + 1,
       }
     })
     .addMatcher(isPending(getAccessiblePatients), (state) => {
@@ -122,10 +120,6 @@ export const PatientTableEditor = createSlice({
       state.loadingContainer.items = true;
       state.errorMessage = null;
     })
-    .addMatcher(isPending(getDataSources), (state) => {
-      state.loadingContainer.dataSources = true;
-      state.errorMessage = null;
-    })
     .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
       state.errorMessage = action.error.message;
       state.loadingContainer.patients = false;
@@ -137,10 +131,6 @@ export const PatientTableEditor = createSlice({
     .addMatcher(isRejected(getUsableItems), (state, action) => {
       state.errorMessage = action.error.message;
       state.loadingContainer.items = false;
-    })
-    .addMatcher(isRejected(getDataSources), (state, action) => {
-      state.errorMessage = action.error.message;
-      state.loadingContainer.dataSources = false;
     })
     ;
   }

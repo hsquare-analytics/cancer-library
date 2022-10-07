@@ -24,11 +24,11 @@ describe('User Patient selector module reducer tests', () => {
   const initialState = {
     itemContainer: {} as any,
     dataSourceContainer: {} as any,
+    dataSourceLoadedCount: 0,
     loadingContainer: {
       patients: false,
       categories: false,
       items: false,
-      dataSources: false
     },
     patients: [],
     categories: [],
@@ -41,12 +41,12 @@ describe('User Patient selector module reducer tests', () => {
         patients: false,
         categories: false,
         items: false,
-        dataSources: false
       },
       errorMessage: null,
     });
     expect(isEmpty(state.itemContainer));
     expect(isEmpty(state.dataSourceContainer));
+    expect(isNaN(state.dataSourceLoadedCount));
     expect(isEmpty(state.patients));
   }
 
@@ -88,13 +88,6 @@ describe('User Patient selector module reducer tests', () => {
         }
       });
 
-      expect(reducer(undefined, {type: getDataSources.pending.type})).toMatchObject({
-        errorMessage: null,
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          dataSources: true,
-        }
-      });
     });
 
     it('should reset the state', () => {
@@ -103,7 +96,6 @@ describe('User Patient selector module reducer tests', () => {
           patients: true,
           categories: true,
           items: true,
-          dataSources: true
         }
       }, reset())).toEqual({
         ...initialState
@@ -141,13 +133,6 @@ describe('User Patient selector module reducer tests', () => {
         }
       });
 
-      expect(reducer(undefined, {type: getDataSources.rejected.type, payload, error})).toMatchObject({
-        errorMessage: 'error message',
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          dataSources: false,
-        }
-      });
     });
   });
 
@@ -214,10 +199,7 @@ describe('User Patient selector module reducer tests', () => {
           ...initialState.dataSourceContainer,
           fakeId: payload.data.dataSource
         },
-        loadingContainer: {
-          ...initialState.loadingContainer,
-          dataSources: false,
-        }
+        dataSourceLoadedCount: 1,
       });
     });
   });
