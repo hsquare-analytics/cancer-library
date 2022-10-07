@@ -4,6 +4,7 @@ import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
 import io.planit.cancerlibrary.service.UnionSqlBuilderService;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -40,13 +41,16 @@ public class DatasourceEditorController {
     }
 
     @GetMapping("/datasource-editor/categories/{categoryId}")
-    public ResponseEntity<List<Map>> getDatasourceByCategoryId(
+    public ResponseEntity<Map<String, Object>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId, String patientNo) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
         SQL sql = unionSqlBuilderService.getUnionSelectSQL(categoryId, patientNo);
 
-        List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
+        Map<String, Object> result = new HashMap<>();
+        List<Map> map = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
+        result.put("categoryId", categoryId);
+        result.put("dataSource", map);
 
         return ResponseEntity.ok().body(result);
     }
