@@ -1,21 +1,23 @@
 import React, {useEffect} from "react";
-import {useAppSelector} from "app/config/store";
-import {getCategories} from "app/modules/navigation/navigation.reducer";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import SingleTableEditor from "app/modules/patient-table-editor/multi-table-editor/single-table-editor";
 import {IPatient} from "app/shared/model/patient.model";
+import {getAccessibleCategories} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 
 export interface IMultiTableEditorProps {
   patient: IPatient;
 }
 
 export const MultiTableEditor = (props: IMultiTableEditorProps) => {
+  const dispatch = useAppDispatch();
+
   const {patient} = props;
 
-  const categories = useAppSelector(state => state.navigation.categories);
+  const categories = useAppSelector(state => state.patientTableEditor.categories);
 
   useEffect(() => {
     if (categories.length === 0) {
-      getCategories();
+      dispatch(getAccessibleCategories());
     }
   }, []);
 

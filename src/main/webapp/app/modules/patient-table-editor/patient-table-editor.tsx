@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getPatients} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getAccessiblePatients,} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -27,7 +27,7 @@ export const PatientTableEditor = () => {
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
 
   useEffect(() => {
-    dispatch(getPatients());
+    dispatch(getAccessiblePatients());
   }, []);
 
   const onRowDblClick = (e) => {

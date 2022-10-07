@@ -4,7 +4,12 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getItemListByCategoryId, getPatients, reset} from './patient-table-editor.reducer';
+import reducer, {
+  getAccessibleCategories,
+  getAccessibleItems,
+  getAccessiblePatients,
+  reset
+} from './patient-table-editor.reducer';
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -18,6 +23,7 @@ describe('User Patient selector module reducer tests', () => {
   const initialState = {
     itemListMap: {} as any,
     patients: [],
+    categories: [],
     loading: false,
     errorMessage: null,
   }
@@ -45,7 +51,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      testMultipleTypes([getPatients.pending.type, getItemListByCategoryId.pending.type], {}, state => {
+      testMultipleTypes([getAccessiblePatients.pending.type, getAccessibleItems.pending.type, getAccessibleCategories.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -62,7 +68,7 @@ describe('User Patient selector module reducer tests', () => {
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getPatients.rejected.type, getItemListByCategoryId.rejected.type],
+      testMultipleTypes([getAccessiblePatients.rejected.type, getAccessibleItems.rejected.type, getAccessibleCategories.rejected.type],
         'some message',
         state => {
           expect(state).toMatchObject({
@@ -80,7 +86,7 @@ describe('User Patient selector module reducer tests', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
 
       expect(reducer(undefined, {
-        type: getPatients.fulfilled.type,
+        type: getAccessiblePatients.fulfilled.type,
         payload,
       })).toEqual({
         ...initialState,
@@ -89,11 +95,24 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
+    it('should fetch accessible categories', () => {
+      const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
+
+      expect(reducer(undefined, {
+        type: getAccessibleCategories.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        loading: false,
+        categories: payload.data,
+      });
+    });
+
     it('should fetch all item list and save as key map', () => {
       const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
 
       expect(reducer(undefined, {
-        type: getItemListByCategoryId.fulfilled.type,
+        type: getAccessibleItems.fulfilled.type,
         payload,
       })).toEqual({
         ...initialState,
@@ -118,15 +137,32 @@ describe('User Patient selector module reducer tests', () => {
     it('dispatches FETCH_PATIENT_LIST actions', async () => {
       const expectedActions = [
         {
-          type: getPatients.pending.type
+          type: getAccessiblePatients.pending.type
         },
         {
-          type: getPatients.fulfilled.type,
+          type: getAccessiblePatients.fulfilled.type,
           payload: resolvedObject
         }
       ];
 
-      await store.dispatch(getPatients());
+      await store.dispatch(getAccessiblePatients());
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('dispatches FETCH_CATEGORY_LIST actions', async () => {
+      const expectedActions = [
+        {
+          type: getAccessibleCategories.pending.type
+        },
+        {
+          type: getAccessibleCategories.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(getAccessibleCategories());
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
@@ -135,15 +171,15 @@ describe('User Patient selector module reducer tests', () => {
     it('dispatches FETCH_ITEM_LIST_BY_CATEGORYID actions', async () => {
       const expectedActions = [
         {
-          type: getItemListByCategoryId.pending.type
+          type: getAccessibleItems.pending.type
         },
         {
-          type: getItemListByCategoryId.fulfilled.type,
+          type: getAccessibleItems.fulfilled.type,
           payload: resolvedObject
         }
       ];
 
-      await store.dispatch(getItemListByCategoryId(1));
+      await store.dispatch(getAccessibleItems(1));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);

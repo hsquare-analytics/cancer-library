@@ -13,7 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {IPatient} from "app/shared/model/patient.model";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getItemListByCategoryId} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getAccessibleItems} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 
 export interface ISingleTableEditor {
   patient: IPatient;
@@ -41,7 +41,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       });
 
       if (!itemListMap[category.id]) {
-        dispatch(getItemListByCategoryId(category.id));
+        dispatch(getAccessibleItems(category.id));
       }
     }
   }, [JSON.stringify(patient), JSON.stringify(category)]);
