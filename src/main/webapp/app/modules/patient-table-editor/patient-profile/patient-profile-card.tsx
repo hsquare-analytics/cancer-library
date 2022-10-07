@@ -22,8 +22,10 @@ const patientStatusChip = (status: string) => {
       return <Chip label="승인 거부" color="error"/>;
     case REVIEW_LIST.APPROVED:
       return <Chip label="승인 완료" color="success"/>;
-    default:
+    case REVIEW_LIST.SUBMITTED:
       return <Chip label="승인 대기" color="info"/>;
+    default:
+      return <Chip label="처리전" color="secondary"/>;
   }
 }
 
