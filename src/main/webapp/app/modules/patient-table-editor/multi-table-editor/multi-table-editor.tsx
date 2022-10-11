@@ -51,7 +51,7 @@ export const MultiTableEditor = () => {
     return () => {
       dispatch(resetDataSourceLoadedCount());
     }
-  }, [JSON.stringify(patient)]);
+  }, [JSON.stringify(patient?.ptNo)]);
 
   return !loading ? (
     <div>
