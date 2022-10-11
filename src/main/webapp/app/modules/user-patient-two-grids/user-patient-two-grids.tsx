@@ -5,8 +5,8 @@ import "./user-patient-two-grids.scss";
 
 export const UserPatientTwoGrids = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState({
-    'left': [],
-    'right': [],
+    'false': [],
+    'true': [],
   });
 
   const [dataSource, setDataSource] = useState([]);

@@ -7,8 +7,8 @@ interface IGridState {
 
 interface IGridProps {
   selectedRowKeys: {
-    'left': any[],
-    'right': any[]
+    'false': any[],
+    'true': any[]
   };
   setSelectedRowKeys: Function;
   dataSource: any[];
@@ -31,61 +31,32 @@ class Grid extends React.Component<IGridProps, IGridState> {
   }
 
   onAdd(e) {
-    const key = e.itemData.ptNo;
-    const selectedRowKeys = this.props.selectedRowKeys;
-    if (e.toData === true) {
-      const result = this.props.dataSource.map((item) => {
-        if (item.ptNo === key) {
-          item.authorized = true;
-        }
-        if (selectedRowKeys['left'].includes(item.ptNo)) {
-          item.authorized = true;
-        }
-        return item;
-      });
-      this.props.setDataSource(result);
-    } else {
-      const result = this.props.dataSource.map((item) => {
-        if (item.ptNo === key) {
-          item.authorized = false;
-        }
-        if (selectedRowKeys['right'].includes(item.ptNo)) {
-          item.authorized = false;
-        }
-        return item;
-      });
-      this.props.setSelectedRowKeys({
-        'left': [],
-        'right': []
-      });
-      this.props.setDataSource(result);
-    }
-  }
-
-  renewDataSource(e) {
     const selectedRowKeys = this.props.selectedRowKeys;
 
     const result = this.props.dataSource.map((item) => {
       if (item.ptNo === e.itemData.ptNo) {
         item.authorized = e.toData;
       }
-      if (selectedRowKeys[e.toData].includes(item.ptNo)) {
+      if (selectedRowKeys[`${!e.toData}`].includes(item.ptNo)) {
         item.authorized = e.toData;
       }
       return item;
     });
     this.props.setDataSource(result);
-    return result;
+
+    const newSelectedRowKeys = {
+      'false': [],
+      'true': [],
+    }
+    this.props.setSelectedRowKeys(newSelectedRowKeys);
   }
 
   onSelectionChanged({selectedRowKeys}) {
     this.props.setSelectedRowKeys({
       ...this.props.selectedRowKeys,
-      [this.props.authorized ? 'right' : 'left']: selectedRowKeys,
+      [`${this.props.authorized}`]: selectedRowKeys,
     });
-
   }
-
 
   render() {
     return (
