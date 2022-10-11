@@ -1,17 +1,42 @@
-import React from "react";
-import {useAppSelector} from "app/config/store";
+import React, {useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import SingleTableEditor from "app/modules/patient-table-editor/multi-table-editor/single-table-editor";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
+import {
+  getUsableCategories,
+  getUsableItems,
+  resetItemListLoadedCount
+} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 
 export const MultiTableEditor = () => {
+  const dispatch = useAppDispatch();
+
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
   const itemListLoadedCount = useAppSelector(state => state.patientTableEditor.itemListLoadedCount);
   const dataSourceLoadedCount = useAppSelector(state => state.patientTableEditor.dataSourceLoadedCount);
+  const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
 
   const loading = !categories || categories.length === 0 || itemListLoadedCount !== categories.length || dataSourceLoadedCount !== categories.length;
+
+  useEffect(() => {
+    if (categories.length === 0) {
+      dispatch(getUsableCategories());
+    }
+  }, []);
+
+  useEffect(() => {
+    for (const category of categories) {
+      if (!itemContainer[category.id]) {
+        dispatch(getUsableItems(category.id));
+      }
+    }
+    return () => {
+      dispatch(resetItemListLoadedCount());
+    }
+  }, [JSON.stringify(categories)]);
 
   return !loading ? (
     <div>
