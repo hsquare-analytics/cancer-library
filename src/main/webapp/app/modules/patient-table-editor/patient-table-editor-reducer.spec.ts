@@ -10,8 +10,8 @@ import reducer, {
   getUsableCategories,
   getUsableItems,
   reset,
-  resetDataSourceLoadedCount,
-  resetItemListLoadedCount,
+  resetDataSource,
+  resetItem,
   setPatient
 } from './patient-table-editor.reducer';
 import {IPatient} from "app/shared/model/patient.model";
@@ -26,11 +26,13 @@ describe('User Patient selector module reducer tests', () => {
   }
 
   const initialState = {
-    itemContainer: {} as any,
-    dataSourceContainer: {} as any,
-    count: {
-      dataSource: 0,
-      item: 0
+    item: {
+      container: {},
+      count: 0
+    },
+    dataSource: {
+      container: {},
+      count: 0
     },
     loading: {
       patients: false,
@@ -50,10 +52,10 @@ describe('User Patient selector module reducer tests', () => {
       },
       errorMessage: null,
     });
-    expect(isEmpty(state.itemContainer));
-    expect(isEmpty(state.dataSourceContainer));
-    expect(isNaN(state.count.dataSource));
-    expect(isNaN(state.count.item));
+    expect(isEmpty(state.item.container));
+    expect(isEmpty(state.dataSource.container));
+    expect(isNaN(state.item.count));
+    expect(isNaN(state.dataSource.count));
     expect(isEmpty(state.patient));
     expect(isEmpty(state.patients));
   }
@@ -94,24 +96,26 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
-    it('should reset datasource loaded count', () => {
+    it('should reset dataSource container', () => {
       expect(reducer({
-        ...initialState, count: {
-          ...initialState.count,
-          dataSource: 0,
+        ...initialState,
+        dataSource: {
+          container: {},
+          count: 0
         }
-      }, resetDataSourceLoadedCount())).toEqual({
+      }, resetDataSource())).toEqual({
         ...initialState
       });
     });
 
-    it('should reset datasource loaded count', () => {
+    it('should reset item container', () => {
       expect(reducer({
-        ...initialState, count :{
-          ...initialState.count,
-          item: 0,
+        ...initialState,
+        item: {
+          container: {},
+          count: 0
         }
-      }, resetItemListLoadedCount())).toEqual({
+      }, resetItem())).toEqual({
         ...initialState
       });
     });
@@ -191,12 +195,11 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        itemContainer: {
-          fakeId: payload.data
-        },
-        count: {
-          ...initialState.count,
-          item: 1,
+        item: {
+          container: {
+            fakeId: payload.data
+          },
+          count: 1
         }
       });
     });
@@ -209,13 +212,11 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        dataSourceContainer: {
-          ...initialState.dataSourceContainer,
-          fakeId: payload.data.dataSource
-        },
-        count: {
-          ...initialState.count,
-          dataSource: 1,
+        dataSource: {
+          container: {
+            fakeId: payload.data.dataSource
+          },
+          count: 1
         }
       });
     });

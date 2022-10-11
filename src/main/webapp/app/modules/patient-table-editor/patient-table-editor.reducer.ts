@@ -5,12 +5,14 @@ import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
 
 type userPatientSelectorType = {
-  itemContainer: { [key: string]: IItem[] },
-  dataSourceContainer: { [key: string]: any[] },
-  count: {
-    dataSource: number,
-    item: number
-  }
+  item: {
+    container: { [key: string]: IItem[] },
+    count: number
+  },
+  dataSource: {
+    container: { [key: string]: any },
+    count: number
+  },
   loading: {
     patients: boolean, categories: boolean
   },
@@ -21,11 +23,13 @@ type userPatientSelectorType = {
 };
 
 const initialState: userPatientSelectorType = {
-  itemContainer: {} as any,
-  dataSourceContainer: {} as any,
-  count: {
-    dataSource: 0,
-    item: 0
+  item: {
+    container: {},
+    count: 0
+  },
+  dataSource: {
+    container: {},
+    count: 0
   },
   loading: {
     patients: false,
@@ -65,21 +69,21 @@ export const PatientTableEditor = createSlice({
     reset() {
       return initialState
     },
-    resetDataSourceLoadedCount(state) {
-      return  {
+    resetDataSource(state) {
+      return {
         ...state,
-        count: {
-          ...state.count,
-          dataSource: 0
+        dataSource: {
+          container: {},
+          count: 0
         }
       }
     },
-    resetItemListLoadedCount(state) {
-      return  {
+    resetItem(state) {
+      return {
         ...state,
-        count: {
-          ...state.count,
-          item: 0
+        item: {
+          container: {},
+          count: 0
         }
       }
     },
@@ -118,13 +122,12 @@ export const PatientTableEditor = createSlice({
       const {data} = action.payload;
       return {
         ...state,
-        itemContainer: {
-          ...state.itemContainer,
-          [data[0].group.category.id]: data
-        },
-        count: {
-          ...state.count,
-          item: state.count.item + 1
+        item: {
+          container: {
+            ...state.item.container,
+            [data[0].group.category.id]: data
+          },
+          count: state.item.count + 1
         }
       }
     })
@@ -132,13 +135,12 @@ export const PatientTableEditor = createSlice({
       const {data} = action.payload;
       return {
         ...state,
-        dataSourceContainer: {
-          ...state.dataSourceContainer,
-          [data.categoryId]: data.dataSource
-        },
-        count: {
-          ...state.count,
-          dataSource: state.count.dataSource + 1
+        dataSource: {
+          container: {
+            ...state.dataSource.container,
+            [data.categoryId]: data.dataSource
+          },
+          count: state.dataSource.count + 1,
         }
       }
     })
@@ -161,7 +163,7 @@ export const PatientTableEditor = createSlice({
   }
 });
 
-export const {reset, resetDataSourceLoadedCount, resetItemListLoadedCount, setPatient} = PatientTableEditor.actions;
+export const {reset, resetDataSource, resetItem, setPatient} = PatientTableEditor.actions;
 
 
 export default PatientTableEditor.reducer;
