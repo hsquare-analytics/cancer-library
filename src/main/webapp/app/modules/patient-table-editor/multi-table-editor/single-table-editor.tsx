@@ -77,6 +77,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }}
             onRowUpdating={onRowUpdating}
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
+            paging={{pageSize: 10}}
           >
             {
               itemContainer[category.id].map(item => <Column
