@@ -29,7 +29,7 @@ export const PatientTableEditor = () => {
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
-  const loading = useAppSelector(state => state.patientTableEditor.loadingContainer.patients);
+  const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
   useEffect(() => {

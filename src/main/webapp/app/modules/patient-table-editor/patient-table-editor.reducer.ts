@@ -9,7 +9,7 @@ type userPatientSelectorType = {
   dataSourceContainer: { [key: string]: any[] },
   dataSourceLoadedCount: number,
   itemListLoadedCount: number,
-  loadingContainer: {
+  loading: {
     patients: boolean, categories: boolean
   },
   patients: IPatient[];
@@ -22,7 +22,7 @@ const initialState: userPatientSelectorType = {
   dataSourceContainer: {} as any,
   dataSourceLoadedCount: 0,
   itemListLoadedCount: 0,
-  loadingContainer: {
+  loading: {
     patients: false,
     categories: false,
   },
@@ -79,8 +79,8 @@ export const PatientTableEditor = createSlice({
       return {
         ...state,
         patients: data,
-        loadingContainer: {
-          ...state.loadingContainer,
+        loading: {
+          ...state.loading,
           patients: false
         }
       }
@@ -90,8 +90,8 @@ export const PatientTableEditor = createSlice({
       return {
         ...state,
         categories: data,
-        loadingContainer: {
-          ...state.loadingContainer,
+        loading: {
+          ...state.loading,
           categories: false
         }
       }
@@ -119,20 +119,20 @@ export const PatientTableEditor = createSlice({
       }
     })
     .addMatcher(isPending(getAccessiblePatients), (state) => {
-      state.loadingContainer.patients = true;
+      state.loading.patients = true;
       state.errorMessage = null;
     })
     .addMatcher(isPending(getUsableCategories), (state) => {
-      state.loadingContainer.categories = true;
+      state.loading.categories = true;
       state.errorMessage = null;
     })
     .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
       state.errorMessage = action.error.message;
-      state.loadingContainer.patients = false;
+      state.loading.patients = false;
     })
     .addMatcher(isRejected(getUsableCategories), (state, action) => {
       state.errorMessage = action.error.message;
-      state.loadingContainer.categories = false;
+      state.loading.categories = false;
     });
   }
 });

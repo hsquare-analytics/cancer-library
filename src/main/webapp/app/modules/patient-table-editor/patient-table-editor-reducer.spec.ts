@@ -28,7 +28,7 @@ describe('User Patient selector module reducer tests', () => {
     dataSourceContainer: {} as any,
     dataSourceLoadedCount: 0,
     itemListLoadedCount: 0,
-    loadingContainer: {
+    loading: {
       patients: false,
       categories: false,
     },
@@ -39,7 +39,7 @@ describe('User Patient selector module reducer tests', () => {
 
   function testInitialState(state) {
     expect(state).toMatchObject({
-      loadingContainer: {
+      loading: {
         patients: false,
         categories: false,
       },
@@ -62,16 +62,16 @@ describe('User Patient selector module reducer tests', () => {
     it('should set state to loading', () => {
       expect(reducer(undefined, {type: getAccessiblePatients.pending.type})).toMatchObject({
         errorMessage: null,
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           patients: true,
         }
       });
 
       expect(reducer(undefined, {type: getUsableCategories.pending.type})).toMatchObject({
         errorMessage: null,
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           categories: true,
         }
       });
@@ -79,7 +79,7 @@ describe('User Patient selector module reducer tests', () => {
 
     it('should reset the state', () => {
       expect(reducer({
-        ...initialState, loadingContainer: {
+        ...initialState, loading: {
           patients: true,
           categories: true,
         }
@@ -113,16 +113,16 @@ describe('User Patient selector module reducer tests', () => {
 
       expect(reducer(undefined, {type: getAccessiblePatients.rejected.type, payload, error})).toMatchObject({
         errorMessage: 'error message',
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           patients: false,
         }
       });
 
       expect(reducer(undefined, {type: getUsableCategories.rejected.type, payload, error})).toMatchObject({
         errorMessage: 'error message',
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           categories: false,
         }
       });
@@ -140,8 +140,8 @@ describe('User Patient selector module reducer tests', () => {
       })).toEqual({
         ...initialState,
         patients: payload.data,
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           patients: false,
         }
       });
@@ -156,8 +156,8 @@ describe('User Patient selector module reducer tests', () => {
       })).toEqual({
         ...initialState,
         categories: payload.data,
-        loadingContainer: {
-          ...initialState.loadingContainer,
+        loading: {
+          ...initialState.loading,
           categories: false,
         }
       });
