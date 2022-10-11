@@ -8,8 +8,8 @@ import {
   getDataSources,
   getUsableCategories,
   getUsableItems,
-  resetDataSourceLoadedCount,
-  resetItemListLoadedCount
+  resetDataSource,
+  resetItem
 } from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 
@@ -19,10 +19,11 @@ export const MultiTableEditor = () => {
   const patient = useAppSelector<IPatient>(state => state.patientTableEditor.patient);
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
-  const count = useAppSelector(state => state.patientTableEditor.count);
-  const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
+  const dataSourceCount = useAppSelector(state => state.patientTableEditor.dataSource.count);
+  const itemContainer = useAppSelector(state => state.patientTableEditor.item.container);
+  const itemCount = useAppSelector(state => state.patientTableEditor.item.count);
 
-  const loading = !categories || categories.length === 0 || count.item !== categories.length || count.dataSource !== categories.length;
+  const loading = !categories || categories.length === 0 || itemCount !== categories.length || dataSourceCount !== categories.length;
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -37,7 +38,7 @@ export const MultiTableEditor = () => {
       }
     }
     return () => {
-      dispatch(resetItemListLoadedCount());
+      dispatch(resetItem());
     }
   }, [JSON.stringify(categories)]);
 
@@ -49,7 +50,7 @@ export const MultiTableEditor = () => {
     }
 
     return () => {
-      dispatch(resetDataSourceLoadedCount());
+      dispatch(resetDataSource());
     }
   }, [JSON.stringify(patient?.ptNo)]);
 

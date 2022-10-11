@@ -22,8 +22,8 @@ export const getCategoryTypography = (category: ICategory) => {
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
-  const dataSourceContainer = useAppSelector(state => state.patientTableEditor.dataSourceContainer);
-  const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
+  const dataSourceContainer = useAppSelector(state => state.patientTableEditor.dataSource.container);
+  const itemContainer = useAppSelector(state => state.patientTableEditor.item.container);
 
   const {category} = props;
 
