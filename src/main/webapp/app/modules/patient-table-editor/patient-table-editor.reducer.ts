@@ -14,6 +14,7 @@ type userPatientSelectorType = {
   loading: {
     patients: boolean, categories: boolean
   },
+  patient: IPatient;
   patients: IPatient[];
   categories: ICategory[];
   errorMessage: string | null;
@@ -30,6 +31,7 @@ const initialState: userPatientSelectorType = {
     patients: false,
     categories: false,
   },
+  patient: {} as IPatient,
   patients: [],
   categories: [],
   errorMessage: null,
@@ -79,6 +81,12 @@ export const PatientTableEditor = createSlice({
           ...state.count,
           item: 0
         }
+      }
+    },
+    setPatient(state, action) {
+      return {
+        ...state,
+        patient: action.payload
       }
     }
   },
@@ -153,6 +161,7 @@ export const PatientTableEditor = createSlice({
   }
 });
 
-export const {reset, resetDataSourceLoadedCount, resetItemListLoadedCount} = PatientTableEditor.actions;
+export const {reset, resetDataSourceLoadedCount, resetItemListLoadedCount, setPatient} = PatientTableEditor.actions;
+
 
 export default PatientTableEditor.reducer;

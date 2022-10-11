@@ -11,8 +11,10 @@ import reducer, {
   getUsableItems,
   reset,
   resetDataSourceLoadedCount,
-  resetItemListLoadedCount
+  resetItemListLoadedCount,
+  setPatient
 } from './patient-table-editor.reducer';
+import {IPatient} from "app/shared/model/patient.model";
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -34,6 +36,7 @@ describe('User Patient selector module reducer tests', () => {
       patients: false,
       categories: false,
     },
+    patient: {} as IPatient,
     patients: [],
     categories: [],
     errorMessage: null,
@@ -51,6 +54,7 @@ describe('User Patient selector module reducer tests', () => {
     expect(isEmpty(state.dataSourceContainer));
     expect(isNaN(state.count.dataSource));
     expect(isNaN(state.count.item));
+    expect(isEmpty(state.patient));
     expect(isEmpty(state.patients));
   }
 
@@ -109,6 +113,14 @@ describe('User Patient selector module reducer tests', () => {
         }
       }, resetItemListLoadedCount())).toEqual({
         ...initialState
+      });
+    });
+
+    it('should set patient', () => {
+      expect(reducer({
+        ...initialState, patient: null
+      }, setPatient({id: 1}))).toEqual({
+        ...initialState, patient: {id: 1}
       });
     });
   });
