@@ -15,11 +15,10 @@ export const MultiTableEditor = () => {
 
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
-  const itemListLoadedCount = useAppSelector(state => state.patientTableEditor.itemListLoadedCount);
-  const dataSourceLoadedCount = useAppSelector(state => state.patientTableEditor.dataSourceLoadedCount);
+  const count = useAppSelector(state => state.patientTableEditor.count);
   const itemContainer = useAppSelector(state => state.patientTableEditor.itemContainer);
 
-  const loading = !categories || categories.length === 0 || itemListLoadedCount !== categories.length || dataSourceLoadedCount !== categories.length;
+  const loading = !categories || categories.length === 0 || count.item !== categories.length || count.dataSource !== categories.length;
 
   useEffect(() => {
     if (categories.length === 0) {
