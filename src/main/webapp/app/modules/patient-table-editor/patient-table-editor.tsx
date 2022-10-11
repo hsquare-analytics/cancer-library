@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {
-  getAccessiblePatients,
-  getDataSources,
-  resetDataSourceLoadedCount,
-} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getAccessiblePatients, setPatient} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -16,7 +12,6 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
-import {IPatient} from "app/shared/model/patient.model";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {hasAnyAuthority} from "app/shared/auth/private-route";
@@ -24,29 +19,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
-  const [patient, setPatient] = useState<IPatient>(null);
 
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
+  const patient = useAppSelector(state => state.patientTableEditor.patient);
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
   const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
-  const categories = useAppSelector(state => state.patientTableEditor.categories);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
   }, []);
-
-  useEffect(() => {
-    if (patient) {
-      for (const category of categories) {
-        dispatch(getDataSources({categoryId: category.id, patientNo: patient.ptNo}));
-      }
-    }
-
-    return () => {
-      dispatch(resetDataSourceLoadedCount());
-    }
-  }, [JSON.stringify(patient)]);
 
   const onRowDblClick = (e) => {
     getPatientInfo(e.data.ptNo);
@@ -55,7 +37,7 @@ export const PatientTableEditor = () => {
 
   const getPatientInfo = (ptNo: string) => {
     return axios.get(`/api/patients/${ptNo}`).then(({data}) => {
-      setPatient(data);
+      dispatch(setPatient(data));
     });
   }
 
@@ -100,14 +82,14 @@ export const PatientTableEditor = () => {
         closeOnOutsideClick={true}
         onHiding={() => {
           setPopupVisible(false)
-          setPatient(null);
+          dispatch(setPatient(null));
         }}
         resizeEnabled={true}
         height={'95vh'}
         width={'95vw'}
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
-          <PatientProfileCard patient={patient}/>
+          <PatientProfileCard/>
           <Stack direction="row-reverse" spacing={2}>
             {isAdmin ? (<> <Button variant="contained" color="error"
                                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>

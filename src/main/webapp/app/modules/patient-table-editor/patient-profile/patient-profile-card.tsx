@@ -11,10 +11,8 @@ import {IPatient} from "app/shared/model/patient.model";
 import {translate} from "react-jhipster";
 import Chip from '@mui/material/Chip';
 import {REVIEW_LIST} from "app/config/constants";
+import {useAppSelector} from "app/config/store";
 
-export interface IPatientProfileCard {
-  patient: IPatient;
-}
 
 const patientStatusChip = (status: string) => {
   switch (status) {
@@ -29,9 +27,8 @@ const patientStatusChip = (status: string) => {
   }
 }
 
-
-export const PatientProfileCard = (props: IPatientProfileCard) => {
-  const {patient} = props;
+export const PatientProfileCard = () => {
+  const patient = useAppSelector<IPatient>(state => state.patientTableEditor.patient);
 
   return (
     <Accordion defaultExpanded={true}>

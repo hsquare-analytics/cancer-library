@@ -5,14 +5,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import {
+  getDataSources,
   getUsableCategories,
   getUsableItems,
+  resetDataSourceLoadedCount,
   resetItemListLoadedCount
 } from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {IPatient} from "app/shared/model/patient.model";
 
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
 
+  const patient = useAppSelector<IPatient>(state => state.patientTableEditor.patient);
   const categories = useAppSelector(state => state.patientTableEditor.categories);
 
   const count = useAppSelector(state => state.patientTableEditor.count);
@@ -36,6 +40,18 @@ export const MultiTableEditor = () => {
       dispatch(resetItemListLoadedCount());
     }
   }, [JSON.stringify(categories)]);
+
+  useEffect(() => {
+    if (patient) {
+      for (const category of categories) {
+        dispatch(getDataSources({categoryId: category.id, patientNo: patient.ptNo}));
+      }
+    }
+
+    return () => {
+      dispatch(resetDataSourceLoadedCount());
+    }
+  }, [JSON.stringify(patient)]);
 
   return !loading ? (
     <div>
