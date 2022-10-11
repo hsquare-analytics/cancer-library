@@ -26,8 +26,10 @@ describe('User Patient selector module reducer tests', () => {
   const initialState = {
     itemContainer: {} as any,
     dataSourceContainer: {} as any,
-    dataSourceLoadedCount: 0,
-    itemListLoadedCount: 0,
+    count: {
+      dataSource: 0,
+      item: 0
+    },
     loading: {
       patients: false,
       categories: false,
@@ -46,9 +48,9 @@ describe('User Patient selector module reducer tests', () => {
       errorMessage: null,
     });
     expect(isEmpty(state.itemContainer));
-    expect(isNaN(state.itemListLoadedCount));
     expect(isEmpty(state.dataSourceContainer));
-    expect(isNaN(state.dataSourceLoadedCount));
+    expect(isNaN(state.count.dataSource));
+    expect(isNaN(state.count.item));
     expect(isEmpty(state.patients));
   }
 
@@ -90,7 +92,10 @@ describe('User Patient selector module reducer tests', () => {
 
     it('should reset datasource loaded count', () => {
       expect(reducer({
-        ...initialState, dataSourceLoadedCount: 0
+        ...initialState, count: {
+          ...initialState.count,
+          dataSource: 0,
+        }
       }, resetDataSourceLoadedCount())).toEqual({
         ...initialState
       });
@@ -98,7 +103,10 @@ describe('User Patient selector module reducer tests', () => {
 
     it('should reset datasource loaded count', () => {
       expect(reducer({
-        ...initialState, itemListLoadedCount: 0
+        ...initialState, count :{
+          ...initialState.count,
+          item: 0,
+        }
       }, resetItemListLoadedCount())).toEqual({
         ...initialState
       });
@@ -174,7 +182,10 @@ describe('User Patient selector module reducer tests', () => {
         itemContainer: {
           fakeId: payload.data
         },
-        itemListLoadedCount: 1,
+        count: {
+          ...initialState.count,
+          item: 1,
+        }
       });
     });
 
@@ -190,7 +201,10 @@ describe('User Patient selector module reducer tests', () => {
           ...initialState.dataSourceContainer,
           fakeId: payload.data.dataSource
         },
-        dataSourceLoadedCount: 1,
+        count: {
+          ...initialState.count,
+          dataSource: 1,
+        }
       });
     });
   });

@@ -7,8 +7,10 @@ import {ICategory} from "app/shared/model/category.model";
 type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
   dataSourceContainer: { [key: string]: any[] },
-  dataSourceLoadedCount: number,
-  itemListLoadedCount: number,
+  count: {
+    dataSource: number,
+    item: number
+  }
   loading: {
     patients: boolean, categories: boolean
   },
@@ -20,8 +22,10 @@ type userPatientSelectorType = {
 const initialState: userPatientSelectorType = {
   itemContainer: {} as any,
   dataSourceContainer: {} as any,
-  dataSourceLoadedCount: 0,
-  itemListLoadedCount: 0,
+  count: {
+    dataSource: 0,
+    item: 0
+  },
   loading: {
     patients: false,
     categories: false,
@@ -62,13 +66,19 @@ export const PatientTableEditor = createSlice({
     resetDataSourceLoadedCount(state) {
       return  {
         ...state,
-        dataSourceLoadedCount: 0,
+        count: {
+          ...state.count,
+          dataSource: 0
+        }
       }
     },
     resetItemListLoadedCount(state) {
       return  {
         ...state,
-        itemListLoadedCount: 0,
+        count: {
+          ...state.count,
+          item: 0
+        }
       }
     }
   },
@@ -104,7 +114,10 @@ export const PatientTableEditor = createSlice({
           ...state.itemContainer,
           [data[0].group.category.id]: data
         },
-        itemListLoadedCount: state.itemListLoadedCount + 1
+        count: {
+          ...state.count,
+          item: state.count.item + 1
+        }
       }
     })
     .addMatcher(isFulfilled(getDataSources), (state, action) => {
@@ -115,7 +128,10 @@ export const PatientTableEditor = createSlice({
           ...state.dataSourceContainer,
           [data.categoryId]: data.dataSource
         },
-        dataSourceLoadedCount: state.dataSourceLoadedCount + 1,
+        count: {
+          ...state.count,
+          dataSource: state.count.dataSource + 1
+        }
       }
     })
     .addMatcher(isPending(getAccessiblePatients), (state) => {
