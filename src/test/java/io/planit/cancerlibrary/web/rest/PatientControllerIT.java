@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -88,4 +89,40 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(patientDTO.getStatus())));
     }
 
+    @Test
+    @Transactional
+    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+    void testWithDivisiblePatientInfo() throws Exception {
+        User user = UserResourceIT.createEntity(em);
+        user.setLogin("test");
+        userRepository.saveAndFlush(user);
+
+        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
+        patientMapper.insert(patientDTO);
+
+        UserPatient userPatient = new UserPatient().user(user).patientNo(patientDTO.getPtNo());
+        userPatientRepository.saveAndFlush(userPatient);
+
+        restDatasourcePatientMockMvc.perform(get("/api/patients/divisible-patient-list").param("login", "test"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
+            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+    void testWithIndiscerptiblePatient() throws Exception {
+        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
+        patientMapper.insert(patientDTO);
+
+        restDatasourcePatientMockMvc.perform(get("/api/patients/divisible-patient-list").param("login", "test"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
+            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
+            .andExpect(jsonPath("$.[*].authorized").value(not(hasItem(true))));
+    }
 }

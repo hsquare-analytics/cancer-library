@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +51,63 @@ public class PatientController {
             List<PatientDTO> result = patientMapper.findAllByPatientNos(accessiblePatientNoList);
 
             return ResponseEntity.ok().body(result);
+        }
+    }
+
+
+    @GetMapping("/patients/divisible-patient-list")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
+        log.debug("REST request to get divisible patient list");
+
+        List<PatientDTO> patientDTOList = patientMapper.findAll();
+        List<String> authorizedPatientNoList = userPatientRepository
+            .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
+            .collect(Collectors.toList());
+
+        List<DivisiblePatientVM> result = patientDTOList.stream().map(patientDTO -> {
+            DivisiblePatientVM divisiblePatientVM = new DivisiblePatientVM();
+            divisiblePatientVM.setPtNo(patientDTO.getPtNo());
+            divisiblePatientVM.setPtNm(patientDTO.getPtNm());
+            divisiblePatientVM.setAuthorized(authorizedPatientNoList.contains(patientDTO.getPtNo()));
+            return divisiblePatientVM;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    static class DivisiblePatientVM {
+        private String ptNo;
+
+        private String ptNm;
+
+        private boolean authorized;
+
+        @JsonProperty("ptNo")
+        public String getPtNo() {
+            return ptNo;
+        }
+
+        public void setPtNo(String ptNo) {
+            this.ptNo = ptNo;
+        }
+
+        @JsonProperty("ptNm")
+        public String getPtNm() {
+            return ptNm;
+        }
+
+        public void setPtNm(String ptNm) {
+            this.ptNm = ptNm;
+        }
+
+        @JsonProperty("authorized")
+        public boolean isAuthorized() {
+            return authorized;
+        }
+
+        public void setAuthorized(boolean authorized) {
+            this.authorized = authorized;
         }
     }
 }
