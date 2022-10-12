@@ -92,6 +92,12 @@ export const PatientTableEditor = createSlice({
         ...state,
         patient: action.payload
       }
+    },
+    setPatients(state, action) {
+      return {
+        ...state,
+        patients: action.payload
+      }
     }
   },
   extraReducers(builder) {
@@ -163,7 +169,7 @@ export const PatientTableEditor = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem, setPatient} = PatientTableEditor.actions;
+export const {reset, resetDataSource, resetItem, setPatient, setPatients} = PatientTableEditor.actions;
 
 
 export default PatientTableEditor.reducer;

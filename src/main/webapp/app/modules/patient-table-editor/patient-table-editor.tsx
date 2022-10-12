@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getAccessiblePatients, setPatient} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {
+  getAccessiblePatients,
+  setPatient,
+  setPatients
+} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -61,12 +65,13 @@ export const PatientTableEditor = () => {
   }
 
   const onStatusChangeButtonClick = (status: string) => {
-    axios.patch(`api/patients/${patient.ptNo}`, {...patient, status})
+    const patientWithUpdatedStatus = {...patient, status}
+    axios.patch(`api/patients/${patient.ptNo}`, patientWithUpdatedStatus)
     .then(({data}) => {
       if (data >= 1) {
-        getPatientInfo(patient.ptNo).then(() => {
-          toast.success('Updated Successfully');
-        });
+        toast.success('Updated Successfully');
+        dispatch(setPatient(patientWithUpdatedStatus));
+        dispatch(setPatients(patientList.map(p => p.ptNo === patient.ptNo ? patientWithUpdatedStatus : p)));
       } else {
         toast.error('Data Submission Failed');
       }
@@ -92,7 +97,7 @@ export const PatientTableEditor = () => {
           <PatientProfileCard/>
           <Stack direction="row-reverse" spacing={2}>
             {canReview ? (<> <Button variant="contained" color="error"
-                                   onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
+                                     onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
                 <Button variant="contained" color="success"
                         onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
             ) : <Button variant="contained" color="info"
