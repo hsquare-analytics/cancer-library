@@ -119,7 +119,7 @@ export const PatientTableEditor = () => {
         editing={{
           mode: 'row',
           allowAdding: false,
-          allowUpdating: true,
+          allowUpdating: canReview,
         }}
         onRowUpdating={onRowUpdating}
         onRowDblClick={onRowDblClick}
@@ -142,8 +142,7 @@ export const PatientTableEditor = () => {
           )
         }
         <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'}
-                minWidth={150}
-                allowEditing={canReview}>
+                minWidth={150} allowEditing={true}>
           <Lookup dataSource={[
             {
               id: 1,
