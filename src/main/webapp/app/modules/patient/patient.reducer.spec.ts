@@ -32,4 +32,15 @@ describe('Patient reducer tests', () => {
     });
   });
 
+  describe('Success tests', () => {
+    it('should set entities', () => {
+      const toTest = reducer(undefined, {type: getEntities.fulfilled.type, payload: {data: [{id: 1}]}});
+      expect(toTest).toMatchObject({
+        loading: false,
+        entities: [{id: 1}]
+      });
+    });
+  });
+
+
 });
