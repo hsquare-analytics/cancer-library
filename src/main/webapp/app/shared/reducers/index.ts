@@ -13,10 +13,11 @@ import password from 'app/modules/account/password/password.reducer';
 import settings from 'app/modules/account/settings/settings.reducer';
 import passwordReset from 'app/modules/account/password-reset/password-reset.reducer';
 import entitiesReducers from 'app/entities/entities-reducers';
+/* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 import navigation from "app/modules/navigation/navigation.reducer";
 import patient from "app/modules/patient/patient.reducer";
 import patientTableEditor from "app/modules/patient-table-editor/patient-table-editor.reducer";
-/* jhipster-needle-add-reducer-import - JHipster will add reducer here */
+import userPatientDndGrid from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
 
 const rootReducer: ReducersMapObject = {
   authentication,
@@ -34,7 +35,8 @@ const rootReducer: ReducersMapObject = {
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   ...entitiesReducers,
   patient,
-  patientTableEditor
+  patientTableEditor,
+  userPatientDndGrid
 };
 
 export default rootReducer;

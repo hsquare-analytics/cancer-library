@@ -1,22 +1,23 @@
 import React from 'react';
 import DataGrid, {Column, RowDragging, Scrolling,} from 'devextreme-react/data-grid';
+import {IRootState} from "app/config/store";
+import {connect} from 'react-redux';
+import {setPatients} from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
+
 
 interface IGridState {
-  selectedRowKeys: any[];
 }
 
-interface IGridProps {
+interface IGridProps extends StateProps, DispatchProps {
   selectedRowKeys: {
     'false': any[],
     'true': any[]
   };
   setSelectedRowKeys: (selectedRowKeys: any) => void;
-  dataSource: any[];
   authorized: boolean;
-  setDataSource: (dataSource: any) => void;
 }
 
-class DndGrid extends React.Component<IGridProps, IGridState> {
+export class DndGrid extends React.Component<IGridProps, IGridState> {
   private filterExpr: (string | any)[];
   private dataGrid: any;
 
@@ -33,7 +34,7 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
   onAdd(e) {
     const selectedRowKeys = this.props.selectedRowKeys;
 
-    const result = this.props.dataSource.map((item) => {
+    const result = JSON.parse(JSON.stringify(this.props.patients)).map((item) => {
       if (item.ptNo === e.itemData.ptNo) {
         item.authorized = e.toData;
       }
@@ -42,8 +43,7 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
       }
       return item;
     });
-    this.props.setDataSource(result);
-
+    this.props.setPatients(result);
 
     this.props.setSelectedRowKeys({
       'false': [],
@@ -60,14 +60,16 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
   }
 
   render() {
+    const {loading, selectedRowKeys} = this.props;
+
     return (
       <div>
-        {JSON.stringify(this.props.selectedRowKeys)}
+        {JSON.stringify(selectedRowKeys)}
         <DataGrid
           ref={(ref) => {
             this.dataGrid = ref;
           }}
-          dataSource={this.props.dataSource}
+          dataSource={this.props.patients}
           height={'65vh'}
           showBorders={true}
           filterRow={{visible: true}}
@@ -79,6 +81,7 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
           keyExpr="ptNo"
           // selectedRowKeys={this.props.selectedRowKeys[`${this.props.authorized}`]}
           onSelectionChanged={this.onSelectionChanged}
+          loadPanel={{enabled: !loading}}
         >
           <RowDragging data={this.props.authorized} group="tasksGroup" onAdd={this.onAdd}/>
           <Scrolling mode="virtual"/>
@@ -91,4 +94,16 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
   }
 }
 
-export default DndGrid;
+const mapStateToProps = ({userPatientDndGrid}: IRootState) => ({
+  loading: userPatientDndGrid.loading,
+  patients: userPatientDndGrid.patients,
+});
+
+const mapDispatchToProps = {
+  setPatients
+}
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(DndGrid);

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import DndGrid from "app/modules/user-patient-dnd-grids/dnd-grid/dnd-grid";
-import axios from "axios";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import "./user-patient-dnd-grids.scss";
 import {useAppDispatch, useAppSelector} from "app/config/store";
@@ -8,11 +7,14 @@ import {getUsers} from "app/modules/administration/user-management/user-manageme
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import {IUser} from "app/shared/model/user.model";
+import {getPatients} from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
+
 
 export const UserPatientDndGrids = () => {
   const dispatch = useAppDispatch();
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<IUser>(null);
 
   const [dndSelectedRowKeys, setDndSelectedRowKeys] = useState({
     'false': [],
@@ -20,18 +22,19 @@ export const UserPatientDndGrids = () => {
   });
 
   const users = useAppSelector(state => state.userManagement.users);
-
-  const [divisiblePatientList, setDivisiblePatientList] = useState([]);
+  const loading = useAppSelector(state => state.userManagement.loading);
 
   useEffect(() => {
-    axios.get("api/patients/divisible-patient-list?login=admin").then(({data}) => {
-      setDivisiblePatientList(data);
-    });
-
     if (users.length === 0) {
       dispatch(getUsers({}));
     }
   }, []);
+
+  useEffect(() => {
+    if (selectedUser) {
+      dispatch(getPatients(selectedUser.login));
+    }
+  }, [JSON.stringify(selectedUser)]);
 
   const onSelectionChanged = ({currentSelectedRowKeys}) => {
     setSelectedUser(currentSelectedRowKeys[0]);
@@ -40,7 +43,6 @@ export const UserPatientDndGrids = () => {
   return (
     <div className="user-patient-two-grids-wrapper">
       <div className="">
-        {JSON.stringify(selectedUser)}
         <DataGrid
           height={'25vh'}
           dataSource={users}
@@ -51,6 +53,7 @@ export const UserPatientDndGrids = () => {
           selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
           paging={{pageSize: 5}}
           onSelectionChanged={onSelectionChanged}
+          loadPanel={{enabled: !loading}}
         >
           <Column dataField="id" caption="id" alignment={"center"}/>
           <Column dataField="login" caption="Login" alignment={"center"}/>
@@ -65,7 +68,7 @@ export const UserPatientDndGrids = () => {
           <DndGrid
             authorized={false}
             selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}
-            dataSource={divisiblePatientList} setDataSource={setDivisiblePatientList}/>
+          />
         </div>
         <div className="column d-flex align-items-center">
           <FontAwesomeIcon icon="arrow-right" size={"2x"}/>
@@ -74,11 +77,11 @@ export const UserPatientDndGrids = () => {
           <DndGrid
             authorized={true}
             selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}
-            dataSource={divisiblePatientList} setDataSource={setDivisiblePatientList}/>
+          />
         </div>
       </div>
     </div>
-  );
+  )
 };
 
 export default UserPatientDndGrids;
