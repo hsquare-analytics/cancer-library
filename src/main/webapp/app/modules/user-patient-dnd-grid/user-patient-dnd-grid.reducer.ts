@@ -15,12 +15,12 @@ const initialState = {
 };
 
 export const getPatients = createAsyncThunk('userPatientDndGrids/fetch_patient_list', async (login: string) => {
-  const requestUrl = `api/patients/divisible-patient-list?login=${login}`;
+  const requestUrl = `api/user-patients/divisible-patient-list?login=${login}`;
   return axios.get<any[]>(requestUrl);
 });
 
 export const createUserPatientAuthorizations = createAsyncThunk('userPatientDndGrids/create_user_patient_authorizations', async (data: { login: any, patients: any[] }, thunkAPI) => {
-    const result = await axios.post<any[]>(`api/user-patient-authorizations`, data);
+    const result = await axios.post<any[]>(`api/user-patients/user-patient-authorizations`, data);
     thunkAPI.dispatch(getPatients(data.login));
     return result
   },

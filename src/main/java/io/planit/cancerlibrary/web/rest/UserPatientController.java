@@ -72,7 +72,7 @@ public class UserPatientController {
             .orElseThrow(() -> new RuntimeException("User not found"));
 
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
-        userPatientAuthorizationsVM.getPatientList().forEach(patient -> {
+        userPatientAuthorizationsVM.getPatients().stream().filter(DivisiblePatientVM::isAuthorized).forEach(patient -> {
             patientMapper.findByPatientNo(patient.getPtNo())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
@@ -82,7 +82,7 @@ public class UserPatientController {
             userPatientRepository.save(userPatient);
         });
 
-        return ResponseEntity.ok().body(userPatientAuthorizationsVM.getPatientList());
+        return ResponseEntity.ok().body(userPatientAuthorizationsVM.getPatients());
     }
 
     static class UserPatientAuthorizationsVM {
@@ -90,20 +90,20 @@ public class UserPatientController {
         @JsonProperty("login")
         private String login;
 
-        @JsonProperty("patientList")
-        private List<DivisiblePatientVM> patientList;
+        @JsonProperty("patients")
+        private List<DivisiblePatientVM> patients;
 
         public String getLogin() {
             return login;
         }
 
-        public List<DivisiblePatientVM> getPatientList() {
-            return patientList;
+        public List<DivisiblePatientVM> getPatients() {
+            return patients;
         }
 
-        public UserPatientAuthorizationsVM(String login, List<DivisiblePatientVM> patientList) {
+        public UserPatientAuthorizationsVM(String login, List<DivisiblePatientVM> patients) {
             this.login = login;
-            this.patientList = patientList;
+            this.patients = patients;
         }
 
         public UserPatientAuthorizationsVM() {
