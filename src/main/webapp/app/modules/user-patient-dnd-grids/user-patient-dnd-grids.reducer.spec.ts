@@ -1,3 +1,9 @@
+import axios from 'axios';
+
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon'
+
 import reducer, {
   createUserPatientAuthorizations,
   getPatients,
@@ -113,6 +119,37 @@ describe('user-patient-dnd-grids.reducer', () => {
         updating: false,
         updateSuccess: true,
       });
+    });
+  });
+
+  describe('Actions', function () {
+    let store;
+
+    const resolvedObject = { value: 'whatever' };
+    beforeEach(() => {
+      const mockStore = configureStore([thunk]);
+      store = mockStore({});
+      axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.put = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.patch = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
+    });
+
+    it('should dispatch getPatients', async () => {
+      const expectedActions = [
+        {
+          type: getPatients.pending.type,
+        },
+        {
+          type: getPatients.fulfilled.type,
+          payload: resolvedObject,
+        }
+      ];
+
+      await store.dispatch(getPatients("test"));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
   });
 });
