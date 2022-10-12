@@ -69,34 +69,21 @@ class Grid extends React.Component<IGridProps, IGridState> {
           dataSource={this.props.dataSource}
           height={'80vh'}
           showBorders={true}
+          filterRow={{visible: true}}
+          headerFilter={{visible: true}}
+          allowColumnResizing={true}
           filterValue={this.filterExpr}
+          scrolling={{mode: 'virtual'}}
           selection={{mode: 'multiple', selectAllMode: 'allPages'}}
           keyExpr="ptNo"
+          // selectedRowKeys={this.props.selectedRowKeys[`${this.props.authorized}`]}
           onSelectionChanged={this.onSelectionChanged}
         >
-          <RowDragging
-            data={this.props.authorized}
-            group="tasksGroup"
-            onAdd={this.onAdd}
-          />
+          <RowDragging data={this.props.authorized} group="tasksGroup" onAdd={this.onAdd}/>
           <Scrolling mode="virtual"/>
-          <Column
-            dataField="ptNo"
-            dataType="string"
-            caption="환자번호"
-            alignment={'center'}
-          />
-          <Column
-            dataField="ptNm"
-            dataType="string"
-            caption="환자명"
-            alignment={'center'}
-          />
-          <Column
-            dataField="authorized"
-            dataType="boolean"
-            visible={false}
-          />
+          <Column dataField="ptNo" dataType="string" caption="환자번호" alignment={'center'}/>
+          <Column dataField="ptNm" dataType="string" caption="환자명" alignment={'center'}/>
+          <Column dataField="authorized" dataType="boolean" visible={false}/>
         </DataGrid>
       </div>
     );
