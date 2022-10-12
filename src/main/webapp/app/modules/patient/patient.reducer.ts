@@ -1,6 +1,6 @@
 import axios from "axios";
 import {defaultValue, IPatient} from "app/shared/model/patient.model";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isPending, isRejected} from "@reduxjs/toolkit";
 
 
 const initialState = {
@@ -26,6 +26,16 @@ export const PatientSlice = createSlice({
     }
   },
   extraReducers(builder) {
+    builder
+    .addMatcher(isPending(getEntities), state => {
+      state.loading = true;
+      state.errorMessage = null;
+    })
+    .addMatcher(isRejected(getEntities), (state, action) => {
+      state.loading = false;
+      state.errorMessage = action.error.message;
+    })
+    ;
   }
 })
 
