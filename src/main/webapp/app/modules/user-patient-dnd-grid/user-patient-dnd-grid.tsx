@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import DndGrid from "app/modules/user-patient-dnd-grids/dnd-grid/dnd-grid";
+import DndGrid from "app/modules/user-patient-dnd-grid/dnd-grid/dnd-grid";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
-import "./user-patient-dnd-grids.scss";
+import "./user-patient-dnd-grid.scss";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import {IUser} from "app/shared/model/user.model";
-import {getPatients} from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
+import {
+  createUserPatientAuthorizations,
+  getPatients
+} from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 
-export const UserPatientDndGrids = () => {
+export const UserPatientDndGrid = () => {
   const dispatch = useAppDispatch();
 
   const [selectedUser, setSelectedUser] = useState<IUser>(null);
@@ -23,6 +26,7 @@ export const UserPatientDndGrids = () => {
 
   const users = useAppSelector(state => state.userManagement.users);
   const loading = useAppSelector(state => state.userManagement.loading);
+  const patients = useAppSelector(state => state.userPatientDndGrid.patients);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -41,7 +45,7 @@ export const UserPatientDndGrids = () => {
   }
 
   const onClickSave = () => {
-
+    dispatch(createUserPatientAuthorizations({login: selectedUser.login, patients}));
   };
 
   const onClickCancel = () => {
@@ -49,7 +53,7 @@ export const UserPatientDndGrids = () => {
   };
 
   return (
-    <div className="user-patient-two-grids-wrapper">
+    <div className="user-patient-two-grid-wrapper">
       <div className="">
         <DataGrid
           height={'25vh'}
@@ -92,4 +96,4 @@ export const UserPatientDndGrids = () => {
   )
 };
 
-export default UserPatientDndGrids;
+export default UserPatientDndGrid;

@@ -17,7 +17,7 @@ import entitiesReducers from 'app/entities/entities-reducers';
 import navigation from "app/modules/navigation/navigation.reducer";
 import patient from "app/modules/patient/patient.reducer";
 import patientTableEditor from "app/modules/patient-table-editor/patient-table-editor.reducer";
-import userPatientDndGrid from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
+import userPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 const rootReducer: ReducersMapObject = {
   authentication,

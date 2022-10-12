@@ -9,7 +9,7 @@ import reducer, {
   getPatients,
   reset,
   setPatients
-} from './user-patient-dnd-grids.reducer';
+} from './user-patient-dnd-grid.reducer';
 
 describe('user-patient-dnd-grids.reducer', () => {
   function isEmpty(element): boolean {

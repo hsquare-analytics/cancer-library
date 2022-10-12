@@ -27,7 +27,7 @@ export const createUserPatientAuthorizations = createAsyncThunk('userPatientDndG
   {serializeError: serializeAxiosError}
 );
 
-export const UserPatientDndGridsReducer = createSlice({
+export const UserPatientDndGridReducer = createSlice({
   name,
   initialState,
   reducers: {
@@ -70,6 +70,6 @@ export const UserPatientDndGridsReducer = createSlice({
   },
 });
 
-export const {reset, setPatients} = UserPatientDndGridsReducer.actions;
+export const {reset, setPatients} = UserPatientDndGridReducer.actions;
 
-export default UserPatientDndGridsReducer.reducer;
+export default UserPatientDndGridReducer.reducer;

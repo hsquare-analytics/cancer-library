@@ -2,7 +2,7 @@ import React from 'react';
 import DataGrid, {Column, RowDragging,} from 'devextreme-react/data-grid';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import {setPatients} from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
+import {setPatients} from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 interface IGridProps extends StateProps, DispatchProps {
   selectedRowKeys: {
