@@ -67,7 +67,7 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
             this.dataGrid = ref;
           }}
           dataSource={this.props.dataSource}
-          height={'70vh'}
+          height={'65vh'}
           showBorders={true}
           filterRow={{visible: true}}
           headerFilter={{visible: true}}
