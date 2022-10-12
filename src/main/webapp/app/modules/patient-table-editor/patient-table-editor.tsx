@@ -21,7 +21,7 @@ export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const dispatch = useAppDispatch();
-  const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
+  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
   const patient = useAppSelector(state => state.patientTableEditor.patient);
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
   const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
@@ -91,7 +91,7 @@ export const PatientTableEditor = () => {
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard/>
           <Stack direction="row-reverse" spacing={2}>
-            {isAdmin ? (<> <Button variant="contained" color="error"
+            {canReview ? (<> <Button variant="contained" color="error"
                                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
                 <Button variant="contained" color="success"
                         onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
@@ -138,7 +138,7 @@ export const PatientTableEditor = () => {
         }
         <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'}
                 minWidth={150}
-                allowEditing={true}>
+                allowEditing={canReview}>
           <Lookup dataSource={[
             {
               id: 1,
