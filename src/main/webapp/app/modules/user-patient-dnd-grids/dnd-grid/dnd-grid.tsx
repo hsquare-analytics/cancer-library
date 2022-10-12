@@ -4,10 +4,6 @@ import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 import {setPatients} from "app/modules/user-patient-dnd-grids/user-patient-dnd-grids.reducer";
 
-
-interface IGridState {
-}
-
 interface IGridProps extends StateProps, DispatchProps {
   selectedRowKeys: {
     'false': any[],
@@ -17,7 +13,7 @@ interface IGridProps extends StateProps, DispatchProps {
   authorized: boolean;
 }
 
-export class DndGrid extends React.Component<IGridProps, IGridState> {
+export class DndGrid extends React.Component<IGridProps> {
   private filterExpr: (string | any)[];
   private dataGrid: any;
 
