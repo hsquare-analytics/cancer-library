@@ -12,6 +12,7 @@ import {
   createUserPatientAuthorizations,
   getPatients
 } from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
+import Swal from "sweetalert2";
 
 
 export const UserPatientDndGrid = () => {
@@ -27,6 +28,7 @@ export const UserPatientDndGrid = () => {
   const users = useAppSelector(state => state.userManagement.users);
   const loading = useAppSelector(state => state.userManagement.loading);
   const patients = useAppSelector(state => state.userPatientDndGrid.patients);
+  const updateSuccess = useAppSelector(state => state.userPatientDndGrid.updateSuccess);
 
   useEffect(() => {
     if (users.length === 0) {
@@ -39,6 +41,17 @@ export const UserPatientDndGrid = () => {
       dispatch(getPatients(selectedUser.login));
     }
   }, [JSON.stringify(selectedUser)]);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      Swal.fire(
+        'Good job!',
+        'You clicked the button!',
+        'success'
+      )
+    }
+  }, [updateSuccess]);
+
 
   const onSelectionChanged = ({currentSelectedRowKeys}) => {
     setSelectedUser(currentSelectedRowKeys[0]);
