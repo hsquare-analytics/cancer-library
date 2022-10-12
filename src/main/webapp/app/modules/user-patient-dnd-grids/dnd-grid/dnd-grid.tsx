@@ -10,10 +10,10 @@ interface IGridProps {
     'false': any[],
     'true': any[]
   };
-  setSelectedRowKeys: Function;
+  setSelectedRowKeys: (selectedRowKeys: any) => void;
   dataSource: any[];
   authorized: boolean;
-  setDataSource: Function;
+  setDataSource: (dataSource: any) => void;
 }
 
 class DndGrid extends React.Component<IGridProps, IGridState> {
