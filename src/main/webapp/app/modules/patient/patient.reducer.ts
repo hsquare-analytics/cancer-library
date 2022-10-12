@@ -38,10 +38,10 @@ export const PatientSlice = createSlice({
     .addCase(getEntities.fulfilled, (state, action) => {
       state.loading = false;
       state.entities = action.payload.data;
-    })
-    ;
+    });
   }
 })
 
+export const {reset} = PatientSlice.actions;
 
 export default PatientSlice.reducer;

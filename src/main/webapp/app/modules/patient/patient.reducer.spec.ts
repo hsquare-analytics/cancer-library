@@ -1,4 +1,24 @@
-import reducer, {getEntities} from './patient.reducer';
+import reducer, {getEntities, reset} from './patient.reducer';
+import {defaultValue} from "app/shared/model/patient.model";
+
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
+import axios from 'axios';
+
+type patientReducerType = {
+  loading: boolean,
+  errorMessage: string | null,
+  entities: any[],
+  entity: any,
+}
+
+const initialState: patientReducerType = {
+  loading: false,
+  errorMessage: null,
+  entities: [],
+  entity: defaultValue
+}
 
 describe('Patient reducer tests', () => {
   describe('Common tests', () => {
@@ -8,6 +28,12 @@ describe('Patient reducer tests', () => {
       expect(toTest).toMatchObject({
         loading: false,
         errorMessage: null,
+      });
+    });
+
+    it('should reset the state', () => {
+      expect(reducer({...initialState, loading: true}, reset())).toEqual({
+        ...initialState,
       });
     });
   });
@@ -39,6 +65,36 @@ describe('Patient reducer tests', () => {
         loading: false,
         entities: [{id: 1}]
       });
+    });
+  });
+
+  describe('Actions tests', () => {
+    let store;
+
+    const resolvedObject = { value: 'whatever' };
+    beforeEach(() => {
+      const mockStore = configureStore([thunk]);
+      store = mockStore({});
+      axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.put = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.patch = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
+    });
+
+    it('should dispatch action getEntities', async () => {
+      const expectedActions = [
+        {
+          type: getEntities.pending.type,
+        },
+        {
+          type: getEntities.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(getEntities());
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
   });
 
