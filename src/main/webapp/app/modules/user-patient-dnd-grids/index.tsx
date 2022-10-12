@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import Grid from "app/modules/user-patient-two-grids/grid";
+import DndGrid from "app/modules/user-patient-dnd-grids/dnd-grid";
 import axios from "axios";
-import "./user-patient-two-grids.scss";
+import "./user-patient-dnd-grids.scss";
 
-export const UserPatientTwoGrids = () => {
+export const Index = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState({
     'false': [],
     'true': [],
@@ -21,13 +21,13 @@ export const UserPatientTwoGrids = () => {
     <div className="user-patient-two-grids-wrapper">
       <div className="tables">
         <div className="column">
-          <Grid
+          <DndGrid
             authorized={false}
             selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys}
             dataSource={dataSource} setDataSource={setDataSource} />
         </div>
         <div className="column">
-          <Grid
+          <DndGrid
             authorized={true}
             selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys}
             dataSource={dataSource} setDataSource={setDataSource} />
@@ -37,4 +37,4 @@ export const UserPatientTwoGrids = () => {
   );
 };
 
-export default UserPatientTwoGrids;
+export default Index;

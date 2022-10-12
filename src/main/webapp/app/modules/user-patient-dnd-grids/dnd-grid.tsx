@@ -16,7 +16,7 @@ interface IGridProps {
   setDataSource: Function;
 }
 
-class Grid extends React.Component<IGridProps, IGridState> {
+class DndGrid extends React.Component<IGridProps, IGridState> {
   private filterExpr: (string | any)[];
   private dataGrid: any;
 
@@ -90,4 +90,4 @@ class Grid extends React.Component<IGridProps, IGridState> {
   }
 }
 
-export default Grid;
+export default DndGrid;

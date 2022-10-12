@@ -16,6 +16,7 @@ import PageNotFound from 'app/shared/error/page-not-found';
 import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
 import PatientTableEditor from "app/modules/patient-table-editor/patient-table-editor";
+import UserPatientDndGrids from "app/modules/user-patient-dnd-grids";
 
 const loading = <div>loading ...</div>;
 
@@ -74,6 +75,7 @@ const AppRoutes = () => {
           }
         >
         </Route>
+        <Route path="test" element={<UserPatientDndGrids/>}/>
         <Route path="*" element={<PageNotFound/>}/>
       </ErrorBoundaryRoutes>
     </div>

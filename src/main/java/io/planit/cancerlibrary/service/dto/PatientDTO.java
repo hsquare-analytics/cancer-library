@@ -129,7 +129,7 @@ public class PatientDTO {
         this.createdDate = createdDate;
     }
 
-public PatientDTO createdDate(Instant createdDate) {
+    public PatientDTO createdDate(Instant createdDate) {
         this.createdDate = createdDate;
         return this;
     }
