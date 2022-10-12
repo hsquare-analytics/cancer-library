@@ -8,6 +8,7 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -74,21 +75,20 @@ public class UserPatientController {
         User user = userRepository.findOneByLogin(login)
             .orElseThrow(() -> new RuntimeException("User not found"));
 
+        List<DivisiblePatientVM> result = new ArrayList<>();
+
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
         userPatientAuthorizationsVM.getPatientNoList().forEach(patientNo -> {
+            PatientDTO patientDTO = patientMapper.findByPatientNo(patientNo).orElseThrow(() ->
+                new RuntimeException("Patient not found"));
+
             UserPatient userPatient = new UserPatient();
             userPatient.setUser(user);
             userPatient.setPatientNo(patientNo);
             userPatientRepository.save(userPatient);
-        });
 
-        List<DivisiblePatientVM> result = userPatientRepository
-            .findAllByUserLogin(login).stream().map(userPatient -> {
-                DivisiblePatientVM divisiblePatientVM = new DivisiblePatientVM();
-                divisiblePatientVM.setPtNo(userPatient.getPatientNo());
-                divisiblePatientVM.setAuthorized(true);
-                return divisiblePatientVM;
-            }).collect(Collectors.toList());
+            result.add(new DivisiblePatientVM(patientDTO));
+        });
 
         return ResponseEntity.ok().body(result);
     }
@@ -151,6 +151,15 @@ public class UserPatientController {
 
         public void setAuthorized(boolean authorized) {
             this.authorized = authorized;
+        }
+
+        public DivisiblePatientVM(PatientDTO patientDTO) {
+            this.ptNo = patientDTO.getPtNo();
+            this.ptNm = patientDTO.getPtNm();
+            this.authorized = true;
+        }
+
+        public DivisiblePatientVM() {
         }
     }
 }

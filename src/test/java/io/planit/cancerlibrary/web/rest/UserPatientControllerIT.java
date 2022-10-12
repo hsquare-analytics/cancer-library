@@ -91,10 +91,18 @@ class UserPatientControllerIT {
     @Transactional
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testCreateMultipleUserPatient() throws Exception {
+        // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
-        List<String> patientNos = List.of("1", "2", "3");
 
+        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
+        List<String> patientNos = List.of("1", "2", "3");
+        patientNos.forEach(patientNo -> {
+            patientDTO.setPtNo(patientNo);
+            patientMapper.insert(patientDTO);
+        });
+
+        // when, then
         UserPatientAuthorizationsVM userPatientAuthorizationsVM = new UserPatientAuthorizationsVM(user.getLogin(), patientNos);
 
         restDatasourcePatientMockMvc.perform(
