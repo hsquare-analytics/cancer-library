@@ -60,7 +60,6 @@ export class DndGrid extends React.Component<IGridProps> {
 
     return (
       <div>
-        {JSON.stringify(selectedRowKeys)}
         <DataGrid
           ref={(ref) => {
             this.dataGrid = ref;
