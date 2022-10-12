@@ -44,13 +44,18 @@ class DndGrid extends React.Component<IGridProps, IGridState> {
     });
     this.props.setDataSource(result);
 
+
+    this.props.setSelectedRowKeys({
+      'false': [],
+      'true': [],
+    });
     this.dataGrid.instance.clearSelection();
   }
 
   onSelectionChanged({selectedRowKeys}) {
     this.props.setSelectedRowKeys({
-      ...this.props.selectedRowKeys,
       [`${this.props.authorized}`]: selectedRowKeys,
+      [`${!this.props.authorized}`]: [],
     });
   }
 
