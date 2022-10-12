@@ -30,7 +30,7 @@ const Admin = Loadable({
   loading: () => loading,
 });
 
-const Routes = () => {
+const AppRoutes = () => {
   const location = useLocation();
   React.useEffect(() => {
     sendActivity(location.pathname);
@@ -82,4 +82,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default AppRoutes;

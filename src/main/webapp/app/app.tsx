@@ -14,7 +14,7 @@ import Header from 'app/shared/layout/header/header';
 import {hasAnyAuthority} from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import {AUTHORITIES} from 'app/config/constants';
-import AppRoutes from 'app/routes';
+import AppRoutes from 'app/app-routes';
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
