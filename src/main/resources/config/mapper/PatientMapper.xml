@@ -8,11 +8,11 @@
         FROM TEST_PATIENT;
     </select>
 
-    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.service.dto.PatientDTO">
+    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.service.dto.PatientDTO" parameterType="java.util.List">
         SELECT *
         FROM TEST_PATIENT
         WHERE PT_NO IN
-        <foreach item="item" index="index" collection="patientNos" open="(" separator="," close=")">
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
