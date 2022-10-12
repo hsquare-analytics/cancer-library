@@ -1,4 +1,4 @@
-import reducer, {reset} from './user-patient-dnd-grids.reducer';
+import reducer, {getPatients, reset} from './user-patient-dnd-grids.reducer';
 
 describe('user-patient-dnd-grids.reducer', () => {
   function isEmpty(element): boolean {
@@ -34,6 +34,38 @@ describe('user-patient-dnd-grids.reducer', () => {
   });
 
   describe('Requests', function () {
+    it('should set state to loading', () => {
+      const result = reducer(undefined, {type: getPatients.pending.type});
+      expect(result)
+      .toMatchObject({
+        loading: true,
+        errorMessage: null,
+      });
+    });
+  });
 
+  describe('Failures', function () {
+    it('should set a message in errorMessage', () => {
+      const result = reducer(undefined, {type: getPatients.rejected.type, error: {message: 'some message'}});
+      expect(result)
+      .toMatchObject({
+        loading: false,
+        errorMessage: 'some message'
+      });
+    });
+  });
+
+  describe('Success', function () {
+    it('should fetch patient data', () => {
+
+      const payload = {data: [{id: 1, name: 'test'}]};
+
+      const result = reducer(undefined, {type: getPatients.fulfilled.type, payload});
+      expect(result)
+      .toMatchObject({
+        loading: false,
+        patients: payload.data,
+      });
+    });
   });
 });
