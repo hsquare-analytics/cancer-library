@@ -6,9 +6,13 @@ import "./user-patient-dnd-grids.scss";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export const UserPatientDndGrids = () => {
   const dispatch = useAppDispatch();
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const [dndSelectedRowKeys, setDndSelectedRowKeys] = useState({
     'false': [],
@@ -30,25 +34,32 @@ export const UserPatientDndGrids = () => {
   }, []);
 
   const onSelectionChanged = ({currentSelectedRowKeys}) => {
+    setSelectedUser(currentSelectedRowKeys[0]);
   }
 
   return (
     <div className="user-patient-two-grids-wrapper">
-      <DataGrid
-        height={'25vh'}
-        dataSource={users}
-        showBorders={true}
-        filterRow={{visible: true}}
-        headerFilter={{visible: true}}
-        allowColumnResizing={true}
-        selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
-        paging={{pageSize: 5}}
-        width={'25%'}
-        onSelectionChanged={onSelectionChanged}
-      >
-        <Column dataField="id" caption="id" alignment={"center"}/>
-        <Column dataField="login" caption="Login" alignment={"center"}/>
-      </DataGrid>
+      <div className="">
+        {JSON.stringify(selectedUser)}
+        <DataGrid
+          height={'25vh'}
+          dataSource={users}
+          showBorders={true}
+          filterRow={{visible: true}}
+          headerFilter={{visible: true}}
+          allowColumnResizing={true}
+          selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
+          paging={{pageSize: 5}}
+          onSelectionChanged={onSelectionChanged}
+        >
+          <Column dataField="id" caption="id" alignment={"center"}/>
+          <Column dataField="login" caption="Login" alignment={"center"}/>
+        </DataGrid>
+        <Stack spacing={2} direction="row" className="justify-content-end my-3">
+          <Button variant="contained">저장</Button>
+          <Button variant="outlined">취소</Button>
+        </Stack>
+      </div>
       <div className="tables">
         <div className="column">
           <DndGrid
