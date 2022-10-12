@@ -40,6 +40,14 @@ export const UserPatientDndGrids = () => {
     setSelectedUser(currentSelectedRowKeys[0]);
   }
 
+  const onClickSave = () => {
+
+  };
+
+  const onClickCancel = () => {
+    dispatch(getPatients(selectedUser.login));
+  };
+
   return (
     <div className="user-patient-two-grids-wrapper">
       <div className="">
@@ -59,8 +67,8 @@ export const UserPatientDndGrids = () => {
           <Column dataField="login" caption="Login" alignment={"center"}/>
         </DataGrid>
         <Stack spacing={2} direction="row" className="justify-content-end my-3">
-          <Button variant="contained">저장</Button>
-          <Button variant="outlined">취소</Button>
+          <Button variant="contained" onClick={onClickSave}>저장</Button>
+          <Button variant="outlined" onClick={onClickCancel}>취소</Button>
         </Stack>
       </div>
       <div className="tables">
