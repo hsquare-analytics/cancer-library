@@ -1,4 +1,4 @@
-import reducer, {getPatients, reset} from './user-patient-dnd-grids.reducer';
+import reducer, {getPatients, reset, setPatients} from './user-patient-dnd-grids.reducer';
 
 describe('user-patient-dnd-grids.reducer', () => {
   function isEmpty(element): boolean {
@@ -40,6 +40,16 @@ describe('user-patient-dnd-grids.reducer', () => {
       .toMatchObject({
         loading: true,
         errorMessage: null,
+      });
+    });
+
+    it('should set patients', () => {
+      const patients = [{id: 1}, {id: 2}];
+      const result = reducer(undefined, setPatients(patients));
+      expect(result)
+      .toEqual({
+        ...initialState,
+        patients,
       });
     });
   });

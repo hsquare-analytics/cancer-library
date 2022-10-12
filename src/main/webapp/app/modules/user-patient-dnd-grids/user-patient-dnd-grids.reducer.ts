@@ -14,14 +14,19 @@ export const getPatients = createAsyncThunk('userPatientDndGrids/fetch_patient_l
   return axios.get<any[]>(requestUrl);
 });
 
-
 export const UserPatientDndGridsReducer = createSlice({
   name,
   initialState,
   reducers: {
     reset() {
       return initialState;
-    }
+    },
+    setPatients(state, action) {
+      return {
+        ...state,
+        patients: action.payload,
+      };
+    },
   },
   extraReducers(builder) {
     builder
@@ -40,6 +45,6 @@ export const UserPatientDndGridsReducer = createSlice({
   },
 });
 
-export const {reset} = UserPatientDndGridsReducer.actions;
+export const {reset, setPatients} = UserPatientDndGridsReducer.actions;
 
 export default UserPatientDndGridsReducer.reducer;
