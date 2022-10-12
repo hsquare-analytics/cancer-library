@@ -1,4 +1,9 @@
-import reducer, {getPatients, reset, setPatients} from './user-patient-dnd-grids.reducer';
+import reducer, {
+  createUserPatientAuthorizations,
+  getPatients,
+  reset,
+  setPatients
+} from './user-patient-dnd-grids.reducer';
 
 describe('user-patient-dnd-grids.reducer', () => {
   function isEmpty(element): boolean {
@@ -9,10 +14,18 @@ describe('user-patient-dnd-grids.reducer', () => {
     }
   }
 
+  function testMultipleTypes(types, payload, testFunction, error?) {
+    types.forEach(e => {
+      testFunction(reducer(undefined, {type: e, payload, error}));
+    });
+  }
+
   const initialState = {
     patients: [],
     loading: false,
     errorMessage: null,
+    updating: false,
+    updateSuccess: false,
   };
 
   describe('common', () => {
@@ -35,11 +48,20 @@ describe('user-patient-dnd-grids.reducer', () => {
 
   describe('Requests', function () {
     it('should set state to loading', () => {
-      const result = reducer(undefined, {type: getPatients.pending.type});
-      expect(result)
-      .toMatchObject({
-        loading: true,
-        errorMessage: null,
+      testMultipleTypes([getPatients.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          loading: true,
+        });
+      });
+    });
+
+    it('should set state to updating', () => {
+      testMultipleTypes([createUserPatientAuthorizations.pending.type], {}, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updating: true,
+        });
       });
     });
 
@@ -56,18 +78,22 @@ describe('user-patient-dnd-grids.reducer', () => {
 
   describe('Failures', function () {
     it('should set a message in errorMessage', () => {
-      const result = reducer(undefined, {type: getPatients.rejected.type, error: {message: 'some message'}});
-      expect(result)
-      .toMatchObject({
-        loading: false,
-        errorMessage: 'some message'
-      });
+      testMultipleTypes([getPatients.rejected.type,
+          createUserPatientAuthorizations.rejected.type],
+        'some message', state => {
+          expect(state).toMatchObject({
+            updateSuccess: false,
+            updating: false,
+            errorMessage: 'error message'
+          });
+        }, {
+          message: 'error message'
+        })
     });
   });
 
   describe('Success', function () {
     it('should fetch patient data', () => {
-
       const payload = {data: [{id: 1, name: 'test'}]};
 
       const result = reducer(undefined, {type: getPatients.fulfilled.type, payload});
@@ -75,6 +101,17 @@ describe('user-patient-dnd-grids.reducer', () => {
       .toMatchObject({
         loading: false,
         patients: payload.data,
+      });
+    });
+
+    it('should create user patient authorization', () => {
+      const payload = {data: [{id: 1, name: 'test'}]};
+
+      const result = reducer(undefined, {type: createUserPatientAuthorizations.fulfilled.type, payload});
+      expect(result)
+      .toMatchObject({
+        updating: false,
+        updateSuccess: true,
       });
     });
   });
