@@ -1,8 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -15,6 +17,8 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
+import io.planit.cancerlibrary.web.rest.UserPatientController.UserPatientAuthorizationsVM;
+import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +85,36 @@ class UserPatientControllerIT {
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
             .andExpect(jsonPath("$.[*].authorized").value(not(hasItem(true))));
 
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
+    void testCreateMultipleUserPatient() throws Exception {
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+        List<String> patientNos = List.of("1", "2", "3");
+
+        UserPatientAuthorizationsVM userPatientAuthorizationsVM = new UserPatientAuthorizationsVM(user.getLogin(), patientNos);
+
+        restDatasourcePatientMockMvc.perform(
+                post("/api/user-patients/user-patient-authorizations").contentType(MediaType.APPLICATION_JSON).content(
+                    TestUtil.convertObjectToJsonBytes(userPatientAuthorizationsVM)))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItems("1", "2", "3")))
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)))
+        ;
+    }
+
+    private class TestVM {
+
+        String login;
+        List<String> patientNos;
+
+        public TestVM(String login, List<String> patientNos) {
+            this.login = login;
+            this.patientNos = patientNos;
+        }
     }
 }

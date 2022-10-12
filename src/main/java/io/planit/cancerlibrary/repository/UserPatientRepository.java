@@ -8,5 +8,8 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface UserPatientRepository extends JpaRepository<UserPatient, Long> {
+
     List<UserPatient> findAllByUserLogin(String login);
+
+    void deleteAllByUserLogin(String login);
 }

@@ -1,9 +1,11 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
+import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
 import java.util.List;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,12 +28,17 @@ public class UserPatientController {
 
     private final Logger log = LoggerFactory.getLogger(UserPatientController.class);
 
+    private final UserRepository userRepository;
+
     private final UserPatientRepository userPatientRepository;
 
     private final PatientMapper patientMapper;
 
-    public UserPatientController(UserPatientRepository userPatientRepository,
+    public UserPatientController(
+        UserRepository userRepository,
+        UserPatientRepository userPatientRepository,
         PatientMapper patientMapper) {
+        this.userRepository = userRepository;
         this.userPatientRepository = userPatientRepository;
         this.patientMapper = patientMapper;
     }
@@ -55,7 +64,62 @@ public class UserPatientController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PostMapping("/user-patients/user-patient-authorizations")
+    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<List<DivisiblePatientVM>> createUserPatientAuthorizations(
+        @RequestBody UserPatientAuthorizationsVM userPatientAuthorizationsVM) {
+        log.debug("REST request to create user patient authorizations");
+
+        String login = userPatientAuthorizationsVM.getLogin();
+        User user = userRepository.findOneByLogin(login)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        userPatientRepository.deleteAllByUserLogin(user.getLogin());
+        userPatientAuthorizationsVM.getPatientNoList().forEach(patientNo -> {
+            UserPatient userPatient = new UserPatient();
+            userPatient.setUser(user);
+            userPatient.setPatientNo(patientNo);
+            userPatientRepository.save(userPatient);
+        });
+
+        List<DivisiblePatientVM> result = userPatientRepository
+            .findAllByUserLogin(login).stream().map(userPatient -> {
+                DivisiblePatientVM divisiblePatientVM = new DivisiblePatientVM();
+                divisiblePatientVM.setPtNo(userPatient.getPatientNo());
+                divisiblePatientVM.setAuthorized(true);
+                return divisiblePatientVM;
+            }).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    static class UserPatientAuthorizationsVM {
+
+        @JsonProperty("login")
+        private String login;
+
+        @JsonProperty("patientNoList")
+        private List<String> patientNoList;
+
+        public String getLogin() {
+            return login;
+        }
+
+        public List<String> getPatientNoList() {
+            return patientNoList;
+        }
+
+        public UserPatientAuthorizationsVM(String login, List<String> patientNoList) {
+            this.login = login;
+            this.patientNoList = patientNoList;
+        }
+
+        public UserPatientAuthorizationsVM() {
+        }
+    }
+
     static class DivisiblePatientVM {
+
         private String ptNo;
 
         private String ptNm;
