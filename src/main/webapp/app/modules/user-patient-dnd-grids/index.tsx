@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import DndGrid from "app/modules/user-patient-dnd-grids/dnd-grid";
+import DndGrid from "app/modules/user-patient-dnd-grids/dnd-grid/dnd-grid";
 import axios from "axios";
 import "./user-patient-dnd-grids.scss";
 
