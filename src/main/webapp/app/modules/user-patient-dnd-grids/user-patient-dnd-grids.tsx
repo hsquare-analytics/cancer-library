@@ -4,7 +4,7 @@ import axios from "axios";
 import DataGrid from 'devextreme-react/data-grid';
 import "./user-patient-dnd-grids.scss";
 
-export const Index = () => {
+export const UserPatientDndGrids = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState({
     'false': [],
     'true': [],
@@ -48,4 +48,4 @@ export const Index = () => {
   );
 };
 
-export default Index;
+export default UserPatientDndGrids;
