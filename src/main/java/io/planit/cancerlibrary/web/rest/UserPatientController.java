@@ -8,7 +8,6 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -55,11 +54,8 @@ public class UserPatientController {
             .collect(Collectors.toList());
 
         List<DivisiblePatientVM> result = patientDTOList.stream().map(patientDTO -> {
-            DivisiblePatientVM divisiblePatientVM = new DivisiblePatientVM();
-            divisiblePatientVM.setPtNo(patientDTO.getPtNo());
-            divisiblePatientVM.setPtNm(patientDTO.getPtNm());
-            divisiblePatientVM.setAuthorized(authorizedPatientNoList.contains(patientDTO.getPtNo()));
-            return divisiblePatientVM;
+            boolean isAuthorized = authorizedPatientNoList.contains(patientDTO.getPtNo());
+            return new DivisiblePatientVM(patientDTO, isAuthorized);
         }).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(result);
@@ -75,22 +71,18 @@ public class UserPatientController {
         User user = userRepository.findOneByLogin(login)
             .orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<DivisiblePatientVM> result = new ArrayList<>();
-
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
-        userPatientAuthorizationsVM.getPatientNoList().forEach(patientNo -> {
-            PatientDTO patientDTO = patientMapper.findByPatientNo(patientNo).orElseThrow(() ->
-                new RuntimeException("Patient not found"));
+        userPatientAuthorizationsVM.getPatientList().forEach(patient -> {
+            patientMapper.findByPatientNo(patient.getPtNo())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
 
             UserPatient userPatient = new UserPatient();
             userPatient.setUser(user);
-            userPatient.setPatientNo(patientNo);
+            userPatient.setPatientNo(patient.getPtNo());
             userPatientRepository.save(userPatient);
-
-            result.add(new DivisiblePatientVM(patientDTO));
         });
 
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body(userPatientAuthorizationsVM.getPatientList());
     }
 
     static class UserPatientAuthorizationsVM {
@@ -98,51 +90,29 @@ public class UserPatientController {
         @JsonProperty("login")
         private String login;
 
-        @JsonProperty("patientNoList")
-        private List<String> patientNoList;
+        @JsonProperty("patientList")
+        private List<DivisiblePatientVM> patientList;
 
         public String getLogin() {
             return login;
         }
 
-        public List<String> getPatientNoList() {
-            return patientNoList;
+        public List<DivisiblePatientVM> getPatientList() {
+            return patientList;
         }
 
-        public UserPatientAuthorizationsVM(String login, List<String> patientNoList) {
+        public UserPatientAuthorizationsVM(String login, List<DivisiblePatientVM> patientList) {
             this.login = login;
-            this.patientNoList = patientNoList;
+            this.patientList = patientList;
         }
 
         public UserPatientAuthorizationsVM() {
         }
     }
 
-    static class DivisiblePatientVM {
-
-        private String ptNo;
-
-        private String ptNm;
+    static class DivisiblePatientVM extends PatientDTO {
 
         private boolean authorized;
-
-        @JsonProperty("ptNo")
-        public String getPtNo() {
-            return ptNo;
-        }
-
-        public void setPtNo(String ptNo) {
-            this.ptNo = ptNo;
-        }
-
-        @JsonProperty("ptNm")
-        public String getPtNm() {
-            return ptNm;
-        }
-
-        public void setPtNm(String ptNm) {
-            this.ptNm = ptNm;
-        }
 
         @JsonProperty("authorized")
         public boolean isAuthorized() {
@@ -153,10 +123,10 @@ public class UserPatientController {
             this.authorized = authorized;
         }
 
-        public DivisiblePatientVM(PatientDTO patientDTO) {
-            this.ptNo = patientDTO.getPtNo();
-            this.ptNm = patientDTO.getPtNm();
-            this.authorized = true;
+        public DivisiblePatientVM(PatientDTO patientDTO, boolean authorized) {
+            this.ptNo(patientDTO.getPtNo());
+            this.ptNm(patientDTO.getPtNm());
+            this.authorized = authorized;
         }
 
         public DivisiblePatientVM() {

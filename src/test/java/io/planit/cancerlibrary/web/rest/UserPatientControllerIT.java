@@ -17,7 +17,9 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
+import io.planit.cancerlibrary.web.rest.UserPatientController.DivisiblePatientVM;
 import io.planit.cancerlibrary.web.rest.UserPatientController.UserPatientAuthorizationsVM;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -90,20 +92,23 @@ class UserPatientControllerIT {
     @Test
     @Transactional
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    void testCreateMultipleUserPatient() throws Exception {
+    void testCreateMultipleUserPatientAuthorizations() throws Exception {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
 
-        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
+        List<DivisiblePatientVM> patientList = new ArrayList<>();
+
         List<String> patientNos = List.of("1", "2", "3");
         patientNos.forEach(patientNo -> {
+            PatientDTO patientDTO = PatientResourceIT.createPatientDTO().ptNo(patientNo);
             patientDTO.setPtNo(patientNo);
             patientMapper.insert(patientDTO);
+            patientList.add(new DivisiblePatientVM(patientDTO, true));
         });
 
         // when, then
-        UserPatientAuthorizationsVM userPatientAuthorizationsVM = new UserPatientAuthorizationsVM(user.getLogin(), patientNos);
+        UserPatientAuthorizationsVM userPatientAuthorizationsVM = new UserPatientAuthorizationsVM(user.getLogin(), patientList);
 
         restDatasourcePatientMockMvc.perform(
                 post("/api/user-patients/user-patient-authorizations").contentType(MediaType.APPLICATION_JSON).content(

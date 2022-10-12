@@ -159,4 +159,7 @@ public class PatientDTO {
         this.lastModifiedDate = lastModifiedDate;
         return this;
     }
+
+    public PatientDTO() {
+    }
 }
