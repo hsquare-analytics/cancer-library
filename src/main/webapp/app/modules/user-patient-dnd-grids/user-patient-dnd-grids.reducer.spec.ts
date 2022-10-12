@@ -125,7 +125,7 @@ describe('user-patient-dnd-grids.reducer', () => {
   describe('Actions', function () {
     let store;
 
-    const resolvedObject = { value: 'whatever' };
+    const resolvedObject = {value: 'whatever'};
     beforeEach(() => {
       const mockStore = configureStore([thunk]);
       store = mockStore({});
@@ -150,6 +150,26 @@ describe('user-patient-dnd-grids.reducer', () => {
       await store.dispatch(getPatients("test"));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('should dispatch createUserPatientAuthorizations', async () => {
+      const expectedActions = [
+        {
+          type: createUserPatientAuthorizations.pending.type,
+        },
+        {
+          type: getPatients.pending.type,
+        },
+        {
+          type: createUserPatientAuthorizations.fulfilled.type,
+          payload: resolvedObject,
+        }
+      ];
+
+      await store.dispatch(createUserPatientAuthorizations({login: "test", patients: [{id: 1}]}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
   });
 });
