@@ -14,6 +14,7 @@ type userPatientSelectorType = {
     count: number
   },
   loading: {
+    patient: boolean,
     patients: boolean, categories: boolean
   },
   patient: IPatient;
@@ -32,6 +33,7 @@ const initialState: userPatientSelectorType = {
     count: 0
   },
   loading: {
+    patient: false,
     patients: false,
     categories: false,
   },
@@ -59,6 +61,11 @@ export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_
 export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
   const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
   return axios.get<any>(requestUrl);
+});
+
+export const getPatient = createAsyncThunk('patient-table-editor/fetch_patient', async (patientNo: string) => {
+  const requestUrl = `api/patients/${patientNo}`;
+  return axios.get<IPatient>(requestUrl);
 });
 
 const name = 'patient-table-editor'
@@ -150,12 +157,27 @@ export const PatientTableEditor = createSlice({
         }
       }
     })
+    .addMatcher(isFulfilled(getPatient), (state, action) => {
+      const {data} = action.payload;
+      return {
+        ...state,
+        patient: data,
+        loading: {
+          ...state.loading,
+          patient: false
+        }
+      }
+    })
     .addMatcher(isPending(getAccessiblePatients), (state) => {
       state.loading.patients = true;
       state.errorMessage = null;
     })
     .addMatcher(isPending(getUsableCategories), (state) => {
       state.loading.categories = true;
+      state.errorMessage = null;
+    })
+    .addMatcher(isPending(getPatient), (state) => {
+      state.loading.patient = true;
       state.errorMessage = null;
     })
     .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
@@ -165,6 +187,10 @@ export const PatientTableEditor = createSlice({
     .addMatcher(isRejected(getUsableCategories), (state, action) => {
       state.errorMessage = action.error.message;
       state.loading.categories = false;
+    })
+    .addMatcher(isRejected(getPatient), (state, action) => {
+      state.errorMessage = action.error.message;
+      state.loading.patient = false;
     });
   }
 });

@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import reducer, {
   getAccessiblePatients,
   getDataSources,
+  getPatient,
   getUsableCategories,
   getUsableItems,
   reset,
@@ -35,6 +36,7 @@ describe('User Patient selector module reducer tests', () => {
       count: 0
     },
     loading: {
+      patient: false,
       patients: false,
       categories: false,
     },
@@ -47,6 +49,7 @@ describe('User Patient selector module reducer tests', () => {
   function testInitialState(state) {
     expect(state).toMatchObject({
       loading: {
+        patient: false,
         patients: false,
         categories: false,
       },
@@ -64,30 +67,11 @@ describe('User Patient selector module reducer tests', () => {
     it('should return the initial state', () => {
       testInitialState(reducer(undefined, {type: ''}));
     });
-  });
-
-  describe('Requests', () => {
-    it('should set state to loading', () => {
-      expect(reducer(undefined, {type: getAccessiblePatients.pending.type})).toMatchObject({
-        errorMessage: null,
-        loading: {
-          ...initialState.loading,
-          patients: true,
-        }
-      });
-
-      expect(reducer(undefined, {type: getUsableCategories.pending.type})).toMatchObject({
-        errorMessage: null,
-        loading: {
-          ...initialState.loading,
-          categories: true,
-        }
-      });
-    });
 
     it('should reset the state', () => {
       expect(reducer({
         ...initialState, loading: {
+          patient: true,
           patients: true,
           categories: true,
         }
@@ -129,6 +113,35 @@ describe('User Patient selector module reducer tests', () => {
     });
   });
 
+  describe('Requests', () => {
+    it('should set state to loading', () => {
+      expect(reducer(undefined, {type: getAccessiblePatients.pending.type})).toMatchObject({
+        errorMessage: null,
+        loading: {
+          ...initialState.loading,
+          patients: true,
+        }
+      });
+
+      expect(reducer(undefined, {type: getUsableCategories.pending.type})).toMatchObject({
+        errorMessage: null,
+        loading: {
+          ...initialState.loading,
+          categories: true,
+        }
+      });
+
+      expect(reducer(undefined, {type: getPatient.pending.type})).toMatchObject({
+        errorMessage: null,
+        loading: {
+          ...initialState.loading,
+          patient: true,
+        }
+      });
+    });
+
+  });
+
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
 
@@ -148,6 +161,14 @@ describe('User Patient selector module reducer tests', () => {
         loading: {
           ...initialState.loading,
           categories: false,
+        }
+      });
+
+      expect(reducer(undefined, {type: getPatient.rejected.type, payload, error})).toMatchObject({
+        errorMessage: 'error message',
+        loading: {
+          ...initialState.loading,
+          patient: false,
         }
       });
 
@@ -220,6 +241,19 @@ describe('User Patient selector module reducer tests', () => {
         }
       });
     });
+
+    it('should fetch patient', () => {
+      const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
+
+      expect(reducer(undefined, {
+        type: getPatient.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        patient: payload.data,
+      });
+    });
+
   });
 
   describe('Actions', () => {
@@ -282,5 +316,24 @@ describe('User Patient selector module reducer tests', () => {
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
+
+    it('dispatches FETCH_PATIENT actions', async () => {
+      const expectedActions = [
+        {
+          type: getPatient.pending.type
+        },
+        {
+          type: getPatient.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(getPatient("test"));
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+
   });
 });
