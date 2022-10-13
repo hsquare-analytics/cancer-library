@@ -44,7 +44,8 @@ public class UserPatientController {
     }
 
     @GetMapping("/user-patients/divisible-patient-list")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')" +
+        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')" )
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
 
@@ -62,7 +63,8 @@ public class UserPatientController {
     }
 
     @PostMapping("/user-patients/user-patient-authorizations")
-    @PreAuthorize("hasRole(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')" +
+        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')" )
     public ResponseEntity<List<DivisiblePatientVM>> createUserPatientAuthorizations(
         @RequestBody UserPatientAuthorizationsVM userPatientAuthorizationsVM) {
         log.debug("REST request to create user patient authorizations");

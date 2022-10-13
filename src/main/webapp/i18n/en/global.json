@@ -16,7 +16,8 @@
          "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "multi-table-editor" : "Muiti Table Editor",
-      "patient-table-editor" : "Patient Table Editor",
+      "patientTableEditor" : "Patient Table Editor",
+      "userPatientAuthorizationEditor" : "User Patient Authorization Editor",
       "editable-categories": "Editable Categories",
       "approval-categories": "Approval Categories",
       "account": {
