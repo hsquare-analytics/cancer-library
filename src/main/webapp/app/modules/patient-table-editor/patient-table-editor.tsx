@@ -16,6 +16,7 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
 import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
 import Box from '@mui/material/Box';
+import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 
 export const PatientTableEditor = () => {
   const dispatch = useAppDispatch();
@@ -87,11 +88,11 @@ export const PatientTableEditor = () => {
         onRowUpdating={(e) => onRowUpdating(e)}
         onRowDblClick={onRowDblClick}
         height={'95vh'}
-        scrolling={{mode: 'virtual'}}
         selection={{mode: 'multiple'}}
         hoverStateEnabled={true}
+        paging={{pageSize: 30}}
       >
-
+        <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'}/>
         {
           PatientTableEditorColumn.map(item => <Column
               key={item.dataField}
