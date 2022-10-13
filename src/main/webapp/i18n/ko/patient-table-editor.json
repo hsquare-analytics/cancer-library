@@ -11,9 +11,13 @@
         "status": "상태"
       },
       "review": {
+        "initial": "처리 전",
         "submitted": "승인 대기",
         "declined": "승인 거부",
         "approved": "승인 완료"
+      },
+      "profileCard": {
+        "title" : "환자 정보 - {{ name }} ({{no}})"
       }
     }
   }

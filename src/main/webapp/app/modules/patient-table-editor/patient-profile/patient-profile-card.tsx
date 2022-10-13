@@ -17,13 +17,13 @@ import {useAppSelector} from "app/config/store";
 const patientStatusChip = (status: string) => {
   switch (status) {
     case REVIEW_LIST.DECLINED:
-      return <Chip label="승인 거부" color="error"/>;
+      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.declined")} color="error"/>;
     case REVIEW_LIST.APPROVED:
-      return <Chip label="승인 완료" color="success"/>;
+      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.approved")} color="success"/>;
     case REVIEW_LIST.SUBMITTED:
-      return <Chip label="승인 대기" color="info"/>;
+      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.submitted")} color="info"/>;
     default:
-      return <Chip label="처리전" color="secondary"/>;
+      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.initial")} color="secondary"/>;
   }
 }
 
@@ -37,8 +37,8 @@ export const PatientProfileCard = () => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>환자
-          정보 {patient ? ` - ${patient.ptNm} (${patient.ptNo})` : ''}</Typography>
+        <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
+          {translate("cancerLibraryApp.patientTableEditor.profileCard.title", patient ? {no: patient.ptNo, name: patient.ptNm}: '')}</Typography>
         {patient && patientStatusChip(patient.status)}
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>

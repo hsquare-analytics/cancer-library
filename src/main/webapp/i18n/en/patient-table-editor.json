@@ -11,9 +11,13 @@
         "status": "status"
       },
       "review": {
+        "initial": "Initial",
         "submitted": "submitted",
         "declined": "declined",
         "approved": "approved"
+      },
+      "profileCard": {
+        "title" : "Patient - {{ name }} ({{no}})"
       }
     }
   }
