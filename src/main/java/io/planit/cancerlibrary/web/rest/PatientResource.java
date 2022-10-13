@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.dto.PatientDTO;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,9 +93,15 @@ public class PatientResource {
 
         Optional<Integer> result = patientMapper.findByPatientNo(ptNo)
             .map(existPatient -> {
-                if (patientDTO.getStatus() != null) {
+                if (!ObjectUtils.isEmpty(patientDTO.getStatus())) {
                     existPatient.setStatus(patientDTO.getStatus());
                 }
+
+                if (ReviewConstants.SUBMITTED.equals(patientDTO.getStatus())) {
+                    existPatient.setCreatedBy(login);
+                    existPatient.setCreatedDate(Instant.now());
+                }
+
                 existPatient.setLastModifiedBy(login);
                 existPatient.setLastModifiedDate(Instant.now());
                 return existPatient;

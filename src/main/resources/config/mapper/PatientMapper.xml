@@ -8,7 +8,8 @@
         FROM TEST_PATIENT;
     </select>
 
-    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.service.dto.PatientDTO" parameterType="java.util.List">
+    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.service.dto.PatientDTO"
+        parameterType="java.util.List">
         SELECT *
         FROM TEST_PATIENT
         WHERE PT_NO IN
@@ -39,6 +40,14 @@
     <update id="update" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
         UPDATE TEST_PATIENT
         SET STATUS = #{status}, LAST_MODIFIED_BY = #{lastModifiedBy}, LAST_MODIFIED_DATE = #{lastModifiedDate}
+        <trim prefix="," suffixOverrides=",">
+            <if test="createdBy != null">
+                CREATED_BY = #{createdBy},
+            </if>
+            <if test="createdDate != null">
+                CREATED_DATE=#{createdDate},
+            </if>
+        </trim>
         WHERE PT_NO = #{ptNo};
     </update>
 </mapper>
