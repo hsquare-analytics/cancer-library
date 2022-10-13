@@ -78,6 +78,13 @@ export class DndGrid extends React.Component<IGridProps> {
           // selectedRowKeys={this.props.selectedRowKeys[`${this.props.authorized}`]}
           onSelectionChanged={this.onSelectionChanged}
           loadPanel={{enabled: !loading}}
+          summary={{
+            totalItems: [{
+              column: 'ptNo',
+              displayFormat: `갯수: {0}`,
+              summaryType: 'count',
+            }],
+          }}
         >
           <RowDragging data={this.props.authorized} group="tasksGroup" onAdd={this.onAdd}/>
           <Column dataField="ptNo" dataType="string" caption="환자번호" alignment={'center'}/>
