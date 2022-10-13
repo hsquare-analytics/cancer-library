@@ -14,6 +14,7 @@ import {
   resetFlag
 } from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 import Swal from "sweetalert2";
+import {translate} from "react-jhipster";
 
 
 export const UserPatientDndGrid = () => {
@@ -46,8 +47,8 @@ export const UserPatientDndGrid = () => {
   useEffect(() => {
     if (updateSuccess) {
       Swal.fire(
-        'Good job!',
-        'You clicked the button!',
+        translate("cancerLibraryApp.userPatientDndGrid.updateAlert.title"),
+        translate("cancerLibraryApp.userPatientDndGrid.updateAlert.description"),
         'success'
       )
       dispatch(resetFlag());

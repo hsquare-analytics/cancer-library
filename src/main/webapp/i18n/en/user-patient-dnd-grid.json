@@ -1,0 +1,10 @@
+{
+  "cancerLibraryApp": {
+    "userPatientDndGrid": {
+      "updateAlert": {
+        "title": "Update Complete",
+        "description": "Patient authorization updated successfully"
+      }
+    }
+  }
+}
