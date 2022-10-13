@@ -15,7 +15,7 @@ import PatientProfileCard from "app/modules/patient-table-editor/patient-profile
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
 import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
-
+import Box from '@mui/material/Box';
 
 export const PatientTableEditor = () => {
   const dispatch = useAppDispatch();
@@ -136,7 +136,9 @@ export const PatientTableEditor = () => {
         </Column>
       </DataGrid>
     </div>
-  ) : <CircularProgress/>;
+  ) : <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '0vh'}}>
+    <CircularProgress/>
+  </Box>;
 };
 
 export default PatientTableEditor;
