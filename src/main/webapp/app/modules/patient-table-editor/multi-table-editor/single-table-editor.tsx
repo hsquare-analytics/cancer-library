@@ -89,9 +89,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 />
               )
             }
-            <Column dataField="last_modified_by" caption={translate('datasource.column.lastModifiedBy')}
+            <Column dataField="last_modified_by" caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
                     alignment={"center"} allowEditing={false}/>
-            <Column dataField="last_modified_date" caption={translate('datasource.column.lastModifiedDate')}
+            <Column dataField="last_modified_date" caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedDate')}
                     alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}/>
           </DataGrid>
         </Typography>

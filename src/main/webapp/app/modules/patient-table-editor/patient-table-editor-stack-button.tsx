@@ -37,16 +37,34 @@ export const PatientTableEditorStackButton = () => {
     })
     .catch(err => toast.error(err));
   }
+
+  const canSubmit = () => {
+    if (!patient) {
+      return false;
+    }
+
+    if (patient.status === REVIEW_LIST.APPROVED) {
+      return false;
+    }
+
+    return true;
+  }
+
+  const canNotSubmit = () => {
+    return !canSubmit();
+  }
+
   return (
-      <Stack direction="row-reverse" spacing={2}>
-        {canReview ? (<> <Button variant="contained" color="error"
-                                 onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
-            <Button variant="contained" color="success"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
-        ) : <Button variant="contained" color="info"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
-      </Stack>
-    );
+    <Stack direction="row-reverse" spacing={2}>
+      {canReview ? (<> <Button variant="contained" color="error"
+                               onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
+          <Button variant="contained" color="success"
+                  onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
+      ) : <Button variant="contained" color="info"
+                  disabled={canNotSubmit()}
+                  onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
+    </Stack>
+  );
 }
 
 export default PatientTableEditorStackButton;
