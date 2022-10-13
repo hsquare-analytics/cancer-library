@@ -16,9 +16,14 @@ export const PatientTableEditorStackButton = () => {
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.patientTableEditor.patient);
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
+  const login = useAppSelector(state => state.authentication.account.login);
 
   const onStatusChangeButtonClick = (status: string) => {
-    const patientWithUpdatedStatus = {...patient, status}
+    const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date()};
+    if (status === REVIEW_LIST.SUBMITTED) {
+      patientWithUpdatedStatus.createdBy = login;
+      patientWithUpdatedStatus.createdDate = new Date();
+    }
     axios.patch(`api/patients/${patient.ptNo}`, patientWithUpdatedStatus)
     .then(({data}) => {
       if (data >= 1) {
@@ -42,12 +47,7 @@ export const PatientTableEditorStackButton = () => {
     if (!patient) {
       return false;
     }
-
-    if (patient.status === REVIEW_LIST.APPROVED) {
-      return false;
-    }
-
-    return true;
+    return patient.status !== REVIEW_LIST.APPROVED;
   }
 
   const canNotSubmit = () => {
