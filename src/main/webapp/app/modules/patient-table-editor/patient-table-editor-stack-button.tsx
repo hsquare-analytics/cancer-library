@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {setPatient, setPatients} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getPatient, setPatients} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {translate} from 'react-jhipster';
@@ -26,7 +26,7 @@ export const PatientTableEditorStackButton = () => {
           no: patient.ptNo,
           name: patient.ptNm
         }));
-        dispatch(setPatient(patientWithUpdatedStatus));
+        dispatch(getPatient(patient.ptNo));
         dispatch(setPatients(patientList.map(p => p.ptNo === patient.ptNo ? patientWithUpdatedStatus : p)));
       } else {
         toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -12,6 +11,8 @@ import {translate} from "react-jhipster";
 import Chip from '@mui/material/Chip';
 import {REVIEW_LIST} from "app/config/constants";
 import {useAppSelector} from "app/config/store";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 
 const patientStatusChip = (status: string) => {
@@ -29,6 +30,7 @@ const patientStatusChip = (status: string) => {
 
 export const PatientProfileCard = () => {
   const patient = useAppSelector<IPatient>(state => state.patientTableEditor.patient);
+  const loading = useAppSelector<IPatient>(state => state.patientTableEditor.loading.patient);
 
   return (
     <Accordion defaultExpanded={true}>
@@ -38,11 +40,14 @@ export const PatientProfileCard = () => {
         id="panel1a-header"
       >
         <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
-          {translate("cancerLibraryApp.patientTableEditor.profileCard.title", patient ? {no: patient.ptNo, name: patient.ptNm}: '')}</Typography>
+          {translate("cancerLibraryApp.patientTableEditor.profileCard.title", patient ? {
+            no: patient.ptNo,
+            name: patient.ptNm
+          } : '')}</Typography>
         {patient && patientStatusChip(patient.status)}
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
-        <Box>
+        {!loading ? <Box>
           <Card variant="outlined" sx={{display: "flex"}}>
             {patient ? Object.entries(patient).map(([key, value]) => <CardContent key={key}>
                 <Typography color="text.secondary">
@@ -54,10 +59,20 @@ export const PatientProfileCard = () => {
               </CardContent>
             ) : null}
           </Card>
+        </Box> : <Box sx={{
+          width: '100%',
+          height: '90px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          border: '1px solid lightgrey'
+        }}>
+          <CircularProgress/>
         </Box>
+        }
       </AccordionDetails>
     </Accordion>
-  );
+  )
 }
 
 export default PatientProfileCard;
