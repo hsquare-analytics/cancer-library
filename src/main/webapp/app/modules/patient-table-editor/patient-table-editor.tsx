@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {
-  getAccessiblePatients,
-  setPatient,
-  setPatients
-} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getAccessiblePatients, setPatient} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -16,18 +12,17 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
+import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
 
 
 export const PatientTableEditor = () => {
+  const dispatch = useAppDispatch();
+
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const dispatch = useAppDispatch();
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
-  const patient = useAppSelector(state => state.patientTableEditor.patient);
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
   const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
 
@@ -64,40 +59,6 @@ export const PatientTableEditor = () => {
     });
   }
 
-  const onStatusChangeButtonClick = (status: string) => {
-    const patientWithUpdatedStatus = {...patient, status}
-    axios.patch(`api/patients/${patient.ptNo}`, patientWithUpdatedStatus)
-    .then(({data}) => {
-      if (data >= 1) {
-        toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
-          no: patient.ptNo,
-          name: patient.ptNm
-        }));
-        dispatch(setPatient(patientWithUpdatedStatus));
-        dispatch(setPatients(patientList.map(p => p.ptNo === patient.ptNo ? patientWithUpdatedStatus : p)));
-      } else {
-        toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {
-          no: patient.ptNo,
-          name: patient.ptNm
-        }));
-      }
-    })
-    .catch(err => toast.error(err));
-  }
-
-  const StackButton = () => {
-    return (
-      <Stack direction="row-reverse" spacing={2}>
-        {canReview ? (<> <Button variant="contained" color="error"
-                                 onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
-            <Button variant="contained" color="success"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
-        ) : <Button variant="contained" color="info"
-                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
-      </Stack>
-    );
-  }
-
   return !loading ? (
     <div>
       <Popup
@@ -114,7 +75,7 @@ export const PatientTableEditor = () => {
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard/>
-          {StackButton()}
+          <PatientTableEditorStackButton/>
           <div>
             <MultiTableEditor/>
           </div>
