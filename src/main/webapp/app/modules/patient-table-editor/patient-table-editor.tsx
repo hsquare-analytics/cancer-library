@@ -21,6 +21,7 @@ import Stack from '@mui/material/Stack';
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
 
+
 export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -52,11 +53,10 @@ export const PatientTableEditor = () => {
       .patch(`api/patients/${row.ptNo}`, row)
       .then(({data}) => {
         if (data >= 1) {
-          toast.success('Updated Successfully');
-          e.oldData['status'] = REVIEW_LIST.SUBMITTED;
+          toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {no: row.ptNo, name: row.ptNm}));
           resolve();
         } else {
-          toast.error('Data Submission Failed');
+          toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {no: row.ptNo, name: row.ptNm}));
           reject('Updated Fail');
         }
       })
@@ -69,14 +69,33 @@ export const PatientTableEditor = () => {
     axios.patch(`api/patients/${patient.ptNo}`, patientWithUpdatedStatus)
     .then(({data}) => {
       if (data >= 1) {
-        toast.success('Updated Successfully');
+        toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
+          no: patient.ptNo,
+          name: patient.ptNm
+        }));
         dispatch(setPatient(patientWithUpdatedStatus));
         dispatch(setPatients(patientList.map(p => p.ptNo === patient.ptNo ? patientWithUpdatedStatus : p)));
       } else {
-        toast.error('Data Submission Failed');
+        toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {
+          no: patient.ptNo,
+          name: patient.ptNm
+        }));
       }
     })
     .catch(err => toast.error(err));
+  }
+
+  const StackButton = () => {
+    return (
+      <Stack direction="row-reverse" spacing={2}>
+        {canReview ? (<> <Button variant="contained" color="error"
+                                 onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
+            <Button variant="contained" color="success"
+                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
+        ) : <Button variant="contained" color="info"
+                    onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
+      </Stack>
+    );
   }
 
   return !loading ? (
@@ -95,14 +114,7 @@ export const PatientTableEditor = () => {
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard/>
-          <Stack direction="row-reverse" spacing={2}>
-            {canReview ? (<> <Button variant="contained" color="error"
-                                     onClick={() => onStatusChangeButtonClick(REVIEW_LIST.DECLINED)}>거부</Button>
-                <Button variant="contained" color="success"
-                        onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
-            ) : <Button variant="contained" color="info"
-                        onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
-          </Stack>
+          {StackButton()}
           <div>
             <MultiTableEditor/>
           </div>
@@ -121,7 +133,7 @@ export const PatientTableEditor = () => {
           allowAdding: false,
           allowUpdating: canReview,
         }}
-        onRowUpdating={onRowUpdating}
+        onRowUpdating={(e) => onRowUpdating(e)}
         onRowDblClick={onRowDblClick}
         height={'95vh'}
         scrolling={{mode: 'virtual'}}
@@ -141,16 +153,25 @@ export const PatientTableEditor = () => {
             />
           )
         }
-        <Column caption={translate("datasource.column.status")} dataField={"status"} alignment={'center'}
+        <Column caption={translate("cancerLibraryApp.patientTableEditor.column.status")} dataField={"status"}
+                alignment={'center'}
                 minWidth={150} allowEditing={true}>
           <Lookup dataSource={[
             {
               id: 1,
               valueExpr: REVIEW_LIST.SUBMITTED,
-              displayExpr: translate('datasource.review.submitted')
+              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.submitted')
             },
-            {id: 2, valueExpr: REVIEW_LIST.DECLINED, displayExpr: translate('datasource.review.declined')},
-            {id: 3, valueExpr: REVIEW_LIST.APPROVED, displayExpr: translate('datasource.review.approved')},
+            {
+              id: 2,
+              valueExpr: REVIEW_LIST.DECLINED,
+              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.declined')
+            },
+            {
+              id: 3,
+              valueExpr: REVIEW_LIST.APPROVED,
+              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.approved')
+            },
           ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
         </Column>
       </DataGrid>

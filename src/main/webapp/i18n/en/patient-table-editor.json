@@ -1,0 +1,20 @@
+{
+  "cancerLibraryApp": {
+    "patientTableEditor": {
+      "updateSuccess" : "Patient {{ name }} ({{no}}) status is updated successfully",
+      "updateFailed" : "Patient {{ name }} ({{no}}) update failed",
+      "column": {
+        "createdBy": "created by",
+        "createdDate": "created date",
+        "lastModifiedBy": "last modified by",
+        "lastModifiedDate": "last modified date",
+        "status": "status"
+      },
+      "review": {
+        "submitted": "submitted",
+        "declined": "declined",
+        "approved": "approved"
+      }
+    }
+  }
+}
