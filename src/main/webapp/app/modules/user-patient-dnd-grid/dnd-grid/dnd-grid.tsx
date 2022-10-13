@@ -56,7 +56,7 @@ export class DndGrid extends React.Component<IGridProps> {
   }
 
   render() {
-    const {loading, selectedRowKeys} = this.props;
+    const {loading} = this.props;
 
     return (
       <div>
