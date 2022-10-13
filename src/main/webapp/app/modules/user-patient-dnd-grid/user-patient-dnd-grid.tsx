@@ -76,7 +76,7 @@ export const UserPatientDndGrid = () => {
           headerFilter={{visible: true}}
           allowColumnResizing={true}
           selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
-          paging={{pageSize: 5}}
+          paging={{pageSize: 10}}
           onSelectionChanged={onSelectionChanged}
           loadPanel={{enabled: !loading}}
         >
