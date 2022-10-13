@@ -14,7 +14,8 @@ import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
-import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
+import PatientTableEditorStackButton
+  from "app/modules/patient-table-editor/component/patient-table-editor-stack-button";
 
 
 export const PatientTableEditor = () => {
