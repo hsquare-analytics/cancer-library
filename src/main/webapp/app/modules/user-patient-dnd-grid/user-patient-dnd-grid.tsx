@@ -10,7 +10,8 @@ import Button from '@mui/material/Button';
 import {IUser} from "app/shared/model/user.model";
 import {
   createUserPatientAuthorizations,
-  getPatients
+  getPatients,
+  resetFlag
 } from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 import Swal from "sweetalert2";
 
@@ -49,6 +50,7 @@ export const UserPatientDndGrid = () => {
         'You clicked the button!',
         'success'
       )
+      dispatch(resetFlag());
     }
   }, [updateSuccess]);
 

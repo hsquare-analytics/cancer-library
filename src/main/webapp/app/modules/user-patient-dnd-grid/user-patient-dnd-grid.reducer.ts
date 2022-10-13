@@ -34,6 +34,14 @@ export const UserPatientDndGridReducer = createSlice({
     reset() {
       return initialState;
     },
+    resetFlag() {
+      return {
+        ...initialState,
+        loading: false,
+        updating: false,
+        errorMessage: null,
+      };
+    },
     setPatients(state, action) {
       return {
         ...state,
@@ -70,6 +78,6 @@ export const UserPatientDndGridReducer = createSlice({
   },
 });
 
-export const {reset, setPatients} = UserPatientDndGridReducer.actions;
+export const {reset, resetFlag, setPatients} = UserPatientDndGridReducer.actions;
 
 export default UserPatientDndGridReducer.reducer;

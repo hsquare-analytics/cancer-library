@@ -8,6 +8,7 @@ import reducer, {
   createUserPatientAuthorizations,
   getPatients,
   reset,
+  resetFlag,
   setPatients
 } from './user-patient-dnd-grid.reducer';
 
@@ -48,6 +49,15 @@ describe('user-patient-dnd-grids.reducer', () => {
     it('should reset the state', () => {
       expect(reducer({...initialState, loading: true}, reset())).toEqual({
         ...initialState
+      });
+    });
+
+    it('should reset the flag', () => {
+      expect(reducer({...initialState, loading: true, updating: true, errorMessage: 'test'}, resetFlag())).toEqual({
+        ...initialState,
+        loading: false,
+        updating: false,
+        errorMessage: null,
       });
     });
   });
