@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getAccessiblePatients, setPatient} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import {getAccessiblePatients, getPatient} from "app/modules/patient-table-editor/patient-table-editor.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -31,14 +31,8 @@ export const PatientTableEditor = () => {
   }, []);
 
   const onRowDblClick = (e) => {
-    getPatientInfo(e.data.ptNo);
+    dispatch(getPatient(e.data.ptNo));
     setPopupVisible(!popupVisible);
-  }
-
-  const getPatientInfo = (ptNo: string) => {
-    return axios.get(`/api/patients/${ptNo}`).then(({data}) => {
-      dispatch(setPatient(data));
-    });
   }
 
   const onRowUpdating = (e) => {
@@ -49,6 +43,7 @@ export const PatientTableEditor = () => {
       .then(({data}) => {
         if (data >= 1) {
           toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {no: row.ptNo, name: row.ptNm}));
+          dispatch(getPatient(row.ptNo));
           resolve();
         } else {
           toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {no: row.ptNo, name: row.ptNm}));
@@ -65,10 +60,7 @@ export const PatientTableEditor = () => {
         showTitle={false}
         visible={popupVisible}
         closeOnOutsideClick={true}
-        onHiding={() => {
-          setPopupVisible(false)
-          dispatch(setPatient(null));
-        }}
+        onHiding={() => setPopupVisible(false)}
         resizeEnabled={true}
         height={'95vh'}
         width={'95vw'}
@@ -80,7 +72,7 @@ export const PatientTableEditor = () => {
         </ScrollView>
       </Popup>
       <DataGrid
-        dataSource={JSON.parse(JSON.stringify(patientList))}
+        dataSource={patientList}
         showBorders={true}
         filterRow={{visible: true}}
         headerFilter={{visible: true}}
