@@ -23,7 +23,7 @@ export const PatientTableEditor = () => {
 
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
+  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
   const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
 

@@ -71,7 +71,7 @@ class PatientControllerIT {
 
     @Test
     @Transactional
-    @WithMockUser(username = "reviewer", authorities = AuthoritiesConstants.REVIEWER)
+    @WithMockUser(username = "supervisor", authorities = AuthoritiesConstants.SUPERVISOR)
     void testFetchAccessiblePatientListWithReviewer() throws Exception {
         PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
         patientMapper.insert(patientDTO);

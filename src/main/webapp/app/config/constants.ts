@@ -1,7 +1,7 @@
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
   USER: 'ROLE_USER',
-  REVIEWER: 'ROLE_REVIEWER',
+  SUPERVISOR: 'ROLE_SUPERVISOR',
 };
 
 export const REVIEW_LIST = {

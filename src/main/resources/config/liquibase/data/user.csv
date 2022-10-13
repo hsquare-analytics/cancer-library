@@ -1,4 +1,7 @@
 id;login;password_hash;first_name;last_name;email;image_url;activated;lang_key;created_by;last_modified_by
 1;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;;true;ko;system;system
 2;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;;true;ko;system;system
-3;reviewer;$2a$12$srIMR.4n8cID5msrM5biOeBnH4Kb.8q2HxuR1TZbakczrh8UD/NQy;Reviewer;Reviewer;reviewer@localhost;;true;ko;system;system
+3;supervisor;$2a$12$3ZW0Mucizy0n0.nkhuiW2uVHuzoCz.j/5FEuOyCnGSy1OKfEdzS1a;Supervisor;Supervisor;supervisor@localhost;;true;ko;system;system
+4;reviewer1;$2a$12$Am9LKGfczj.R25qoDpqmR.asN7eeBqcreiUKG6sNxLjY97q87g17C;Reviewer1;Reviewer1;reviewer1@localhost;;true;ko;system;system
+5;reviewer2;$2a$12$Am9LKGfczj.R25qoDpqmR.asN7eeBqcreiUKG6sNxLjY97q87g17C;Reviewer2;Reviewer2;reviewer2@localhost;;true;ko;system;system
+6;reviewer3;$2a$12$Am9LKGfczj.R25qoDpqmR.asN7eeBqcreiUKG6sNxLjY97q87g17C;Reviewer3;Reviewer3;reviewer3@localhost;;true;ko;system;system

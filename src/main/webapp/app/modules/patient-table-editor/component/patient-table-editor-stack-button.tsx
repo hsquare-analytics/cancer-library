@@ -13,7 +13,7 @@ import {translate} from 'react-jhipster';
 export const PatientTableEditorStackButton = () => {
   const dispatch = useAppDispatch();
 
-  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.REVIEWER]));
+  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.patientTableEditor.patient);
   const patientList = useAppSelector(state => state.patientTableEditor.patients);
 

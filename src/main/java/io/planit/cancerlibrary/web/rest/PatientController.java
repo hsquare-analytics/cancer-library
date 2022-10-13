@@ -37,7 +37,7 @@ public class PatientController {
     public ResponseEntity<List<PatientDTO>> getAccessiblePatientList() {
         log.debug("REST request to get accessible patient list");
 
-        if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.REVIEWER, AuthoritiesConstants.ADMIN)) {
+        if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.SUPERVISOR, AuthoritiesConstants.ADMIN)) {
             List<PatientDTO> result = patientMapper.findAll();
             return ResponseEntity.ok().body(result);
         } else {
