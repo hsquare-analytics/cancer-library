@@ -76,9 +76,7 @@ export const PatientTableEditor = () => {
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard/>
           <PatientTableEditorStackButton/>
-          <div>
-            <MultiTableEditor/>
-          </div>
+          <MultiTableEditor/>
         </ScrollView>
       </Popup>
       <DataGrid

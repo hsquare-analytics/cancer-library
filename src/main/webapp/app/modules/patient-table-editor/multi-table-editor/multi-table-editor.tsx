@@ -54,13 +54,20 @@ export const MultiTableEditor = () => {
     }
   }, [JSON.stringify(patient?.ptNo)]);
 
-  return !loading ? (
-    <div>
-      {categories.map(category => <SingleTableEditor key={category.id} category={category}/>)}
-    </div>
-  ) : <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
-    <CircularProgress/>
-  </Box>;
+  return (<div>
+    {
+      !loading ? (
+          <div>
+            {categories.map(category => <SingleTableEditor key={category.id} category={category}/>)}
+          </div>
+        ) :
+        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
+          <CircularProgress/>
+        </Box>
+    }
+  </div>)
+
+
 }
 
 export default MultiTableEditor;
