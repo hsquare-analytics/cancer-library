@@ -17,7 +17,18 @@ const PatientTableEditorColumn: IDxColumn[] = [
     dataField: "hspTpCd",
   },
   {
-    dataField: "idxDt",
+    dataField: "createdBy",
+  },
+  {
+    dataField: "createdDate",
+    dataType: "datetime",
+  },
+  {
+    dataField: "lastModifiedBy",
+  },
+  {
+    dataField: "lastModifiedDate",
+    dataType: "datetime",
   }
 ];
 

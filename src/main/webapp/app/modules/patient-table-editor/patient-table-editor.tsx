@@ -107,6 +107,7 @@ export const PatientTableEditor = () => {
               key={item.dataField}
               dataField={item.dataField}
               caption={translate("cancerLibraryApp.patient." + item.dataField)}
+              dataType={item.dataType}
               visibleIndex={item.visibleIndex}
               allowEditing={false}
               alignment={'center'}

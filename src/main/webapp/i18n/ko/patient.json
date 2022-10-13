@@ -8,10 +8,10 @@
       "hspTpCd": "병원 코드",
       "idxDt": "등록일",
       "status": "상태",
-      "createdBy": "생성자",
-      "createdDate": "생성일",
-      "lastModifiedBy": "수정자",
-      "lastModifiedDate": "수정일"
+      "createdBy": "제출자",
+      "createdDate": "제출일",
+      "lastModifiedBy": "최종 수정자",
+      "lastModifiedDate": "최종 수정일"
     }
   }
 }
