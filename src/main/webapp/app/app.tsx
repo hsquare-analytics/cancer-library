@@ -48,8 +48,10 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline/>
         <div className="app-container" style={{paddingTop, paddingLeft}}>
-          <ToastContainer position={toast.POSITION.TOP_CENTER} className="toastify-container"
-                          toastClassName="toastify-toast"/>
+          <ToastContainer position={toast.POSITION.TOP_RIGHT} className="toastify-container"
+                          theme="light"
+                          toastClassName="toastify-toast"
+                          limit={3}/>
           <ErrorBoundary>
             <Header
               isAuthenticated={isAuthenticated}
