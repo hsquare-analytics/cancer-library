@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getAccessiblePatients,
   getPatient
-} from "app/modules/patient-table-editor/patient-table-editor.datasource.reducer";
+} from "app/modules/patient-table-editor/patient-table-editor.container.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
@@ -28,8 +28,8 @@ export const PatientTableEditor = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
-  const patientList = useAppSelector(state => state.patientTableEditor.patients);
-  const loading = useAppSelector(state => state.patientTableEditor.loading.patients);
+  const patientList = useAppSelector(state => state.patientTableEditorContainer.patients);
+  const loading = useAppSelector(state => state.patientTableEditorContainer.loading.patients);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {getPatient, setPatients} from "app/modules/patient-table-editor/patient-table-editor.datasource.reducer";
+import {getPatient, setPatients} from "app/modules/patient-table-editor/patient-table-editor.container.reducer";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {translate} from 'react-jhipster';
@@ -18,8 +18,8 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
   const dispatch = useAppDispatch();
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
-  const patient = useAppSelector(state => state.patientTableEditor.patient);
-  const patientList = useAppSelector(state => state.patientTableEditor.patients);
+  const patient = useAppSelector(state => state.patientTableEditorContainer.patient);
+  const patientList = useAppSelector(state => state.patientTableEditorContainer.patients);
   const login = useAppSelector(state => state.authentication.account.login);
 
   const onStatusChangeButtonClick = (status: string) => {

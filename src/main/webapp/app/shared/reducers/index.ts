@@ -16,7 +16,7 @@ import entitiesReducers from 'app/entities/entities-reducers';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 import navigation from "app/modules/navigation/navigation.reducer";
 import patient from "app/modules/patient/patient.reducer";
-import patientTableEditor from "app/modules/patient-table-editor/patient-table-editor.reducer";
+import patientTableEditorContainer from "app/modules/patient-table-editor/patient-table-editor.container.reducer";
 import userPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 const rootReducer: ReducersMapObject = {
@@ -35,7 +35,7 @@ const rootReducer: ReducersMapObject = {
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   ...entitiesReducers,
   patient,
-  patientTableEditor,
+  patientTableEditorContainer,
   userPatientDndGrid
 };
 

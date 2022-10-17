@@ -69,7 +69,7 @@ export const getPatient = createAsyncThunk('patient-table-editor/fetch_patient',
 });
 
 const name = 'patient-table-editor'
-export const PatientTableEditor = createSlice({
+export const PatientTableEditorContainer = createSlice({
   name,
   initialState,
   reducers: {
@@ -195,7 +195,7 @@ export const PatientTableEditor = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem, setPatient, setPatients} = PatientTableEditor.actions;
+export const {reset, resetDataSource, resetItem, setPatient, setPatients} = PatientTableEditorContainer.actions;
 
 
-export default PatientTableEditor.reducer;
+export default PatientTableEditorContainer.reducer;

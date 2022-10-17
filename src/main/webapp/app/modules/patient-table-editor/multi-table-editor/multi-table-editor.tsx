@@ -10,18 +10,18 @@ import {
   getUsableItems,
   resetDataSource,
   resetItem
-} from "app/modules/patient-table-editor/patient-table-editor.datasource.reducer";
+} from "app/modules/patient-table-editor/patient-table-editor.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
 
-  const patient = useAppSelector<IPatient>(state => state.patientTableEditor.patient);
-  const categories = useAppSelector(state => state.patientTableEditor.categories);
+  const patient = useAppSelector<IPatient>(state => state.patientTableEditorContainer.patient);
+  const categories = useAppSelector(state => state.patientTableEditorContainer.categories);
 
-  const dataSourceCount = useAppSelector(state => state.patientTableEditor.dataSource.count);
-  const itemContainer = useAppSelector(state => state.patientTableEditor.item.container);
-  const itemCount = useAppSelector(state => state.patientTableEditor.item.count);
+  const dataSourceCount = useAppSelector(state => state.patientTableEditorContainer.dataSource.count);
+  const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
+  const itemCount = useAppSelector(state => state.patientTableEditorContainer.item.count);
 
   const loading = !categories || categories.length === 0 || itemCount !== categories.length || dataSourceCount !== categories.length;
 
