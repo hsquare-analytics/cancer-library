@@ -1,0 +1,13 @@
+.swal2-container {
+  z-index: 9999 !important;
+}
+
+.swal2-wide-textarea-container {
+  .swal2-popup {
+    width: 50em;
+  }
+
+  .swal2-textarea {
+    height: 20em;
+  }
+}

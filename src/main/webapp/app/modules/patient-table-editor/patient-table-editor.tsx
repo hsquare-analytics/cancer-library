@@ -17,6 +17,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
 import Box from '@mui/material/Box';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
+import "./patient-table-editor.scss";
 
 export const PatientTableEditor = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +61,6 @@ export const PatientTableEditor = () => {
       <Popup
         showTitle={false}
         visible={popupVisible}
-        closeOnOutsideClick={true}
         onHiding={() => setPopupVisible(false)}
         resizeEnabled={true}
         height={'95vh'}
@@ -68,7 +68,7 @@ export const PatientTableEditor = () => {
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
           <PatientProfileCard/>
-          <PatientTableEditorStackButton/>
+          <PatientTableEditorStackButton setPopupVisible={setPopupVisible}/>
           <MultiTableEditor/>
         </ScrollView>
       </Popup>
