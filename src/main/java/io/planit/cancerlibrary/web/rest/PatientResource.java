@@ -61,17 +61,17 @@ public class PatientResource {
     }
 
     @GetMapping("/patients/{ptNo}")
-     public ResponseEntity<PatientDTO> getPatient(@PathVariable String ptNo) {
+    public ResponseEntity<PatientDTO> getPatient(@PathVariable String ptNo) {
         log.debug("REST request to get Patient : {}", ptNo);
 
         Optional<PatientDTO> result = patientMapper.findByPatientNo(ptNo);
-        return result.map(patient-> ResponseEntity.ok().body(patient))
+        return result.map(patient -> ResponseEntity.ok().body(patient))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-     }
+    }
 
     @PatchMapping(value = "/patients/{ptNo}", consumes = {"application/json", "application/merge-patch+json"})
-    public ResponseEntity<Integer> partialUpdatePatient(
+    public ResponseEntity<PatientDTO> partialUpdatePatient(
         @PathVariable(value = "ptNo") final String ptNo,
         @NotNull @RequestBody PatientDTO patientDTO
     ) {
@@ -89,9 +89,10 @@ public class PatientResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        String login = SecurityUtils.getCurrentUserLogin()
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        Optional<Integer> result = patientMapper.findByPatientNo(ptNo)
+        Optional<PatientDTO> patient = patientMapper.findByPatientNo(ptNo)
             .map(existPatient -> {
                 if (!ObjectUtils.isEmpty(patientDTO.getStatus())) {
                     existPatient.setStatus(patientDTO.getStatus());
@@ -105,9 +106,12 @@ public class PatientResource {
                 existPatient.setLastModifiedBy(login);
                 existPatient.setLastModifiedDate(Instant.now());
                 return existPatient;
-            }).map(patientMapper::update);
+            });
 
-        return result.map(updated -> ResponseEntity.ok().body(updated))
+        return patient.map(response -> {
+                patientMapper.update(response);
+                return ResponseEntity.ok().body(response);
+            })
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
