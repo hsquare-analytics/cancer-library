@@ -48,7 +48,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
       lastModifiedDate: new Date(),
     };
 
-    if (status == REVIEW_LIST.SUBMITTED) {
+    if (status === REVIEW_LIST.SUBMITTED) {
       return {
         ...result,
         createdBy: login,
