@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {getPatient, setPatients} from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
-import axios from "axios";
+import {
+  updateEntity as updatePatient
+} from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
 import {toast} from 'react-toastify';
 import {translate} from 'react-jhipster';
 import Swal from "sweetalert2";
@@ -19,8 +20,18 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
-  const patientList = useAppSelector(state => state.patientTableEditorPatient.entities);
+  const updateSuccess = useAppSelector(state => state.patientTableEditorPatient.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
+
+  useEffect(() => {
+    if(updateSuccess) {
+      toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
+        no: patient.ptNo,
+        name: patient.ptNm
+      }));
+    }
+
+  }, [updateSuccess]);
 
   const onStatusChangeButtonClick = (status: string) => {
     const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date()};
@@ -28,23 +39,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
       patientWithUpdatedStatus.createdBy = login;
       patientWithUpdatedStatus.createdDate = new Date();
     }
-    axios.patch(`api/patients/${patient.ptNo}`, patientWithUpdatedStatus)
-    .then(({data}) => {
-      if (data >= 1) {
-        toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
-          no: patient.ptNo,
-          name: patient.ptNm
-        }));
-        dispatch(getPatient(patient.ptNo));
-        dispatch(setPatients(patientList.map(p => p.ptNo === patient.ptNo ? patientWithUpdatedStatus : p)));
-      } else {
-        toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {
-          no: patient.ptNo,
-          name: patient.ptNm
-        }));
-      }
-    })
-    .catch(err => toast.error(err));
+    dispatch(updatePatient(patientWithUpdatedStatus));
   }
 
   const canSubmit = () => {

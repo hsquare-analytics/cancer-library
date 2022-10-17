@@ -28,7 +28,7 @@ export const getEntity = createAsyncThunk('patient/fetch_entity', async (id: str
 
 export const updateEntity = createAsyncThunk('patient/update_entity', async (entity: IPatient, thunkAPI) => {
 
-    const result = await axios.put<IPatient>(`api/patients/${entity.ptNo}`, cleanEntity(entity));
+    const result = await axios.patch<IPatient>(`api/patients/${entity.ptNo}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities());
     return result;
   },

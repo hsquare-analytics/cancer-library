@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
-import {IPatient} from "app/shared/model/patient.model";
 import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
 
@@ -13,12 +12,7 @@ type userPatientSelectorType = {
     container: { [key: string]: any },
     count: number
   },
-  loading: {
-    patient: boolean,
-    patients: boolean, categories: boolean
-  },
-  patient: IPatient;
-  patients: IPatient[];
+  loading: boolean,
   categories: ICategory[];
   errorMessage: string | null;
 };
@@ -32,21 +26,10 @@ const initialState: userPatientSelectorType = {
     container: {},
     count: 0
   },
-  loading: {
-    patient: false,
-    patients: false,
-    categories: false,
-  },
-  patient: {} as IPatient,
-  patients: [],
+  loading: false,
   categories: [],
   errorMessage: null,
 }
-
-export const getAccessiblePatients = createAsyncThunk('patient-table-editor/fetch_accesible_patient_list', async () => {
-  const requestUrl = `api/patients/accessible-patient-list`;
-  return axios.get<IPatient[]>(requestUrl);
-})
 
 export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usable_item_list', async (categoryId: number) => {
   const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
@@ -63,12 +46,7 @@ export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_
   return axios.get<any>(requestUrl);
 });
 
-export const getPatient = createAsyncThunk('patient-table-editor/fetch_patient', async (patientNo: string) => {
-  const requestUrl = `api/patients/${patientNo}`;
-  return axios.get<IPatient>(requestUrl);
-});
-
-const name = 'patient-table-editor'
+const name = 'patient-table-editor-container'
 export const PatientTableEditorContainer = createSlice({
   name,
   initialState,
@@ -94,41 +72,15 @@ export const PatientTableEditorContainer = createSlice({
         }
       }
     },
-    setPatient(state, action) {
-      return {
-        ...state,
-        patient: action.payload
-      }
-    },
-    setPatients(state, action) {
-      return {
-        ...state,
-        patients: action.payload
-      }
-    }
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isFulfilled(getAccessiblePatients), (state, action) => {
-      const {data} = action.payload;
-      return {
-        ...state,
-        patients: data,
-        loading: {
-          ...state.loading,
-          patients: false
-        }
-      }
-    })
     .addMatcher(isFulfilled(getUsableCategories), (state, action) => {
       const {data} = action.payload;
       return {
         ...state,
         categories: data,
-        loading: {
-          ...state.loading,
-          categories: false
-        }
+        loading: false,
       }
     })
     .addMatcher(isFulfilled(getUsableItems), (state, action) => {
@@ -157,45 +109,18 @@ export const PatientTableEditorContainer = createSlice({
         }
       }
     })
-    .addMatcher(isFulfilled(getPatient), (state, action) => {
-      const {data} = action.payload;
-      return {
-        ...state,
-        patient: data,
-        loading: {
-          ...state.loading,
-          patient: false
-        }
-      }
-    })
-    .addMatcher(isPending(getAccessiblePatients), (state) => {
-      state.loading.patients = true;
-      state.errorMessage = null;
-    })
     .addMatcher(isPending(getUsableCategories), (state) => {
-      state.loading.categories = true;
+      state.loading = true;
       state.errorMessage = null;
-    })
-    .addMatcher(isPending(getPatient), (state) => {
-      state.loading.patient = true;
-      state.errorMessage = null;
-    })
-    .addMatcher(isRejected(getAccessiblePatients), (state, action) => {
-      state.errorMessage = action.error.message;
-      state.loading.patients = false;
     })
     .addMatcher(isRejected(getUsableCategories), (state, action) => {
       state.errorMessage = action.error.message;
-      state.loading.categories = false;
-    })
-    .addMatcher(isRejected(getPatient), (state, action) => {
-      state.errorMessage = action.error.message;
-      state.loading.patient = false;
+      state.loading = false;
     });
   }
 });
 
-export const {reset, resetDataSource, resetItem, setPatient, setPatients} = PatientTableEditorContainer.actions;
+export const {reset, resetDataSource, resetItem } = PatientTableEditorContainer.actions;
 
 
 export default PatientTableEditorContainer.reducer;

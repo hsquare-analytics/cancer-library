@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getEntities as getAccessiblePatients,
-  getEntity as getPatient
+  getEntity as getPatient,
+  updateEntity as updatePatient,
 } from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
@@ -13,7 +14,6 @@ import MultiTableEditor from "app/modules/patient-table-editor/multi-table-edito
 import ScrollView from 'devextreme-react/scroll-view';
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
-import axios from "axios";
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -25,15 +25,29 @@ import "./patient-table-editor.scss";
 export const PatientTableEditor = () => {
   const dispatch = useAppDispatch();
 
+  const dataGrid = useRef(null);
+
   const [popupVisible, setPopupVisible] = useState(false);
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
+  const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
   const patientList = useAppSelector(state => state.patientTableEditorPatient.entities);
   const loading = useAppSelector(state => state.patientTableEditorPatient.loading);
+  const updateSuccess = useAppSelector(state => state.patientTableEditorPatient.updateSuccess);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
   }, []);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
+        no: patient.ptNo,
+        name: patient.ptNm
+      }));
+    }
+
+  }, [updateSuccess]);
 
   const onRowDblClick = (e) => {
     dispatch(getPatient(e.data.ptNo));
@@ -41,41 +55,30 @@ export const PatientTableEditor = () => {
   }
 
   const onRowUpdating = (e) => {
-    e.cancel = new Promise<void>((resolve, reject) => {
+    e.cancel = new Promise<void>((resolve) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-      axios
-      .patch(`api/patients/${row.ptNo}`, row)
-      .then(({data}) => {
-        if (data >= 1) {
-          toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {no: row.ptNo, name: row.ptNm}));
-          dispatch(getPatient(row.ptNo));
-          resolve();
-        } else {
-          toast.error(translate("cancerLibraryApp.patientTableEditor.updateFailed", {no: row.ptNo, name: row.ptNm}));
-          reject('Updated Fail');
-        }
-      })
-      .catch(err => reject(err));
+      dispatch(updatePatient(row));
+      resolve();
     });
   }
 
-  return !loading ? (
-    <div>
-      <Popup
-        showTitle={false}
-        visible={popupVisible}
-        onHiding={() => setPopupVisible(false)}
-        resizeEnabled={true}
-        height={'95vh'}
-        width={'95vw'}
-      >
-        <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
-          <PatientProfileCard/>
-          <PatientTableEditorStackButton setPopupVisible={setPopupVisible}/>
-          <MultiTableEditor/>
-        </ScrollView>
-      </Popup>
-      <DataGrid
+  return <div>
+    <Popup
+      showTitle={false}
+      visible={popupVisible}
+      onHiding={() => setPopupVisible(false)}
+      resizeEnabled={true}
+      height={'95vh'}
+      width={'95vw'}
+    >
+      <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
+        <PatientProfileCard/>
+        <PatientTableEditorStackButton setPopupVisible={setPopupVisible}/>
+        <MultiTableEditor/>
+      </ScrollView>
+    </Popup>
+    {!loading ? <DataGrid
+        ref={dataGrid}
         dataSource={patientList}
         showBorders={true}
         filterRow={{visible: true}}
@@ -130,11 +133,11 @@ export const PatientTableEditor = () => {
             },
           ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
         </Column>
-      </DataGrid>
-    </div>
-  ) : <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '0vh'}}>
-    <CircularProgress/>
-  </Box>;
+      </DataGrid> :
+      <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '0vh'}}>
+        <CircularProgress/>
+      </Box>}
+  </div>
 };
 
 export default PatientTableEditor;

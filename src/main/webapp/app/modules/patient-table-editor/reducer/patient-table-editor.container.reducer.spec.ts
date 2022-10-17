@@ -5,17 +5,13 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
 import reducer, {
-  getAccessiblePatients,
   getDataSources,
-  getPatient,
   getUsableCategories,
   getUsableItems,
   reset,
   resetDataSource,
   resetItem,
-  setPatient
 } from './patient-table-editor.container.reducer';
-import {IPatient} from "app/shared/model/patient.model";
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -35,32 +31,20 @@ describe('User Patient selector module reducer tests', () => {
       container: {},
       count: 0
     },
-    loading: {
-      patient: false,
-      patients: false,
-      categories: false,
-    },
-    patient: {} as IPatient,
-    patients: [],
+    loading: false,
     categories: [],
     errorMessage: null,
   }
 
   function testInitialState(state) {
     expect(state).toMatchObject({
-      loading: {
-        patient: false,
-        patients: false,
-        categories: false,
-      },
+      loading: false,
       errorMessage: null,
     });
     expect(isEmpty(state.item.container));
     expect(isEmpty(state.dataSource.container));
     expect(isNaN(state.item.count));
     expect(isNaN(state.dataSource.count));
-    expect(isEmpty(state.patient));
-    expect(isEmpty(state.patients));
   }
 
   describe('Common', () => {
@@ -70,11 +54,7 @@ describe('User Patient selector module reducer tests', () => {
 
     it('should reset the state', () => {
       expect(reducer({
-        ...initialState, loading: {
-          patient: true,
-          patients: true,
-          categories: true,
-        }
+        ...initialState, loading: true, errorMessage: 'error'
       }, reset())).toEqual({
         ...initialState
       });
@@ -104,42 +84,15 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
-    it('should set patient', () => {
-      expect(reducer({
-        ...initialState, patient: null
-      }, setPatient({id: 1}))).toEqual({
-        ...initialState, patient: {id: 1}
-      });
-    });
   });
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      expect(reducer(undefined, {type: getAccessiblePatients.pending.type})).toMatchObject({
-        errorMessage: null,
-        loading: {
-          ...initialState.loading,
-          patients: true,
-        }
-      });
-
       expect(reducer(undefined, {type: getUsableCategories.pending.type})).toMatchObject({
         errorMessage: null,
-        loading: {
-          ...initialState.loading,
-          categories: true,
-        }
-      });
-
-      expect(reducer(undefined, {type: getPatient.pending.type})).toMatchObject({
-        errorMessage: null,
-        loading: {
-          ...initialState.loading,
-          patient: true,
-        }
+        loading: true,
       });
     });
-
   });
 
   describe('Failures', () => {
@@ -148,49 +101,14 @@ describe('User Patient selector module reducer tests', () => {
       const payload = 'some message';
       const error = {message: 'error message'};
 
-      expect(reducer(undefined, {type: getAccessiblePatients.rejected.type, payload, error})).toMatchObject({
-        errorMessage: 'error message',
-        loading: {
-          ...initialState.loading,
-          patients: false,
-        }
-      });
-
       expect(reducer(undefined, {type: getUsableCategories.rejected.type, payload, error})).toMatchObject({
         errorMessage: 'error message',
-        loading: {
-          ...initialState.loading,
-          categories: false,
-        }
+        loading: false
       });
-
-      expect(reducer(undefined, {type: getPatient.rejected.type, payload, error})).toMatchObject({
-        errorMessage: 'error message',
-        loading: {
-          ...initialState.loading,
-          patient: false,
-        }
-      });
-
     });
   });
 
   describe('Successes', () => {
-    it('should fetch accessible patients', () => {
-      const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
-
-      expect(reducer(undefined, {
-        type: getAccessiblePatients.fulfilled.type,
-        payload,
-      })).toEqual({
-        ...initialState,
-        patients: payload.data,
-        loading: {
-          ...initialState.loading,
-          patients: false,
-        }
-      });
-    });
 
     it('should fetch usable categories', () => {
       const payload = {data: [{1: 'fake1', 2: 'fake2'}]};
@@ -201,10 +119,7 @@ describe('User Patient selector module reducer tests', () => {
       })).toEqual({
         ...initialState,
         categories: payload.data,
-        loading: {
-          ...initialState.loading,
-          categories: false,
-        }
+        loading: false
       });
     });
 
@@ -242,18 +157,6 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
-    it('should fetch patient', () => {
-      const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
-
-      expect(reducer(undefined, {
-        type: getPatient.fulfilled.type,
-        payload,
-      })).toEqual({
-        ...initialState,
-        patient: payload.data,
-      });
-    });
-
   });
 
   describe('Actions', () => {
@@ -264,23 +167,6 @@ describe('User Patient selector module reducer tests', () => {
       const mockStore = configureStore([thunk]);
       store = mockStore({});
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
-    });
-
-    it('dispatches FETCH_PATIENT_LIST actions', async () => {
-      const expectedActions = [
-        {
-          type: getAccessiblePatients.pending.type
-        },
-        {
-          type: getAccessiblePatients.fulfilled.type,
-          payload: resolvedObject
-        }
-      ];
-
-      await store.dispatch(getAccessiblePatients());
-
-      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
-      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
     it('dispatches FETCH_CATEGORY_LIST actions', async () => {
@@ -316,24 +202,6 @@ describe('User Patient selector module reducer tests', () => {
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
-
-    it('dispatches FETCH_PATIENT actions', async () => {
-      const expectedActions = [
-        {
-          type: getPatient.pending.type
-        },
-        {
-          type: getPatient.fulfilled.type,
-          payload: resolvedObject
-        }
-      ];
-
-      await store.dispatch(getPatient("test"));
-
-      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
-      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
-    });
-
 
   });
 });
