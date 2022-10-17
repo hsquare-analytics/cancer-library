@@ -15,7 +15,7 @@ import passwordReset from 'app/modules/account/password-reset/password-reset.red
 import entitiesReducers from 'app/entities/entities-reducers';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 import navigation from "app/modules/navigation/navigation.reducer";
-import patient from "app/modules/patient/patient.reducer";
+import patient from "app/entities/patient/patient.reducer";
 import patientTableEditorContainer
   from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
 import patientTableEditorPatient from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
