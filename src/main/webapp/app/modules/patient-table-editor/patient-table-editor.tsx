@@ -16,9 +16,7 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import CircularProgress from '@mui/material/CircularProgress';
 import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
-import Box from '@mui/material/Box';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import "./patient-table-editor.scss";
 
@@ -32,7 +30,6 @@ export const PatientTableEditor = () => {
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
   const patientList = useAppSelector(state => state.patientTableEditorPatient.entities);
-  const loading = useAppSelector(state => state.patientTableEditorPatient.loading);
   const updateSuccess = useAppSelector(state => state.patientTableEditorPatient.updateSuccess);
 
   useEffect(() => {
@@ -77,66 +74,63 @@ export const PatientTableEditor = () => {
         <MultiTableEditor/>
       </ScrollView>
     </Popup>
-    {!loading ? <DataGrid
-        ref={dataGrid}
-        dataSource={patientList}
-        showBorders={true}
-        filterRow={{visible: true}}
-        headerFilter={{visible: true}}
-        searchPanel={{visible: true}}
-        allowColumnResizing={true}
-        pager={{displayMode: 'compact', showNavigationButtons: true}}
-        editing={{
-          mode: 'row',
-          allowAdding: false,
-          allowUpdating: canReview,
-        }}
-        onRowUpdating={(e) => onRowUpdating(e)}
-        onRowDblClick={onRowDblClick}
-        height={'95vh'}
-        selection={{mode: 'multiple'}}
-        hoverStateEnabled={true}
-        paging={{pageSize: 30}}
-      >
-        <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'}/>
-        {
-          PatientTableEditorColumn.map(item => <Column
-              key={item.dataField}
-              dataField={item.dataField}
-              caption={translate("cancerLibraryApp.patient." + item.dataField)}
-              dataType={item.dataType}
-              visibleIndex={item.visibleIndex}
-              allowEditing={false}
+    <DataGrid
+      ref={dataGrid}
+      dataSource={JSON.parse(JSON.stringify(patientList))}
+      showBorders={true}
+      filterRow={{visible: true}}
+      headerFilter={{visible: true}}
+      searchPanel={{visible: true}}
+      allowColumnResizing={true}
+      pager={{displayMode: 'compact', showNavigationButtons: true}}
+      editing={{
+        mode: 'row',
+        allowAdding: false,
+        allowUpdating: canReview,
+      }}
+      onRowUpdating={(e) => onRowUpdating(e)}
+      onRowDblClick={onRowDblClick}
+      height={'95vh'}
+      selection={{mode: 'multiple'}}
+      hoverStateEnabled={true}
+      paging={{pageSize: 30}}
+    >
+      <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'}/>
+      {
+        PatientTableEditorColumn.map(item => <Column
+            key={item.dataField}
+            dataField={item.dataField}
+            caption={translate("cancerLibraryApp.patient." + item.dataField)}
+            dataType={item.dataType}
+            visibleIndex={item.visibleIndex}
+            allowEditing={false}
+            alignment={'center'}
+            minWidth={150}
+          />
+        )
+      }
+      <Column caption={translate("cancerLibraryApp.patientTableEditor.column.status")} dataField={"status"}
               alignment={'center'}
-              minWidth={150}
-            />
-          )
-        }
-        <Column caption={translate("cancerLibraryApp.patientTableEditor.column.status")} dataField={"status"}
-                alignment={'center'}
-                minWidth={150} allowEditing={true}>
-          <Lookup dataSource={[
-            {
-              id: 1,
-              valueExpr: REVIEW_LIST.SUBMITTED,
-              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.submitted')
-            },
-            {
-              id: 2,
-              valueExpr: REVIEW_LIST.DECLINED,
-              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.declined')
-            },
-            {
-              id: 3,
-              valueExpr: REVIEW_LIST.APPROVED,
-              displayExpr: translate('cancerLibraryApp.patientTableEditor.review.approved')
-            },
-          ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
-        </Column>
-      </DataGrid> :
-      <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width: '0vh'}}>
-        <CircularProgress/>
-      </Box>}
+              minWidth={150} allowEditing={true}>
+        <Lookup dataSource={[
+          {
+            id: 1,
+            valueExpr: REVIEW_LIST.SUBMITTED,
+            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.submitted')
+          },
+          {
+            id: 2,
+            valueExpr: REVIEW_LIST.DECLINED,
+            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.declined')
+          },
+          {
+            id: 3,
+            valueExpr: REVIEW_LIST.APPROVED,
+            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.approved')
+          },
+        ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
+      </Column>
+    </DataGrid>
   </div>
 };
 
