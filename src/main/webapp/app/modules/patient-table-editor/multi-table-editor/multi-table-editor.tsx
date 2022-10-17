@@ -23,7 +23,7 @@ export const MultiTableEditor = () => {
   const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
   const itemCount = useAppSelector(state => state.patientTableEditorContainer.item.count);
 
-  const loading = !categories || categories.length === 0 || itemCount !== categories.length || dataSourceCount !== categories.length;
+  const loading = useAppSelector(state => state.patientTableEditorContainer.loading) || itemCount !== categories.length || dataSourceCount !== categories.length;
 
   useEffect(() => {
     if (categories.length === 0) {
