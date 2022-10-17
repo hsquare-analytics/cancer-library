@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -7,8 +7,6 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {
   updateEntity as updatePatient
 } from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
-import {toast} from 'react-toastify';
-import {translate} from 'react-jhipster';
 import Swal from "sweetalert2";
 
 interface IPatientTableEditorStackButtonProps {
@@ -20,18 +18,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
-  const updateSuccess = useAppSelector(state => state.patientTableEditorPatient.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
-
-  useEffect(() => {
-    if(updateSuccess) {
-      toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
-        no: patient.ptNo,
-        name: patient.ptNm
-      }));
-    }
-
-  }, [updateSuccess]);
 
   const onStatusChangeButtonClick = (status: string) => {
     const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date()};
