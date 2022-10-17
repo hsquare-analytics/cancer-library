@@ -1,8 +1,8 @@
 {
   "cancerLibraryApp": {
     "patientTableEditor": {
-      "updateSuccess" : "Patient {{ name }} ({{no}}) status is updated successfully",
-      "updateFailed" : "Patient {{ name }} ({{no}}) update failed",
+      "updateSuccess": "Patient {{ name }} ({{no}}) status is updated successfully",
+      "updateFailed": "Patient {{ name }} ({{no}}) update failed",
       "column": {
         "createdBy": "created by",
         "createdDate": "created date",
@@ -17,7 +17,19 @@
         "approved": "approved"
       },
       "profileCard": {
-        "title" : "Patient - {{ name }} ({{no}})"
+        "title": "Patient - {{ name }} ({{no}})"
+      },
+      "reviewButton": {
+        "submit": "submit",
+        "decline": "decline",
+        "approve": "approve",
+        "cancel": "cancel",
+        "declinePopup": {
+          "title": "Decline Patient",
+          "placeholder": "Please enter the reason for declining the patient",
+          "confirm": "Confirm",
+          "cancel": "Cancel"
+        }
       }
     }
   }

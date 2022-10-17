@@ -1,8 +1,8 @@
 {
   "cancerLibraryApp": {
     "patientTableEditor": {
-      "updateSuccess" : "Patient {{ name }} ({{no}}) status is updated successfully",
-      "updateFailed" : "Patient {{ name }} ({{no}}) update failed",
+      "updateSuccess": "Patient {{ name }} ({{no}}) status is updated successfully",
+      "updateFailed": "Patient {{ name }} ({{no}}) update failed",
       "column": {
         "createdBy": "생성자",
         "createdDate": "생성일",
@@ -17,7 +17,19 @@
         "approved": "승인 완료"
       },
       "profileCard": {
-        "title" : "환자 정보 - {{ name }} ({{no}})"
+        "title": "환자 정보 - {{ name }} ({{no}})"
+      },
+      "reviewButton" : {
+        "submit": "제출",
+        "decline": "거부",
+        "approve": "승인",
+        "cancel" : "취소",
+        "declinePopup": {
+          "title": "거부 사유",
+          "placeholder": "승인 거부 사유를 입력해주세요.",
+          "confirm": "확인",
+          "cancel": "취소"
+        }
       }
     }
   }

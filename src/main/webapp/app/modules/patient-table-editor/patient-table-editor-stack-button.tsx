@@ -8,6 +8,7 @@ import {
   updateEntity as updatePatient
 } from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
 import Swal from "sweetalert2";
+import {translate} from "react-jhipster";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
@@ -20,8 +21,8 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
   const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
   const login = useAppSelector(state => state.authentication.account.login);
 
-  const onStatusChangeButtonClick = (status: string) => {
-    const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date()};
+  const onStatusChangeButtonClick = (status: string, comment?: string) => {
+    const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date(), comment};
     if (status === REVIEW_LIST.SUBMITTED) {
       patientWithUpdatedStatus.createdBy = login;
       patientWithUpdatedStatus.createdDate = new Date();
@@ -42,23 +43,23 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const onDeclinedButtonClick = async () => {
     const {value: text, isConfirmed: isConfirmed} = await Swal.fire({
+      title: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.title"),
       input: 'textarea',
-      inputPlaceholder: '거부 사유를 입력해주세요....',
+      inputValue: patient ? patient.comment : "",
+      inputPlaceholder: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.placeholder"),
       inputAttributes: {
         'aria-label': 'Type your message here'
       },
       showCancelButton: true,
       customClass: {
         container: 'swal2-wide-textarea-container',
-      }
+      },
+      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.cancel"),
     });
 
     if (isConfirmed) {
-      Swal.fire({
-          text
-        },
-      );
-      onStatusChangeButtonClick(REVIEW_LIST.DECLINED)
+      onStatusChangeButtonClick(REVIEW_LIST.DECLINED, text);
     }
     return 0;
   }
@@ -70,15 +71,15 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
         <>
           <Button variant="contained" color="error" onClick={() => {
             onDeclinedButtonClick()
-          }}>거부</Button>
+          }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.decline")}</Button>
           <Button variant="contained" color="success"
                   onClick={() => {
                     onStatusChangeButtonClick(REVIEW_LIST.APPROVED)
-                  }}>승인</Button> </>
+                  }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.approve")}</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
                   onClick={() => {
                     onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)
-                  }}>제출</Button>}
+                  }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.submit")}</Button>}
     </Stack>
   );
 }
