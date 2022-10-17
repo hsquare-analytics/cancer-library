@@ -85,11 +85,18 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
     <Stack direction="row-reverse" spacing={1}>
       <Button variant="outlined" onClick={() => props.setPopupVisible(false)}>닫기</Button>
       {canReview ? (
-        <> <Button variant="contained" color="error" onClick={() => onDeclinedButtonClick()}>거부</Button>
+        <>
+          <Button variant="contained" color="error" onClick={() => {
+            onDeclinedButtonClick()
+          }}>거부</Button>
           <Button variant="contained" color="success"
-                  onClick={() => onStatusChangeButtonClick(REVIEW_LIST.APPROVED)}>승인</Button> </>
+                  onClick={() => {
+                    onStatusChangeButtonClick(REVIEW_LIST.APPROVED)
+                  }}>승인</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
-                  onClick={() => onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)}>제출</Button>}
+                  onClick={() => {
+                    onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)
+                  }}>제출</Button>}
     </Stack>
   );
 }
