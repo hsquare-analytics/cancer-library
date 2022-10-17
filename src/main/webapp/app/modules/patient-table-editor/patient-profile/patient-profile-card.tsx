@@ -15,6 +15,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
 import TextBox from 'devextreme-react/text-box';
+import PatientTableEditorColumn from "app/modules/patient-table-editor/patient-table-editor.column";
+import {IDxColumn} from "app/shared/model/dx-column.model";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -29,27 +31,27 @@ const PatientStatusChip = (status: string) => {
   }
 }
 
-const getFormattedValue: (string, any, array) => string = (key: string, value: any, dateKeys: string[]) => {
-  if (Date.parse(value)) {
-    if (dateKeys.includes(key)) {
-      return convertDateFromServer(value);
-    }
+const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
+  if (column.dataType === 'date') {
+    return convertDateFromServer(value);
+  } else if (column.dataType === 'datetime') {
     return convertDateTimeFromServer(value);
   }
   return value;
 }
+
 const PatientProfileDetail = (patient: IPatient) => {
   return (<Box>
     <Card variant="outlined" sx={{display: "flex"}}>
-      {patient ? Object.entries(patient).map(([key, value]) => <CardContent key={key}>
+      {PatientTableEditorColumn.map((column) => <CardContent key={column.dataField}>
           <Typography color="text.secondary">
-            {translate("cancerLibraryApp.patient." + key)}
+            {translate("cancerLibraryApp.patient." + column.dataField)}
           </Typography>
           <Typography component="span" color="text.default">
-            <TextBox value={getFormattedValue(key, value, ['ptBrdyDt', 'idxDt'])} readOnly={true} stylingMode={"underlined"}/>
+            <TextBox value={getFormattedValue(patient[column.dataField], column)} readOnly={true} stylingMode={"underlined"}/>
           </Typography>
         </CardContent>
-      ) : null}
+      )}
     </Card>
   </Box>);
 };
