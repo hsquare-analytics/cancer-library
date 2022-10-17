@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {getPatient, setPatients} from "app/modules/patient-table-editor/patient-table-editor.container.reducer";
+import {getPatient, setPatients} from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
 import axios from "axios";
 import {toast} from 'react-toastify';
 import {translate} from 'react-jhipster';

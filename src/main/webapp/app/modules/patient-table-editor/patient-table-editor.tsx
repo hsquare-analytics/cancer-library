@@ -3,7 +3,7 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getEntities as getAccessiblePatients,
   getEntity as getPatient
-} from "app/modules/patient-table-editor/patient-table-editor.patient.reducer";
+} from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
