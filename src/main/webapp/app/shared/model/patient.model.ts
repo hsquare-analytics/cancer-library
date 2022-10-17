@@ -11,7 +11,7 @@ export interface IPatient extends IAbstractAuditing {
   hspTpCd?: string;
   idxDt?: Date;
   status?: string;
-
+  comment?: string;
 }
 
 export const defaultValue: Readonly<IPatient> = {
@@ -22,5 +22,6 @@ export const defaultValue: Readonly<IPatient> = {
   hspTpCd: "",
   idxDt: new Date(),
   status: "",
+  comment: "",
   ...abstractAuditingDefaultValue
 };

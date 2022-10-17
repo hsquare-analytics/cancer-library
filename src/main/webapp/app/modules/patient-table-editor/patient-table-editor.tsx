@@ -16,7 +16,8 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import PatientTableEditorStackButton from "app/modules/patient-table-editor/patient-table-editor-stack-button";
+import PatientTableEditorStackButton
+  from "app/modules/patient-table-editor/stack-button/patient-table-editor-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import "./patient-table-editor.scss";
 
