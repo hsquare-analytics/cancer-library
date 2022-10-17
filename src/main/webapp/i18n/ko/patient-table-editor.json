@@ -19,7 +19,7 @@
       "profileCard": {
         "title": "환자 정보 - {{ name }} ({{no}})"
       },
-      "reviewButton" : {
+      "reviewButton": {
         "submit": "제출",
         "decline": "거부",
         "approve": "승인",
@@ -35,6 +35,9 @@
           "title": "{{name}}({{no}}) 님의 데이터 거부 사유를 입력해주세요",
           "text": "{{name}}({{no}}) 님의 데이터 거부를 확정하시겠습니까?",
           "placeholder": "승인 거부 사유를 입력해주세요."
+        },
+        "declineReasonPopup": {
+          "title": "{{name}}({{no}}) 님의 데이터 거부 사유"
         }
       }
     }

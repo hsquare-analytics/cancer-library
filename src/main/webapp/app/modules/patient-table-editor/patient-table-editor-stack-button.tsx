@@ -34,13 +34,13 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const onDeclinedButtonClick = async () => {
     const {value: text, isConfirmed: isConfirmed} = await Swal.fire({
-      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.title", {name : patient.ptNm, no: patient.ptNo}),
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.title", {
+        name: patient.ptNm,
+        no: patient.ptNo
+      }),
       input: 'textarea',
       inputValue: patient ? patient.comment : "",
       inputPlaceholder: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.placeholder"),
-      inputAttributes: {
-        'aria-label': 'Type your message here'
-      },
       showCancelButton: true,
       customClass: {
         container: 'swal2-wide-textarea-container',
@@ -51,7 +51,10 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
     if (isConfirmed) {
       const reConfirm = await Swal.fire({
-        text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.text", {name : patient.ptNm, no: patient.ptNo}),
+        text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.text", {
+          name: patient.ptNm,
+          no: patient.ptNo
+        }),
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
@@ -74,7 +77,10 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const onApprovedButtonClick = async () => {
     const {isConfirmed: isConfirmed} = await Swal.fire({
-      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.approvePopup.title", {name : patient.ptNm, no: patient.ptNo}),
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.approvePopup.title", {
+        name: patient.ptNm,
+        no: patient.ptNo
+      }),
       showCancelButton: true,
       confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
       cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
@@ -94,10 +100,13 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const onSubmittedButtonClick = async () => {
     const {isConfirmed: isConfirmed} = await Swal.fire({
-      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.title", {name : patient.ptNm, no: patient.ptNo}),
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.title", {
+        name: patient.ptNm,
+        no: patient.ptNo
+      }),
       showCancelButton: true,
-      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.confirm"),
-      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.cancel"),
+      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
     });
 
     if (isConfirmed) {
@@ -114,9 +123,33 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
     return 0;
   }
 
+  const onDeclineReasonButtonClick = () => {
+    Swal.fire({
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declineReasonPopup.title", {
+        name: patient.ptNm,
+        no: patient.ptNo
+      }),
+      input: 'textarea',
+      inputValue: patient ? patient.comment : "",
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
+      customClass: {
+        container: 'swal2-wide-textarea-container',
+      },
+    });
+  }
+
+
   return (
     <Stack direction="row-reverse" spacing={1}>
       <Button variant="outlined" onClick={() => props.setPopupVisible(false)}>닫기</Button>
+      {
+        patient && patient.status === REVIEW_LIST.DECLINED &&
+        <Button variant="outlined" color="warning" onClick={() => {
+          onDeclineReasonButtonClick()
+        }}>거부 사유</Button>
+      }
       {canReview ? (
         <>
           <Button variant="contained" color="error" onClick={() => {
