@@ -23,12 +23,18 @@
         "submit": "제출",
         "decline": "거부",
         "approve": "승인",
-        "cancel" : "취소",
+        "confirm": "확인",
+        "cancel": "취소",
+        "submitPopup": {
+          "title": "{{name}}({{no}}) 님의 데이터를 제출하시겠습니까?"
+        },
+        "approvePopup": {
+          "title": "{{name}}({{no}}) 님의 데이터를 승인하시겠습니까?"
+        },
         "declinePopup": {
-          "title": "거부 사유",
-          "placeholder": "승인 거부 사유를 입력해주세요.",
-          "confirm": "확인",
-          "cancel": "취소"
+          "title": "{{name}}({{no}}) 님의 데이터 거부 사유를 입력해주세요",
+          "text": "{{name}}({{no}}) 님의 데이터 거부를 확정하시겠습니까?",
+          "placeholder": "승인 거부 사유를 입력해주세요."
         }
       }
     }

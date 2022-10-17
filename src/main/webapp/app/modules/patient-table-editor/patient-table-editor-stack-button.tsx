@@ -21,15 +21,6 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
   const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
   const login = useAppSelector(state => state.authentication.account.login);
 
-  const onStatusChangeButtonClick = (status: string, comment?: string) => {
-    const patientWithUpdatedStatus = {...patient, status, lastModifiedBy: login, lastModifiedDate: new Date(), comment};
-    if (status === REVIEW_LIST.SUBMITTED) {
-      patientWithUpdatedStatus.createdBy = login;
-      patientWithUpdatedStatus.createdDate = new Date();
-    }
-    dispatch(updatePatient(patientWithUpdatedStatus));
-  }
-
   const canSubmit = () => {
     if (!patient) {
       return false;
@@ -43,7 +34,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
 
   const onDeclinedButtonClick = async () => {
     const {value: text, isConfirmed: isConfirmed} = await Swal.fire({
-      title: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.title"),
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.title", {name : patient.ptNm, no: patient.ptNo}),
       input: 'textarea',
       inputValue: patient ? patient.comment : "",
       inputPlaceholder: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.placeholder"),
@@ -54,12 +45,71 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
       customClass: {
         container: 'swal2-wide-textarea-container',
       },
-      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.confirm"),
-      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.cancel"),
+      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
     });
 
     if (isConfirmed) {
-      onStatusChangeButtonClick(REVIEW_LIST.DECLINED, text);
+      const reConfirm = await Swal.fire({
+        text: translate("cancerLibraryApp.patientTableEditor.reviewButton.declinePopup.text", {name : patient.ptNm, no: patient.ptNo}),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
+        cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
+      });
+
+      if (reConfirm.isConfirmed) {
+        const patientWithUpdatedStatus = {
+          ...patient,
+          status: REVIEW_LIST.DECLINED,
+          lastModifiedBy: login,
+          lastModifiedDate: new Date(),
+          comment: text
+        };
+        dispatch(updatePatient(patientWithUpdatedStatus));
+      }
+    }
+    return 0;
+  }
+
+  const onApprovedButtonClick = async () => {
+    const {isConfirmed: isConfirmed} = await Swal.fire({
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.approvePopup.title", {name : patient.ptNm, no: patient.ptNo}),
+      showCancelButton: true,
+      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.cancel"),
+    });
+
+    if (isConfirmed) {
+      const patientWithUpdatedStatus = {
+        ...patient,
+        status: REVIEW_LIST.APPROVED,
+        lastModifiedBy: login,
+        lastModifiedDate: new Date()
+      };
+      dispatch(updatePatient(patientWithUpdatedStatus));
+    }
+    return 0;
+  }
+
+  const onSubmittedButtonClick = async () => {
+    const {isConfirmed: isConfirmed} = await Swal.fire({
+      text: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.title", {name : patient.ptNm, no: patient.ptNo}),
+      showCancelButton: true,
+      confirmButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.patientTableEditor.reviewButton.submitPopup.cancel"),
+    });
+
+    if (isConfirmed) {
+      const patientWithUpdatedStatus = {
+        ...patient,
+        status: REVIEW_LIST.SUBMITTED,
+        createdBy: login,
+        createdDate: new Date(),
+        lastModifiedBy: login,
+        lastModifiedDate: new Date()
+      };
+      dispatch(updatePatient(patientWithUpdatedStatus));
     }
     return 0;
   }
@@ -74,11 +124,11 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
           }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.decline")}</Button>
           <Button variant="contained" color="success"
                   onClick={() => {
-                    onStatusChangeButtonClick(REVIEW_LIST.APPROVED)
+                    onApprovedButtonClick()
                   }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.approve")}</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
                   onClick={() => {
-                    onStatusChangeButtonClick(REVIEW_LIST.SUBMITTED)
+                    onSubmittedButtonClick()
                   }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.submit")}</Button>}
     </Stack>
   );
