@@ -14,7 +14,7 @@ import reducer, {
   resetDataSource,
   resetItem,
   setPatient
-} from './patient-table-editor.reducer';
+} from './patient-table-editor.datasource.reducer';
 import {IPatient} from "app/shared/model/patient.model";
 
 describe('User Patient selector module reducer tests', () => {

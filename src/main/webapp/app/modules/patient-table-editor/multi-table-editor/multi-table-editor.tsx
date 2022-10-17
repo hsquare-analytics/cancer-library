@@ -10,7 +10,7 @@ import {
   getUsableItems,
   resetDataSource,
   resetItem
-} from "app/modules/patient-table-editor/patient-table-editor.reducer";
+} from "app/modules/patient-table-editor/patient-table-editor.datasource.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 
 export const MultiTableEditor = () => {
