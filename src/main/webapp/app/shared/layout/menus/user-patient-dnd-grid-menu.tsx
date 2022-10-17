@@ -6,7 +6,7 @@ import {NavLink as Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export const UserPatientDndGridMenu = () => (
-  <NavItem>
+  <NavItem id="user-patient-dnd-grid-menu">
     <NavLink tag={Link} to="/user-patient-authorization-editor" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home"/>
       <span>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import {render} from '@testing-library/react';
+import {Provider} from 'react-redux';
+import {MemoryRouter} from 'react-router-dom';
 
 import initStore from 'app/config/store';
 import Header from './header';
@@ -10,6 +10,7 @@ describe('Header', () => {
   let mountedWrapper;
   const devProps = {
     isAuthenticated: true,
+    isSupervisor: true,
     isAdmin: true,
     currentLocale: 'en',
     ribbonEnv: 'dev',
@@ -22,12 +23,19 @@ describe('Header', () => {
     isInProduction: true,
     isOpenAPIEnabled: false,
   };
+  const supervisorProps = {
+    ...prodProps,
+    isSupervisor: true,
+    isAdmin: false,
+  }
   const userProps = {
     ...prodProps,
+    isSupervisor: false,
     isAdmin: false,
   };
   const guestProps = {
     ...prodProps,
+    isSupervisor: false,
     isAdmin: false,
     isAuthenticated: false,
   };
@@ -59,8 +67,6 @@ describe('Header', () => {
     expect(html).toContain('navbar');
     // Find AdminMenu component
     expect(html).toContain('admin-menu');
-    // Find EntitiesMenu component
-    expect(html).toContain('entity-menu');
     // Find AccountMenu component
     expect(html).toContain('account-menu');
     // Ribbon
@@ -74,12 +80,25 @@ describe('Header', () => {
     expect(html).toContain('navbar');
     // Find AdminMenu component
     expect(html).toContain('admin-menu');
-    // Find EntitiesMenu component
-    expect(html).toContain('entity-menu');
     // Find AccountMenu component
     expect(html).toContain('account-menu');
     // No Ribbon
     expect(html).not.toContain('ribbon');
+  });
+
+  it('Renders a Header component in prod profile with logged in Supervisor', () => {
+    const html = wrapper(supervisorProps);
+
+    // Find Navbar component
+    expect(html).toContain('navbar');
+    // Not find AdminMenu component
+    expect(html).not.toContain('admin-menu');
+    // Find AccountMenu component
+    expect(html).toContain('account-menu');
+
+    // Custom header
+    expect(html).toContain('patient-table-editor-menu');
+    expect(html).toContain('user-patient-dnd-grid-menu');
   });
 
   it('Renders a Header component in prod profile with logged in User', () => {
@@ -89,10 +108,12 @@ describe('Header', () => {
     expect(html).toContain('navbar');
     // Not find AdminMenu component
     expect(html).not.toContain('admin-menu');
-    // Find EntitiesMenu component
-    expect(html).toContain('entity-menu');
     // Find AccountMenu component
     expect(html).toContain('account-menu');
+
+    // Custom header
+    expect(html).toContain('patient-table-editor-menu');
+    expect(html).not.toContain('user-patient-dnd-grid-menu');
   });
 
   it('Renders a Header component in prod profile with no logged in User', () => {
@@ -102,9 +123,10 @@ describe('Header', () => {
     expect(html).toContain('navbar');
     // Not find AdminMenu component
     expect(html).not.toContain('admin-menu');
-    // Not find EntitiesMenu component
-    expect(html).not.toContain('entity-menu');
     // Find AccountMenu component
+
+    // Custom header
     expect(html).toContain('account-menu');
+    expect(html).not.toContain('patient-table-editor-menu');
   });
 });
