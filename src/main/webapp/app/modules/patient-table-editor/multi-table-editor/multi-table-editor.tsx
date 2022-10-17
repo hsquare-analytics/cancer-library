@@ -16,7 +16,7 @@ import {IPatient} from "app/shared/model/patient.model";
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
 
-  const patient = useAppSelector<IPatient>(state => state.patientTableEditorContainer.patient);
+  const patient = useAppSelector<IPatient>(state => state.patientTableEditorPatient.entity);
   const categories = useAppSelector(state => state.patientTableEditorContainer.categories);
 
   const dataSourceCount = useAppSelector(state => state.patientTableEditorContainer.dataSource.count);

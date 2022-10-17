@@ -18,8 +18,8 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
   const dispatch = useAppDispatch();
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
-  const patient = useAppSelector(state => state.patientTableEditorContainer.patient);
-  const patientList = useAppSelector(state => state.patientTableEditorContainer.patients);
+  const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
+  const patientList = useAppSelector(state => state.patientTableEditorPatient.entities);
   const login = useAppSelector(state => state.authentication.account.login);
 
   const onStatusChangeButtonClick = (status: string) => {

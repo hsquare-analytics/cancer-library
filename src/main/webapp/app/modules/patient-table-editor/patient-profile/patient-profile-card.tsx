@@ -55,8 +55,8 @@ const PatientProfileDetail = (patient: IPatient) => {
 };
 
 export const PatientProfileCard = () => {
-  const patient = useAppSelector<IPatient>(state => state.patientTableEditorContainer.patient);
-  const loading = useAppSelector<IPatient>(state => state.patientTableEditorContainer.loading.patient);
+  const patient = useAppSelector<IPatient>(state => state.patientTableEditorPatient.entity);
+  const loading = useAppSelector<IPatient>(state => state.patientTableEditorPatient.loading);
 
   return (
     <Accordion defaultExpanded={true} expanded={true}>
