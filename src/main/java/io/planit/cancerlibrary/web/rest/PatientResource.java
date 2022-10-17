@@ -98,6 +98,10 @@ public class PatientResource {
                     existPatient.setStatus(patientDTO.getStatus());
                 }
 
+                if (!ObjectUtils.isEmpty(patientDTO.getComment())) {
+                    existPatient.setComment(patientDTO.getComment());
+                }
+
                 if (ReviewConstants.SUBMITTED.equals(patientDTO.getStatus())) {
                     existPatient.setCreatedBy(login);
                     existPatient.setCreatedDate(Instant.now());

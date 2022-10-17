@@ -42,6 +42,7 @@ public class PatientResourceIT {
     private static final Instant DEFAULT_CREATED_DATE = Instant.now();
     private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
     private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.now();
+    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
 
     private static final String UPDATED_PT_NO = "BBBBBBBBBB";
     private static final String UPDATED_PT_NM = "BBBBBBBBBB";
@@ -54,6 +55,8 @@ public class PatientResourceIT {
     private static final Instant UPDATED_CREATED_DATE = Instant.now();
     private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
     private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().plus(1, ChronoUnit.DAYS);
+    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/patients";
 
     @Autowired
@@ -76,7 +79,8 @@ public class PatientResourceIT {
             .createdBy(DEFAULT_CREATED_BY)
             .createdDate(DEFAULT_CREATED_DATE)
             .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
-            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
+            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE)
+            .comment(DEFAULT_COMMENT);
     }
 
     public static Patient createUpdatedPatientDTO() {
@@ -91,7 +95,8 @@ public class PatientResourceIT {
             .createdBy(UPDATED_CREATED_BY)
             .createdDate(UPDATED_CREATED_DATE)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE);
+            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
+            .comment(UPDATED_COMMENT);
     }
 
     @BeforeEach
@@ -120,6 +125,7 @@ public class PatientResourceIT {
         assertThat(testPatient.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testPatient.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testPatient.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
+        assertThat(testPatient.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
     @Test
@@ -140,12 +146,14 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
             .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
             .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
-            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())));
+            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())))
+            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)))
+        ;
     }
 
     @Test
     @Transactional
-    void testUpdatePartialPatientStatus() throws Exception {
+    void testUpdatePartialPatientUpdate() throws Exception {
         // given
         patientMapper.insert(patient);
         int databaseSizeBeforeUpdate = patientMapper.findAll().size();
@@ -153,6 +161,7 @@ public class PatientResourceIT {
         // when
         patient.setPtNm(UPDATED_PT_NM);
         patient.setStatus(UPDATED_STATUS);
+        patient.setComment(UPDATED_COMMENT);
         restPatientMockMvc.perform(patch(ENTITY_API_URL + "/{ptNo}", patient.getPtNo())
                 .contentType("application/merge-patch+json")
                 .content(TestUtil.convertObjectToJsonBytes(patient)))
@@ -163,6 +172,7 @@ public class PatientResourceIT {
         assertThat(patientList).hasSize(databaseSizeBeforeUpdate);
         Patient testPatient = patientList.get(patientList.size() - 1);
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
+        assertThat(testPatient.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
     }
 

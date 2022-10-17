@@ -20,9 +20,9 @@
 
     <insert id="insert" parameterType="io.planit.cancerlibrary.domain.Patient">
         INSERT INTO TEST_PATIENT (PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY,
-                                  CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
+                                  CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COMMENT)
         VALUES (#{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
-                #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate});
+                #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate}, #{comment});
     </insert>
 
     <select id="existsByPatientNo" resultType="boolean">
@@ -39,8 +39,14 @@
 
     <update id="update" parameterType="io.planit.cancerlibrary.domain.Patient">
         UPDATE TEST_PATIENT
-        SET STATUS = #{status}, LAST_MODIFIED_BY = #{lastModifiedBy}, LAST_MODIFIED_DATE = #{lastModifiedDate}
+        SET LAST_MODIFIED_BY = #{lastModifiedBy}, LAST_MODIFIED_DATE = #{lastModifiedDate}
         <trim prefix="," suffixOverrides=",">
+            <if test="status != null">
+                STATUS = #{status},
+            </if>
+            <if test="comment != null">
+                COMMENT = #{comment},
+            </if>
             <if test="createdBy != null">
                 CREATED_BY = #{createdBy},
             </if>

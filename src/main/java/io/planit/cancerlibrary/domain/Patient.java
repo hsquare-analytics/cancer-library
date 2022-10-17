@@ -16,6 +16,7 @@ public class Patient {
     private Instant createdDate;
     private String lastModifiedBy;
     private Instant lastModifiedDate;
+    private String comment;
 
     public String getPtNo() {
         return ptNo;
@@ -157,6 +158,19 @@ public class Patient {
 
     public Patient lastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+        return this;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Patient comment(String comment) {
+        this.comment = comment;
         return this;
     }
 
