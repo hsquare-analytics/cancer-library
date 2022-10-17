@@ -3,12 +3,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.planit.cancerlibrary.mapper.PatientMapper">
-    <select id="findAll" resultType="io.planit.cancerlibrary.service.dto.PatientDTO">
+    <select id="findAll" resultType="io.planit.cancerlibrary.domain.Patient">
         SELECT *
         FROM TEST_PATIENT;
     </select>
 
-    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.service.dto.PatientDTO"
+    <select id="findAllByPatientNos" resultType="io.planit.cancerlibrary.domain.Patient"
         parameterType="java.util.List">
         SELECT *
         FROM TEST_PATIENT
@@ -18,7 +18,7 @@
         </foreach>
     </select>
 
-    <insert id="insert" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
+    <insert id="insert" parameterType="io.planit.cancerlibrary.domain.Patient">
         INSERT INTO TEST_PATIENT (PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY,
                                   CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)
         VALUES (#{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
@@ -31,13 +31,13 @@
         WHERE PT_NO = #{patientNo};
     </select>
 
-    <select id="findByPatientNo" resultType="io.planit.cancerlibrary.service.dto.PatientDTO">
+    <select id="findByPatientNo" resultType="io.planit.cancerlibrary.domain.Patient">
         SELECT *
         FROM TEST_PATIENT
         WHERE PT_NO = #{patientNo};
     </select>
 
-    <update id="update" parameterType="io.planit.cancerlibrary.service.dto.PatientDTO">
+    <update id="update" parameterType="io.planit.cancerlibrary.domain.Patient">
         UPDATE TEST_PATIENT
         SET STATUS = #{status}, LAST_MODIFIED_BY = #{lastModifiedBy}, LAST_MODIFIED_DATE = #{lastModifiedDate}
         <trim prefix="," suffixOverrides=",">

@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
-import io.planit.cancerlibrary.service.dto.PatientDTO;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -62,10 +62,10 @@ public class PatientResourceIT {
     @Autowired
     private MockMvc restPatientMockMvc;
 
-    private PatientDTO patient;
+    private Patient patient;
 
-    public static PatientDTO createPatientDTO() {
-        return new PatientDTO()
+    public static Patient createPatientDTO() {
+        return new Patient()
             .ptNo(DEFAULT_PT_NO)
             .ptNm(DEFAULT_PT_NM)
             .sexTpCd(DEFAULT_SEX_TP_CD)
@@ -79,8 +79,8 @@ public class PatientResourceIT {
             .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE);
     }
 
-    public static PatientDTO createUpdatedPatientDTO() {
-        return new PatientDTO()
+    public static Patient createUpdatedPatientDTO() {
+        return new Patient()
             .ptNo(UPDATED_PT_NO)
             .ptNm(UPDATED_PT_NM)
             .sexTpCd(UPDATED_SEX_TP_CD)
@@ -108,9 +108,9 @@ public class PatientResourceIT {
                 .content(TestUtil.convertObjectToJsonBytes(patient)))
             .andExpect(status().isCreated());
 
-        List<PatientDTO> patientList = patientMapper.findAll();
+        List<Patient> patientList = patientMapper.findAll();
         assertThat(patientList).hasSize(databaseSizeBeforeCreate + 1);
-        PatientDTO testPatient = patientList.get(patientList.size() - 1);
+        Patient testPatient = patientList.get(patientList.size() - 1);
         assertThat(testPatient.getPtNo()).isEqualTo(DEFAULT_PT_NO);
         assertThat(testPatient.getPtNm()).isEqualTo(DEFAULT_PT_NM);
         assertThat(testPatient.getSexTpCd()).isEqualTo(DEFAULT_SEX_TP_CD);
@@ -159,9 +159,9 @@ public class PatientResourceIT {
             .andExpect(status().isOk());
 
         // then
-        List<PatientDTO> patientDTOList = patientMapper.findAll();
-        assertThat(patientDTOList).hasSize(databaseSizeBeforeUpdate);
-        PatientDTO testPatient = patientDTOList.get(patientDTOList.size() - 1);
+        List<Patient> patientList = patientMapper.findAll();
+        assertThat(patientList).hasSize(databaseSizeBeforeUpdate);
+        Patient testPatient = patientList.get(patientList.size() - 1);
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
     }

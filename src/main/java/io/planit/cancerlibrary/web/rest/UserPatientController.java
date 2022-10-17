@@ -1,13 +1,13 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
-import io.planit.cancerlibrary.service.dto.PatientDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -49,12 +49,12 @@ public class UserPatientController {
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
 
-        List<PatientDTO> patientDTOList = patientMapper.findAll();
+        List<Patient> patientList = patientMapper.findAll();
         List<String> authorizedPatientNoList = userPatientRepository
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
 
-        List<DivisiblePatientVM> result = patientDTOList.stream().map(patientDTO -> {
+        List<DivisiblePatientVM> result = patientList.stream().map(patientDTO -> {
             boolean isAuthorized = authorizedPatientNoList.contains(patientDTO.getPtNo());
             return new DivisiblePatientVM(patientDTO, isAuthorized);
         }).collect(Collectors.toList());
@@ -112,7 +112,7 @@ public class UserPatientController {
         }
     }
 
-    static class DivisiblePatientVM extends PatientDTO {
+    static class DivisiblePatientVM extends Patient {
 
         private boolean authorized;
 
@@ -125,9 +125,9 @@ public class UserPatientController {
             this.authorized = authorized;
         }
 
-        public DivisiblePatientVM(PatientDTO patientDTO, boolean authorized) {
-            this.ptNo(patientDTO.getPtNo());
-            this.ptNm(patientDTO.getPtNm());
+        public DivisiblePatientVM(Patient patient, boolean authorized) {
+            this.ptNo(patient.getPtNo());
+            this.ptNm(patient.getPtNm());
             this.authorized = authorized;
         }
 

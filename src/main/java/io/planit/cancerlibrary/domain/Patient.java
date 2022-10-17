@@ -1,9 +1,9 @@
-package io.planit.cancerlibrary.service.dto;
+package io.planit.cancerlibrary.domain;
 
 import java.time.Instant;
 import java.util.Date;
 
-public class PatientDTO {
+public class Patient {
 
     private String ptNo;
     private String ptNm;
@@ -25,7 +25,7 @@ public class PatientDTO {
         this.ptNo = ptNo;
     }
 
-    public PatientDTO ptNo(String ptNo) {
+    public Patient ptNo(String ptNo) {
         this.ptNo = ptNo;
         return this;
     }
@@ -38,7 +38,7 @@ public class PatientDTO {
         this.ptNm = ptNm;
     }
 
-    public PatientDTO ptNm(String ptNm) {
+    public Patient ptNm(String ptNm) {
         this.ptNm = ptNm;
         return this;
     }
@@ -51,7 +51,7 @@ public class PatientDTO {
         this.sexTpCd = sexTpCd;
     }
 
-    public PatientDTO sexTpCd(String sexTpCd) {
+    public Patient sexTpCd(String sexTpCd) {
         this.sexTpCd = sexTpCd;
         return this;
     }
@@ -64,7 +64,7 @@ public class PatientDTO {
         this.ptBrdyDt = ptBrdyDt;
     }
 
-    public PatientDTO ptBrdyDt(String ptBrdyDt) {
+    public Patient ptBrdyDt(String ptBrdyDt) {
         this.ptBrdyDt = ptBrdyDt;
         return this;
     }
@@ -77,7 +77,7 @@ public class PatientDTO {
         this.hspTpCd = hspTpCd;
     }
 
-    public PatientDTO hspTpCd(String hspTpCd) {
+    public Patient hspTpCd(String hspTpCd) {
         this.hspTpCd = hspTpCd;
         return this;
     }
@@ -90,7 +90,7 @@ public class PatientDTO {
         this.idxDt = idxDt;
     }
 
-    public PatientDTO idxDt(Date idxDt) {
+    public Patient idxDt(Date idxDt) {
         this.idxDt = idxDt;
         return this;
     }
@@ -103,7 +103,7 @@ public class PatientDTO {
         this.status = status;
     }
 
-    public PatientDTO status(String status) {
+    public Patient status(String status) {
         this.status = status;
         return this;
     }
@@ -116,7 +116,7 @@ public class PatientDTO {
         this.createdBy = createdBy;
     }
 
-    public PatientDTO createdBy(String createdBy) {
+    public Patient createdBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
@@ -129,7 +129,7 @@ public class PatientDTO {
         this.createdDate = createdDate;
     }
 
-    public PatientDTO createdDate(Instant createdDate) {
+    public Patient createdDate(Instant createdDate) {
         this.createdDate = createdDate;
         return this;
     }
@@ -142,7 +142,7 @@ public class PatientDTO {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public PatientDTO lastModifiedBy(String lastModifiedBy) {
+    public Patient lastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
         return this;
     }
@@ -155,11 +155,11 @@ public class PatientDTO {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public PatientDTO lastModifiedDate(Instant lastModifiedDate) {
+    public Patient lastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
         return this;
     }
 
-    public PatientDTO() {
+    public Patient() {
     }
 }

@@ -1,9 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.security.SecurityUtils;
-import io.planit.cancerlibrary.service.dto.PatientDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,37 +43,37 @@ public class PatientResource {
     }
 
     @PostMapping("/patients")
-    public ResponseEntity<Integer> createPatient(@RequestBody PatientDTO patientDTO)
+    public ResponseEntity<Integer> createPatient(@RequestBody Patient patient)
         throws URISyntaxException {
-        log.debug("REST request to save Patient : {}", patientDTO);
+        log.debug("REST request to save Patient : {}", patient);
 
-        int result = patientMapper.insert(patientDTO);
+        int result = patientMapper.insert(patient);
 
         return ResponseEntity.created(new URI("/api/patients/" + result)).body(result);
     }
 
     @GetMapping(("/patients"))
-    public ResponseEntity<List<PatientDTO>> getAllPatients() {
+    public ResponseEntity<List<Patient>> getAllPatients() {
         log.debug("REST request to get all Patients");
 
-        List<PatientDTO> result = patientMapper.findAll();
+        List<Patient> result = patientMapper.findAll();
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/patients/{ptNo}")
-    public ResponseEntity<PatientDTO> getPatient(@PathVariable String ptNo) {
+    public ResponseEntity<Patient> getPatient(@PathVariable String ptNo) {
         log.debug("REST request to get Patient : {}", ptNo);
 
-        Optional<PatientDTO> result = patientMapper.findByPatientNo(ptNo);
+        Optional<Patient> result = patientMapper.findByPatientNo(ptNo);
         return result.map(patient -> ResponseEntity.ok().body(patient))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
     }
 
     @PatchMapping(value = "/patients/{ptNo}", consumes = {"application/json", "application/merge-patch+json"})
-    public ResponseEntity<PatientDTO> partialUpdatePatient(
+    public ResponseEntity<Patient> partialUpdatePatient(
         @PathVariable(value = "ptNo") final String ptNo,
-        @NotNull @RequestBody PatientDTO patientDTO
+        @NotNull @RequestBody Patient patientDTO
     ) {
         log.debug("REST request to update Patient partially : {}, {}", ptNo, patientDTO);
 
@@ -92,7 +92,7 @@ public class PatientResource {
         String login = SecurityUtils.getCurrentUserLogin()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        Optional<PatientDTO> patient = patientMapper.findByPatientNo(ptNo)
+        Optional<Patient> patient = patientMapper.findByPatientNo(ptNo)
             .map(existPatient -> {
                 if (!ObjectUtils.isEmpty(patientDTO.getStatus())) {
                     existPatient.setStatus(patientDTO.getStatus());

@@ -1,11 +1,11 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
-import io.planit.cancerlibrary.service.dto.PatientDTO;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -34,11 +34,11 @@ public class PatientController {
     }
 
     @GetMapping("/patients/accessible-patient-list")
-    public ResponseEntity<List<PatientDTO>> getAccessiblePatientList() {
+    public ResponseEntity<List<Patient>> getAccessiblePatientList() {
         log.debug("REST request to get accessible patient list");
 
         if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.SUPERVISOR, AuthoritiesConstants.ADMIN)) {
-            List<PatientDTO> result = patientMapper.findAll();
+            List<Patient> result = patientMapper.findAll();
             return ResponseEntity.ok().body(result);
         } else {
             String login = SecurityUtils.getCurrentUserLogin().orElseThrow().toLowerCase();
@@ -46,7 +46,7 @@ public class PatientController {
                 .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
                 .collect(Collectors.toList());
 
-            List<PatientDTO> result = patientMapper.findAllByPatientNos(accessiblePatientNoList);
+            List<Patient> result = patientMapper.findAllByPatientNos(accessiblePatientNoList);
 
             return ResponseEntity.ok().body(result);
         }

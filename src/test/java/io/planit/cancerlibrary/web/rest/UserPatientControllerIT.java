@@ -10,13 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
-import io.planit.cancerlibrary.service.dto.PatientDTO;
 import io.planit.cancerlibrary.web.rest.UserPatientController.DivisiblePatientVM;
 import io.planit.cancerlibrary.web.rest.UserPatientController.UserPatientAuthorizationsVM;
 import java.util.ArrayList;
@@ -59,17 +59,17 @@ class UserPatientControllerIT {
         user.setLogin("test");
         userRepository.saveAndFlush(user);
 
-        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
-        patientMapper.insert(patientDTO);
+        Patient patient = PatientResourceIT.createPatientDTO();
+        patientMapper.insert(patient);
 
-        UserPatient userPatient = new UserPatient().user(user).patientNo(patientDTO.getPtNo());
+        UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
-            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
+            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
             .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)));
     }
 
@@ -77,14 +77,14 @@ class UserPatientControllerIT {
     @Transactional
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithIndiscerptiblePatient() throws Exception {
-        PatientDTO patientDTO = PatientResourceIT.createPatientDTO();
-        patientMapper.insert(patientDTO);
+        Patient patient = PatientResourceIT.createPatientDTO();
+        patientMapper.insert(patient);
 
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patientDTO.getPtNo())))
-            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patientDTO.getPtNm())))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
+            .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
             .andExpect(jsonPath("$.[*].authorized").value(not(hasItem(true))));
 
     }
@@ -101,10 +101,10 @@ class UserPatientControllerIT {
 
         List<String> patientNos = List.of("1", "2", "3");
         patientNos.forEach(patientNo -> {
-            PatientDTO patientDTO = PatientResourceIT.createPatientDTO().ptNo(patientNo);
-            patientDTO.setPtNo(patientNo);
-            patientMapper.insert(patientDTO);
-            patientList.add(new DivisiblePatientVM(patientDTO, true));
+            Patient patient = PatientResourceIT.createPatientDTO().ptNo(patientNo);
+            patient.setPtNo(patientNo);
+            patientMapper.insert(patient);
+            patientList.add(new DivisiblePatientVM(patient, true));
         });
 
         // when, then
@@ -118,16 +118,5 @@ class UserPatientControllerIT {
             .andExpect(jsonPath("$.[*].ptNo").value(hasItems("1", "2", "3")))
             .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)))
         ;
-    }
-
-    private class TestVM {
-
-        String login;
-        List<String> patientNos;
-
-        public TestVM(String login, List<String> patientNos) {
-            this.login = login;
-            this.patientNos = patientNos;
-        }
     }
 }
