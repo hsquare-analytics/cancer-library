@@ -1,4 +1,4 @@
-"id";"order_no";"title";"description";"activated";"group_id";"created_by";"last_modified_by"
+"id";"order_no";"title";"description";"activated";"category_id";"created_by";"last_modified_by"
 "1";"1";"Item1";"desc1";"false";"1";"system";"system"
 "2";"2";"Item2";"desc2";"true";"2";"system";"system"
 "3";"3";"Item3";"desc3";"false";"3";"system";"system"

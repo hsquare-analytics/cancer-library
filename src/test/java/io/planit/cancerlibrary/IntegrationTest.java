@@ -1,6 +1,5 @@
 package io.planit.cancerlibrary;
 
-import io.planit.cancerlibrary.CancerLibraryApp;
 import io.planit.cancerlibrary.config.AsyncSyncConfiguration;
 import io.planit.cancerlibrary.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;

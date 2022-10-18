@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
@@ -56,21 +55,19 @@ class ItemControllerIT {
 
     private Category category;
 
-    private Group group;
+    private final String DEFAULT_TABLE = "test_member";
 
-    private String DEFAULT_TABLE = "test_member";
+    private final String DEFAULT_COLUMN_IDX = "idx";
 
-    private String DEFAULT_COLUMN_IDX = "idx";
+    private final String DEFAULT_COLUMN_NAME = "name";
 
-    private String DEFAULT_COLUMN_NAME = "name";
+    private final String DEFAULT_COLUMN_BIRTH = "birth";
 
-    private String DEFAULT_COLUMN_BIRTH = "birth";
+    private final String DEFAULT_COLUMN_CITY = "cty";
 
-    private String DEFAULT_COLUMN_CITY = "cty";
+    private final String DEFAULT_COLUMN_GENDER = "gender";
 
-    private String DEFAULT_COLUMN_GENDER = "gender";
-
-    private String[] DEFAULT_COLUMN_NAME_ARRAY = {"idx", "name", "birth", "city", "gender", "join_dt", "mail",
+    private final String[] DEFAULT_COLUMN_NAME_ARRAY = {"idx", "name", "birth", "city", "gender", "join_dt", "mail",
         "login_ip"};
 
     @BeforeEach
@@ -83,9 +80,6 @@ class ItemControllerIT {
 
         category = CategoryResourceIT.createEntity(em, topic).title(DEFAULT_TABLE);
         categoryRepository.saveAndFlush(category);
-
-        group = GroupResourceIT.createEntity(em, category);
-        groupRepository.saveAndFlush(group);
     }
 
     @Test
@@ -93,7 +87,7 @@ class ItemControllerIT {
     void testFetchColumnListByCategoryId() throws Exception {
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
-            Item item = new Item().group(group).title(columnName).activated(true);
+            Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
 

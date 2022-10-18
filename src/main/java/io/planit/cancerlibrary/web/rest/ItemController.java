@@ -29,7 +29,7 @@ public class ItemController {
     public ResponseEntity<List<Item>> getItemListByCategoryId(@Param("categoryId") Long categoryId) {
         log.debug("REST request to get Item List by category id: {}", categoryId);
 
-        List<Item> result = itemRepository.findAllByActivatedTrueAndGroupCategoryId(categoryId);
+        List<Item> result = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
 
         return ResponseEntity.ok().body(result);
     }

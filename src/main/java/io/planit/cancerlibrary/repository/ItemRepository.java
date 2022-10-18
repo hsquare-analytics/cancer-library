@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<Item> findAllByGroupCategoryId(Long id);
+    List<Item> findAllByCategoryId(Long id);
 
-    List<Item> findAllByActivatedTrueAndGroupCategoryId(Long id);
+    List<Item> findAllByActivatedTrueAndCategoryId(Long id);
 }

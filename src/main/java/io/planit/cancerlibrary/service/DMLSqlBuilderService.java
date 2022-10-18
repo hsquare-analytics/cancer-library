@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DMLSqlBuilderService {
 
-    private Logger log = LoggerFactory.getLogger(DMLSqlBuilderService.class);
+    private final Logger log = LoggerFactory.getLogger(DMLSqlBuilderService.class);
 
     private final CategoryRepository categoryRepository;
 
@@ -47,7 +47,7 @@ public class DMLSqlBuilderService {
 
     public SQL getInsertSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
-        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 
@@ -104,7 +104,7 @@ public class DMLSqlBuilderService {
     public SQL getUpdateSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 
-        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 

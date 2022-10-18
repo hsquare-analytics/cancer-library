@@ -29,7 +29,7 @@ public class UnionSqlBuilderService {
 
     public SQL getUnionSelectSQL(Long categoryId, String patientNo) {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
-        List<Item> itemList = itemRepository.findAllByGroupCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new RuntimeException("Category not found"));
 

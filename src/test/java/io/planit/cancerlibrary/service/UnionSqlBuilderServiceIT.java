@@ -5,21 +5,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.DatasourceConstants;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
-import io.planit.cancerlibrary.web.rest.GroupResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
@@ -47,9 +44,6 @@ class UnionSqlBuilderServiceIT {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
 
     @Autowired
@@ -74,11 +68,8 @@ class UnionSqlBuilderServiceIT {
         category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
 
-        Group group = GroupResourceIT.createEntity(em, category);
-        groupRepository.saveAndFlush(group);
-
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20220830090435-1" author="jhipster">
         <createTable tableName="ph_item">
@@ -22,7 +20,7 @@
             <column name="order_no" type="int">
                 <constraints nullable="true" />
             </column>
-            <column name="group_id" type="bigint">
+            <column name="category_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="created_by" type="varchar(50)">
@@ -33,11 +31,11 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <addForeignKeyConstraint baseColumnNames="group_id"
+        <addForeignKeyConstraint baseColumnNames="category_id"
             baseTableName="ph_item"
-            constraintName="fk_item_group_id"
+            constraintName="fk_item_category_id"
             referencedColumnNames="id"
-            referencedTableName="ph_group"/>
+            referencedTableName="ph_category"/>
     </changeSet>
 
     <changeSet id="20220830090435-1-data" author="jhipster" context="faker">
@@ -51,7 +49,7 @@
             <column name="description" type="string"/>
             <column name="activated" type="boolean"/>
             <column name="order_no" type="numeric"/>
-            <column name="group_id" type="numeric"/>
+            <column name="category_id" type="numeric"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

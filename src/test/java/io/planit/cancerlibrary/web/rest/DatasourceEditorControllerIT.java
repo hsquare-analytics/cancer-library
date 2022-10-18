@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
@@ -75,8 +74,6 @@ class DatasourceEditorControllerIT {
 
     private Category category;
 
-    private Group group;
-
     private final String DEFAULT_TABLE = "ph_test";
 
     private final String DEFAULT_COLUMN_IDX = "idx";
@@ -103,14 +100,12 @@ class DatasourceEditorControllerIT {
         category = CategoryResourceIT.createEntity(em, topic).title(DEFAULT_TABLE);
         categoryRepository.saveAndFlush(category);
 
-        group = GroupResourceIT.createEntity(em, category);
-        groupRepository.saveAndFlush(group);
     }
 
     @Test
     @Transactional
     void testFetchDataByCategoryId() throws Exception {
-        Item item = new Item().group(group).title(DEFAULT_COLUMN_NAME).activated(true);
+        Item item = new Item().category(category).title(DEFAULT_COLUMN_NAME).activated(true);
 
         itemRepository.saveAndFlush(item);
 
@@ -128,7 +123,7 @@ class DatasourceEditorControllerIT {
     @Transactional
     void testDatasourceRowInsert() throws Exception {
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
-            Item item = new Item().group(group).title(columnName).activated(true);
+            Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
 
@@ -156,7 +151,7 @@ class DatasourceEditorControllerIT {
         datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
-            Item item = new Item().group(group).title(columnName).activated(true);
+            Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
 

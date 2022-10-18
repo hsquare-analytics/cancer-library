@@ -21,19 +21,19 @@ insert into ph_group (id, title, activated, order_no, category_id, created_by, c
                       last_modified_date)
 values (2705, 'test_medicine_group', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2781, 'PACT_ID', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2782, 'PT_NO', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2783, 'PT_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2784, 'SEX_TP_CD', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2785, 'PT_BRDY_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2786, 'HSP_TP_CD', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2787, 'IDX_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2788, 'ORD_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2789, 'PRSC_DAYS', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2790, 'ENG_MDPR_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2791, 'AGE_CD_YY', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2792, 'INGR_MDPR_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item (id, title, activated, order_no, group_id, created_by, created_date, last_modified_by, last_modified_date) values (2793, 'AMPTH_TP_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2781, 'PACT_ID', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2782, 'PT_NO', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2783, 'PT_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2784, 'SEX_TP_CD', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2785, 'PT_BRDY_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2786, 'HSP_TP_CD', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2787, 'IDX_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2788, 'ORD_DT', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2789, 'PRSC_DAYS', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2790, 'ENG_MDPR_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2791, 'AGE_CD_YY', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2792, 'INGR_MDPR_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2793, 'AMPTH_TP_NM', true, 1, 2705, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
 
 CREATE TABLE TEST_MEDICINE (

@@ -59,7 +59,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
     return result;
   }
 
-  const onDeclinedButtonClick = async () => {
+  const onDeclinedButtonClick = () => {
     fireDeclineSwal(patient).then(({isConfirmed, text}) => {
       if (isConfirmed) {
         const payload = {...getLocalPatient(REVIEW_LIST.DECLINED), comment: text};
@@ -68,7 +68,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
     });
   };
 
-  const onApprovedButtonClick = async () => {
+  const onApprovedButtonClick = () => {
     fireApprovedSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
         const payload = {...getLocalPatient(REVIEW_LIST.APPROVED)};
@@ -77,7 +77,7 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
     });
   }
 
-  const onSubmittedButtonClick = async () => {
+  const onSubmittedButtonClick = () => {
     fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
         const payload = {...getLocalPatient(REVIEW_LIST.SUBMITTED)};

@@ -13,14 +13,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
@@ -66,8 +64,8 @@ public class ItemResourceIT {
     private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA");
     private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB");
 
-    private static Random random = new Random();
-    private static AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final Random random = new Random();
+    private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     @Autowired
     private SubjectRepository subjectRepository;
@@ -79,9 +77,6 @@ public class ItemResourceIT {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
 
     @Autowired
@@ -90,17 +85,20 @@ public class ItemResourceIT {
     @Autowired
     private MockMvc restItemMockMvc;
 
-    private Group group;
+    private Category category;
+
     private Item item;
 
-    public static Item createEntity(EntityManager em, Group group) {
-        Item item = new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).group(group).itemProperty(DEFAULT_ITEM_PROPERTY).itemAttribute(DEFAULT_ITEM_ATTRIBUTE);
-        return item;
+    public static Item createEntity(EntityManager em, Category category) {
+        return new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED)
+            .orderNo(DEFAULT_ORDER_NO).category(category).itemProperty(DEFAULT_ITEM_PROPERTY)
+            .itemAttribute(DEFAULT_ITEM_ATTRIBUTE);
     }
 
-    public static Item createUpdatedEntity(EntityManager em, Group group) {
-        Item item = new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO).group(group).itemProperty(UPDATED_ITEM_PROPERTY).itemAttribute(UPDATED_ITEM_ATTRIBUTE);
-        return item;
+    public static Item createUpdatedEntity(EntityManager em, Category category) {
+        return new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED)
+            .orderNo(UPDATED_ORDER_NO).category(category).itemProperty(UPDATED_ITEM_PROPERTY)
+            .itemAttribute(UPDATED_ITEM_ATTRIBUTE);
     }
 
     @BeforeEach
@@ -109,11 +107,10 @@ public class ItemResourceIT {
         subjectRepository.saveAndFlush(subject);
         Topic topic = TopicResourceIT.createEntity(em, subject);
         topicRepository.saveAndFlush(topic);
-        Category category = CategoryResourceIT.createEntity(em, topic);
+        category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
-        group = GroupResourceIT.createEntity(em, category);
-        groupRepository.saveAndFlush(group);
-        item = createEntity(em, group);
+
+        item = createEntity(em, category);
     }
 
     @Test
@@ -160,7 +157,6 @@ public class ItemResourceIT {
         int databaseSizeBeforeTest = itemRepository.findAll().size();
         item.setTitle(null);
 
-
         restItemMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(item)))
@@ -183,7 +179,8 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
-            .andExpect(jsonPath("$.[*].itemProperty.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
+            .andExpect(
+                jsonPath("$.[*].itemProperty.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
             .andExpect(jsonPath("$.[*].itemProperty.caption").value(hasItem(DEFAULT_ITEM_PROPERTY.getCaption())))
             .andExpect(jsonPath("$.[*].itemAttribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
         ;
@@ -221,9 +218,11 @@ public class ItemResourceIT {
 
         int databaseSizeBeforeUpdate = itemRepository.findAll().size();
 
-        Item updatedItem = itemRepository.findById(item.getId()).get();
+        Item updatedItem = itemRepository.findById(item.getId())
+            .orElseThrow(() -> new RuntimeException("Item not found"));
         em.detach(updatedItem);
-        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).itemProperty(UPDATED_ITEM_PROPERTY).itemAttribute(UPDATED_ITEM_ATTRIBUTE);
+        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).itemProperty(UPDATED_ITEM_PROPERTY)
+            .itemAttribute(UPDATED_ITEM_ATTRIBUTE);
 
         restItemMockMvc
             .perform(

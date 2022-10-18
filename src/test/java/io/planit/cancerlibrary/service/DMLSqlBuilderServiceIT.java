@@ -4,19 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Group;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
-import io.planit.cancerlibrary.web.rest.GroupResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
@@ -47,9 +44,6 @@ class DMLSqlBuilderServiceIT {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
 
     @Autowired
@@ -59,8 +53,6 @@ class DMLSqlBuilderServiceIT {
     private DMLSqlBuilderService dmlSqlBuilderService;
 
     private Category category;
-
-    private Group group;
 
     @MockBean
     TimeService timeService;
@@ -75,9 +67,6 @@ class DMLSqlBuilderServiceIT {
 
         category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
-
-        group = GroupResourceIT.createEntity(em, category);
-        groupRepository.saveAndFlush(group);
     }
 
     @Test
@@ -90,8 +79,8 @@ class DMLSqlBuilderServiceIT {
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
@@ -117,8 +106,8 @@ class DMLSqlBuilderServiceIT {
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
@@ -153,8 +142,8 @@ class DMLSqlBuilderServiceIT {
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
@@ -179,8 +168,8 @@ class DMLSqlBuilderServiceIT {
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().group(group).title("column1").activated(true);
-        Item item2 = new Item().group(group).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);

@@ -50,7 +50,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @ManyToOne(optional = false)
-    private Group group;
+    private Category category;
 
     @Embedded
     @AttributeOverride(name = "dataType", column = @Column(name = "data_type", table = "ph_item_attribute"))
@@ -126,16 +126,16 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public Group getGroup() {
-        return group;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public Item group(Group group) {
-        this.setGroup(group);
+    public Item category(Category category) {
+        this.setCategory(category);
         return this;
     }
 
@@ -190,7 +190,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
             ", description='" + description + '\'' +
             ", activated=" + activated +
             ", orderNo=" + orderNo +
-            ", group=" + group +
+            ", category=" + category +
             ", itemAttribute=" + itemAttribute +
             '}';
     }
