@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.domain;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
@@ -68,9 +69,9 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     @ElementCollection
     @CollectionTable(name = "ph_item_lookup", joinColumns = @JoinColumn(name = "item_id"))
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     @OrderColumn(name = "order_no")
-    private List<String> lookup;
+    private List<String> lookup = new ArrayList<>();
 
     public Long getId() {
         return this.id;
