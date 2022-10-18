@@ -5,7 +5,6 @@ import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
-import javax.persistence.SecondaryTables;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,10 +21,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "ph_item")
-@SecondaryTables({
-    @SecondaryTable(name = "ph_item_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id")),
-    @SecondaryTable(name = "ph_item_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
-})
+@SecondaryTable(name = "ph_item_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
+@SecondaryTable(name = "ph_item_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "item_id"))
 public class Item extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,8 +57,8 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     private ItemAttribute itemAttribute;
 
     @Embedded
-    @AttributeOverrides({@AttributeOverride(name = "visibleIndex", column = @Column(name = "visible_index", table = "ph_item_property")),
-        @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))})
+    @AttributeOverride(name = "visibleIndex", column = @Column(name = "visible_index", table = "ph_item_property"))
+    @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))
     private ItemProperty itemProperty;
 
     public Long getId() {
