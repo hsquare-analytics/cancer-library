@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
@@ -17,6 +18,7 @@ import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
 import java.time.Instant;
 import java.util.HashMap;
 import javax.persistence.EntityManager;
@@ -160,7 +162,7 @@ class DMLSqlBuilderServiceIT {
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
             .contains(
                 "SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'")
-        .contains("WHERE (IDX = 'test_idx')");
+            .contains("WHERE (IDX = 'test_idx')");
     }
 
     public void testDeleteSql() {
@@ -182,6 +184,17 @@ class DMLSqlBuilderServiceIT {
         // then
         assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED");
         assertThat(result).contains("WHERE (IDX = 'test_idx')");
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testInsertSqlConfigurationException() {
+        HashMap param = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("column1", "test1");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(ConfigurationDeficiencyException.class).hasMessage("Category not found");
     }
 }
 

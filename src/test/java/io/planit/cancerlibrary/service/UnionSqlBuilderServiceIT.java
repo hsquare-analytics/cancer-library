@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.DatasourceConstants;
@@ -21,6 +22,7 @@ import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,13 +78,15 @@ class UnionSqlBuilderServiceIT {
     }
 
     private void assertUpdateListSQL(String result, String updatedTableName) {
-        assertThat(result).contains(String.format("SELECT %s, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN))
+        assertThat(result).contains(String.format("SELECT %s, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+                DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", updatedTableName));
     }
 
     private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2", DatasourceConstants.IDX_COLUMN))
+                String.format("SELECT %s, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+                    DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", originTableName))
             .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
                 DatasourceConstants.IDX_COLUMN))
@@ -130,6 +134,14 @@ class UnionSqlBuilderServiceIT {
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
         assertThat(result).contains("PT_NO IN ('test_patient_no')");
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testCategoryNotFoundException() {
+        assertThatThrownBy(() -> unionSqlBuilderService.getUnionSelectSQL(999L, "test"))
+            .isInstanceOf(ConfigurationDeficiencyException.class);
     }
 
 }

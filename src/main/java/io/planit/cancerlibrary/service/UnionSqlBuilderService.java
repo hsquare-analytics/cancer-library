@@ -5,6 +5,7 @@ import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
 import java.util.List;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class UnionSqlBuilderService {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+            .orElseThrow(() -> new ConfigurationDeficiencyException("Category not found", "category"));
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, patientNo);
         SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, patientNo);
@@ -49,7 +50,8 @@ public class UnionSqlBuilderService {
         String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
 
         SQL sql = new SQL();
-        sql.SELECT(DatasourceConstants.IDX_COLUMN, DatasourceConstants.LAST_MODIFIED_BY, DatasourceConstants.LAST_MODIFIED_DATE);
+        sql.SELECT(DatasourceConstants.IDX_COLUMN, DatasourceConstants.LAST_MODIFIED_BY,
+            DatasourceConstants.LAST_MODIFIED_DATE);
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
@@ -64,7 +66,8 @@ public class UnionSqlBuilderService {
 
         SQL excludeIdxSubquery = new SQL().SELECT(DatasourceConstants.IDX_COLUMN).FROM(updatedTableName);
 
-        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN, "NULL AS LAST_MODIFIED_BY", "NULL AS LAST_MODIFIED_DATE");
+        SQL sql = new SQL().SELECT(DatasourceConstants.IDX_COLUMN, "NULL AS LAST_MODIFIED_BY",
+            "NULL AS LAST_MODIFIED_DATE");
         itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(originTableName)
             .WHERE(String.format("%s NOT IN (%s)", DatasourceConstants.IDX_COLUMN, excludeIdxSubquery));

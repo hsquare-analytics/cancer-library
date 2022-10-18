@@ -15,6 +15,7 @@ import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -48,8 +49,7 @@ public class DMLSqlBuilderService {
     public SQL getInsertSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ConfigurationDeficiencyException("Category not found", "category"));
 
         String login = SecurityUtils.getCurrentUserLogin()
             .orElseThrow(() -> new RuntimeException("Current user login not found"));
