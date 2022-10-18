@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,6 +68,18 @@ class CategoryControllerIT {
             .andExpect(jsonPath("$.[0].id").value(category.getId()))
             .andExpect(jsonPath("$.[0].title").value(category.getTitle()))
             .andExpect(jsonPath("$.[0].description").value(category.getDescription()));
+    }
+
+    @Test
+    @Transactional
+    void testCategoryDeficiencyException() throws Exception {
+        restNavigationMockMvc
+            .perform(get(API_URL))
+            .andExpect(status().isBadRequest())
+            .andExpect(header().string("X-cancerlibraryApp-error", "error.configurationDeficiency"))
+            .andExpect(header().string("X-cancerlibraryApp-params", "category"))
+            .andExpect(jsonPath("detail").value("There is no usable category"))
+        ;
     }
 
 }
