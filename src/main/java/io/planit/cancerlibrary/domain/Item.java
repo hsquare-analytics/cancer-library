@@ -59,12 +59,12 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     @Embedded
     @AttributeOverride(name = "dataType", column = @Column(name = "data_type", table = "ph_item_attribute"))
-    private ItemAttribute itemAttribute;
+    private ItemAttribute attribute;
 
     @Embedded
     @AttributeOverride(name = "visibleIndex", column = @Column(name = "visible_index", table = "ph_item_property"))
     @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))
-    private ItemProperty itemProperty;
+    private ItemProperty property;
 
     @ElementCollection
     @CollectionTable(name = "ph_item_lookup", joinColumns = @JoinColumn(name = "item_id"))
@@ -150,29 +150,29 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public ItemAttribute getItemAttribute() {
-        return itemAttribute;
+    public ItemAttribute getAttribute() {
+        return attribute;
     }
 
-    public void setItemAttribute(ItemAttribute itemAttribute) {
-        this.itemAttribute = itemAttribute;
+    public void setAttribute(ItemAttribute attribute) {
+        this.attribute = attribute;
     }
 
-    public Item itemAttribute(ItemAttribute itemAttribute) {
-        this.setItemAttribute(itemAttribute);
+    public Item attribute(ItemAttribute attribute) {
+        this.setAttribute(attribute);
         return this;
     }
 
-    public ItemProperty getItemProperty() {
-        return itemProperty;
+    public ItemProperty getProperty() {
+        return property;
     }
 
-    public void setItemProperty(ItemProperty itemProperty) {
-        this.itemProperty = itemProperty;
+    public void setProperty(ItemProperty property) {
+        this.property = property;
     }
 
-    public Item itemProperty(ItemProperty itemProperty) {
-        this.setItemProperty(itemProperty);
+    public Item property(ItemProperty property) {
+        this.setProperty(property);
         return this;
     }
 
@@ -215,7 +215,9 @@ public class Item extends AbstractAuditingEntity implements Serializable {
             ", activated=" + activated +
             ", orderNo=" + orderNo +
             ", category=" + category +
-            ", itemAttribute=" + itemAttribute +
+            ", attribute=" + attribute +
+            ", property=" + property +
+            ", lookup=" + lookup +
             '}';
     }
 }

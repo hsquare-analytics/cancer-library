@@ -102,14 +102,14 @@ public class ItemResourceIT {
 
     public static Item createEntity(EntityManager em, Category category) {
         return new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED)
-            .orderNo(DEFAULT_ORDER_NO).category(category).itemProperty(DEFAULT_ITEM_PROPERTY)
-            .itemAttribute(DEFAULT_ITEM_ATTRIBUTE).lookup(DEFAULT_ITEM_LOOKUP_LIST);
+            .orderNo(DEFAULT_ORDER_NO).category(category).property(DEFAULT_ITEM_PROPERTY)
+            .attribute(DEFAULT_ITEM_ATTRIBUTE).lookup(DEFAULT_ITEM_LOOKUP_LIST);
     }
 
     public static Item createUpdatedEntity(EntityManager em, Category category) {
         return new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED)
-            .orderNo(UPDATED_ORDER_NO).category(category).itemProperty(UPDATED_ITEM_PROPERTY)
-            .itemAttribute(UPDATED_ITEM_ATTRIBUTE).lookup(UPDATED_ITEM_LOOKUP_LIST);
+            .orderNo(UPDATED_ORDER_NO).category(category).property(UPDATED_ITEM_PROPERTY)
+            .attribute(UPDATED_ITEM_ATTRIBUTE).lookup(UPDATED_ITEM_LOOKUP_LIST);
     }
 
     @BeforeEach
@@ -141,9 +141,9 @@ public class ItemResourceIT {
         assertThat(testItem.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testItem.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testItem.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
-        assertThat(testItem.getItemAttribute().getDataType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getDataType());
-        assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getVisibleIndex());
-        assertThat(testItem.getItemProperty().getCaption()).isEqualTo(DEFAULT_ITEM_PROPERTY.getCaption());
+        assertThat(testItem.getAttribute().getDataType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getDataType());
+        assertThat(testItem.getProperty().getVisibleIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getVisibleIndex());
+        assertThat(testItem.getProperty().getCaption()).isEqualTo(DEFAULT_ITEM_PROPERTY.getCaption());
         assertThat(testItem.getLookup()).hasSize(1);
         assertThat(testItem.getLookup()).containsAll(DEFAULT_ITEM_LOOKUP_LIST);
     }
@@ -192,9 +192,9 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
-            .andExpect(jsonPath("$.[*].itemProperty.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
-            .andExpect(jsonPath("$.[*].itemProperty.caption").value(hasItem(DEFAULT_ITEM_PROPERTY.getCaption())))
-            .andExpect(jsonPath("$.[*].itemAttribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
+            .andExpect(jsonPath("$.[*].property.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
+            .andExpect(jsonPath("$.[*].property.caption").value(hasItem(DEFAULT_ITEM_PROPERTY.getCaption())))
+            .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
             .andExpect(jsonPath("$.[*].lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST)));
     }
 
@@ -211,9 +211,9 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
-            .andExpect(jsonPath("$.itemProperty.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
-            .andExpect(jsonPath("$.itemProperty.caption").value(DEFAULT_ITEM_PROPERTY.getCaption()))
-            .andExpect(jsonPath("$.itemAttribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
+            .andExpect(jsonPath("$.property.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
+            .andExpect(jsonPath("$.property.caption").value(DEFAULT_ITEM_PROPERTY.getCaption()))
+            .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
             .andExpect(jsonPath("$.lookup").value(hasSize(1)))
             .andExpect(jsonPath("$.lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST.toArray())))
         ;
@@ -235,8 +235,8 @@ public class ItemResourceIT {
         Item updatedItem = itemRepository.findById(item.getId())
             .orElseThrow(() -> new RuntimeException("Item not found"));
         em.detach(updatedItem);
-        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).itemProperty(UPDATED_ITEM_PROPERTY)
-            .itemAttribute(UPDATED_ITEM_ATTRIBUTE).lookup(UPDATED_ITEM_LOOKUP_LIST);
+        updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).property(UPDATED_ITEM_PROPERTY)
+            .attribute(UPDATED_ITEM_ATTRIBUTE).lookup(UPDATED_ITEM_LOOKUP_LIST);
 
         restItemMockMvc
             .perform(
@@ -251,9 +251,9 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
-        assertThat(testItem.getItemProperty().getVisibleIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getVisibleIndex());
-        assertThat(testItem.getItemProperty().getCaption()).isEqualTo(UPDATED_ITEM_PROPERTY.getCaption());
-        assertThat(testItem.getItemAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
+        assertThat(testItem.getProperty().getVisibleIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getVisibleIndex());
+        assertThat(testItem.getProperty().getCaption()).isEqualTo(UPDATED_ITEM_PROPERTY.getCaption());
+        assertThat(testItem.getAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
         assertThat(testItem.getLookup()).containsAll(UPDATED_ITEM_LOOKUP_LIST);
     }
 
