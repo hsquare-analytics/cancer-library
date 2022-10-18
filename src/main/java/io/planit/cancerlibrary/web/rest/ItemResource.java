@@ -64,7 +64,7 @@ public class ItemResource {
 
     @PutMapping("/items/{id}")
     public ResponseEntity<Item> updateItem(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Item item)
-        throws URISyntaxException {
+        {
         log.debug("REST request to update Item : {}, {}", id, item);
         if (item.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -89,7 +89,7 @@ public class ItemResource {
     public ResponseEntity<Item> partialUpdateItem(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody Item item
-    ) throws URISyntaxException {
+    ) {
         log.debug("REST request to partial update Item partially : {}, {}", id, item);
         if (item.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -110,6 +110,9 @@ public class ItemResource {
                 }
                 if (item.getOrderNo() != null) {
                     existingItem.setOrderNo(item.getOrderNo());
+                }
+                if(item.getLookup() != null) {
+                    existingItem.setLookup(item.getLookup());
                 }
 
                 return existingItem;

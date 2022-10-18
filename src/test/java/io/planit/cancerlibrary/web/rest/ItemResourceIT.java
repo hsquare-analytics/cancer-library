@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -213,7 +214,9 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.itemProperty.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
             .andExpect(jsonPath("$.itemProperty.caption").value(DEFAULT_ITEM_PROPERTY.getCaption()))
             .andExpect(jsonPath("$.itemAttribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
-            .andExpect(jsonPath("$.lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST)));
+            .andExpect(jsonPath("$.lookup").value(hasSize(1)))
+            .andExpect(jsonPath("$.lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST.toArray())))
+        ;
     }
 
     @Test
@@ -316,6 +319,7 @@ public class ItemResourceIT {
         partialUpdatedItem.setId(item.getId());
 
         partialUpdatedItem.orderNo(UPDATED_ORDER_NO);
+        partialUpdatedItem.lookup(UPDATED_ITEM_LOOKUP_LIST);
 
         restItemMockMvc
             .perform(
@@ -330,6 +334,7 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
+        assertThat(testItem.getLookup()).containsAll(UPDATED_ITEM_LOOKUP_LIST);
     }
 
     @Test
@@ -342,7 +347,7 @@ public class ItemResourceIT {
         Item partialUpdatedItem = new Item();
         partialUpdatedItem.setId(item.getId());
 
-        partialUpdatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO);
+        partialUpdatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).lookup(UPDATED_ITEM_LOOKUP_LIST);
 
         restItemMockMvc
             .perform(
@@ -357,6 +362,7 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
+        assertThat(testItem.getLookup()).isEqualTo(UPDATED_ITEM_LOOKUP_LIST);
     }
 
     @Test
