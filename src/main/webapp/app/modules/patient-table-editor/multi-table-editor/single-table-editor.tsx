@@ -1,5 +1,5 @@
 import React from "react";
-import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 import {REVIEW_LIST} from "app/config/constants";
@@ -12,10 +12,9 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppSelector} from "app/config/store";
-import {IItem} from "app/shared/model/item.model";
-import TagBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/TagBoxComponent";
-import SelectBoxComponent
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/SelectBoxComponent";
+import {
+  getDxTableColumn
+} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-table-column";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -56,40 +55,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
 
-  const getDxColumn = (item: IItem) => {
-    return <Column
-      key={item.id}
-      dataField={item.title.toLowerCase()}
-      dataType={item.attribute?.dataType}
-      caption={item.property?.caption}
-      visibleIndex={item.property?.visibleIndex}
-      alignment={'center'}
-      editCellComponent={getDxEditCellComponent(item)}
-    >
-      {getDxLookupComponent(item)}
-    </Column>
-  }
-
-  const getDxEditCellComponent = (item: IItem) => {
-    switch (item.attribute?.dataType.toLowerCase()) {
-      case 'tagbox':
-        return TagBoxComponent;
-      case 'selectbox':
-        return SelectBoxComponent;
-      default:
-        return undefined;
-    }
-  }
-
-  const getDxLookupComponent = (item: IItem) => {
-    switch (item.attribute?.dataType.toLowerCase()) {
-      case 'selectbox' || 'tagbox':
-        return <Lookup dataSource={item.lookup.filter(data => data).map(data => new Object({"title": data}))}
-                       displayExpr={"title"} valueExpr={"title"}/>;
-      default:
-        return undefined;
-    }
-  }
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
@@ -120,7 +85,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             paging={{pageSize: 10}}
           >
             {
-              itemContainer[category.id].map(item => getDxColumn(item))
+              itemContainer[category.id].map(item => getDxTableColumn(item))
             }
             <Column dataField="last_modified_by"
                     caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
