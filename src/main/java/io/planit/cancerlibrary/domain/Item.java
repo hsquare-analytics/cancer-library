@@ -3,15 +3,20 @@ package io.planit.cancerlibrary.domain;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.AttributeOverride;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.SequenceGenerator;
@@ -60,6 +65,12 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @AttributeOverride(name = "visibleIndex", column = @Column(name = "visible_index", table = "ph_item_property"))
     @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))
     private ItemProperty itemProperty;
+
+    @ElementCollection
+    @CollectionTable(name = "ph_item_lookup", joinColumns = @JoinColumn(name = "item_id"))
+    @Column(name = "title")
+    @OrderColumn(name = "order_no")
+    private List<String> lookup;
 
     public Long getId() {
         return this.id;
@@ -162,6 +173,19 @@ public class Item extends AbstractAuditingEntity implements Serializable {
 
     public Item itemProperty(ItemProperty itemProperty) {
         this.setItemProperty(itemProperty);
+        return this;
+    }
+
+    public List<String> getLookup() {
+        return lookup;
+    }
+
+    public void setLookup(List<String> lookup) {
+        this.lookup = lookup;
+    }
+
+    public Item lookup(List<String> lookup) {
+        this.setLookup(lookup);
         return this;
     }
 
