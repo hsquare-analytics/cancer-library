@@ -13,6 +13,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppSelector} from "app/config/store";
 import {IItem} from "app/shared/model/item.model";
+import TagBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/TagBoxComponent";
+import SelectBoxComponent
+  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/SelectBoxComponent";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -52,6 +55,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   };
 
+
   const getDxColumn = (item: IItem) => {
     return <Column
       key={item.id}
@@ -60,9 +64,31 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       caption={item.property?.caption}
       visibleIndex={item.property?.visibleIndex}
       alignment={'center'}
+      editCellComponent={getDxEditCellComponent(item)}
     >
-      {item.attribute?.dataType.toLowerCase() === 'lookup' ? <Lookup dataSource={item.lookup}/> : null}
+      {getDxLookupComponent(item)}
     </Column>
+  }
+
+  const getDxEditCellComponent = (item: IItem) => {
+    switch (item.attribute?.dataType.toLowerCase()) {
+      case 'tagbox':
+        return TagBoxComponent;
+      case 'selectbox':
+        return SelectBoxComponent;
+      default:
+        return undefined;
+    }
+  }
+
+  const getDxLookupComponent = (item: IItem) => {
+    switch (item.attribute?.dataType.toLowerCase()) {
+      case 'selectbox' || 'tagbox':
+        return <Lookup dataSource={item.lookup.filter(data => data).map(data => new Object({"title": data}))}
+                       displayExpr={"title"} valueExpr={"title"}/>;
+      default:
+        return undefined;
+    }
   }
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];

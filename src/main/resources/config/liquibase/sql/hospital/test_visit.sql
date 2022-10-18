@@ -34,7 +34,7 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
                      last_modified_date)
 values (2704, 'SEX_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption) values (2704, 1, '성별');
-insert into ph_item_attribute (item_id, data_type) values (2704, 'lookup');
+insert into ph_item_attribute (item_id, data_type) values (2704, 'selectbox');
 insert into ph_item_lookup (item_id, order_no, title) values (2704, 1, 'M');
 insert into ph_item_lookup (item_id, order_no, title) values (2704, 2, 'F');
 
