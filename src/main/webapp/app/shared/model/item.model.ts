@@ -10,8 +10,9 @@ export interface IItem extends IAbstractAuditing {
   description?: string;
   activated?: boolean;
   category?: ICategory;
-  itemAttribute?: { dataType?: string };
-  itemProperty?: { visibleIndex?: number, caption?:string };
+  attribute?: { dataType?: string };
+  property?: { visibleIndex?: number, caption?:string };
+  lookup?: string[];
 }
 
 export const defaultValue: Readonly<IItem> = {
@@ -20,7 +21,8 @@ export const defaultValue: Readonly<IItem> = {
   description: '',
   activated: false,
   category: null,
-  itemAttribute: {dataType: ''},
-  itemProperty: {visibleIndex: 0, caption: ''},
+  attribute: {dataType: ''},
+  property: {visibleIndex: 0, caption: ''},
+  lookup: [],
   ...abstractAuditingDefaultValue
 };

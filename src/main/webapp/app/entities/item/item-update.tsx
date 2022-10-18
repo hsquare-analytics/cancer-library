@@ -124,24 +124,24 @@ export const ItemUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
-                label={translate('cancerLibraryApp.item.itemAttribute.dataType')}
+                label={translate('cancerLibraryApp.item.attribute.dataType')}
                 id="item-dataType"
-                name="itemAttribute.dataType"
-                data-cy="itemAttribute.dataType"
+                name="attribute.dataType"
+                data-cy="attribute.dataType"
                 type="text"
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.item.itemProperty.visibleIndex')}
+                label={translate('cancerLibraryApp.item.property.visibleIndex')}
                 id="item-visibleIndex"
-                name="itemProperty.visibleIndex"
-                data-cy="itemProperty.visibleIndex"
+                name="property.visibleIndex"
+                data-cy="property.visibleIndex"
                 type="number"
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.item.itemProperty.caption')}
+                label={translate('cancerLibraryApp.item.property.caption')}
                 id="item-caption"
-                name="itemProperty.caption"
-                data-cy="itemProperty.caption"
+                name="property.caption"
+                data-cy="property.caption"
                 type="text"
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace color="info">

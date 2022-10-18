@@ -83,8 +83,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               itemContainer[category.id].map(item => <Column
                   key={item}
                   dataField={item.title.toLowerCase()}
-                  caption={item.itemProperty?.caption}
-                  visibleIndex={item.itemProperty?.visibleIndex}
+                  caption={item.property?.caption}
+                  visibleIndex={item.property?.visibleIndex}
                   alignment={'center'}
                 />
               )

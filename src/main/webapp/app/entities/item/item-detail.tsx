@@ -56,22 +56,22 @@ export const ItemDetail = () => {
           <dd>{itemEntity.category?.title}</dd>
           <dt>
             <span id="type">
-              <Translate contentKey="cancerLibraryApp.item.itemAttribute.dataType">Data Type</Translate>
+              <Translate contentKey="cancerLibraryApp.item.attribute.dataType">Data Type</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.itemAttribute.dataType}</dd>
+          <dd>{itemEntity.attribute.dataType}</dd>
           <dt>
             <span id="visibleIndex">
-              <Translate contentKey="cancerLibraryApp.item.itemProperty.visibleIndex">Visible Index</Translate>
+              <Translate contentKey="cancerLibraryApp.item.property.visibleIndex">Visible Index</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.itemProperty.caption}</dd>
+          <dd>{itemEntity.property.caption}</dd>
           <dt>
             <span id="caption">
-              <Translate contentKey="cancerLibraryApp.item.itemProperty.caption">Visible Index</Translate>
+              <Translate contentKey="cancerLibraryApp.item.property.caption">Visible Index</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.itemProperty.caption}</dd>
+          <dd>{itemEntity.property.caption}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

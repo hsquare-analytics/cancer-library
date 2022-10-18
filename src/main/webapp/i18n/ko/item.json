@@ -23,13 +23,14 @@
       "activated": "Activated",
       "orderNo": "orderNo",
       "category.title": "Category Title",
-      "itemAttribute": {
+      "attribute": {
         "dataType": "Data Type"
       },
-      "itemProperty": {
+      "property": {
         "visibleIndex": "Visible Index",
         "caption": "caption"
-      }
+      },
+      "lookup" : "lookup"
     }
   }
 }
