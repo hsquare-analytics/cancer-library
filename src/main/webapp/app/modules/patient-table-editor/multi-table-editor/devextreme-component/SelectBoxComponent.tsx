@@ -1,7 +1,6 @@
 import React from 'react';
 import SelectBox from 'devextreme-react/select-box';
 
-
 export interface ISelectBoxComponent {
   data: any;
 }
@@ -22,16 +21,32 @@ export default class SelectBoxComponent extends React.Component<ISelectBoxCompon
   }
 
   render() {
-    return <SelectBox
-      dataSource={this.props.data.column.lookup.dataSource}
-      valueExpr={this.props.data.column.lookup.valueExpr}
-      displayExpr={this.props.data.column.lookup.displayExpr}
-      showSelectionControls={true}
-      applyValueMode="useButtons"
-      searchEnabled={true}
-      defaultValue={this.props.data.value}
-      onValueChanged={this.onValueChanged}
-      onSelectionChanged={this.onSelectionChanged}
-    />;
+    return (
+      <div>
+        <SelectBox
+          dataSource={this.props.data.column.lookup.dataSource}
+          valueExpr={this.props.data.column.lookup.valueExpr}
+          displayExpr={this.props.data.column.lookup.displayExpr}
+          showSelectionControls={true}
+          applyValueMode="useButtons"
+          searchEnabled={true}
+          defaultValue={this.props.data.value}
+          onValueChanged={this.onValueChanged}
+          onSelectionChanged={this.onSelectionChanged}
+          buttons={[
+            {
+              name: 'add',
+              location: 'after',
+              options: {
+                text: 'add',
+                icon: 'add',
+                onClick() {
+                },
+              },
+            }]}
+        >
+
+        </SelectBox>
+      </div>);
   }
 }
