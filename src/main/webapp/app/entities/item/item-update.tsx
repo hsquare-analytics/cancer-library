@@ -12,7 +12,7 @@ export const ItemUpdate = () => {
 
   const navigate = useNavigate();
 
-  const { id } = useParams<'id'>();
+  const {id} = useParams<'id'>();
   const isNew = id === undefined;
 
   const itemEntity = useAppSelector(state => state.item.entity);
@@ -32,8 +32,7 @@ export const ItemUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    if (categories.length === 0)
-    {
+    if (categories.length === 0) {
       dispatch(getCategories({}));
     }
   }, []);
@@ -48,6 +47,7 @@ export const ItemUpdate = () => {
     const entity = {
       ...itemEntity,
       ...values,
+      lookup: values.lookup ? values.lookup.replace(/(^,)|(,$)/g, "").split(",") : null,
     };
 
     if (isNew) {
@@ -61,8 +61,8 @@ export const ItemUpdate = () => {
     isNew
       ? {}
       : {
-          ...itemEntity,
-        };
+        ...itemEntity,
+      };
 
   return (
     <div>
@@ -86,7 +86,7 @@ export const ItemUpdate = () => {
                   readOnly
                   id="item-id"
                   label={translate('global.field.id')}
-                  validate={{ required: true }}
+                  validate={{required: true}}
                 />
               ) : null}
               <ValidatedField
@@ -96,8 +96,8 @@ export const ItemUpdate = () => {
                 data-cy="title"
                 type="text"
                 validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 30, message: translate('entity.validation.maxlength', { max: 30 }) },
+                  required: {value: true, message: translate('entity.validation.required')},
+                  maxLength: {value: 30, message: translate('entity.validation.maxlength', {max: 30})},
                 }}
               />
               <ValidatedField
@@ -115,7 +115,8 @@ export const ItemUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.item.category.title')}>
+              <ValidatedField type="select" name="category.id" data-cy="category"
+                              label={translate('cancerLibraryApp.item.category.title')}>
                 <option value="">-</option>
                 {categories.map(category => (
                   <option value={category.id} key={category}>
@@ -144,16 +145,25 @@ export const ItemUpdate = () => {
                 data-cy="property.caption"
                 type="text"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.lookup')}
+                id="item-lookup"
+                name="lookup"
+                data-cy="lookup"
+                type="text"
+              />
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace
+                      color="info">
+                <FontAwesomeIcon icon="arrow-left"/>
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
+                      disabled={updating}>
+                <FontAwesomeIcon icon="save"/>
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

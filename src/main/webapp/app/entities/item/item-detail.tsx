@@ -72,6 +72,12 @@ export const ItemDetail = () => {
             </span>
           </dt>
           <dd>{itemEntity.property.caption}</dd>
+          <dt>
+            <span id="lookup">
+              <Translate contentKey="cancerLibraryApp.item.lookup">Lookup</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.lookup}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
