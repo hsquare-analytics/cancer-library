@@ -1,5 +1,5 @@
 import React from "react";
-import DataGrid, {Column} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 import {REVIEW_LIST} from "app/config/constants";
@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppSelector} from "app/config/store";
+import {IItem} from "app/shared/model/item.model";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -51,6 +52,19 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   };
 
+  const getDxColumn = (item: IItem) => {
+    return <Column
+      key={item.id}
+      dataField={item.title.toLowerCase()}
+      dataType={item.attribute?.dataType}
+      caption={item.property?.caption}
+      visibleIndex={item.property?.visibleIndex}
+      alignment={'center'}
+    >
+      {item.attribute?.dataType.toLowerCase() === 'lookup' ? <Lookup dataSource={item.lookup}/> : null}
+    </Column>
+  }
+
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
@@ -80,18 +94,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             paging={{pageSize: 10}}
           >
             {
-              itemContainer[category.id].map(item => <Column
-                  key={item}
-                  dataField={item.title.toLowerCase()}
-                  caption={item.property?.caption}
-                  visibleIndex={item.property?.visibleIndex}
-                  alignment={'center'}
-                />
-              )
+              itemContainer[category.id].map(item => getDxColumn(item))
             }
-            <Column dataField="last_modified_by" caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
+            <Column dataField="last_modified_by"
+                    caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
                     alignment={"center"} allowEditing={false}/>
-            <Column dataField="last_modified_date" caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedDate')}
+            <Column dataField="last_modified_date"
+                    caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedDate')}
                     alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}/>
           </DataGrid>
         </Typography>

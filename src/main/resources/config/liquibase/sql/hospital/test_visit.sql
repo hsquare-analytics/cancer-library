@@ -33,9 +33,15 @@ values (2703, 'PT_NM', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system',
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2704, 'SEX_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item_property (item_id, visible_index, caption) values (2704, 1, '성별');
+insert into ph_item_attribute (item_id, data_type) values (2704, 'lookup');
+insert into ph_item_lookup (item_id, order_no, title) values (2704, 1, 'M');
+insert into ph_item_lookup (item_id, order_no, title) values (2704, 2, 'F');
+
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2705, 'PT_BRDY_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2706, 'HSP_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
@@ -45,6 +51,9 @@ values (2707, 'IDX_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system'
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2708, 'MED_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
+insert into ph_item_property (item_id, visible_index, caption) values (2707, 1, '수진일자');
+insert into ph_item_attribute (item_id, data_type) values (2707, 'datetime');
+
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2709, 'HSP_DTL_TP_NM', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
