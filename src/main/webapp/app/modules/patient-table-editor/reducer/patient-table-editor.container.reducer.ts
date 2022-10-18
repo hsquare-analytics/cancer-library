@@ -2,6 +2,7 @@ import axios from 'axios';
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
+import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 
 type userPatientSelectorType = {
   item: {
@@ -32,19 +33,25 @@ const initialState: userPatientSelectorType = {
 }
 
 export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usable_item_list', async (categoryId: number) => {
-  const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
-  return axios.get<IItem[]>(requestUrl);
-});
+    const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
+    return axios.get<IItem[]>(requestUrl);
+  },
+  {serializeError: serializeAxiosError}
+);
 
 export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_usable_category_list', async () => {
-  const requestUrl = `api/categories/usable-category-list`;
-  return axios.get<IItem[]>(requestUrl);
-});
+    const requestUrl = `api/categories/usable-category-list`;
+    return axios.get<IItem[]>(requestUrl);
+  },
+  {serializeError: serializeAxiosError}
+);
 
 export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
-  const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
-  return axios.get<any>(requestUrl);
-});
+    const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
+    return axios.get<any>(requestUrl);
+  },
+  {serializeError: serializeAxiosError}
+);
 
 const name = 'patient-table-editor-container'
 export const PatientTableEditorContainer = createSlice({
@@ -120,7 +127,7 @@ export const PatientTableEditorContainer = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem } = PatientTableEditorContainer.actions;
+export const {reset, resetDataSource, resetItem} = PatientTableEditorContainer.actions;
 
 
 export default PatientTableEditorContainer.reducer;
