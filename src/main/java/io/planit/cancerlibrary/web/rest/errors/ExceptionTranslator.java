@@ -181,6 +181,16 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         );
     }
 
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleConfigurationDeficiencyException(ConfigurationDeficiencyException ex, NativeWebRequest request) {
+        return create(
+            Status.BAD_REQUEST,
+            ex,
+            request,
+            HeaderUtil.createFailureAlert(applicationName, true, ex.getEntityName(), ex.getErrorKey(), ex.getMessage())
+        );
+    }
+
     @Override
     public ProblemBuilder prepare(final Throwable throwable, final StatusType status, final URI type) {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());

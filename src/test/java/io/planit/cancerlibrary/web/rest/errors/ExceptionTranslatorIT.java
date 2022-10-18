@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.web.rest.errors;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,7 +38,8 @@ class ExceptionTranslatorIT {
     @Test
     void testMethodArgumentNotValid() throws Exception {
         mockMvc
-            .perform(post("/api/exception-translator-test/method-argument").content("{}").contentType(MediaType.APPLICATION_JSON))
+            .perform(post("/api/exception-translator-test/method-argument").content("{}")
+                .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isBadRequest())
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("$.message").value(ErrorConstants.ERR_VALIDATION))
@@ -119,6 +121,18 @@ class ExceptionTranslatorIT {
     void testSqlGrammerException() throws Exception {
         mockMvc
             .perform(get("/api/exception-translator-test/bad-sql-grammar-exception"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+            .andExpect(jsonPath("$.message").value("error.http.400"))
+            .andExpect(jsonPath("$.title").value("Bad Request"));
+    }
+
+    @Test
+    void testConfigurationDeficiencyException() throws Exception {
+        mockMvc
+            .perform(get("/api/exception-translator-test/configuration-deficiency-exception"))
+            .andExpect(header().string("X-cancerLibraryApp-error", "error.configurationDeficiency"))
+            .andExpect(header().string("X-cancerLibraryApp-params", "entityname"))
             .andExpect(status().isBadRequest())
             .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
             .andExpect(jsonPath("$.message").value("error.http.400"))

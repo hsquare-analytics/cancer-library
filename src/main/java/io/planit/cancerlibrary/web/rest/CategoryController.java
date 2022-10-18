@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,10 @@ public class CategoryController {
             SecurityUtils.getCurrentUserLogin());
 
         List<Category> categoryList = categoryRepository.findAllByActivatedTrue();
+
+        if (categoryList.isEmpty()) {
+            throw new ConfigurationDeficiencyException("There is no usable category", "category");
+        }
         return ResponseEntity.ok(categoryList);
     }
 }

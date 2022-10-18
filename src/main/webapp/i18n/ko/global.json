@@ -159,7 +159,8 @@
       "could.not.extract": "Could not extract file",
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     },
-    "sqlSyntax": "SQL Syntax Error"
+    "sqlSyntax": "SQL Syntax Error",
+    "configurationDeficiency": "관리자에게 문의 하세요. \n *{{ entityName }} 설정 정보가 없습니다."
   },
   "footer": "하단영역"
 }

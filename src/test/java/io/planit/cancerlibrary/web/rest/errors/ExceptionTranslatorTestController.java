@@ -76,4 +76,9 @@ public class ExceptionTranslatorTestController {
     public void sqlGrammerException() {
         throw new org.springframework.jdbc.BadSqlGrammarException("ddl", "select * from test", new SQLException());
     }
+
+    @GetMapping("/configuration-deficiency-exception")
+    public void configurationDeficiencyException() {
+        throw new ConfigurationDeficiencyException("configuration deficiency exception", "entityname");
+    }
 }
