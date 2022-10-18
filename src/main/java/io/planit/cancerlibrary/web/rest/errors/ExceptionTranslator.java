@@ -182,7 +182,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleConfigurationDeficiencyException(ConfigurationDeficiencyException ex, NativeWebRequest request) {
+    public ResponseEntity<Problem> handleConfigurationDeficiencyException(ConfigurationDeficiencyBaseException ex, NativeWebRequest request) {
         return create(
             Status.BAD_REQUEST,
             ex,

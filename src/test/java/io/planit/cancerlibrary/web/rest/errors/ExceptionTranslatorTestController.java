@@ -79,6 +79,6 @@ public class ExceptionTranslatorTestController {
 
     @GetMapping("/configuration-deficiency-exception")
     public void configurationDeficiencyException() {
-        throw new ConfigurationDeficiencyException("configuration deficiency exception", "entityname");
+        throw new ConfigurationDeficiencyBaseException("configuration deficiency exception", "entityname");
     }
 }

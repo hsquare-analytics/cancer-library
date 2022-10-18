@@ -5,7 +5,7 @@ import java.util.Map;
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
 
-public class ConfigurationDeficiencyException extends AbstractThrowableProblem {
+public class ConfigurationDeficiencyBaseException extends AbstractThrowableProblem {
 
     private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class ConfigurationDeficiencyException extends AbstractThrowableProblem {
 
     private final String errorKey;
 
-    public ConfigurationDeficiencyException(String defaultMessage, String entityName) {
+    public ConfigurationDeficiencyBaseException(String defaultMessage, String entityName) {
         super(ErrorConstants.CONFIGURATION_DEFICIENCY_TYPE, defaultMessage, Status.BAD_REQUEST, null, null, null, getAlertParameters(entityName));
         this.entityName = entityName;
         this.errorKey = "configurationDeficiency";

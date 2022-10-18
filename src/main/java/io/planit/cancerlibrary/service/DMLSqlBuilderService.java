@@ -15,7 +15,7 @@ import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
-import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
+import io.planit.cancerlibrary.web.rest.errors.CategoryDeficiencyException;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
@@ -49,10 +49,9 @@ public class DMLSqlBuilderService {
     public SQL getInsertSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ConfigurationDeficiencyException("Category not found", "category"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
-        String login = SecurityUtils.getCurrentUserLogin()
-            .orElseThrow(() -> new RuntimeException("Current user login not found"));
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
         SQL sql = new SQL();
@@ -78,8 +77,7 @@ public class DMLSqlBuilderService {
 
     public SQL getReadSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
         SQL sql = new SQL().
             SELECT("*").
@@ -92,8 +90,7 @@ public class DMLSqlBuilderService {
 
     public SQL getReadAllSQL(Long categoryId) {
         log.debug("Request to get read all query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
         SQL sql = new SQL().SELECT("*").FROM(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
@@ -105,11 +102,9 @@ public class DMLSqlBuilderService {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
-        String login = SecurityUtils.getCurrentUserLogin()
-            .orElseThrow(() -> new RuntimeException("Current user login not found"));
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
         SQL sql = new SQL();
@@ -132,8 +127,7 @@ public class DMLSqlBuilderService {
 
     public SQL getDeleteSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get delete query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new RuntimeException("Category not found"));
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
         SQL sql = new SQL()
             .DELETE_FROM(sqlization(category.getTitle() + UPDATED_SUFFIX))

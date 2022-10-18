@@ -18,7 +18,7 @@ import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
-import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
+import io.planit.cancerlibrary.web.rest.errors.CategoryDeficiencyException;
 import java.time.Instant;
 import java.util.HashMap;
 import javax.persistence.EntityManager;
@@ -194,7 +194,52 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(ConfigurationDeficiencyException.class).hasMessage("Category not found");
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(
+            CategoryDeficiencyException.class);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testReadSqlConfigurationException() {
+        HashMap param = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("column1", "test1");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadSQL(99999L, param)).isInstanceOf(
+            CategoryDeficiencyException.class);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testReadAllSqlConfigurationException() {
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(
+            CategoryDeficiencyException.class);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testUpdateSqlConfigurationException() {
+        HashMap param = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("column1", "test1");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(
+            CategoryDeficiencyException.class);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser
+    void testDeleteSqlConfigurationException() {
+        HashMap param = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("column1", "test1");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(
+            CategoryDeficiencyException.class);
     }
 }
 

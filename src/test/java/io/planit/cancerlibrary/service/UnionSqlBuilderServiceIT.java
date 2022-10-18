@@ -22,7 +22,7 @@ import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
-import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyException;
+import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyBaseException;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -141,7 +141,7 @@ class UnionSqlBuilderServiceIT {
     @WithMockUser
     void testCategoryNotFoundException() {
         assertThatThrownBy(() -> unionSqlBuilderService.getUnionSelectSQL(999L, "test"))
-            .isInstanceOf(ConfigurationDeficiencyException.class);
+            .isInstanceOf(ConfigurationDeficiencyBaseException.class);
     }
 
 }
