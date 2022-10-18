@@ -90,7 +90,7 @@ export const PatientTableEditorContainer = createSlice({
         item: {
           container: {
             ...state.item.container,
-            [data[0].group.category.id]: data
+            [data[0].category.id]: data
           },
           count: state.item.count + 1
         }

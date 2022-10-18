@@ -124,7 +124,7 @@ describe('User Patient selector module reducer tests', () => {
     });
 
     it('should fetch usable items', () => {
-      const payload = {data: [{group: {category: {id: 'fakeId'}}}]};
+      const payload = {data: [{category: {id: 'fakeId'}}]};
 
       expect(reducer(undefined, {
         type: getUsableItems.fulfilled.type,

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {Button, Table} from 'reactstrap';
-import {Translate, TextFormat} from 'react-jhipster';
+import {TextFormat, Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './item.reducer';
@@ -9,9 +9,6 @@ import {APP_DATE_FORMAT} from "app/config/constants";
 
 export const Item = () => {
   const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const itemList = useAppSelector(state => state.item.entities);
   const loading = useAppSelector(state => state.item.loading);
@@ -59,7 +56,7 @@ export const Item = () => {
                 <Translate contentKey="cancerLibraryApp.item.activated">Activated</Translate>
               </th>
               <th>
-                <Translate contentKey="cancerLibraryApp.item.group.title">Group</Translate>
+                <Translate contentKey="cancerLibraryApp.item.category.title">Category</Translate>
               </th>
               <th>
                 <Translate contentKey="cancerLibraryApp.subject.createdDate">Created Date</Translate>
@@ -84,7 +81,7 @@ export const Item = () => {
                 <td>{item.title}</td>
                 <td>{item.description}</td>
                 <td>{item.activated ? 'true' : 'false'}</td>
-                <td>{item.group?.title}</td>
+                <td>{item.category.title}</td>
                 <td>
                   {item.createdDate ?
                     <TextFormat value={item.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/> : null}
