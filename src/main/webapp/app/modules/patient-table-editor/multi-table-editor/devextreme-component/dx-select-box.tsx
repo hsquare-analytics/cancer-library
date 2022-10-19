@@ -25,7 +25,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
 
   return (
     <div>
-      <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={props.data.column.lookup.dataSource}/>
+      <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
       <SelectBox
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
