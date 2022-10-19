@@ -2,7 +2,7 @@ import React from 'react';
 import {IItem} from "app/shared/model/item.model";
 import TagBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/TagBoxComponent";
 import SelectBoxComponent
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/SelectBoxComponent";
+  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/select-box-component";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 
 export interface IDxColumn {
