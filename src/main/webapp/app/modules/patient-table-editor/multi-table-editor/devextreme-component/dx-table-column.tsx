@@ -1,6 +1,7 @@
 import React from 'react';
 import {IItem} from "app/shared/model/item.model";
-import TagBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/TagBoxComponent";
+import TagBoxComponent
+  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/tag-box-component";
 import SelectBoxComponent
   from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/select-box-component";
 import {Column, Lookup} from 'devextreme-react/data-grid';
