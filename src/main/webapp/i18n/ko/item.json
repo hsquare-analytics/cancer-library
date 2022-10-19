@@ -28,9 +28,10 @@
       },
       "property": {
         "visibleIndex": "Visible Index",
-        "caption": "caption"
+        "caption": "caption",
+        "allowEditing": "Allow Editing"
       },
-      "lookup" : "lookup"
+      "lookup": "lookup"
     }
   }
 }

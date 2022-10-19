@@ -47,7 +47,7 @@ export const ItemUpdate = () => {
     const entity = {
       ...itemEntity,
       ...values,
-      lookup: values.lookup ? values.lookup.replace(/(^,)|(,$)/g, "").split(",") : null,
+      lookup: Array.isArray(values.lookup) ? values.lookup : values?.lookup.replace(/(^,)|(,$)/g, "").split(","),
     };
 
     if (isNew) {
@@ -144,6 +144,14 @@ export const ItemUpdate = () => {
                 name="property.caption"
                 data-cy="property.caption"
                 type="text"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.property.allowEditing')}
+                id="item-allowEditing"
+                name="property.allowEditing"
+                data-cy="property.allowEditing"
+                check
+                type="checkbox"
               />
               <ValidatedField
                 label={translate('cancerLibraryApp.item.lookup')}

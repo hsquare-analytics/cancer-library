@@ -59,19 +59,25 @@ export const ItemDetail = () => {
               <Translate contentKey="cancerLibraryApp.item.attribute.dataType">Data Type</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.attribute.dataType}</dd>
+          <dd>{itemEntity.attribute?.dataType}</dd>
           <dt>
             <span id="visibleIndex">
               <Translate contentKey="cancerLibraryApp.item.property.visibleIndex">Visible Index</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.property.caption}</dd>
+          <dd>{itemEntity.property?.visibleIndex}</dd>
           <dt>
             <span id="caption">
-              <Translate contentKey="cancerLibraryApp.item.property.caption">Visible Index</Translate>
+              <Translate contentKey="cancerLibraryApp.item.property.caption">Caption</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.property.caption}</dd>
+          <dd>{itemEntity.property?.caption}</dd>
+          <dt>
+            <span id="allowEditing">
+              <Translate contentKey="cancerLibraryApp.item.property.allowEditing">Allow Editing</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.allowEditing}</dd>
           <dt>
             <span id="lookup">
               <Translate contentKey="cancerLibraryApp.item.lookup">Lookup</Translate>

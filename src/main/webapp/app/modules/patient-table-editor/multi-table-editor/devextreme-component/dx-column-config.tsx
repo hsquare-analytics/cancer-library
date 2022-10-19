@@ -34,6 +34,8 @@ export const getDxColumnConfig = (item: IItem) => {
     dataType={item.attribute?.dataType}
     caption={item.property?.caption}
     visibleIndex={item.property?.visibleIndex}
+    visible={item.activated}
+    allowEditing={item.property?.allowEditing}
     alignment={'center'}
     editCellComponent={getDxEditCellComponent(item)}
   >
