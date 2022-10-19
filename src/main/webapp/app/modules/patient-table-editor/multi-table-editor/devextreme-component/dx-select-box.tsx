@@ -10,6 +10,7 @@ interface ISelectBoxComponentProps extends StateProps, DispatchProps {
 }
 
 const DxSelectBox = (props: ISelectBoxComponentProps) => {
+  const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
   const {data} = props;
@@ -21,6 +22,12 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
 
   const onSelectionChanged = () => {
     props.data.component.updateDimensions();
+  }
+
+  const onOptionChanged = (e) => {
+    if (e.name === 'opened') {
+      setIsSelectBoxOpened(e.value);
+    }
   }
 
   return (
@@ -36,15 +43,16 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         defaultValue={data.value}
         onValueChanged={onValueChanged}
         onSelectionChanged={onSelectionChanged}
-        buttons={[
+        onOptionChanged={onOptionChanged}
+        buttons={isSelectBoxOpened ? [
           {
             name: 'add',
-            location: 'after',
+            location: 'before',
             options: {
-              icon: 'overflow',
+              icon: 'preferences',
               onClick: () => setShowLookup(true)
             },
-          }]}
+          }] : null}
       >
 
       </SelectBox>
