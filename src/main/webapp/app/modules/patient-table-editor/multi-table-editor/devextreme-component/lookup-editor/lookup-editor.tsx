@@ -10,6 +10,8 @@ import {
   fireAddCardSwal,
   fireSaveCardSwal
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor.swal";
+import {partialUpdateEntity} from "app/entities/item/item.reducer";
+import {useAppDispatch} from "app/config/store";
 
 interface ILookupEditorProps {
   dataSource: { itemId: number, title: string }[];
@@ -18,6 +20,8 @@ interface ILookupEditorProps {
 }
 
 const LookupEditor = (props: ILookupEditorProps) => {
+  const dispatch = useAppDispatch();
+
   const {visible, dataSource} = props;
 
   const [itemId, setItemId] = React.useState<number>(0);
@@ -44,10 +48,9 @@ const LookupEditor = (props: ILookupEditorProps) => {
     fireSaveCardSwal().then((result) => {
       if (result.isConfirmed) {
         props.setVisible(false);
-        alert(itemId);
+        dispatch(partialUpdateEntity({id: itemId, lookup: cards.map(card => card.text)}));
       }
     });
-
   }
 
   const ToolbarItems: Array<IToolbarItemProps> = [
