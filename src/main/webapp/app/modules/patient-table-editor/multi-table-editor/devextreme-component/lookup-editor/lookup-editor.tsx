@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Popup} from 'devextreme-react/popup';
+import {IToolbarItemProps, Popup} from 'devextreme-react/popup';
 import {ICategory} from "app/shared/model/category.model";
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
@@ -7,7 +7,7 @@ import {
   DndContainer
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-container";
 import {ICard} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-card";
-
+import Swal from "sweetalert2";
 
 interface ILookupEditorProps {
   dataField: string;
@@ -30,6 +30,44 @@ const LookupEditor = (props: ILookupEditorProps) => {
     setCards(result);
   }, [JSON.stringify(dataSource)]);
 
+  const onAddCardButtonClick = () => {
+    Swal.fire({
+      title: 'Add new item',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Add',
+      showLoaderOnConfirm: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setCards([...cards, {id: result.value, text: result.value}]);
+      }
+    });
+  };
+
+  const ToolbarItems: Array<IToolbarItemProps> = [
+    {
+      location: 'before', widget: 'dxButton', toolbar: "bottom",
+      options: {
+        icon: 'plus', onClick: () => onAddCardButtonClick()
+      }
+    },
+    {
+      location: 'after', widget: 'dxButton', toolbar: "bottom",
+      options: {
+        text: 'SAVE', onClick: () => props.setVisible(false)
+      }
+    },
+    {
+      location: 'after', widget: 'dxButton', toolbar: "bottom",
+      options: {
+        text: 'CANCEL', onClick: () => props.setVisible(false)
+      }
+    },
+  ];
+
   return (
     <Popup
       showTitle={false}
@@ -38,22 +76,8 @@ const LookupEditor = (props: ILookupEditorProps) => {
       width={500}
       height={500}
       onHiding={() => props.setVisible(false)}
-      toolbarItems={[
-        {
-          location: 'after', widget: 'dxButton', toolbar: "bottom",
-          options: {
-            text: 'SAVE', onClick: () => props.setVisible(false)
-          }
-        },
-        {
-          location: 'after', widget: 'dxButton', toolbar: "bottom",
-          options: {
-            text: 'CANCEL', onClick: () => props.setVisible(false)
-          }
-        }
-      ]}
+      toolbarItems={ToolbarItems}
     >
-      {JSON.stringify(cards)}
       <DndProvider backend={HTML5Backend}>
         <DndContainer cards={cards} setCards={setCards}/>
       </DndProvider>
