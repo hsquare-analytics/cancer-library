@@ -7,7 +7,7 @@ import {DndCard} from './dnd-card'
 import {DndItemTypes} from './dnd-item-types'
 
 const style = {
-  width: 400,
+  width: "100%",
 }
 
 interface IDndContainerProps {
