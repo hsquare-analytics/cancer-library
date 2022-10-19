@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import {IToolbarItemProps, Popup} from 'devextreme-react/popup';
-import {ICategory} from "app/shared/model/category.model";
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
 import {
@@ -13,21 +12,21 @@ import {
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor.swal";
 
 interface ILookupEditorProps {
-  dataField: string;
-  category: ICategory;
-  dataSource: string[];
+  dataSource: { itemId: number, title: string }[];
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
 const LookupEditor = (props: ILookupEditorProps) => {
-  const {visible, category, dataField, dataSource} = props;
+  const {visible, dataSource} = props;
 
+  const [itemId, setItemId] = React.useState<number>(0);
   const [cards, setCards] = React.useState<ICard[]>([]);
 
   useEffect(() => {
+    setItemId(dataSource[0].itemId);
     const result = JSON.parse(JSON.stringify(dataSource)).map(data => {
-      return {id: data, text: data}
+      return {id: data.title, text: data.title}
     });
 
     setCards(result);
@@ -45,6 +44,7 @@ const LookupEditor = (props: ILookupEditorProps) => {
     fireSaveCardSwal().then((result) => {
       if (result.isConfirmed) {
         props.setVisible(false);
+        alert(itemId);
       }
     });
 

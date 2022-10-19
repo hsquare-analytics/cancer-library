@@ -17,12 +17,13 @@ const getDxEditCellComponent = (item: IItem) => {
 
 const getDxLookupComponent = (item: IItem) => {
   if (item.attribute?.dataType.toLowerCase()) {
-    return <Lookup dataSource={item.lookup.filter(data => data).map(data => new Object({"title": data}))}
-                   displayExpr={"title"} valueExpr={"title"}/>;
+    return <Lookup
+      dataSource={item.lookup.filter(data => data).map(data => new Object({"itemId": item.id, "title": data}))}
+      displayExpr={"title"} valueExpr={"title"}/>;
   }
 }
 
-export const getDxTableColumn = (item: IItem) => {
+export const getDxColumnConfig = (item: IItem) => {
   return <Column
     key={item.id}
     dataField={item.title.toLowerCase()}

@@ -19,7 +19,6 @@ import patient from "app/entities/patient/patient.reducer";
 import patientTableEditorContainer
   from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
 import patientTableEditorPatient from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
-import patientTableConfig from "app/modules/patient-table-editor/reducer/patient-table-editor.config.reducer";
 import userPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 const rootReducer: ReducersMapObject = {
@@ -40,7 +39,6 @@ const rootReducer: ReducersMapObject = {
   patient,
   patientTableEditorContainer,
   patientTableEditorPatient,
-  patientTableConfig,
   userPatientDndGrid
 };
 
