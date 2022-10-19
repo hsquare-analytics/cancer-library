@@ -88,10 +88,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }
             <Column dataField="last_modified_by"
                     caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
-                    alignment={"center"} allowEditing={false}/>
+                    alignment={"center"} allowEditing={false}
+                    visibleIndex={9998}/>
             <Column dataField="last_modified_date"
                     caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedDate')}
-                    alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}/>
+                    alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}
+                    visibleIndex={9999}/>
           </DataGrid>
         </Typography>
       </AccordionDetails>
