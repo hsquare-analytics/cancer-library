@@ -1,11 +1,14 @@
 import React from 'react';
 import SelectBox from 'devextreme-react/select-box';
+import {IRootState} from "app/config/store";
+import {connect} from 'react-redux';
 
-export interface ISelectBoxComponent {
+
+export interface ISelectBoxComponent extends StateProps, DispatchProps {
   data: any;
 }
 
-export default class SelectBoxComponent extends React.Component<ISelectBoxComponent> {
+export class SelectBoxComponent extends React.Component<ISelectBoxComponent> {
   constructor(props) {
     super(props);
     this.onValueChanged = this.onValueChanged.bind(this);
@@ -50,3 +53,12 @@ export default class SelectBoxComponent extends React.Component<ISelectBoxCompon
       </div>);
   }
 }
+
+const mapStateToProps = ({}: IRootState) => ({});
+
+const mapDispatchToProps = {}
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectBoxComponent);
