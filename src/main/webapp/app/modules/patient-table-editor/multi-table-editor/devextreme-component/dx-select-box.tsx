@@ -8,10 +8,13 @@ interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
 }
 
-const SelectBoxComponent = (props: ISelectBoxComponentProps) => {
+const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [showLookup, setShowLookup] = useState(false);
 
-  const {data} = props;
+  const {data, category} = props;
+
+
+
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
@@ -23,7 +26,7 @@ const SelectBoxComponent = (props: ISelectBoxComponentProps) => {
 
   return (
     <div>
-      <LookupEditor visible={showLookup} setVisible={setShowLookup}/>
+      <LookupEditor visible={showLookup} setVisible={setShowLookup} category={category} dataField={props.data.column.dataField}/>
       <SelectBox
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
@@ -59,4 +62,4 @@ const mapDispatchToProps = {}
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(SelectBoxComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DxSelectBox);

@@ -1,9 +1,7 @@
 import React from 'react';
 import {IItem} from "app/shared/model/item.model";
-import TagBoxComponent
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/tag-box-component";
-import SelectBoxComponent
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/select-box-component";
+import DxTagBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-tag-box";
+import SelectBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-select-box";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 
 export interface IDxColumn {
@@ -13,7 +11,7 @@ export interface IDxColumn {
 const getDxEditCellComponent = (item: IItem) => {
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
-      return TagBoxComponent;
+      return DxTagBox;
     case 'selectbox':
       return SelectBoxComponent;
     default:
@@ -23,8 +21,8 @@ const getDxEditCellComponent = (item: IItem) => {
 
 const getDxLookupComponent = (item: IItem) => {
   if (item.attribute?.dataType.toLowerCase()) {
-      return <Lookup dataSource={item.lookup.filter(data => data).map(data => new Object({"title": data}))}
-                     displayExpr={"title"} valueExpr={"title"}/>;
+    return <Lookup dataSource={item.lookup.filter(data => data).map(data => new Object({"title": data}))}
+                   displayExpr={"title"} valueExpr={"title"}/>;
   }
 }
 

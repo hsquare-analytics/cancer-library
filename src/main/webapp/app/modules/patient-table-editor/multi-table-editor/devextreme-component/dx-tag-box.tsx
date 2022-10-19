@@ -5,7 +5,7 @@ export interface ITagBoxComponentProps {
   data: any;
 }
 
-const TagBoxComponent = (props: ITagBoxComponentProps) => {
+const DxTagBox = (props: ITagBoxComponentProps) => {
   const {data} = props;
 
   const onValueChanged = (e) => {
@@ -30,4 +30,4 @@ const TagBoxComponent = (props: ITagBoxComponentProps) => {
     onSelectionChanged={onSelectionChanged}/>;
 }
 
-export default TagBoxComponent;
+export default DxTagBox;
