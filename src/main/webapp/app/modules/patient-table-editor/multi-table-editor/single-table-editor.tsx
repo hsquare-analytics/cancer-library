@@ -11,10 +11,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
-import {useAppSelector} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getDxTableColumn
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-table-column";
+import {
+  reset as resetConfig,
+  setCategory
+} from "app/modules/patient-table-editor/reducer/patient-table-editor.config.reducer";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -25,6 +29,8 @@ export const getCategoryTypography = (category: ICategory) => {
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
+  const dispatch = useAppDispatch();
+
   const dataSourceContainer = useAppSelector(state => state.patientTableEditorContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
 
@@ -55,7 +61,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
 
-
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
@@ -83,6 +88,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             onRowUpdating={onRowUpdating}
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
             paging={{pageSize: 10}}
+            onEditingStart={() => dispatch(setCategory(category))}
+            onEditCanceled={() => dispatch(resetConfig())}
+            onSaved={() => dispatch(resetConfig())}
           >
             {
               itemContainer[category.id].map(item => getDxTableColumn(item))
