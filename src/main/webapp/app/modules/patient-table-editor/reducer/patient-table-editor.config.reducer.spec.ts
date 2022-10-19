@@ -1,4 +1,7 @@
-import reducer, {reset} from "app/modules/patient-table-editor/reducer/patient-table-editor.config.reducer";
+import reducer, {
+  reset,
+  setCategory
+} from "app/modules/patient-table-editor/reducer/patient-table-editor.config.reducer";
 
 describe("PatientTableEditorConfigReducer", () => {
 
@@ -36,6 +39,13 @@ describe("PatientTableEditorConfigReducer", () => {
     it('should reset the state', () => {
       expect(reducer({...initialState, loading: true}, reset())).toEqual({
         ...initialState,
+      });
+    });
+
+    it('should set category', () => {
+      expect(reducer(undefined, setCategory("test"))).toEqual({
+        ...initialState,
+        category: "test"
       });
     });
   });

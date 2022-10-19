@@ -15,6 +15,12 @@ export const PatientTableEditorConfigReducer = createSlice({
   reducers: {
     reset() {
       return initialState;
+    },
+    setCategory(state, action) {
+      return {
+        ...state,
+        category: action.payload
+      };
     }
   },
   extraReducers(builder) {
@@ -22,6 +28,6 @@ export const PatientTableEditorConfigReducer = createSlice({
   }
 });
 
-export const {reset} = PatientTableEditorConfigReducer.actions;
+export const {reset, setCategory} = PatientTableEditorConfigReducer.actions;
 
 export default PatientTableEditorConfigReducer.reducer;
