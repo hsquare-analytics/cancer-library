@@ -2,7 +2,7 @@ import type {CSSProperties, FC} from 'react'
 import React, {memo} from 'react'
 import {useDrag, useDrop} from 'react-dnd'
 
-import {ItemTypes} from './item-types'
+import {DndItemTypes} from './dnd-item-types'
 
 const style: CSSProperties = {
   border: '1px dashed gray',
@@ -24,7 +24,7 @@ interface Item {
   originalIndex: number
 }
 
-export const Card: FC<CardProps> = memo(function Card({
+export const DndCard: FC<CardProps> = memo(function Card({
                                                         id,
                                                         text,
                                                         moveCard,
@@ -33,7 +33,7 @@ export const Card: FC<CardProps> = memo(function Card({
   const originalIndex = findCard(id).index
   const [{ isDragging }, drag] = useDrag(
     () => ({
-      type: ItemTypes.CARD,
+      type: DndItemTypes.CARD,
       item: { id, originalIndex },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -51,7 +51,7 @@ export const Card: FC<CardProps> = memo(function Card({
 
   const [, drop] = useDrop(
     () => ({
-      accept: ItemTypes.CARD,
+      accept: DndItemTypes.CARD,
       hover({ id: draggedId }: Item) {
         if (draggedId !== id) {
           const { index: overIndex } = findCard(id)

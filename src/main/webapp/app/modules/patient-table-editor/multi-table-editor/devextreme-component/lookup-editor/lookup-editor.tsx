@@ -1,6 +1,11 @@
 import React from "react";
 import {Popup} from 'devextreme-react/popup';
 import {ICategory} from "app/shared/model/category.model";
+import {DndProvider} from 'react-dnd'
+import {HTML5Backend} from 'react-dnd-html5-backend'
+import {
+  DndContainer
+} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-container";
 
 
 interface ILookupEditorProps {
@@ -25,13 +30,9 @@ const LookupEditor = (props: ILookupEditorProps) => {
       height={500}
       onHiding={() => props.setVisible(false)}
     >
-      <div>
-        {dataField}
-        <p>{JSON.stringify(dataSource)}</p>
-        <p>
-          {JSON.stringify(category)}
-        </p>
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <DndContainer />
+      </DndProvider>
     </Popup>
   );
 

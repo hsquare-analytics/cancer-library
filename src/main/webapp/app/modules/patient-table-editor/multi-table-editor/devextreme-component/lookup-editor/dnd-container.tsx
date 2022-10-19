@@ -3,8 +3,8 @@ import React, {memo, useCallback, useState} from "react";
 import update from 'immutability-helper'
 import {useDrop} from 'react-dnd'
 
-import {Card} from './card'
-import {ItemTypes} from './item-types'
+import {DndCard} from './dnd-card'
+import {DndItemTypes} from './dnd-item-types'
 
 const style = {
   width: 400,
@@ -45,7 +45,7 @@ const ITEMS = [
   },
 ]
 
-export const Container: FC = memo(function Container() {
+export const DndContainer: FC = memo(function Container() {
   const [cards, setCards] = useState(ITEMS)
 
   const findCard = useCallback(
@@ -77,11 +77,11 @@ export const Container: FC = memo(function Container() {
     [findCard, cards, setCards],
   )
 
-  const [, drop] = useDrop(() => ({ accept: ItemTypes.CARD }))
+  const [, drop] = useDrop(() => ({ accept: DndItemTypes.CARD }))
   return (
     <div ref={drop} style={style}>
       {cards.map((card) => (
-        <Card
+        <DndCard
           key={card.id}
           id={`${card.id}`}
           text={card.text}

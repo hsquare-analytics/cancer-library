@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import LookupEditor from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor";
+import LookupEditor
+  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
