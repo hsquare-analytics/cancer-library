@@ -5,6 +5,7 @@ import {useDrag, useDrop} from 'react-dnd'
 
 import {DndItemTypes} from './dnd-item-types'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
 
 const style: CSSProperties = {
   border: '1px dashed gray',
@@ -16,11 +17,18 @@ const style: CSSProperties = {
   justifyContent: 'space-between',
 }
 
+export interface ICard {
+  id: any;
+  text: any;
+}
+
 export interface CardProps {
-  id: string
-  text: string
+  id: string;
+  text: string;
   moveCard: (id: string, to: number) => void
-  findCard: (id: string) => { index: number }
+  findCard: (id: string) => { index: number; }
+  cards: ICard[]
+  setCards: (cards: ICard[]) => void;
 }
 
 interface Item {
@@ -28,12 +36,7 @@ interface Item {
   originalIndex: number
 }
 
-export const DndCard: FC<CardProps> = memo(function Card({
-                                                           id,
-                                                           text,
-                                                           moveCard,
-                                                           findCard,
-                                                         }) {
+export const DndCard: FC<CardProps> = memo(function Card({id, text, moveCard, findCard, cards, setCards}) {
   const originalIndex = findCard(id).index
   const [{isDragging}, drag] = useDrag(
     () => ({
@@ -66,15 +69,37 @@ export const DndCard: FC<CardProps> = memo(function Card({
     [findCard, moveCard],
   )
 
-  const opacity = isDragging ? 0 : 1
+  const opacity = isDragging ? 0 : 1;
+
+  const onClickDeleteButton = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setCards(cards.filter((card) => card.id !== id));
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        );
+      }
+    });
+  };
+
   return (
     <div ref={(node) => drag(drop(node))} style={{...style, opacity}}>
       <div className="d-flex align-items-center">
         {text}
       </div>
-      <Button variant="text">
-        <FontAwesomeIcon icon="trash" />
+      <Button variant="text" onClick={onClickDeleteButton}>
+        <FontAwesomeIcon icon="trash"/>
       </Button>
     </div>
   )
-})
+});

@@ -3,7 +3,7 @@ import React, {memo, useCallback} from "react";
 import update from 'immutability-helper'
 import {useDrop} from 'react-dnd'
 
-import {DndCard} from './dnd-card'
+import {DndCard, ICard} from './dnd-card'
 import {DndItemTypes} from './dnd-item-types'
 
 const style = {
@@ -11,8 +11,8 @@ const style = {
 }
 
 interface IDndContainerProps {
-  cards: { id: any, text: any; }[]
-  setCards: (cards: { id: string, text: string }[]) => void
+  cards: ICard[]
+  setCards: (cards: ICard[]) => void
 }
 
 
@@ -56,6 +56,8 @@ export const DndContainer: FC<IDndContainerProps> = memo(function Container({car
           text={card.text}
           moveCard={moveCard}
           findCard={findCard}
+          cards={cards}
+          setCards={setCards}
         />
       ))}
     </div>

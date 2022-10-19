@@ -6,6 +6,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend'
 import {
   DndContainer
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-container";
+import {ICard} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-card";
 
 
 interface ILookupEditorProps {
@@ -19,7 +20,7 @@ interface ILookupEditorProps {
 const LookupEditor = (props: ILookupEditorProps) => {
   const {visible, category, dataField, dataSource} = props;
 
-  const [cards, setCards] = React.useState<{ id: any, text: any }[]>([]);
+  const [cards, setCards] = React.useState<ICard[]>([]);
 
   useEffect(() => {
     const result = JSON.parse(JSON.stringify(dataSource)).map(data => {
@@ -34,7 +35,6 @@ const LookupEditor = (props: ILookupEditorProps) => {
       showTitle={false}
       visible={visible}
       dragEnabled={false}
-      hideOnOutsideClick={true}
       width={500}
       height={500}
       onHiding={() => props.setVisible(false)}
