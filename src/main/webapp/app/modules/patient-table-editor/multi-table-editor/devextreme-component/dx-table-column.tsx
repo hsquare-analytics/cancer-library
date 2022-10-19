@@ -4,10 +4,6 @@ import DxTagBox from "app/modules/patient-table-editor/multi-table-editor/devext
 import SelectBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-select-box";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 
-export interface IDxColumn {
-  item: IItem;
-}
-
 const getDxEditCellComponent = (item: IItem) => {
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
@@ -27,7 +23,6 @@ const getDxLookupComponent = (item: IItem) => {
 }
 
 export const getDxTableColumn = (item: IItem) => {
-
   return <Column
     key={item.id}
     dataField={item.title.toLowerCase()}
