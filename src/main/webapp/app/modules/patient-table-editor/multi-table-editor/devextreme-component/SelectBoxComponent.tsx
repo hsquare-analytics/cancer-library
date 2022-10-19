@@ -3,7 +3,6 @@ import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 
-
 export interface ISelectBoxComponent extends StateProps, DispatchProps {
   data: any;
 }
@@ -54,7 +53,7 @@ export class SelectBoxComponent extends React.Component<ISelectBoxComponent> {
   }
 }
 
-const mapStateToProps = ({}: IRootState) => ({});
+const mapStateToProps = ({authentication}: IRootState) => ({});
 
 const mapDispatchToProps = {}
 
