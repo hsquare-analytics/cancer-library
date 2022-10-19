@@ -16,10 +16,14 @@ const getDxEditCellComponent = (item: IItem) => {
 }
 
 const getDxLookupComponent = (item: IItem) => {
-  if (item.attribute?.dataType.toLowerCase()) {
-    return <Lookup
-      dataSource={item.lookup.filter(data => data).map(data => new Object({"itemId": item.id, "title": data}))}
-      displayExpr={"title"} valueExpr={"title"}/>;
+  switch (item.attribute?.dataType.toLowerCase()) {
+    case 'tagbox':
+    case 'selectbox':
+      return <Lookup
+        dataSource={item.lookup.filter(data => data).map(data => new Object({"itemId": item.id, "title": data}))}
+        displayExpr={"title"} valueExpr={"title"}/>;
+    default:
+      return undefined;
   }
 }
 
