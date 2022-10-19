@@ -7,7 +7,10 @@ import {
   DndContainer
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-container";
 import {ICard} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/dnd-card";
-import Swal from "sweetalert2";
+import {
+  fireAddCardSwal,
+  fireSaveCardSwal
+} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor.swal";
 
 interface ILookupEditorProps {
   dataField: string;
@@ -31,39 +34,39 @@ const LookupEditor = (props: ILookupEditorProps) => {
   }, [JSON.stringify(dataSource)]);
 
   const onAddCardButtonClick = () => {
-    Swal.fire({
-      title: 'Add new item',
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Add',
-      showLoaderOnConfirm: true,
-    }).then((result) => {
+    fireAddCardSwal().then((result) => {
       if (result.isConfirmed) {
         setCards([...cards, {id: result.value, text: result.value}]);
       }
     });
   };
 
+  const onSaveButtonClick = () => {
+    fireSaveCardSwal().then((result) => {
+      if (result.isConfirmed) {
+        props.setVisible(false);
+      }
+    });
+
+  }
+
   const ToolbarItems: Array<IToolbarItemProps> = [
     {
       location: 'before', widget: 'dxButton', toolbar: "bottom",
       options: {
-        icon: 'plus', onClick: () => onAddCardButtonClick()
+        icon: 'plus', onClick: () => onAddCardButtonClick(),
       }
     },
     {
       location: 'after', widget: 'dxButton', toolbar: "bottom",
       options: {
-        text: 'SAVE', onClick: () => props.setVisible(false)
+        text: 'SAVE', onClick: () => onSaveButtonClick(),
       }
     },
     {
       location: 'after', widget: 'dxButton', toolbar: "bottom",
       options: {
-        text: 'CANCEL', onClick: () => props.setVisible(false)
+        text: 'CANCEL', onClick: () => props.setVisible(false),
       }
     },
   ];

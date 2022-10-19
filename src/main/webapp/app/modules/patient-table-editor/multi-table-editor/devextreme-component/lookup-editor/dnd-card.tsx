@@ -6,6 +6,9 @@ import {useDrag, useDrop} from 'react-dnd'
 import {DndItemTypes} from './dnd-item-types'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
+import {
+  fireDeleteCardSwal
+} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor.swal";
 
 const style: CSSProperties = {
   border: '1px dashed gray',
@@ -72,22 +75,10 @@ export const DndCard: FC<CardProps> = memo(function Card({id, text, moveCard, fi
   const opacity = isDragging ? 0 : 1;
 
   const onClickDeleteButton = () => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
+    fireDeleteCardSwal().then((result) => {
       if (result.isConfirmed) {
         setCards(cards.filter((card) => card.id !== id));
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        );
+        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }
     });
   };
