@@ -21,19 +21,32 @@ const LookupEditor = (props: ILookupEditorProps) => {
 
   return (
     <Popup
+      showTitle={false}
       visible={visible}
       dragEnabled={false}
       hideOnOutsideClick={true}
-      showCloseButton={false}
-      showTitle={false}
       width={500}
       height={500}
       onHiding={() => props.setVisible(false)}
+      toolbarItems={[
+        {
+          location: 'after', widget: 'dxButton', toolbar: "bottom",
+          options: {
+            text: 'SAVE', onClick: () => props.setVisible(false)
+          }
+        },
+        {
+          location: 'after', widget: 'dxButton', toolbar: "bottom",
+          options: {
+            text: 'CANCEL', onClick: () => props.setVisible(false)
+          }
+        }
+      ]}
     >
       <DndProvider backend={HTML5Backend}>
-        <DndContainer dataSource={dataSource.map(data=>{
+        <DndContainer dataSource={dataSource.map(data => {
           return {id: data, text: data}
-        })} />
+        })}/>
       </DndProvider>
     </Popup>
   );
