@@ -10,6 +10,8 @@ public class ItemProperty implements Serializable {
 
     private String caption;
 
+    private Boolean allowEditing;
+
     public Integer getVisibleIndex() {
         return visibleIndex;
     }
@@ -33,6 +35,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty caption(String caption) {
         this.setCaption(caption);
+        return this;
+    }
+
+    public Boolean isAllowEditing() {
+        return allowEditing;
+    }
+
+    public void setAllowEditing(Boolean allowEditing) {
+        this.allowEditing = allowEditing;
+    }
+
+    public ItemProperty allowEditing(Boolean allowEditing) {
+        this.setAllowEditing(allowEditing);
         return this;
     }
 }

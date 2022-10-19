@@ -11,6 +11,7 @@
             </column>
             <column name="visible_index" type="int"/>
             <column name="caption" type="varchar(50)"/>
+            <column name="allow_editing" type="boolean" valueBoolean="true"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"
@@ -29,6 +30,7 @@
             <column name="item_id" type="numeric"/>
             <column name="visible_index" type="numeric"/>
             <column name="caption" type="string"/>
+            <column name="allow_editing" type="boolean"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

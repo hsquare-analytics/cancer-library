@@ -64,8 +64,8 @@ public class ItemResourceIT {
     private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("AAAAAAAAAA");
     private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("BBBBBBBBBB");
 
-    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA");
-    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB");
+    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA").allowEditing(true);
+    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB").allowEditing(false);
 
     private static final ArrayList<String> DEFAULT_ITEM_LOOKUP_LIST = new ArrayList<>() {{
         add("AAAAAAAAAA");
@@ -144,6 +144,7 @@ public class ItemResourceIT {
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getDataType());
         assertThat(testItem.getProperty().getVisibleIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getVisibleIndex());
         assertThat(testItem.getProperty().getCaption()).isEqualTo(DEFAULT_ITEM_PROPERTY.getCaption());
+        assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(DEFAULT_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getLookup()).hasSize(1);
         assertThat(testItem.getLookup()).containsAll(DEFAULT_ITEM_LOOKUP_LIST);
     }
@@ -194,6 +195,7 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].property.visibleIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getVisibleIndex())))
             .andExpect(jsonPath("$.[*].property.caption").value(hasItem(DEFAULT_ITEM_PROPERTY.getCaption())))
+            .andExpect(jsonPath("$.[*].property.allowEditing").value(hasItem(DEFAULT_ITEM_PROPERTY.isAllowEditing())))
             .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
             .andExpect(jsonPath("$.[*].lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST)));
     }
@@ -213,6 +215,7 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
             .andExpect(jsonPath("$.property.visibleIndex").value(DEFAULT_ITEM_PROPERTY.getVisibleIndex()))
             .andExpect(jsonPath("$.property.caption").value(DEFAULT_ITEM_PROPERTY.getCaption()))
+            .andExpect(jsonPath("$.property.allowEditing").value(DEFAULT_ITEM_PROPERTY.isAllowEditing()))
             .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
             .andExpect(jsonPath("$.lookup").value(hasSize(1)))
             .andExpect(jsonPath("$.lookup").value(contains(DEFAULT_ITEM_LOOKUP_LIST.toArray())))
@@ -253,6 +256,7 @@ public class ItemResourceIT {
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
         assertThat(testItem.getProperty().getVisibleIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getVisibleIndex());
         assertThat(testItem.getProperty().getCaption()).isEqualTo(UPDATED_ITEM_PROPERTY.getCaption());
+        assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(UPDATED_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
         assertThat(testItem.getLookup()).containsAll(UPDATED_ITEM_LOOKUP_LIST);
     }

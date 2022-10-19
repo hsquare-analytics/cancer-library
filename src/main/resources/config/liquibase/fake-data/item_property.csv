@@ -1,11 +1,11 @@
-"item_id";"visible_index";"caption"
-"1";"1";"caption1"
-"2";"2";"caption2"
-"3";"3";"caption3"
-"4";"4";"caption4"
-"5";"5";"caption5"
-"6";"6";"caption6"
-"7";"7";"caption7"
-"8";"8";"caption8"
-"9";"9";"caption9"
-"10";"10";"caption10 "
+"item_id";"visible_index";"caption";"allow_editing"
+"1";"1";"caption1";true
+"2";"2";"caption2";true
+"3";"3";"caption3";true
+"4";"4";"caption4";true
+"5";"5";"caption5";true
+"6";"6";"caption6";true
+"7";"7";"caption7";true
+"8";"8";"caption8";true
+"9";"9";"caption9";true
+"10";"10";"caption10";true
