@@ -6,12 +6,13 @@ import {ICategory} from "app/shared/model/category.model";
 interface ILookupEditorProps {
   dataField: string;
   category: ICategory;
+  dataSource: string[];
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
 
 const LookupEditor = (props: ILookupEditorProps) => {
-  const {visible, category, dataField} = props;
+  const {visible, category, dataField, dataSource} = props;
 
   return (
     <Popup
@@ -26,6 +27,7 @@ const LookupEditor = (props: ILookupEditorProps) => {
     >
       <div>
         {dataField}
+        <p>{JSON.stringify(dataSource)}</p>
         <p>
           {JSON.stringify(category)}
         </p>

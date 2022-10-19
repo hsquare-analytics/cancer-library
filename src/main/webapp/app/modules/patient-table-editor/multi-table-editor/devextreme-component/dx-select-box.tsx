@@ -14,8 +14,6 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const {data, category} = props;
 
 
-
-
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
   }
@@ -26,7 +24,9 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
 
   return (
     <div>
-      <LookupEditor visible={showLookup} setVisible={setShowLookup} category={category} dataField={props.data.column.dataField}/>
+      <LookupEditor visible={showLookup} setVisible={setShowLookup} category={category}
+                    dataField={props.data.column.dataField}
+                    dataSource={props.data.column.lookup.dataSource.map(data => data.title)}/>
       <SelectBox
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
@@ -42,8 +42,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
             name: 'add',
             location: 'after',
             options: {
-              text: 'add',
-              icon: 'add',
+              icon: 'overflow',
               onClick: () => setShowLookup(true)
             },
           }]}
