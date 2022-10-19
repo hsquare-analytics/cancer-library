@@ -31,7 +31,9 @@ const LookupEditor = (props: ILookupEditorProps) => {
       onHiding={() => props.setVisible(false)}
     >
       <DndProvider backend={HTML5Backend}>
-        <DndContainer />
+        <DndContainer dataSource={dataSource.map(data=>{
+          return {id: data, text: data}
+        })} />
       </DndProvider>
     </Popup>
   );
