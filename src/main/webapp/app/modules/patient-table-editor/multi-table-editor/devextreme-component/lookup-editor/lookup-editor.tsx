@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Popup} from 'devextreme-react/popup';
 import {ICategory} from "app/shared/model/category.model";
 import {DndProvider} from 'react-dnd'
@@ -18,6 +18,16 @@ interface ILookupEditorProps {
 
 const LookupEditor = (props: ILookupEditorProps) => {
   const {visible, category, dataField, dataSource} = props;
+
+  const [cards, setCards] = React.useState<{ id: any, text: any }[]>([]);
+
+  useEffect(() => {
+    const result = JSON.parse(JSON.stringify(dataSource)).map(data => {
+      return {id: data, text: data}
+    });
+
+    setCards(result);
+  }, [JSON.stringify(dataSource)]);
 
   return (
     <Popup
@@ -43,10 +53,9 @@ const LookupEditor = (props: ILookupEditorProps) => {
         }
       ]}
     >
+      {JSON.stringify(cards)}
       <DndProvider backend={HTML5Backend}>
-        <DndContainer dataSource={dataSource.map(data => {
-          return {id: data, text: data}
-        })}/>
+        <DndContainer cards={cards} setCards={setCards}/>
       </DndProvider>
     </Popup>
   );

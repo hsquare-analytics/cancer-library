@@ -1,5 +1,5 @@
 import type {FC} from 'react'
-import React, {memo, useCallback, useEffect, useState} from "react";
+import React, {memo, useCallback} from "react";
 import update from 'immutability-helper'
 import {useDrop} from 'react-dnd'
 
@@ -11,17 +11,12 @@ const style = {
 }
 
 interface IDndContainerProps {
-  dataSource: any[]
+  cards: { id: any, text: any; }[]
+  setCards: (cards: { id: string, text: string }[]) => void
 }
 
 
-export const DndContainer: FC<IDndContainerProps> = memo(function Container({ dataSource }) {
-  const [cards, setCards] = useState([]);
-
-  useEffect(() => {
-    setCards(dataSource)
-  }, [dataSource]);
-
+export const DndContainer: FC<IDndContainerProps> = memo(function Container({cards, setCards}) {
   const findCard = useCallback(
     (id: string) => {
       const card = cards.filter((c) => `${c.id}` === id)[0] as {
@@ -38,7 +33,7 @@ export const DndContainer: FC<IDndContainerProps> = memo(function Container({ da
 
   const moveCard = useCallback(
     (id: string, atIndex: number) => {
-      const { card, index } = findCard(id)
+      const {card, index} = findCard(id)
       setCards(
         update(cards, {
           $splice: [
@@ -51,7 +46,7 @@ export const DndContainer: FC<IDndContainerProps> = memo(function Container({ da
     [findCard, cards, setCards],
   )
 
-  const [, drop] = useDrop(() => ({ accept: DndItemTypes.CARD }))
+  const [, drop] = useDrop(() => ({accept: DndItemTypes.CARD}))
   return (
     <div ref={drop} style={style}>
       {cards.map((card) => (
