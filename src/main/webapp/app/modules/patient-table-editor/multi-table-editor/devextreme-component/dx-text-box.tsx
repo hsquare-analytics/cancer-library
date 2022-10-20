@@ -2,6 +2,9 @@ import React from "react";
 import TextBox from 'devextreme-react/text-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
+import DxRowCommentBox, {
+  getDxCellClass
+} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-row-comment-box";
 
 
 interface IDxEditCellRenderProps extends StateProps, DispatchProps {
@@ -9,25 +12,18 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
 }
 
 const DxTextBox = (props: IDxEditCellRenderProps) => {
-  const {row} = props;
+  const {data, row} = props;
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
   }
 
-  const isChanged = () => {
-    return props.data.value !== row[props.data.column.dataField];
-  }
-
   return <div>
-    <TextBox className={isChanged() ? "border border-info" : ""} defaultValue={props.data.value}
+    <TextBox className={getDxCellClass(data, row)} defaultValue={props.data.value}
              onValueChanged={onValueChanged}
              disabled={!props.data.column.allowEditing}
     />
-    {
-      isChanged() ? <div
-        className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div> : null
-    }
+    <DxRowCommentBox data={data} row={row}/>
   </div>
 }
 
