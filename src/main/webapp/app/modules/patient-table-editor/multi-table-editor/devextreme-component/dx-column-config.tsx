@@ -4,6 +4,7 @@ import {IItem} from "app/shared/model/item.model";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
 import DxTextBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-text-box";
+import DxNumberBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-number-box";
 
 
 const getDxEditCellComponent = (item: IItem) => {
@@ -14,6 +15,8 @@ const getDxEditCellComponent = (item: IItem) => {
       return SelectBoxComponent;
     case 'string':
       return DxTextBox;
+    case 'number':
+      return DxNumberBox;
     default:
       return undefined;
   }

@@ -1,7 +1,9 @@
 import React from "react";
 
 export const isDxCellChanged = (data, row) => {
-  return data.value !== row[data.column.dataField];
+  if (data.value && row[data.column.dataField]) {
+    return data.value.toString() !== row[data.column.dataField].toString();
+  }
 }
 
 export const getDxCellClass = (data, row) => {
