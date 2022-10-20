@@ -1,8 +1,21 @@
 import React from "react";
+import moment from 'moment/moment';
 
 export const isDxCellChanged = (data, row) => {
-  if (data.value && row[data.column.dataField]) {
-    return data.value.toString() !== row[data.column.dataField].toString();
+  const type = data.column.dataType;
+
+  const a = data.value;
+  const b = row[data.column.dataField];
+
+  switch (type) {
+    case 'date':
+      return moment(a).format('YYYY-MM-DD') !== moment(b).format('YYYY-MM-DD');
+    case 'datetime':
+      return moment(a).format('YYYY-MM-DD HH:mm:ss') !== moment(b).format('YYYY-MM-DD HH:mm:ss');
+    case 'number':
+      return parseFloat(a) !== parseFloat(b);
+    default:
+      return a !== b;
   }
 }
 
@@ -19,10 +32,6 @@ interface IDxRowCommentBoxProps {
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   const {data, row} = props;
-
-  const onValueChanged = (e) => {
-    data.setValue(e.value);
-  }
 
   if (!isDxCellChanged(data, row)) {
     return null;
