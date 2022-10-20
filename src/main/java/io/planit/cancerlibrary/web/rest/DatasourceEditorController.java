@@ -74,4 +74,22 @@ public class DatasourceEditorController {
             return ResponseEntity.ok().body(result);
         }
     }
+
+    @GetMapping("/datasource-editor/categories/{categoryId}/row/{rowIdx}")
+    public ResponseEntity<Map<String, Object>> getOriginDatasourceRowByCategoryId(
+        @PathVariable(value = "categoryId") final Long categoryId, @PathVariable(value = "rowIdx") final Long rowIdx) {
+        log.debug("REST request to get Datasource row by category id: {}", categoryId);
+
+        SQL sql = dmlSqlBuilderService.getOriginDataSourceRow(categoryId, rowIdx);
+
+        Map<String, Object> result = new HashMap<>();
+        List<Map> map = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
+        result.put("categoryId", categoryId);
+        result.put("dataSource", map);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+
+
 }

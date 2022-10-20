@@ -136,4 +136,18 @@ public class DMLSqlBuilderService {
         log.debug("Assembled final sql: {} ", sql);
         return sql;
     }
+
+    public SQL getOriginDataSourceRow(Long categoryId, Long rowIdx) {
+        log.debug("Request to get origin data source row by categoryId: {}", categoryId);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
+
+        SQL sql = new SQL()
+            .SELECT("*")
+            .FROM(sqlization(category.getTitle()))
+            .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, rowIdx));
+
+        log.debug("Assembled final sql: {} ", sql);
+        return sql;
+
+    }
 }
