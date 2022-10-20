@@ -6,9 +6,7 @@ import {useDrag, useDrop} from 'react-dnd'
 import {DndItemTypes} from './dnd-item-types'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
-import {
-  fireDeleteCardSwal
-} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor.swal";
+import {fireDeleteCardSwal} from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/lookup-editor.swal";
 
 const style: CSSProperties = {
   border: '1px dashed gray',

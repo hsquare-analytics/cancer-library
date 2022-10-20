@@ -15,11 +15,19 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
     props.data.setValue(e.value);
   }
 
+  const isChanged = () => {
+    return props.data.value !== row[props.data.column.dataField];
+  }
+
   return <div>
-    <TextBox className={"border border-info"} defaultValue={props.data.value} onValueChanged={onValueChanged}
+    <TextBox className={isChanged() ? "border border-info" : ""} defaultValue={props.data.value}
+             onValueChanged={onValueChanged}
              disabled={!props.data.column.allowEditing}
     />
-    <div className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div>
+    {
+      isChanged() ? <div
+        className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div> : null
+    }
   </div>
 }
 

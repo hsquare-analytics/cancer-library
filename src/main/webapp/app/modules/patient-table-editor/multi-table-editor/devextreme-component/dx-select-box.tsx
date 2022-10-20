@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import LookupEditor
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/lookup-editor/lookup-editor";
+import LookupEditor from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/lookup-editor";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -30,10 +29,15 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     }
   }
 
+  const isChanged = () => {
+    return props.data.value !== row[props.data.column.dataField];
+  }
+
   return (
     <div>
       <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
       <SelectBox
+        className={isChanged() ? "border border-info" : ""}
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
         displayExpr={data.column.lookup.displayExpr}
@@ -55,8 +59,10 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           }] : null}
       >
       </SelectBox>
-      <div className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div>
-    </div>);
+      {
+        isChanged() ? <div
+          className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div> : null
+      }    </div>);
 }
 
 const mapStateToProps = ({patientTableOrigin}: IRootState) => ({
