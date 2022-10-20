@@ -1,9 +1,9 @@
 ---
-name: weekly discussion request
+name: k-cure 주간회의 요청 사항
 about: Suggest an idea for this project
 title: "[k-cure 주간회의]"
 labels: modify ✨
-assignees: 'zero@planit.ai'
+assignees: 'planit-zero'
 
 ---
 ### k-cure 주간회의 수정 사항 
