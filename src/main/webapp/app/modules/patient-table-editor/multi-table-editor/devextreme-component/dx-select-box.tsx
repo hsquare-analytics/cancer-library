@@ -13,7 +13,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
-  const {data} = props;
+  const {data, row} = props;
 
 
   const onValueChanged = (e) => {
@@ -54,12 +54,15 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
             },
           }] : null}
       >
-
       </SelectBox>
+      <div className={"text-decoration-line-through p-1"}>{JSON.stringify(row[props.data.column.dataField])}</div>
     </div>);
 }
 
-const mapStateToProps = ({authentication}: IRootState) => ({});
+const mapStateToProps = ({patientTableOrigin}: IRootState) => ({
+  row: patientTableOrigin.row,
+});
+
 
 const mapDispatchToProps = {}
 

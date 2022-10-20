@@ -1,10 +1,9 @@
-import DxEditCellRender
-  from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-edit-cell-render";
 import SelectBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-select-box";
 import DxTagBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-tag-box";
 import {IItem} from "app/shared/model/item.model";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
+import DxTextBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-text-box";
 
 
 const getDxEditCellComponent = (item: IItem) => {
@@ -13,6 +12,8 @@ const getDxEditCellComponent = (item: IItem) => {
       return DxTagBox;
     case 'selectbox':
       return SelectBoxComponent;
+    case 'string':
+      return DxTextBox;
     default:
       return undefined;
   }
@@ -30,18 +31,6 @@ const getDxLookupComponent = (item: IItem) => {
   }
 }
 
-const getDxEditCellRender = (item: IItem) => {
-  if (item.property?.allowEditing === false) {
-    return undefined;
-  }
-
-  switch (item.attribute?.dataType.toLowerCase()) {
-    case 'string':
-      return DxEditCellRender;
-    default:
-      return undefined;
-  }
-}
 
 export const getDxColumnConfig = (item: IItem) => {
   return <Column
@@ -53,7 +42,6 @@ export const getDxColumnConfig = (item: IItem) => {
     visible={item.activated}
     allowEditing={item.property?.allowEditing}
     alignment={'center'}
-    editCellRender={getDxEditCellRender(item)}
     editCellComponent={getDxEditCellComponent(item)}
   >
     {getDxLookupComponent(item)}
