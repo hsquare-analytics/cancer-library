@@ -12,8 +12,8 @@ const DxEditCellRender = (props: IDxEditCellRenderProps) => {
   }
 
   return <div>
-    <TextBox className={"border border-info"} defaultValue={props.value} onValueChanged={onValueChanged} />
-    <div>test</div>
+    <TextBox className={"border border-info"} defaultValue={props.value} onValueChanged={onValueChanged}/>
+    <div className={"text-decoration-line-through p-1"}>test</div>
   </div>
 }
 
