@@ -11,10 +11,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
-import {useAppSelector} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import {
   getDxColumnConfig
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-column-config";
+import {getRow, resetRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -25,6 +26,8 @@ export const getCategoryTypography = (category: ICategory) => {
 }
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
+  const dispatch = useAppDispatch();
+
   const dataSourceContainer = useAppSelector(state => state.patientTableEditorContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
 
@@ -82,6 +85,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             onRowUpdating={onRowUpdating}
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
             paging={{pageSize: 10}}
+            onEditingStart={e => {
+              dispatch(getRow({categoryId: category.id, rowId: e.data.idx}));
+            }}
+            onEditCanceled={e => {
+              dispatch(resetRow());
+            }}
           >
             {
               itemContainer[category.id].map(item => getDxColumnConfig(item))

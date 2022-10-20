@@ -18,10 +18,10 @@ export const PatientTableEditorOriginReducer = createSlice({
     reset() {
       return initialState;
     },
-    setRow(state, action) {
+    resetRow(state) {
       return {
         ...state,
-        row: action.payload,
+        row: {},
       };
     }
   },
@@ -43,14 +43,14 @@ export const PatientTableEditorOriginReducer = createSlice({
   },
 });
 
-export const getRow = createAsyncThunk("patient-table-editor-config/get_row", async (data: { categoryId: number, idx: number }) => {
-    const requestUrl = `api/patient-table-editor-config?categoryId=${data.categoryId}&idx=${data.idx}`;
+export const getRow = createAsyncThunk("patient-table-editor-config/get_row", async (data: { categoryId: number, rowId: number }) => {
+    const requestUrl = `api/datasource-editor/categories/${data.categoryId}/row/${data.rowId}`;
     return axios.get<any>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
 
-export const {reset, setRow} = PatientTableEditorOriginReducer.actions;
+export const {reset, resetRow} = PatientTableEditorOriginReducer.actions;
 
 export default PatientTableEditorOriginReducer.reducer;

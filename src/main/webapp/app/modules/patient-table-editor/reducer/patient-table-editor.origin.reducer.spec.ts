@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import reducer, {
   getRow,
   reset,
-  setRow
+  resetRow
 } from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
 
 describe("PatientTableEditorConfigReducer", () => {
@@ -50,9 +50,9 @@ describe("PatientTableEditorConfigReducer", () => {
     });
 
     it('should set origin data', () => {
-      expect(reducer(undefined, setRow("test"))).toEqual({
+      expect(reducer(undefined, resetRow())).toEqual({
         ...initialState,
-        row: "test"
+        row: {}
       });
     });
   });
@@ -116,7 +116,7 @@ describe("PatientTableEditorConfigReducer", () => {
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getRow({categoryId: 1, idx: 1}));
+      await store.dispatch(getRow({categoryId: 1, rowId: 1}));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
