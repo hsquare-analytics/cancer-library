@@ -74,13 +74,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           <DataGrid
             dataSource={JSON.parse(JSON.stringify(dataSourceContainer[category.id]))}
             showBorders={true}
-            filterRow={{visible: true}}
+            filterRow={{visible: false}}
             headerFilter={{visible: true}}
             allowColumnResizing={true}
             pager={{displayMode: 'compact', showNavigationButtons: true}}
             editing={{
               mode: 'popup',
               allowUpdating: true,
+              allowAdding: true,
+              form: {colCount: 3}
             }}
             onRowUpdating={onRowUpdating}
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
