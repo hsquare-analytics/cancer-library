@@ -71,8 +71,8 @@ insert into ph_item_attribute (item_id, data_type) values (2707, 'date');
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2708, 'MED_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2708, 8, '수진 기록일', true);
-insert into ph_item_attribute (item_id, data_type) values (2708, 'date');
+insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2708, 8, '수진 기록일시', true);
+insert into ph_item_attribute (item_id, data_type) values (2708, 'datetime');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)

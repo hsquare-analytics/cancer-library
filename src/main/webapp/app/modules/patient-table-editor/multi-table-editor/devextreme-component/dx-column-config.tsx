@@ -19,6 +19,7 @@ const getDxEditCellComponent = (item: IItem) => {
     case 'number':
       return DxNumberBox;
     case 'date':
+    case 'datetime':
       return DxDateBox;
     default:
       return undefined;
