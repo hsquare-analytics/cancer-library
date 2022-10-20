@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import io.planit.cancerlibrary.IntegrationTest;
@@ -115,8 +116,8 @@ class DatasourceEditorControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryDd}", category.getId())).andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
+        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryDd}", category.getId()))
+            .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
     @Test
@@ -134,12 +135,12 @@ class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/categories/{categoryId}", category.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
+                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                    MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+        List<Map> result = datasourceMapper.executeSelectSQL(
+            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
@@ -147,8 +148,9 @@ class DatasourceEditorControllerIT {
 
     @Test
     @Transactional
-    void testDatasourceRowUpdate() throws Exception{
-        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
+    void testDatasourceRowUpdate() throws Exception {
+        datasourceMapper.executeSelectSQL(
+            new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -162,15 +164,33 @@ class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/categories/{categoryId}", category.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
+                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                    MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+        List<Map> result = datasourceMapper.executeSelectSQL(
+            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
 
         // todo: mybatis transaction 처리 안됨...
 //        assertThat(result.size()).isEqualTo(1);
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
+    }
+
+
+    @Test
+    @Transactional
+    void testGetOriginalDatasourceRow() throws Exception {
+        // given
+        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test (idx, name) values (10001, 'zero')"));
+
+        // then
+        restDatasourceMockMvc.perform(
+                get("/api/datasource-editor/categories/{categoryId}/row/{rowIdx}", category.getId(), 10001))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.idx").value("10001"))
+            .andExpect(jsonPath("$.name").value("zero"));
+        ;
+
     }
 }
