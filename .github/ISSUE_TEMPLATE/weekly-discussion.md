@@ -1,5 +1,5 @@
 ---
-name: k-cure request
+name: weekly discussion request
 about: Suggest an idea for this project
 title: "[k-cure 주간회의]"
 labels: modify ✨
