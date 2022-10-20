@@ -1,7 +1,7 @@
 ---
 name: k-cure 주간회의 요청 사항
 about: Suggest an idea for this project
-title: "[k-cure 주간회의]"
+title: "[k-cure 주간회의] 2022-xx-xx"
 labels: modify ✨
 assignees: 'planit-zero'
 
