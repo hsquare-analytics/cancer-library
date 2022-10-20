@@ -95,7 +95,7 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
                      last_modified_date)
 values (2711, 'FRVS_RMDE_TP_NM', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2711, 11, '첫 방문 여부', true);
-insert into ph_item_attribute (item_id, data_type) values (2711, 'string');
+insert into ph_item_attribute (item_id, data_type) values (2711, 'boolean');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
