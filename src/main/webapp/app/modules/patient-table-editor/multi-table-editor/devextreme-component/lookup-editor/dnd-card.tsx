@@ -48,8 +48,8 @@ export const DndCard: FC<CardProps> = memo(function Card({id, text, moveCard, fi
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
-      end: (item, monitor) => {
-        const {id: droppedId, originalIndex} = item
+      end(item, monitor) {
+        const {id: droppedId} = item
         const didDrop = monitor.didDrop()
         if (!didDrop) {
           moveCard(droppedId, originalIndex)
