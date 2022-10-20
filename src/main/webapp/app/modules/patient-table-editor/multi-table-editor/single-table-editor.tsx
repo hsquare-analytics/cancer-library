@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
@@ -16,6 +16,9 @@ import {
   getDxColumnConfig
 } from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-column-config";
 import {getRow, resetRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
+import Button from '@mui/material/Button';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -27,6 +30,7 @@ export const getCategoryTypography = (category: ICategory) => {
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dispatch = useAppDispatch();
+  const dataGrid = useRef(null);
 
   const dataSourceContainer = useAppSelector(state => state.patientTableEditorContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
@@ -61,17 +65,24 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
-    <Accordion defaultExpanded={true}>
+    <Accordion defaultExpanded={true} className={"single-table-editor-wrapper"}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
         {getCategoryTypography(category)}
+        <Button variant="text" onClick={(e) => {
+          e.stopPropagation();
+          dataGrid.current.instance.addRow()
+        }}>
+          <FontAwesomeIcon icon="plus"/>
+        </Button>
       </AccordionSummary>
       <AccordionDetails sx={{padding: "8px 0"}}>
         <Typography>
           <DataGrid
+            ref={dataGrid}
             dataSource={JSON.parse(JSON.stringify(dataSourceContainer[category.id]))}
             showBorders={true}
             filterRow={{visible: false}}
@@ -81,7 +92,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             editing={{
               mode: 'popup',
               allowUpdating: true,
-              allowAdding: true,
               form: {colCount: 3}
             }}
             onRowUpdating={onRowUpdating}
