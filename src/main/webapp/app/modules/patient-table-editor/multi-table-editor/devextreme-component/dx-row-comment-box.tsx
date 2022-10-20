@@ -27,7 +27,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   }
 
   return <div>
-    <div className="text-decoration-line-through p-1">{JSON.stringify(row[data.column.dataField])}</div>
+    <div className="text-underline p-1">최초: {row[data.column.dataField]}</div>
   </div>
 }
 
