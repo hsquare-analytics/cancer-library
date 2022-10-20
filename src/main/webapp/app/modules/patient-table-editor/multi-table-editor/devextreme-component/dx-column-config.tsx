@@ -5,6 +5,7 @@ import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
 import DxTextBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-text-box";
 import DxNumberBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-number-box";
+import DxDateBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-date-box";
 
 
 const getDxEditCellComponent = (item: IItem) => {
@@ -17,6 +18,8 @@ const getDxEditCellComponent = (item: IItem) => {
       return DxTextBox;
     case 'number':
       return DxNumberBox;
+    case 'date':
+      return DxDateBox;
     default:
       return undefined;
   }
