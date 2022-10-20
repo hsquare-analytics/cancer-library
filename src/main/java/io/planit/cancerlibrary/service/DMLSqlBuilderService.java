@@ -75,13 +75,26 @@ public class DMLSqlBuilderService {
         return sql;
     }
 
-    public SQL getReadSQL(Long categoryId, Map<String, String> map) {
+    public SQL getReadUpdatedRowSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
         SQL sql = new SQL().
             SELECT("*").
             FROM(sqlization(category.getTitle() + UPDATED_SUFFIX)).
+            WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
+
+        log.debug("Assembled final sql: {} ", sql);
+        return sql;
+    }
+
+    public SQL getReadOriginRowSQL(Long categoryId, Map<String, String> map) {
+        log.debug("Request to get read query by categoryId: {}", categoryId);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
+
+        SQL sql = new SQL().
+            SELECT("*").
+            FROM(sqlization(category.getTitle())).
             WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         log.debug("Assembled final sql: {} ", sql);

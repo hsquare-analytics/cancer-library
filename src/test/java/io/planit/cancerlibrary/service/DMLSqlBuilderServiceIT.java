@@ -103,7 +103,7 @@ class DMLSqlBuilderServiceIT {
 
     @Test
     @Transactional
-    void testReadSql() {
+    void testReadUpdatedRowSql() {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -115,7 +115,7 @@ class DMLSqlBuilderServiceIT {
         itemRepository.saveAndFlush(item2);
 
         // when
-        String result = dmlSqlBuilderService.getReadSQL(category.getId(), new HashMap<>() {{
+        String result = dmlSqlBuilderService.getReadUpdatedRowSQL(category.getId(), new HashMap<>() {{
             put("idx", "test_idx");
         }}).toString();
 
@@ -123,6 +123,30 @@ class DMLSqlBuilderServiceIT {
         assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"))
             .contains("WHERE (IDX = 'test_idx')");
     }
+
+    @Test
+    @Transactional
+    void testReadOriginRowSQL() {
+        // given
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+
+        Item item1 = new Item().category(category).title("column1").activated(true);
+        Item item2 = new Item().category(category).title("column2").activated(true);
+
+        itemRepository.saveAndFlush(item1);
+        itemRepository.saveAndFlush(item2);
+
+        // when
+        String result = dmlSqlBuilderService.getReadOriginRowSQL(category.getId(), new HashMap<>() {{
+            put("idx", "test_idx");
+        }}).toString();
+
+        // then
+        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle()))
+            .contains("WHERE (IDX = 'test_idx')");
+    }
+
 
     @Test
     @Transactional
@@ -206,7 +230,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getReadSQL(99999L, param)).isInstanceOf(
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(
             CategoryDeficiencyException.class);
     }
 

@@ -60,7 +60,7 @@ public class DatasourceEditorController {
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
-        SQL readSQL = dmlSqlBuilderService.getReadSQL(categoryId, map);
+        SQL readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, map);
 
         List<Map> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
 
