@@ -30,6 +30,9 @@
           "confirm": "Confirm",
           "cancel": "Cancel"
         }
+      },
+      "singleTableEditor": {
+        "updateSuccess": "Table {{ table }} of row {{ row }} update success"
       }
     }
   }

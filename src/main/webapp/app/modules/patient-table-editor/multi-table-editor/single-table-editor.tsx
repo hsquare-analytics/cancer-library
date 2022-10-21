@@ -1,7 +1,6 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
-import axios from "axios";
 import {REVIEW_LIST} from "app/config/constants";
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
@@ -18,6 +17,7 @@ import {
 import {getRow, resetRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {updateDatasourceRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
 
 
 export interface ISingleTableEditor {
@@ -32,32 +32,33 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dispatch = useAppDispatch();
   const dataGrid = useRef(null);
 
+  // 다섯개 테이블에 대한 업데이트 플래그 체크를 위해서 별도로 local state를 생성하였다. (swal alert 다중 표시 방지)
+  const [editedCategory, setEditedCategory] = useState(null);
+  const [editedRow, setEditedRow] = useState(null);
+
   const dataSourceContainer = useAppSelector(state => state.patientTableEditorContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
+  const updateSuccess = useAppSelector(state => state.patientTableEditorContainer.updateSuccess);
 
   const {category} = props;
 
-  const login = useAppSelector(state => state.authentication.account.login);
+  useEffect(() => {
+    if (updateSuccess && editedCategory && editedCategory.id == category.id) {
+      toast.info(translate("cancerLibraryApp.patientTableEditor.singleTableEditor.updateSuccess", {
+        table: category.title.toUpperCase(),
+        row: editedRow.idx
+      }));
+    }
+  }, [updateSuccess]);
+
 
   const onRowUpdating = e => {
     e.cancel = new Promise<void>((resolve, reject) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       row['status'] = REVIEW_LIST.SUBMITTED;
-      axios
-      .post(`api/datasource-editor/categories/${category.id}`, row)
-      .then(({data}) => {
-        if (data >= 1) {
-          toast.success('Data Submitted Successfully');
-          e.oldData['status'] = REVIEW_LIST.SUBMITTED;
-          e.oldData['last_modified_by'] = login;
-          e.oldData['last_modified_date'] = new Date();
-          resolve();
-        } else {
-          toast.error('Data Submission Failed');
-          reject('update fail');
-        }
-      })
-      .catch(err => reject(err));
+
+      dispatch(updateDatasourceRow({categoryId: category.id, row}));
+      resolve();
     });
   };
 
@@ -98,6 +99,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
             paging={{pageSize: 10}}
             onEditingStart={e => {
+              setEditedCategory(category);
+              setEditedRow(e.data);
               dispatch(getRow({categoryId: category.id, rowId: e.data.idx}));
             }}
             onEditCanceled={e => {
