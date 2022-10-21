@@ -13,9 +13,11 @@ type userPatientSelectorType = {
     container: { [key: string]: any },
     count: number
   },
-  loading: boolean,
   categories: ICategory[];
+  loading: boolean,
   errorMessage: string | null;
+  updating: boolean;
+  updateSuccess: boolean;
 };
 
 const initialState: userPatientSelectorType = {
@@ -27,9 +29,11 @@ const initialState: userPatientSelectorType = {
     container: {},
     count: 0
   },
-  loading: false,
   categories: [],
+  loading: false,
   errorMessage: null,
+  updating: false,
+  updateSuccess: false
 }
 
 export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usable_item_list', async (categoryId: number) => {
@@ -49,6 +53,14 @@ export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_
 export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
     const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
     return axios.get<any>(requestUrl);
+  },
+  {serializeError: serializeAxiosError}
+);
+
+export const updateDatasourceRow = createAsyncThunk('patient-table-editor/update_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
+    const result = axios.put<any>(`api/datasource-editor/categories/${data.categoryId}`, data.row);
+    thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row.patientNo}));
+    return result;
   },
   {serializeError: serializeAxiosError}
 );
@@ -116,13 +128,25 @@ export const PatientTableEditorContainer = createSlice({
         }
       }
     })
+    .addMatcher(isFulfilled(updateDatasourceRow), (state) => {
+      state.updating = false
+      state.loading = false;
+      state.updateSuccess = true;
+    })
     .addMatcher(isPending(getUsableCategories), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getUsableCategories), (state, action) => {
+    .addMatcher(isPending(updateDatasourceRow), (state) => {
+      state.errorMessage = null;
+      state.updating = true;
+      state.updateSuccess = false;
+    })
+    .addMatcher(isRejected(getUsableCategories, updateDatasourceRow), (state, action) => {
       state.errorMessage = action.error.message;
       state.loading = false;
+      state.updating = false;
+      state.updateSuccess = false;
     });
   }
 });

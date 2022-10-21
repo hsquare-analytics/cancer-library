@@ -11,6 +11,7 @@ import reducer, {
   reset,
   resetDataSource,
   resetItem,
+  updateDatasourceRow,
 } from './patient-table-editor.container.reducer';
 
 describe('User Patient selector module reducer tests', () => {
@@ -34,6 +35,8 @@ describe('User Patient selector module reducer tests', () => {
     loading: false,
     categories: [],
     errorMessage: null,
+    updating: false,
+    updateSuccess: false
   }
 
   function testInitialState(state) {
@@ -45,6 +48,12 @@ describe('User Patient selector module reducer tests', () => {
     expect(isEmpty(state.dataSource.container));
     expect(isNaN(state.item.count));
     expect(isNaN(state.dataSource.count));
+  }
+
+  function testMultipleTypes(types, payload, testFunction, error?) {
+    types.forEach(e => {
+      testFunction(reducer(undefined, {type: e, payload, error}));
+    });
   }
 
   describe('Common', () => {
@@ -93,18 +102,35 @@ describe('User Patient selector module reducer tests', () => {
         loading: true,
       });
     });
+
+    it('should set state to loading', () => {
+      expect(reducer(undefined, {type: updateDatasourceRow.pending.type})).toMatchObject({
+        errorMessage: null,
+        updateSuccess: false,
+        updating: true,
+      });
+    });
   });
 
   describe('Failures', () => {
     it('should set a message in errorMessage', () => {
-
-      const payload = 'some message';
-      const error = {message: 'error message'};
-
-      expect(reducer(undefined, {type: getUsableCategories.rejected.type, payload, error})).toMatchObject({
-        errorMessage: 'error message',
-        loading: false
-      });
+      testMultipleTypes(
+        [
+          getUsableCategories.rejected.type,
+          updateDatasourceRow.rejected.type,
+        ],
+        'some message',
+        state => {
+          expect(state).toMatchObject({
+            errorMessage: 'error message',
+            updateSuccess: false,
+            updating: false,
+          });
+        },
+        {
+          message: 'error message',
+        }
+      );
     });
   });
 
@@ -157,6 +183,19 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
+    it('should update dataSource row', () => {
+      const payload = {data: {categoryId: 'fakeId', dataSource: [{1: 'fake1', 2: 'fake2'}]}};
+
+      expect(reducer(undefined, {
+        type: updateDatasourceRow.fulfilled.type,
+        payload,
+      })).toEqual({
+        ...initialState,
+        updateSuccess: true,
+        updating: false,
+        loading: false
+      });
+    });
   });
 
   describe('Actions', () => {
@@ -203,5 +242,24 @@ describe('User Patient selector module reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
 
+    it('dispatches UPDATE_DATASOURCE_ROW actions', async () => {
+      const expectedActions = [
+        {
+          type: updateDatasourceRow.pending.type
+        },
+        {
+          type: getDataSources.pending.type
+        },
+        {
+          type: updateDatasourceRow.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(updateDatasourceRow({categoryId: 1, row: {}}));
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
   });
 });
