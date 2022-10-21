@@ -2,7 +2,7 @@ package io.planit.cancerlibrary.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,7 +17,6 @@ import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.GroupRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
@@ -57,9 +56,6 @@ class DatasourceEditorControllerIT {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -116,7 +112,7 @@ class DatasourceEditorControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryDd}", category.getId()))
+        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryId}", category.getId()).param("ptNo", "1"))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -135,7 +131,7 @@ class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                put("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
@@ -164,7 +160,7 @@ class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                put("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 

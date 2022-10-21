@@ -58,7 +58,7 @@ export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_
 );
 
 export const updateDatasourceRow = createAsyncThunk('patient-table-editor/update_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
-    const result = await axios.post<any>(`api/datasource-editor/categories/${data.categoryId}`, data.row);
+    const result = await axios.put<any>(`api/datasource-editor/categories/${data.categoryId}`, data.row);
     thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
     return result;
   },

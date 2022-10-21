@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +55,7 @@ public class DatasourceEditorController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PostMapping("/datasource-editor/categories/{categoryId}")
+    @PutMapping("/datasource-editor/categories/{categoryId}")
     public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
         @RequestBody Map map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
