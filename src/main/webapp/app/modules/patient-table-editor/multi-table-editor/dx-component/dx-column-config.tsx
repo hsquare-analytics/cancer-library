@@ -1,11 +1,11 @@
-import SelectBoxComponent from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-select-box";
-import DxTagBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-tag-box";
+import SelectBoxComponent from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-select-box";
+import DxTagBox from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-tag-box";
 import {IItem} from "app/shared/model/item.model";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
-import DxTextBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-text-box";
-import DxNumberBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-number-box";
-import DxDateBox from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-date-box";
+import DxTextBox from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-text-box";
+import DxNumberBox from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-number-box";
+import DxDateBox from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-date-box";
 
 
 const getDxEditCellComponent = (item: IItem) => {

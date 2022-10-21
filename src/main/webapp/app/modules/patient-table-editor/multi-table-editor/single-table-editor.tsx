@@ -11,9 +11,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {
-  getDxColumnConfig
-} from "app/modules/patient-table-editor/multi-table-editor/devextreme-component/dx-column-config";
+import {getDxColumnConfig} from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-column-config";
 import {getRow, resetRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
