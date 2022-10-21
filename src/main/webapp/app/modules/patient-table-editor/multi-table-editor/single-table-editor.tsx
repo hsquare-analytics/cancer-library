@@ -41,7 +41,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const {category} = props;
 
   useEffect(() => {
-    if (updateSuccess && editedCategory && editedCategory.id == category.id) {
+    if (updateSuccess && editedCategory && editedCategory.id === category.id) {
       toast.info(translate("cancerLibraryApp.patientTableEditor.singleTableEditor.updateSuccess", {
         table: category.title.toUpperCase(),
         row: editedRow.idx

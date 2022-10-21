@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -101,6 +102,25 @@ class DatasourceEditorControllerIT {
 
     @Test
     @Transactional
+    void testDatasourceRowInsert() throws Exception {
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().category(category).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        restDatasourceMockMvc.perform(
+                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
+            .andExpect(status().isOk());
+
+        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
+            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+
+        assertThat(result.get(0)).containsEntry("name", "modified_zero");
+    }
+
+    @Test
+    @Transactional
     void testFetchDataByCategoryId() throws Exception {
         Item item = new Item().category(category).title(DEFAULT_COLUMN_NAME).activated(true);
 
@@ -118,24 +138,18 @@ class DatasourceEditorControllerIT {
 
     @Test
     @Transactional
-    void testDatasourceRowInsert() throws Exception {
+    void testDatasourceNotExistRowUpdate() throws Exception {
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
-
-        User user = UserResourceIT.createEntity(em);
-        userRepository.saveAndFlush(user);
-        UserCategory userCategory = new UserCategory().user(user).category(category).activated(true)
-            .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
-        userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
                 put("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map> result = datasourceMapper.executeSelectSQL(
+        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
             new SQLAdapter("select * from ph_test_updated where idx = 10001"));
 
         assertThat(result).hasSize(1);
@@ -144,7 +158,7 @@ class DatasourceEditorControllerIT {
 
     @Test
     @Transactional
-    void testDatasourceRowUpdate() throws Exception {
+    void testDatasourceExistRowUpdate() throws Exception {
         datasourceMapper.executeSelectSQL(
             new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
 
@@ -164,7 +178,7 @@ class DatasourceEditorControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map> result = datasourceMapper.executeSelectSQL(
+        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
             new SQLAdapter("select * from ph_test_updated where idx = 10001"));
 
         // todo: mybatis transaction 처리 안됨...
