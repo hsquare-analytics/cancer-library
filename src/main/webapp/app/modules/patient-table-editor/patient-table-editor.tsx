@@ -96,7 +96,7 @@ export const PatientTableEditor = () => {
       hoverStateEnabled={true}
       paging={{pageSize: 30}}
     >
-      <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'}/>
+      <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
       {
         PatientTableEditorColumn.map(item => <Column
             key={item.dataField}
