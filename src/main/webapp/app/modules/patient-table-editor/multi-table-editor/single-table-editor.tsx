@@ -103,6 +103,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             onEditCanceled={e => {
               dispatch(resetRow());
             }}
+            columnAutoWidth={true}
           >
             {
               itemContainer[category.id].map(item => getDxColumnConfig(item))
