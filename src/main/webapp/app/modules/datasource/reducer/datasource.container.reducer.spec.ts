@@ -15,7 +15,7 @@ import reducer, {
 } from './datasource.container.reducer';
 
 describe('User Patient selector module reducer tests', () => {
-  function isEmpty(element): boolean {
+  function isEmpty(element) {
     if (element instanceof Array) {
       return element.length === 0;
     } else {
@@ -50,7 +50,7 @@ describe('User Patient selector module reducer tests', () => {
     expect(isNaN(state.dataSource.count));
   }
 
-  function testMultipleTypes(types, payload, testFunction, error?) {
+  function testMultipleTypes(types, payload, testFunction, error) {
     types.forEach(e => {
       testFunction(reducer(undefined, {type: e, payload, error}));
     });
@@ -206,6 +206,10 @@ describe('User Patient selector module reducer tests', () => {
       const mockStore = configureStore([thunk]);
       store = mockStore({});
       axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.put = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.patch = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
     });
 
     it('dispatches FETCH_CATEGORY_LIST actions', async () => {
@@ -256,10 +260,11 @@ describe('User Patient selector module reducer tests', () => {
         }
       ];
 
-      await store.dispatch(updateDatasourceRow({categoryId: 1, row: {}}));
+      await store.dispatch(updateDatasourceRow({categoryId: 1, row: {'pt_no': 'fake'}}));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
   });
 });
