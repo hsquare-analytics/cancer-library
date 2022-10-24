@@ -1,34 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.Subject;
-import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserCategory;
+import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
-import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.SubjectRepository;
-import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserCategoryRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import javax.persistence.EntityManager;
+import io.planit.cancerlibrary.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +14,21 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class DatasourceEditorControllerIT {
+class DatasourceControllerIT {
 
     @Autowired
     private EntityManager em;
@@ -109,7 +96,7 @@ class DatasourceEditorControllerIT {
         });
 
         restDatasourceMockMvc.perform(
-                post("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                post("/api/datasource/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
@@ -132,7 +119,7 @@ class DatasourceEditorControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource-editor/categories/{categoryId}", category.getId()).param("ptNo", "1"))
+        restDatasourceMockMvc.perform(get("/api/datasource/categories/{categoryId}", category.getId()).param("ptNo", "1"))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -145,7 +132,7 @@ class DatasourceEditorControllerIT {
         });
 
         restDatasourceMockMvc.perform(
-                put("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                put("/api/datasource/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
@@ -174,7 +161,7 @@ class DatasourceEditorControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                put("/api/datasource-editor/categories/{categoryId}", category.getId()).contentType(
+                put("/api/datasource/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
@@ -195,7 +182,7 @@ class DatasourceEditorControllerIT {
 
         // then
         restDatasourceMockMvc.perform(
-                get("/api/datasource-editor/categories/{categoryId}/row/{rowIdx}", category.getId(), 10001))
+                get("/api/datasource/categories/{categoryId}/row/{rowIdx}", category.getId(), 10001))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.idx").value("10001"))

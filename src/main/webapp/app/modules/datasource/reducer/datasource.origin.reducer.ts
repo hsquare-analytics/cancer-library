@@ -44,7 +44,7 @@ export const DatasourceOriginReducer = createSlice({
 });
 
 export const getRow = createAsyncThunk("datasource_origin/get_row", async (data: { categoryId: number, rowId: number }) => {
-    const requestUrl = `api/datasource-editor/categories/${data.categoryId}/row/${data.rowId}`;
+    const requestUrl = `api/datasource/categories/${data.categoryId}/row/${data.rowId}`;
     return axios.get<any>(requestUrl);
   },
   {serializeError: serializeAxiosError}
