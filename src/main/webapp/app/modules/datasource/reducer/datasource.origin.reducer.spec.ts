@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getRow, reset, resetRow} from "app/modules/datasource/reducer/datasource.origin.reducer";
+import reducer, {getOriginRow, reset} from "app/modules/datasource/reducer/datasource.origin.reducer";
 
 describe("DatasourceOriginReducer", () => {
 
@@ -45,17 +45,11 @@ describe("DatasourceOriginReducer", () => {
       });
     });
 
-    it('should set origin data', () => {
-      expect(reducer(undefined, resetRow())).toEqual({
-        ...initialState,
-        row: {}
-      });
-    });
   });
 
   describe("Requests", () => {
     it("should set state to loading", () => {
-      expect(reducer(undefined, {type: getRow.pending.type})).toMatchObject({
+      expect(reducer(undefined, {type: getOriginRow.pending.type})).toMatchObject({
         errorMessage: null,
         updateSuccess: false,
         loading: true,
@@ -66,7 +60,7 @@ describe("DatasourceOriginReducer", () => {
   describe("Failures", () => {
     it("should set errorMessage to error message", () => {
       expect(reducer(undefined, {
-        type: getRow.rejected.type, error: {
+        type: getOriginRow.rejected.type, error: {
           message: 'error message',
         }
       })).toMatchObject({
@@ -81,7 +75,7 @@ describe("DatasourceOriginReducer", () => {
     it("should set origin data", () => {
       const payload = {data: {1: 'fake1'}};
 
-      expect(reducer(undefined, {type: getRow.fulfilled.type, payload})).toMatchObject({
+      expect(reducer(undefined, {type: getOriginRow.fulfilled.type, payload})).toMatchObject({
         loading: false,
         row: payload.data,
       });
@@ -105,14 +99,14 @@ describe("DatasourceOriginReducer", () => {
     it('dispatches FETCH_ROW actions', async () => {
       const expectedActions = [
         {
-          type: getRow.pending.type,
+          type: getOriginRow.pending.type,
         },
         {
-          type: getRow.fulfilled.type,
+          type: getOriginRow.fulfilled.type,
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getRow({categoryId: 1, rowId: 1}));
+      await store.dispatch(getOriginRow({categoryId: 1, rowId: 1}));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });

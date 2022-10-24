@@ -18,32 +18,26 @@ export const DatasourceOriginReducer = createSlice({
     reset() {
       return initialState;
     },
-    resetRow(state) {
-      return {
-        ...state,
-        row: {},
-      };
-    }
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isPending(getRow), (state) => {
+    .addMatcher(isPending(getOriginRow), (state) => {
       state.errorMessage = null;
       state.updateSuccess = false;
       state.loading = true;
     })
-    .addMatcher(isRejected(getRow), (state, action) => {
+    .addMatcher(isRejected(getOriginRow), (state, action) => {
       state.loading = false;
       state.errorMessage = action.error.message;
     })
-    .addMatcher(isFulfilled(getRow), (state, action) => {
+    .addMatcher(isFulfilled(getOriginRow), (state, action) => {
       state.loading = false;
       state.row = action.payload.data;
     });
   },
 });
 
-export const getRow = createAsyncThunk("datasource_origin/get_row", async (data: { categoryId: number, rowId: number }) => {
+export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async (data: { categoryId: number, rowId: number }) => {
     const requestUrl = `api/datasource/categories/${data.categoryId}/row/${data.rowId}`;
     return axios.get<any>(requestUrl);
   },
@@ -51,6 +45,6 @@ export const getRow = createAsyncThunk("datasource_origin/get_row", async (data:
 );
 
 
-export const {reset, resetRow} = DatasourceOriginReducer.actions;
+export const {reset} = DatasourceOriginReducer.actions;
 
 export default DatasourceOriginReducer.reducer;
