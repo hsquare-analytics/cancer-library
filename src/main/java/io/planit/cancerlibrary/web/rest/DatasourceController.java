@@ -104,5 +104,13 @@ public class DatasourceController {
         }
     }
 
+    @DeleteMapping("/datasource/categories/{categoryId}/rows/{rowId}")
+    public ResponseEntity<Integer> deleteDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+                                                       @PathVariable(value = "rowId") final String rowId) {
+        log.debug("REST request to delete Datasource row by category id: {}", categoryId);
 
+        SQL deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
+        Integer result = datasourceMapper.executeDeleteSQL(new SQLAdapter(deleteSQL));
+        return ResponseEntity.ok().body(result);
+    }
 }

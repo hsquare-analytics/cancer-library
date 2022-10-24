@@ -6,6 +6,7 @@ import sinon from 'sinon';
 
 import reducer, {
   createDatasourceRow,
+  deleteDatasourceRow,
   getDataSources,
   getUsableCategories,
   getUsableItems,
@@ -105,7 +106,7 @@ describe('User Patient selector module reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      testMultipleTypes([updateDatasourceRow.pending.type, createDatasourceRow.pending.type], {}, state=>{
+      testMultipleTypes([updateDatasourceRow.pending.type, createDatasourceRow.pending.type, deleteDatasourceRow.pending.type], {}, state=>{
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,
@@ -121,7 +122,8 @@ describe('User Patient selector module reducer tests', () => {
         [
           getUsableCategories.rejected.type,
           updateDatasourceRow.rejected.type,
-          createDatasourceRow.rejected.type
+          createDatasourceRow.rejected.type,
+          deleteDatasourceRow.rejected.type
         ],
         'some message',
         state => {
@@ -198,6 +200,16 @@ describe('User Patient selector module reducer tests', () => {
           loading: false,
         });
       })
+    });
+
+    it('should delete dataSource row', () => {
+      expect(reducer(undefined, {
+        type: deleteDatasourceRow.fulfilled.type,
+      })).toMatchObject({
+        updateSuccess: true,
+        updating: false,
+        loading: false,
+      });
     });
   });
 
@@ -291,5 +303,25 @@ describe('User Patient selector module reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
+    it('dispatches DELETE_DATASOURCE_ROW actions', async () => {
+      const expectedActions = [
+        {
+          type: deleteDatasourceRow.pending.type
+        },
+        {
+          type: getDataSources.pending.type
+        },
+        {
+          type: deleteDatasourceRow.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(deleteDatasourceRow({categoryId: 1, row: {'idx': 'fake'}}));
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
   });
 });

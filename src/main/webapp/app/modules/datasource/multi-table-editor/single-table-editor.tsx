@@ -13,7 +13,11 @@ import {getDxColumnConfig} from "app/modules/datasource/multi-table-editor/dx-co
 import {getOriginRow, reset as resetDatasourceOrigin} from "app/modules/datasource/reducer/datasource.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {createDatasourceRow, updateDatasourceRow} from "app/modules/datasource/reducer/datasource.container.reducer";
+import {
+  createDatasourceRow,
+  deleteDatasourceRow,
+  updateDatasourceRow
+} from "app/modules/datasource/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 
 
@@ -87,6 +91,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   }
 
+  const onRowRemoving = e => {
+    e.cancel = new Promise<void>((resolve) => {
+      const row = Object.assign({}, e.data);
+
+      dispatch(deleteDatasourceRow({categoryId: category.id, row}));
+      resolve();
+    });
+  };
+
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
@@ -116,11 +129,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           editing={{
             mode: 'popup',
             allowUpdating: true,
+            allowDeleting: true,
             form: {colCount: 3}
           }}
           onEditingStart={onEditingStart}
           onRowInserting={onRowInserting}
           onRowUpdating={onRowUpdating}
+          onRowRemoving={onRowRemoving}
           // onInitNewRow={onInitNewRow}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}

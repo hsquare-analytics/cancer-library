@@ -198,7 +198,22 @@ class DatasourceControllerIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.idx").value("10001"))
             .andExpect(jsonPath("$.name").value("zero"));
-        ;
+    }
 
+    @Test
+    @Transactional
+    void testDeleteDatasourceRow() throws Exception {
+        // given
+        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test (idx, name) values (10001, 'zero')"));
+
+        // then
+        restDatasourceMockMvc.perform(
+                delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001))
+            .andExpect(status().isOk());
+
+        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
+            new SQLAdapter("select * from ph_test where idx = 10001"));
+
+        assertThat(result).isEmpty();
     }
 }

@@ -19,4 +19,7 @@ public interface DatasourceMapper {
 
     @MapKey("id")
     Integer executeUpdateSQL(SQLAdapter sqlAdapter);
+
+    @MapKey("id")
+    Integer executeDeleteSQL(SQLAdapter sqlAdapter);
 }

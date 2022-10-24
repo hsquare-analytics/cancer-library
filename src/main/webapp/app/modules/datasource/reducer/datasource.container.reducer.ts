@@ -73,6 +73,14 @@ export const createDatasourceRow = createAsyncThunk('datasource_container/create
   {serializeError: serializeAxiosError}
 );
 
+export const deleteDatasourceRow = createAsyncThunk('datasource_container/delete_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
+    const result = await axios.delete<any>(`api/datasource/categories/${data.categoryId}/rows/${data.row.idx}`);
+    thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
+    return result;
+  },
+  {serializeError: serializeAxiosError}
+);
+
 const name = 'datasource-container'
 export const DatasourceContainer = createSlice({
   name,
@@ -102,62 +110,62 @@ export const DatasourceContainer = createSlice({
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isFulfilled(getUsableCategories), (state, action) => {
-      const {data} = action.payload;
-      return {
-        ...state,
-        categories: data,
-        loading: false,
-      }
-    })
-    .addMatcher(isFulfilled(getUsableItems), (state, action) => {
-      const {data} = action.payload;
-      return {
-        ...state,
-        item: {
-          container: {
-            ...state.item.container,
-            [data[0].category.id]: data
-          },
-          count: state.item.count + 1
+      .addMatcher(isFulfilled(getUsableCategories), (state, action) => {
+        const {data} = action.payload;
+        return {
+          ...state,
+          categories: data,
+          loading: false,
         }
-      }
-    })
-    .addMatcher(isFulfilled(getDataSources), (state, action) => {
-      const {data} = action.payload;
-      return {
-        ...state,
-        dataSource: {
-          container: {
-            ...state.dataSource.container,
-            [data.categoryId]: data.dataSource
-          },
-          count: state.dataSource.count + 1,
+      })
+      .addMatcher(isFulfilled(getUsableItems), (state, action) => {
+        const {data} = action.payload;
+        return {
+          ...state,
+          item: {
+            container: {
+              ...state.item.container,
+              [data[0].category.id]: data
+            },
+            count: state.item.count + 1
+          }
         }
-      }
-    })
-    .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow), (state) => {
-      state.updating = false
-      state.loading = false;
-      state.updateSuccess = true;
-    })
-    .addMatcher(isPending(getUsableCategories), (state) => {
-      state.updating = false
-      state.loading = true;
-      state.errorMessage = null;
-      state.updateSuccess = false;
-    })
-    .addMatcher(isPending(updateDatasourceRow, createDatasourceRow), (state) => {
-      state.errorMessage = null;
-      state.updating = true;
-      state.updateSuccess = false;
-    })
-    .addMatcher(isRejected(getUsableCategories, updateDatasourceRow, createDatasourceRow), (state, action) => {
-      state.errorMessage = action.error.message;
-      state.loading = false;
-      state.updating = false;
-      state.updateSuccess = false;
-    });
+      })
+      .addMatcher(isFulfilled(getDataSources), (state, action) => {
+        const {data} = action.payload;
+        return {
+          ...state,
+          dataSource: {
+            container: {
+              ...state.dataSource.container,
+              [data.categoryId]: data.dataSource
+            },
+            count: state.dataSource.count + 1,
+          }
+        }
+      })
+      .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state) => {
+        state.updating = false
+        state.loading = false;
+        state.updateSuccess = true;
+      })
+      .addMatcher(isPending(getUsableCategories), (state) => {
+        state.updating = false
+        state.loading = true;
+        state.errorMessage = null;
+        state.updateSuccess = false;
+      })
+      .addMatcher(isPending(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state) => {
+        state.errorMessage = null;
+        state.updating = true;
+        state.updateSuccess = false;
+      })
+      .addMatcher(isRejected(getUsableCategories, updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state, action) => {
+        state.errorMessage = action.error.message;
+        state.loading = false;
+        state.updating = false;
+        state.updateSuccess = false;
+      });
   }
 });
 

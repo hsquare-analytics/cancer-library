@@ -18,4 +18,8 @@
     <update id="executeUpdateSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter">
         ${sql}
     </update>
+
+    <delete id="executeDeleteSQL" parameterType="io.planit.cancerlibrary.mapper.SQLAdapter">
+        ${sql}
+    </delete>
 </mapper>
