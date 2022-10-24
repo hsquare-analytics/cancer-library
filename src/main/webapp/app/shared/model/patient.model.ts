@@ -9,7 +9,7 @@ export interface IPatient extends IAbstractAuditing {
   sexTpCd?: string;
   ptBrdyDt?: string;
   hspTpCd?: string;
-  idxDt?: Date;
+  // idxDt?: Date;
   status?: string;
   comment?: string;
 }
@@ -20,7 +20,7 @@ export const defaultValue: Readonly<IPatient> = {
   sexTpCd: "",
   ptBrdyDt: "",
   hspTpCd: "",
-  idxDt: new Date(),
+  // idxDt: new Date(),
   status: "",
   comment: "",
   ...abstractAuditingDefaultValue
