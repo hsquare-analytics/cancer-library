@@ -15,7 +15,8 @@ import {getDxColumnConfig} from "app/modules/datasource/multi-table-editor/dx-co
 import {getRow, resetRow} from "app/modules/datasource/reducer/datasource.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {updateDatasourceRow} from "app/modules/datasource/reducer/datasource.container.reducer";
+import {createDatasourceRow, updateDatasourceRow} from "app/modules/datasource/reducer/datasource.container.reducer";
+import {IPatient} from "app/shared/model/patient.model";
 
 
 export interface ISingleTableEditor {
@@ -34,6 +35,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const [editedCategory, setEditedCategory] = useState(null);
   const [editedRow, setEditedRow] = useState(null);
 
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
@@ -51,7 +53,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
 
   const onRowUpdating = e => {
-    e.cancel = new Promise<void>((resolve, reject) => {
+    e.cancel = new Promise<void>((resolve) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
       row['status'] = REVIEW_LIST.SUBMITTED;
 
@@ -59,6 +61,19 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       resolve();
     });
   };
+
+  const onInitNewRow = e => {
+    e.data['pt_no'] = patient.ptNo;
+  }
+
+  const onRowInserting = e => {
+    e.cancel = new Promise<void>((resolve) => {
+      const row = cleanEntity(Object.assign({}, e.data));
+
+      dispatch(createDatasourceRow({categoryId: category.id, row}));
+      resolve();
+    });
+  }
 
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
@@ -94,6 +109,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               form: {colCount: 3}
             }}
             onRowUpdating={onRowUpdating}
+            onRowInserting={onRowInserting}
+            onInitNewRow={onInitNewRow}
             scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
             paging={{pageSize: 10}}
             onEditingStart={e => {
@@ -101,7 +118,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               setEditedRow(e.data);
               dispatch(getRow({categoryId: category.id, rowId: e.data.idx}));
             }}
-            onEditCanceled={e => {
+            onEditCanceled={() => {
               dispatch(resetRow());
             }}
             columnAutoWidth={true}
