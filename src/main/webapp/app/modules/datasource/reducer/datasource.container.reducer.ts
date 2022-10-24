@@ -65,6 +65,14 @@ export const updateDatasourceRow = createAsyncThunk('datasource_container/update
   {serializeError: serializeAxiosError}
 );
 
+export const createDatasourceRow = createAsyncThunk('datasource_container/create_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
+    const result = await axios.post<any>(`api/datasource/categories/${data.categoryId}`, data.row);
+    thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
+    return result;
+  },
+  {serializeError: serializeAxiosError}
+);
+
 const name = 'datasource-container'
 export const DatasourceContainer = createSlice({
   name,
@@ -128,7 +136,7 @@ export const DatasourceContainer = createSlice({
         }
       }
     })
-    .addMatcher(isFulfilled(updateDatasourceRow), (state) => {
+    .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow), (state) => {
       state.updating = false
       state.loading = false;
       state.updateSuccess = true;
@@ -139,12 +147,12 @@ export const DatasourceContainer = createSlice({
       state.errorMessage = null;
       state.updateSuccess = false;
     })
-    .addMatcher(isPending(updateDatasourceRow), (state) => {
+    .addMatcher(isPending(updateDatasourceRow, createDatasourceRow), (state) => {
       state.errorMessage = null;
       state.updating = true;
       state.updateSuccess = false;
     })
-    .addMatcher(isRejected(getUsableCategories, updateDatasourceRow), (state, action) => {
+    .addMatcher(isRejected(getUsableCategories, updateDatasourceRow, createDatasourceRow), (state, action) => {
       state.errorMessage = action.error.message;
       state.loading = false;
       state.updating = false;

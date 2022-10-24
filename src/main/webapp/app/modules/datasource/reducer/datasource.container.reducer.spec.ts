@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
 import reducer, {
+  createDatasourceRow,
   getDataSources,
   getUsableCategories,
   getUsableItems,
@@ -15,7 +16,7 @@ import reducer, {
 } from './datasource.container.reducer';
 
 describe('User Patient selector module reducer tests', () => {
-  function isEmpty(element) {
+  function isEmpty(element): boolean {
     if (element instanceof Array) {
       return element.length === 0;
     } else {
@@ -50,7 +51,7 @@ describe('User Patient selector module reducer tests', () => {
     expect(isNaN(state.dataSource.count));
   }
 
-  function testMultipleTypes(types, payload, testFunction, error) {
+  function testMultipleTypes(types, payload, testFunction, error?) {
     types.forEach(e => {
       testFunction(reducer(undefined, {type: e, payload, error}));
     });
@@ -104,11 +105,13 @@ describe('User Patient selector module reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      expect(reducer(undefined, {type: updateDatasourceRow.pending.type})).toMatchObject({
-        errorMessage: null,
-        updateSuccess: false,
-        updating: true,
-      });
+      testMultipleTypes([updateDatasourceRow.pending.type, createDatasourceRow.pending.type], {}, state=>{
+        expect(state).toMatchObject({
+          errorMessage: null,
+          updateSuccess: false,
+          updating: true,
+        });
+      })
     });
   });
 
@@ -118,6 +121,7 @@ describe('User Patient selector module reducer tests', () => {
         [
           getUsableCategories.rejected.type,
           updateDatasourceRow.rejected.type,
+          createDatasourceRow.rejected.type
         ],
         'some message',
         state => {
@@ -186,15 +190,14 @@ describe('User Patient selector module reducer tests', () => {
     it('should update dataSource row', () => {
       const payload = {data: {categoryId: 'fakeId', dataSource: [{1: 'fake1', 2: 'fake2'}]}};
 
-      expect(reducer(undefined, {
-        type: updateDatasourceRow.fulfilled.type,
-        payload,
-      })).toEqual({
-        ...initialState,
-        updateSuccess: true,
-        updating: false,
-        loading: false
-      });
+      testMultipleTypes([updateDatasourceRow.fulfilled.type, createDatasourceRow.fulfilled.type], payload, state => {
+        expect(state).toEqual({
+          ...initialState,
+          updateSuccess: true,
+          updating: false,
+          loading: false,
+        });
+      })
     });
   });
 
@@ -266,5 +269,27 @@ describe('User Patient selector module reducer tests', () => {
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
+
+    it('dispatches CREATE_DATASOURCE_ROW actions', async () => {
+      const expectedActions = [
+        {
+          type: createDatasourceRow.pending.type
+        },
+        {
+          type: getDataSources.pending.type
+        },
+        {
+          type: createDatasourceRow.fulfilled.type,
+          payload: resolvedObject
+        }
+      ];
+
+      await store.dispatch(createDatasourceRow({categoryId: 1, row: {'pt_no': 'fake'}}));
+
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
   });
 });
