@@ -41,7 +41,7 @@ public class DatasourceController {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map<String, Object> mapWithIdx = new HashMap<>(map);
-        mapWithIdx.put("idx", "10001");
+        mapWithIdx.put("idx", "KCURE" + datasourceMapper.getSequenceNextValue());
 
         SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
         Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(insertSQL));
@@ -65,7 +65,7 @@ public class DatasourceController {
 
     @PutMapping("/datasource/categories/{categoryId}")
     public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-        @RequestBody Map<String, Object> map) {
+                                                       @RequestBody Map<String, Object> map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
         SQL readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, map);
