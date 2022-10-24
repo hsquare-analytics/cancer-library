@@ -37,7 +37,7 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 
 
 CREATE TABLE TEST_MEDICINE (
-                              IDX Integer,
+                              IDX VARCHAR,
                               PACT_ID Varchar,
                               PT_NO Varchar,
                               PT_NM Varchar,
@@ -55,7 +55,7 @@ CREATE TABLE TEST_MEDICINE (
 
 CREATE TABLE TEST_MEDICINE_UPDATED
 (
-    IDX Integer,
+    IDX VARCHAR,
     PACT_ID Varchar,
     PT_NO Varchar,
     PT_NM Varchar,

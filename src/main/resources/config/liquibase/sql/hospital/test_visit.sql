@@ -124,7 +124,7 @@ insert into ph_item_attribute (item_id, data_type) values (2715, 'date');
 
 CREATE TABLE TEST_VISIT
 (
-    IDX             Integer,
+    IDX             VARCHAR,
     PACT_ID         Varchar,
     PT_NO           Varchar,
     PT_NM           Varchar,
@@ -144,7 +144,7 @@ CREATE TABLE TEST_VISIT
 
 CREATE TABLE TEST_VISIT_UPDATED
 (
-    IDX                Integer,
+    IDX                VARCHAR,
     PACT_ID            Varchar,
     PT_NO              Varchar,
     PT_NM              Varchar,

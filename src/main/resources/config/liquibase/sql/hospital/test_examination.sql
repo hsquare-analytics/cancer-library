@@ -66,7 +66,7 @@ values (2753, 'AGE_CD_MM', true, 1, 2703, 'system', '2019-01-01 00:00:00', 'syst
 
 CREATE TABLE TEST_EXAMINATION
 (
-    IDX             Integer,
+    IDX             VARCHAR,
     PACT_ID         Varchar,
     PT_NO           Varchar,
     PT_NM           Varchar,
@@ -84,7 +84,7 @@ CREATE TABLE TEST_EXAMINATION
 
 CREATE TABLE TEST_EXAMINATION_UPDATED
 (
-    IDX                Integer,
+    IDX                VARCHAR,
     PACT_ID            Varchar,
     PT_NO              Varchar,
     PT_NM              Varchar,

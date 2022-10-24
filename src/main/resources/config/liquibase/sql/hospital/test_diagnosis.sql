@@ -36,7 +36,7 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by, last_modified_date) values (2733, 'MAIN_SKNS_YN', true, 1, 2702, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 
 CREATE TABLE TEST_DIAGNOSIS (
-                          IDX Integer,
+                          IDX VARCHAR,
                           PACT_ID Varchar,
                           PT_NO Varchar,
                           PT_NM Varchar,
@@ -55,7 +55,7 @@ CREATE TABLE TEST_DIAGNOSIS (
 CREATE TABLE TEST_DIAGNOSIS_UPDATED
 (
     PACT_ID            Varchar,
-    IDX                Integer,
+    IDX                VARCHAR,
     PT_NO              Varchar,
     PT_NM              Varchar,
     SEX_TP_CD          Varchar,
