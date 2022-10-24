@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.domain.embedded;
 
-import java.io.Serializable;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
 public class ItemProperty implements Serializable {
@@ -11,6 +11,8 @@ public class ItemProperty implements Serializable {
     private String caption;
 
     private Boolean allowEditing;
+
+    private Boolean required;
 
     public Integer getVisibleIndex() {
         return visibleIndex;
@@ -48,6 +50,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty allowEditing(Boolean allowEditing) {
         this.setAllowEditing(allowEditing);
+        return this;
+    }
+
+    public Boolean isRequired() {
+        return required;
+    }
+
+    public void setRequired(Boolean required) {
+        this.required = required;
+    }
+
+    public ItemProperty required(Boolean required) {
+        this.setRequired(required);
         return this;
     }
 }

@@ -2,28 +2,14 @@ package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.AttributeOverride;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "ph_item")
@@ -66,6 +52,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @AttributeOverride(name = "visibleIndex", column = @Column(name = "visible_index", table = "ph_item_property"))
     @AttributeOverride(name = "caption", column = @Column(table = "ph_item_property"))
     @AttributeOverride(name = "allowEditing", column = @Column(name = "allow_editing", table = "ph_item_property"))
+    @AttributeOverride(name = "required", column = @Column(name = "required", table = "ph_item_property"))
     private ItemProperty property;
 
     @ElementCollection

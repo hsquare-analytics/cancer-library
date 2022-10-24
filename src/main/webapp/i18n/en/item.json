@@ -29,7 +29,8 @@
       "property": {
         "visibleIndex": "Visible Index",
         "caption": "caption",
-        "allowEditing": "Allow Editing"
+        "allowEditing": "Allow Editing",
+        "required": "Required"
       },
       "lookup": "Lookup"
     }
