@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getEntities, getEntity, reset, updateEntity} from './patient-table-editor.patient.reducer';
+import reducer, {getEntities, getEntity, reset, updateEntity} from './datasource.patient.reducer';
 import {EntityState} from 'app/shared/reducers/reducer.utils';
 import {defaultValue, IPatient} from "app/shared/model/patient.model";
 

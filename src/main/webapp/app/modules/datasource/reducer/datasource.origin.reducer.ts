@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const name = 'patient-table-editor-config';
-export const PatientTableEditorOriginReducer = createSlice({
+export const DatasourceOriginReducer = createSlice({
   name,
   initialState,
   reducers: {
@@ -51,6 +51,6 @@ export const getRow = createAsyncThunk("patient-table-editor-config/get_row", as
 );
 
 
-export const {reset, resetRow} = PatientTableEditorOriginReducer.actions;
+export const {reset, resetRow} = DatasourceOriginReducer.actions;
 
-export default PatientTableEditorOriginReducer.reducer;
+export default DatasourceOriginReducer.reducer;

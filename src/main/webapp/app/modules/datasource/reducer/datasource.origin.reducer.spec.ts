@@ -4,11 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {
-  getRow,
-  reset,
-  resetRow
-} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
+import reducer, {getRow, reset, resetRow} from "app/modules/datasource/reducer/datasource.origin.reducer";
 
 describe("PatientTableEditorConfigReducer", () => {
 

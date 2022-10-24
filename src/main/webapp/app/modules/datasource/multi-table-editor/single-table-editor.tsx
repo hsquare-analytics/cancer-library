@@ -11,11 +11,11 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getDxColumnConfig} from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-column-config";
-import {getRow, resetRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.origin.reducer";
+import {getDxColumnConfig} from "app/modules/datasource/multi-table-editor/dx-component/dx-column-config";
+import {getRow, resetRow} from "app/modules/datasource/reducer/datasource.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {updateDatasourceRow} from "app/modules/patient-table-editor/reducer/patient-table-editor.container.reducer";
+import {updateDatasourceRow} from "app/modules/datasource/reducer/datasource.container.reducer";
 
 
 export interface ISingleTableEditor {

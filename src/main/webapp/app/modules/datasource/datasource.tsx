@@ -4,24 +4,23 @@ import {
   getEntities as getAccessiblePatients,
   getEntity as getPatient,
   updateEntity as updatePatient,
-} from "app/modules/patient-table-editor/reducer/patient-table-editor.patient.reducer";
+} from "app/modules/datasource/reducer/datasource.patient.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
-import PatientTableEditorColumn from "./patient-table-editor.column";
+import DatasourceColumn from "./datasource.column";
 import {Popup} from 'devextreme-react/popup';
-import MultiTableEditor from "app/modules/patient-table-editor/multi-table-editor/multi-table-editor";
+import MultiTableEditor from "app/modules/datasource/multi-table-editor/multi-table-editor";
 import ScrollView from 'devextreme-react/scroll-view';
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
-import PatientProfileCard from "app/modules/patient-table-editor/patient-profile/patient-profile-card";
+import PatientProfileCard from "app/modules/datasource/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import PatientTableEditorStackButton
-  from "app/modules/patient-table-editor/stack-button/patient-table-editor-stack-button";
+import PatientTableEditorStackButton from "app/modules/datasource/stack-button/patient-table-editor-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
-import "./patient-table-editor.scss";
+import "./datasource.scss";
 
-export const PatientTableEditor = () => {
+export const Datasource = () => {
   const dispatch = useAppDispatch();
 
   const dataGrid = useRef(null);
@@ -98,7 +97,7 @@ export const PatientTableEditor = () => {
     >
       <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
       {
-        PatientTableEditorColumn.map(item => <Column
+        DatasourceColumn.map(item => <Column
             key={item.dataField}
             dataField={item.dataField}
             caption={translate("cancerLibraryApp.patient." + item.dataField)}
@@ -135,4 +134,4 @@ export const PatientTableEditor = () => {
   </div>
 };
 
-export default PatientTableEditor;
+export default Datasource;

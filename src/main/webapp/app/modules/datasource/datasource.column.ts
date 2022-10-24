@@ -1,6 +1,6 @@
 import {IDxColumn} from "app/shared/model/dx-column.model";
 
-const PatientTableEditorColumn: IDxColumn[] = [
+const DatasourceColumn: IDxColumn[] = [
   {
     dataField: "ptNo",
   },
@@ -32,4 +32,4 @@ const PatientTableEditorColumn: IDxColumn[] = [
   }
 ];
 
-export default PatientTableEditorColumn;
+export default DatasourceColumn;

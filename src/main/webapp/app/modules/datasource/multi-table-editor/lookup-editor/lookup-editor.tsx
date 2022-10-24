@@ -2,12 +2,12 @@ import React, {useEffect} from "react";
 import {IToolbarItemProps, Popup} from 'devextreme-react/popup';
 import {DndProvider} from 'react-dnd'
 import {HTML5Backend} from 'react-dnd-html5-backend'
-import {DndContainer} from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/dnd-container";
-import {ICard} from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/dnd-card";
+import {DndContainer} from "app/modules/datasource/multi-table-editor/lookup-editor/dnd-container";
+import {ICard} from "app/modules/datasource/multi-table-editor/lookup-editor/dnd-card";
 import {
   fireAddCardSwal,
   fireSaveCardSwal
-} from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/lookup-editor.swal";
+} from "app/modules/datasource/multi-table-editor/lookup-editor/lookup-editor.swal";
 import {partialUpdateEntity} from "app/entities/item/item.reducer";
 import {useAppDispatch} from "app/config/store";
 

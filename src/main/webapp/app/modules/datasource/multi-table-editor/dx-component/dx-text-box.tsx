@@ -1,10 +1,10 @@
 import React from "react";
-import NumberBox from 'devextreme-react/number-box';
+import TextBox from 'devextreme-react/text-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 import DxRowCommentBox, {
   getDxCellClass
-} from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-row-comment-box";
+} from "app/modules/datasource/multi-table-editor/dx-component/dx-row-comment-box";
 
 
 interface IDxEditCellRenderProps extends StateProps, DispatchProps {
@@ -19,7 +19,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
   }
 
   return <div>
-    <NumberBox className={getDxCellClass(data, row)} defaultValue={props.data.value}
+    <TextBox className={getDxCellClass(data, row)} defaultValue={props.data.value}
              onValueChanged={onValueChanged}
              disabled={!props.data.column.allowEditing}
     />

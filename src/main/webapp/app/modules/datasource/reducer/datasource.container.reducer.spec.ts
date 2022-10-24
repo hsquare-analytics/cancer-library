@@ -12,7 +12,7 @@ import reducer, {
   resetDataSource,
   resetItem,
   updateDatasourceRow,
-} from './patient-table-editor.container.reducer';
+} from './datasource.container.reducer';
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {

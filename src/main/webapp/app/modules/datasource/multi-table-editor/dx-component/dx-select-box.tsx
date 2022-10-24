@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import LookupEditor from "app/modules/patient-table-editor/multi-table-editor/lookup-editor/lookup-editor";
+import LookupEditor from "app/modules/datasource/multi-table-editor/lookup-editor/lookup-editor";
 import DxRowCommentBox, {
   getDxCellClass
-} from "app/modules/patient-table-editor/multi-table-editor/dx-component/dx-row-comment-box";
+} from "app/modules/datasource/multi-table-editor/dx-component/dx-row-comment-box";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
