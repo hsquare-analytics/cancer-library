@@ -19,10 +19,27 @@ export const isDxCellChanged = (data, row) => {
   }
 }
 
-export const getDxCellClass = (data, row) => {
-  if (isDxCellChanged(data, row)) {
+export const isNotDxCellChanged = (data, row) => {
+  return !isDxCellChanged(data, row);
+};
+
+
+export const getDxCellClass = (data, originRow) => {
+  if (isNotEmpty(originRow) && isDxCellChanged(data, originRow)) {
     return "border border-info"
   }
+}
+
+const isEmpty = (element): boolean => {
+  if (element instanceof Array) {
+    return element.length === 0;
+  } else {
+    return Object.keys(element).length === 0;
+  }
+}
+
+const isNotEmpty = (element): boolean => {
+  return !isEmpty(element);
 }
 
 interface IDxRowCommentBoxProps {
@@ -33,13 +50,13 @@ interface IDxRowCommentBoxProps {
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   const {data, row} = props;
 
-  if (!isDxCellChanged(data, row)) {
+  if (isEmpty(row) || isNotDxCellChanged(data, row)) {
     return null;
   }
 
   return <div>
     <div className="text-underline p-1">최초: {row[data.column.dataField]}</div>
-  </div>
+  </div>;
 }
 
 export default DxRowCommentBox;
