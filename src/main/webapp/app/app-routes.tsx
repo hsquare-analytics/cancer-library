@@ -15,7 +15,7 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
-import Datasource from "app/modules/datasource/datasource";
+import AccessiblePatient from "app/modules/datasource/accessible-patient";
 import UserPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid";
 
 const loading = <div>loading ...</div>;
@@ -70,7 +70,7 @@ const AppRoutes = () => {
           path="datasource-editor"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.SUPERVISOR]}>
-              <Datasource/>
+              <AccessiblePatient/>
             </PrivateRoute>
           }
         >

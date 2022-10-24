@@ -8,7 +8,7 @@ import {
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
-import DatasourceColumn from "./datasource.column";
+import AccessiblePatientColumn from "./accessible-patient.column";
 import {Popup} from 'devextreme-react/popup';
 import MultiTableEditor from "app/modules/datasource/multi-table-editor/multi-table-editor";
 import ScrollView from 'devextreme-react/scroll-view';
@@ -18,9 +18,9 @@ import PatientProfileCard from "app/modules/datasource/patient-profile/patient-p
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import DatasourceStackButton from "app/modules/datasource/stack-button/datasource-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
-import "./datasource.scss";
+import "./accessible-patient.scss";
 
-export const Datasource = () => {
+export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
 
   const dataGrid = useRef(null);
@@ -97,7 +97,7 @@ export const Datasource = () => {
     >
       <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
       {
-        DatasourceColumn.map(item => <Column
+        AccessiblePatientColumn.map(item => <Column
             key={item.dataField}
             dataField={item.dataField}
             caption={translate("cancerLibraryApp.patient." + item.dataField)}
@@ -134,4 +134,4 @@ export const Datasource = () => {
   </div>
 };
 
-export default Datasource;
+export default AccessiblePatient;

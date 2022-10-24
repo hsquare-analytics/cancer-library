@@ -1,6 +1,6 @@
 import {IDxColumn} from "app/shared/model/dx-column.model";
 
-const DatasourceColumn: IDxColumn[] = [
+const AccessiblePatientColumn: IDxColumn[] = [
   {
     dataField: "ptNo",
   },
@@ -32,4 +32,4 @@ const DatasourceColumn: IDxColumn[] = [
   }
 ];
 
-export default DatasourceColumn;
+export default AccessiblePatientColumn;

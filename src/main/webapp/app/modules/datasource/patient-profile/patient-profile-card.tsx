@@ -15,8 +15,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
 import TextBox from 'devextreme-react/text-box';
-import DatasourceColumn from "app/modules/datasource/datasource.column";
 import {IDxColumn} from "app/shared/model/dx-column.model";
+import AccessiblePatientColumn from "app/modules/datasource/accessible-patient.column";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -43,7 +43,7 @@ const getFormattedValue: (value: any, column: IDxColumn) => string = (value, col
 const PatientProfileDetail = (patient: IPatient) => {
   return (<Box>
     <Card variant="outlined" sx={{display: "flex"}}>
-      {DatasourceColumn.map((column) => <CardContent key={column.dataField}>
+      {AccessiblePatientColumn.map((column) => <CardContent key={column.dataField}>
           <Typography color="text.secondary">
             {translate("cancerLibraryApp.patient." + column.dataField)}
           </Typography>
