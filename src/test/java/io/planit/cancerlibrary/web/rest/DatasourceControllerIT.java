@@ -5,10 +5,13 @@ import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.repository.*;
+import io.planit.cancerlibrary.service.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -57,6 +60,9 @@ class DatasourceControllerIT {
     @Autowired
     private DatasourceMapper datasourceMapper;
 
+    @MockBean
+    private SequenceGenerator sequenceGenerator;
+
     private Category category;
 
     private final String DEFAULT_TABLE = "ph_test";
@@ -90,18 +96,23 @@ class DatasourceControllerIT {
     @Test
     @Transactional
     void testDatasourceRowInsert() throws Exception {
+        // given
+        String sequence = "KCURE0000000001";
+        BDDMockito.given(sequenceGenerator.getNextSequence()).willReturn(sequence);
+
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
         });
 
+        // when, then
         restDatasourceMockMvc.perform(
                 post("/api/datasource/categories/{categoryId}", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+            new SQLAdapter("select * from ph_test_updated where idx = '" + sequence + "'"));
 
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
     }

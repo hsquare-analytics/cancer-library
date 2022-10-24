@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.mapper.DatasourceMapper;
 import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
+import io.planit.cancerlibrary.service.SequenceGenerator;
 import io.planit.cancerlibrary.service.UnionSqlBuilderService;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
@@ -26,13 +27,17 @@ public class DatasourceController {
 
     private final DMLSqlBuilderService dmlSqlBuilderService;
 
+    private final SequenceGenerator sequenceGenerator;
+
     private final DatasourceMapper datasourceMapper;
 
     public DatasourceController(UnionSqlBuilderService unionSqlBuilderService,
                                 DMLSqlBuilderService dmlSqlBuilderService,
+                                SequenceGenerator sequenceGenerator,
                                 DatasourceMapper datasourceMapper) {
         this.unionSqlBuilderService = unionSqlBuilderService;
         this.datasourceMapper = datasourceMapper;
+        this.sequenceGenerator = sequenceGenerator;
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
@@ -41,7 +46,7 @@ public class DatasourceController {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map<String, Object> mapWithIdx = new HashMap<>(map);
-        mapWithIdx.put("idx", "KCURE" + datasourceMapper.getSequenceNextValue());
+        mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
 
         SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
         Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(insertSQL));
