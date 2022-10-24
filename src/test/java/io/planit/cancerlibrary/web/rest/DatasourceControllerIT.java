@@ -107,7 +107,7 @@ class DatasourceControllerIT {
 
         // when, then
         restDatasourceMockMvc.perform(
-                post("/api/datasource/categories/{categoryId}", category.getId()).contentType(
+                post("/api/datasource/categories/{categoryId}/rows", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
@@ -119,7 +119,7 @@ class DatasourceControllerIT {
 
     @Test
     @Transactional
-    void testFetchDataByCategoryId() throws Exception {
+    void testFetchDatasourceOfPatient() throws Exception {
         Item item = new Item().category(category).title(DEFAULT_COLUMN_NAME).activated(true);
 
         itemRepository.saveAndFlush(item);
@@ -130,7 +130,7 @@ class DatasourceControllerIT {
             .termStart(Instant.now().minus(30, ChronoUnit.DAYS)).termEnd(Instant.now().plus(30, ChronoUnit.DAYS));
         userCategoryRepository.saveAndFlush(userCategory);
 
-        restDatasourceMockMvc.perform(get("/api/datasource/categories/{categoryId}", category.getId()).param("ptNo", "1"))
+        restDatasourceMockMvc.perform(get("/api/datasource/categories/{categoryId}/rows", category.getId()).param("ptNo", "1"))
             .andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE));
     }
 
@@ -143,8 +143,8 @@ class DatasourceControllerIT {
         });
 
         restDatasourceMockMvc.perform(
-                put("/api/datasource/categories/{categoryId}", category.getId()).contentType(
-                    MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
+                put("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001).contentType(
+                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
@@ -172,8 +172,8 @@ class DatasourceControllerIT {
         userCategoryRepository.saveAndFlush(userCategory);
 
         restDatasourceMockMvc.perform(
-                put("/api/datasource/categories/{categoryId}", category.getId()).contentType(
-                    MediaType.APPLICATION_JSON).content("{\"idx\":\"10001\",\"name\":\"modified_zero\"}"))
+                put("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001).contentType(
+                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
@@ -187,13 +187,13 @@ class DatasourceControllerIT {
 
     @Test
     @Transactional
-    void testGetOriginalDatasourceRow() throws Exception {
+    void testGetDatasourceRow() throws Exception {
         // given
         datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test (idx, name) values (10001, 'zero')"));
 
         // then
         restDatasourceMockMvc.perform(
-                get("/api/datasource/categories/{categoryId}/row/{rowIdx}", category.getId(), 10001))
+                get("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.idx").value("10001"))

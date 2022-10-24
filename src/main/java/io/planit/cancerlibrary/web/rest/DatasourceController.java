@@ -41,7 +41,7 @@ public class DatasourceController {
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
 
-    @PostMapping("/datasource/categories/{categoryId}")
+    @PostMapping("/datasource/categories/{categoryId}/rows")
     public ResponseEntity<Integer> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
@@ -53,8 +53,8 @@ public class DatasourceController {
         return ResponseEntity.ok().body(result);
     }
 
-    @GetMapping("/datasource/categories/{categoryId}")
-    public ResponseEntity<Map<String, Object>> getDatasourceByCategoryId(
+    @GetMapping("/datasource/categories/{categoryId}/rows")
+    public ResponseEntity<Map<String, Object>> getDatasourceOfPatient(
         @PathVariable(value = "categoryId") final Long categoryId, String patientNo) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
@@ -68,28 +68,8 @@ public class DatasourceController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PutMapping("/datasource/categories/{categoryId}")
-    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-                                                       @RequestBody Map<String, Object> map) {
-        log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
-
-        SQL readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, map);
-
-        List<Map<String, Object>> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
-
-        if (founded.isEmpty()) {
-            SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, map);
-            Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(insertSQL));
-            return ResponseEntity.ok().body(result);
-        } else {
-            SQL updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, map);
-            Integer result = datasourceMapper.executeUpdateSQL(new SQLAdapter(updateSQL));
-            return ResponseEntity.ok().body(result);
-        }
-    }
-
-    @GetMapping("/datasource/categories/{categoryId}/row/{rowIdx}")
-    public ResponseEntity<Map<String, Object>> getOriginDatasourceRowByCategoryId(
+    @GetMapping("/datasource/categories/{categoryId}/rows/{rowIdx}")
+    public ResponseEntity<Map<String, Object>> getDatasourceRow(
         @PathVariable(value = "categoryId") final Long categoryId, @PathVariable(value = "rowIdx") final String rowIdx) {
         log.debug("REST request to get Datasource row by category id: {}", categoryId);
 
@@ -99,4 +79,30 @@ public class DatasourceController {
 
         return ResponseEntity.ok().body(result);
     }
+
+    @PutMapping("/datasource/categories/{categoryId}/rows/{rowId}")
+    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+                                                         @PathVariable(value = "rowId") final String rowId,
+                                                       @RequestBody Map<String, Object> map) {
+        log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
+
+        Map<String, Object> mapWithIdx = new HashMap<>(map);
+        mapWithIdx.put("idx", rowId);
+
+        SQL readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, mapWithIdx);
+
+        List<Map<String, Object>> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
+
+        if (founded.isEmpty()) {
+            SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
+            Integer result = datasourceMapper.executeInsertSQL(new SQLAdapter(insertSQL));
+            return ResponseEntity.ok().body(result);
+        } else {
+            SQL updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
+            Integer result = datasourceMapper.executeUpdateSQL(new SQLAdapter(updateSQL));
+            return ResponseEntity.ok().body(result);
+        }
+    }
+
+
 }

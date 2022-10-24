@@ -51,14 +51,14 @@ export const getUsableCategories = createAsyncThunk('datasource_container/fetch_
 );
 
 export const getDataSources = createAsyncThunk('datasource_container/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
-    const requestUrl = `api/datasource/categories/${data.categoryId}?patientNo=${data.patientNo}`;
+    const requestUrl = `api/datasource/categories/${data.categoryId}/rows?patientNo=${data.patientNo}`;
     return axios.get<any>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
 export const updateDatasourceRow = createAsyncThunk('datasource_container/update_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
-    const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}`, data.row);
+    const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/rows/${data.row.idx}`, data.row);
     thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
     return result;
   },
@@ -66,7 +66,7 @@ export const updateDatasourceRow = createAsyncThunk('datasource_container/update
 );
 
 export const createDatasourceRow = createAsyncThunk('datasource_container/create_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
-    const result = await axios.post<any>(`api/datasource/categories/${data.categoryId}`, data.row);
+    const result = await axios.post<any>(`api/datasource/categories/${data.categoryId}/rows`, data.row);
     thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
     return result;
   },

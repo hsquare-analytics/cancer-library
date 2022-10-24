@@ -41,8 +41,8 @@
         }
       },
       "singleTableEditor": {
-        "createSuccess": "{{ table }} 테이블에 행이 정상적으로 추가되었습니다.",
-        "updateSuccess": "{{ table }} 테이블의 {{ row }} 행이 정상적으로 수정되었습니다."
+        "createSuccess": "{{ table }} 테이블에 행이 추가되었습니다.",
+        "updateSuccess": "{{ table }} 테이블의 {{ row }} 행이 수정되었습니다."
       }
     }
   }
