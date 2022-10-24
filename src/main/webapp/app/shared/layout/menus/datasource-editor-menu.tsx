@@ -10,7 +10,7 @@ export const DatasourceEditorMenu = () => (
     <NavLink tag={Link} to="/datasource-editor" className="d-flex align-items-center">
       <FontAwesomeIcon icon="home"/>
       <span>
-        <Translate contentKey="global.menu.patientTableEditor">Patient Table Editor</Translate>
+        <Translate contentKey="global.menu.datasource">Patient Table Editor</Translate>
       </span>
     </NavLink>
   </NavItem>

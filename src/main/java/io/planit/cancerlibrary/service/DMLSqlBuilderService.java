@@ -46,7 +46,7 @@ public class DMLSqlBuilderService {
         this.timeService = timeService;
     }
 
-    public SQL getInsertSQL(Long categoryId, Map<String, String> map) {
+    public SQL getInsertSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
@@ -75,7 +75,7 @@ public class DMLSqlBuilderService {
         return sql;
     }
 
-    public SQL getReadUpdatedRowSQL(Long categoryId, Map<String, String> map) {
+    public SQL getReadUpdatedRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
@@ -88,7 +88,7 @@ public class DMLSqlBuilderService {
         return sql;
     }
 
-    public SQL getReadOriginRowSQL(Long categoryId, Map<String, String> map) {
+    public SQL getReadOriginRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryDeficiencyException::new);
 
@@ -111,7 +111,7 @@ public class DMLSqlBuilderService {
         return sql;
     }
 
-    public SQL getUpdateSQL(Long categoryId, Map<String, String> map) {
+    public SQL getUpdateSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);

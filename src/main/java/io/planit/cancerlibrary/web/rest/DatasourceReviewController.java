@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Transactional
 public class DatasourceReviewController {
 
-    private final Logger log = LoggerFactory.getLogger(SubjectResource.class);
+    private final Logger log = LoggerFactory.getLogger(DatasourceReviewController.class);
 
     private final DMLSqlBuilderService dmlSqlBuilderService;
 
@@ -36,13 +36,13 @@ public class DatasourceReviewController {
 
     @GetMapping("/datasource-review/categories/{categoryId}")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<Map>> getDatasourceByCategoryId(
+    public ResponseEntity<List<Map<String, Object>>> getDatasourceByCategoryId(
         @PathVariable(value = "categoryId") final Long categoryId) {
         log.debug("REST request to get Datasource by category id: {}", categoryId);
 
         SQL sql = dmlSqlBuilderService.getReadAllSQL(categoryId);
 
-        List<Map> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
+        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
 
         return ResponseEntity.ok().body(result);
     }

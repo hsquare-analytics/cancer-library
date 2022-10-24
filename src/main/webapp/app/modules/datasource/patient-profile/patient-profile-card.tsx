@@ -21,13 +21,13 @@ import {IDxColumn} from "app/shared/model/dx-column.model";
 const PatientStatusChip = (status: string) => {
   switch (status) {
     case REVIEW_LIST.DECLINED:
-      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.declined")} color="error"/>;
+      return <Chip label={translate("cancerLibraryApp.datasource.review.declined")} color="error"/>;
     case REVIEW_LIST.APPROVED:
-      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.approved")} color="success"/>;
+      return <Chip label={translate("cancerLibraryApp.datasource.review.approved")} color="success"/>;
     case REVIEW_LIST.SUBMITTED:
-      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.submitted")} color="info"/>;
+      return <Chip label={translate("cancerLibraryApp.datasource.review.submitted")} color="info"/>;
     default:
-      return <Chip label={translate("cancerLibraryApp.patientTableEditor.review.initial")} color="secondary"/>;
+      return <Chip label={translate("cancerLibraryApp.datasource.review.initial")} color="secondary"/>;
   }
 }
 
@@ -57,14 +57,14 @@ const PatientProfileDetail = (patient: IPatient) => {
 };
 
 export const PatientProfileCard = () => {
-  const patient = useAppSelector<IPatient>(state => state.patientTableEditorPatient.entity);
-  const loading = useAppSelector<IPatient>(state => state.patientTableEditorPatient.loading);
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+  const loading = useAppSelector<IPatient>(state => state.datasourcePatient.loading);
 
   return (
     <Accordion defaultExpanded={true} expanded={true}>
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
-          {translate("cancerLibraryApp.patientTableEditor.profileCard.title", patient ? {
+          {translate("cancerLibraryApp.datasource.profileCard.title", patient ? {
             no: patient.ptNo, name: patient.ptNm
           } : '')}</Typography>
         {patient && PatientStatusChip(patient.status)}

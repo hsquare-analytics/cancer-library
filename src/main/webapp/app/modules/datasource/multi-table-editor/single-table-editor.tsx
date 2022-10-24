@@ -34,15 +34,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const [editedCategory, setEditedCategory] = useState(null);
   const [editedRow, setEditedRow] = useState(null);
 
-  const dataSourceContainer = useAppSelector(state => state.patientTableEditorContainer.dataSource.container);
-  const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
-  const updateSuccess = useAppSelector(state => state.patientTableEditorContainer.updateSuccess);
+  const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
+  const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
 
   const {category} = props;
 
   useEffect(() => {
     if (updateSuccess && editedCategory && editedCategory.id === category.id) {
-      toast.info(translate("cancerLibraryApp.patientTableEditor.singleTableEditor.updateSuccess", {
+      toast.info(translate("cancerLibraryApp.datasource.singleTableEditor.updateSuccess", {
         table: category.title.toUpperCase(),
         row: editedRow.idx
       }));
@@ -110,11 +110,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               itemContainer[category.id].map(item => getDxColumnConfig(item))
             }
             <Column dataField="last_modified_by"
-                    caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedBy')}
+                    caption={translate('cancerLibraryApp.datasource.column.lastModifiedBy')}
                     alignment={"center"} allowEditing={false}
                     visibleIndex={9998}/>
             <Column dataField="last_modified_date"
-                    caption={translate('cancerLibraryApp.patientTableEditor.column.lastModifiedDate')}
+                    caption={translate('cancerLibraryApp.datasource.column.lastModifiedDate')}
                     alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}
                     visibleIndex={9999}/>
           </DataGrid>

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DatasourceMapper {
 
     @MapKey("id")
-    List<Map> executeSelectSQL(SQLAdapter sqlAdapter);
+    List<Map<String, Object>> executeSelectSQL(SQLAdapter sqlAdapter);
 
     @MapKey("id")
     Integer executeInsertSQL(SQLAdapter sqlAdapter);

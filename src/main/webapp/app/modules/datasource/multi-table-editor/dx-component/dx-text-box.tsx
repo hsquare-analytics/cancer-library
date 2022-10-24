@@ -27,8 +27,8 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
   </div>
 }
 
-const mapStateToProps = ({patientTableOrigin}: IRootState) => ({
-  row: patientTableOrigin.row,
+const mapStateToProps = ({datasourceOrigin}: IRootState) => ({
+  row: datasourceOrigin.row,
 });
 
 const mapDispatchToProps = {}

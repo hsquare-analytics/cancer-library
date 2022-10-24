@@ -16,14 +16,14 @@ import {IPatient} from "app/shared/model/patient.model";
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
 
-  const patient = useAppSelector<IPatient>(state => state.patientTableEditorPatient.entity);
-  const categories = useAppSelector(state => state.patientTableEditorContainer.categories);
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+  const categories = useAppSelector(state => state.datasourceContainer.categories);
 
-  const dataSourceCount = useAppSelector(state => state.patientTableEditorContainer.dataSource.count);
-  const itemContainer = useAppSelector(state => state.patientTableEditorContainer.item.container);
-  const itemCount = useAppSelector(state => state.patientTableEditorContainer.item.count);
+  const dataSourceCount = useAppSelector(state => state.datasourceContainer.dataSource.count);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
+  const itemCount = useAppSelector(state => state.datasourceContainer.item.count);
 
-  const loading = useAppSelector(state => state.patientTableEditorContainer.loading) || itemCount < categories.length || dataSourceCount < categories.length;
+  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length || dataSourceCount < categories.length;
 
   useEffect(() => {
     if (categories.length === 0) {

@@ -1,6 +1,6 @@
 {
   "cancerLibraryApp": {
-    "patientTableEditor": {
+    "datasource": {
       "updateSuccess": "Patient {{ name }} ({{no}}) status is updated successfully",
       "updateFailed": "Patient {{ name }} ({{no}}) update failed",
       "column": {

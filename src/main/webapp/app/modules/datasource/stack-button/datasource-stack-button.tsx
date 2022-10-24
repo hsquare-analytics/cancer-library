@@ -24,7 +24,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const canNotDecline = () => {
     return !canDecline;
   }
-  const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
+  const patient = useAppSelector(state => state.datasourcePatient.entity);
   const login = useAppSelector(state => state.authentication.account.login);
 
   const canSubmit = () => {
@@ -102,15 +102,15 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
         <>
           <Button variant="contained" color="error" onClick={() => {
             onDeclinedButtonClick()
-          }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.decline")}</Button>
+          }}>{translate("cancerLibraryApp.datasource.reviewButton.decline")}</Button>
           <Button variant="contained" color="success"
                   onClick={() => {
                     onApprovedButtonClick()
-                  }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.approve")}</Button> </>
+                  }}>{translate("cancerLibraryApp.datasource.reviewButton.approve")}</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
                   onClick={() => {
                     onSubmittedButtonClick()
-                  }}>{translate("cancerLibraryApp.patientTableEditor.reviewButton.submit")}</Button>}
+                  }}>{translate("cancerLibraryApp.datasource.reviewButton.submit")}</Button>}
     </Stack>
   );
 }

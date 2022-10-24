@@ -62,8 +62,8 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     </div>);
 }
 
-const mapStateToProps = ({patientTableOrigin}: IRootState) => ({
-  row: patientTableOrigin.row,
+const mapStateToProps = ({datasourceOrigin}: IRootState) => ({
+  row: datasourceOrigin.row,
 });
 
 

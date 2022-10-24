@@ -42,7 +42,7 @@ public class DatasourceEditorController {
     }
 
     @PostMapping("/datasource-editor/categories/{categoryId}")
-    public ResponseEntity<Integer> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, String> map) {
+    public ResponseEntity<Integer> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map mapWithIdx = new HashMap<String, Object>(map);
@@ -61,7 +61,7 @@ public class DatasourceEditorController {
         SQL sql = unionSqlBuilderService.getUnionSelectSQL(categoryId, patientNo);
 
         Map<String, Object> result = new HashMap<>();
-        List<Map> map = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
+        List<Map<String, Object>> map = datasourceMapper.executeSelectSQL(new SQLAdapter(sql));
         result.put("categoryId", categoryId);
         result.put("dataSource", map);
 
@@ -70,12 +70,12 @@ public class DatasourceEditorController {
 
     @PutMapping("/datasource-editor/categories/{categoryId}")
     public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-        @RequestBody Map map) {
+        @RequestBody Map<String, Object> map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
         SQL readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, map);
 
-        List<Map> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
+        List<Map<String, Object>> founded = datasourceMapper.executeSelectSQL(new SQLAdapter(readSQL));
 
         if (founded.isEmpty()) {
             SQL insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, map);

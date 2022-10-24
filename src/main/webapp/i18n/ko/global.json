@@ -16,7 +16,7 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "multi-table-editor" : "다중 테이블 편집기",
-      "patientTableEditor" : "환자 테이블 편집기",
+      "datasource" : "데이터 편집 모듈",
       "userPatientAuthorizationEditor" : "환자 권한 설정",
       "editable-categories": "편집 테이블 목록",
       "approval-categories": "승인 테이블 목록",

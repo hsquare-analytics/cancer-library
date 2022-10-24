@@ -28,9 +28,9 @@ export const Datasource = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
-  const patient = useAppSelector(state => state.patientTableEditorPatient.entity);
-  const patientList = useAppSelector(state => state.patientTableEditorPatient.entities);
-  const updateSuccess = useAppSelector(state => state.patientTableEditorPatient.updateSuccess);
+  const patient = useAppSelector(state => state.datasourcePatient.entity);
+  const patientList = useAppSelector(state => state.datasourcePatient.entities);
+  const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
@@ -38,7 +38,7 @@ export const Datasource = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      toast.success(translate("cancerLibraryApp.patientTableEditor.updateSuccess", {
+      toast.success(translate("cancerLibraryApp.datasource.updateSuccess", {
         no: patient.ptNo,
         name: patient.ptNm
       }));
@@ -109,24 +109,24 @@ export const Datasource = () => {
           />
         )
       }
-      <Column caption={translate("cancerLibraryApp.patientTableEditor.column.status")} dataField={"status"}
+      <Column caption={translate("cancerLibraryApp.datasource.column.status")} dataField={"status"}
               alignment={'center'}
               minWidth={150} allowEditing={true}>
         <Lookup dataSource={[
           {
             id: 1,
             valueExpr: REVIEW_LIST.SUBMITTED,
-            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.submitted')
+            displayExpr: translate('cancerLibraryApp.datasource.review.submitted')
           },
           {
             id: 2,
             valueExpr: REVIEW_LIST.DECLINED,
-            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.declined')
+            displayExpr: translate('cancerLibraryApp.datasource.review.declined')
           },
           {
             id: 3,
             valueExpr: REVIEW_LIST.APPROVED,
-            displayExpr: translate('cancerLibraryApp.patientTableEditor.review.approved')
+            displayExpr: translate('cancerLibraryApp.datasource.review.approved')
           },
         ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
       </Column>
