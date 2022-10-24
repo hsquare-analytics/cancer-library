@@ -14,19 +14,19 @@ const initialState: EntityState<IPatient> = {
   updateSuccess: false,
 };
 
-export const getEntities = createAsyncThunk('patient/fetch_accessible_patient_list', async () => {
+export const getEntities = createAsyncThunk('datasource_patient/fetch_accessible_patient_list', async () => {
   const requestUrl = `api/patients/accessible-patient-list`;
   return axios.get<IPatient[]>(requestUrl);
 });
 
-export const getEntity = createAsyncThunk('patient/fetch_entity', async (id: string | number) => {
+export const getEntity = createAsyncThunk('datasource_patient/fetch_entity', async (id: string | number) => {
     const requestUrl = `api/patients/${id}`;
     return axios.get<IPatient>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
-export const updateEntity = createAsyncThunk('patient/update_entity', async (entity: IPatient, thunkAPI) => {
+export const updateEntity = createAsyncThunk('datasource_patient/update_entity', async (entity: IPatient, thunkAPI) => {
 
     const result = await axios.patch<IPatient>(`api/patients/${entity.ptNo}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities());
@@ -36,8 +36,8 @@ export const updateEntity = createAsyncThunk('patient/update_entity', async (ent
 );
 
 
-export const PatientTableEditorPatientSlice = createEntitySlice({
-    name: 'patient',
+export const DatasourcePatientSlice = createEntitySlice({
+    name: 'datasource-patient',
     initialState,
     extraReducers(builder) {
       builder
@@ -75,6 +75,6 @@ export const PatientTableEditorPatientSlice = createEntitySlice({
   }
 );
 
-export const {reset} = PatientTableEditorPatientSlice.actions;
+export const {reset} = DatasourcePatientSlice.actions;
 
-export default PatientTableEditorPatientSlice.reducer;
+export default DatasourcePatientSlice.reducer;

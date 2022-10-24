@@ -67,7 +67,7 @@ const AppRoutes = () => {
           }
         />
         <Route
-          path="patient-table-editor"
+          path="datasource-editor"
           element={
             <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.SUPERVISOR]}>
               <Datasource/>

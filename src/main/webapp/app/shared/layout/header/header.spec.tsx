@@ -97,7 +97,7 @@ describe('Header', () => {
     expect(html).toContain('account-menu');
 
     // Custom header
-    expect(html).toContain('patient-table-editor-menu');
+    expect(html).toContain('datasource-editor-menu');
     expect(html).toContain('user-patient-dnd-grid-menu');
   });
 
@@ -112,7 +112,7 @@ describe('Header', () => {
     expect(html).toContain('account-menu');
 
     // Custom header
-    expect(html).toContain('patient-table-editor-menu');
+    expect(html).toContain('datasource-editor-menu');
     expect(html).not.toContain('user-patient-dnd-grid-menu');
   });
 
@@ -127,6 +127,6 @@ describe('Header', () => {
 
     // Custom header
     expect(html).toContain('account-menu');
-    expect(html).not.toContain('patient-table-editor-menu');
+    expect(html).not.toContain('datasource-editor-menu');
   });
 });

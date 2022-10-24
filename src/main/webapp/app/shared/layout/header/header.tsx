@@ -6,7 +6,7 @@ import {Collapse, Nav, Navbar, NavbarToggler} from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
 import {Brand, Home} from './header-components';
-import {AccountMenu, AdminMenu, LocaleMenu, PatientTableEditorMenu, UserPatientDndGridMenu} from '../menus';
+import {AccountMenu, AdminMenu, DatasourceEditorMenu, LocaleMenu, UserPatientDndGridMenu} from '../menus';
 import {useAppDispatch} from 'app/config/store';
 import {setLocale} from 'app/shared/reducers/locale';
 
@@ -54,7 +54,7 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ms-auto flex-column" navbar>
             <Home/>
-            {props.isAuthenticated && <PatientTableEditorMenu/>}
+            {props.isAuthenticated && <DatasourceEditorMenu/>}
             {props.isAuthenticated && (props.isSupervisor || props.isAdmin) && <UserPatientDndGridMenu/>}
             {props.isAuthenticated && props.isAdmin && (
               <>

@@ -6,7 +6,7 @@ import sinon from 'sinon';
 
 import reducer, {getRow, reset, resetRow} from "app/modules/datasource/reducer/datasource.origin.reducer";
 
-describe("PatientTableEditorConfigReducer", () => {
+describe("DatasourceOriginReducer", () => {
 
   function isEmpty(element): boolean {
     if (element instanceof Array) {

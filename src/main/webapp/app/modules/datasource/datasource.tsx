@@ -16,7 +16,7 @@ import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
 import PatientProfileCard from "app/modules/datasource/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import PatientTableEditorStackButton from "app/modules/datasource/stack-button/patient-table-editor-stack-button";
+import DatasourceStackButton from "app/modules/datasource/stack-button/datasource-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import "./datasource.scss";
 
@@ -70,7 +70,7 @@ export const Datasource = () => {
     >
       <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
         <PatientProfileCard/>
-        <PatientTableEditorStackButton setPopupVisible={setPopupVisible}/>
+        <DatasourceStackButton setPopupVisible={setPopupVisible}/>
         <MultiTableEditor/>
       </ScrollView>
     </Popup>

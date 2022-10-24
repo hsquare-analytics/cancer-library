@@ -36,28 +36,28 @@ const initialState: userPatientSelectorType = {
   updateSuccess: false
 }
 
-export const getUsableItems = createAsyncThunk('patient-table-editor/fetch_usable_item_list', async (categoryId: number) => {
+export const getUsableItems = createAsyncThunk('datasource_container/fetch_usable_item_list', async (categoryId: number) => {
     const requestUrl = `api/items/usable-item-list?categoryId=${categoryId}`;
     return axios.get<IItem[]>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
-export const getUsableCategories = createAsyncThunk('patient-table-editor/fetch_usable_category_list', async () => {
+export const getUsableCategories = createAsyncThunk('datasource_container/fetch_usable_category_list', async () => {
     const requestUrl = `api/categories/usable-category-list`;
     return axios.get<IItem[]>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
-export const getDataSources = createAsyncThunk('patient-table-editor/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
+export const getDataSources = createAsyncThunk('datasource_container/fetch_data_source', async (data: { categoryId: number, patientNo: string }) => {
     const requestUrl = `api/datasource-editor/categories/${data.categoryId}?patientNo=${data.patientNo}`;
     return axios.get<any>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );
 
-export const updateDatasourceRow = createAsyncThunk('patient-table-editor/update_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
+export const updateDatasourceRow = createAsyncThunk('datasource_container/update_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
     const result = await axios.put<any>(`api/datasource-editor/categories/${data.categoryId}`, data.row);
     thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
     return result;
@@ -65,8 +65,8 @@ export const updateDatasourceRow = createAsyncThunk('patient-table-editor/update
   {serializeError: serializeAxiosError}
 );
 
-const name = 'patient-table-editor-container'
-export const PatientTableEditorContainer = createSlice({
+const name = 'datasource-container'
+export const DatasourceContainer = createSlice({
   name,
   initialState,
   reducers: {
@@ -153,7 +153,7 @@ export const PatientTableEditorContainer = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem} = PatientTableEditorContainer.actions;
+export const {reset, resetDataSource, resetItem} = DatasourceContainer.actions;
 
 
-export default PatientTableEditorContainer.reducer;
+export default DatasourceContainer.reducer;

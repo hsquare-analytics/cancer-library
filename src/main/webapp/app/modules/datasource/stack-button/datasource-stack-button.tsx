@@ -11,13 +11,13 @@ import {
   fireDeclineReasonSwal,
   fireDeclineSwal,
   fireSubmitSwal
-} from "app/modules/datasource/stack-button/patient-table-editor.swal-fires";
+} from "app/modules/datasource/stack-button/datasource.swal-fires";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
 }
 
-export const PatientTableEditorStackButton = (props: IPatientTableEditorStackButtonProps) => {
+export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps) => {
   const dispatch = useAppDispatch();
 
   const canDecline = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
@@ -115,4 +115,4 @@ export const PatientTableEditorStackButton = (props: IPatientTableEditorStackBut
   );
 }
 
-export default PatientTableEditorStackButton;
+export default DatasourceStackButton;

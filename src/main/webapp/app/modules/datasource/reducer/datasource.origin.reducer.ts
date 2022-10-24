@@ -10,7 +10,7 @@ const initialState = {
   updateSuccess: false,
 };
 
-const name = 'patient-table-editor-config';
+const name = 'datasource-origin';
 export const DatasourceOriginReducer = createSlice({
   name,
   initialState,
@@ -43,7 +43,7 @@ export const DatasourceOriginReducer = createSlice({
   },
 });
 
-export const getRow = createAsyncThunk("patient-table-editor-config/get_row", async (data: { categoryId: number, rowId: number }) => {
+export const getRow = createAsyncThunk("datasource_origin/get_row", async (data: { categoryId: number, rowId: number }) => {
     const requestUrl = `api/datasource-editor/categories/${data.categoryId}/row/${data.rowId}`;
     return axios.get<any>(requestUrl);
   },
