@@ -20,5 +20,5 @@ ${AnsiColor.BRIGHT_BLUE}██████████████████�
 ${AnsiColor.BRIGHT_BLUE}████████████████████████${AnsiColor.BLACK}██████${AnsiColor.BRIGHT_BLUE}████${AnsiColor.BLACK}██████${AnsiColor.BRIGHT_BLUE}████████████${AnsiColor.BLACK}██████${AnsiColor.BRIGHT_BLUE}████${AnsiColor.BLACK}██████${AnsiColor.BRIGHT_BLUE}████████████
 ████████████████████████████████████████████████████████████████████████████████
 
-${AnsiColor.BRIGHT_BLUE}:: cancer-library-application 🤓  :: Running Spring Boot ${spring-boot.version} ::
+${AnsiColor.BRIGHT_BLUE}:: Cancer Library Application 🤓  :: Running Spring Boot ${spring-boot.version} ::
 :: https://www.planit-healthcare.com ::${AnsiColor.DEFAULT}
