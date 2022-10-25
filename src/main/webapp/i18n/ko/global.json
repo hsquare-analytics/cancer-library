@@ -123,7 +123,8 @@
       "value": "값"
     },
     "delete": {
-      "title": "삭제 확인"
+      "title": "삭제 확인",
+      "warning" : "정말로 삭제하시겠습니까?"
     },
     "validation": {
       "required": "필수항목입니다.",

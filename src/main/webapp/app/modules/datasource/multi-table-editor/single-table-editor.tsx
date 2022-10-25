@@ -153,7 +153,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             mode: 'popup',
             allowUpdating: true,
             allowDeleting: true,
-            form: {colCount: 3}
+            form: {colCount: 3},
+            texts: {
+              confirmDeleteMessage: translate('entity.delete.warning'),
+            },
           }}
           onEditingStart={onEditingStart}
           onRowInserting={onRowInserting}
