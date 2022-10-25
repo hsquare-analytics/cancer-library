@@ -15,6 +15,7 @@ import {
 } from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 import Swal from "sweetalert2";
 import {translate} from "react-jhipster";
+import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 
 
 export const UserPatientDndGrid = () => {
@@ -83,7 +84,8 @@ export const UserPatientDndGrid = () => {
           onSelectionChanged={onSelectionChanged}
           loadPanel={{enabled: !loading}}
         >
-          <Column dataField="id" caption="id" alignment={"center"}/>
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'}/>
+          <Column dataField="id" caption="id" alignment={"center"} visible={false}/>
           <Column dataField="login" caption="Login" alignment={"center"}/>
         </DataGrid>
         <Stack spacing={2} direction="row" className="justify-content-end my-3">
