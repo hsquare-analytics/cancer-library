@@ -3,7 +3,6 @@ import DndGrid from "app/modules/user-patient-dnd-grid/dnd-grid/dnd-grid";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import "./user-patient-dnd-grid.scss";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -11,6 +10,7 @@ import {IUser} from "app/shared/model/user.model";
 import {
   createUserPatientAuthorizations,
   getPatients,
+  getUsers,
   resetFlag
 } from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 import Swal from "sweetalert2";
@@ -27,14 +27,14 @@ export const UserPatientDndGrid = () => {
     'true': [],
   });
 
-  const users = useAppSelector(state => state.userManagement.users);
+  const users = useAppSelector(state => state.userPatientDndGrid.users);
   const loading = useAppSelector(state => state.userManagement.loading);
   const patients = useAppSelector(state => state.userPatientDndGrid.patients);
   const updateSuccess = useAppSelector(state => state.userPatientDndGrid.updateSuccess);
 
   useEffect(() => {
     if (users.length === 0) {
-      dispatch(getUsers({}));
+      dispatch(getUsers());
     }
   }, []);
 

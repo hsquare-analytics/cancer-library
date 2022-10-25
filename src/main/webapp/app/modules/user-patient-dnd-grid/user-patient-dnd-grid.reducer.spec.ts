@@ -7,6 +7,7 @@ import sinon from 'sinon'
 import reducer, {
   createUserPatientAuthorizations,
   getPatients,
+  getUsers,
   reset,
   resetFlag,
   setPatients
@@ -28,6 +29,7 @@ describe('user-patient-dnd-grids.reducer', () => {
   }
 
   const initialState = {
+    users: [],
     patients: [],
     loading: false,
     errorMessage: null,
@@ -39,10 +41,11 @@ describe('user-patient-dnd-grids.reducer', () => {
     it('should return the initial state', () => {
       const result = reducer(undefined, {type: ''});
       expect(result)
-      .toMatchObject({
-        loading: false,
-        errorMessage: null,
-      });
+        .toMatchObject({
+          loading: false,
+          errorMessage: null,
+        });
+      expect(isEmpty(result.users));
       expect(isEmpty(result.patients));
     });
 
@@ -64,7 +67,7 @@ describe('user-patient-dnd-grids.reducer', () => {
 
   describe('Requests', function () {
     it('should set state to loading', () => {
-      testMultipleTypes([getPatients.pending.type], {}, state => {
+      testMultipleTypes([getPatients.pending.type, getUsers.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           loading: true,
@@ -85,17 +88,20 @@ describe('user-patient-dnd-grids.reducer', () => {
       const patients = [{id: 1}, {id: 2}];
       const result = reducer(undefined, setPatients(patients));
       expect(result)
-      .toEqual({
-        ...initialState,
-        patients,
-      });
+        .toEqual({
+          ...initialState,
+          patients,
+        });
     });
   });
 
   describe('Failures', function () {
     it('should set a message in errorMessage', () => {
-      testMultipleTypes([getPatients.rejected.type,
-          createUserPatientAuthorizations.rejected.type],
+      testMultipleTypes([
+          getPatients.rejected.type,
+          createUserPatientAuthorizations.rejected.type,
+          getUsers.rejected.type
+        ],
         'some message', state => {
           expect(state).toMatchObject({
             updateSuccess: false,
@@ -114,10 +120,21 @@ describe('user-patient-dnd-grids.reducer', () => {
 
       const result = reducer(undefined, {type: getPatients.fulfilled.type, payload});
       expect(result)
-      .toMatchObject({
-        loading: false,
-        patients: payload.data,
-      });
+        .toMatchObject({
+          loading: false,
+          patients: payload.data,
+        });
+    });
+
+    it('should fetch user list', () => {
+      const payload = {data: [{id: 1, name: 'test'}]};
+
+      const result = reducer(undefined, {type: getUsers.fulfilled.type, payload});
+      expect(result)
+        .toMatchObject({
+          loading: false,
+          users: payload.data,
+        });
     });
 
     it('should create user patient authorization', () => {
@@ -125,10 +142,10 @@ describe('user-patient-dnd-grids.reducer', () => {
 
       const result = reducer(undefined, {type: createUserPatientAuthorizations.fulfilled.type, payload});
       expect(result)
-      .toMatchObject({
-        updating: false,
-        updateSuccess: true,
-      });
+        .toMatchObject({
+          updating: false,
+          updateSuccess: true,
+        });
     });
   });
 
@@ -158,6 +175,22 @@ describe('user-patient-dnd-grids.reducer', () => {
       ];
 
       await store.dispatch(getPatients("test"));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+    });
+
+    it('should dispatch getUsers', async () => {
+      const expectedActions = [
+        {
+          type: getUsers.pending.type,
+        },
+        {
+          type: getUsers.fulfilled.type,
+          payload: resolvedObject,
+        }
+      ];
+
+      await store.dispatch(getUsers());
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });

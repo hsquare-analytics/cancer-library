@@ -7,6 +7,7 @@ import {serializeAxiosError} from 'app/shared/reducers/reducer.utils';
 const name = 'userPatientDndGrids';
 
 const initialState = {
+  users: [],
   patients: [],
   loading: false,
   errorMessage: null,
@@ -16,6 +17,11 @@ const initialState = {
 
 export const getPatients = createAsyncThunk('userPatientDndGrids/fetch_patient_list', async (login: string) => {
   const requestUrl = `api/user-patients/divisible-patient-list?login=${login}`;
+  return axios.get<any[]>(requestUrl);
+});
+
+export const getUsers = createAsyncThunk('userPatientDndGrids/fetch_user_list', async () => {
+  const requestUrl = `api/users/normal-authorization-list`;
   return axios.get<any[]>(requestUrl);
 });
 
@@ -55,13 +61,17 @@ export const UserPatientDndGridReducer = createSlice({
       state.loading = false;
       state.patients = action.payload.data;
     })
+    .addMatcher(isFulfilled(getUsers), (state, action) => {
+      state.loading = false;
+      state.users = action.payload.data;
+    })
     .addMatcher(isFulfilled(createUserPatientAuthorizations), (state, action) => {
       state.updating = false;
       state.loading = false;
       state.updateSuccess = true;
       state.patients = action.payload.data;
     })
-    .addMatcher(isPending(getPatients), (state) => {
+    .addMatcher(isPending(getPatients, getUsers), (state) => {
       state.loading = true;
       state.errorMessage = null;
     })
@@ -69,7 +79,7 @@ export const UserPatientDndGridReducer = createSlice({
       state.updating = true;
       state.errorMessage = null;
     })
-    .addMatcher(isRejected(getPatients, createUserPatientAuthorizations), (state, action) => {
+    .addMatcher(isRejected(getPatients, createUserPatientAuthorizations, getUsers), (state, action) => {
       state.loading = false;
       state.updateSuccess = false;
       state.errorMessage = action.error.message;
