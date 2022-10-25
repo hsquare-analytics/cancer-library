@@ -12,6 +12,7 @@ import {
   resetItem
 } from "app/modules/datasource/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
+import _ from "lodash";
 
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
@@ -60,7 +61,9 @@ export const MultiTableEditor = () => {
     {
       !loading ? (
           <div>
-            {categories.map(category => <SingleTableEditor key={category.id} category={category} editedCategoryId={editedCategoryId} setEditedCategoryId={setEditedCategoryId}/>)}
+            {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
+              key={category.id} category={category} editedCategoryId={editedCategoryId}
+              setEditedCategoryId={setEditedCategoryId}/>)}
           </div>
         ) :
         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
