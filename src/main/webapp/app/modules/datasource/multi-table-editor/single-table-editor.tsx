@@ -71,8 +71,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   }, [updateSuccess]);
 
   const onEditingStart = e => {
-    setEditedRow(e.data);
-
     if (!e.data['idx'].includes('KCURE')) {
       dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
     } else {
@@ -83,6 +81,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const onRowUpdating = e => {
     setActionType(ActionType.UPDATE);
     setEditedCategory(category);
+    setEditedRow(e.oldData);
 
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.oldData, e.newData);
