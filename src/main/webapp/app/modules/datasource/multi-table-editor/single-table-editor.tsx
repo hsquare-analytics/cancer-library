@@ -30,6 +30,8 @@ enum ActionType {
 
 export interface ISingleTableEditor {
   category: ICategory;
+  editedCategoryId: number;
+  setEditedCategoryId: (categoryId: number) => void;
 }
 
 export const getCategoryTypography = (category: ICategory) => {
@@ -40,8 +42,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dispatch = useAppDispatch();
   const dataGrid = useRef(null);
 
-  // 다섯개 테이블에 대한 업데이트 플래그 체크를 위해서 별도로 local state를 생성하였다. (swal alert 다중 표시 방지)
-  const [editedCategory, setEditedCategory] = useState(null);
   const [editedRow, setEditedRow] = useState(null);
   const [actionType, setActionType] = useState(null);
 
@@ -53,7 +53,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const {category} = props;
 
   useEffect(() => {
-    if (updateSuccess && editedCategory && editedCategory.id === category.id) {
+    if (updateSuccess && category.id === props.editedCategoryId) {
       switch (actionType) {
         case ActionType.CREATE:
           toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
@@ -80,7 +80,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowUpdating = e => {
     setActionType(ActionType.UPDATE);
-    setEditedCategory(category);
+    props.setEditedCategoryId(category.id);
     setEditedRow(e.oldData);
 
     e.cancel = new Promise<void>((resolve) => {
@@ -93,7 +93,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowInserting = e => {
     setActionType(ActionType.CREATE);
-    setEditedCategory(category);
+    props.setEditedCategoryId(category.id);
 
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
@@ -105,7 +105,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowRemoving = e => {
     setActionType(ActionType.DELETE);
-    setEditedCategory(category);
+    props.setEditedCategoryId(category.id);
     setEditedRow(e.data);
 
     e.cancel = new Promise<void>((resolve, reject) => {

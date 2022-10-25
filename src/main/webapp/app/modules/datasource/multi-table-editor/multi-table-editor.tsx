@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import SingleTableEditor from "app/modules/datasource/multi-table-editor/single-table-editor";
 import CircularProgress from '@mui/material/CircularProgress';
@@ -24,6 +24,8 @@ export const MultiTableEditor = () => {
   const itemCount = useAppSelector(state => state.datasourceContainer.item.count);
 
   const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length || dataSourceCount < categories.length;
+
+  const [editedCategoryId, setEditedCategoryId] = useState(null);
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -58,7 +60,7 @@ export const MultiTableEditor = () => {
     {
       !loading ? (
           <div>
-            {categories.map(category => <SingleTableEditor key={category.id} category={category}/>)}
+            {categories.map(category => <SingleTableEditor key={category.id} category={category} editedCategoryId={editedCategoryId} setEditedCategoryId={setEditedCategoryId}/>)}
           </div>
         ) :
         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
