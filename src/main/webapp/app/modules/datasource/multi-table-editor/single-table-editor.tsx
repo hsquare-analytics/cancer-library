@@ -21,6 +21,13 @@ import {
 import {IPatient} from "app/shared/model/patient.model";
 
 
+enum ActionType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete'
+}
+
+
 export interface ISingleTableEditor {
   category: ICategory;
 }
@@ -36,7 +43,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   // 다섯개 테이블에 대한 업데이트 플래그 체크를 위해서 별도로 local state를 생성하였다. (swal alert 다중 표시 방지)
   const [editedCategory, setEditedCategory] = useState(null);
   const [editedRow, setEditedRow] = useState(null);
-  const [isNew, setIsNew] = useState(false);
+  const [actionType, setActionType] = useState(null);
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
@@ -47,20 +54,23 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   useEffect(() => {
     if (updateSuccess && editedCategory && editedCategory.id === category.id) {
-      if (isNew) {
-        toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
-      } else {
-        toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', {
-          table: category.title.toUpperCase(),
-          row: editedRow.idx
-        }));
+      switch (actionType) {
+        case ActionType.CREATE:
+          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
+          break;
+        case ActionType.UPDATE:
+          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', {table: category.title.toUpperCase(), row: editedRow.idx}));
+          break;
+        case ActionType.DELETE:
+          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.deleteSuccess', {table: category.title.toUpperCase(), row: editedRow.idx}));
+          break;
+        default:
+          break;
       }
     }
   }, [updateSuccess]);
 
   const onEditingStart = e => {
-    setIsNew(false);
-    setEditedCategory(category);
     setEditedRow(e.data);
 
     if (!e.data['idx'].includes('KCURE')) {
@@ -71,6 +81,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   }
 
   const onRowUpdating = e => {
+    setActionType(ActionType.UPDATE);
+    setEditedCategory(category);
+
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.oldData, e.newData);
 
@@ -80,7 +93,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
   const onRowInserting = e => {
-    setIsNew(true);
+    setActionType(ActionType.CREATE);
     setEditedCategory(category);
 
     e.cancel = new Promise<void>((resolve) => {
@@ -92,11 +105,22 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   }
 
   const onRowRemoving = e => {
-    e.cancel = new Promise<void>((resolve) => {
-      const row = Object.assign({}, e.data);
+    setActionType(ActionType.DELETE);
+    setEditedCategory(category);
+    setEditedRow(e.data);
 
-      dispatch(deleteDatasourceRow({categoryId: category.id, row}));
-      resolve();
+    e.cancel = new Promise<void>((resolve, reject) => {
+      const row = Object.assign({}, e.data);
+      if (!row.idx.includes('KCURE')) {
+        const result = translate('cancerLibraryApp.datasource.singleTableEditor.deleteFail', {
+          table: category.title.toUpperCase(), row: row.idx
+        });
+        toast.error(result);
+        reject(result);
+      } else {
+        dispatch(deleteDatasourceRow({categoryId: category.id, row}));
+        resolve();
+      }
     });
   };
 
