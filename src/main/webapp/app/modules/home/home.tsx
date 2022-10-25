@@ -41,10 +41,10 @@ export const Home = () => {
               <Translate contentKey="global.messages.info.authenticated.suffix">
                 , you can try the default accounts:
                 <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                <br />- Supervisor (login=&quot;admin&quot; and password=&quot;supervisor&quot;)
-                <br />- Reviewer1 (login=&quot;user&quot; and password=&quot;reviewer&quot;).
-                <br />- Reviewer2 (login=&quot;user&quot; and password=&quot;reviewer&quot;).
-                <br />- Reviewer3 (login=&quot;user&quot; and password=&quot;reviewer&quot;).
+                <br />- Supervisor (login=&quot;supervisor&quot; and password=&quot;supervisor&quot;)
+                <br />- Reviewer1 (login=&quot;reviewer1&quot; and password=&quot;reviewer&quot;).
+                <br />- Reviewer2 (login=&quot;reviewer2&quot; and password=&quot;reviewer&quot;).
+                <br />- Reviewer3 (login=&quot;reviewer3&quot; and password=&quot;reviewer&quot;).
               </Translate>
             </Alert>
 
