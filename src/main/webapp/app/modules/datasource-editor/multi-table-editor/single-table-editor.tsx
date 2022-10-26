@@ -9,15 +9,18 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getDxColumnConfig} from "app/modules/datasource/multi-table-editor/dx-component/dx-column-config";
-import {getOriginRow, reset as resetDatasourceOrigin} from "app/modules/datasource/reducer/datasource.origin.reducer";
+import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config";
+import {
+  getOriginRow,
+  reset as resetDatasourceOrigin
+} from "app/modules/datasource-editor/reducer/datasource.origin.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   createDatasourceRow,
   deleteDatasourceRow,
   updateDatasourceRow
-} from "app/modules/datasource/reducer/datasource.container.reducer";
+} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 
 

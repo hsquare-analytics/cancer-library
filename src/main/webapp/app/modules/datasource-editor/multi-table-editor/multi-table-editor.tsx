@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import SingleTableEditor from "app/modules/datasource/multi-table-editor/single-table-editor";
+import SingleTableEditor from "app/modules/datasource-editor/multi-table-editor/single-table-editor";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
@@ -10,7 +10,7 @@ import {
   getUsableItems,
   resetDataSource,
   resetItem
-} from "app/modules/datasource/reducer/datasource.container.reducer";
+} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 import _ from "lodash";
 

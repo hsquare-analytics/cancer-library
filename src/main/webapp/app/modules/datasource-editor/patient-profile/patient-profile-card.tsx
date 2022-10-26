@@ -16,7 +16,7 @@ import Box from '@mui/material/Box';
 import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
 import TextBox from 'devextreme-react/text-box';
 import {IDxColumn} from "app/shared/model/dx-column.model";
-import AccessiblePatientColumn from "app/modules/datasource/accessible-patient.column";
+import AccessiblePatientColumn from "app/modules/datasource-editor/accessible-patient.column";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {

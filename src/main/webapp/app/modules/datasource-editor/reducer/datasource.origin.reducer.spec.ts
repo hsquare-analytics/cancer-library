@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getOriginRow, reset} from "app/modules/datasource/reducer/datasource.origin.reducer";
+import reducer, {getOriginRow, reset} from "app/modules/datasource-editor/reducer/datasource.origin.reducer";
 
 describe("DatasourceOriginReducer", () => {
 

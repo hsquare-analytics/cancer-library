@@ -15,7 +15,7 @@ import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
 import PageNotFound from 'app/shared/error/page-not-found';
 import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
-import AccessiblePatient from "app/modules/datasource/accessible-patient";
+import AccessiblePatient from "app/modules/datasource-editor/accessible-patient";
 import UserPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid";
 
 const loading = <div>loading ...</div>;

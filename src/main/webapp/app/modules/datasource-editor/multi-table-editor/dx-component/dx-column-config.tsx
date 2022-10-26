@@ -1,11 +1,11 @@
-import SelectBoxComponent from "app/modules/datasource/multi-table-editor/dx-component/dx-select-box";
-import DxTagBox from "app/modules/datasource/multi-table-editor/dx-component/dx-tag-box";
+import SelectBoxComponent from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-select-box";
+import DxTagBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-tag-box";
 import {IItem} from "app/shared/model/item.model";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
-import DxTextBox from "app/modules/datasource/multi-table-editor/dx-component/dx-text-box";
-import DxNumberBox from "app/modules/datasource/multi-table-editor/dx-component/dx-number-box";
-import DxDateBox from "app/modules/datasource/multi-table-editor/dx-component/dx-date-box";
+import DxTextBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-text-box";
+import DxNumberBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-number-box";
+import DxDateBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-date-box";
 
 
 const getDxEditCellComponent = (item: IItem) => {

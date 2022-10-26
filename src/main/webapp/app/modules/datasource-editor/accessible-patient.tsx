@@ -4,19 +4,19 @@ import {
   getEntities as getAccessiblePatients,
   getEntity as getPatient,
   updateEntity as updatePatient,
-} from "app/modules/datasource/reducer/datasource.patient.reducer";
+} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from "./accessible-patient.column";
 import {Popup} from 'devextreme-react/popup';
-import MultiTableEditor from "app/modules/datasource/multi-table-editor/multi-table-editor";
+import MultiTableEditor from "app/modules/datasource-editor/multi-table-editor/multi-table-editor";
 import ScrollView from 'devextreme-react/scroll-view';
 import {cleanEntity} from "app/shared/util/entity-utils";
 import {toast} from 'react-toastify';
-import PatientProfileCard from "app/modules/datasource/patient-profile/patient-profile-card";
+import PatientProfileCard from "app/modules/datasource-editor/patient-profile/patient-profile-card";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import DatasourceStackButton from "app/modules/datasource/stack-button/datasource-stack-button";
+import DatasourceStackButton from "app/modules/datasource-editor/stack-button/datasource-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import "./accessible-patient.scss";
 

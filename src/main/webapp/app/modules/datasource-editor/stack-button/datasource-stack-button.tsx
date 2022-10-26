@@ -4,14 +4,14 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {updateEntity as updatePatient} from "app/modules/datasource/reducer/datasource.patient.reducer";
+import {updateEntity as updatePatient} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import {translate} from "react-jhipster";
 import {
   fireApprovedSwal,
   fireDeclineReasonSwal,
   fireDeclineSwal,
   fireSubmitSwal
-} from "app/modules/datasource/stack-button/datasource.swal-fires";
+} from "app/modules/datasource-editor/stack-button/datasource.swal-fires";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
