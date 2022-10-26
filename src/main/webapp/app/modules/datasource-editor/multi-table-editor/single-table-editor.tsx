@@ -13,7 +13,8 @@ import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-edito
 import {
   getOriginRow,
   reset as resetDatasourceStatus,
-  setCategory
+  setCategory,
+  setValidateFailedItems
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -160,7 +161,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
           onSaved={() => dispatch(resetDatasourceStatus())}
           columnAutoWidth={true}
-          onRowValidating={(e) => onRowValidating(e, {category, itemContainer})}
+          onRowValidating={(e) => onRowValidating(e, {
+              category,
+              itemContainer
+            }, (value) => dispatch(setValidateFailedItems(value))
+          )}
         >
           {
             itemContainer[category.id].map(item => getDxColumnConfig(item))

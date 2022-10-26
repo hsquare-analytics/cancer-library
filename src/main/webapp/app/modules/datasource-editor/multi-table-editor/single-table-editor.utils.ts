@@ -28,22 +28,23 @@ export const toastApiResult = (type: ActionType, data: { table: string, row?: st
 }
 
 
-export const onRowValidating = (e, data: { category: ICategory, itemContainer: any, }) => {
+export const onRowValidating = (e, data: { category: ICategory, itemContainer: any }, callback: (value: string[]) => void) => {
   const {category, itemContainer} = data;
   const items = itemContainer[category.id];
   const targetData = {...e.oldData, ...e.newData};
-  const requiredFields = [];
+  const validationFailedItemList = [];
   items.forEach(item => {
     if (!item || !item.property) {
       return false;
     }
     if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
-      requiredFields.push(item.property.caption || item.title);
+      validationFailedItemList.push(item);
       e.isValid = false;
       return false;
     }
   });
-  const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: requiredFields.join(', ')});
+  callback(validationFailedItemList);
+  const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property.caption || item.title).join(', ')});
   e.errorText = message;
   Swal.fire({
     icon: 'error',
