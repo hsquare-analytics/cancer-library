@@ -23,9 +23,11 @@ import {
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
-import _ from "lodash";
-import Swal from "sweetalert2";
-import {ActionType, toastApiResult} from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
+import {
+  ActionType,
+  onRowValidating,
+  toastApiResult
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
 
 
 export interface ISingleTableEditor {
@@ -115,28 +117,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
-  const onRowValidating = (e) => {
-    const items = itemContainer[category.id];
-    const targetData = {...e.oldData, ...e.newData};
-    items.forEach(item => {
-      if (!item || !item.property) {
-        return false;
-      }
-
-      if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
-        e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title});
-        e.isValid = false;
-        Swal.fire({
-          icon: 'error',
-          text: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title}),
-          showConfirmButton: false,
-          timer: 1500
-        });
-        return false;
-      }
-    });
-  }
-
   return canRender() ? (
     <Accordion defaultExpanded={true} className={"single-table-editor-wrapper"}>
       <AccordionSummary
@@ -180,7 +160,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
           onSaved={() => dispatch(resetDatasourceStatus())}
           columnAutoWidth={true}
-          onRowValidating={onRowValidating}
+          onRowValidating={(e) => onRowValidating(e, {category, itemContainer})}
         >
           {
             itemContainer[category.id].map(item => getDxColumnConfig(item))
