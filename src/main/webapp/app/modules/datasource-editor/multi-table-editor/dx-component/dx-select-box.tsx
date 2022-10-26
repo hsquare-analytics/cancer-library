@@ -7,6 +7,7 @@ import DxRowCommentBox, {
   getDxCellClass
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
 import {Validator} from 'devextreme-react/validator';
+import {translate} from 'react-jhipster';
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -51,7 +52,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     }
     const rules = [];
     if (item.property.required) {
-      rules.push({type: 'required', message: 'This field is required'});
+      rules.push({type: 'required', message: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title})});
     }
     return rules;
   }
