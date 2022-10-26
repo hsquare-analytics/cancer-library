@@ -32,20 +32,21 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
   const {category, itemContainer} = data;
   const items = itemContainer[category.id];
   const targetData = {...e.oldData, ...e.newData};
+  const requiredFields = [];
   items.forEach(item => {
     if (!item || !item.property) {
       return false;
     }
-
     if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
-      e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title});
+      requiredFields.push(item.property.caption || item.title);
       e.isValid = false;
-      Swal.fire({
-        icon: 'error',
-        text: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title}),
-        timer: 1500
-      });
       return false;
     }
+  });
+  const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: requiredFields.join(', ')});
+  e.errorText = message;
+  Swal.fire({
+    icon: 'error',
+    text: message,
   });
 }
