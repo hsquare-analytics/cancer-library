@@ -24,6 +24,7 @@ import {
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 import _ from "lodash";
+import Swal from "sweetalert2";
 
 
 enum ActionType {
@@ -145,6 +146,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
         e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption});
         e.isValid = false;
+        Swal.fire({
+          icon: 'error',
+          text: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption}),
+          showConfirmButton: false,
+          timer: 1500
+        });
         return false;
       }
     });
