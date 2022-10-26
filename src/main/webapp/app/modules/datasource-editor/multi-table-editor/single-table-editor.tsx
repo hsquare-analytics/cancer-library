@@ -143,12 +143,16 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     const items = itemContainer[category.id];
     const targetData = {...e.oldData, ...e.newData};
     items.forEach(item => {
+      if (!item || !item.property) {
+        return false;
+      }
+
       if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
-        e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption});
+        e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title});
         e.isValid = false;
         Swal.fire({
           icon: 'error',
-          text: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption}),
+          text: translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title}),
           showConfirmButton: false,
           timer: 1500
         });

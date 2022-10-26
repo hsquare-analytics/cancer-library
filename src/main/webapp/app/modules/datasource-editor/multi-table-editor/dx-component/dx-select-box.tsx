@@ -46,6 +46,9 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   }
 
   const getValidationRules = () => {
+    if (!item || !item.property) {
+      return [];
+    }
     const rules = [];
     if (item.property.required) {
       rules.push({type: 'required', message: 'This field is required'});
