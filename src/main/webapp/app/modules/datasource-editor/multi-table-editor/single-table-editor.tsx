@@ -62,10 +62,16 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
           break;
         case ActionType.UPDATE:
-          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', {table: category.title.toUpperCase(), row: editedRow.idx}));
+          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', {
+            table: category.title.toUpperCase(),
+            row: editedRow.idx
+          }));
           break;
         case ActionType.DELETE:
-          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.deleteSuccess', {table: category.title.toUpperCase(), row: editedRow.idx}));
+          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.deleteSuccess', {
+            table: category.title.toUpperCase(),
+            row: editedRow.idx
+          }));
           break;
         default:
           break;
@@ -168,9 +174,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           // onInitNewRow={onInitNewRow}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
-          onEditCanceled={() => {
-            dispatch(resetDatasourceOrigin());
-          }}
+          onEditCanceled={() => dispatch(resetDatasourceOrigin())}
+          onSaved={() => dispatch(resetDatasourceOrigin())}
           columnAutoWidth={true}
         >
           {
