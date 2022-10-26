@@ -6,6 +6,7 @@ import LookupEditor from "app/modules/datasource-editor/multi-table-editor/looku
 import DxRowCommentBox, {
   getDxCellClass
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
+import {Validator} from 'devextreme-react/validator';
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -40,6 +41,18 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     }
   }
 
+  if (!item) {
+    return null;
+  }
+
+  const getValidationRules = () => {
+    const rules = [];
+    if (item.property.required) {
+      rules.push({type: 'required', message: 'This field is required'});
+    }
+    return rules;
+  }
+
   return (
     <div>
       <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
@@ -65,6 +78,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
             },
           }] : null}
       >
+        {<Validator validationRules={getValidationRules()}/>}
       </SelectBox>
       <DxRowCommentBox originRow={originRow} data={data}/>
     </div>);
