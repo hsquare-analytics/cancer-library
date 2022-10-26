@@ -51,7 +51,7 @@ export const App = () => {
           <ToastContainer position={toast.POSITION.TOP_RIGHT} className="toastify-container"
                           theme="light"
                           toastClassName="toastify-toast"
-                          limit={3}/>
+                          limit={5}/>
           <ErrorBoundary>
             <Header
               isAuthenticated={isAuthenticated}
