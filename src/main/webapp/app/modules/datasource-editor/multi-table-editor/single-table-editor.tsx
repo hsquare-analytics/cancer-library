@@ -25,13 +25,7 @@ import {
 import {IPatient} from "app/shared/model/patient.model";
 import _ from "lodash";
 import Swal from "sweetalert2";
-
-
-enum ActionType {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete'
-}
+import {ActionType, toastApiResult} from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
 
 
 export interface ISingleTableEditor {
@@ -60,25 +54,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   useEffect(() => {
     if (updateSuccess && category.id === selectedCategory.id) {
-      switch (actionType) {
-        case ActionType.CREATE:
-          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
-          break;
-        case ActionType.UPDATE:
-          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', {
-            table: category.title.toUpperCase(),
-            row: editedRow.idx
-          }));
-          break;
-        case ActionType.DELETE:
-          toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.deleteSuccess', {
-            table: category.title.toUpperCase(),
-            row: editedRow.idx
-          }));
-          break;
-        default:
-          break;
-      }
+      toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
     }
   }, [updateSuccess]);
 
