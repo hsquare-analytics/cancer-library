@@ -8,7 +8,6 @@ import reducer, {
   getOriginRow,
   reset,
   setCategory,
-  setItem
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
 describe("datasourceStatusReducer", () => {
@@ -24,7 +23,6 @@ describe("datasourceStatusReducer", () => {
   const initialState = {
     selected: {
       category: {},
-      item: {}
     },
     originRow: {},
     loading: false,
@@ -59,20 +57,10 @@ describe("datasourceStatusReducer", () => {
         ...initialState,
         selected: {
           category: {id: 1},
-          item: {}
         }
       });
     });
 
-    it('should set item', () => {
-      expect(reducer(initialState, {type: setItem, payload: {id: 1}})).toEqual({
-        ...initialState,
-        selected: {
-          category: {},
-          item: {id: 1}
-        }
-      });
-    });
   });
 
   describe("Requests", () => {

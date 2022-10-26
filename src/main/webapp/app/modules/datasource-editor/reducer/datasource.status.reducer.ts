@@ -5,7 +5,6 @@ import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 const initialState = {
   selected: {
     category: {},
-    item: {}
   },
   originRow: {},
   loading: false,
@@ -25,9 +24,6 @@ export const DatasourceStatusReducer = createSlice({
     setCategory(state, action) {
       state.selected.category = action.payload;
     },
-    setItem(state, action) {
-      state.selected.item = action.payload;
-    }
   },
   extraReducers(builder) {
     builder
@@ -55,6 +51,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset, setCategory, setItem} = DatasourceStatusReducer.actions;
+export const {reset, setCategory } = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;
