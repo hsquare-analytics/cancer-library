@@ -6,6 +6,7 @@ const initialState = {
   selected: {
     category: {},
   },
+  validationFailedItems: [],
   originRow: {},
   loading: false,
   errorMessage: null,
@@ -24,6 +25,9 @@ export const DatasourceStatusReducer = createSlice({
     setCategory(state, action) {
       state.selected.category = action.payload;
     },
+    setValidateFailedItems(state, action) {
+      state.validationFailedItems = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -51,6 +55,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset, setCategory } = DatasourceStatusReducer.actions;
+export const {reset, setCategory, setValidateFailedItems } = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;

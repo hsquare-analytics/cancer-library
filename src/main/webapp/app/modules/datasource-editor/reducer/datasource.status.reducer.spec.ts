@@ -8,6 +8,7 @@ import reducer, {
   getOriginRow,
   reset,
   setCategory,
+  setValidateFailedItems,
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
 describe("datasourceStatusReducer", () => {
@@ -24,6 +25,7 @@ describe("datasourceStatusReducer", () => {
     selected: {
       category: {},
     },
+    validationFailedItems: [],
     originRow: {},
     loading: false,
     errorMessage: null,
@@ -39,6 +41,7 @@ describe("datasourceStatusReducer", () => {
       updateSuccess: false,
     });
     expect(isEmpty(state.originRow));
+    expect(isEmpty(state.validationFailedItems));
   }
 
   describe('Common', () => {
@@ -61,6 +64,12 @@ describe("datasourceStatusReducer", () => {
       });
     });
 
+    it('should set validationFailedItems', () => {
+      expect(reducer(initialState, {type: setValidateFailedItems, payload: [{id: 1}]})).toEqual({
+        ...initialState,
+        validationFailedItems: [{id: 1}],
+      });
+    });
   });
 
   describe("Requests", () => {
