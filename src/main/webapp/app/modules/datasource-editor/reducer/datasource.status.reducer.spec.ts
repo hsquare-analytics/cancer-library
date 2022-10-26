@@ -4,7 +4,12 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getOriginRow, reset} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
+import reducer, {
+  getOriginRow,
+  reset,
+  setCategory,
+  setItem
+} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
 describe("datasourceStatusReducer", () => {
 
@@ -17,6 +22,10 @@ describe("datasourceStatusReducer", () => {
   }
 
   const initialState = {
+    selected: {
+      category: {},
+      item: {}
+    },
     originRow: {},
     loading: false,
     errorMessage: null,
@@ -45,6 +54,25 @@ describe("datasourceStatusReducer", () => {
       });
     });
 
+    it('should set category', () => {
+      expect(reducer(initialState, {type: setCategory, payload: {id: 1}})).toEqual({
+        ...initialState,
+        selected: {
+          category: {id: 1},
+          item: {}
+        }
+      });
+    });
+
+    it('should set item', () => {
+      expect(reducer(initialState, {type: setItem, payload: {id: 1}})).toEqual({
+        ...initialState,
+        selected: {
+          category: {},
+          item: {id: 1}
+        }
+      });
+    });
   });
 
   describe("Requests", () => {

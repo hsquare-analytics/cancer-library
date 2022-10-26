@@ -3,6 +3,10 @@ import axios from "axios";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 
 const initialState = {
+  selected: {
+    category: {},
+    item: {}
+  },
   originRow: {},
   loading: false,
   errorMessage: null,
@@ -10,7 +14,7 @@ const initialState = {
   updateSuccess: false,
 };
 
-const name = 'datasource-origin';
+const name = 'datasource-status';
 export const DatasourceStatusReducer = createSlice({
   name,
   initialState,
@@ -18,6 +22,12 @@ export const DatasourceStatusReducer = createSlice({
     reset() {
       return initialState;
     },
+    setCategory(state, action) {
+      state.selected.category = action.payload;
+    },
+    setItem(state, action) {
+      state.selected.item = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -45,6 +55,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset} = DatasourceStatusReducer.actions;
+export const {reset, setCategory, setItem} = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;
