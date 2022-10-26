@@ -44,18 +44,18 @@ const isNotEmpty = (element): boolean => {
 
 interface IDxRowCommentBoxProps {
   data: any;
-  row: any;
+  originRow: any;
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
-  const {data, row} = props;
+  const {data, originRow} = props;
 
-  if (isEmpty(row) || isNotDxCellChanged(data, row)) {
+  if (isEmpty(originRow) || isNotDxCellChanged(data, originRow)) {
     return null;
   }
 
   return <div>
-    <div className="text-underline p-1">최초: {row[data.column.dataField]}</div>
+    <div className="text-underline p-1">최초: {originRow[data.column.dataField]}</div>
   </div>;
 }
 

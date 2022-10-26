@@ -12,8 +12,8 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config";
 import {
   getOriginRow,
-  reset as resetDatasourceOrigin
-} from "app/modules/datasource-editor/reducer/datasource.origin.reducer";
+  reset as resetDatasourceStatus
+} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -83,7 +83,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     if (!e.data['idx'].includes('KCURE')) {
       dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
     } else {
-      dispatch(resetDatasourceOrigin());
+      dispatch(resetDatasourceStatus());
     }
   }
 
@@ -174,8 +174,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           // onInitNewRow={onInitNewRow}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
-          onEditCanceled={() => dispatch(resetDatasourceOrigin())}
-          onSaved={() => dispatch(resetDatasourceOrigin())}
+          onEditCanceled={() => dispatch(resetDatasourceStatus())}
+          onSaved={() => dispatch(resetDatasourceStatus())}
           columnAutoWidth={true}
         >
           {

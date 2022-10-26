@@ -18,7 +18,7 @@ import navigation from "app/modules/navigation/navigation.reducer";
 import patient from "app/entities/patient/patient.reducer";
 import datasourceContainer from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import datasourcePatient from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
-import datasourceOrigin from "app/modules/datasource-editor/reducer/datasource.origin.reducer";
+import datasourceStatus from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import userPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 
 const rootReducer: ReducersMapObject = {
@@ -40,7 +40,7 @@ const rootReducer: ReducersMapObject = {
   datasourceContainer,
   datasourcePatient,
   userPatientDndGrid,
-  datasourceOrigin
+  datasourceStatus
 };
 
 export default rootReducer;

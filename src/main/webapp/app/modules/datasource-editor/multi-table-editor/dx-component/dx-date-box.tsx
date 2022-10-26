@@ -12,24 +12,24 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
 }
 
 const DxDateBox = (props: IDxEditCellRenderProps) => {
-  const {data, row} = props;
+  const {data, originRow} = props;
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
   }
 
   return <div>
-    <DateBox className={getDxCellClass(data, row)} defaultValue={props.data.value}
+    <DateBox className={getDxCellClass(data, originRow)} defaultValue={props.data.value}
              onValueChanged={onValueChanged}
              type={props.data.column.dataType}
              disabled={!props.data.column.allowEditing}
     />
-    <DxRowCommentBox data={data} row={row}/>
+    <DxRowCommentBox data={data} originRow={originRow}/>
   </div>
 }
 
-const mapStateToProps = ({datasourceOrigin}: IRootState) => ({
-  row: datasourceOrigin.row,
+const mapStateToProps = ({datasourceStatus}: IRootState) => ({
+  originRow: datasourceStatus.originRow,
 });
 
 const mapDispatchToProps = {}

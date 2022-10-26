@@ -4,9 +4,9 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getOriginRow, reset} from "app/modules/datasource-editor/reducer/datasource.origin.reducer";
+import reducer, {getOriginRow, reset} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
-describe("DatasourceOriginReducer", () => {
+describe("datasourceStatusReducer", () => {
 
   function isEmpty(element): boolean {
     if (element instanceof Array) {
@@ -17,7 +17,7 @@ describe("DatasourceOriginReducer", () => {
   }
 
   const initialState = {
-    row: {},
+    originRow: {},
     loading: false,
     errorMessage: null,
     updating: false,
@@ -31,7 +31,7 @@ describe("DatasourceOriginReducer", () => {
       updating: false,
       updateSuccess: false,
     });
-    expect(isEmpty(state.row));
+    expect(isEmpty(state.originRow));
   }
 
   describe('Common', () => {
@@ -77,7 +77,7 @@ describe("DatasourceOriginReducer", () => {
 
       expect(reducer(undefined, {type: getOriginRow.fulfilled.type, payload})).toMatchObject({
         loading: false,
-        row: payload.data,
+        originRow: payload.data,
       });
     });
   });

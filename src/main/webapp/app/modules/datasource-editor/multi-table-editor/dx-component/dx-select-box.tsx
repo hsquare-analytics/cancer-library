@@ -15,7 +15,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
-  const {data, row} = props;
+  const {data, originRow} = props;
 
 
   const onValueChanged = (e) => {
@@ -36,7 +36,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     <div>
       <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
       <SelectBox
-        className={getDxCellClass(data, row)}
+        className={getDxCellClass(data, originRow)}
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
         displayExpr={data.column.lookup.displayExpr}
@@ -58,12 +58,12 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           }] : null}
       >
       </SelectBox>
-      <DxRowCommentBox row={row} data={data}/>
+      <DxRowCommentBox originRow={originRow} data={data}/>
     </div>);
 }
 
-const mapStateToProps = ({datasourceOrigin}: IRootState) => ({
-  row: datasourceOrigin.row,
+const mapStateToProps = ({datasourceStatus}: IRootState) => ({
+  originRow: datasourceStatus.originRow,
 });
 
 

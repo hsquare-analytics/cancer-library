@@ -3,7 +3,7 @@ import axios from "axios";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 
 const initialState = {
-  row: {},
+  originRow: {},
   loading: false,
   errorMessage: null,
   updating: false,
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const name = 'datasource-origin';
-export const DatasourceOriginReducer = createSlice({
+export const DatasourceStatusReducer = createSlice({
   name,
   initialState,
   reducers: {
@@ -32,7 +32,7 @@ export const DatasourceOriginReducer = createSlice({
     })
     .addMatcher(isFulfilled(getOriginRow), (state, action) => {
       state.loading = false;
-      state.row = action.payload.data;
+      state.originRow = action.payload.data;
     });
   },
 });
@@ -45,6 +45,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset} = DatasourceOriginReducer.actions;
+export const {reset} = DatasourceStatusReducer.actions;
 
-export default DatasourceOriginReducer.reducer;
+export default DatasourceStatusReducer.reducer;
