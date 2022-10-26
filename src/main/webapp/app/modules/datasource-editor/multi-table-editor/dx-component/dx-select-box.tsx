@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
@@ -15,8 +15,16 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
-  const {data, originRow} = props;
+  const {data, originRow, category, itemContainer} = props;
 
+  const [item, setItem] = useState(null);
+
+  useEffect(() => {
+    if (category && itemContainer[category.id]) {
+      const foundedItem = itemContainer[category.id].find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
+      setItem(foundedItem);
+    }
+  }, [JSON.stringify(category), JSON.stringify(itemContainer)]);
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
@@ -62,8 +70,10 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     </div>);
 }
 
-const mapStateToProps = ({datasourceStatus}: IRootState) => ({
+const mapStateToProps = ({datasourceStatus, datasourceContainer}: IRootState) => ({
   originRow: datasourceStatus.originRow,
+  category: datasourceStatus.selected.category,
+  itemContainer: datasourceContainer.item.container
 });
 
 
