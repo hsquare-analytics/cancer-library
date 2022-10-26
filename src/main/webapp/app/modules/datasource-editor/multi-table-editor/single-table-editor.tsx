@@ -23,6 +23,7 @@ import {
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
+import _ from "lodash";
 
 
 enum ActionType {
@@ -137,6 +138,18 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
+  const onRowValidating = (e) => {
+    const items = itemContainer[category.id];
+    const targetData = {...e.oldData, ...e.newData};
+    items.forEach(item => {
+      if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
+        e.errorText = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption});
+        e.isValid = false;
+        return false;
+      }
+    });
+  }
+
   return canRender() ? (
     <Accordion defaultExpanded={true} className={"single-table-editor-wrapper"}>
       <AccordionSummary
@@ -180,6 +193,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
           onSaved={() => dispatch(resetDatasourceStatus())}
           columnAutoWidth={true}
+          onRowValidating={onRowValidating}
         >
           {
             itemContainer[category.id].map(item => getDxColumnConfig(item))
