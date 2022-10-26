@@ -80,19 +80,24 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     }
   }, [updateSuccess]);
 
+  const onInitNewRow = (e) => {
+    e.promise = new Promise<void>((resolve) => {
+      dispatch(setCategory(category));
+      setActionType(ActionType.CREATE);
+      resolve();
+    });
+  }
   const onEditingStart = e => {
+    dispatch(setCategory(category));
+    setActionType(ActionType.UPDATE);
+    setEditedRow(e.data);
+
     if (!e.data['idx'].includes('KCURE')) {
       dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
-    } else {
-      dispatch(resetDatasourceStatus());
     }
   }
 
   const onRowUpdating = e => {
-    setActionType(ActionType.UPDATE);
-    dispatch(setCategory(category));
-    setEditedRow(e.oldData);
-
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.oldData, e.newData);
 
@@ -102,9 +107,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
   const onRowInserting = e => {
-    setActionType(ActionType.CREATE);
-    dispatch(setCategory(category));
-
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
 
@@ -168,11 +170,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               confirmDeleteMessage: translate('entity.delete.warning'),
             },
           }}
+          onInitNewRow={onInitNewRow}
           onEditingStart={onEditingStart}
           onRowInserting={onRowInserting}
           onRowUpdating={onRowUpdating}
           onRowRemoving={onRowRemoving}
-          // onInitNewRow={onInitNewRow}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
