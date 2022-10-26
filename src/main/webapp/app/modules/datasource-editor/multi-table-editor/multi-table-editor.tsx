@@ -62,8 +62,7 @@ export const MultiTableEditor = () => {
       !loading ? (
           <div>
             {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
-              key={category.id} category={category} editedCategoryId={editedCategoryId}
-              setEditedCategoryId={setEditedCategoryId}/>)}
+              key={category.id} category={category}/>)}
           </div>
         ) :
         <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>

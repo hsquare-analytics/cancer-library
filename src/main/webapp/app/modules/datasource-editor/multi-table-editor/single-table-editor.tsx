@@ -12,7 +12,8 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config";
 import {
   getOriginRow,
-  reset as resetDatasourceStatus
+  reset as resetDatasourceStatus,
+  setCategory
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -33,8 +34,6 @@ enum ActionType {
 
 export interface ISingleTableEditor {
   category: ICategory;
-  editedCategoryId: number;
-  setEditedCategoryId: (categoryId: number) => void;
 }
 
 export const getCategoryTypography = (category: ICategory) => {
@@ -53,10 +52,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
 
+  const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
+
   const {category} = props;
 
   useEffect(() => {
-    if (updateSuccess && category.id === props.editedCategoryId) {
+    if (updateSuccess && category.id === selectedCategory.id) {
       switch (actionType) {
         case ActionType.CREATE:
           toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', {table: category.title.toUpperCase()}));
@@ -89,7 +90,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowUpdating = e => {
     setActionType(ActionType.UPDATE);
-    props.setEditedCategoryId(category.id);
+    dispatch(setCategory(category));
     setEditedRow(e.oldData);
 
     e.cancel = new Promise<void>((resolve) => {
@@ -102,7 +103,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowInserting = e => {
     setActionType(ActionType.CREATE);
-    props.setEditedCategoryId(category.id);
+    dispatch(setCategory(category));
 
     e.cancel = new Promise<void>((resolve) => {
       const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
@@ -114,7 +115,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const onRowRemoving = e => {
     setActionType(ActionType.DELETE);
-    props.setEditedCategoryId(category.id);
+    dispatch(setCategory(category));
     setEditedRow(e.data);
 
     e.cancel = new Promise<void>((resolve, reject) => {
