@@ -1,34 +1,21 @@
 package io.planit.cancerlibrary.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.DatasourceConstants;
-import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.Subject;
-import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserPatient;
-import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.SubjectRepository;
-import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserPatientRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
-import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
-import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
-import io.planit.cancerlibrary.web.rest.TopicResourceIT;
-import io.planit.cancerlibrary.web.rest.UserPatientResourceIT;
-import io.planit.cancerlibrary.web.rest.UserResourceIT;
+import io.planit.cancerlibrary.domain.*;
+import io.planit.cancerlibrary.repository.*;
+import io.planit.cancerlibrary.web.rest.*;
 import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyBaseException;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @IntegrationTest
 class UnionSqlBuilderServiceIT {
@@ -78,14 +65,14 @@ class UnionSqlBuilderServiceIT {
     }
 
     private void assertUpdateListSQL(String result, String updatedTableName) {
-        assertThat(result).contains(String.format("SELECT %s, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+        assertThat(result).contains(String.format("SELECT %s, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
                 DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", updatedTableName));
     }
 
     private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+                String.format("SELECT %s, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
                     DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", originTableName))
             .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,

@@ -1,10 +1,14 @@
 package io.planit.cancerlibrary.constant;
 
+import java.util.List;
+
 public final class DatasourceConstants {
     public static final String IDX_COLUMN = "IDX";
     public static final String STATUS_COLUMN = "STATUS";
     public static final String UPDATED_SUFFIX = "_UPDATED";
     public static final String SQL_EQUAL_SYNTAX = "%s = '%s'";
+    public static final String CREATED_BY = "CREATED_BY";
+    public static final String CREATED_DATE = "CREATED_DATE";
     public static final String LAST_MODIFIED_BY = "LAST_MODIFIED_BY";
     public static final String LAST_MODIFIED_DATE = "LAST_MODIFIED_DATE";
 
@@ -17,5 +21,9 @@ public final class DatasourceConstants {
 
     public static String parameterization(String key) {
         return key.toLowerCase();
+    }
+
+    public static List<String> getMarkingColumns() {
+        return List.of(CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE);
     }
 }
