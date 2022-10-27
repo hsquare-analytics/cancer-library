@@ -1,12 +1,5 @@
 package io.planit.cancerlibrary.service;
 
-import static io.planit.cancerlibrary.constant.DatasourceConstants.IDX_COLUMN;
-import static io.planit.cancerlibrary.constant.DatasourceConstants.SQL_EQUAL_SYNTAX;
-import static io.planit.cancerlibrary.constant.DatasourceConstants.STATUS_COLUMN;
-import static io.planit.cancerlibrary.constant.DatasourceConstants.UPDATED_SUFFIX;
-import static io.planit.cancerlibrary.constant.DatasourceConstants.parameterization;
-import static io.planit.cancerlibrary.constant.DatasourceConstants.sqlization;
-
 import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
@@ -16,13 +9,16 @@ import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.web.rest.errors.CategoryDeficiencyException;
-import java.util.List;
-import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+
+import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 
 @Service
 @Transactional
@@ -39,7 +35,7 @@ public class DMLSqlBuilderService {
     private final TimeService timeService;
 
     public DMLSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-        UserRepository userRepository, TimeService timeService) {
+                                UserRepository userRepository, TimeService timeService) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
@@ -65,13 +61,13 @@ public class DMLSqlBuilderService {
             }
         });
 
-        sql.VALUES("CREATED_BY", String.format("'%s'", user.getLogin()))
-            .VALUES("CREATED_DATE", String.format("'%s'", timeService.getCurrentTime()))
-            .VALUES("LAST_MODIFIED_BY", String.format("'%s'", user.getLogin()))
-            .VALUES("LAST_MODIFIED_DATE", String.format("'%s'", timeService.getCurrentTime()))
-            .VALUES("STATUS", String.format("'%s'", ReviewConstants.SUBMITTED));
+        sql.VALUES(CREATED_BY, String.format("'%s'", user.getLogin()))
+            .VALUES(CREATED_DATE, String.format("'%s'", timeService.getCurrentTime()))
+            .VALUES(LAST_MODIFIED_BY, String.format("'%s'", user.getLogin()))
+            .VALUES(LAST_MODIFIED_DATE, String.format("'%s'", timeService.getCurrentTime()))
+            .VALUES(STATUS_COLUMN, String.format("'%s'", ReviewConstants.SUBMITTED));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
     }
 
@@ -84,7 +80,7 @@ public class DMLSqlBuilderService {
             FROM(sqlization(category.getTitle() + UPDATED_SUFFIX)).
             WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
     }
 
@@ -97,7 +93,7 @@ public class DMLSqlBuilderService {
             FROM(sqlization(category.getTitle())).
             WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
     }
 
@@ -107,7 +103,7 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL().SELECT("*").FROM(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
     }
 
@@ -129,12 +125,12 @@ public class DMLSqlBuilderService {
             }
         });
 
-        sql.SET(String.format("LAST_MODIFIED_BY = '%s'", user.getLogin()))
-            .SET(String.format("LAST_MODIFIED_DATE = '%s'", timeService.getCurrentTime()))
+        sql.SET(String.format(SQL_EQUAL_SYNTAX, LAST_MODIFIED_BY, user.getLogin()))
+            .SET(String.format(SQL_EQUAL_SYNTAX, LAST_MODIFIED_DATE, timeService.getCurrentTime()))
             .SET(String.format(SQL_EQUAL_SYNTAX, STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
             .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
     }
 
@@ -146,8 +142,12 @@ public class DMLSqlBuilderService {
             .DELETE_FROM(sqlization(category.getTitle() + UPDATED_SUFFIX))
             .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get("idx")));
 
-        log.debug("Assembled final sql: {} ", sql);
+        loggingFinalSQL(sql);
         return sql;
+    }
+
+    private void loggingFinalSQL(SQL sql) {
+        log.debug("Assembled final sql: {} ", sql);
     }
 
 }
