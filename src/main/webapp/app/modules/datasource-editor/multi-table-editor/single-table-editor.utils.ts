@@ -33,11 +33,16 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
   const items = itemContainer[category.id];
   const targetData = {...e.oldData, ...e.newData};
   const validationFailedItemList = [];
+
+  const isDxCellNil = (value: any): boolean => {
+    return _.isNil(value) || value === 'null';
+  }
+
   items.forEach(item => {
     if (!item || !item.property) {
       return false;
     }
-    if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
+    if (item.property.required && isDxCellNil(targetData[item.title.toLowerCase()])) {
       const singleMessage = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title});
 
       validationFailedItemList.push({...item, message: singleMessage});
