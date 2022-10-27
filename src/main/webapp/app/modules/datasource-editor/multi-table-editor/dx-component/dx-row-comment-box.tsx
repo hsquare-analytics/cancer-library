@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import moment from 'moment/moment';
+import {IRootState} from "app/config/store";
+import {connect} from 'react-redux';
 
 export const isDxCellChanged = (data, row) => {
   const type = data.column.dataType;
@@ -42,15 +44,25 @@ const isNotEmpty = (element): boolean => {
   return !isEmpty(element);
 }
 
-interface IDxRowCommentBoxProps {
+interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
   data: any;
-  originRow: any;
-  isValid?: boolean;
-  validationMessage?: string;
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
-  const {data, originRow, isValid, validationMessage} = props;
+  const {data, originRow, validationFailedItems} = props;
+
+  const [isValid, setIsValid] = useState(true);
+  const [validationMessage, setValidationMessage] = useState('');
+
+  useEffect(() => {
+    if (validationFailedItems.length > 0) {
+      const item = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
+      if (item) {
+        setIsValid(false);
+        setValidationMessage(item.message);
+      }
+    }
+  }, [validationFailedItems]);
 
   if (!isValid && validationMessage && validationMessage.length > 0) {
     return <div>
@@ -67,4 +79,17 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   </div>;
 }
 
-export default DxRowCommentBox;
+
+const mapStateToProps = ({datasourceStatus}: IRootState) => ({
+  originRow: datasourceStatus.originRow,
+  validationFailedItems: datasourceStatus.validationFailedItems,
+});
+
+
+const mapDispatchToProps = {}
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(mapStateToProps, mapDispatchToProps)(DxRowCommentBox);
+

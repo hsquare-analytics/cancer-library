@@ -20,10 +20,10 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
 
   return <div>
     <NumberBox className={getDxCellClass(data, originRow)} defaultValue={props.data.value}
-             onValueChanged={onValueChanged}
-             disabled={!props.data.column.allowEditing}
+               onValueChanged={onValueChanged}
+               disabled={!props.data.column.allowEditing}
     />
-    <DxRowCommentBox data={data} originRow={originRow}/>
+    <DxRowCommentBox data={data}/>
   </div>
 }
 
