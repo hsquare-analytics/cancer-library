@@ -26,6 +26,7 @@ import {
 import {IPatient} from "app/shared/model/patient.model";
 import {
   ActionType,
+  makeCallBackOnPromise,
   onRowValidating,
   toastApiResult
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
@@ -60,41 +61,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
     }
   }, [updateSuccess]);
-
-  const onInitNewRow = (e) => {
-    e.promise = new Promise<void>((resolve) => {
-      dispatch(setCategory(category));
-      setActionType(ActionType.CREATE);
-      resolve();
-    });
-  }
-  const onEditingStart = e => {
-    dispatch(setCategory(category));
-    setActionType(ActionType.UPDATE);
-    setEditedRow(e.data);
-
-    if (!e.data['idx'].includes('KCURE')) {
-      dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
-    }
-  }
-
-  const onRowUpdating = e => {
-    e.cancel = new Promise<void>((resolve) => {
-      const row = Object.assign({}, e.oldData, e.newData);
-
-      dispatch(updateDatasourceRow({categoryId: category.id, row}));
-      resolve();
-    });
-  };
-
-  const onRowInserting = e => {
-    e.cancel = new Promise<void>((resolve) => {
-      const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
-
-      dispatch(createDatasourceRow({categoryId: category.id, row}));
-      resolve();
-    });
-  }
 
   const onRowRemoving = e => {
     setActionType(ActionType.DELETE);
@@ -151,10 +117,27 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               confirmDeleteMessage: translate('entity.delete.warning'),
             },
           }}
-          onInitNewRow={onInitNewRow}
-          onEditingStart={onEditingStart}
-          onRowInserting={onRowInserting}
-          onRowUpdating={onRowUpdating}
+          onInitNewRow={(e) => makeCallBackOnPromise(e, () => {
+            dispatch(setCategory(category));
+            setActionType(ActionType.CREATE);
+          })}
+          onEditingStart={(e) => {
+            dispatch(setCategory(category));
+            setActionType(ActionType.UPDATE);
+            setEditedRow(e.data);
+
+            if (!e.data['idx'].includes('KCURE')) {
+              dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
+            }
+          }}
+          onRowInserting={(e) => makeCallBackOnPromise(e, () => {
+            const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
+            dispatch(createDatasourceRow({categoryId: category.id, row}));
+          })}
+          onRowUpdating={(e) => makeCallBackOnPromise(e, () => {
+            const row = Object.assign({}, e.oldData, e.newData);
+            dispatch(updateDatasourceRow({categoryId: category.id, row}));
+          })}
           onRowRemoving={onRowRemoving}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}

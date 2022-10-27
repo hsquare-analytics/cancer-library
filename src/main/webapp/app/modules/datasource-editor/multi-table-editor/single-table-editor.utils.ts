@@ -51,3 +51,10 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
     text: message,
   });
 }
+
+export const makeCallBackOnPromise = (e, callback: () => void) => {
+  e.promise = new Promise<void>((resolve) => {
+    callback();
+    resolve();
+  });
+}
