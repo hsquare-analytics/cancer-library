@@ -26,7 +26,11 @@ export const isNotDxCellChanged = (data, row) => {
 };
 
 
-export const getDxCellClass = (data, originRow) => {
+export const getDxCellClass = (data, originRow, isValid: boolean) => {
+  if (!isValid) {
+    return "border border-danger"
+  }
+
   if (isNotEmpty(originRow) && isDxCellChanged(data, originRow)) {
     return "border border-info"
   }

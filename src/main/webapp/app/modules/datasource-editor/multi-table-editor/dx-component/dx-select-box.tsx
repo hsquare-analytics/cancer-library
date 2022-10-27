@@ -36,7 +36,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     <div>
       <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
       <SelectBox
-        className={getDxCellClass(data, originRow)}
+        className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
         displayExpr={data.column.lookup.displayExpr}

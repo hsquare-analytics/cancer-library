@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import DxRowCommentBox, {
   getDxCellClass
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
+import {isValid} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 
 
 interface IDxEditCellRenderProps extends StateProps, DispatchProps {
@@ -12,14 +13,16 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
 }
 
 const DxTextBox = (props: IDxEditCellRenderProps) => {
-  const {data, originRow} = props;
+  const {data, originRow, validationFailedItems} = props;
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
   }
 
   return <div>
-    <TextBox className={getDxCellClass(data, originRow)} defaultValue={props.data.value}
+    <TextBox className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
+             isValid={isValid(validationFailedItems, data.column.name)}
+             defaultValue={props.data.value}
              onValueChanged={onValueChanged}
              disabled={!props.data.column.allowEditing}
     />
@@ -29,6 +32,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
 
 const mapStateToProps = ({datasourceStatus}: IRootState) => ({
   originRow: datasourceStatus.originRow,
+  validationFailedItems: datasourceStatus.validationFailedItems
 });
 
 const mapDispatchToProps = {}
