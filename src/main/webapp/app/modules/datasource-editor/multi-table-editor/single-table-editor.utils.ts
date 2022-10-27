@@ -63,3 +63,23 @@ export const makeCallBackOnPromise = (e, callback: () => void) => {
     resolve();
   });
 }
+
+export const onRowRemoving = (e, data: { login: string, category: ICategory },
+                              initialize: () => void,
+                              resolveCallback: ({categoryId, row}) => void) => {
+  initialize();
+  e.cancel = new Promise<void>((resolve, reject) => {
+    const row = Object.assign({}, e.data);
+    if (!row.idx.includes('KCURE') || row['created_by'] !== data.login) {
+      const result = translate('cancerLibraryApp.datasource.singleTableEditor.deleteFail', {
+        table: data.category.title.toUpperCase(), row: row.idx
+      });
+      toast.error(result);
+      reject(result);
+    } else {
+      resolveCallback({categoryId: data.category.id, row});
+      resolve();
+    }
+  });
+};
+

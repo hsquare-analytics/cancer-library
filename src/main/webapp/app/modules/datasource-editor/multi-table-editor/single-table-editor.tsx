@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import {ICategory} from "app/shared/model/category.model";
-import {toast} from 'react-toastify';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -27,6 +26,7 @@ import {IPatient} from "app/shared/model/patient.model";
 import {
   ActionType,
   makeCallBackOnPromise,
+  onRowRemoving,
   onRowValidating,
   toastApiResult
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
@@ -52,6 +52,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
+  const login = useAppSelector(state => state.authentication.account.login);
 
   const {category} = props;
 
@@ -60,26 +61,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
     }
   }, [updateSuccess]);
-
-  const onRowRemoving = e => {
-    setActionType(ActionType.DELETE);
-    setSelectedCategory(category);
-    setEditedRow(e.data);
-
-    e.cancel = new Promise<void>((resolve, reject) => {
-      const row = Object.assign({}, e.data);
-      if (!row.idx.includes('KCURE')) {
-        const result = translate('cancerLibraryApp.datasource.singleTableEditor.deleteFail', {
-          table: category.title.toUpperCase(), row: row.idx
-        });
-        toast.error(result);
-        reject(result);
-      } else {
-        dispatch(deleteDatasourceRow({categoryId: category.id, row}));
-        resolve();
-      }
-    });
-  };
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
@@ -137,7 +118,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             const row = Object.assign({}, e.oldData, e.newData);
             dispatch(updateDatasourceRow({categoryId: category.id, row}));
           })}
-          onRowRemoving={onRowRemoving}
+          onRowRemoving={(e) => onRowRemoving(e, {login, category},
+            () => {
+              setActionType(ActionType.DELETE);
+              setSelectedCategory(category);
+              setEditedRow(e.data);
+            }, (value) => {
+              dispatch(deleteDatasourceRow(value))
+            })}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
