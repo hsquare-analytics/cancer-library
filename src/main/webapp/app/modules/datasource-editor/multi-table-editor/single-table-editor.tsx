@@ -66,10 +66,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     }
   }, [updateSuccess]);
 
-  // useEffect(() => {
-  //   dispatch(resetDatasourceStatus());
-  // }, [actionType]);
-
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
   return canRender() ? (
