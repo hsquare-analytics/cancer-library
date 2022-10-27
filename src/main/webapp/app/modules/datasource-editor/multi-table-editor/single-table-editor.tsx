@@ -21,6 +21,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   createDatasourceRow,
   deleteDatasourceRow,
+  resetFlag,
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
@@ -142,7 +143,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
-          onSaved={() => dispatch(resetDatasourceStatus())}
+          onSaved={() => dispatch(resetFlag())}
           columnAutoWidth={true}
           onRowValidating={(e) => onRowValidating(e, {
               category,
