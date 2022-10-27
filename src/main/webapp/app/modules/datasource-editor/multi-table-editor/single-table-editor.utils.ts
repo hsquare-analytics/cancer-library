@@ -38,7 +38,9 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
       return false;
     }
     if (item.property.required && (_.isEmpty(targetData[item.title.toLowerCase()]) || targetData[item.title.toLowerCase()] === 'null')) {
-      validationFailedItemList.push(item);
+      const singleMessage = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.property.caption || item.title});
+
+      validationFailedItemList.push({...item, message: singleMessage});
       e.isValid = false;
       return false;
     }
@@ -46,11 +48,11 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
 
   if (validationFailedItemList.length > 0) {
     callback(validationFailedItemList);
-    const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property.caption || item.title).join(', ')});
-    e.errorText = message;
+    const concatenatedMessage = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property?.caption || item.title).join(', ')});
+    // e.errorText = concatenatedMessage;
     Swal.fire({
       icon: 'error',
-      text: message,
+      text: concatenatedMessage,
     });
   }
 }
