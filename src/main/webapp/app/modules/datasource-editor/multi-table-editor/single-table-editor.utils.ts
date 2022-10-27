@@ -43,13 +43,16 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
       return false;
     }
   });
-  callback(validationFailedItemList);
-  const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property.caption || item.title).join(', ')});
-  e.errorText = message;
-  Swal.fire({
-    icon: 'error',
-    text: message,
-  });
+
+  if (validationFailedItemList.length > 0) {
+    callback(validationFailedItemList);
+    const message = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property.caption || item.title).join(', ')});
+    e.errorText = message;
+    Swal.fire({
+      icon: 'error',
+      text: message,
+    });
+  }
 }
 
 export const makeCallBackOnPromise = (e, callback: () => void) => {
