@@ -30,6 +30,8 @@ import {
   onRowValidating,
   toastApiResult
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 
 export interface ISingleTableEditor {
@@ -53,6 +55,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
+  const isManager = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
 
   const {category} = props;
 
@@ -118,14 +121,17 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             const row = Object.assign({}, e.oldData, e.newData);
             dispatch(updateDatasourceRow({categoryId: category.id, row}));
           })}
-          onRowRemoving={(e) => onRowRemoving(e, {login, category},
-            () => {
-              setActionType(ActionType.DELETE);
-              setSelectedCategory(category);
-              setEditedRow(e.data);
-            }, (value) => {
-              dispatch(deleteDatasourceRow(value))
-            })}
+          onRowRemoving={(e) => {
+            const canManaging = e.data.idx.includes('KCURE') && (isManager || e.data['created_by'] === login);
+            onRowRemoving(e, {canManaging, category},
+              () => {
+                setActionType(ActionType.DELETE);
+                setSelectedCategory(category);
+                setEditedRow(e.data);
+              }, (value) => {
+                dispatch(deleteDatasourceRow(value))
+              })
+          }}
           scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
