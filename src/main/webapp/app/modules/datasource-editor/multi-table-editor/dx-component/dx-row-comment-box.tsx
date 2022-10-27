@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import moment from 'moment/moment';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
@@ -51,22 +51,11 @@ interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   const {data, originRow, validationFailedItems} = props;
 
-  const [isValid, setIsValid] = useState(true);
-  const [validationMessage, setValidationMessage] = useState('');
+  const errorItem = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
 
-  useEffect(() => {
-    if (validationFailedItems.length > 0) {
-      const item = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
-      if (item) {
-        setIsValid(false);
-        setValidationMessage(item.message);
-      }
-    }
-  }, [validationFailedItems]);
-
-  if (!isValid && validationMessage && validationMessage.length > 0) {
+  if (errorItem) {
     return <div>
-      <div className="text-underline text-danger p-1">* {validationMessage}</div>
+      <div className="text-underline text-danger p-1">* {errorItem.message}</div>
     </div>;
   }
 
