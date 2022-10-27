@@ -12,6 +12,7 @@ import reducer, {
   getUsableItems,
   reset,
   resetDataSource,
+  resetFlag,
   resetItem,
   updateDatasourceRow,
 } from './datasource.container.reducer';
@@ -83,6 +84,15 @@ describe('User Patient selector module reducer tests', () => {
       });
     });
 
+    it('should reset flag', () => {
+      expect(reducer(undefined, resetFlag())).toMatchObject({
+        updating: false,
+        updateSuccess: false,
+        loading: false,
+        errorMessage: null
+      });
+    });
+
     it('should reset item container', () => {
       expect(reducer({
         ...initialState,
@@ -106,7 +116,7 @@ describe('User Patient selector module reducer tests', () => {
     });
 
     it('should set state to loading', () => {
-      testMultipleTypes([updateDatasourceRow.pending.type, createDatasourceRow.pending.type, deleteDatasourceRow.pending.type], {}, state=>{
+      testMultipleTypes([updateDatasourceRow.pending.type, createDatasourceRow.pending.type, deleteDatasourceRow.pending.type], {}, state => {
         expect(state).toMatchObject({
           errorMessage: null,
           updateSuccess: false,

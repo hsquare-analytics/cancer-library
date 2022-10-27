@@ -89,6 +89,15 @@ export const DatasourceContainer = createSlice({
     reset() {
       return initialState
     },
+    resetFlag(state) {
+      return {
+        ...state,
+        updateSuccess: false,
+        updating: false,
+        errorMessage: null,
+        loading: false,
+      }
+    },
     resetDataSource(state) {
       return {
         ...state,
@@ -169,7 +178,7 @@ export const DatasourceContainer = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem} = DatasourceContainer.actions;
+export const {reset, resetDataSource, resetItem, resetFlag} = DatasourceContainer.actions;
 
 
 export default DatasourceContainer.reducer;
