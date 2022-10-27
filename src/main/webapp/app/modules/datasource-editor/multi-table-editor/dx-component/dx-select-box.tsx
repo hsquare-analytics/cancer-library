@@ -6,6 +6,7 @@ import LookupEditor from "app/modules/datasource-editor/multi-table-editor/looku
 import DxRowCommentBox, {
   getDxCellClass
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
+import {isValid} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -31,10 +32,6 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     }
   }
 
-  const isValid = () => {
-    return !validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
-  }
-
   return (
     <div>
       <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
@@ -50,7 +47,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         onValueChanged={onValueChanged}
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
-        isValid={isValid()}
+        isValid={isValid(validationFailedItems, data.column.name)}
         buttons={isSelectBoxOpened ? [
           {
             name: 'add',
