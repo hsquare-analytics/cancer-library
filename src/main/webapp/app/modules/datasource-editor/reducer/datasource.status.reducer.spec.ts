@@ -7,6 +7,7 @@ import sinon from 'sinon';
 import reducer, {
   getOriginRow,
   reset,
+  setCategory,
   setValidateFailedItems,
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
@@ -21,6 +22,9 @@ describe("datasourceStatusReducer", () => {
   }
 
   const initialState = {
+    selected: {
+      category: {},
+    },
     validationFailedItems: [],
     originRow: {},
     loading: false,
@@ -48,6 +52,15 @@ describe("datasourceStatusReducer", () => {
     it('should reset the state', () => {
       expect(reducer({...initialState, loading: true}, reset())).toEqual({
         ...initialState,
+      });
+    });
+
+    it('should set category', () => {
+      expect(reducer(initialState, {type: setCategory, payload: {id: 1}})).toEqual({
+        ...initialState,
+        selected: {
+          category: {id: 1},
+        }
       });
     });
 

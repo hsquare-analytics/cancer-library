@@ -12,6 +12,7 @@ import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-edito
 import {
   getOriginRow,
   reset as resetDatasourceStatus,
+  setCategory as setSelectedCategory,
   setValidateFailedItems
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import Button from '@mui/material/Button';
@@ -48,7 +49,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   const [editedRow, setEditedRow] = useState(null);
   const [actionType, setActionType] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
@@ -56,6 +56,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
   const isManager = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
+  const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
 
   const {category} = props;
 
@@ -64,6 +65,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
     }
   }, [updateSuccess]);
+
+  // useEffect(() => {
+  //   dispatch(resetDatasourceStatus());
+  // }, [actionType]);
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
 
@@ -101,11 +106,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             },
           }}
           onInitNewRow={(e) => makeCallBackOnPromise(e, () => {
-            setSelectedCategory(category);
+            dispatch(setSelectedCategory(category));
             setActionType(ActionType.CREATE);
           })}
           onEditingStart={(e) => {
-            setSelectedCategory(category);
+            dispatch(setSelectedCategory(category));
             setActionType(ActionType.UPDATE);
             setEditedRow(e.data);
 
@@ -126,7 +131,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             onRowRemoving(e, {canManaging, category},
               () => {
                 setActionType(ActionType.DELETE);
-                setSelectedCategory(category);
+                dispatch(setSelectedCategory(category));
                 setEditedRow(e.data);
               }, (value) => {
                 dispatch(deleteDatasourceRow(value))
