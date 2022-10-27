@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
@@ -14,8 +14,20 @@ interface ISelectBoxComponentProps extends StateProps, DispatchProps {
 const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+  const [validationMessage, setValidationMessage] = useState('');
 
   const {data, originRow, validationFailedItems} = props;
+
+  useEffect(() => {
+    if (validationFailedItems.length > 0) {
+      const item = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
+      if (item) {
+        setIsValid(false);
+        setValidationMessage(item.message);
+      }
+    }
+  }, [validationFailedItems]);
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
@@ -29,10 +41,6 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     if (e.name === 'opened') {
       setIsSelectBoxOpened(e.value);
     }
-  }
-
-  const isValid: () => boolean = () => {
-    return !validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
   }
 
   return (
@@ -50,7 +58,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         onValueChanged={onValueChanged}
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
-        isValid={isValid()}
+        isValid={isValid}
         buttons={isSelectBoxOpened ? [
           {
             name: 'add',
@@ -62,7 +70,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           }] : null}
       >
       </SelectBox>
-      <DxRowCommentBox originRow={originRow} data={data}/>
+      <DxRowCommentBox originRow={originRow} data={data} isValid={isValid} validationMessage={validationMessage}/>
     </div>);
 }
 

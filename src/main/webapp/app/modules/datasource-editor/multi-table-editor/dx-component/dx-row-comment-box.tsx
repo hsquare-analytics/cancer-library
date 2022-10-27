@@ -45,10 +45,18 @@ const isNotEmpty = (element): boolean => {
 interface IDxRowCommentBoxProps {
   data: any;
   originRow: any;
+  isValid?: boolean;
+  validationMessage?: string;
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
-  const {data, originRow} = props;
+  const {data, originRow, isValid, validationMessage} = props;
+
+  if (!isValid && validationMessage && validationMessage.length > 0) {
+    return <div>
+      <div className="text-underline text-danger p-1">* {validationMessage}</div>
+    </div>;
+  }
 
   if (isEmpty(originRow) || isNotDxCellChanged(data, originRow)) {
     return null;
