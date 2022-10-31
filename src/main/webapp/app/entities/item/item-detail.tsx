@@ -79,6 +79,12 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.property?.allowEditing}</dd>
           <dt>
+            <span id="format">
+              <Translate contentKey="cancerLibraryApp.item.property.format">format</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.format}</dd>
+          <dt>
             <span id="required">
               <Translate contentKey="cancerLibraryApp.item.property.required">Required</Translate>
             </span>

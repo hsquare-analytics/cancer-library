@@ -30,7 +30,8 @@
         "visibleIndex": "Visible Index",
         "caption": "caption",
         "allowEditing": "Allow Editing",
-        "required": "Required"
+        "required": "Required",
+        "format": "Format"
       },
       "lookup": "lookup"
     }

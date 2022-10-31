@@ -162,6 +162,13 @@ export const ItemUpdate = () => {
                 type="checkbox"
               />
               <ValidatedField
+                label={translate('cancerLibraryApp.item.property.format')}
+                id="item-format"
+                name="property.format"
+                data-cy="property.format"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('cancerLibraryApp.item.lookup')}
                 id="item-lookup"
                 name="lookup"
