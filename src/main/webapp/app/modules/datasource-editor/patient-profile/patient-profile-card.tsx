@@ -17,6 +17,9 @@ import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/
 import TextBox from 'devextreme-react/text-box';
 import {IDxColumn} from "app/shared/model/dx-column.model";
 import AccessiblePatientColumn from "app/modules/datasource-editor/accessible-patient.column";
+import TextArea from 'devextreme-react/text-area';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Button from '@mui/material/Button';
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -42,16 +45,32 @@ const getFormattedValue: (value: any, column: IDxColumn) => string = (value, col
 
 const PatientProfileDetail = (patient: IPatient) => {
   return (<Box>
-    <Card variant="outlined" sx={{display: "flex"}}>
-      {AccessiblePatientColumn.map((column) => <CardContent key={column.dataField}>
-          <Typography color="text.secondary">
-            {translate("cancerLibraryApp.patient." + column.dataField)}
-          </Typography>
-          <Typography component="span" color="text.default">
-            <TextBox value={getFormattedValue(patient[column.dataField], column)} readOnly={true} stylingMode={"underlined"}/>
-          </Typography>
-        </CardContent>
-      )}
+    <Card variant="outlined">
+      <div className="d-flex align-items-center">
+        {AccessiblePatientColumn.map((column) => <CardContent key={column.dataField}>
+            <Typography color="text.secondary">
+              {translate("cancerLibraryApp.patient." + column.dataField)}
+            </Typography>
+            <Typography component="span" color="text.default">
+              <TextBox value={getFormattedValue(patient[column.dataField], column)} readOnly={true}
+                       stylingMode={"underlined"}/>
+            </Typography>
+          </CardContent>
+        )}
+      </div>
+      <CardContent>
+        <Typography color="text.secondary">
+          환자 상세
+          <Button variant={"text"}>
+            <FontAwesomeIcon icon={"pencil-alt"}/>
+          </Button>
+        </Typography>
+        <TextArea height={90}
+                  readOnly={true}
+                  value={"Prepare 2013 Marketing Plan: We need to double revenues in 2013 and our marketing strategy is going to be key here." +
+                    " R&D is improving existing products and creating new products so we can deliver great AV equipment to our customers.Robert," +
+                    " please make certain to create a PowerPoint presentation for the members of the executive team."}/>
+      </CardContent>
     </Card>
   </Box>);
 };
@@ -61,7 +80,7 @@ export const PatientProfileCard = () => {
   const loading = useAppSelector<IPatient>(state => state.datasourcePatient.loading);
 
   return (
-    <Accordion defaultExpanded={true} expanded={true}>
+    <Accordion defaultExpanded={true}>
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
           {translate("cancerLibraryApp.datasource.profileCard.title", patient ? {
