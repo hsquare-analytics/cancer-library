@@ -3,6 +3,10 @@
     background-color: white !important;
   }
 
+  .dx-texteditor.dx-editor-filled::after{
+    border: none !important;
+  }
+
   .detail-comment-card-content {
     .dx-texteditor-container {
       border: 1px dotted gray;
