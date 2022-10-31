@@ -10,6 +10,7 @@ import Chip from '@mui/material/Chip';
 import {REVIEW_LIST} from "app/config/constants";
 import {useAppSelector} from "app/config/store";
 import CircularProgress from '@mui/material/CircularProgress';
+
 import Box from '@mui/material/Box';
 import PatientProfileCardDetail from "app/modules/datasource-editor/patient-profile/patient-profile-card-detail";
 
@@ -43,7 +44,7 @@ export const PatientProfileCard = () => {
         {!loading ?
           <PatientProfileCardDetail patient={patient}/> :
           <Box sx={{
-            width: '100%', height: '100px', display: 'flex', justifyContent: 'center',
+            width: '100%', height: '200px', display: 'flex', justifyContent: 'center',
             alignItems: 'center', border: '1px solid lightgrey'
           }}> <CircularProgress/> </Box>
         }
