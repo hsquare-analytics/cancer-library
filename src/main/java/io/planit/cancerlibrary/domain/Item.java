@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
+import io.planit.cancerlibrary.domain.embedded.Lookup;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -59,7 +60,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @CollectionTable(name = "ph_item_lookup", joinColumns = @JoinColumn(name = "item_id"))
     @Column(name = "title", nullable = false)
     @OrderColumn(name = "order_no")
-    private List<String> lookup = new ArrayList<>();
+    private List<Lookup> lookupList = new ArrayList<>();
 
     public Long getId() {
         return this.id;
@@ -165,16 +166,16 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public List<String> getLookup() {
-        return lookup;
+    public List<Lookup> getLookupList() {
+        return lookupList;
     }
 
-    public void setLookup(List<String> lookup) {
-        this.lookup = lookup;
+    public void setLookupList(List<Lookup> lookupList) {
+        this.lookupList = lookupList;
     }
 
-    public Item lookup(List<String> lookup) {
-        this.setLookup(lookup);
+    public Item lookupList(List<Lookup> lookupList) {
+        this.lookupList = lookupList;
         return this;
     }
 
@@ -206,7 +207,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
             ", category=" + category +
             ", attribute=" + attribute +
             ", property=" + property +
-            ", lookup=" + lookup +
+            ", lookupList=" + lookupList +
             '}';
     }
 }

@@ -44,8 +44,8 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 values (2704, 'SEX_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2704, 4, '성별', true);
 insert into ph_item_attribute (item_id, data_type) values (2704, 'selectbox');
-insert into ph_item_lookup (item_id, order_no, title) values (2704, 1, 'M');
-insert into ph_item_lookup (item_id, order_no, title) values (2704, 2, 'F');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 1, 'M', '1');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 2, 'F', '2');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
@@ -58,9 +58,9 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 values (2706, 'HSP_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2706, 6, '병원코드', true);
 insert into ph_item_attribute (item_id, data_type) values (2706, 'selectbox');
-insert into ph_item_lookup (item_id, order_no, title) values (2706, 1, '01');
-insert into ph_item_lookup (item_id, order_no, title) values (2706, 2, '02');
-insert into ph_item_lookup (item_id, order_no, title) values (2706, 3, '03');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 1, '01', '1');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 2, '02', '2');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 3, '03', '3');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
@@ -79,10 +79,10 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 values (2709, 'HSP_DTL_TP_NM', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2709, 9, '환자 세부 구분', true);
 insert into ph_item_attribute (item_id, data_type) values (2709, 'selectbox');
-insert into ph_item_lookup (item_id, order_no, title) values (2709, 1, '어린이');
-insert into ph_item_lookup (item_id, order_no, title) values (2709, 2, '청소년');
-insert into ph_item_lookup (item_id, order_no, title) values (2709, 3, '어른');
-insert into ph_item_lookup (item_id, order_no, title) values (2709, 4, '노인');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2709, 1, '어린이', '1');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2709, 2, '청소년', '2');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2709, 3, '어른', '3');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2709, 4, '노인', '4');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)

@@ -12,6 +12,9 @@
             <column name="title" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
+            <column name="description" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
             <column name="order_no" type="int"/>
         </createTable>
         <addPrimaryKey columnNames="item_id, title" tableName="ph_item_lookup"/>
@@ -31,6 +34,7 @@
                   usePreparedStatements="true">
             <column name="item_id" type="numeric"/>
             <column name="title" type="string"/>
+            <column name="descripton" type="string"/>
             <column name="order_no" type="numeric"/>
         </loadData>
     </changeSet>
