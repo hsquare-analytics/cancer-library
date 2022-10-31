@@ -22,6 +22,7 @@ const AccessiblePatientColumn: IDxColumn[] = [
   {
     dataField: "createdDate",
     dataType: "datetime",
+    format: "yyyy-MM-dd HH:mm:ss",
   },
   {
     dataField: "lastModifiedBy",
@@ -29,6 +30,7 @@ const AccessiblePatientColumn: IDxColumn[] = [
   {
     dataField: "lastModifiedDate",
     dataType: "datetime",
+    format: "yyyy-MM-dd HH:mm:ss",
   }
 ];
 

@@ -110,6 +110,7 @@ export const AccessiblePatient = () => {
             caption={translate("cancerLibraryApp.patient." + item.dataField)}
             dataType={item.dataType}
             visibleIndex={item.visibleIndex}
+            format={item.format}
             allowEditing={false}
             alignment={'center'}
             minWidth={150}
