@@ -62,11 +62,8 @@ export const AccessiblePatient = () => {
 
   const commentCellRender = (data) => {
     const comment = data.value;
-    if (comment && comment.length > 0) {
-      return <CheckBox value={true} readOnly/>
-    } else {
-      return <CheckBox value={false} readOnly/>
-    }
+    const result = comment && comment.length > 0 ? true : false
+    return <CheckBox value={result}/>
   };
 
   return <div>
@@ -143,9 +140,9 @@ export const AccessiblePatient = () => {
       <Column dataField="comment"
               caption={translate("cancerLibraryApp.datasource.column.comment")}
               width={150}
-              allowSorting={false}
               alignment={'center'}
               cellRender={commentCellRender}
+              allowEditing={false}
       />
     </DataGrid>
   </div>
