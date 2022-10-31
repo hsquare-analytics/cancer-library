@@ -133,7 +133,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 dispatch(deleteDatasourceRow(value))
               })
           }}
-          scrolling={{mode: 'standard', showScrollbar: 'onHover'}}
+          scrolling={{mode: 'standard', showScrollbar: 'always'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
           onSaved={() => {
