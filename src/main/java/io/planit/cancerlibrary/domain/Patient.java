@@ -16,6 +16,7 @@ public class Patient {
     private Instant createdDate;
     private String lastModifiedBy;
     private Instant lastModifiedDate;
+    private String declineReason;
     private String comment;
 
     public String getPtNo() {
@@ -158,6 +159,19 @@ public class Patient {
 
     public Patient lastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+        return this;
+    }
+
+    public String getDeclineReason() {
+        return declineReason;
+    }
+
+    public void setDeclineReason(String declineReason) {
+        this.declineReason = declineReason;
+    }
+
+    public Patient declineReason(String declineReason) {
+        this.declineReason = declineReason;
         return this;
     }
 

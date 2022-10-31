@@ -20,9 +20,9 @@
 
     <insert id="insert" parameterType="io.planit.cancerlibrary.domain.Patient">
         INSERT INTO TEST_PATIENT (PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY,
-                                  CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COMMENT)
+                                  CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COMMENT, DECLINE_REASON)
         VALUES (#{ptNo}, #{ptNm}, #{sexTpCd}, #{ptBrdyDt}, #{hspTpCd}, #{idxDt}, #{status}, #{createdBy},
-                #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate}, #{comment});
+                #{createdDate}, #{lastModifiedBy}, #{lastModifiedDate}, #{comment}, #{declineReason});
     </insert>
 
     <select id="existsByPatientNo" resultType="boolean">
@@ -46,6 +46,9 @@
             </if>
             <if test="comment != null">
                 COMMENT = #{comment},
+            </if>
+            <if test="declineReason != null">
+                DECLINE_REASON = #{declineReason},
             </if>
             <if test="createdBy != null">
                 CREATED_BY = #{createdBy},

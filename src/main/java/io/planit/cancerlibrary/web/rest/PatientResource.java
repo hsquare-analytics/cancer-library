@@ -5,27 +5,22 @@ import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.Instant;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.Instant;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -100,6 +95,10 @@ public class PatientResource {
 
                 if (!ObjectUtils.isEmpty(patientDTO.getComment())) {
                     existPatient.setComment(patientDTO.getComment());
+                }
+
+                if (!ObjectUtils.isEmpty(patientDTO.getDeclineReason())) {
+                    existPatient.setComment(patientDTO.getDeclineReason());
                 }
 
                 if (ReviewConstants.SUBMITTED.equals(patientDTO.getStatus())) {

@@ -1,22 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.mapper.PatientMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +12,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IntegrationTest
 @AutoConfigureMockMvc
@@ -43,6 +40,7 @@ public class PatientResourceIT {
     private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
     private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.now();
     private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
+    private static final String DEFAULT_DECLINE_REASON = "AAAAAAAAAA";
 
     private static final String UPDATED_PT_NO = "BBBBBBBBBB";
     private static final String UPDATED_PT_NM = "BBBBBBBBBB";
@@ -56,6 +54,7 @@ public class PatientResourceIT {
     private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
     private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().plus(1, ChronoUnit.DAYS);
     private static final String UPDATED_COMMENT = "BBBBBBBBBB";
+    private static final String UPDATED_DECLINE_REASON = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/patients";
 
@@ -80,7 +79,8 @@ public class PatientResourceIT {
             .createdDate(DEFAULT_CREATED_DATE)
             .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
             .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE)
-            .comment(DEFAULT_COMMENT);
+            .comment(DEFAULT_COMMENT)
+            .declineReason(DEFAULT_DECLINE_REASON);
     }
 
     public static Patient createUpdatedPatientDTO() {
@@ -96,7 +96,8 @@ public class PatientResourceIT {
             .createdDate(UPDATED_CREATED_DATE)
             .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
             .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
-            .comment(UPDATED_COMMENT);
+            .comment(UPDATED_COMMENT)
+            .declineReason(UPDATED_DECLINE_REASON);
     }
 
     @BeforeEach
@@ -126,6 +127,7 @@ public class PatientResourceIT {
         assertThat(testPatient.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
         assertThat(testPatient.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
         assertThat(testPatient.getComment()).isEqualTo(DEFAULT_COMMENT);
+        assertThat(testPatient.getDeclineReason()).isEqualTo(DEFAULT_DECLINE_REASON);
     }
 
     @Test
@@ -148,6 +150,7 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
             .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)))
+            .andExpect(jsonPath("$.[*].declineReason").value(hasItem(DEFAULT_DECLINE_REASON)))
         ;
     }
 
@@ -162,6 +165,7 @@ public class PatientResourceIT {
         patient.setPtNm(UPDATED_PT_NM);
         patient.setStatus(UPDATED_STATUS);
         patient.setComment(UPDATED_COMMENT);
+        patient.setDeclineReason(UPDATED_DECLINE_REASON);
         restPatientMockMvc.perform(patch(ENTITY_API_URL + "/{ptNo}", patient.getPtNo())
                 .contentType("application/merge-patch+json")
                 .content(TestUtil.convertObjectToJsonBytes(patient)))
@@ -174,6 +178,7 @@ public class PatientResourceIT {
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testPatient.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
+        assertThat(testPatient.getDeclineReason()).isNotEqualTo(UPDATED_DECLINE_REASON);
     }
 
     @Test
