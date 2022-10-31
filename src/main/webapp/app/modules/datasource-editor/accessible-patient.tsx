@@ -19,6 +19,7 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import DatasourceStackButton from "app/modules/datasource-editor/stack-button/datasource-stack-button";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import "./accessible-patient.scss";
+import {CheckBox} from 'devextreme-react/check-box';
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -58,6 +59,15 @@ export const AccessiblePatient = () => {
       resolve();
     });
   }
+
+  const commentCellRender = (data) => {
+    const comment = data.value;
+    if (comment && comment.length > 0) {
+      return <CheckBox value={true} readOnly/>
+    } else {
+      return <CheckBox value={false} readOnly/>
+    }
+  };
 
   return <div>
     <Popup
@@ -130,6 +140,12 @@ export const AccessiblePatient = () => {
           },
         ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
       </Column>
+      <Column dataField="comment"
+              width={100}
+              allowSorting={false}
+              alignment={'center'}
+              cellRender={commentCellRender}
+      />
     </DataGrid>
   </div>
 };
