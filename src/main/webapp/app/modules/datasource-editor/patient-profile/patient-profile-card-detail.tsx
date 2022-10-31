@@ -55,14 +55,16 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               </CardContent>
             )}
           </div>
-          <CardContent className={"detail-comment-card-content"}>
+          <CardContent >
             <Typography color="text.secondary">
-              {translate("cancerLibraryApp.datasource.profileCard.comment")}
+              * {translate("cancerLibraryApp.datasource.profileCard.comment")}
               <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
                 <FontAwesomeIcon icon={"pencil-alt"}/>
               </Button>
             </Typography>
-            <TextArea height={90}
+            <TextArea
+              className={"comment-text-area"}
+              height={90}
                       readOnly={true}
                       defaultValue={patient.comment}/>
           </CardContent>
@@ -90,7 +92,8 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
         },
         ]}
       >
-        <TextArea height={'43vh'} width={'100%'} defaultValue={patient.comment} value={commentValue}
+        <TextArea height={'43vh'} width={'100%'} defaultValue={patient.comment}
+                  value={commentValue}
                   onValueChanged={(e) => setCommentValue(e.value)}/>
       </Popup>
     </div>
