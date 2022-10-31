@@ -76,15 +76,14 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             text: 'SAVE', onClick() {
               dispatch(updateEntity({...patient, comment: commentValue}))
               setIsPopupVisible(false);
-              setCommentValue('');
             },
           },
         }, {
           location: 'after', widget: 'dxButton', toolbar: "bottom",
           options: {
             text: 'CANCEL', onClick() {
+              setCommentValue(patient.comment);
               setIsPopupVisible(false);
-              setCommentValue('');
             },
           },
         },
