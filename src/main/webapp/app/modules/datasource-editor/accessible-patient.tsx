@@ -141,7 +141,8 @@ export const AccessiblePatient = () => {
         ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
       </Column>
       <Column dataField="comment"
-              width={100}
+              caption={translate("cancerLibraryApp.datasource.column.comment")}
+              width={150}
               allowSorting={false}
               alignment={'center'}
               cellRender={commentCellRender}

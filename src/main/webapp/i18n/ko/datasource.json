@@ -8,7 +8,8 @@
         "createdDate": "생성일",
         "lastModifiedBy": "최종 수정자",
         "lastModifiedDate": "최종 수정일",
-        "status": "상태"
+        "status": "상태",
+        "comment": "특이사항"
       },
       "review": {
         "initial": "처리 전",
