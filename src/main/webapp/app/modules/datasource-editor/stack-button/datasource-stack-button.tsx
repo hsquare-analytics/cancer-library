@@ -60,7 +60,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onDeclinedButtonClick = () => {
     fireDeclineSwal(patient).then(({isConfirmed, text}) => {
       if (isConfirmed) {
-        const payload = {...getLocalPatient(REVIEW_LIST.DECLINED), comment: text};
+        const payload = {...getLocalPatient(REVIEW_LIST.DECLINED), declineReason: text};
         dispatch(updatePatient(payload));
       }
     });

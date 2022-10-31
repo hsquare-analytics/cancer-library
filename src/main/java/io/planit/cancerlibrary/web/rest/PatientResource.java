@@ -98,7 +98,7 @@ public class PatientResource {
                 }
 
                 if (!ObjectUtils.isEmpty(patientDTO.getDeclineReason())) {
-                    existPatient.setComment(patientDTO.getDeclineReason());
+                    existPatient.setDeclineReason(patientDTO.getDeclineReason());
                 }
 
                 if (ReviewConstants.SUBMITTED.equals(patientDTO.getStatus())) {
