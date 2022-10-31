@@ -15,6 +15,7 @@ import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/
 import {useAppDispatch} from "app/config/store";
 import {Popup} from 'devextreme-react/popup';
 import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
+import "./patient-profile-card-detail.scss";
 
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
@@ -39,7 +40,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   return (
-    <div>
+    <div className={"patient-profile-card-detail-wrapper"}>
       <Box>
         <Card variant="outlined">
           <div className="d-flex align-items-center">
@@ -54,7 +55,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               </CardContent>
             )}
           </div>
-          <CardContent>
+          <CardContent className={"detail-comment-card-content"}>
             <Typography color="text.secondary">
               {translate("cancerLibraryApp.datasource.profileCard.comment")}
               <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
