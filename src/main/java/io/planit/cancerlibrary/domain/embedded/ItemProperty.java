@@ -14,6 +14,8 @@ public class ItemProperty implements Serializable {
 
     private Boolean required;
 
+    private String format;
+
     public Integer getVisibleIndex() {
         return visibleIndex;
     }
@@ -63,6 +65,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty required(Boolean required) {
         this.setRequired(required);
+        return this;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public ItemProperty format(String format) {
+        this.setFormat(format);
         return this;
     }
 }
