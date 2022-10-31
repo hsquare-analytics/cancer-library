@@ -11,7 +11,7 @@ import {REVIEW_LIST} from "app/config/constants";
 import {useAppSelector} from "app/config/store";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import PatientProfileDetail from "app/modules/datasource-editor/patient-profile/patient-profile-detail";
+import PatientProfileCardDetail from "app/modules/datasource-editor/patient-profile/patient-profile-card-detail";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -41,8 +41,8 @@ export const PatientProfileCard = () => {
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
         {!loading ?
-          <PatientProfileDetail/> :
-           <Box sx={{
+          <PatientProfileCardDetail patient={patient}/> :
+          <Box sx={{
             width: '100%', height: '100px', display: 'flex', justifyContent: 'center',
             alignItems: 'center', border: '1px solid lightgrey'
           }}> <CircularProgress/> </Box>

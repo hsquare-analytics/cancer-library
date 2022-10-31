@@ -17,7 +17,8 @@
         "approved": "승인 완료"
       },
       "profileCard": {
-        "title": "환자 정보 - {{ name }} ({{no}})"
+        "title": "환자 정보 - {{ name }} ({{no}})",
+        "comment": "특이사항"
       },
       "reviewButton": {
         "submit": "제출",

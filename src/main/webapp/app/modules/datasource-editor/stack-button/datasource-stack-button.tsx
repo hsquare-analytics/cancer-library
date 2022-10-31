@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {updateEntity as updatePatient} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
+import {
+  getEntity,
+  updateEntity as updatePatient
+} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import {translate} from "react-jhipster";
 import {
   fireApprovedSwal,
@@ -25,7 +28,15 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
     return !canDecline;
   }
   const patient = useAppSelector(state => state.datasourcePatient.entity);
+  const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      dispatch(getEntity(patient.ptNo));
+    }
+  }, [updateSuccess]);
+
 
   const canSubmit = () => {
     if (!patient) {

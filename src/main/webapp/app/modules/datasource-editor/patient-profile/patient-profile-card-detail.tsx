@@ -12,8 +12,10 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Button from '@mui/material/Button';
 import {IDxColumn} from "app/shared/model/dx-column.model";
 import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
-import {useAppSelector} from "app/config/store";
+import {useAppDispatch} from "app/config/store";
 import {Popup} from 'devextreme-react/popup';
+import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
+
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -24,9 +26,16 @@ const getFormattedValue: (value: any, column: IDxColumn) => string = (value, col
   return value;
 }
 
-export const PatientProfileDetail = () => {
-  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+interface IPatientProfileDetailProps {
+  patient: IPatient;
+}
 
+export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
+  const dispatch = useAppDispatch();
+
+  const {patient} = props;
+
+  const [commentValue, setCommentValue] = useState(patient ? patient.comment : '');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   return (
@@ -47,39 +56,45 @@ export const PatientProfileDetail = () => {
           </div>
           <CardContent>
             <Typography color="text.secondary">
-              환자 상세
+              {translate("cancerLibraryApp.datasource.profileCard.comment")}
               <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
                 <FontAwesomeIcon icon={"pencil-alt"}/>
               </Button>
             </Typography>
             <TextArea height={90}
                       readOnly={true}
-                      value={"Prepare 2013 Marketing Plan: We need to double revenues in 2013 and our marketing strategy is going to be key here." +
-                        " R&D is improving existing products and creating new products so we can deliver great AV equipment to our customers.Robert," +
-                        " please make certain to create a PowerPoint presentation for the members of the executive team."}/>
+                      defaultValue={patient.comment}/>
           </CardContent>
         </Card>
       </Box>
       <Popup
         visible={isPopupVisible} onHiding={() => setIsPopupVisible(false)} dragEnabled={false} hideOnOutsideClick={true}
-        showCloseButton={false} showTitle={false} width={'30vw'} height={'50vh'}
+        showCloseButton={false} showTitle={false} width={'60vw'} height={'50vh'}
         toolbarItems={[{
-          location: 'after', widget: 'dxButton', toolbar: "bottom", options: {text: 'SAVE', onClick: () => alert()}
+          location: 'after', widget: 'dxButton', toolbar: "bottom",
+          options: {
+            text: 'SAVE', onClick() {
+              dispatch(updateEntity({...patient, comment: commentValue}))
+              setIsPopupVisible(false);
+              setCommentValue('');
+            },
+          },
         }, {
-          location: 'after',
-          widget: 'dxButton',
-          toolbar: "bottom",
-          options: {text: 'CANCEL', onClick: () => setIsPopupVisible(false),}
+          location: 'after', widget: 'dxButton', toolbar: "bottom",
+          options: {
+            text: 'CANCEL', onClick() {
+              setIsPopupVisible(false);
+              setCommentValue('');
+            },
+          },
         },
         ]}
       >
-        <TextArea height={'43vh'} width={'100%'}
-                  value={"Prepare 2013 Marketing Plan: We need to double revenues in 2013 and our marketing strategy is going to be key here." +
-                    " R&D is improving existing products and creating new products so we can deliver great AV equipment to our customers.Robert," +
-                    " please make certain to create a PowerPoint presentation for the members of the executive team."}/>
+        <TextArea height={'43vh'} width={'100%'} defaultValue={patient.comment} value={commentValue}
+                  onValueChanged={(e) => setCommentValue(e.value)}/>
       </Popup>
     </div>
   );
 };
 
-export default PatientProfileDetail;
+export default PatientProfileCardDetail;
