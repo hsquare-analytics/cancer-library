@@ -1,27 +1,12 @@
 package io.planit.cancerlibrary.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.Subject;
-import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.SubjectRepository;
-import io.planit.cancerlibrary.repository.TopicRepository;
-import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.domain.*;
+import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
 import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
-import io.planit.cancerlibrary.web.rest.errors.CategoryDeficiencyException;
-import java.time.Instant;
-import java.util.HashMap;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -29,6 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.util.HashMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @IntegrationTest
 class DMLSqlBuilderServiceIT {
@@ -219,7 +211,7 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
         }};
         assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(
-            CategoryDeficiencyException.class);
+            SetupDeficiencyException.class);
     }
 
     @Test
@@ -231,7 +223,7 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
         }};
         assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(
-            CategoryDeficiencyException.class);
+            SetupDeficiencyException.class);
     }
 
     @Test
@@ -239,7 +231,7 @@ class DMLSqlBuilderServiceIT {
     @WithMockUser
     void testReadAllSqlConfigurationException() {
         assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(
-            CategoryDeficiencyException.class);
+            SetupDeficiencyException.class);
     }
 
     @Test
@@ -251,7 +243,7 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
         }};
         assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(
-            CategoryDeficiencyException.class);
+            SetupDeficiencyException.class);
     }
 
     @Test
@@ -263,7 +255,7 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
         }};
         assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(
-            CategoryDeficiencyException.class);
+            SetupDeficiencyException.class);
     }
 }
 

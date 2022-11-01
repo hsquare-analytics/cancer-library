@@ -15,9 +15,9 @@
         "user-patient": "User Patient",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
-      "multi-table-editor" : "다중 테이블 편집기",
-      "datasource" : "데이터 편집 모듈",
-      "userPatientAuthorizationEditor" : "환자 권한 설정",
+      "multi-table-editor": "다중 테이블 편집기",
+      "datasource": "데이터 편집 모듈",
+      "userPatientAuthorizationEditor": "환자 권한 설정",
       "editable-categories": "편집 테이블 목록",
       "approval-categories": "승인 테이블 목록",
       "account": {
@@ -124,7 +124,7 @@
     },
     "delete": {
       "title": "삭제 확인",
-      "warning" : "정말로 삭제하시겠습니까?"
+      "warning": "정말로 삭제하시겠습니까?"
     },
     "validation": {
       "required": "필수항목입니다.",
@@ -161,7 +161,7 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     },
     "sqlSyntax": "SQL Syntax Error",
-    "configurationDeficiency": "관리자에게 문의 하세요. \n *{{ entityName }} 설정 정보가 없습니다."
+    "setupDeficiency": "필수 설정 정보가 부족합니다. \n 관리자에게 문의 하세요."
   },
   "footer": "하단영역"
 }

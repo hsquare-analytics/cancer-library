@@ -90,7 +90,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
 
     @Override
     public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-        @Nonnull NativeWebRequest request) {
+                                                                @Nonnull NativeWebRequest request) {
         BindingResult result = ex.getBindingResult();
         List<FieldErrorVM> fieldErrors = result
             .getFieldErrors()
@@ -144,6 +144,20 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
+    public ResponseEntity<Problem> handleSetupDeficiencyException(
+        io.planit.cancerlibrary.service.SetupDeficiencyException ex,
+        NativeWebRequest request
+    ) {
+        SetupDeficiencyException problem = new SetupDeficiencyException();
+        return create(
+            problem,
+            request,
+            HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(),
+                problem.getMessage())
+        );
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Problem> handleInvalidPasswordException(
         io.planit.cancerlibrary.service.InvalidPasswordException ex,
         NativeWebRequest request
@@ -153,7 +167,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
 
     @ExceptionHandler
     public ResponseEntity<Problem> handleBadRequestAlertException(BadRequestAlertException ex,
-        NativeWebRequest request) {
+                                                                  NativeWebRequest request) {
         return create(
             ex,
             request,
