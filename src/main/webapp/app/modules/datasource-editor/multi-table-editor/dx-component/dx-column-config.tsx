@@ -31,7 +31,7 @@ const getDxLookupComponent = (item: IItem) => {
     case 'tagbox':
     case 'selectbox':
       return <Lookup
-        dataSource={item.lookup.filter(data => data).map(data => new Object({"itemId": item.id, "title": data}))}
+        dataSource={item.lookupList.filter(data => data).map(data => new Object({"itemId": item.id, "title": data.title}))}
         displayExpr={"title"} valueExpr={"title"}/>;
     default:
       return undefined;

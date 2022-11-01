@@ -46,7 +46,7 @@ const LookupEditor = (props: ILookupEditorProps) => {
     fireSaveCardSwal().then((result) => {
       if (result.isConfirmed) {
         props.setVisible(false);
-        dispatch(partialUpdateEntity({id: itemId, lookup: cards.map(card => card.text)}));
+        dispatch(partialUpdateEntity({id: itemId, lookupList: cards.map(card => card.text)}));
       }
     });
   }

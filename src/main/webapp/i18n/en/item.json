@@ -33,7 +33,7 @@
         "required": "Required",
         "format": "Format"
       },
-      "lookup": "Lookup"
+      "lookupList": "Lookup list"
     }
   }
 }

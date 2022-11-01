@@ -10,7 +10,7 @@ import {getEntity} from './item.reducer';
 export const ItemDetail = () => {
   const dispatch = useAppDispatch();
 
-  const { id } = useParams<'id'>();
+  const {id} = useParams<'id'>();
 
   useEffect(() => {
     dispatch(getEntity(id));
@@ -91,21 +91,21 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.property?.allowEditing}</dd>
           <dt>
-            <span id="lookup">
-              <Translate contentKey="cancerLibraryApp.item.lookup">Lookup</Translate>
+            <span id="lookupList">
+              <Translate contentKey="cancerLibraryApp.item.lookupList">Lookup</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.lookup}</dd>
+          <dd>{JSON.stringify(itemEntity.lookupList.filter(data => data))}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
+          <FontAwesomeIcon icon="arrow-left"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.back">Back</Translate>
           </span>
         </Button>
         &nbsp;
         <Button tag={Link} to={`/admin/item/${itemEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
+          <FontAwesomeIcon icon="pencil-alt"/>{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>
           </span>
