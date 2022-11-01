@@ -36,7 +36,7 @@ export const CustomDateRangePopover = () => {
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'right',
+        horizontal: 'center',
       }}
     >
       <CustomDateRangePicker selectionRange={selectionRange} onChange={(value) => setSelectionRange(value)}/>
