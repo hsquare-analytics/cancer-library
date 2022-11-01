@@ -8,7 +8,7 @@ import moment from "moment";
 export const CustomDateRangePopover = () => {
 
   const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(),
+    startDate: moment(new Date()).subtract(3, 'month').toDate(),
     endDate: new Date(),
   });
 
@@ -23,7 +23,8 @@ export const CustomDateRangePopover = () => {
   }
 
   return <>
-    <Button variant="outlined" onClick={onDateRangeBoxClick}>{`제출일: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
+    <Button variant="outlined"
+            onClick={onDateRangeBoxClick}>{`제출일: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
     <Popover
       id={open ? 'simple-popover' : undefined}
       open={Boolean(anchorEl)}
@@ -35,7 +36,7 @@ export const CustomDateRangePopover = () => {
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'center',
+        horizontal: 'right',
       }}
     >
       <CustomDateRangePicker selectionRange={selectionRange} onChange={(value) => setSelectionRange(value)}/>
