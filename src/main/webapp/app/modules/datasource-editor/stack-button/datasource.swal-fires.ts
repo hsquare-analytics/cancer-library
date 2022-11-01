@@ -4,31 +4,31 @@ import {IPatient} from "app/shared/model/patient.model";
 
 export const fireDeclineSwal = async (patient: IPatient) => {
   const {value: text, isConfirmed: isConfirmed} = await Swal.fire({
-    text: translate("cancerLibraryApp.datasource.reviewButton.declinePopup.title", {
+    text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.title", {
       name: patient.ptNm,
       no: patient.ptNo
     }),
     input: 'textarea',
     inputValue: patient ? patient.declineReason : "",
-    inputPlaceholder: translate("cancerLibraryApp.datasource.reviewButton.declinePopup.placeholder"),
+    inputPlaceholder: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.placeholder"),
     showCancelButton: true,
     customClass: {
       container: 'swal2-wide-textarea-container',
     },
-    confirmButtonText: translate("cancerLibraryApp.datasource.reviewButton.confirm"),
-    cancelButtonText: translate("cancerLibraryApp.datasource.reviewButton.cancel"),
+    confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
+    cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
   });
 
   if (isConfirmed) {
     const reConfirm = await Swal.fire({
-      text: translate("cancerLibraryApp.datasource.reviewButton.declinePopup.text", {
+      text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.text", {
         name: patient.ptNm,
         no: patient.ptNo
       }),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: translate("cancerLibraryApp.datasource.reviewButton.confirm"),
-      cancelButtonText: translate("cancerLibraryApp.datasource.reviewButton.cancel"),
+      confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
+      cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
     });
 
     return {isConfirmed: reConfirm.isConfirmed, text};
@@ -37,28 +37,28 @@ export const fireDeclineSwal = async (patient: IPatient) => {
 }
 
 export const fireApprovedSwal = async (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasource.reviewButton.approvePopup.title", {
+  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.approvePopup.title", {
     name: patient.ptNm,
     no: patient.ptNo
   }),
   showCancelButton: true,
-  confirmButtonText: translate("cancerLibraryApp.datasource.reviewButton.confirm"),
-  cancelButtonText: translate("cancerLibraryApp.datasource.reviewButton.cancel"),
+  confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
+  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
 });
 
 export const fireSubmitSwal = async (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasource.reviewButton.submitPopup.title", {
+  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.submitPopup.title", {
     name: patient.ptNm,
     no: patient.ptNo
   }),
   showCancelButton: true,
-  confirmButtonText: translate("cancerLibraryApp.datasource.reviewButton.confirm"),
-  cancelButtonText: translate("cancerLibraryApp.datasource.reviewButton.cancel"),
+  confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
+  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
 });
 
 
 export const fireDeclineReasonSwal = (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasource.reviewButton.declineReasonPopup.title", {
+  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declineReasonPopup.title", {
     name: patient.ptNm,
     no: patient.ptNo
   }),
@@ -66,7 +66,7 @@ export const fireDeclineReasonSwal = (patient: IPatient) => Swal.fire({
   inputValue: patient ? patient.declineReason : "",
   showCancelButton: true,
   showConfirmButton: false,
-  cancelButtonText: translate("cancerLibraryApp.datasource.reviewButton.cancel"),
+  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
   customClass: {
     container: 'swal2-wide-textarea-container',
   },

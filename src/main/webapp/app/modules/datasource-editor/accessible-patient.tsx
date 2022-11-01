@@ -39,7 +39,7 @@ export const AccessiblePatient = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      toast.success(translate("cancerLibraryApp.datasource.updateSuccess", {
+      toast.success(translate("cancerLibraryApp.datasourceEditor.updateSuccess", {
         no: patient.ptNo,
         name: patient.ptNm
       }));
@@ -117,29 +117,29 @@ export const AccessiblePatient = () => {
           />
         )
       }
-      <Column caption={translate("cancerLibraryApp.datasource.column.status")} dataField={"status"}
+      <Column caption={translate("cancerLibraryApp.datasourceEditor.column.status")} dataField={"status"}
               alignment={'center'}
               minWidth={150} allowEditing={true}>
         <Lookup dataSource={[
           {
             id: 1,
             valueExpr: REVIEW_LIST.SUBMITTED,
-            displayExpr: translate('cancerLibraryApp.datasource.review.submitted')
+            displayExpr: translate('cancerLibraryApp.datasourceEditor.review.submitted')
           },
           {
             id: 2,
             valueExpr: REVIEW_LIST.DECLINED,
-            displayExpr: translate('cancerLibraryApp.datasource.review.declined')
+            displayExpr: translate('cancerLibraryApp.datasourceEditor.review.declined')
           },
           {
             id: 3,
             valueExpr: REVIEW_LIST.APPROVED,
-            displayExpr: translate('cancerLibraryApp.datasource.review.approved')
+            displayExpr: translate('cancerLibraryApp.datasourceEditor.review.approved')
           },
         ]} displayExpr={'displayExpr'} valueExpr={'valueExpr'}/>
       </Column>
       <Column dataField="comment"
-              caption={translate("cancerLibraryApp.datasource.column.comment")}
+              caption={translate("cancerLibraryApp.datasourceEditor.column.comment")}
               width={150}
               alignment={'center'}
               cellRender={commentCellRender}

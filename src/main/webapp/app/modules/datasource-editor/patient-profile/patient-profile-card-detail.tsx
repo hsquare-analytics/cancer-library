@@ -57,7 +57,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
           </div>
           <CardContent >
             <Typography color="text.secondary">
-              * {translate("cancerLibraryApp.datasource.profileCard.comment")}
+              * {translate("cancerLibraryApp.datasourceEditor.profileCard.comment")}
               <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
                 <FontAwesomeIcon icon={"pencil-alt"}/>
               </Button>

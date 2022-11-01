@@ -113,15 +113,15 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
         <>
           <Button variant="contained" color="error" onClick={() => {
             onDeclinedButtonClick()
-          }}>{translate("cancerLibraryApp.datasource.reviewButton.decline")}</Button>
+          }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.decline")}</Button>
           <Button variant="contained" color="success"
                   onClick={() => {
                     onApprovedButtonClick()
-                  }}>{translate("cancerLibraryApp.datasource.reviewButton.approve")}</Button> </>
+                  }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.approve")}</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
                   onClick={() => {
                     onSubmittedButtonClick()
-                  }}>{translate("cancerLibraryApp.datasource.reviewButton.submit")}</Button>}
+                  }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.submit")}</Button>}
     </Stack>
   );
 }

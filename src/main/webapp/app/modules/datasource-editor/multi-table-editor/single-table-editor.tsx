@@ -151,11 +151,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             itemContainer[category.id].map(item => getDxColumnConfig(item))
           }
           <Column dataField="last_modified_by"
-                  caption={translate('cancerLibraryApp.datasource.column.lastModifiedBy')}
+                  caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
                   alignment={"center"} allowEditing={false}
                   visibleIndex={9998}/>
           <Column dataField="last_modified_date"
-                  caption={translate('cancerLibraryApp.datasource.column.lastModifiedDate')}
+                  caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedDate')}
                   alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}
                   visibleIndex={9999}/>
         </DataGrid>
