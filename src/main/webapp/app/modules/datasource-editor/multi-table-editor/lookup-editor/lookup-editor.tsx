@@ -10,6 +10,8 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor.swal";
 import {partialUpdateEntity} from "app/entities/item/item.reducer";
 import {useAppDispatch} from "app/config/store";
+import ScrollView from 'devextreme-react/scroll-view';
+
 
 interface ILookupEditorProps {
   dataSource: { itemId: number, title: string, description: string }[];
@@ -42,7 +44,12 @@ const LookupEditor = (props: ILookupEditorProps) => {
     fireAddCardSwal().then(result => {
       const data = result.value;
       if (result.isConfirmed) {
-        setCards([...cards, {id: data, title: data.title, description: data.description, text: `${data.title} (${data.description})`}]);
+        setCards([...cards, {
+          id: data,
+          title: data.title,
+          description: data.description,
+          text: `${data.title} (${data.description})`
+        }]);
       }
     });
   };
@@ -94,9 +101,11 @@ const LookupEditor = (props: ILookupEditorProps) => {
       onHiding={() => props.setVisible(false)}
       toolbarItems={ToolbarItems}
     >
-      <DndProvider backend={HTML5Backend}>
-        <DndContainer cards={cards} setCards={setCards}/>
-      </DndProvider>
+      <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
+        <DndProvider backend={HTML5Backend}>
+          <DndContainer cards={cards} setCards={setCards}/>
+        </DndProvider>
+      </ScrollView>
     </Popup>
   );
 
