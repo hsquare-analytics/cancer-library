@@ -4,6 +4,9 @@ import {CustomDateRangePicker} from "app/modules/datasource-editor/date-range-pi
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import moment from "moment";
+import Search from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+
 
 export const CustomDateRangePopover = () => {
 
@@ -24,7 +27,11 @@ export const CustomDateRangePopover = () => {
 
   return <>
     <Button variant="outlined"
+            className={"me-2"}
             onClick={onDateRangeBoxClick}>{`제출일: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
+    <IconButton color="primary" aria-label="upload picture" component="label">
+      <Search />
+    </IconButton>
     <Popover
       id={open ? 'simple-popover' : undefined}
       open={Boolean(anchorEl)}
