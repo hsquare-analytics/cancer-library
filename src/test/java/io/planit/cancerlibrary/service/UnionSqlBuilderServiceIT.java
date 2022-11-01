@@ -5,7 +5,6 @@ import io.planit.cancerlibrary.constant.DatasourceConstants;
 import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.web.rest.*;
-import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyBaseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @IntegrationTest
 class UnionSqlBuilderServiceIT {
@@ -121,14 +119,6 @@ class UnionSqlBuilderServiceIT {
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
         assertThat(result).contains("PT_NO IN ('test_patient_no')");
-    }
-
-    @Test
-    @Transactional
-    @WithMockUser
-    void testCategoryNotFoundException() {
-        assertThatThrownBy(() -> unionSqlBuilderService.getUnionSelectSQL(999L, "test"))
-            .isInstanceOf(ConfigurationDeficiencyBaseException.class);
     }
 
 }

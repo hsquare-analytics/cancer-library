@@ -1,13 +1,13 @@
 package io.planit.cancerlibrary;
 
-import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
-import static com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf;
-import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
-
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+
+import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf;
+import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
 @AnalyzeClasses(packagesOf = CancerLibraryApp.class, importOptions = DoNotIncludeTests.class)
 class TechnicalStructureTest {
@@ -19,7 +19,7 @@ class TechnicalStructureTest {
         .layer("Web").definedBy("..web..")
         .optionalLayer("Service").definedBy("..service..")
         .layer("Security").definedBy("..security..")
-        .layer("Persistence").definedBy("..repository..")
+        .layer("Persistence").definedBy("..repository..", "..mapper..")
         .layer("Domain").definedBy("..domain..")
 
         .whereLayer("Config").mayNotBeAccessedByAnyLayer()

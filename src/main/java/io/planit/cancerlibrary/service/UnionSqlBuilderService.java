@@ -4,7 +4,6 @@ import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.web.rest.errors.ConfigurationDeficiencyBaseException;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +33,7 @@ public class UnionSqlBuilderService {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new ConfigurationDeficiencyBaseException("Category not found", "category"));
+            .orElseThrow(SetupDeficiencyException::new);
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, patientNo);
         SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, patientNo);

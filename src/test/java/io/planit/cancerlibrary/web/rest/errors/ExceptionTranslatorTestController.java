@@ -1,20 +1,14 @@
 package io.planit.cancerlibrary.web.rest.errors;
 
-import java.sql.SQLException;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api/exception-translator-test")
@@ -77,8 +71,4 @@ public class ExceptionTranslatorTestController {
         throw new org.springframework.jdbc.BadSqlGrammarException("ddl", "select * from test", new SQLException());
     }
 
-    @GetMapping("/configuration-deficiency-exception")
-    public void configurationDeficiencyException() {
-        throw new ConfigurationDeficiencyBaseException("configuration deficiency exception", "entityname");
-    }
 }
