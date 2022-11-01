@@ -64,7 +64,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             </Typography>
             <TextArea
               className={"comment-text-area"}
-              height={90}
+              height={100}
                       readOnly={true}
                       defaultValue={patient.comment}/>
           </CardContent>
