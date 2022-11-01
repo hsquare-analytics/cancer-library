@@ -1,19 +1,17 @@
-.patient-profile-card-detail-wrapper {
-  .comment-text-area {
-    .dx-texteditor-container {
-      background-color: #fcfcfc !important;
-      border: 1px dotted gray;
-      border-radius: 3px;
-    }
-
-    &.dx-texteditor.dx-editor-filled::after {
-      border: none;
-    }
-
-    .dx-texteditor-input {
-      color: black !important;
-    }
+#patient-profiel-card-detail-comment-text-area {
+  .dx-texteditor-container {
+    background-color: #fcfcfc !important;
+    border: 1px dotted gray;
+    border-radius: 3px;
   }
 
+  &.dx-texteditor.dx-editor-filled::after {
+    border: none;
+  }
+
+  .dx-texteditor-input {
+    color: black !important;
+  }
 }
+
 

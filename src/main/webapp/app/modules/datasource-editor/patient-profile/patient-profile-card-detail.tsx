@@ -40,7 +40,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   return (
-    <div className={"patient-profile-card-detail-wrapper"}>
+    <div>
       <Box>
         <Card variant="outlined">
           <div className="d-flex align-items-center">
@@ -55,7 +55,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               </CardContent>
             )}
           </div>
-          <CardContent >
+          <CardContent>
             <Typography color="text.secondary">
               * {translate("cancerLibraryApp.datasourceEditor.profileCard.comment")}
               <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
@@ -63,10 +63,10 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               </Button>
             </Typography>
             <TextArea
-              className={"comment-text-area"}
+              id={"patient-profiel-card-detail-comment-text-area"}
               height={100}
-                      readOnly={true}
-                      defaultValue={patient.comment}/>
+              readOnly={true}
+              defaultValue={patient.comment}/>
           </CardContent>
         </Card>
       </Box>
@@ -92,9 +92,11 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
         },
         ]}
       >
-        <TextArea height={'43vh'} width={'100%'} defaultValue={patient.comment}
-                  value={commentValue}
-                  onValueChanged={(e) => setCommentValue(e.value)}/>
+        <TextArea
+          id={"patient-profiel-card-detail-comment-text-area"}
+          height={'43vh'} width={'100%'} defaultValue={patient.comment}
+          value={commentValue}
+          onValueChanged={(e) => setCommentValue(e.value)}/>
       </Popup>
     </div>
   );
