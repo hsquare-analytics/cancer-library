@@ -22,6 +22,8 @@ export const DndContainer: FC<IDndContainerProps> = memo(function Container({car
       const card = cards.filter((c) => `${c.id}` === id)[0] as {
         id: number
         text: string
+        title: string
+        description: string
       }
       return {
         card,

@@ -21,6 +21,8 @@ const style: CSSProperties = {
 export interface ICard {
   id: any;
   text: any;
+  title: string;
+  description: string;
 }
 
 export interface CardProps {
