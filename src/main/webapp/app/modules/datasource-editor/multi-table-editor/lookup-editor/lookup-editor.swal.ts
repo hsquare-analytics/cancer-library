@@ -1,9 +1,23 @@
 import Swal from 'sweetalert2';
+import $ from 'jquery';
 
 export const fireAddCardSwal = () => {
   return Swal.fire({
-    title: 'Add new item',
-    input: 'text',
+    html:
+      `<div style="white-space:nowrap">
+          <label for="swal-input1">label:</label>
+          <input id="swal-input1" class="swal2-input" required>
+        </div>` +
+      `<div style="white-space:nowrap">
+          <label for="swal-input2">value:</label>
+          <input id="swal-input2" class="swal2-input" required/>
+        </div>`,
+    preConfirm() {
+      return {
+        title: $('#swal-input1').val(),
+        description: $('#swal-input2').val(),
+      };
+    },
     inputAttributes: {
       autocapitalize: 'off'
     },

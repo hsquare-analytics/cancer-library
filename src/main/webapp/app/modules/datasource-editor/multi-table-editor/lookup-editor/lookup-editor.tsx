@@ -39,9 +39,10 @@ const LookupEditor = (props: ILookupEditorProps) => {
   }, [JSON.stringify(dataSource)]);
 
   const onAddCardButtonClick = () => {
-    fireAddCardSwal().then((result) => {
+    fireAddCardSwal().then(result => {
+      const data = result.value;
       if (result.isConfirmed) {
-        setCards([...cards, {id: result.value, title: result.value, description: result.value, text: result.value}]);
+        setCards([...cards, {id: data, title: data.title, description: data.description, text: `${data.title} (${data.description})`}]);
       }
     });
   };
