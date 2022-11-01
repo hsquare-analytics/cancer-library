@@ -5,7 +5,6 @@ import {useDrag, useDrop} from 'react-dnd'
 
 import {DndItemTypes} from './dnd-item-types'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import Swal from 'sweetalert2';
 import {fireDeleteCardSwal} from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor.swal";
 
 const style: CSSProperties = {
@@ -78,7 +77,6 @@ export const DndCard: FC<CardProps> = memo(function Card({id, text, moveCard, fi
     fireDeleteCardSwal().then((result) => {
       if (result.isConfirmed) {
         setCards(cards.filter((card) => card.id !== id));
-        Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
       }
     });
   };

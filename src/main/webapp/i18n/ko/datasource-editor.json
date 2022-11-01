@@ -50,6 +50,12 @@
         "validator": {
           "required": "{{ field }} 필드는 필수 입력 항목입니다."
         }
+      },
+      "lookupEditor" : {
+        "confirmButtonText" : "확인",
+        "cancelButtonText" : "취소",
+        "saveAlert" : "변경사항을 저장하시겠습니까?",
+        "deleteAlert" : "해당 코드를 목록에서 삭제 하시겠습니까?"
       }
     }
   }

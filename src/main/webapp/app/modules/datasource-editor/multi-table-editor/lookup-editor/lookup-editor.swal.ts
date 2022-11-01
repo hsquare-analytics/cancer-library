@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import $ from 'jquery';
+import {translate} from 'react-jhipster';
 
 export const fireAddCardSwal = () => {
   return Swal.fire({
@@ -29,24 +30,24 @@ export const fireAddCardSwal = () => {
 
 export const fireSaveCardSwal = () => {
   return Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    text: translate('cancerLibraryApp.datasourceEditor.lookupEditor.saveAlert'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, save it!'
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.confirmButtonText'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.cancelButtonText'),
   });
 }
 
 export const fireDeleteCardSwal = () => {
   return Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
+    text: translate('cancerLibraryApp.datasourceEditor.lookupEditor.deleteAlert'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.confirmButtonText'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.cancelButtonText'),
   });
 };
