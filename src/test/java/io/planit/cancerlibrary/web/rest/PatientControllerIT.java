@@ -8,15 +8,20 @@ import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
+import io.planit.cancerlibrary.service.TimeService;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,6 +46,9 @@ class PatientControllerIT {
 
     @Autowired
     private UserPatientRepository userPatientRepository;
+
+    @MockBean
+    private TimeService timeService;
 
     @Test
     @Transactional
@@ -72,11 +80,15 @@ class PatientControllerIT {
     @Transactional
     @WithMockUser(username = "supervisor", authorities = AuthoritiesConstants.SUPERVISOR)
     void testFetchAccessiblePatientListWithReviewer() throws Exception {
-        Patient patient = PatientResourceIT.createPatientDTO();
+        // given
+        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        Patient patient = PatientResourceIT.createPatientDTO().createdDate(timeService.getCurrentTime().minus(1, ChronoUnit.DAYS));
         patientMapper.insert(patient);
 
-
-        restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list"))
+        // when, them
+        restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list")
+                .param("startDate", timeService.getCurrentTime().minus(365, ChronoUnit.DAYS).toString())
+                .param("endDate", timeService.getCurrentTime().toString()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
