@@ -158,7 +158,7 @@ class DatasourceControllerIT {
     @Transactional
     void testDatasourceExistRowUpdate() throws Exception {
         datasourceMapper.executeSelectSQL(
-            new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
+            new SQLAdapter("insert into ph_test_updated (idx, name) values ('10001', 'zero')"));
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -177,7 +177,7 @@ class DatasourceControllerIT {
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+            new SQLAdapter("select * from ph_test_updated where idx = '10001'"));
 
         // todo: mybatis transaction 처리 안됨...
 //        assertThat(result.size()).isEqualTo(1);
@@ -204,7 +204,7 @@ class DatasourceControllerIT {
     @Transactional
     void testDeleteDatasourceRow() throws Exception {
         // given
-        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test (idx, name) values (10001, 'zero')"));
+        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
 
         // then
         restDatasourceMockMvc.perform(
@@ -212,7 +212,7 @@ class DatasourceControllerIT {
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test where idx = 10001"));
+            new SQLAdapter("select * from ph_test_updated where idx = '10001'"));
 
         assertThat(result).isEmpty();
     }
