@@ -178,7 +178,7 @@ public class PatientResourceIT {
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testPatient.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
-        assertThat(testPatient.getDeclineReason()).isNotEqualTo(UPDATED_DECLINE_REASON);
+        assertThat(testPatient.getDeclineReason()).isEqualTo(UPDATED_DECLINE_REASON);
     }
 
     @Test
