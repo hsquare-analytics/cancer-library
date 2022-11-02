@@ -4,6 +4,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import './custom-date-range-picker.scss';
 import {DateRangePicker} from 'react-date-range';
 import moment from "moment";
+import ko from "date-fns/locale/ko"; // the locale you want
 
 interface ICustomDateRangePickerProps {
   selectionRange: {
@@ -20,6 +21,7 @@ export const CustomDateRangePicker = (props: ICustomDateRangePickerProps) => {
   return (
     <div className={"custom-date-range-picker-wrapper"}>
       <DateRangePicker
+        locale={ko}
         staticRanges={[]}
         inputRanges={[]}
         minDate={moment().subtract(5, 'years').toDate()}
