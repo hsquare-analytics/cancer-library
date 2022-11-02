@@ -6,10 +6,12 @@ import Popover from '@mui/material/Popover';
 import moment from "moment";
 import Search from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
-import {useAppSelector} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
+import {getEntities} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 
 
 export const CustomDateRangePopover = () => {
+  const dispatch = useAppDispatch();
 
   const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
@@ -23,11 +25,15 @@ export const CustomDateRangePopover = () => {
     setAnchorEl(null);
   }
 
+  const onSearchClick = () => {
+    dispatch(getEntities(dateRange));
+  }
+
   return <>
     <Button variant="outlined"
             className={"me-2"}
             onClick={onDateRangeBoxClick}>{`제출 기간: ${moment(dateRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(dateRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
-    <IconButton color="primary" aria-label="upload picture" component="label">
+    <IconButton color="primary" aria-label="upload picture" component="label" onClick={onSearchClick}>
       <Search/>
     </IconButton>
     <Popover
