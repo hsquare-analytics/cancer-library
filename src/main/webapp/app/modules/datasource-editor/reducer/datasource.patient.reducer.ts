@@ -36,10 +36,12 @@ export const getEntity = createAsyncThunk('datasource_patient/fetch_entity', asy
   {serializeError: serializeAxiosError}
 );
 
-export const updateEntity = createAsyncThunk('datasource_patient/update_entity', async (entity: IPatient, thunkAPI) => {
+export const updateEntity = createAsyncThunk('datasource_patient/update_entity', async (data: {
+    entity: IPatient, dateRange: IDateRange
+  }, thunkAPI) => {
 
-    const result = await axios.patch<IPatient>(`api/patients/${entity.ptNo}`, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
+    const result = await axios.patch<IPatient>(`api/patients/${data.entity.ptNo}`, cleanEntity(data.entity));
+    thunkAPI.dispatch(getEntities(data.dateRange));
     return result;
   },
   {serializeError: serializeAxiosError}

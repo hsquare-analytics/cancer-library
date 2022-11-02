@@ -32,12 +32,12 @@ export const AccessiblePatient = () => {
   const patientList = useAppSelector(state => state.datasourcePatient.entities);
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
 
-  useEffect(() => {
-    const initialDateRange = {
-      startDate: moment(new Date()).subtract(1, 'week').toDate(),
-      endDate: new Date(),
-    }
+  const initialDateRange = {
+    startDate: moment(new Date()).subtract(1, 'week').toDate(),
+    endDate: new Date(),
+  }
 
+  useEffect(() => {
     dispatch(setDateRange(initialDateRange));
     dispatch(getAccessiblePatients(initialDateRange));
   }, []);
@@ -60,7 +60,7 @@ export const AccessiblePatient = () => {
   const onRowUpdating = (e) => {
     e.cancel = new Promise<void>((resolve) => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-      dispatch(updatePatient(row));
+      dispatch(updatePatient({entity: row, dateRange: initialDateRange}));
       resolve();
     });
   }

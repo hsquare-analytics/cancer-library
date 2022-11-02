@@ -12,7 +12,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Button from '@mui/material/Button';
 import {IDxColumn} from "app/shared/model/dx-column.model";
 import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
-import {useAppDispatch} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import {Popup} from 'devextreme-react/popup';
 import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import "./patient-profile-card-detail.scss";
@@ -33,6 +33,7 @@ interface IPatientProfileDetailProps {
 
 export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const dispatch = useAppDispatch();
+  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
   const {patient} = props;
 
@@ -77,7 +78,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
           location: 'after', widget: 'dxButton', toolbar: "bottom",
           options: {
             text: 'SAVE', onClick() {
-              dispatch(updateEntity({...patient, comment: commentValue}))
+              dispatch(updateEntity({entity: {...patient, comment: commentValue}, dateRange}))
               setIsPopupVisible(false);
             },
           },
