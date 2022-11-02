@@ -30,6 +30,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const patient = useAppSelector(state => state.datasourcePatient.entity);
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
+  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
   useEffect(() => {
     if (updateSuccess) {
@@ -71,7 +72,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onDeclinedButtonClick = () => {
     fireDeclineSwal(patient).then(({isConfirmed, text}) => {
       if (isConfirmed) {
-        const payload = {...getLocalPatient(REVIEW_LIST.DECLINED), declineReason: text};
+        const payload = {
+          entity: {...getLocalPatient(REVIEW_LIST.DECLINED), declineReason: text},
+          dateRange
+        };
         dispatch(updatePatient(payload));
       }
     });
@@ -80,7 +84,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onApprovedButtonClick = () => {
     fireApprovedSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const payload = {...getLocalPatient(REVIEW_LIST.APPROVED)};
+        const payload = {
+          entity: {...getLocalPatient(REVIEW_LIST.APPROVED)},
+          dateRange
+        };
         dispatch(updatePatient(payload));
       }
     });
@@ -89,7 +96,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onSubmittedButtonClick = () => {
     fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const payload = {...getLocalPatient(REVIEW_LIST.SUBMITTED)};
+        const payload = {
+          entity: {...getLocalPatient(REVIEW_LIST.SUBMITTED)},
+          dateRange
+        };
         dispatch(updatePatient(payload));
       }
     });

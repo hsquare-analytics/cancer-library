@@ -63,6 +63,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
                 <FontAwesomeIcon icon={"pencil-alt"}/>
               </Button>
             </Typography>
+            {/* todo : 블러 버그  */}
             <TextArea
               id={"patient-profiel-card-detail-comment-text-area"}
               height={100}
