@@ -19,6 +19,8 @@ import {MultiTableEditorPopup} from "app/modules/datasource-editor/multi-table-e
 import CustomDateRangePopover from "app/modules/datasource-editor/date-range-picker";
 import {setDateRange} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import moment from "moment";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +33,7 @@ export const AccessiblePatient = () => {
   const patient = useAppSelector(state => state.datasourcePatient.entity);
   const patientList = useAppSelector(state => state.datasourcePatient.entities);
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
+  const loading = useAppSelector(state => state.datasourcePatient.loading);
 
   const initialDateRange = {
     startDate: moment(new Date()).subtract(1, 'week').toDate(),
@@ -73,7 +76,7 @@ export const AccessiblePatient = () => {
 
   return <div>
     <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
-    <DataGrid
+    {!loading ? <DataGrid
       ref={dataGrid}
       dataSource={JSON.parse(JSON.stringify(patientList))}
       showBorders={true}
@@ -143,7 +146,9 @@ export const AccessiblePatient = () => {
               cellRender={commentCellRender}
               allowEditing={false}
       />
-    </DataGrid>
+    </DataGrid> : <Box sx={{display: 'flex'}}>
+      <CircularProgress/>
+    </Box>}
   </div>
 };
 
