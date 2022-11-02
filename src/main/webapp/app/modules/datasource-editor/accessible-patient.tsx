@@ -33,12 +33,13 @@ export const AccessiblePatient = () => {
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
 
   useEffect(() => {
-    dispatch(getAccessiblePatients());
-
-    dispatch(setDateRange({
+    const initialDateRange = {
       startDate: moment(new Date()).subtract(1, 'week').toDate(),
       endDate: new Date(),
-    }));
+    }
+
+    dispatch(setDateRange(initialDateRange));
+    dispatch(getAccessiblePatients(initialDateRange));
   }, []);
 
   useEffect(() => {

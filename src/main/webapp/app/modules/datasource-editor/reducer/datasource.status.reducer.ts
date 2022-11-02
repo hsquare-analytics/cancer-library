@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import axios from "axios";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
-import moment from "moment";
 
 const initialState = {
   selected: {

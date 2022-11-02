@@ -174,7 +174,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getEntities());
+      await store.dispatch(getEntities({}));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
