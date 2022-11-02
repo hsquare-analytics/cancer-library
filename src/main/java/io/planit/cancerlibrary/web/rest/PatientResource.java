@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
-@Transactional
+@Transactional(value = "mybatisTransactionManager")
 public class PatientResource {
 
     private final Logger log = LoggerFactory.getLogger(PatientResource.class);

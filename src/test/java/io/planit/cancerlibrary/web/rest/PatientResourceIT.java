@@ -106,7 +106,7 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("mybatisTransactionManager")
     void testCreatePatient() throws Exception {
         int databaseSizeBeforeCreate = patientMapper.findAll().size();
         restPatientMockMvc
@@ -131,7 +131,7 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("mybatisTransactionManager")
     void testGetAllPatient() throws Exception {
         patientMapper.insert(patient);
 
@@ -155,7 +155,7 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("mybatisTransactionManager")
     void testUpdatePartialPatientUpdate() throws Exception {
         // given
         patientMapper.insert(patient);
@@ -182,7 +182,7 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("mybatisTransactionManager")
     void testGetPatientDTO() throws Exception {
         // given
         patientMapper.insert(patient);
