@@ -2,8 +2,6 @@ package io.planit.cancerlibrary.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import java.util.Objects;
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
@@ -19,6 +17,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
+import java.util.Objects;
 
 @Configuration
 @EnableTransactionManagement
@@ -48,8 +49,7 @@ public class JpaConfiguration {
     @Bean
     @Primary
     public DataSource jpaDatasource() {
-        DataSource dataSource = new HikariDataSource(jpaHikariConfig());
-        return dataSource;
+        return new HikariDataSource(jpaHikariConfig());
     }
 
     @Bean
@@ -64,7 +64,8 @@ public class JpaConfiguration {
             .build();
     }
 
-    @Bean
+    @Bean(name = "jpaTransactionManager")
+    @Primary
     public PlatformTransactionManager jpaTransactionManager(
         @Qualifier("jpaEntityManagerFactory") LocalContainerEntityManagerFactoryBean jpaEntityManagerFactory) {
         return new JpaTransactionManager(Objects.requireNonNull(jpaEntityManagerFactory.getObject()));
