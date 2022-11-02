@@ -1,10 +1,5 @@
 package io.planit.cancerlibrary.web.rest;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Subject;
@@ -12,7 +7,6 @@ import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +14,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IntegrationTest
 @AutoConfigureMockMvc
@@ -76,9 +75,9 @@ class CategoryControllerIT {
         restNavigationMockMvc
             .perform(get(API_URL))
             .andExpect(status().isBadRequest())
-            .andExpect(header().string("X-cancerlibraryApp-error", "error.configurationDeficiency"))
-            .andExpect(header().string("X-cancerlibraryApp-params", "category"))
-            .andExpect(jsonPath("detail").value("There is no usable category"))
+            .andExpect(header().string("X-cancerlibraryApp-error", "error.setupDeficiency"))
+            .andExpect(header().string("X-cancerlibraryApp-params", "setup"))
+            .andExpect(jsonPath("title").value("There is some deficiency of setup"))
         ;
     }
 
