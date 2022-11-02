@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import axios from "axios";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
+import moment from "moment";
 
 const initialState = {
   selected: {
@@ -8,6 +9,10 @@ const initialState = {
   },
   validationFailedItems: [],
   originRow: {},
+  dateRange: {
+    startDate: null,
+    endDate: null,
+  },
   loading: false,
   errorMessage: null,
   updating: false,
@@ -27,23 +32,26 @@ export const DatasourceStatusReducer = createSlice({
     },
     setValidateFailedItems(state, action) {
       state.validationFailedItems = action.payload;
+    },
+    setDateRange(state, action) {
+      state.dateRange = action.payload;
     }
   },
   extraReducers(builder) {
     builder
-    .addMatcher(isPending(getOriginRow), (state) => {
-      state.errorMessage = null;
-      state.updateSuccess = false;
-      state.loading = true;
-    })
-    .addMatcher(isRejected(getOriginRow), (state, action) => {
-      state.loading = false;
-      state.errorMessage = action.error.message;
-    })
-    .addMatcher(isFulfilled(getOriginRow), (state, action) => {
-      state.loading = false;
-      state.originRow = action.payload.data;
-    });
+      .addMatcher(isPending(getOriginRow), (state) => {
+        state.errorMessage = null;
+        state.updateSuccess = false;
+        state.loading = true;
+      })
+      .addMatcher(isRejected(getOriginRow), (state, action) => {
+        state.loading = false;
+        state.errorMessage = action.error.message;
+      })
+      .addMatcher(isFulfilled(getOriginRow), (state, action) => {
+        state.loading = false;
+        state.originRow = action.payload.data;
+      });
   },
 });
 
@@ -55,6 +63,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset, setCategory, setValidateFailedItems } = DatasourceStatusReducer.actions;
+export const {reset, setCategory, setValidateFailedItems, setDateRange} = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;
