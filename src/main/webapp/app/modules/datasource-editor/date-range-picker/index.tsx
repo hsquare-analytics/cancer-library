@@ -28,7 +28,7 @@ export const CustomDateRangePopover = () => {
   return <>
     <Button variant="outlined"
             className={"me-2"}
-            onClick={onDateRangeBoxClick}>{`제출일: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
+            onClick={onDateRangeBoxClick}>{`제출 기간: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
     <IconButton color="primary" aria-label="upload picture" component="label">
       <Search />
     </IconButton>
@@ -50,3 +50,5 @@ export const CustomDateRangePopover = () => {
     </Popover>
   </>
 }
+
+export default CustomDateRangePopover;
