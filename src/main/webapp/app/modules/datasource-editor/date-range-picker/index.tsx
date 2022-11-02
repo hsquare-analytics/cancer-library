@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {APP_LOCAL_DATE_FORMAT} from "app/config/constants";
 import {CustomDateRangePicker} from "app/modules/datasource-editor/date-range-picker/custom-date-range-picker";
 import Button from '@mui/material/Button';
@@ -6,14 +6,12 @@ import Popover from '@mui/material/Popover';
 import moment from "moment";
 import Search from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
+import {useAppSelector} from "app/config/store";
 
 
 export const CustomDateRangePopover = () => {
 
-  const [selectionRange, setSelectionRange] = useState({
-    startDate: moment(new Date()).subtract(3, 'month').toDate(),
-    endDate: new Date(),
-  });
+  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -28,9 +26,9 @@ export const CustomDateRangePopover = () => {
   return <>
     <Button variant="outlined"
             className={"me-2"}
-            onClick={onDateRangeBoxClick}>{`제출 기간: ${moment(selectionRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(selectionRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
+            onClick={onDateRangeBoxClick}>{`제출 기간: ${moment(dateRange.startDate).format(APP_LOCAL_DATE_FORMAT)} ~ ${moment(dateRange.endDate).format(APP_LOCAL_DATE_FORMAT)}`}</Button>
     <IconButton color="primary" aria-label="upload picture" component="label">
-      <Search />
+      <Search/>
     </IconButton>
     <Popover
       id={open ? 'simple-popover' : undefined}
@@ -46,7 +44,7 @@ export const CustomDateRangePopover = () => {
         horizontal: 'left',
       }}
     >
-      <CustomDateRangePicker selectionRange={selectionRange} onChange={(value) => setSelectionRange(value)}/>
+      <CustomDateRangePicker/>
     </Popover>
   </>
 }

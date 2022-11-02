@@ -4,19 +4,15 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import './custom-date-range-picker.scss';
 import {DateRangePicker} from 'react-date-range';
 import moment from "moment";
-import ko from "date-fns/locale/ko"; // the locale you want
+import ko from "date-fns/locale/ko";
+import {useAppDispatch, useAppSelector} from "app/config/store";
+import {setDateRange} from "app/modules/datasource-editor/reducer/datasource.status.reducer"; // the locale you want
 
-interface ICustomDateRangePickerProps {
-  selectionRange: {
-    startDate: Date,
-    endDate: Date
-  },
-  onChange: (selectionRange: any) => void;
-}
 
-export const CustomDateRangePicker = (props: ICustomDateRangePickerProps) => {
+export const CustomDateRangePicker = () => {
+  const dispatch = useAppDispatch();
 
-  const {selectionRange, onChange} = props;
+  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
   return (
     <div className={"custom-date-range-picker-wrapper"}>
@@ -27,11 +23,11 @@ export const CustomDateRangePicker = (props: ICustomDateRangePickerProps) => {
         minDate={moment().subtract(5, 'years').toDate()}
         maxDate={new Date()}
         ranges={[{
-          startDate: selectionRange?.startDate,
-          endDate: selectionRange?.endDate,
+          startDate: dateRange?.startDate,
+          endDate: dateRange?.endDate,
           key: 'selection'
         }]}
-        onChange={(e) => onChange(e.selection)}
+        onChange={(e) => dispatch(setDateRange(e.selection))}
         editableDateInputs={true}
       />
     </div>

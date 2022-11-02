@@ -17,6 +17,8 @@ import "./accessible-patient.scss";
 import {CheckBox} from 'devextreme-react/check-box';
 import {MultiTableEditorPopup} from "app/modules/datasource-editor/multi-table-editor/multi-table-editor-popup";
 import CustomDateRangePopover from "app/modules/datasource-editor/date-range-picker";
+import {setDateRange} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
+import moment from "moment";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +34,11 @@ export const AccessiblePatient = () => {
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
+
+    dispatch(setDateRange({
+      startDate: moment(new Date()).subtract(1, 'week').toDate(),
+      endDate: new Date(),
+    }));
   }, []);
 
   useEffect(() => {
