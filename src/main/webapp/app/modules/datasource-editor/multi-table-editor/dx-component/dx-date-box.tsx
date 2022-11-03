@@ -27,6 +27,7 @@ const DxDateBox = (props: IDxEditCellRenderProps) => {
              onValueChanged={onValueChanged}
              type={props.data.column.dataType}
              disabled={!props.data.column.allowEditing}
+             displayFormat={props.data.column.format}
     />
     <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
