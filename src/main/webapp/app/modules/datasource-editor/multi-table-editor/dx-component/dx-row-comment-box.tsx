@@ -34,11 +34,6 @@ const isNumeric = (str: string | number) => {
   return !isNaN(parseFloat(str));
 }
 
-export const isNotDxCellChanged = (data, row) => {
-  return !isDxCellChanged(data, row);
-};
-
-
 export const getDxCellClass = (data, originRow, isValid: boolean) => {
   if (!isValid) {
     return "border border-danger"
@@ -76,15 +71,12 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
     </div>;
   }
 
-  if (isEmpty(originRow) || isNotDxCellChanged(data, originRow)) {
-    return null;
+  if (isNotEmpty(originRow) && isDxCellChanged(data, originRow)) {
+    return <div>
+      <div className="text-underline p-1">최초: {originRow[data.column.dataField]}</div>
+    </div>;
   }
-
-  return <div>
-    <div className="text-underline p-1">최초: {originRow[data.column.dataField]}</div>
-  </div>;
 }
-
 
 const mapStateToProps = ({datasourceStatus}: IRootState) => ({
   originRow: datasourceStatus.originRow,
