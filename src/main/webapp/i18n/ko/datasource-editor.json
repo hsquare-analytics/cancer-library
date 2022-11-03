@@ -1,8 +1,8 @@
 {
   "cancerLibraryApp": {
     "datasourceEditor": {
-      "updateSuccess": "Patient {{ name }} ({{no}}) status is updated successfully",
-      "updateFailed": "Patient {{ name }} ({{no}}) update failed",
+      "updateSuccess": "환자 {{ name }} ({{no}}) 님의 정보가 성공적으로 업데이트 되었습니다.",
+      "updateFailed": "환자 {{ name }} ({{no}}) 님의 정보 업데이트에 실패하였습니다.",
       "column": {
         "createdBy": "생성자",
         "createdDate": "생성일",
