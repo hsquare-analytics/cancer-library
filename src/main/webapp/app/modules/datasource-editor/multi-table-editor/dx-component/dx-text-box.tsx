@@ -26,7 +26,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
              onValueChanged={onValueChanged}
              disabled={!props.data.column.allowEditing}
     />
-    <DxRowCommentBox data={data}/>
+    <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
 }
 

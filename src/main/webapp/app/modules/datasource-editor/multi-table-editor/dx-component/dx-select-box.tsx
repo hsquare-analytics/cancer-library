@@ -59,7 +59,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           }] : null}
       >
       </SelectBox>
-      <DxRowCommentBox data={data}/>
+      <DxRowCommentBox data={Object.assign({}, data)}/>
     </div>);
 }
 
