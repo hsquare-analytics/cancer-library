@@ -9,6 +9,13 @@ export const isDxCellChanged = (data, row) => {
   const a = data.value;
   const b = row[data.column.dataField];
 
+  if (type === 'selectbox') {
+    if (isNumeric(a) && isNumeric(b)) {
+      return parseFloat(a) !== parseFloat(b);
+    }
+    return a !== b;
+  }
+
   switch (type) {
     case 'date':
       return moment(a).format('YYYY-MM-DD') !== moment(b).format('YYYY-MM-DD');
@@ -19,6 +26,12 @@ export const isDxCellChanged = (data, row) => {
     default:
       return a !== b;
   }
+}
+
+const isNumeric = (str: string | number) => {
+  if (typeof str === "number") return true;
+  if (typeof str !== "string") return false // we only process strings!
+  return !isNaN(parseFloat(str));
 }
 
 export const isNotDxCellChanged = (data, row) => {
