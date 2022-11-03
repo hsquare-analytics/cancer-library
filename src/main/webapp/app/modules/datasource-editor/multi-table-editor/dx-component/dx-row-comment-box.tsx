@@ -1,7 +1,10 @@
 import React from "react";
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import {isChangedCell} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
+import {
+  getFormattedValue,
+  isChangedCell
+} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 
 
 interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
@@ -21,7 +24,11 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
 
   if (isChangedCell(data, originRow)) {
     return <div>
-      <div className="text-underline p-1">최초: {originRow[data.column.dataField]}</div>
+      <div className="text-underline p-1">최초: {getFormattedValue({
+        value: originRow[data.column.dataField],
+        type: data.column.dataType,
+        format: data.column.format
+      })}</div>
     </div>;
   }
 }

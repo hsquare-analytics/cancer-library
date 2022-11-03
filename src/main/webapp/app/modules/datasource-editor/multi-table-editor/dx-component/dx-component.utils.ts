@@ -52,6 +52,21 @@ export const isChangedCell = (data, originRow) => {
   }
 }
 
+export const getFormattedValue = (props: { value: any, type: any, format: any }) => {
+  const {value, type, format} = props;
+  switch (type) {
+    case 'date':
+    case 'datetime':
+      if (Date.parse(value)) {
+        return moment(value).format('yyyy/MM/DD');
+      }
+      return value;
+    default:
+      return value;
+  }
+
+}
+
 
 export const getDxCellClass = (data, originRow, isValidColumn: boolean) => {
   if (!isValidColumn) {
