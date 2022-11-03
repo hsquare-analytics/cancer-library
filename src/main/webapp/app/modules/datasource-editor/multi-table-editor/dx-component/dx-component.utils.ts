@@ -23,7 +23,7 @@ export const isNumeric = (str: string | number) => {
 }
 
 
-export const isDxCellChanged = (data, originRow) => {
+export const isChangedCell = (data, originRow) => {
   if (isEmpty(data) || isEmpty(originRow)) {
     return false;
   }
@@ -58,7 +58,7 @@ export const getDxCellClass = (data, originRow, isValidColumn: boolean) => {
     return "border border-danger"
   }
 
-  if (isDxCellChanged(data, originRow)) {
+  if (isChangedCell(data, originRow)) {
     return "border border-info"
   }
 }
