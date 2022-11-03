@@ -29,7 +29,7 @@ export const AccessiblePatient = () => {
 
   const multiTableEditorPopupRef = useRef(null);
 
-  const canReview = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
+  const isSudoUser = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]));
   const patient = useAppSelector(state => state.datasourcePatient.entity);
   const patientList = useAppSelector(state => state.datasourcePatient.entities);
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
@@ -88,7 +88,7 @@ export const AccessiblePatient = () => {
       editing={{
         mode: 'row',
         allowAdding: false,
-        allowUpdating: canReview,
+        allowUpdating: isSudoUser,
       }}
       onRowUpdating={(e) => onRowUpdating(e)}
       onRowDblClick={onRowDblClick}
@@ -99,9 +99,9 @@ export const AccessiblePatient = () => {
     >
       <Toolbar>
         <Item name={"searchPanel"}/>
-        <Item location={"before"}>
+        {isSudoUser ? <Item location={"before"}>
           <CustomDateRangePopover/>
-        </Item>
+        </Item> : null}
       </Toolbar>
       <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
       {
