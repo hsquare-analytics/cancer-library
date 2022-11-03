@@ -29,6 +29,7 @@ export const CustomDateRangePicker = () => {
         }]}
         onChange={(e) => dispatch(setDateRange(e.selection))}
         editableDateInputs={true}
+        dateDisplayFormat="yyyy-MM-dd"
       />
     </div>
   );
