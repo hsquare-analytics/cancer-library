@@ -64,7 +64,8 @@ export const fireDeclineReasonSwal = (patient: IPatient) => Swal.fire({
   }),
   input: 'textarea',
   inputValue: patient ? patient.declineReason : "",
-  showCancelButton: true,
+  showCloseButton: true,
+  showCancelButton: false,
   showConfirmButton: false,
   cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
   customClass: {
