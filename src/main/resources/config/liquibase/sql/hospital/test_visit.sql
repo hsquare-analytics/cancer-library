@@ -50,7 +50,7 @@ insert into ph_item_lookup (item_id, order_no, title, description) values (2704,
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2705, 'PT_BRDY_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2705, 5, '생년월일', true);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, format) values (2705, 5, '생년월일', true, 'yyyy/MM/dd');
 insert into ph_item_attribute (item_id, data_type) values (2705, 'date');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
@@ -65,13 +65,13 @@ insert into ph_item_lookup (item_id, order_no, title, description) values (2706,
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2707, 'IDX_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2707, 7, '수진일', true);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, format) values (2707, 7, '수진일', true, 'yyyy/MM/dd');
 insert into ph_item_attribute (item_id, data_type) values (2707, 'date');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2708, 'MED_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2708, 8, '수진 기록일시', true);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, format) values (2708, 8, '수진 기록일시', true, 'yyyy/MM/dd HH:mm:ss');
 insert into ph_item_attribute (item_id, data_type) values (2708, 'date');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
@@ -118,7 +118,7 @@ insert into ph_item_attribute (item_id, data_type) values (2714, 'string');
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2715, 'ADS_DT', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2715, 15, '입원일', true);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, format) values (2715, 15, '입원일', true, 'yyyy/MM/dd');
 insert into ph_item_attribute (item_id, data_type) values (2715, 'date');
 
 
