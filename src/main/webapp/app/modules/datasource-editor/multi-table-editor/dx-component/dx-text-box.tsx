@@ -2,10 +2,11 @@ import React from "react";
 import TextBox from 'devextreme-react/text-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
-import DxRowCommentBox, {
-  getDxCellClass
-} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
-import {isValid} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
+import DxRowCommentBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
+import {
+  getDxCellClass,
+  isValid
+} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 
 
 interface IDxEditCellRenderProps extends StateProps, DispatchProps {
