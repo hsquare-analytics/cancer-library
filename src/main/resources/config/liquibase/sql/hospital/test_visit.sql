@@ -44,8 +44,8 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 values (2704, 'SEX_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2704, 4, '성별', true);
 insert into ph_item_attribute (item_id, data_type) values (2704, 'selectbox');
-insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 1, 'M', '1');
-insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 2, 'F', '2');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 1, 'M', 'M');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2704, 2, 'F', 'F');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
@@ -58,9 +58,9 @@ insert into ph_item (id, title, activated, order_no, category_id, created_by, cr
 values (2706, 'HSP_TP_CD', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
 insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2706, 6, '병원코드', true);
 insert into ph_item_attribute (item_id, data_type) values (2706, 'selectbox');
-insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 1, '01', '1');
-insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 2, '02', '2');
-insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 3, '03', '3');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 1, '01', '01');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 2, '02', '02');
+insert into ph_item_lookup (item_id, order_no, title, description) values (2706, 3, '03', '03');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
