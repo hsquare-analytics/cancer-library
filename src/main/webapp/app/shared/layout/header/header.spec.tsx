@@ -10,7 +10,7 @@ describe('Header', () => {
   let mountedWrapper;
   const devProps = {
     isAuthenticated: true,
-    isSupervisor: true,
+    hasSuAuthority: true,
     isAdmin: true,
     currentLocale: 'en',
     ribbonEnv: 'dev',
@@ -25,17 +25,17 @@ describe('Header', () => {
   };
   const supervisorProps = {
     ...prodProps,
-    isSupervisor: true,
+    hasSuAuthority: true,
     isAdmin: false,
   }
   const userProps = {
     ...prodProps,
-    isSupervisor: false,
+    hasSuAuthority: false,
     isAdmin: false,
   };
   const guestProps = {
     ...prodProps,
-    isSupervisor: false,
+    hasSuAuthority: false,
     isAdmin: false,
     isAuthenticated: false,
   };
