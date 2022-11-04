@@ -136,10 +136,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           scrolling={{mode: 'standard', showScrollbar: 'always'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatus())}
-          onSaved={() => {
-            dispatch(resetFlag());
-            dispatch(resetDatasourceStatus())
-          }}
+          onSaved={() => dispatch(resetFlag())}
           columnAutoWidth={true}
           onRowValidating={(e) => onRowValidating(e, {
               category,
