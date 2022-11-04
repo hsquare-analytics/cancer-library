@@ -168,6 +168,20 @@ export const ItemUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('cancerLibraryApp.item.property.sortIndex')}
+                id="item-sortIndex"
+                name="property.sortIndex"
+                data-cy="property.sortIndex"
+                type="number"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.property.sortDirection')}
+                id="item-sortDirection"
+                name="property.sortDirection"
+                data-cy="property.sortDirection"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('cancerLibraryApp.item.lookupList')}
                 id="item-lookupList"
                 name="lookupList"

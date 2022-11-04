@@ -3,10 +3,11 @@ import SelectBox from 'devextreme-react/select-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 import LookupEditor from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor";
-import DxRowCommentBox, {
-  getDxCellClass
-} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
-import {isValid} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
+import DxRowCommentBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
+import {
+  getDxCellClass,
+  isValid
+} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -59,7 +60,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           }] : null}
       >
       </SelectBox>
-      <DxRowCommentBox data={data}/>
+      <DxRowCommentBox data={Object.assign({}, data)}/>
     </div>);
 }
 

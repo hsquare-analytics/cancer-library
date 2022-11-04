@@ -31,7 +31,9 @@
         "caption": "caption",
         "allowEditing": "Allow Editing",
         "required": "Required",
-        "format": "Format"
+        "format": "Format",
+        "sortIndex" : "Sort Index",
+        "sortDirection" : "Sort Direction"
       },
       "lookupList": "lookup list"
     }

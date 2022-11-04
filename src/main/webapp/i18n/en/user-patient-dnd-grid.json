@@ -1,6 +1,7 @@
 {
   "cancerLibraryApp": {
     "userPatientDndGrid": {
+      "confirmUpdate": "Are you sure you want to update the patient's information?",
       "updateAlert": {
         "title": "Update Complete",
         "description": "Patient authorization updated successfully"
