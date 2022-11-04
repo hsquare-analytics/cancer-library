@@ -13,7 +13,7 @@ import {setLocale} from 'app/shared/reducers/locale';
 export interface IHeaderProps {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  isSupervisor: boolean;
+  hasSuAuthority: boolean;
   ribbonEnv: string;
   isInProduction: boolean;
   isOpenAPIEnabled: boolean;
@@ -55,7 +55,7 @@ const Header = (props: IHeaderProps) => {
           <Nav id="header-tabs" className="ms-auto flex-column" navbar>
             <Home/>
             {props.isAuthenticated && <DatasourceEditorMenu/>}
-            {props.isAuthenticated && (props.isSupervisor || props.isAdmin) && <UserPatientDndGridMenu/>}
+            {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
             {props.isAuthenticated && props.isAdmin && (
               <>
                 <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
