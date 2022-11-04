@@ -19,9 +19,13 @@ public class PersonMapper implements RowMapper<Patient> {
         patient.setIdxDt(resultSet.getDate("idx_dt"));
         patient.setStatus(resultSet.getString("status"));
         patient.setCreatedBy(resultSet.getString("created_by"));
-        patient.setCreatedDate(resultSet.getTimestamp("created_date").toInstant());
+        if (resultSet.getTimestamp("created_date") != null) {
+            patient.setCreatedDate(resultSet.getTimestamp("created_date").toInstant());
+        }
         patient.setLastModifiedBy(resultSet.getString("last_modified_by"));
-        patient.setLastModifiedDate(resultSet.getTimestamp("last_modified_date").toInstant());
+        if (resultSet.getTimestamp("last_modified_date") != null) {
+            patient.setLastModifiedDate(resultSet.getTimestamp("last_modified_date").toInstant());
+        }
         patient.setDeclineReason(resultSet.getString("decline_reason"));
         patient.setComment(resultSet.getString("comment"));
 
