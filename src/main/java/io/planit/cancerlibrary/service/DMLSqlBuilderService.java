@@ -39,7 +39,7 @@ public class DMLSqlBuilderService {
         this.timeService = timeService;
     }
 
-    public SQL getInsertSQL(Long categoryId, Map<String, Object> map) {
+    public String getInsertSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
@@ -65,10 +65,10 @@ public class DMLSqlBuilderService {
             .VALUES(STATUS_COLUMN, String.format("'%s'", ReviewConstants.SUBMITTED));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
-    public SQL getReadUpdatedRowSQL(Long categoryId, Map<String, Object> map) {
+    public String getReadUpdatedRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
@@ -78,10 +78,10 @@ public class DMLSqlBuilderService {
             WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
-    public SQL getReadOriginRowSQL(Long categoryId, Map<String, Object> map) {
+    public String getReadOriginRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
@@ -91,20 +91,20 @@ public class DMLSqlBuilderService {
             WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
-    public SQL getReadAllSQL(Long categoryId) {
+    public String getReadAllSQL(Long categoryId) {
         log.debug("Request to get read all query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
         SQL sql = new SQL().SELECT("*").FROM(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
-    public SQL getUpdateSQL(Long categoryId, Map<String, Object> map) {
+    public String getUpdateSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
@@ -128,10 +128,10 @@ public class DMLSqlBuilderService {
             .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
-    public SQL getDeleteSQL(Long categoryId, Map<String, String> map) {
+    public String getDeleteSQL(Long categoryId, Map<String, String> map) {
         log.debug("Request to get delete query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
@@ -140,7 +140,7 @@ public class DMLSqlBuilderService {
             .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get("idx")));
 
         loggingFinalSQL(sql);
-        return sql;
+        return sql.toString();
     }
 
     private void loggingFinalSQL(SQL sql) {

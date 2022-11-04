@@ -27,7 +27,7 @@ public class UnionSqlBuilderService {
         this.itemRepository = itemRepository;
     }
 
-    public SQL getUnionSelectSQL(Long categoryId, String patientNo) {
+    public String getUnionSelectSQL(Long categoryId, String patientNo) {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
@@ -42,7 +42,7 @@ public class UnionSqlBuilderService {
             .ORDER_BY(IDX_COLUMN);
 
         log.debug("Assembled final sql: {} ", sql);
-        return sql;
+        return sql.toString();
     }
 
     private SQL getUpdatedListSQL(Category category, List<Item> itemList, String patientNo) {

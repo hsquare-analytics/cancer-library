@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.mapper;
+package io.planit.cancerlibrary.dao;
 
 import io.planit.cancerlibrary.domain.Patient;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,11 +39,8 @@ public class PatientDao {
         return jdbcTemplate.query(SQL_FIND_ALL, new PatientMapper());
     }
 
-    public List<Patient> findAllByCreatedDateBetween(String startDate, String endDate) {
-        return jdbcTemplate.query(SQL_FIND_ALL_BY_CREATED_DATE_BETWEEN, Map.of(
-            "startDate", startDate,
-            "endDate", endDate
-        ), new PatientMapper());
+    public List<Patient> findAllByCreatedDateBetween(Map<String, Instant> dateRange) {
+        return jdbcTemplate.query(SQL_FIND_ALL_BY_CREATED_DATE_BETWEEN, dateRange, new PatientMapper());
     }
 
     public List<Patient> findAllByPatientNos(List<String> patientNos) {

@@ -16,7 +16,7 @@ spring:
       username: CancerLibraryApp
       password:
       auto-commit: false
-    mybatis:
+    jdbc:
       type: com.zaxxer.hikari.HikariDataSource
       jdbc-url: jdbc:tc:postgresql:13.2:///cancerlibraryapp?TC_TMPFS=/testtmpfs:rw
       username: CancerLibraryApp

@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.mapper;
+package io.planit.cancerlibrary.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -24,7 +24,7 @@ public class DatasourceDao {
                 if (rs.next()) {
                     return rs.getLong(1);
                 } else {
-                    throw new SQLException("Unable to retrieve value from sequence chessgame_seq.");
+                    throw new SQLException("Unable to retrieve value from sequence sequence_generator.");
                 }
             });
     }

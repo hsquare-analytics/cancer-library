@@ -84,7 +84,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
             put("column2", "test2");
-        }}).toString();
+        }});
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
@@ -109,7 +109,7 @@ class DMLSqlBuilderServiceIT {
         // when
         String result = dmlSqlBuilderService.getReadUpdatedRowSQL(category.getId(), new HashMap<>() {{
             put("idx", "test_idx");
-        }}).toString();
+        }});
 
         // then
         assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"))
@@ -132,7 +132,7 @@ class DMLSqlBuilderServiceIT {
         // when
         String result = dmlSqlBuilderService.getReadOriginRowSQL(category.getId(), new HashMap<>() {{
             put("idx", "test_idx");
-        }}).toString();
+        }});
 
         // then
         assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle()))
@@ -144,7 +144,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     void testReadAllSql() {
         // when
-        String result = dmlSqlBuilderService.getReadAllSQL(category.getId()).toString();
+        String result = dmlSqlBuilderService.getReadAllSQL(category.getId());
 
         // then
         assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"));
@@ -172,7 +172,7 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
             put("column2", "test2");
             put("status", "STATUS_APPROVED");
-        }}).toString();
+        }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
@@ -195,7 +195,7 @@ class DMLSqlBuilderServiceIT {
         // when
         String result = dmlSqlBuilderService.getDeleteSQL(category.getId(), new HashMap<>() {{
             put("idx", "test_idx");
-        }}).toString();
+        }});
 
         // then
         assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED");

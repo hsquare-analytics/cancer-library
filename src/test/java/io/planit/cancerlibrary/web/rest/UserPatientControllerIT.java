@@ -1,27 +1,15 @@
 package io.planit.cancerlibrary.web.rest;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.not;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
-import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.web.rest.UserPatientController.DivisiblePatientVM;
 import io.planit.cancerlibrary.web.rest.UserPatientController.UserPatientAuthorizationsVM;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,6 +17,15 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @IntegrationTest
@@ -46,7 +43,7 @@ class UserPatientControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private PatientMapper patientMapper;
+    private PatientDao patientDao;
 
     @Autowired
     private UserPatientRepository userPatientRepository;
@@ -60,7 +57,7 @@ class UserPatientControllerIT {
         userRepository.saveAndFlush(user);
 
         Patient patient = PatientResourceIT.createPatientDTO();
-        patientMapper.insert(patient);
+        patientDao.insert(patient);
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
@@ -78,7 +75,7 @@ class UserPatientControllerIT {
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithIndiscerptiblePatient() throws Exception {
         Patient patient = PatientResourceIT.createPatientDTO();
-        patientMapper.insert(patient);
+        patientDao.insert(patient);
 
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
             .andExpect(status().isOk())
@@ -103,7 +100,7 @@ class UserPatientControllerIT {
         patientNos.forEach(patientNo -> {
             Patient patient = PatientResourceIT.createPatientDTO().ptNo(patientNo);
             patient.setPtNo(patientNo);
-            patientMapper.insert(patient);
+            patientDao.insert(patient);
             patientList.add(new DivisiblePatientVM(patient, true));
         });
 

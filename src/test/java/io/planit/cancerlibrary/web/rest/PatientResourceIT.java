@@ -2,8 +2,8 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
-import io.planit.cancerlibrary.mapper.PatientMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class PatientResourceIT {
     private static final String ENTITY_API_URL = "/api/patients";
 
     @Autowired
-    private PatientMapper patientMapper;
+    private PatientDao patientDao;
 
     @Autowired
     private MockMvc restPatientMockMvc;
@@ -106,15 +106,15 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional("mybatisTransactionManager")
+    @Transactional("jdbcTemplateTransactionManager")
     void testCreatePatient() throws Exception {
-        int databaseSizeBeforeCreate = patientMapper.findAll().size();
+        int databaseSizeBeforeCreate = patientDao.findAll().size();
         restPatientMockMvc
             .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(patient)))
             .andExpect(status().isCreated());
 
-        List<Patient> patientList = patientMapper.findAll();
+        List<Patient> patientList = patientDao.findAll();
         assertThat(patientList).hasSize(databaseSizeBeforeCreate + 1);
         Patient testPatient = patientList.get(patientList.size() - 1);
         assertThat(testPatient.getPtNo()).isEqualTo(DEFAULT_PT_NO);
@@ -131,9 +131,9 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional("mybatisTransactionManager")
+    @Transactional("jdbcTemplateTransactionManager")
     void testGetAllPatient() throws Exception {
-        patientMapper.insert(patient);
+        patientDao.insert(patient);
 
         restPatientMockMvc
             .perform(get(ENTITY_API_URL))
@@ -155,11 +155,11 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional("mybatisTransactionManager")
+    @Transactional("jdbcTemplateTransactionManager")
     void testUpdatePartialPatientUpdate() throws Exception {
         // given
-        patientMapper.insert(patient);
-        int databaseSizeBeforeUpdate = patientMapper.findAll().size();
+        patientDao.insert(patient);
+        int databaseSizeBeforeUpdate = patientDao.findAll().size();
 
         // when
         patient.setPtNm(UPDATED_PT_NM);
@@ -172,7 +172,7 @@ public class PatientResourceIT {
             .andExpect(status().isOk());
 
         // then
-        List<Patient> patientList = patientMapper.findAll();
+        List<Patient> patientList = patientDao.findAll();
         assertThat(patientList).hasSize(databaseSizeBeforeUpdate);
         Patient testPatient = patientList.get(patientList.size() - 1);
         assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
@@ -182,10 +182,10 @@ public class PatientResourceIT {
     }
 
     @Test
-    @Transactional("mybatisTransactionManager")
+    @Transactional("jdbcTemplateTransactionManager")
     void testGetPatientDTO() throws Exception {
         // given
-        patientMapper.insert(patient);
+        patientDao.insert(patient);
 
         // when, then
         restPatientMockMvc.perform(get(ENTITY_API_URL + "/{ptNo}", patient.getPtNo()))

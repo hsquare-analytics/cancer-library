@@ -1,8 +1,8 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
-import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
@@ -29,12 +29,12 @@ public class PatientController {
 
     private final UserPatientRepository userPatientRepository;
 
-    private final PatientMapper patientMapper;
+    private final PatientDao paientDao;
 
     public PatientController(UserPatientRepository userPatientRepository,
-        PatientMapper patientMapper) {
+        PatientDao paientDao) {
         this.userPatientRepository = userPatientRepository;
-        this.patientMapper = patientMapper;
+        this.paientDao = paientDao;
     }
 
     @GetMapping("/patients/accessible-patient-list")
@@ -46,7 +46,7 @@ public class PatientController {
                 "startDate", startDate.minus(1, ChronoUnit.DAYS),
                 "endDate", endDate.plus(1, ChronoUnit.DAYS)
            );
-            List<Patient> result = patientMapper.findAllByCreatedDateBetween(dateRange);
+            List<Patient> result = paientDao.findAllByCreatedDateBetween(dateRange);
             return ResponseEntity.ok().body(result);
         } else {
             String login = SecurityUtils.getCurrentUserLogin().orElseThrow().toLowerCase();
@@ -54,7 +54,7 @@ public class PatientController {
                 .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
                 .collect(Collectors.toList());
 
-            List<Patient> result = patientMapper.findAllByPatientNos(accessiblePatientNoList);
+            List<Patient> result = paientDao.findAllByPatientNos(accessiblePatientNoList);
 
             return ResponseEntity.ok().body(result);
         }

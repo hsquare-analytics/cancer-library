@@ -1,9 +1,8 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.dao.DatasourceDao;
 import io.planit.cancerlibrary.domain.*;
-import io.planit.cancerlibrary.mapper.DatasourceMapper;
-import io.planit.cancerlibrary.mapper.SQLAdapter;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.service.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +57,7 @@ class DatasourceControllerIT {
     private UserCategoryRepository userCategoryRepository;
 
     @Autowired
-    private DatasourceMapper datasourceMapper;
+    private DatasourceDao datasourceDao;
 
     @MockBean
     private SequenceGenerator sequenceGenerator;
@@ -111,8 +110,8 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = '" + sequence + "'"));
+        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+            "select * from ph_test_updated where idx = '" + sequence + "'");
 
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
     }
@@ -147,8 +146,7 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = 10001"));
+        List<Map<String, Object>> result = datasourceDao.executeSelectSQL("select * from ph_test_updated where idx = 10001");
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
@@ -157,8 +155,7 @@ class DatasourceControllerIT {
     @Test
     @Transactional
     void testDatasourceExistRowUpdate() throws Exception {
-        datasourceMapper.executeSelectSQL(
-            new SQLAdapter("insert into ph_test_updated (idx, name) values ('10001', 'zero')"));
+        datasourceDao.executeInsertSQL("insert into ph_test_updated (idx, name) values ('10001', 'zero')");
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -176,8 +173,8 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = '10001'"));
+        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+            "select * from ph_test_updated where idx = '10001'");
 
         // todo: mybatis transaction 처리 안됨...
 //        assertThat(result.size()).isEqualTo(1);
@@ -189,7 +186,7 @@ class DatasourceControllerIT {
     @Transactional
     void testGetDatasourceRow() throws Exception {
         // given
-        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test (idx, name) values (10001, 'zero')"));
+        datasourceDao.executeInsertSQL("insert into ph_test (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
@@ -204,15 +201,15 @@ class DatasourceControllerIT {
     @Transactional
     void testDeleteDatasourceRow() throws Exception {
         // given
-        datasourceMapper.executeSelectSQL(new SQLAdapter("insert into ph_test_updated (idx, name) values (10001, 'zero')"));
+        datasourceDao.executeInsertSQL("insert into ph_test_updated (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
                 delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceMapper.executeSelectSQL(
-            new SQLAdapter("select * from ph_test_updated where idx = '10001'"));
+        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+            "select * from ph_test_updated where idx = '10001'");
 
         assertThat(result).isEmpty();
     }

@@ -1,25 +1,22 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
-import io.planit.cancerlibrary.mapper.PatientMapper;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -32,24 +29,24 @@ public class UserPatientController {
 
     private final UserPatientRepository userPatientRepository;
 
-    private final PatientMapper patientMapper;
+    private final PatientDao patientDao;
 
     public UserPatientController(
         UserRepository userRepository,
         UserPatientRepository userPatientRepository,
-        PatientMapper patientMapper) {
+        PatientDao patientDao) {
         this.userRepository = userRepository;
         this.userPatientRepository = userPatientRepository;
-        this.patientMapper = patientMapper;
+        this.patientDao = patientDao;
     }
 
     @GetMapping("/user-patients/divisible-patient-list")
     @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')" +
-        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')" )
+        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')")
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
 
-        List<Patient> patientList = patientMapper.findAll();
+        List<Patient> patientList = patientDao.findAll();
         List<String> authorizedPatientNoList = userPatientRepository
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
@@ -64,19 +61,20 @@ public class UserPatientController {
 
     @PostMapping("/user-patients/user-patient-authorizations")
     @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')" +
-        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')" )
+        " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')")
     public ResponseEntity<List<DivisiblePatientVM>> createUserPatientAuthorizations(
         @RequestBody UserPatientAuthorizationsVM userPatientAuthorizationsVM) {
         log.debug("REST request to create user patient authorizations");
 
         String login = userPatientAuthorizationsVM.getLogin();
         User user = userRepository.findOneByLogin(login)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserPatientControllerException("User not found"));
 
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
         userPatientAuthorizationsVM.getPatients().stream().filter(DivisiblePatientVM::isAuthorized).forEach(patient -> {
-            patientMapper.findByPatientNo(patient.getPtNo())
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
+            if (!patientDao.findByPatientNo(patient.getPtNo()).isPresent()) {
+                throw new UserPatientControllerException("Patient not found");
+            }
 
             UserPatient userPatient = new UserPatient();
             userPatient.setUser(user);
@@ -85,6 +83,12 @@ public class UserPatientController {
         });
 
         return ResponseEntity.ok().body(userPatientAuthorizationsVM.getPatients());
+    }
+
+    private static class UserPatientControllerException extends RuntimeException {
+        private UserPatientControllerException(String message) {
+            super(message);
+        }
     }
 
     static class UserPatientAuthorizationsVM {
