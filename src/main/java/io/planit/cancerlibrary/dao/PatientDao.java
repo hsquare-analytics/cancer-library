@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.dao;
 
 import io.planit.cancerlibrary.domain.Patient;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -18,70 +19,83 @@ import java.util.Optional;
 public class PatientDao {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String SQL_FIND_ALL = "SELECT * FROM TEST_PATIENT";
-
-    private static final String SQL_FIND_ALL_BY_CREATED_DATE_BETWEEN = "SELECT * FROM TEST_PATIENT WHERE created_date BETWEEN :startDate AND :endDate";
-
-    private static final String SQL_FIND_ALL_BY_PT_NOS = "SELECT * FROM TEST_PATIENT WHERE PT_NO IN (:ptNos)";
-
-    private static final String SQL_FIND_ONE_BY_PT_NO = "SELECT * FROM TEST_PATIENT WHERE PT_NO = :ptNo";
-
-    private static final String SQL_INSERT_PATIENT = "INSERT INTO TEST_PATIENT (PT_NO, PT_NM, SEX_TP_CD, PT_BRDY_DT, HSP_TP_CD, IDX_DT, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COMMENT, DECLINE_REASON)" +
-        " VALUES ( :ptNo, :ptNm, :sexTpCd, :ptBrdyDt, :hspTpCd, :idxDt, :status, :createdBy, :createdDate, :lastModifiedBy, :lastModifiedDate, :comment, :declineReason)";
-
-    private static final String SQL_CHECK_PATIENT_EXISTS = "SELECT COUNT(*) FROM TEST_PATIENT WHERE PT_NO = :ptNo";
+    private static final String TARGET_TABLE = "TEST_PATIENT";
 
     public PatientDao(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Patient> findAll() {
-        return jdbcTemplate.query(SQL_FIND_ALL, new PatientMapper());
+        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE);
+        return jdbcTemplate.query(sql.toString(), new PatientMapper());
     }
 
     public List<Patient> findAllByCreatedDateBetween(Map<String, Instant> dateRange) {
-        return jdbcTemplate.query(SQL_FIND_ALL_BY_CREATED_DATE_BETWEEN, dateRange, new PatientMapper());
+        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE).WHERE("CREATED_DATE BETWEEN :startDate AND :endDate");
+        return jdbcTemplate.query(sql.toString(), dateRange, new PatientMapper());
     }
 
     public List<Patient> findAllByPatientNos(List<String> patientNos) {
-        return jdbcTemplate.query(SQL_FIND_ALL_BY_PT_NOS, Map.of("ptNos", patientNos), new PatientMapper());
+        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE).WHERE("PT_NO IN (:ptNos)");
+        return jdbcTemplate.query(sql.toString(), Map.of("ptNos", patientNos), new PatientMapper());
     }
 
     public Integer insert(Patient patient) {
+        SQL sql = new SQL().INSERT_INTO(TARGET_TABLE)
+            .VALUES("PT_NO", ":ptNo")
+            .VALUES("PT_NM", ":ptNm")
+            .VALUES("SEX_TP_CD", ":sexTpCd")
+            .VALUES("PT_BRDY_DT", ":ptBrdyDt")
+            .VALUES("HSP_TP_CD", ":hspTpCd")
+            .VALUES("IDX_DT", ":idxDt")
+            .VALUES("STATUS", ":status")
+            .VALUES("CREATED_BY", ":createdBy")
+            .VALUES("CREATED_DATE", ":createdDate")
+            .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
+            .VALUES("LAST_MODIFIED_DATE", ":lastModifiedDate")
+            .VALUES("COMMENT", ":comment")
+            .VALUES("DECLINE_REASON", ":declineReason");
+
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        return jdbcTemplate.update(SQL_INSERT_PATIENT, namedParameters);
+        return jdbcTemplate.update(sql.toString(), namedParameters);
     }
 
     public boolean existsByPatientNo(String patientNo) {
-        return jdbcTemplate.queryForObject(SQL_CHECK_PATIENT_EXISTS, Map.of("ptNo", patientNo), Integer.class) > 0;
+        SQL sql = new SQL().SELECT("COUNT(*)").FROM(TARGET_TABLE).WHERE("PT_NO = :ptNo");
+        return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
     }
 
     public Optional<Patient> findByPatientNo(String patientNo) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_ONE_BY_PT_NO, Map.of("ptNo", patientNo), new PatientMapper()));
+        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE).WHERE("PT_NO = :ptNo");
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
     public Integer update(Patient patient) {
-        String sql = "UPDATE TEST_PATIENT SET LAST_MODIFIED_BY = :lastModifiedBy, LAST_MODIFIED_DATE = :lastModifiedDate";
+
+        SQL sql = new SQL().UPDATE(TARGET_TABLE);
+        sql.SET("LAST_MODIFIED_BY = :lastModifiedBy")
+            .SET("LAST_MODIFIED_DATE = :lastModifiedDate");
+
         if (patient.getStatus() != null) {
-            sql += ", STATUS = :status";
+            sql.SET("STATUS = :status");
         }
         if (patient.getComment() != null) {
-            sql += ", COMMENT = :comment";
+            sql.SET("COMMENT = :comment");
         }
         if (patient.getDeclineReason() != null) {
-            sql += ", DECLINE_REASON = :declineReason";
+            sql.SET("DECLINE_REASON = :declineReason");
         }
         if (patient.getCreatedBy() != null) {
-            sql += ", CREATED_BY = :createdBy";
+            sql.SET("CREATED_BY = :createdBy");
         }
         if (patient.getCreatedDate() != null) {
-            sql += ", CREATED_DATE = :createdDate";
+            sql.SET("CREATED_DATE = :createdDate");
         }
 
-        sql += " WHERE PT_NO = :ptNo";
+        sql.WHERE("PT_NO = :ptNo");
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        return jdbcTemplate.update(sql, namedParameters);
+        return jdbcTemplate.update(sql.toString(), namedParameters);
     }
 
     private static class PatientMapper implements RowMapper<Patient> {
