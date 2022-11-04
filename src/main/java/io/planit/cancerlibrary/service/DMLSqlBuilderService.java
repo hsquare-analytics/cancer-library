@@ -75,7 +75,7 @@ public class DMLSqlBuilderService {
         SQL sql = new SQL().
             SELECT("*").
             FROM(sqlization(category.getTitle() + UPDATED_SUFFIX)).
-            WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
+            WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
         return sql.toString();
@@ -88,7 +88,7 @@ public class DMLSqlBuilderService {
         SQL sql = new SQL().
             SELECT("*").
             FROM(sqlization(category.getTitle())).
-            WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
+            WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
         return sql.toString();
@@ -118,14 +118,14 @@ public class DMLSqlBuilderService {
         itemList.forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (map.containsKey(mapKey)) {
-                sql.SET(String.format(SQL_EQUAL_SYNTAX, sqlization(item.getTitle()), map.get(mapKey)));
+                sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
             }
         });
 
-        sql.SET(String.format(SQL_EQUAL_SYNTAX, LAST_MODIFIED_BY, user.getLogin()))
-            .SET(String.format(SQL_EQUAL_SYNTAX, LAST_MODIFIED_DATE, timeService.getCurrentTime()))
-            .SET(String.format(SQL_EQUAL_SYNTAX, STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
-            .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
+        sql.SET(getSqlEqualSyntax(LAST_MODIFIED_BY, user.getLogin()))
+            .SET(getSqlEqualSyntax(LAST_MODIFIED_DATE, timeService.getCurrentTime()))
+            .SET(getSqlEqualSyntax(STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
+            .WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
         return sql.toString();
@@ -137,7 +137,7 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL()
             .DELETE_FROM(sqlization(category.getTitle() + UPDATED_SUFFIX))
-            .WHERE(String.format(SQL_EQUAL_SYNTAX, IDX_COLUMN, map.get("idx")));
+            .WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get("idx")));
 
         loggingFinalSQL(sql);
         return sql.toString();
