@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PatientDao {
@@ -39,19 +40,19 @@ public class PatientDao {
         return jdbcTemplate.query(SQL_FIND_ALL_BY_PT_NOS, new PersonMapper(), new Object[]{patientNos});
     }
 
-    public boolean insert(Patient patient) {
-        return jdbcTemplate.update(SQL_INSERT_PATIENT, patient) > 0;
+    public Integer insert(Patient patient) {
+        return jdbcTemplate.update(SQL_INSERT_PATIENT, patient);
     }
 
-    public boolean existByPatientNo(String patientNo) {
+    public boolean existsByPatientNo(String patientNo) {
         return jdbcTemplate.queryForObject(SQL_CHECK_PATIENT_EXISTS, Integer.class, new Object[]{patientNo}) > 0;
     }
 
-    public Patient findByPatientNo(String patientNo) {
-        return jdbcTemplate.queryForObject(SQL_FIND_ONE_BY_PT_NO, new PersonMapper(), new Object[]{patientNo});
+    public Optional<Patient> findByPatientNo(String patientNo) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(SQL_FIND_ONE_BY_PT_NO, new PersonMapper(), new Object[]{patientNo}));
     }
 
-    public boolean updatePatient(Patient patient) {
+    public Integer update(Patient patient) {
         String SQL_UPDATE_PATIENT = "UPDATE TEST_PATIENT SET LAST_MODIFIED_BY = :lastModifiedBy, LAST_MODIFIED_DATE = :lastModifiedDate";
         if (patient.getStatus() != null) {
             SQL_UPDATE_PATIENT += ", STATUS = :status";
@@ -71,7 +72,7 @@ public class PatientDao {
 
         SQL_UPDATE_PATIENT += " WHERE PT_NO = :ptNo";
 
-        return jdbcTemplate.update(SQL_UPDATE_PATIENT, patient) > 0;
+        return jdbcTemplate.update(SQL_UPDATE_PATIENT, patient);
     }
 
 
