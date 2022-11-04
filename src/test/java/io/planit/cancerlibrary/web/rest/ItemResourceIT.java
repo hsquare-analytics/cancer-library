@@ -59,8 +59,8 @@ public class ItemResourceIT {
     private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("AAAAAAAAAA");
     private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("BBBBBBBBBB");
 
-    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA").allowEditing(true).required(true).format("AAAAAAAAAA");
-    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB").allowEditing(false).required(false).format("BBBBBBBBBB");
+    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA").allowEditing(true).required(true).format("AAAAAAAAAA").sortIndex(1).sortDirection("AAAAAAAAAA");
+    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB").allowEditing(false).required(false).format("BBBBBBBBBB").sortIndex(2).sortDirection("BBBBBBBBBB");
 
     private static final List<Lookup> DEFAULT_ITEM_LOOKUP_LIST = Arrays.asList(new Lookup().title("AAAAAAAAAA").description("AAAAAAAAAA"));
 
@@ -142,6 +142,8 @@ public class ItemResourceIT {
         assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(DEFAULT_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getProperty().isRequired()).isEqualTo(DEFAULT_ITEM_PROPERTY.isRequired());
         assertThat(testItem.getProperty().getFormat()).isEqualTo(DEFAULT_ITEM_PROPERTY.getFormat());
+        assertThat(testItem.getProperty().getSortIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortIndex());
+        assertThat(testItem.getProperty().getSortDirection()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortDirection());
         assertThat(testItem.getLookupList()).hasSize(1);
         compareTwoLookupList(testItem.getLookupList(), DEFAULT_ITEM_LOOKUP_LIST);
     }
@@ -196,6 +198,8 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].property.allowEditing").value(hasItem(DEFAULT_ITEM_PROPERTY.isAllowEditing())))
             .andExpect(jsonPath("$.[*].property.required").value(hasItem(DEFAULT_ITEM_PROPERTY.isRequired())))
             .andExpect(jsonPath("$.[*].property.format").value(hasItem(DEFAULT_ITEM_PROPERTY.getFormat())))
+            .andExpect(jsonPath("$.[*].property.sortIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortIndex())))
+            .andExpect(jsonPath("$.[*].property.sortDirection").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortDirection())))
             .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
             .andExpect(jsonPath("$.[*].lookupList.[*].title").value(contains(DEFAULT_ITEM_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())));
     }
@@ -218,6 +222,8 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.property.allowEditing").value(DEFAULT_ITEM_PROPERTY.isAllowEditing()))
             .andExpect(jsonPath("$.property.required").value(DEFAULT_ITEM_PROPERTY.isRequired()))
             .andExpect(jsonPath("$.property.format").value(DEFAULT_ITEM_PROPERTY.getFormat()))
+            .andExpect(jsonPath("$.property.sortIndex").value(DEFAULT_ITEM_PROPERTY.getSortIndex()))
+            .andExpect(jsonPath("$.property.sortDirection").value(DEFAULT_ITEM_PROPERTY.getSortDirection()))
             .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
             .andExpect(jsonPath("$.lookupList").value(hasSize(1)))
             .andExpect(jsonPath("$.lookupList.[*].title").value(contains(DEFAULT_ITEM_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())))
@@ -261,6 +267,8 @@ public class ItemResourceIT {
         assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(UPDATED_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getProperty().isRequired()).isEqualTo(UPDATED_ITEM_PROPERTY.isRequired());
         assertThat(testItem.getProperty().getFormat()).isEqualTo(UPDATED_ITEM_PROPERTY.getFormat());
+        assertThat(testItem.getProperty().getSortIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortIndex());
+        assertThat(testItem.getProperty().getSortDirection()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortDirection());
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
         compareTwoLookupList(testItem.getLookupList(), UPDATED_ITEM_LOOKUP_LIST);
     }

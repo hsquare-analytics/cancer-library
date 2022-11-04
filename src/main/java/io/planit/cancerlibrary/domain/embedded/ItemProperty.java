@@ -16,6 +16,10 @@ public class ItemProperty implements Serializable {
 
     private String format;
 
+    private Integer sortIndex;
+
+    private String sortDirection;
+
     public Integer getVisibleIndex() {
         return visibleIndex;
     }
@@ -78,6 +82,32 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty format(String format) {
         this.setFormat(format);
+        return this;
+    }
+
+    public Integer getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(Integer sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
+    public ItemProperty sortIndex(Integer sortIndex) {
+        this.setSortIndex(sortIndex);
+        return this;
+    }
+
+    public String getSortDirection() {
+        return sortDirection;
+    }
+
+    public void setSortDirection(String sortDirection) {
+        this.sortDirection = sortDirection;
+    }
+
+    public ItemProperty sortDirection(String sortDirection) {
+        this.setSortDirection(sortDirection);
         return this;
     }
 }

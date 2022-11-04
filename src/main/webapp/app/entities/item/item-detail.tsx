@@ -89,7 +89,19 @@ export const ItemDetail = () => {
               <Translate contentKey="cancerLibraryApp.item.property.required">Required</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.property?.allowEditing}</dd>
+          <dd>{itemEntity.property?.required}</dd>
+          <dt>
+            <span id="sortIndex">
+              <Translate contentKey="cancerLibraryApp.item.property.sortIndex">Sort Index</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.sortIndex}</dd>
+          <dt>
+            <span id="sortDirection">
+              <Translate contentKey="cancerLibraryApp.item.property.sortDirection">Sort Direction</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.sortDirection}</dd>
           <dt>
             <span id="lookupList">
               <Translate contentKey="cancerLibraryApp.item.lookupList">Lookup</Translate>

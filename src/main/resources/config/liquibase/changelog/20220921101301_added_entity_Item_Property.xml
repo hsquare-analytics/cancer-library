@@ -14,6 +14,8 @@
             <column name="allow_editing" type="boolean" valueBoolean="true"/>
             <column name="required" type="boolean" valueBoolean="true"/>
             <column name="format" type="varchar(50)"/>
+            <column name="sort_index" type="int"/>
+            <column name="sort_direction" type="varchar(10)"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"
