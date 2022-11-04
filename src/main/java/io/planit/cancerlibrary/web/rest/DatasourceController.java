@@ -73,7 +73,7 @@ public class DatasourceController {
 
         String sql = dmlSqlBuilderService.getReadOriginRowSQL(categoryId, Map.of("idx", rowIdx));
 
-        Map<String, Object> result = datasourceDao.executeSelectSQL(sql).get(0);
+        Map<String, Object> result = datasourceDao.executeSelectOneSQL(sql);
 
         return ResponseEntity.ok().body(result);
     }
