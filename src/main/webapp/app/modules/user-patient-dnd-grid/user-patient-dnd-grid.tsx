@@ -47,11 +47,10 @@ export const UserPatientDndGrid = () => {
 
   useEffect(() => {
     if (updateSuccess) {
-      Swal.fire(
-        translate("cancerLibraryApp.userPatientDndGrid.updateAlert.title"),
-        translate("cancerLibraryApp.userPatientDndGrid.updateAlert.description"),
-        'success'
-      )
+      Swal.fire({
+        text: translate("cancerLibraryApp.userPatientDndGrid.updateAlert.description", {name: selectedUser.login}),
+        icon: 'success'
+      })
       dispatch(resetFlag());
     }
   }, [updateSuccess]);
@@ -62,7 +61,16 @@ export const UserPatientDndGrid = () => {
   }
 
   const onClickSave = () => {
-    dispatch(createUserPatientAuthorizations({login: selectedUser.login, patients}));
+    Swal.fire({
+      text: translate("cancerLibraryApp.userPatientDndGrid.confirmUpdate", {name: selectedUser.login}),
+      icon: 'warning',
+      showCancelButton: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(createUserPatientAuthorizations({login: selectedUser.login, patients}));
+      }
+    });
+
   };
 
   const onClickCancel = () => {

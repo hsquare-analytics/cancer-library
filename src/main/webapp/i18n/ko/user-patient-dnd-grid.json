@@ -1,9 +1,10 @@
 {
   "cancerLibraryApp": {
     "userPatientDndGrid": {
+      "confirmUpdate": "{{name}}님의 환자 목록을 변경 하시겠습니까?",
       "updateAlert": {
         "title": "Update Complete",
-        "description": "Patient authorization updated successfully"
+        "description": "{{name}}님의 환자 목록이 변경되었습니다."
       }
     }
   }
