@@ -25,7 +25,7 @@ public class Codebook extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 10, max = 50)
+    @Size(min = 1, max = 50)
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 

@@ -90,7 +90,7 @@ export const CodebookUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  minLength: { value: 1, message: translate('entity.validation.minlength', { min: 1 }) },
                   maxLength: { value: 50, message: translate('entity.validation.maxlength', { max: 50 }) },
                 }}
               />
