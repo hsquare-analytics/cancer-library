@@ -14,6 +14,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findAllByCategoryId(Long id);
 
+    @EntityGraph(attributePaths = {"codebook.lookupList"})
     List<Item> findAllByActivatedTrueAndCategoryId(Long id);
 
     @EntityGraph(attributePaths = {"category", "attribute", "property"})

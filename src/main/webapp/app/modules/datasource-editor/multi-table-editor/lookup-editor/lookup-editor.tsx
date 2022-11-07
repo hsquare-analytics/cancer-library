@@ -8,13 +8,13 @@ import {
   fireAddCardSwal,
   fireSaveCardSwal
 } from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor.swal";
-import {partialUpdateEntity} from "app/entities/item/item.reducer";
+import {partialUpdateEntity} from "app/entities/codebook/codebook.reducer";
 import {useAppDispatch} from "app/config/store";
 import ScrollView from 'devextreme-react/scroll-view';
 
 
 interface ILookupEditorProps {
-  dataSource: { itemId: number, title: string, description: string }[];
+  dataSource: { codebookId: number, title: string, description: string }[];
   visible: boolean;
   setVisible: (visible: boolean) => void;
 }
@@ -24,11 +24,9 @@ const LookupEditor = (props: ILookupEditorProps) => {
 
   const {visible, dataSource} = props;
 
-  const [itemId, setItemId] = React.useState<number>(0);
   const [cards, setCards] = React.useState<ICard[]>([]);
 
   useEffect(() => {
-    setItemId(dataSource[0].itemId);
     const result = JSON.parse(JSON.stringify(dataSource)).map(data => {
       return {
         ...data,
@@ -59,7 +57,8 @@ const LookupEditor = (props: ILookupEditorProps) => {
       if (result.isConfirmed) {
         props.setVisible(false);
         dispatch(partialUpdateEntity({
-          id: itemId, lookupList: cards.map(card => {
+          id: dataSource[0].codebookId,
+          lookupList: cards.map(card => {
             return {
               title: card.title,
               description: card.description

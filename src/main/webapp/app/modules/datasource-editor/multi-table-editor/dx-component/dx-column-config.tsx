@@ -7,12 +7,15 @@ import DxTextBox from "app/modules/datasource-editor/multi-table-editor/dx-compo
 import DxNumberBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-number-box";
 import DxDateBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-date-box";
 
-
 const getDxEditCellComponent = (item: IItem) => {
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
       return DxTagBox;
     case 'selectbox':
+      if (!canBeLookup(item)) {
+        return undefined;
+      }
+
       return SelectBoxComponent;
     case 'string':
       return DxTextBox;
@@ -30,9 +33,13 @@ const getDxLookupComponent = (item: IItem) => {
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
     case 'selectbox':
+      if (!canBeLookup(item)) {
+        return undefined;
+      }
+
       return <Lookup
-        dataSource={item.lookupList.filter(data => data).map(data => new Object({
-          "itemId": item.id,
+        dataSource={item.codebook.lookupList.filter(data => data).map(data => new Object({
+          "codebookId": item.codebook.id,
           "title": data.title,
           "description": data.description
         }))}
@@ -42,6 +49,9 @@ const getDxLookupComponent = (item: IItem) => {
   }
 }
 
+const canBeLookup = (item: IItem) => {
+  return item.codebook && item.codebook.lookupList && item.codebook.lookupList.length > 0;
+}
 
 export const getDxColumnConfig = (item: IItem) => {
   return <Column
