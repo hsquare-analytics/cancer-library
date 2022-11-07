@@ -1,12 +1,13 @@
 package io.planit.cancerlibrary.service.dto;
 
 import io.planit.cancerlibrary.domain.Subject;
+import io.planit.cancerlibrary.domain.Topic;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
 
-public class SubjectDTO {
+public class TopicDTO {
 
     private Long id;
 
@@ -20,6 +21,9 @@ public class SubjectDTO {
     @NotNull
     private Integer orderNo;
 
+    @NotNull
+    private Subject subject;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -28,31 +32,33 @@ public class SubjectDTO {
 
     private Instant lastModifiedDate;
 
-    public SubjectDTO() {
+    public TopicDTO() {
     }
 
-    public SubjectDTO(Subject subject) {
-        this.id = subject.getId();
-        this.title = subject.getTitle();
-        this.activated = subject.getActivated();
-        this.orderNo = subject.getOrderNo();
-        this.createdBy = subject.getCreatedBy();
-        this.createdDate = subject.getCreatedDate();
-        this.lastModifiedBy = subject.getLastModifiedBy();
-        this.lastModifiedDate = subject.getLastModifiedDate();
+    public TopicDTO(Topic topic) {
+        this.id = topic.getId();
+        this.title = topic.getTitle();
+        this.activated = topic.getActivated();
+        this.orderNo = topic.getOrderNo();
+        this.subject = topic.getSubject();
+        this.createdBy = topic.getCreatedBy();
+        this.createdDate = topic.getCreatedDate();
+        this.lastModifiedBy = topic.getLastModifiedBy();
+        this.lastModifiedDate = topic.getLastModifiedDate();
     }
 
-    public Subject toEntity() {
-        Subject subject = new Subject();
-        subject.setId(this.id);
-        subject.setTitle(this.title);
-        subject.setActivated(this.activated);
-        subject.setOrderNo(this.orderNo);
-        subject.setCreatedBy(this.createdBy);
-        subject.setCreatedDate(this.createdDate);
-        subject.setLastModifiedBy(this.lastModifiedBy);
-        subject.setLastModifiedDate(this.lastModifiedDate);
-        return subject;
+    public Topic toEntity() {
+        Topic topic = new Topic();
+        topic.setId(this.id);
+        topic.setTitle(this.title);
+        topic.setActivated(this.activated);
+        topic.setOrderNo(this.orderNo);
+        topic.setSubject(this.subject);
+        topic.setCreatedBy(this.createdBy);
+        topic.setCreatedDate(this.createdDate);
+        topic.setLastModifiedBy(this.lastModifiedBy);
+        topic.setLastModifiedDate(this.lastModifiedDate);
+        return topic;
     }
 
     public Long getId() {
@@ -85,6 +91,14 @@ public class SubjectDTO {
 
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public String getCreatedBy() {

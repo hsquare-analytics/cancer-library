@@ -1,32 +1,25 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.repository.TopicRepository;
+import io.planit.cancerlibrary.service.dto.TopicDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.ResponseUtil;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -47,12 +40,12 @@ public class TopicResource {
     }
 
     @PostMapping("/topics")
-    public ResponseEntity<Topic> createTopic(@Valid @RequestBody Topic topic) throws URISyntaxException {
-        log.debug("REST request to save Topic : {}", topic);
-        if (topic.getId() != null) {
+    public ResponseEntity<TopicDTO> createTopic(@Valid @RequestBody TopicDTO topicDTO) throws URISyntaxException {
+        log.debug("REST request to save Topic : {}", topicDTO);
+        if (topicDTO.getId() != null) {
             throw new BadRequestAlertException("A new topic cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Topic result = topicRepository.save(topic);
+        TopicDTO result = new TopicDTO(topicRepository.save(topicDTO.toEntity()));
         return ResponseEntity
             .created(new URI("/api/topics/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -60,13 +53,12 @@ public class TopicResource {
     }
 
     @PutMapping("/topics/{id}")
-    public ResponseEntity<Topic> updateTopic(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Topic topic)
-        throws URISyntaxException {
-        log.debug("REST request to update Topic : {}, {}", id, topic);
-        if (topic.getId() == null) {
+    public ResponseEntity<TopicDTO> updateTopic(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody TopicDTO topicDTO) {
+        log.debug("REST request to update Topic : {}, {}", id, topicDTO);
+        if (topicDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, topic.getId())) {
+        if (!Objects.equals(id, topicDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -74,23 +66,23 @@ public class TopicResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Topic result = topicRepository.save(topic);
+        TopicDTO result = new TopicDTO(topicRepository.save(topicDTO.toEntity()));
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, topic.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    @PatchMapping(value = "/topics/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Topic> partialUpdateTopic(
+    @PatchMapping(value = "/topics/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<TopicDTO> partialUpdateTopic(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Topic topic
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Topic partially : {}, {}", id, topic);
-        if (topic.getId() == null) {
+        @NotNull @RequestBody TopicDTO topicDTO
+    ) {
+        log.debug("REST request to partial update Topic partially : {}, {}", id, topicDTO);
+        if (topicDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, topic.getId())) {
+        if (!Objects.equals(id, topicDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -98,37 +90,37 @@ public class TopicResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Topic> result = topicRepository
-            .findById(topic.getId())
+        Optional<TopicDTO> result = topicRepository
+            .findById(topicDTO.getId())
             .map(existingTopic -> {
-                if (topic.getTitle() != null) {
-                    existingTopic.setTitle(topic.getTitle());
+                if (topicDTO.getTitle() != null) {
+                    existingTopic.setTitle(topicDTO.getTitle());
                 }
-                if (topic.getActivated() != null) {
-                    existingTopic.setActivated(topic.getActivated());
+                if (topicDTO.getActivated() != null) {
+                    existingTopic.setActivated(topicDTO.getActivated());
                 }
 
                 return existingTopic;
             })
-            .map(topicRepository::save);
+            .map(topicRepository::save).map(TopicDTO::new);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, topic.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, topicDTO.getId().toString())
         );
     }
 
     @GetMapping("/topics")
-    public ResponseEntity<List<Topic>> getAllTopics(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<TopicDTO>> getAllTopics() {
         log.debug("REST request to get a page of Topics");
-        List<Topic> result = topicRepository.findAll();
+        List<TopicDTO> result = topicRepository.findAll().stream().map(TopicDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/topics/{id}")
-    public ResponseEntity<Topic> getTopic(@PathVariable Long id) {
+    public ResponseEntity<TopicDTO> getTopic(@PathVariable Long id) {
         log.debug("REST request to get Topic : {}", id);
-        Optional<Topic> topic = topicRepository.findById(id);
+        Optional<TopicDTO> topic = topicRepository.findById(id).map(TopicDTO::new);
         return ResponseUtil.wrapOrNotFound(topic);
     }
 
