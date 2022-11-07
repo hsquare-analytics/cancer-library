@@ -1,31 +1,25 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.repository.CategoryRepository;
+import io.planit.cancerlibrary.service.dto.CategoryDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -46,12 +40,12 @@ public class CategoryResource {
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) throws URISyntaxException {
-        log.debug("REST request to save Category : {}", category);
-        if (category.getId() != null) {
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) throws URISyntaxException {
+        log.debug("REST request to save Category : {}", categoryDTO);
+        if (categoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new category cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Category result = categoryRepository.save(category);
+        CategoryDTO result = new CategoryDTO(categoryRepository.save(categoryDTO.toEntity()));
         return ResponseEntity
             .created(new URI("/api/categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -59,15 +53,13 @@ public class CategoryResource {
     }
 
     @PutMapping("/categories/{id}")
-    public ResponseEntity<Category> updateCategory(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody Category category
-    ) throws URISyntaxException {
-        log.debug("REST request to update Category : {}, {}", id, category);
-        if (category.getId() == null) {
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody CategoryDTO categoryDTO
+    ) {
+        log.debug("REST request to update Category : {}, {}", id, categoryDTO);
+        if (categoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, category.getId())) {
+        if (!Objects.equals(id, categoryDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -75,23 +67,23 @@ public class CategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Category result = categoryRepository.save(category);
+        CategoryDTO result = new CategoryDTO(categoryRepository.save(categoryDTO.toEntity()));
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, category.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, categoryDTO.getId().toString()))
             .body(result);
     }
 
-    @PatchMapping(value = "/categories/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Category> partialUpdateCategory(
+    @PatchMapping(value = "/categories/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<CategoryDTO> partialUpdateCategory(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Category category
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Category partially : {}, {}", id, category);
-        if (category.getId() == null) {
+        @NotNull @RequestBody CategoryDTO categoryDTO
+    ) {
+        log.debug("REST request to partial update Category partially : {}, {}", id, categoryDTO);
+        if (categoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, category.getId())) {
+        if (!Objects.equals(id, categoryDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -99,42 +91,42 @@ public class CategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Category> result = categoryRepository
-            .findById(category.getId())
+        Optional<CategoryDTO> result = categoryRepository
+            .findById(categoryDTO.getId())
             .map(existingCategory -> {
-                if (category.getTitle() != null) {
-                    existingCategory.setTitle(category.getTitle());
+                if (categoryDTO.getTitle() != null) {
+                    existingCategory.setTitle(categoryDTO.getTitle());
                 }
-                if (category.getDescription() != null) {
-                    existingCategory.setDescription(category.getDescription());
+                if (categoryDTO.getDescription() != null) {
+                    existingCategory.setDescription(categoryDTO.getDescription());
                 }
 
-                existingCategory.setActivated(category.isActivated());
+                existingCategory.setActivated(categoryDTO.isActivated());
 
-                existingCategory.property(category.getProperty());
+                existingCategory.property(categoryDTO.getProperty());
 
                 return existingCategory;
             })
-            .map(categoryRepository::save);
+            .map(categoryRepository::save).map(CategoryDTO::new);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, category.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, categoryDTO.getId().toString())
         );
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         log.debug("REST request to get all Categories");
-        List<Category> result = categoryRepository.findAll();
+        List<CategoryDTO> result = categoryRepository.findAll().stream().map(CategoryDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/categories/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Long id) {
+    public ResponseEntity<CategoryDTO> getCategory(@PathVariable Long id) {
         log.debug("REST request to get Category : {}", id);
-        Optional<Category> category = categoryRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(category);
+        Optional<CategoryDTO> result = categoryRepository.findById(id).map(CategoryDTO::new);
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     @DeleteMapping("/categories/{id}")
