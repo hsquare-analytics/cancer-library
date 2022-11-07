@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './item.reducer';
 import {getEntities as getCategories} from "app/entities/category/category.reducer";
+import {getEntities as getCodebooks} from "app/entities/codebook/codebook.reducer";
 
 export const ItemUpdate = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,7 @@ export const ItemUpdate = () => {
   const updating = useAppSelector(state => state.item.updating);
   const updateSuccess = useAppSelector(state => state.item.updateSuccess);
   const categories = useAppSelector(state => state.category.entities);
+  const codebooks = useAppSelector(state => state.codebook.entities);
 
   const handleClose = () => {
     navigate('/admin/item');
@@ -34,6 +36,10 @@ export const ItemUpdate = () => {
 
     if (categories.length === 0) {
       dispatch(getCategories({}));
+    }
+
+    if (codebooks.length === 0) {
+      dispatch(getCodebooks({}));
     }
   }, []);
 
@@ -130,6 +136,15 @@ export const ItemUpdate = () => {
                 data-cy="attribute.dataType"
                 type="text"
               />
+              <ValidatedField type="select" name="codebook.id" data-cy="codebook"
+                              label={translate('cancerLibraryApp.item.codebook.title')}>
+                <option value="">-</option>
+                {codebooks.map(codebook => (
+                  <option value={codebook.id} key={codebook}>
+                    {codebook.title}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField
                 label={translate('cancerLibraryApp.item.property.visibleIndex')}
                 id="item-visibleIndex"

@@ -23,6 +23,7 @@
       "activated": "Activated",
       "orderNo": "orderNo",
       "category.title": "Category Title",
+      "codebook.title": "Codebook Title",
       "attribute": {
         "dataType": "Data Type"
       },
