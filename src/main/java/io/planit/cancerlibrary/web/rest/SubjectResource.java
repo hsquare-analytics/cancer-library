@@ -1,36 +1,25 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.repository.SubjectRepository;
+import io.planit.cancerlibrary.service.dto.SubjectDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.HeaderUtil;
+import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
-import tech.jhipster.web.util.ResponseUtil;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -51,12 +40,12 @@ public class SubjectResource {
     }
 
     @PostMapping("/subjects")
-    public ResponseEntity<Subject> createSubject(@Valid @RequestBody Subject subject) throws URISyntaxException {
-        log.debug("REST request to save Subject : {}", subject);
-        if (subject.getId() != null) {
+    public ResponseEntity<SubjectDTO> createSubject(@Valid @RequestBody SubjectDTO subjectDTO) throws URISyntaxException {
+        log.debug("REST request to save Subject : {}", subjectDTO);
+        if (subjectDTO.getId() != null) {
             throw new BadRequestAlertException("A new subject cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Subject result = subjectRepository.save(subject);
+        SubjectDTO result = new SubjectDTO(subjectRepository.save(subjectDTO.toEntity()));
         return ResponseEntity
             .created(new URI("/api/subjects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -64,13 +53,13 @@ public class SubjectResource {
     }
 
     @PutMapping("/subjects/{id}")
-    public ResponseEntity<Subject> updateSubject(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Subject subject)
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody SubjectDTO subjectDTO)
         throws URISyntaxException {
-        log.debug("REST request to update Subject : {}, {}", id, subject);
-        if (subject.getId() == null) {
+        log.debug("REST request to update Subject : {}, {}", id, subjectDTO);
+        if (subjectDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, subject.getId())) {
+        if (!Objects.equals(id, subjectDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -78,23 +67,20 @@ public class SubjectResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Subject result = subjectRepository.save(subject);
+        SubjectDTO result = new SubjectDTO(subjectRepository.save(subjectDTO.toEntity()));
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, subject.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    @PatchMapping(value = "/subjects/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Subject> partialUpdateSubject(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Subject subject
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Subject partially : {}, {}", id, subject);
-        if (subject.getId() == null) {
+    @PatchMapping(value = "/subjects/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<SubjectDTO> partialUpdateSubject(@PathVariable(value = "id", required = false) final Long id, @NotNull @RequestBody SubjectDTO subjectDTO) {
+        log.debug("REST request to partial update Subject partially : {}, {}", id, subjectDTO);
+        if (subjectDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, subject.getId())) {
+        if (!Objects.equals(id, subjectDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -102,37 +88,37 @@ public class SubjectResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Subject> result = subjectRepository
-            .findById(subject.getId())
+        Optional<SubjectDTO> result = subjectRepository
+            .findById(subjectDTO.getId())
             .map(existingSubject -> {
-                if (subject.getTitle() != null) {
-                    existingSubject.setTitle(subject.getTitle());
+                if (subjectDTO.getTitle() != null) {
+                    existingSubject.setTitle(subjectDTO.getTitle());
                 }
-                if (subject.getActivated() != null) {
-                    existingSubject.setActivated(subject.getActivated());
+                if (subjectDTO.getActivated() != null) {
+                    existingSubject.setActivated(subjectDTO.getActivated());
                 }
 
                 return existingSubject;
             })
-            .map(subjectRepository::save);
+            .map(subjectRepository::save).map(SubjectDTO::new);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, subject.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, subjectDTO.getId().toString())
         );
     }
 
     @GetMapping("/subjects")
-    public ResponseEntity<List<Subject>> getAllSubjects(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<SubjectDTO>> getAllSubjects() {
         log.debug("REST request to get a page of Subjects");
-        List<Subject> result = subjectRepository.findAll();
+        List<SubjectDTO> result = subjectRepository.findAll().stream().map(SubjectDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/subjects/{id}")
-    public ResponseEntity<Subject> getSubject(@PathVariable Long id) {
+    public ResponseEntity<SubjectDTO> getSubject(@PathVariable Long id) {
         log.debug("REST request to get Subject : {}", id);
-        Optional<Subject> subject = subjectRepository.findById(id);
+        Optional<SubjectDTO> subject = subjectRepository.findById(id).map(SubjectDTO::new);
         return ResponseUtil.wrapOrNotFound(subject);
     }
 
