@@ -103,6 +103,9 @@ public class CodebookResource {
                 if (codebook.getDescription() != null) {
                     existingCodebook.setDescription(codebook.getDescription());
                 }
+                if (codebook.getLookupList() != null) {
+                    existingCodebook.setLookupList(codebook.getLookupList());
+                }
 
                 return existingCodebook;
             })

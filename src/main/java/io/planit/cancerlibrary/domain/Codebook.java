@@ -1,9 +1,13 @@
 package io.planit.cancerlibrary.domain;
 
+import io.planit.cancerlibrary.domain.embedded.Lookup;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Codebook.
@@ -27,6 +31,12 @@ public class Codebook implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @ElementCollection
+    @CollectionTable(name = "ph_codebook_lookup", joinColumns = @JoinColumn(name = "codebook_id"))
+    @Column(name = "title", nullable = false)
+    @OrderColumn(name = "order_no")
+    private List<Lookup> lookupList = new ArrayList<>();
 
     public Long getId() {
         return this.id;
@@ -67,7 +77,18 @@ public class Codebook implements Serializable {
         this.description = description;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public List<Lookup> getLookupList() {
+        return lookupList;
+    }
+
+    public void setLookupList(List<Lookup> lookupList) {
+        this.lookupList = lookupList;
+    }
+
+    public Codebook lookupList(List<Lookup> lookupList) {
+        this.setLookupList(lookupList);
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {

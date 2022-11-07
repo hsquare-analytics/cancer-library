@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Codebook;
+import io.planit.cancerlibrary.domain.embedded.Lookup;
 import io.planit.cancerlibrary.repository.CodebookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,6 +36,9 @@ class CodebookResourceIT {
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
+    private static final List<Lookup> DEFAULT_CODEBOOK_LOOKUP_LIST = Arrays.asList(new Lookup().title("AAAAAAAAAA").description("AAAAAAAAAA"));
+    private static final List<Lookup> UPDATED_CODEBOOK_LOOKUP_LIST = Arrays.asList(new Lookup().title("BBBBBBBBBB").description("BBBBBBBBBB"));
 
     private static final String ENTITY_API_URL = "/api/codebooks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -51,13 +58,17 @@ class CodebookResourceIT {
     private Codebook codebook;
 
     public static Codebook createEntity(EntityManager em) {
-        Codebook codebook = new Codebook().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION);
+        Codebook codebook = new Codebook().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).lookupList(DEFAULT_CODEBOOK_LOOKUP_LIST);
         return codebook;
     }
 
     public static Codebook createUpdatedEntity(EntityManager em) {
-        Codebook codebook = new Codebook().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
+        Codebook codebook = new Codebook().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).lookupList(UPDATED_CODEBOOK_LOOKUP_LIST);
         return codebook;
+    }
+
+    private void compareTwoLookupList(List<Lookup> list1, List<Lookup> list2) {
+        assertThat(list1.stream().map(Lookup::getTitle).collect(Collectors.toList())).containsAll(list2.stream().map(Lookup::getTitle).collect(Collectors.toList()));
     }
 
     @BeforeEach
@@ -78,6 +89,8 @@ class CodebookResourceIT {
         Codebook testCodebook = codebookList.get(codebookList.size() - 1);
         assertThat(testCodebook.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testCodebook.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testCodebook.getLookupList()).hasSize(1);
+        compareTwoLookupList(testCodebook.getLookupList(), DEFAULT_CODEBOOK_LOOKUP_LIST);
     }
 
     @Test
@@ -121,7 +134,9 @@ class CodebookResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(codebook.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].lookupList.[*].title").value(contains(DEFAULT_CODEBOOK_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())));
+        ;
     }
 
     @Test
@@ -135,7 +150,9 @@ class CodebookResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(codebook.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.lookupList.[*].title").value(contains(DEFAULT_CODEBOOK_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())))
+        ;
     }
 
     @Test
@@ -153,7 +170,7 @@ class CodebookResourceIT {
 
         Codebook updatedCodebook = codebookRepository.findById(codebook.getId()).get();
         em.detach(updatedCodebook);
-        updatedCodebook.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
+        updatedCodebook.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).lookupList(UPDATED_CODEBOOK_LOOKUP_LIST);
 
         restCodebookMockMvc
             .perform(
@@ -168,6 +185,7 @@ class CodebookResourceIT {
         Codebook testCodebook = codebookList.get(codebookList.size() - 1);
         assertThat(testCodebook.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testCodebook.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        compareTwoLookupList(testCodebook.getLookupList(), UPDATED_CODEBOOK_LOOKUP_LIST);
     }
 
     @Test
@@ -230,7 +248,7 @@ class CodebookResourceIT {
         Codebook partialUpdatedCodebook = new Codebook();
         partialUpdatedCodebook.setId(codebook.getId());
 
-        partialUpdatedCodebook.description(UPDATED_DESCRIPTION);
+        partialUpdatedCodebook.description(UPDATED_DESCRIPTION).lookupList(UPDATED_CODEBOOK_LOOKUP_LIST);
 
         restCodebookMockMvc
             .perform(
@@ -245,6 +263,7 @@ class CodebookResourceIT {
         Codebook testCodebook = codebookList.get(codebookList.size() - 1);
         assertThat(testCodebook.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testCodebook.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        compareTwoLookupList(testCodebook.getLookupList(), UPDATED_CODEBOOK_LOOKUP_LIST);
     }
 
     @Test
@@ -257,7 +276,7 @@ class CodebookResourceIT {
         Codebook partialUpdatedCodebook = new Codebook();
         partialUpdatedCodebook.setId(codebook.getId());
 
-        partialUpdatedCodebook.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION);
+        partialUpdatedCodebook.title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).lookupList(UPDATED_CODEBOOK_LOOKUP_LIST);
 
         restCodebookMockMvc
             .perform(
@@ -272,6 +291,7 @@ class CodebookResourceIT {
         Codebook testCodebook = codebookList.get(codebookList.size() - 1);
         assertThat(testCodebook.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testCodebook.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        compareTwoLookupList(testCodebook.getLookupList(), UPDATED_CODEBOOK_LOOKUP_LIST);
     }
 
     @Test
