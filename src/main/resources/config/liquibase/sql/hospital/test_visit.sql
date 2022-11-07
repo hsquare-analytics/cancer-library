@@ -36,13 +36,13 @@ insert into ph_item_attribute (item_id, data_type) values (2702, 'string');
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2703, 'PT_NM', true, 1, 2701, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2703, 3, '환자 이름', false);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, required) values (2703, 3, '환자 이름', false, true);
 insert into ph_item_attribute (item_id, data_type) values (2703, 'string');
 
 insert into ph_item (id, title, activated, order_no, category_id, codebook_id, created_by, created_date, last_modified_by,
                      last_modified_date)
 values (2704, 'SEX_TP_CD', true, 1, 2701, 101, 'system', '2019-01-01 00:00:00', 'system', '2019-01-01 00:00:00');
-insert into ph_item_property (item_id, visible_index, caption, allow_editing) values (2704, 4, '성별', true);
+insert into ph_item_property (item_id, visible_index, caption, allow_editing, required) values (2704, 4, '성별', true, true);
 insert into ph_item_attribute (item_id, data_type) values (2704, 'selectbox');
 
 insert into ph_item (id, title, activated, order_no, category_id, created_by, created_date, last_modified_by,
