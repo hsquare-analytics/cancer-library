@@ -6,6 +6,7 @@ import topic from 'app/entities/topic/topic.reducer';
 import group from 'app/entities/group/group.reducer';
 import userCategory from 'app/entities/user-category/user-category.reducer';
 import userPatient from 'app/entities/user-patient/user-patient.reducer';
+import codebook from 'app/entities/codebook/codebook.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -16,7 +17,8 @@ const entitiesReducers = {
     topic,
     category,
     group,
-    userPatient
+    userPatient,
+    codebook
     /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

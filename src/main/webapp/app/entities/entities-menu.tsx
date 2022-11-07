@@ -1,5 +1,5 @@
 import React from 'react';
-import { Translate } from 'react-jhipster';
+import {Translate} from 'react-jhipster';
 
 import MenuItem from 'app/shared/layout/menus/menu-item';
 
@@ -23,6 +23,9 @@ const EntitiesMenu = () => {
       </MenuItem>
       <MenuItem icon="asterisk" to="/user-patient">
         <Translate contentKey="global.menu.entities.user-patient" />
+      </MenuItem>
+      <MenuItem icon="asterisk" to="/codebook">
+        <Translate contentKey="global.menu.entities.codebook" />
       </MenuItem>
     </>
   );

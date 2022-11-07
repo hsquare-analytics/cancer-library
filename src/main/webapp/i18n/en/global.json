@@ -13,6 +13,7 @@
         "item": "Item",
         "user-category": "User Category",
          "user-patient": "User Patient",
+         "codebook": "Code Book",
          "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "multi-table-editor" : "Muiti Table Editor",
@@ -45,7 +46,8 @@
         "category": "Category Management",
         "group": "Group Management",
         "item": "Item Management",
-        "userCategory": "User Category Management"
+        "userCategory": "User Category Management",
+        "codebook": "Codebook Management"
       },
       "language": "Language"
     },
