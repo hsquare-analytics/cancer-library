@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Codebook;
 import io.planit.cancerlibrary.repository.CodebookRepository;
+import io.planit.cancerlibrary.service.dto.CodebookDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +19,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -39,12 +40,12 @@ public class CodebookResource {
     }
 
     @PostMapping("/codebooks")
-    public ResponseEntity<Codebook> createCodebook(@Valid @RequestBody Codebook codebook) throws URISyntaxException {
-        log.debug("REST request to save Codebook : {}", codebook);
-        if (codebook.getId() != null) {
+    public ResponseEntity<CodebookDTO> createCodebook(@Valid @RequestBody CodebookDTO codebookDTO) throws URISyntaxException {
+        log.debug("REST request to save Codebook : {}", codebookDTO);
+        if (codebookDTO.getId() != null) {
             throw new BadRequestAlertException("A new codebook cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Codebook result = codebookRepository.save(codebook);
+        CodebookDTO result = new CodebookDTO(codebookRepository.save(codebookDTO.toEntity()));
         return ResponseEntity
             .created(new URI("/api/codebooks/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -52,12 +53,12 @@ public class CodebookResource {
     }
 
     @PutMapping("/codebooks/{id}")
-    public ResponseEntity<Codebook> updateCodebook(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Codebook codebook) {
-        log.debug("REST request to update Codebook : {}, {}", id, codebook);
-        if (codebook.getId() == null) {
+    public ResponseEntity<CodebookDTO> updateCodebook(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody CodebookDTO codebookDTO) {
+        log.debug("REST request to update Codebook : {}, {}", id, codebookDTO);
+        if (codebookDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, codebook.getId())) {
+        if (!Objects.equals(id, codebookDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -65,23 +66,23 @@ public class CodebookResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Codebook result = codebookRepository.save(codebook);
+        CodebookDTO result = new CodebookDTO(codebookRepository.save(codebookDTO.toEntity()));
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, codebook.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, codebookDTO.getId().toString()))
             .body(result);
     }
 
     @PatchMapping(value = "/codebooks/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Codebook> partialUpdateCodebook(
+    public ResponseEntity<CodebookDTO> partialUpdateCodebook(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Codebook codebook
+        @NotNull @RequestBody CodebookDTO codebookDTO
     ) {
-        log.debug("REST request to partial update Codebook partially : {}, {}", id, codebook);
-        if (codebook.getId() == null) {
+        log.debug("REST request to partial update Codebook partially : {}, {}", id, codebookDTO);
+        if (codebookDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, codebook.getId())) {
+        if (!Objects.equals(id, codebookDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -89,40 +90,40 @@ public class CodebookResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Codebook> result = codebookRepository
-            .findById(codebook.getId())
+        Optional<CodebookDTO> result = codebookRepository
+            .findById(codebookDTO.getId())
             .map(existingCodebook -> {
-                if (codebook.getTitle() != null) {
-                    existingCodebook.setTitle(codebook.getTitle());
+                if (codebookDTO.getTitle() != null) {
+                    existingCodebook.setTitle(codebookDTO.getTitle());
                 }
-                if (codebook.getDescription() != null) {
-                    existingCodebook.setDescription(codebook.getDescription());
+                if (codebookDTO.getDescription() != null) {
+                    existingCodebook.setDescription(codebookDTO.getDescription());
                 }
-                if (codebook.getLookupList() != null) {
-                    existingCodebook.setLookupList(codebook.getLookupList());
+                if (codebookDTO.getLookupList() != null) {
+                    existingCodebook.setLookupList(codebookDTO.getLookupList());
                 }
 
                 return existingCodebook;
             })
-            .map(codebookRepository::save);
+            .map(codebookRepository::save).map(CodebookDTO::new);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, codebook.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, codebookDTO.getId().toString())
         );
     }
 
     @GetMapping("/codebooks")
-    public ResponseEntity<List<Codebook>> getAllCodebooks() {
+    public ResponseEntity<List<CodebookDTO>> getAllCodebooks() {
         log.debug("REST request to get a page of Codebooks");
-        List<Codebook> result = codebookRepository.findAll();
+        List<CodebookDTO> result = codebookRepository.findAll().stream().map(CodebookDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/codebooks/{id}")
-    public ResponseEntity<Codebook> getCodebook(@PathVariable Long id) {
+    public ResponseEntity<CodebookDTO> getCodebook(@PathVariable Long id) {
         log.debug("REST request to get Codebook : {}", id);
-        Optional<Codebook> codebook = codebookRepository.findById(id);
+        Optional<CodebookDTO> codebook = codebookRepository.findById(id).map(CodebookDTO::new);
         return ResponseUtil.wrapOrNotFound(codebook);
     }
 
