@@ -1,10 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -29,15 +29,15 @@ public class UserPatientController {
 
     private final UserPatientRepository userPatientRepository;
 
-    private final PatientDao patientDao;
+    private final PatientRepository patientRepository;
 
     public UserPatientController(
         UserRepository userRepository,
         UserPatientRepository userPatientRepository,
-        PatientDao patientDao) {
+        PatientRepository patientRepository) {
         this.userRepository = userRepository;
         this.userPatientRepository = userPatientRepository;
-        this.patientDao = patientDao;
+        this.patientRepository = patientRepository;
     }
 
     @GetMapping("/user-patients/divisible-patient-list")
@@ -46,7 +46,7 @@ public class UserPatientController {
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
 
-        List<Patient> patientList = patientDao.findAll();
+        List<Patient> patientList = patientRepository.findAll();
         List<String> authorizedPatientNoList = userPatientRepository
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class UserPatientController {
 
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
         userPatientAuthorizationsVM.getPatients().stream().filter(DivisiblePatientVM::isAuthorized).forEach(patient -> {
-            if (!patientDao.findByPatientNo(patient.getPtNo()).isPresent()) {
+            if (!patientRepository.findByPatientNo(patient.getPtNo()).isPresent()) {
                 throw new UserPatientControllerException("Patient not found");
             }
 

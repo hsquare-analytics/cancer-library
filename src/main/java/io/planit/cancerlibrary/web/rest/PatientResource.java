@@ -1,8 +1,8 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.constant.ReviewConstants;
-import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
+import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -31,10 +31,10 @@ public class PatientResource {
 
     private static final String ENTITY_NAME = "patient";
 
-    private final PatientDao patientDao;
+    private final PatientRepository patientRepository;
 
-    public PatientResource(PatientDao patientDao) {
-        this.patientDao = patientDao;
+    public PatientResource(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
     }
 
     @PostMapping("/patients")
@@ -42,7 +42,7 @@ public class PatientResource {
         throws URISyntaxException {
         log.debug("REST request to save Patient : {}", patient);
 
-        int result = patientDao.insert(patient);
+        int result = patientRepository.insert(patient);
 
         return ResponseEntity.created(new URI("/api/patients/" + result)).body(result);
     }
@@ -51,7 +51,7 @@ public class PatientResource {
     public ResponseEntity<List<Patient>> getAllPatients() {
         log.debug("REST request to get all Patients");
 
-        List<Patient> result = patientDao.findAll();
+        List<Patient> result = patientRepository.findAll();
         return ResponseEntity.ok().body(result);
     }
 
@@ -59,7 +59,7 @@ public class PatientResource {
     public ResponseEntity<Patient> getPatient(@PathVariable String ptNo) {
         log.debug("REST request to get Patient : {}", ptNo);
 
-        Optional<Patient> result = patientDao.findByPatientNo(ptNo);
+        Optional<Patient> result = patientRepository.findByPatientNo(ptNo);
         return result.map(patient -> ResponseEntity.ok().body(patient))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -80,14 +80,14 @@ public class PatientResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!patientDao.existsByPatientNo(ptNo)) {
+        if (!patientRepository.existsByPatientNo(ptNo)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
         String login = SecurityUtils.getCurrentUserLogin()
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        Optional<Patient> patient = patientDao.findByPatientNo(ptNo)
+        Optional<Patient> patient = patientRepository.findByPatientNo(ptNo)
             .map(existPatient -> {
                 if (!ObjectUtils.isEmpty(patientDTO.getStatus())) {
                     existPatient.setStatus(patientDTO.getStatus());
@@ -112,7 +112,7 @@ public class PatientResource {
             });
 
         return patient.map(response -> {
-                patientDao.update(response);
+                patientRepository.update(response);
                 return ResponseEntity.ok().body(response);
             })
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

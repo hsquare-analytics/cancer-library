@@ -1,7 +1,7 @@
-package io.planit.cancerlibrary.dao;
+package io.planit.cancerlibrary.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Component
-public class DatasourceDao {
+@Repository
+public class SqlExecutor {
     JdbcTemplate jdbcTemplate;
 
-    public DatasourceDao(JdbcTemplate jdbcTemplate) {
+    public SqlExecutor(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -29,24 +29,24 @@ public class DatasourceDao {
             });
     }
 
-    public List<Map<String, Object>> executeSelectSQL(String sql) {
+    public List<Map<String, Object>> executeSelectAll(String sql) {
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql);
-        return result.stream().map(DatasourceDao::keyChangeLowerMap).collect(Collectors.toList());
+        return result.stream().map(SqlExecutor::keyChangeLowerMap).collect(Collectors.toList());
     }
 
-    public Map<String, Object> executeSelectOneSQL(String sql) {
+    public Map<String, Object> executeSelectOne(String sql) {
         return keyChangeLowerMap(jdbcTemplate.queryForMap(sql));
     }
 
-    public Integer executeInsertSQL(String sql) {
+    public Integer executeInsert(String sql) {
         return jdbcTemplate.update(sql);
     }
 
-    public Integer executeUpdateSQL(String sql) {
+    public Integer executeUpdate(String sql) {
         return jdbcTemplate.update(sql);
     }
 
-    public Integer executeDeleteSQL(String sql) {
+    public Integer executeDelete(String sql) {
         return jdbcTemplate.update(sql);
     }
 

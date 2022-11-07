@@ -1,4 +1,4 @@
-package io.planit.cancerlibrary.dao;
+package io.planit.cancerlibrary.repository;
 
 import io.planit.cancerlibrary.domain.Patient;
 import org.apache.ibatis.jdbc.SQL;
@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,13 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Component
-public class PatientDao {
+@Repository
+public class PatientRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     private static final String TARGET_TABLE = "TEST_PATIENT";
 
-    public PatientDao(NamedParameterJdbcTemplate jdbcTemplate) {
+    private static final String PATIENT_IDENTIFY_CONDITION = "PT_NO = :ptNo";
+
+    public PatientRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -61,12 +63,12 @@ public class PatientDao {
     }
 
     public boolean existsByPatientNo(String patientNo) {
-        SQL sql = new SQL().SELECT("COUNT(*)").FROM(TARGET_TABLE).WHERE("PT_NO = :ptNo");
+        SQL sql = new SQL().SELECT("COUNT(*)").FROM(TARGET_TABLE).WHERE(PATIENT_IDENTIFY_CONDITION);
         return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
     }
 
     public Optional<Patient> findByPatientNo(String patientNo) {
-        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE).WHERE("PT_NO = :ptNo");
+        SQL sql = new SQL().SELECT("*").FROM(TARGET_TABLE).WHERE(PATIENT_IDENTIFY_CONDITION);
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
@@ -92,7 +94,7 @@ public class PatientDao {
             sql.SET("CREATED_DATE = :createdDate");
         }
 
-        sql.WHERE("PT_NO = :ptNo");
+        sql.WHERE(PATIENT_IDENTIFY_CONDITION);
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
         return jdbcTemplate.update(sql.toString(), namedParameters);

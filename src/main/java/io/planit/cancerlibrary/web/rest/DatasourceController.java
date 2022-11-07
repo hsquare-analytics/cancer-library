@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.dao.DatasourceDao;
+import io.planit.cancerlibrary.repository.SqlExecutor;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
 import io.planit.cancerlibrary.service.SequenceGenerator;
 import io.planit.cancerlibrary.service.UnionSqlBuilderService;
@@ -27,14 +27,14 @@ public class DatasourceController {
 
     private final SequenceGenerator sequenceGenerator;
 
-    private final DatasourceDao datasourceDao;
+    private final SqlExecutor sqlExecutor;
 
     public DatasourceController(UnionSqlBuilderService unionSqlBuilderService,
                                 DMLSqlBuilderService dmlSqlBuilderService,
                                 SequenceGenerator sequenceGenerator,
-                                DatasourceDao datasourceDao) {
+                                SqlExecutor sqlExecutor) {
         this.unionSqlBuilderService = unionSqlBuilderService;
-        this.datasourceDao = datasourceDao;
+        this.sqlExecutor = sqlExecutor;
         this.sequenceGenerator = sequenceGenerator;
         this.dmlSqlBuilderService = dmlSqlBuilderService;
     }
@@ -47,7 +47,7 @@ public class DatasourceController {
         mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
 
         String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-        Integer result = datasourceDao.executeInsertSQL(insertSQL);
+        Integer result = sqlExecutor.executeInsert(insertSQL);
         return ResponseEntity.ok().body(result);
     }
 
@@ -59,7 +59,7 @@ public class DatasourceController {
         String sql = unionSqlBuilderService.getUnionSelectSQL(categoryId, patientNo);
 
         Map<String, Object> result = new HashMap<>();
-        List<Map<String, Object>> map = datasourceDao.executeSelectSQL(sql);
+        List<Map<String, Object>> map = sqlExecutor.executeSelectAll(sql);
         result.put("categoryId", categoryId);
         result.put("dataSource", map);
 
@@ -73,7 +73,7 @@ public class DatasourceController {
 
         String sql = dmlSqlBuilderService.getReadOriginRowSQL(categoryId, Map.of("idx", rowIdx));
 
-        Map<String, Object> result = datasourceDao.executeSelectOneSQL(sql);
+        Map<String, Object> result = sqlExecutor.executeSelectOne(sql);
 
         return ResponseEntity.ok().body(result);
     }
@@ -89,15 +89,15 @@ public class DatasourceController {
 
         String readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, mapWithIdx);
 
-        List<Map<String, Object>> founded = datasourceDao.executeSelectSQL(readSQL);
+        List<Map<String, Object>> founded = sqlExecutor.executeSelectAll(readSQL);
 
         if (founded.isEmpty()) {
             String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-            Integer result = datasourceDao.executeInsertSQL(insertSQL);
+            Integer result = sqlExecutor.executeInsert(insertSQL);
             return ResponseEntity.ok().body(result);
         } else {
             String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
-            Integer result = datasourceDao.executeUpdateSQL(updateSQL);
+            Integer result = sqlExecutor.executeUpdate(updateSQL);
             return ResponseEntity.ok().body(result);
         }
     }
@@ -108,7 +108,7 @@ public class DatasourceController {
         log.debug("REST request to delete Datasource row by category id: {}", categoryId);
 
         String deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
-        Integer result = datasourceDao.executeDeleteSQL(deleteSQL);
+        Integer result = sqlExecutor.executeDelete(deleteSQL);
         return ResponseEntity.ok().body(result);
     }
 }

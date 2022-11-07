@@ -1,10 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -43,7 +43,7 @@ class UserPatientControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private PatientDao patientDao;
+    private PatientRepository patientRepository;
 
     @Autowired
     private UserPatientRepository userPatientRepository;
@@ -57,7 +57,7 @@ class UserPatientControllerIT {
         userRepository.saveAndFlush(user);
 
         Patient patient = PatientResourceIT.createPatientDTO();
-        patientDao.insert(patient);
+        patientRepository.insert(patient);
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
@@ -75,7 +75,7 @@ class UserPatientControllerIT {
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithIndiscerptiblePatient() throws Exception {
         Patient patient = PatientResourceIT.createPatientDTO();
-        patientDao.insert(patient);
+        patientRepository.insert(patient);
 
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
             .andExpect(status().isOk())
@@ -100,7 +100,7 @@ class UserPatientControllerIT {
         patientNos.forEach(patientNo -> {
             Patient patient = PatientResourceIT.createPatientDTO().ptNo(patientNo);
             patient.setPtNo(patientNo);
-            patientDao.insert(patient);
+            patientRepository.insert(patient);
             patientList.add(new DivisiblePatientVM(patient, true));
         });
 

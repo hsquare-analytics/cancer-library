@@ -1,10 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.dao.PatientDao;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -42,7 +42,7 @@ class PatientControllerIT {
     private UserRepository userRepository;
 
     @Autowired
-    private PatientDao patientDao;
+    private PatientRepository patientRepository;
 
     @Autowired
     private UserPatientRepository userPatientRepository;
@@ -60,7 +60,7 @@ class PatientControllerIT {
         userRepository.saveAndFlush(user);
 
         Patient patient = PatientResourceIT.createPatientDTO();
-        patientDao.insert(patient);
+        patientRepository.insert(patient);
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
@@ -83,7 +83,7 @@ class PatientControllerIT {
         // given
         BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
         Patient patient = PatientResourceIT.createPatientDTO().createdDate(timeService.getCurrentTime().minus(1, ChronoUnit.DAYS));
-        patientDao.insert(patient);
+        patientRepository.insert(patient);
 
         // when, them
         restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list")

@@ -1,7 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.dao.DatasourceDao;
 import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.service.SequenceGenerator;
@@ -57,7 +56,7 @@ class DatasourceControllerIT {
     private UserCategoryRepository userCategoryRepository;
 
     @Autowired
-    private DatasourceDao datasourceDao;
+    private SqlExecutor sqlExecutor;
 
     @MockBean
     private SequenceGenerator sequenceGenerator;
@@ -110,7 +109,7 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
             "select * from ph_test_updated where idx = '" + sequence + "'");
 
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
@@ -146,7 +145,7 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceDao.executeSelectSQL("select * from ph_test_updated where idx = 10001");
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll("select * from ph_test_updated where idx = 10001");
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0)).containsEntry("name", "modified_zero");
@@ -155,7 +154,7 @@ class DatasourceControllerIT {
     @Test
     @Transactional
     void testDatasourceExistRowUpdate() throws Exception {
-        datasourceDao.executeInsertSQL("insert into ph_test_updated (idx, name) values ('10001', 'zero')");
+        sqlExecutor.executeInsert("insert into ph_test_updated (idx, name) values ('10001', 'zero')");
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -173,7 +172,7 @@ class DatasourceControllerIT {
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
             "select * from ph_test_updated where idx = '10001'");
 
         // todo: mybatis transaction 처리 안됨...
@@ -186,7 +185,7 @@ class DatasourceControllerIT {
     @Transactional
     void testGetDatasourceRow() throws Exception {
         // given
-        datasourceDao.executeInsertSQL("insert into ph_test (idx, name) values (10001, 'zero')");
+        sqlExecutor.executeInsert("insert into ph_test (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
@@ -201,14 +200,14 @@ class DatasourceControllerIT {
     @Transactional
     void testDeleteDatasourceRow() throws Exception {
         // given
-        datasourceDao.executeInsertSQL("insert into ph_test_updated (idx, name) values (10001, 'zero')");
+        sqlExecutor.executeInsert("insert into ph_test_updated (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
                 delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001))
             .andExpect(status().isOk());
 
-        List<Map<String, Object>> result = datasourceDao.executeSelectSQL(
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
             "select * from ph_test_updated where idx = '10001'");
 
         assertThat(result).isEmpty();
