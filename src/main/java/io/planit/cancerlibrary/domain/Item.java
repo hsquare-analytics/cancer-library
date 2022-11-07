@@ -3,6 +3,7 @@ package io.planit.cancerlibrary.domain;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +42,9 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @ManyToOne(optional = false)
     private Category category;
+
+    @ManyToOne
+    private Codebook codebook;
 
     @Embedded
     @AttributeOverride(name = "dataType", column = @Column(name = "data_type", table = "ph_item_attribute"))
@@ -133,6 +137,19 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
+    public Codebook getCodebook() {
+        return codebook;
+    }
+
+    public void setCodebook(@Nullable Codebook codebook) {
+        this.codebook = codebook;
+    }
+
+    public Item codebook(@Nullable Codebook codebook) {
+        this.setCodebook(codebook);
+        return this;
+    }
+
     public ItemAttribute getAttribute() {
         return attribute;
     }
@@ -187,6 +204,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
             ", category=" + category +
             ", attribute=" + attribute +
             ", property=" + property +
+            ", codebook=" + codebook +
             '}';
     }
 }
