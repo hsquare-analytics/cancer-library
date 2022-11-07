@@ -7,7 +7,6 @@ import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
-import io.planit.cancerlibrary.domain.embedded.Lookup;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
@@ -22,14 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,10 +59,6 @@ public class ItemResourceIT {
     private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA").allowEditing(true).required(true).format("AAAAAAAAAA").sortIndex(1).sortDirection("AAAAAAAAAA");
     private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB").allowEditing(false).required(false).format("BBBBBBBBBB").sortIndex(2).sortDirection("BBBBBBBBBB");
 
-    private static final List<Lookup> DEFAULT_ITEM_LOOKUP_LIST = Arrays.asList(new Lookup().title("AAAAAAAAAA").description("AAAAAAAAAA"));
-
-    private static final List<Lookup> UPDATED_ITEM_LOOKUP_LIST = Arrays.asList(new Lookup().title("BBBBBBBBBB").description("BBBBBBBBBB"));
-
     private static final Random random = new Random();
     private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
@@ -94,17 +87,13 @@ public class ItemResourceIT {
     public static Item createEntity(EntityManager em, Category category) {
         return new Item().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).activated(DEFAULT_ACTIVATED)
             .orderNo(DEFAULT_ORDER_NO).category(category).property(DEFAULT_ITEM_PROPERTY)
-            .attribute(DEFAULT_ITEM_ATTRIBUTE).lookupList(DEFAULT_ITEM_LOOKUP_LIST);
+            .attribute(DEFAULT_ITEM_ATTRIBUTE);
     }
 
     public static Item createUpdatedEntity(EntityManager em, Category category) {
         return new Item().title(UPDATED_TITLE).description(UPDATED_DESCRIPTION).activated(UPDATED_ACTIVATED)
             .orderNo(UPDATED_ORDER_NO).category(category).property(UPDATED_ITEM_PROPERTY)
-            .attribute(UPDATED_ITEM_ATTRIBUTE).lookupList(UPDATED_ITEM_LOOKUP_LIST);
-    }
-
-    private void compareTwoLookupList(List<Lookup> list1, List<Lookup> list2) {
-        assertThat(list1.stream().map(Lookup::getTitle).collect(Collectors.toList())).containsAll(list2.stream().map(Lookup::getTitle).collect(Collectors.toList()));
+            .attribute(UPDATED_ITEM_ATTRIBUTE);
     }
 
     @BeforeEach
@@ -144,8 +133,6 @@ public class ItemResourceIT {
         assertThat(testItem.getProperty().getFormat()).isEqualTo(DEFAULT_ITEM_PROPERTY.getFormat());
         assertThat(testItem.getProperty().getSortIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortIndex());
         assertThat(testItem.getProperty().getSortDirection()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortDirection());
-        assertThat(testItem.getLookupList()).hasSize(1);
-        compareTwoLookupList(testItem.getLookupList(), DEFAULT_ITEM_LOOKUP_LIST);
     }
 
 
@@ -200,8 +187,7 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].property.format").value(hasItem(DEFAULT_ITEM_PROPERTY.getFormat())))
             .andExpect(jsonPath("$.[*].property.sortIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortIndex())))
             .andExpect(jsonPath("$.[*].property.sortDirection").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortDirection())))
-            .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
-            .andExpect(jsonPath("$.[*].lookupList.[*].title").value(contains(DEFAULT_ITEM_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())));
+            .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())));
     }
 
     @Test
@@ -224,10 +210,8 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.property.format").value(DEFAULT_ITEM_PROPERTY.getFormat()))
             .andExpect(jsonPath("$.property.sortIndex").value(DEFAULT_ITEM_PROPERTY.getSortIndex()))
             .andExpect(jsonPath("$.property.sortDirection").value(DEFAULT_ITEM_PROPERTY.getSortDirection()))
-            .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
-            .andExpect(jsonPath("$.lookupList").value(hasSize(1)))
-            .andExpect(jsonPath("$.lookupList.[*].title").value(contains(DEFAULT_ITEM_LOOKUP_LIST.stream().map(Lookup::getTitle).toArray())))
-        ;
+            .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType())) ;
+
     }
 
     @Test
@@ -247,7 +231,7 @@ public class ItemResourceIT {
             .orElseThrow(() -> new RuntimeException("Item not found"));
         em.detach(updatedItem);
         updatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).property(UPDATED_ITEM_PROPERTY)
-            .attribute(UPDATED_ITEM_ATTRIBUTE).lookupList(UPDATED_ITEM_LOOKUP_LIST);
+            .attribute(UPDATED_ITEM_ATTRIBUTE);
 
         restItemMockMvc
             .perform(
@@ -270,7 +254,6 @@ public class ItemResourceIT {
         assertThat(testItem.getProperty().getSortIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortIndex());
         assertThat(testItem.getProperty().getSortDirection()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortDirection());
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
-        compareTwoLookupList(testItem.getLookupList(), UPDATED_ITEM_LOOKUP_LIST);
     }
 
 
@@ -336,7 +319,6 @@ public class ItemResourceIT {
         partialUpdatedItem.setId(item.getId());
 
         partialUpdatedItem.orderNo(UPDATED_ORDER_NO);
-        partialUpdatedItem.lookupList(UPDATED_ITEM_LOOKUP_LIST);
 
         restItemMockMvc
             .perform(
@@ -351,7 +333,7 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
-        compareTwoLookupList(testItem.getLookupList(), UPDATED_ITEM_LOOKUP_LIST);
+
     }
 
     @Test
@@ -364,7 +346,7 @@ public class ItemResourceIT {
         Item partialUpdatedItem = new Item();
         partialUpdatedItem.setId(item.getId());
 
-        partialUpdatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO).lookupList(UPDATED_ITEM_LOOKUP_LIST);
+        partialUpdatedItem.title(UPDATED_TITLE).orderNo(UPDATED_ORDER_NO);
 
         restItemMockMvc
             .perform(
@@ -379,7 +361,6 @@ public class ItemResourceIT {
         Item testItem = itemList.get(itemList.size() - 1);
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
-        compareTwoLookupList(testItem.getLookupList(), UPDATED_ITEM_LOOKUP_LIST);
     }
 
     @Test

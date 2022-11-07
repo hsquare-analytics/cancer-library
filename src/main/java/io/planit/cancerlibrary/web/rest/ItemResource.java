@@ -104,10 +104,6 @@ public class ItemResource {
                 if (item.getOrderNo() != null) {
                     existingItem.setOrderNo(item.getOrderNo());
                 }
-                if(item.getLookupList() != null) {
-                    existingItem.setLookupList(item.getLookupList());
-                }
-
                 return existingItem;
             })
             .map(itemRepository::save);

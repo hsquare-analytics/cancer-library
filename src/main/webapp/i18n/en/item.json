@@ -34,8 +34,7 @@
         "format": "Format",
         "sortIndex": "Sort Index",
         "sortDirection": "Sort Direction"
-      },
-      "lookupList": "Lookup list"
+      }
     }
   }
 }

@@ -2,14 +2,11 @@ package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
-import io.planit.cancerlibrary.domain.embedded.Lookup;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -57,12 +54,6 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @AttributeOverride(name = "sortIndex", column = @Column(name = "sort_index", table = "ph_item_property"))
     @AttributeOverride(name = "sortDirection", column = @Column(name = "sort_direction", table = "ph_item_property"))
     private ItemProperty property;
-
-    @ElementCollection
-    @CollectionTable(name = "ph_item_lookup", joinColumns = @JoinColumn(name = "item_id"))
-    @Column(name = "title", nullable = false)
-    @OrderColumn(name = "order_no")
-    private List<Lookup> lookupList = new ArrayList<>();
 
     public Long getId() {
         return this.id;
@@ -168,19 +159,6 @@ public class Item extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public List<Lookup> getLookupList() {
-        return lookupList;
-    }
-
-    public void setLookupList(List<Lookup> lookupList) {
-        this.lookupList = lookupList;
-    }
-
-    public Item lookupList(List<Lookup> lookupList) {
-        this.lookupList = lookupList;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -209,7 +187,6 @@ public class Item extends AbstractAuditingEntity implements Serializable {
             ", category=" + category +
             ", attribute=" + attribute +
             ", property=" + property +
-            ", lookupList=" + lookupList +
             '}';
     }
 }

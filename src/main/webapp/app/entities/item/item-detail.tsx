@@ -102,12 +102,6 @@ export const ItemDetail = () => {
             </span>
           </dt>
           <dd>{itemEntity.property?.sortDirection}</dd>
-          <dt>
-            <span id="lookupList">
-              <Translate contentKey="cancerLibraryApp.item.lookupList">Lookup</Translate>
-            </span>
-          </dt>
-          <dd>{JSON.stringify(itemEntity.lookupList.filter(data => data))}</dd>
         </dl>
         <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left"/>{' '}
