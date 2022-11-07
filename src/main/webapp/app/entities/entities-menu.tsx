@@ -9,8 +9,8 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/subject">
         <Translate contentKey="global.menu.entities.subject" />
       </MenuItem>
-      <MenuItem icon="asterisk" to="/library">
-        <Translate contentKey="global.menu.entities.library" />
+      <MenuItem icon="asterisk" to="/topic">
+        <Translate contentKey="global.menu.entities.topic" />
       </MenuItem>
       <MenuItem icon="asterisk" to="/category">
         <Translate contentKey="global.menu.entities.category" />
@@ -18,14 +18,14 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/item">
         <Translate contentKey="global.menu.entities.item" />
       </MenuItem>
+      <MenuItem icon="asterisk" to="/codebook">
+        <Translate contentKey="global.menu.entities.codebook" />
+      </MenuItem>
       <MenuItem icon="asterisk" to="/user-category">
         <Translate contentKey="global.menu.entities.user-category" />
       </MenuItem>
       <MenuItem icon="asterisk" to="/user-patient">
         <Translate contentKey="global.menu.entities.user-patient" />
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/codebook">
-        <Translate contentKey="global.menu.entities.codebook" />
       </MenuItem>
     </>
   );

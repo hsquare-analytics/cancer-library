@@ -2,7 +2,6 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 
 import ErrorBoundaryRoutes from 'app/shared/error/error-boundary-routes';
-import Library from './library';
 import Category from "./category";
 import Item from "./item";
 import UserCategory from "./user-category";
@@ -20,7 +19,6 @@ export default () => {
         {/* prettier-ignore */}
         <Route path="subject/*" element={<Subject />} />
         <Route path="topic/*" element={<Topic />} />
-        <Route path="library/*" element={<Library />} />
         <Route path="category/*" element={<Category />} />
         <Route path="item/*" element={<Item />} />
         <Route path="group/*" element={<Group />} />

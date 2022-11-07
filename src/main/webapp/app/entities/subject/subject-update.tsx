@@ -5,7 +5,6 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './subject.reducer';
-import {getEntities as getLibraries} from "app/entities/library/library.reducer";
 
 export const SubjectUpdate = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ export const SubjectUpdate = () => {
   const loading = useAppSelector(state => state.subject.loading);
   const updating = useAppSelector(state => state.subject.updating);
   const updateSuccess = useAppSelector(state => state.subject.updateSuccess);
-  const libraries = useAppSelector(state => state.library.entities);
 
   const handleClose = () => {
     navigate('/admin/subject');
@@ -30,10 +28,6 @@ export const SubjectUpdate = () => {
       dispatch(reset());
     } else {
       dispatch(getEntity(id));
-    }
-
-    if (libraries.length === 0) {
-      dispatch(getLibraries({}));
     }
   }, []);
 
