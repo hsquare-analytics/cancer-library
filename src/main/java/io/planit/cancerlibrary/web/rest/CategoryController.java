@@ -1,8 +1,8 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.service.dto.CategoryDTO;
 import io.planit.cancerlibrary.web.rest.errors.SetupDeficiencyException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -28,11 +29,13 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/usable-category-list")
-    public ResponseEntity<List<Category>> getUsableCategory() {
+    public ResponseEntity<List<CategoryDTO>> getUsableCategory() {
         log.debug("REST request to get accessible category by user login info: {}",
             SecurityUtils.getCurrentUserLogin());
 
-        List<Category> categoryList = categoryRepository.findAllByActivatedTrue();
+        List<CategoryDTO> categoryList = categoryRepository.findAllByActivatedTrue().stream()
+            .map(CategoryDTO::new)
+            .collect(Collectors.toList());
 
         if (categoryList.isEmpty()) {
             throw new SetupDeficiencyException();

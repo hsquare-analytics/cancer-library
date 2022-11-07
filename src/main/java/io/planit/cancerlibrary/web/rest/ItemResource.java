@@ -126,8 +126,8 @@ public class ItemResource {
     @GetMapping("/items/{id}")
     public ResponseEntity<ItemDTO> getItem(@PathVariable Long id) {
         log.debug("REST request to get Item : {}", id);
-        Optional<ItemDTO> item = itemRepository.findById(id).map(ItemDTO::new);
-        return ResponseUtil.wrapOrNotFound(item);
+        Optional<ItemDTO> result = itemRepository.findById(id).map(ItemDTO::new);
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
 
