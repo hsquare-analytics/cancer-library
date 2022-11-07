@@ -101,6 +101,20 @@ export const CodebookUpdate = () => {
                 data-cy="description"
                 type="text"
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.codebook.lookupList')}
+                id="codebook-lookupList"
+                name="lookupList"
+                data-cy="lookupList"
+                type="select"
+                multiple
+              >
+                {codebookEntity.lookupList?.filter(data=>data).map(lookup => (
+                  <option value={lookup} key={lookup}>
+                    {lookup.title}
+                  </option>
+                ))}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/codebook" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

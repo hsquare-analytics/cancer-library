@@ -42,6 +42,12 @@ export const CodebookDetail = () => {
             </span>
           </dt>
           <dd>{codebookEntity.description}</dd>
+          <dt>
+            <span id="lookupList">
+              <Translate contentKey="cancerLibraryApp.codebook.lookupList">Lookup</Translate>
+            </span>
+          </dt>
+          <dd>{JSON.stringify(codebookEntity.lookupList?.filter(data => data))}</dd>
         </dl>
         <Button tag={Link} to="/admin/codebook" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}
