@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ph_codebook")
-public class Codebook implements Serializable {
+public class Codebook extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
