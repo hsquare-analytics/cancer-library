@@ -31,6 +31,7 @@
     <include file="config/liquibase/changelog/20220929120135_added_entity_User_Patient.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221020101301_added_entity_Data_Type.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221107041201_added_entity_Codebook.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221108041201_added_entity_Patient.xml" relativeToChangelogFile="false"/>
 
     <!--sql file-->
     <include file="config/liquibase/sql/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>

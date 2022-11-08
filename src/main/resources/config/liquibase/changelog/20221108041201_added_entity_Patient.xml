@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20221108041201-1" author="jhipster">
+        <createTable tableName="test_patient">
+            <column name="pt_no" type="varchar">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="pt_nm" type="varchar"/>
+            <column name="sex_tp_cd" type="varchar"/>
+            <column name="pt_brdy_dt" type="varchar"/>
+            <column name="hsp_tp_cd" type="varchar"/>
+            <column name="idx_dt" type="date"/>
+        </createTable>
+        <createTable tableName="ph_patient_detail">
+            <column name="pt_no" type="varchar">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)"/>
+            <column name="comment" type="varchar(2000)"/>
+            <column name="decline_reason" type="varchar(2000)"/>
+            <column name="created_by" type="varchar(50)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="pt_no"
+                                 baseTableName="ph_patient_detail"
+                                 constraintName="fk_patient_detail_pt_no"
+                                 referencedColumnNames="pt_no"
+                                 referencedTableName="test_patient"/>
+    </changeSet>
+
+    <changeSet id="20221108041201-1-data" author="jhipster" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/patient.csv"
+            separator=";"
+            tableName="test_patient">
+            usePreparedStatements="true">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
