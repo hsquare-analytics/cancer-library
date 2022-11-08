@@ -120,12 +120,6 @@ CREATE TABLE CNCR_RGST_UPDATED (
                                    STATUS             VARCHAR(50)
 );
 
-INSERT INTO ph_subject (id, title, activated, order_no, created_by)
-VALUES (999, 'KCURE-Subject', true, 1, 'system');
-
-INSERT INTO ph_topic (id, title, activated, order_no, subject_id, created_by)
-VALUES (999, 'KCURE-Topic', true, 999, 1, 'system');
-
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
 VALUES (1001, 'CNCR_RGST', 'CNCR_RGST', true, 1, 999, 'system');
 
