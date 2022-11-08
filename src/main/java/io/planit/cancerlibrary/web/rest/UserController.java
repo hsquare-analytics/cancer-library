@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.repository.UserRepository;
@@ -30,14 +31,36 @@ public class UserController {
     }
 
     @GetMapping("/users/normal-authorization-list")
-    public ResponseEntity<List<User>> getNormalAuthorizationUserList() {
+    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
         log.debug("REST request to get a page of Users");
         List<Authority> authorities = new ArrayList<>();
         authorities.add(new Authority().name(AuthoritiesConstants.ADMIN));
         authorities.add(new Authority().name(AuthoritiesConstants.SUPERVISOR));
-        List<User> users = userRepository.findAllByAuthoritiesNotIn(authorities)
+        List<NormalAuthorizationUserVM> result = userRepository.findAllByAuthoritiesNotIn(authorities)
             .stream()
-            .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR))).collect(Collectors.toList());
-        return ResponseEntity.ok().body(users);
+            .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR))).collect(Collectors.toList())
+            .stream().map(NormalAuthorizationUserVM::new).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    static class NormalAuthorizationUserVM {
+        @JsonProperty("login")
+        private String login;
+
+        @JsonProperty("firstName")
+        private String firstName;
+
+        @JsonProperty("lastName")
+        private String lastName;
+
+        public NormalAuthorizationUserVM(User user) {
+            this.login = user.getLogin();
+            this.firstName = user.getFirstName();
+            this.lastName = user.getLastName();
+        }
+
+        public NormalAuthorizationUserVM() {
+        }
     }
 }
