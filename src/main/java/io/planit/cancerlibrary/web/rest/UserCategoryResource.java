@@ -1,29 +1,25 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.domain.UserCategory;
 import io.planit.cancerlibrary.repository.UserCategoryRepository;
+import io.planit.cancerlibrary.service.dto.UserCategoryDTO;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -44,12 +40,12 @@ public class UserCategoryResource {
     }
 
     @PostMapping("/users-categories")
-    public ResponseEntity<UserCategory> createUserCategory(@Valid @RequestBody UserCategory userCategory) throws URISyntaxException {
-        log.debug("REST request to save UserCategory : {}", userCategory);
-        if (userCategory.getId() != null) {
+    public ResponseEntity<UserCategoryDTO> createUserCategory(@Valid @RequestBody UserCategoryDTO userCategoryDTO) throws URISyntaxException {
+        log.debug("REST request to save UserCategory : {}", userCategoryDTO);
+        if (userCategoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new userCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        UserCategory result = userCategoryRepository.save(userCategory);
+        UserCategoryDTO result = new UserCategoryDTO(userCategoryRepository.save(userCategoryDTO.toEntity()));
         return ResponseEntity
             .created(new URI("/api/users-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -57,15 +53,13 @@ public class UserCategoryResource {
     }
 
     @PutMapping("/users-categories/{id}")
-    public ResponseEntity<UserCategory> updateUserCategory(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody UserCategory userCategory
-    ) throws URISyntaxException {
-        log.debug("REST request to update UserCategory : {}, {}", id, userCategory);
-        if (userCategory.getId() == null) {
+    public ResponseEntity<UserCategoryDTO> updateUserCategory(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody UserCategoryDTO userCategoryDTO
+    ) {
+        log.debug("REST request to update UserCategory : {}, {}", id, userCategoryDTO);
+        if (userCategoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, userCategory.getId())) {
+        if (!Objects.equals(id, userCategoryDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -73,65 +67,62 @@ public class UserCategoryResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        UserCategory result = userCategoryRepository.save(userCategory);
+        UserCategoryDTO result = new UserCategoryDTO(userCategoryRepository.save(userCategoryDTO.toEntity()));
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategory.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategoryDTO.getId().toString()))
             .body(result);
     }
 
-//    @PatchMapping(value = "/categories/{id}", consumes = { "application/json", "application/merge-patch+json" })
-//    public ResponseEntity<UserCategory> partialUpdateUserCategory(
-//        @PathVariable(value = "id", required = false) final Long id,
-//        @NotNull @RequestBody UserCategory userCategory
-//    ) throws URISyntaxException {
-//        log.debug("REST request to partial update UserCategory partially : {}, {}", id, userCategory);
-//        if (userCategory.getId() == null) {
-//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-//        }
-//        if (!Objects.equals(id, userCategory.getId())) {
-//            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-//        }
-//
-//        if (!userCategoryRepository.existsById(id)) {
-//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-//        }
-//
-//        Optional<UserCategory> result = userCategoryRepository
-//            .findById(userCategory.getId())
-//            .map(existingUserCategory -> {
-//                if (userCategory.getTitle() != null) {
-//                    existingUserCategory.setTitle(userCategory.getTitle());
-//                }
-//                if (userCategory.getDescription() != null) {
-//                    existingUserCategory.setDescription(userCategory.getDescription());
-//                }
-//                if (userCategory.getActivated() != null) {
-//                    existingUserCategory.setActivated(userCategory.getActivated());
-//                }
-//
-//                return existingUserCategory;
-//            })
-//            .map(userCategoryRepository::save);
-//
-//        return ResponseUtil.wrapOrNotFound(
-//            result,
-//            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategory.getId().toString())
-//        );
-//    }
+    @PatchMapping(value = "/users-categories/{id}", consumes = {"application/json", "application/merge-patch+json"})
+    public ResponseEntity<UserCategoryDTO> partialUpdateUserCategory(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody UserCategoryDTO userCategoryDTO
+    ) {
+        log.debug("REST request to partial update UserCategory partially : {}, {}", id, userCategoryDTO);
+        if (userCategoryDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (!Objects.equals(id, userCategoryDTO.getId())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+
+        if (!userCategoryRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Optional<UserCategoryDTO> result = userCategoryRepository
+            .findById(userCategoryDTO.getId())
+            .map(existingUserCategory -> {
+                if (userCategoryDTO.getUser() != null) {
+                    existingUserCategory.setUser(userCategoryDTO.getUser());
+                }
+                if (userCategoryDTO.getCategory() != null) {
+                    existingUserCategory.setCategory(userCategoryDTO.getCategory());
+                }
+
+                return existingUserCategory;
+            })
+            .map(userCategoryRepository::save).map(UserCategoryDTO::new);
+
+        return ResponseUtil.wrapOrNotFound(
+            result,
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, userCategoryDTO.getId().toString())
+        );
+    }
 
     @GetMapping("/users-categories")
-    public ResponseEntity<List<UserCategory>> getAllUsersCategories() {
+    public ResponseEntity<List<UserCategoryDTO>> getAllUsersCategories() {
         log.debug("REST request to get all UsersCategories");
-        List<UserCategory> result = userCategoryRepository.findAll();
+        List<UserCategoryDTO> result = userCategoryRepository.findAll().stream().map(UserCategoryDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/users-categories/{id}")
-    public ResponseEntity<UserCategory> getUserCategory(@PathVariable Long id) {
+    public ResponseEntity<UserCategoryDTO> getUserCategory(@PathVariable Long id) {
         log.debug("REST request to get UserCategory : {}", id);
-        Optional<UserCategory> userCategory = userCategoryRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(userCategory);
+        Optional<UserCategoryDTO> result = userCategoryRepository.findById(id).map(UserCategoryDTO::new);
+        return ResponseUtil.wrapOrNotFound(result);
     }
 
     @DeleteMapping("/users-categories/{id}")
