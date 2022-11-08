@@ -51,7 +51,7 @@ class PatientControllerIT {
     private TimeService timeService;
 
     @Test
-    @Transactional
+    @Transactional(value = "jdbcTransactionManager")
     @WithMockUser(username = "accessibleUser")
     void testFetchAccessiblePatientList() throws Exception {
 
@@ -77,7 +77,7 @@ class PatientControllerIT {
     }
 
     @Test
-    @Transactional
+    @Transactional(value = "jdbcTransactionManager")
     @WithMockUser(username = "supervisor", authorities = AuthoritiesConstants.SUPERVISOR)
     void testFetchAccessiblePatientListWithReviewer() throws Exception {
         // given
