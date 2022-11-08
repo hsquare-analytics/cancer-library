@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -42,9 +43,9 @@ public class PatientController {
         log.debug("REST request to get accessible patient list");
 
         if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.SUPERVISOR, AuthoritiesConstants.ADMIN)) {
-           Map<String, Instant> dateRange = Map.of(
-                "startDate", startDate.minus(1, ChronoUnit.DAYS),
-                "endDate", endDate.plus(1, ChronoUnit.DAYS)
+           Map<String, Timestamp> dateRange = Map.of(
+                "startDate", Timestamp.from(startDate.minus(1, ChronoUnit.DAYS)),
+                "endDate", Timestamp.from(endDate.plus(1, ChronoUnit.DAYS))
            );
             List<Patient> result = patientRepository.findAllByCreatedDateBetween(dateRange);
             return ResponseEntity.ok().body(result);

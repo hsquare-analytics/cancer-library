@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Instant;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class PatientRepository {
         return jdbcTemplate.query(sql.toString(), new PatientMapper());
     }
 
-    public List<Patient> findAllByCreatedDateBetween(Map<String, Instant> dateRange) {
+    public List<Patient> findAllByCreatedDateBetween(Map<String, Timestamp> dateRange) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE("CREATED_DATE BETWEEN :startDate AND :endDate");
         return jdbcTemplate.query(sql.toString(), dateRange, new PatientMapper());
     }
