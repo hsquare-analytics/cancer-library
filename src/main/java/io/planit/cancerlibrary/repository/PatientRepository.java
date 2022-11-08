@@ -85,7 +85,7 @@ public class PatientRepository {
     public Integer update(Patient patient) {
         SQL sql = new SQL().UPDATE(PATIENT_DETAIL);
         sql.SET("LAST_MODIFIED_BY = :lastModifiedBy")
-            .SET("LAST_MODIFIED_DATE = :lastModifiedDate");
+            .SET(String.format("LAST_MODIFIED_DATE = '%s'", Timestamp.from(patient.getLastModifiedDate())));
 
         if (patient.getStatus() != null) {
             sql.SET("STATUS = :status");
@@ -100,7 +100,7 @@ public class PatientRepository {
             sql.SET("CREATED_BY = :createdBy");
         }
         if (patient.getCreatedDate() != null) {
-            sql.SET("CREATED_DATE = :createdDate");
+            sql.SET(String.format("CREATED_DATE = '%s'", Timestamp.from(patient.getCreatedDate())));
         }
 
         sql.WHERE("PT_NO = :ptNo");
