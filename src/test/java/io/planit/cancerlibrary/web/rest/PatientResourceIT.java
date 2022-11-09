@@ -134,6 +134,7 @@ public class PatientResourceIT {
     @Transactional("jdbcTemplateTransactionManager")
     void testGetAllPatient() throws Exception {
         patientRepository.insert(patient);
+        patientRepository.insertPatientDetail(patient);
 
         restPatientMockMvc
             .perform(get(ENTITY_API_URL))

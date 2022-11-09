@@ -46,7 +46,7 @@ public class PatientRepository {
         return new SQL().SELECT("*").FROM(PATIENT_VIEW).LEFT_OUTER_JOIN(PATIENT_DETAIL + " ON " + PATIENT_VIEW + ".PT_NO = " + PATIENT_DETAIL + ".PT_NO");
     }
 
-    public Integer insert(Patient patient) {
+    public boolean insert(Patient patient) {
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
 
         SQL sql1 = new SQL().INSERT_INTO(PATIENT_VIEW)
@@ -56,24 +56,16 @@ public class PatientRepository {
             .VALUES("PT_BRDY_DT", ":ptBrdyDt")
             .VALUES("HSP_TP_CD", ":hspTpCd")
             .VALUES("IDX_DT", ":idxDt");
-        jdbcTemplate.update(sql1.toString(), namedParameters);
-
-        SQL sql2 = new SQL().INSERT_INTO(PATIENT_DETAIL)
-            .VALUES("PT_NO", ":ptNo")
-            .VALUES("STATUS", ":status")
-            .VALUES("CREATED_BY", ":createdBy")
-            .VALUES("CREATED_DATE", ":createdDate")
-            .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
-            .VALUES("LAST_MODIFIED_DATE", ":lastModifiedDate")
-            .VALUES("COMMENT", ":comment")
-            .VALUES("DECLINE_REASON", ":declineReason");
-        jdbcTemplate.update(sql2.toString(), namedParameters);
-
-        return 1;
+        return jdbcTemplate.update(sql1.toString(), namedParameters) > 0;
     }
 
-    public boolean existsByPatientNo(String patientNo) {
+    public boolean checkExistPatientByPatientNo(String patientNo) {
         SQL sql = new SQL().SELECT("COUNT(*)").FROM(PATIENT_VIEW).WHERE("PT_NO = :ptNo");
+        return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
+    }
+
+    public boolean checkExistPatientDetailByPatientNo(String patientNo) {
+        SQL sql = new SQL().SELECT("COUNT(*)").FROM(PATIENT_DETAIL).WHERE("PT_NO = :ptNo");
         return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
     }
 
@@ -82,7 +74,7 @@ public class PatientRepository {
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
-    public Integer update(Patient patient) {
+    public boolean updatePatientDetail(Patient patient) {
         SQL sql = new SQL().UPDATE(PATIENT_DETAIL);
         sql.SET("LAST_MODIFIED_BY = :lastModifiedBy")
             .SET(String.format("LAST_MODIFIED_DATE = '%s'", Timestamp.from(patient.getLastModifiedDate())));
@@ -106,7 +98,28 @@ public class PatientRepository {
         sql.WHERE("PT_NO = :ptNo");
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        return jdbcTemplate.update(sql.toString(), namedParameters);
+        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
+    }
+
+    public boolean insertPatientDetail(Patient patient) {
+        SQL sql = new SQL().INSERT_INTO(PATIENT_DETAIL)
+            .VALUES("PT_NO", ":ptNo")
+            .VALUES("STATUS", ":status")
+            .VALUES("CREATED_BY", ":createdBy")
+            .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
+            .VALUES("COMMENT", ":comment")
+            .VALUES("DECLINE_REASON", ":declineReason");
+
+        if (patient.getCreatedDate() != null) {
+            sql.VALUES("CREATED_DATE", String.format("'%s'", Timestamp.from(patient.getCreatedDate())));
+        }
+
+        if (patient.getLastModifiedDate() != null) {
+            sql.VALUES("LAST_MODIFIED_DATE", String.format("'%s'", Timestamp.from(patient.getLastModifiedDate())));
+        }
+
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
+        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
     }
 
     private static class PatientMapper implements RowMapper<Patient> {

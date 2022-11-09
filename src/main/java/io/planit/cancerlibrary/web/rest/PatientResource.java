@@ -38,11 +38,11 @@ public class PatientResource {
     }
 
     @PostMapping("/patients")
-    public ResponseEntity<Integer> createPatient(@RequestBody Patient patient)
+    public ResponseEntity<Boolean> createPatient(@RequestBody Patient patient)
         throws URISyntaxException {
         log.debug("REST request to save Patient : {}", patient);
 
-        int result = patientRepository.insert(patient);
+        Boolean result = patientRepository.insert(patient) && patientRepository.insertPatientDetail(patient);
 
         return ResponseEntity.created(new URI("/api/patients/" + result)).body(result);
     }
@@ -80,7 +80,7 @@ public class PatientResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!patientRepository.existsByPatientNo(ptNo)) {
+        if (!patientRepository.checkExistPatientByPatientNo(ptNo)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
@@ -112,7 +112,11 @@ public class PatientResource {
             });
 
         return patient.map(response -> {
-                patientRepository.update(response);
+                if (patientRepository.checkExistPatientDetailByPatientNo(ptNo)) {
+                    patientRepository.updatePatientDetail(response);
+                } else {
+                    patientRepository.insertPatientDetail(response);
+                }
                 return ResponseEntity.ok().body(response);
             })
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
