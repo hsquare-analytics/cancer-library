@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    jpa:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:postgresql://10.102.70.70:5432/cure
+      username: ENC(+7X+jKRtOkYQp6kLKeeF8g==)
+      password: ENC(VfVbDUk9J6YWwWGhdlvfBthqQAGbfred)
+      auto-commit: false
+    jdbc:
+      type: com.zaxxer.hikari.HikariDataSource
+      jdbc-url: jdbc:postgresql://10.102.70.70:5432/cure
+      username: ENC(+7X+jKRtOkYQp6kLKeeF8g==)
+      password: ENC(VfVbDUk9J6YWwWGhdlvfBthqQAGbfred)
+      auto-commit: true
+  jpa:
+    database-platform: tech.jhipster.domain.util.FixedPostgreSQL10Dialect
