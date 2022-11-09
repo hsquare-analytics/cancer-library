@@ -211,3 +211,8 @@ jhipster:
 # ===================================================================
 
 # application:
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    password: ${JASYPT_PASSWORD}
