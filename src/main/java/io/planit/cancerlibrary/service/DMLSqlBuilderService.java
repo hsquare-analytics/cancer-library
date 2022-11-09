@@ -47,6 +47,14 @@ public class DMLSqlBuilderService {
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
+            throw new RuntimeException("Patient number parameter is required");
+        }
+
+        if (itemList.stream().map(Item::getTitle).noneMatch(s -> parameterization(s).equals(parameterization(PATIENT_NUMBER_COLUMN)))) {
+            throw new RuntimeException("Patient number item is required");
+        }
+
         SQL sql = new SQL();
         sql.VALUES(IDX_COLUMN, String.format("'%s'", map.get(parameterization(IDX_COLUMN))))
             .INSERT_INTO(sqlization(category.getTitle() + UPDATED_SUFFIX));
