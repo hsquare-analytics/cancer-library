@@ -215,4 +215,4 @@ jhipster:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-    password: ${JASYPT_PASSWORD}
+    password: ${JASYPT_PASSWORD:1234}
