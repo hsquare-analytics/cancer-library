@@ -8,6 +8,8 @@ import {
   getDxCellClass,
   isValid
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -17,7 +19,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
-  const {data, originRow, validationFailedItems} = props;
+  const {data, originRow, validationFailedItems, isSudoUser} = props;
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
@@ -35,7 +37,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
 
   return (
     <div>
-      <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/>
+      {isSudoUser ? <LookupEditor visible={showLookup} setVisible={setShowLookup} dataSource={data.column.lookup.dataSource}/> : null}
       <SelectBox
         className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
         dataSource={data.column.lookup.dataSource}
@@ -64,9 +66,10 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     </div>);
 }
 
-const mapStateToProps = ({datasourceStatus}: IRootState) => ({
+const mapStateToProps = ({datasourceStatus, authentication}: IRootState) => ({
   originRow: datasourceStatus.originRow,
   validationFailedItems: datasourceStatus.validationFailedItems,
+  isSudoUser: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
 });
 
 
