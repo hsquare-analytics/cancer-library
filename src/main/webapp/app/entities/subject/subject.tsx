@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './subject.reducer';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import SubjectColumns from "app/entities/subject/subject.column";
+import {getDxButtonColumns} from "app/entities/entities.utils";
 
 export const Subject = () => {
   const dispatch = useAppDispatch();
@@ -66,21 +67,8 @@ export const Subject = () => {
               format={column.format}
               alignment={'center'}
             />)}
-            <Column type="buttons" width={110} buttons={[
-              {
-                hint: "View", icon: "check", onClick: (e) => navigate(`./${e.row.data.id}`)
-              },
-              {
-                hint: "Edit", icon: "edit", onClick: (e) => navigate(`./${e.row.key.id}/edit`)
-              },
-              {
-                hint: "Delete", icon: "trash", onClick: (e) => navigate(`./${e.row.key.id}/delete`)
-              }
-            ]}>
-            </Column>
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
           </DataGrid>
-
-
         ) : (
           !loading && (
             <div className="alert alert-warning">
