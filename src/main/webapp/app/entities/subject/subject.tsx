@@ -43,7 +43,7 @@ export const Subject = () => {
           <DataGrid
             dataSource={subjectList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -55,6 +55,7 @@ export const Subject = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {SubjectColumns.map((column, index) => <Column
               key={index}

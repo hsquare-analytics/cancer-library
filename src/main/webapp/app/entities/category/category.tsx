@@ -43,7 +43,7 @@ export const Category = () => {
           <DataGrid
             dataSource={categoryList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -55,6 +55,7 @@ export const Category = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {CategoryColumns.map((column, index) => <Column
               key={index}

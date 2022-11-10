@@ -45,7 +45,7 @@ export const Topic = () => {
           <DataGrid
             dataSource={topicList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -57,6 +57,7 @@ export const Topic = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {TopicColumns.map((column, index) => <Column
               key={index}

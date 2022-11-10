@@ -98,7 +98,7 @@ export const UserPatient = () => {
           <DataGrid
             dataSource={userPatientList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -110,6 +110,7 @@ export const UserPatient = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {UserPatientColumns.map((column, index) => <Column
               key={index}

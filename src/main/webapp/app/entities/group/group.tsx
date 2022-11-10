@@ -45,7 +45,7 @@ export const Group = () => {
           <DataGrid
             dataSource={groupList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -57,6 +57,7 @@ export const Group = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {GroupColumns.map((column, index) => <Column
               key={index}

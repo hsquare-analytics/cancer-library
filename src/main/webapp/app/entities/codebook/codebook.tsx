@@ -86,10 +86,11 @@ export const Codebook = () => {
         <Translate contentKey="cancerLibraryApp.codebook.home.title">Codebooks</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
-          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
+          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
+                data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus"/>
           </Link>
         </div>
       </h2>
@@ -98,7 +99,7 @@ export const Codebook = () => {
           <DataGrid
             dataSource={codebookList}
             showBorders={true}
-            filterRow={{visible: false}}
+            filterRow={{visible: true}}
             headerFilter={{visible: true}}
             showColumnLines={true}
             showRowLines={true}
@@ -110,6 +111,7 @@ export const Codebook = () => {
               allowUpdating: true,
               allowDeleting: true
             }}
+            paging={{pageSize: 22}}
           >
             {CodebookColumns.map((column, index) => <Column
               key={index}
@@ -136,7 +138,8 @@ export const Codebook = () => {
       {totalItems ? (
         <div className={codebookList && codebookList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
+            <JhiItemCount page={paginationState.activePage} total={totalItems}
+                          itemsPerPage={paginationState.itemsPerPage} i18nEnabled/>
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination
