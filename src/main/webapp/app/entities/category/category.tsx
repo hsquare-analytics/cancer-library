@@ -1,16 +1,17 @@
 import React, {useEffect} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {TextFormat, Translate} from 'react-jhipster';
+import {Link, useNavigate} from 'react-router-dom';
+import {Button} from 'reactstrap';
+import {Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './category.reducer';
-import {APP_DATE_FORMAT} from "app/config/constants";
+import DataGrid, {Column} from 'devextreme-react/data-grid';
+import {getDxButtonColumns} from "app/entities/entities.utils";
+import CategoryColumns from "app/entities/category/category.column";
 
 export const Category = () => {
   const dispatch = useAppDispatch();
 
-  const location = useLocation();
   const navigate = useNavigate();
 
   const categoryList = useAppSelector(state => state.category.entities);
@@ -31,106 +32,42 @@ export const Category = () => {
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="cancerLibraryApp.category.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="cancerLibraryApp.category.home.createLabel">Create new Category</Translate>
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
         {categoryList && categoryList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.title">title</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.description">Description</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.activated">Activated</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.orderNo">Order No</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.property.dateColumn">Date Column</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.property.caption">Caption</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.subject.createdDate">Created Date</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedBy">Last Modified By</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.subject.lastModifiedDate">Last Modified Date</Translate>
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {categoryList.map((category, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`./${category.id}`} color="link" size="sm">
-                      {category.id}
-                    </Button>
-                  </td>
-                  <td>{category.title}</td>
-                  <td>{category.description}</td>
-                  <td>{category.activated ? 'true' : 'false'}</td>
-                  <td>{category.orderNo}</td>
-                  <td>{category.property?.dateColumn}</td>
-                  <td>{category.property?.caption}</td>
-                  <td>{category.topic.title}</td>
-                  <td>
-                    {category.createdDate ? <TextFormat value={category.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
-                  </td>
-                  <td>{category.lastModifiedBy}</td>
-                  <td>
-                    {category.lastModifiedDate ? (
-                      <TextFormat value={category.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
-                    ) : null}
-                  </td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`./${category.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button tag={Link} to={`./${category.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button tag={Link} to={`./${category.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <DataGrid
+            dataSource={categoryList}
+            showBorders={true}
+            filterRow={{visible: false}}
+            headerFilter={{visible: true}}
+            showColumnLines={true}
+            showRowLines={true}
+            rowAlternationEnabled={true}
+            showColumnHeaders={true}
+            editing={{
+              mode: "row",
+              useIcons: true,
+              allowUpdating: true,
+              allowDeleting: true
+            }}
+          >
+            {CategoryColumns.map((column, index) => <Column
+              key={index}
+              dataField={column.dataField}
+              caption={column.caption}
+              dataType={column.dataType}
+              visible={column.visible}
+              width={column.width}
+              format={column.format}
+              alignment={'center'}
+            />)}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+          </DataGrid>
         ) : (
           !loading && (
             <div className="alert alert-warning">
