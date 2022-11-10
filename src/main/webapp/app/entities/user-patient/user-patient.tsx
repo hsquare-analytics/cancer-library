@@ -88,7 +88,7 @@ export const UserPatient = () => {
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
           </Button>
-          <Link to="/admin/user-patient/new" className="btn btnPrimary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/admin/user-patient/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
           </Link>
         </div>
