@@ -33,7 +33,7 @@
             </column>
             <column name="order_no" type="int"/>
         </createTable>
-        <addPrimaryKey columnNames="codebook_id, title, description" tableName="ph_codebook_lookup"/>
+        <addPrimaryKey columnNames="codebook_id, description" tableName="ph_codebook_lookup"/>
 
         <addForeignKeyConstraint baseColumnNames="codebook_id"
                                  baseTableName="ph_codebook_lookup"
