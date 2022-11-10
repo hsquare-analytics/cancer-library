@@ -7,6 +7,7 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './item.reducer';
 import {getEntities as getCategories} from "app/entities/category/category.reducer";
 import {getEntities as getCodebooks} from "app/entities/codebook/codebook.reducer";
+import _ from "lodash";
 
 export const ItemUpdate = () => {
   const dispatch = useAppDispatch();
@@ -139,7 +140,7 @@ export const ItemUpdate = () => {
               <ValidatedField type="select" name="codebook.id" data-cy="codebook"
                               label={translate('cancerLibraryApp.item.codebook.title')}>
                 <option value="">-</option>
-                {codebooks.map(codebook => (
+                {_.orderBy(codebooks, 'title').map(codebook => (
                   <option value={codebook.id} key={codebook}>
                     {codebook.title}
                   </option>
