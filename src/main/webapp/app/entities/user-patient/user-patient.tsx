@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {Button, Table} from 'reactstrap';
-import {getSortState, JhiItemCount, JhiPagination, Translate, TextFormat} from 'react-jhipster';
+import {Button} from 'reactstrap';
+import {getSortState, JhiItemCount, JhiPagination, Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
 import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './user-patient.reducer';
-import {APP_DATE_FORMAT} from "app/config/constants";
+import DataGrid, {Column} from 'devextreme-react/data-grid';
+import {getDxButtonColumns} from "app/entities/entities.utils";
+import UserPatientColumns from "app/entities/user-patient/user-patient.column";
 
 export const UserPatient = () => {
   const dispatch = useAppDispatch();
@@ -85,99 +87,42 @@ export const UserPatient = () => {
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="cancerLibraryApp.userPatient.home.refreshListLabel">Refresh List</Translate>
           </Button>
           <Link to="/admin/user-patient/new" className="btn btnPrimary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp;
-            <Translate contentKey="cancerLibraryApp.userPatient.home.createLabel">Create new UserPatient</Translate>
           </Link>
         </div>
       </h2>
       <div className="table-responsive">
         {userPatientList && userPatientList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.userPatient.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.userPatient.user.login">User Login</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="cancerLibraryApp.userPatient.patientNo">Patient No:</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                  <th>
-                      <Translate contentKey="cancerLibraryApp.userPatient.createdDate">Created Date</Translate>
-                  </th>
-                  <th>
-                      <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedBy">Last Modified By</Translate>
-                  </th>
-                  <th>
-                      <Translate contentKey="cancerLibraryApp.userPatient.lastModifiedDate">Last Modified Date</Translate>
-                  </th>
-                  <th />
-              </tr>
-            </thead>
-            <tbody>
-              {userPatientList.map((userPatient, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    <Button tag={Link} to={`/admin/user-patient/${userPatient.id}`} color="link" size="sm">
-                      {userPatient.id}
-                    </Button>
-                  </td>
-                  <td>{userPatient.user.login}</td>
-                  <td>{userPatient.patientNo}</td>
-                    <td>
-                        {userPatient.createdDate ?
-                            <TextFormat value={userPatient.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/> : null}
-                    </td>
-                    <td>{userPatient.lastModifiedBy}</td>
-                    <td>
-                        {userPatient.lastModifiedDate ? (
-                            <TextFormat value={userPatient.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid/>
-                        ) : null}
-                    </td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/admin/user-patient/${userPatient.id}`} color="info" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/admin/user-patient/${userPatient.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                        data-cy="entityEditButton"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/admin/user-patient/${userPatient.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                        data-cy="entityDeleteButton"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <DataGrid
+            dataSource={userPatientList}
+            showBorders={true}
+            filterRow={{visible: false}}
+            headerFilter={{visible: true}}
+            showColumnLines={true}
+            showRowLines={true}
+            rowAlternationEnabled={true}
+            showColumnHeaders={true}
+            editing={{
+              mode: "row",
+              useIcons: true,
+              allowUpdating: true,
+              allowDeleting: true
+            }}
+          >
+            {UserPatientColumns.map((column, index) => <Column
+              key={index}
+              dataField={column.dataField}
+              caption={column.caption}
+              dataType={column.dataType}
+              visible={column.visible}
+              width={column.width}
+              format={column.format}
+              alignment={'center'}
+            />)}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+          </DataGrid>
         ) : (
           !loading && (
             <div className="alert alert-warning">
