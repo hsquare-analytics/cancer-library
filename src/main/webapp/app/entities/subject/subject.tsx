@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -12,7 +12,6 @@ import {getDxButtonColumns} from "app/entities/entities.utils";
 export const Subject = () => {
   const dispatch = useAppDispatch();
 
-  const location = useLocation();
   const navigate = useNavigate();
 
   const subjectList = useAppSelector(state => state.subject.entities);
