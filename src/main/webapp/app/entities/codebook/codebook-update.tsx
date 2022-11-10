@@ -112,8 +112,8 @@ export const CodebookUpdate = () => {
                 <MuiButton variant="text" onClick={() => setShowLookup(true)}>
                   <FontAwesomeIcon icon="pencil-alt"/>{' '}
                 </MuiButton>
-                {codebookEntity.lookupList && codebookEntity.lookupList.length > 0 ?
-                  <LookupEditor visible={showLookup} setVisible={setShowLookup}
+                {codebookEntity.lookupList ?
+                  <LookupEditor visible={showLookup} setVisible={setShowLookup} codebookId={codebookEntity.id}
                                 dataSource={codebookEntity.lookupList.filter(data => data).map(data => {
                                   return {
                                     codebookId: codebookEntity.id,

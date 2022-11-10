@@ -14,6 +14,7 @@ import ScrollView from 'devextreme-react/scroll-view';
 
 
 interface ILookupEditorProps {
+  codebookId: number,
   dataSource: { codebookId: number, title: string, description: string }[];
   visible: boolean;
   setVisible: (visible: boolean) => void;
@@ -22,7 +23,7 @@ interface ILookupEditorProps {
 const LookupEditor = (props: ILookupEditorProps) => {
   const dispatch = useAppDispatch();
 
-  const {visible, dataSource} = props;
+  const {visible, codebookId, dataSource} = props;
 
   const [cards, setCards] = React.useState<ICard[]>([]);
 
@@ -57,7 +58,7 @@ const LookupEditor = (props: ILookupEditorProps) => {
       if (result.isConfirmed) {
         props.setVisible(false);
         dispatch(partialUpdateEntity({
-          id: dataSource[0].codebookId,
+          id: codebookId,
           lookupList: cards.map(card => {
             return {
               title: card.title,
