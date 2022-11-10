@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20221108041201-1" author="jhipster">
-        <createTable tableName="test_patient">
+        <createTable tableName="ph_patient">
             <column name="pt_no" type="varchar">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -13,7 +13,7 @@
             <column name="sex_tp_cd" type="varchar"/>
             <column name="pt_brdy_dt" type="varchar"/>
             <column name="hsp_tp_cd" type="varchar"/>
-            <column name="idx_dt" type="date"/>
+            <column name="idx_dt" type="datetime"/>
         </createTable>
         <createTable tableName="ph_patient_detail">
             <column name="pt_no" type="varchar">
@@ -32,14 +32,14 @@
                                  baseTableName="ph_patient_detail"
                                  constraintName="fk_patient_detail_pt_no"
                                  referencedColumnNames="pt_no"
-                                 referencedTableName="test_patient"/>
+                                 referencedTableName="ph_patient"/>
     </changeSet>
 
     <changeSet id="20221108041201-1-data" author="jhipster" context="faker">
         <loadData
             file="config/liquibase/fake-data/patient.csv"
             separator=";"
-            tableName="test_patient">
+            tableName="ph_patient">
             usePreparedStatements="true">
         </loadData>
     </changeSet>

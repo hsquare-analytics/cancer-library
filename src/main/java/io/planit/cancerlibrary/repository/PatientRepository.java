@@ -19,7 +19,7 @@ import java.util.Optional;
 public class PatientRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String PATIENT_VIEW = "TEST_PATIENT";
+    private static final String PATIENT_VIEW = "PH_PATIENT";
 
     private static final String PATIENT_DETAIL = "PH_PATIENT_DETAIL";
 

@@ -109,7 +109,7 @@ class UnionSqlBuilderServiceIT {
         userPatientRepository.saveAndFlush(userPatient2);
 
         // when
-        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), "test_patient_no").toString();
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), "ph_patient_no").toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
@@ -118,7 +118,7 @@ class UnionSqlBuilderServiceIT {
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
         assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-        assertThat(result).contains("PT_NO IN ('test_patient_no')");
+        assertThat(result).contains("PT_NO IN ('ph_patient_no')");
     }
 
 }
