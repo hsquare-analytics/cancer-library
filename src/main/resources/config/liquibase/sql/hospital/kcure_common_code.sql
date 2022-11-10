@@ -116,7 +116,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('20080','전이진단방법코드','2','조직검사','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('20080','전이진단방법코드','9','기타','3','3'),
 
-insert into ph_codebook (id, title, created_by) values ('20090','전이치료코','system');
+insert into ph_codebook (id, title, created_by) values ('20090','전이치료코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('20090','전이치료코드','00000','No','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('20090','전이치료코드','10000','Chemotherapy','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('20090','전이치료코드','01000','Operation','3','5'),
@@ -154,6 +154,8 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30010','DNA변이정보B코드','2','G>','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30010','DNA변이정보B코드','3','T>','3','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30010','DNA변이정보B코드','4','C>','4','4'),
+
+insert into ph_codebook (id, title, created_by) values ('30020','DNA변이정보C코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30020','DNA변이정보C코드','01','A','1','8'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30020','DNA변이정보C코드','02','G','2','8'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30020','DNA변이정보C코드','03','C','3','8'),
@@ -167,6 +169,9 @@ insert into ph_codebook (id, title, created_by) values ('30030','EUS_M병기코�
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30030','EUS_M병기코드','1','MX','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30030','EUS_M병기코드','2','M0','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30030','EUS_M병기코드','3','M1','3','3'),
+
+
+insert into ph_codebook (id, title, created_by) values ('30040','EUS_N병기코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30040','EUS_N병기코드','1','NX','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30040','EUS_N병기코드','2','N0','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30040','EUS_N병기코드','3','N(+)','3','3'),
@@ -180,14 +185,15 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30050','EUS_T병기코드','06','T4a','6','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30050','EUS_T병기코드','07','T4b','7','7'),
 
+insert into ph_codebook (id, title, created_by) values ('30060','EUS합병증코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30060','EUS합병증코드','1','None','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30060','EUS합병증코드','2','bleeding','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30060','EUS합병증코드','3','perforation','3','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30060','EUS합병증코드','4','Mallory-weiss tearing','4','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30060','EUS합병증코드','9','기타','5','5'),
-insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','01','EGC-I','1','12'),
 
 insert into ph_codebook (id, title, created_by) values ('30070','GROSS유형코드','system');
+insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','01','EGC-I','1','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','02','EGC-IIa','2','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','03','EGC-IIb','3','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','04','EGC-IIc','4','12'),
@@ -200,10 +206,12 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','11','Combination','11','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30070','GROSS유형코드','99','기타/Unclassifiable','12','12'),
 
-insert into ph_codebook (id, title, created_by) values ('30070','GROSS유형코드','system');
+insert into ph_codebook (id, title, created_by) values ('30080','HPYLORI검사결과코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30080','HPYLORI검사결과코드','1','Negative','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30080','HPYLORI검사결과코드','2','Positive','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30080','HPYLORI검사결과코드','3','not evaluable','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('30090','HPYLORI검사방법코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30090','HPYLORI검사방법코드','1','Rapid urease test(CLO test)','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30090','HPYLORI검사방법코드','2','Urea Breath Test','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30090','HPYLORI검사방법코드','3','Histology(병리검사)','3','5'),
@@ -280,6 +288,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30190','분자병리검사결과종류코드','4','HER2/CEP17 비율','4','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30190','분자병리검사결과종류코드','9','기타','5','5'),
 
+insert into ph_codebook (id, title, created_by) values ('30200','분자병리검사결과코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30200','분자병리검사결과코드','1','Positive','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30200','분자병리검사결과코드','2','Negative','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30200','분자병리검사결과코드','3','Equivocal','3','4'),
@@ -289,11 +298,13 @@ insert into ph_codebook (id, title, created_by) values ('30210','분자병리검
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30210','분자병리검사방법코드','1','SISH','1','2'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30210','분자병리검사방법코드','2','FISH','2','2'),
 
+insert into ph_codebook (id, title, created_by) values ('30220','분자병리검사소견코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30220','분자병리검사소견코드','1','Positive','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30220','분자병리검사소견코드','2','Negative','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30220','분자병리검사소견코드','3','Equivocal','3','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30220','분자병리검사소견코드','4','Not evaluable','4','4'),
 
+insert into ph_codebook (id, title, created_by) values ('30230','분자병리검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30230','분자병리검사종류코드','1','Microsatellite instability(MSI)','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30230','분자병리검사종류코드','2','HER-2','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30230','분자병리검사종류코드','3','EBV ISH','3','4'),
@@ -309,6 +320,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30250','상피내암핵등급코드','07','high','7','8'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30250','상피내암핵등급코드','99','기타','8','8'),
 
+insert into ph_codebook (id, title, created_by) values ('30260','생식세포변이검사방법코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30260','생식세포변이검사방법코드','1','Sanger sequencing','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30260','생식세포변이검사방법코드','2','NGS','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30260','생식세포변이검사방법코드','9','기타','3','3'),
@@ -345,6 +357,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30310','생체검사부위코드','07','Brain','7','8'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30310','생체검사부위코드','99','기타','8','8'),
 
+insert into ph_codebook (id, title, created_by) values ('30320','생체검사부위편측성코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30320','생체검사부위편측성코드','1','Left','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30320','생체검사부위편측성코드','2','Right','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30320','생체검사부위편측성코드','3','Bilateral','3','4'),
@@ -376,6 +389,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30340','수술후둘레방향종양위치코드','17','Entire (Whole)','17','18'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30340','수술후둘레방향종양위치코드','99','기타','18','18'),
 
+insert into ph_codebook (id, title, created_by) values ('30350','아미노산변이정보A코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30350','아미노산변이정보A코드','01','Ala(A)','1','21'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30350','아미노산변이정보A코드','02','Arg(R)','2','21'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30350','아미노산변이정보A코드','03','Asn(N)','3','21'),
@@ -398,6 +412,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30350','아미노산변이정보A코드','20','Val(V)','20','21'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30350','아미노산변이정보A코드','99','기타','21','21'),
 
+insert into ph_codebook (id, title, created_by) values ('30360','아미노산변이정보C코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30360','아미노산변이정보C코드','01','Ala(A)','1','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30360','아미노산변이정보C코드','02','Arg(R)','2','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30360','아미노산변이정보C코드','03','Asn(N)','3','26'),
@@ -429,18 +444,22 @@ insert into ph_codebook (id, title, created_by) values ('30370','양성여부구
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30370','양성여부구분코드','Y','Positive','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30370','양성여부구분코드','N','Negative','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30370','양성여부구분코드','Z','Indeterminate','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('30380','여부확인불가구분코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30380','여부확인불가구분코드','Y','Yes','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30380','여부확인불가구분코드','N','No','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30380','여부확인불가구분코드','Z','Unknown','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('30400','영상검사결과진단적분류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','01','negative','1','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','02','benign','2','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','03','probably benign','3','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','04','suspicous','4','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','05','highly suggestive','5','7'),
-
-insert into ph_codebook (id, title, created_by) values ('30400','영상검사결과진단적분류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','06','proven malignancy','6','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30400','영상검사결과진단적분류코드','99','기타','7','7'),
+
+insert into ph_codebook (id, title, created_by) values ('30410','영상검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','01','MMG','1','10'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','02','DBT','2','10'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','03','SONO','3','10'),
@@ -449,20 +468,20 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','06','CT','6','10'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','07','Dexa','7','10'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','08','X-ray','8','10'),
-
-insert into ph_codebook (id, title, created_by) values ('30410','영상검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','09','Bone scan','9','10'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30410','영상검사종류코드','99','기타','10','10'),
+
+insert into ph_codebook (id, title, created_by) values ('30430','외과병리채취부위코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30430','외과병리채취부위코드','1','Breast','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30430','외과병리채취부위코드','2','Stomach','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30430','외과병리채취부위코드','3','LN','3','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30430','외과병리채취부위코드','9','기타','4','4'),
+
+insert into ph_codebook (id, title, created_by) values ('30440','위내시경검사결과유형코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','01','EGC-I','1','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','02','EGC-IIa','2','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','03','EGC-IIb','3','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','04','EGC-IIc','4','12'),
-
-insert into ph_codebook (id, title, created_by) values ('30440','위내시경검사결과유형코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','05','EGC-III','5','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','06','AGC-Bormann type 4','6','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','07','AGC-Bormann type 1','7','12'),
@@ -471,28 +490,32 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','10','AGC-Bormann type 5','10','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','11','Combination','11','12'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30440','위내시경검사결과유형코드','99','기타/Unclassifiable','12','12'),
-insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','01','진단','1','6'),
-insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','02','내시경 시술 및 추적검사','2','6'),
 
 insert into ph_codebook (id, title, created_by) values ('30450','위내시경검사목적코드','system');
+insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','01','진단','1','6'),
+insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','02','내시경 시술 및 추적검사','2','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','03','수술후 추적검사','3','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','04','공단검진','4','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','05','암예방검진센터 수검자','5','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30450','위내시경검사목적코드','99','기타','6','6'),
+
+insert into ph_codebook (id, title, created_by) values ('30460','위내시경합병증등급코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','01','0','1','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','02','I','2','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','03','II','3','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','04','IIIa','4','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','05','IV','5','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','06','V','6','7'),
-
-insert into ph_codebook (id, title, created_by) values ('30460','위내시경합병증등급코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30460','위내시경합병증등급코드','07','Not available','7','7'),
+
+insert into ph_codebook (id, title, created_by) values ('30470','위내시경합병증코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30470','위내시경합병증코드','1','None','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30470','위내시경합병증코드','2','bleeding','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30470','위내시경합병증코드','3','perforation','3','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30470','위내시경합병증코드','4','Mallory-weiss tearing','4','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30470','위내시경합병증코드','9','기타','5','5'),
+
+insert into ph_codebook (id, title, created_by) values ('30480','위식도경계부위암분류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30480','위식도경계부위암분류코드','1','Type I','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30480','위식도경계부위암분류코드','2','Type II','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30480','위식도경계부위암분류코드','3','Type III','3','4'),
@@ -504,6 +527,8 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30490','유방밀도분류코드','3','heterogeneously dense','3','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30490','유방밀도분류코드','4','extremely dense ','4','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30490','유방밀도분류코드','9','기타','5','5'),
+
+insert into ph_codebook (id, title, created_by) values ('30500','유전자발현검사결과종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30500','유전자발현검사결과종류코드','01','EPclin score','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30500','유전자발현검사결과종류코드','02','Risk Assessment','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30500','유전자발현검사결과종류코드','03','Mammaprint Index','3','5'),
@@ -518,23 +543,25 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30510','유전자발현검사종류코드','05','GenesWell BCT','5','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30510','유전자발현검사종류코드','06','Oncofree','6','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30510','유전자발현검사종류코드','99','기타','7','7'),
+
+insert into ph_codebook (id, title, created_by) values ('30520','조직학적등급코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30520','조직학적등급코드','1','Gx','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30520','조직학적등급코드','2','G1','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30520','조직학적등급코드','3','G2','3','4'),
-
-insert into ph_codebook (id, title, created_by) values ('30520','조직학적등급코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30520','조직학적등급코드','4','G3 ','4','4'),
+
+insert into ph_codebook (id, title, created_by) values ('30530','조직학적분화도코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30530','조직학적분화도코드','1','Well differentiated','1','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30530','조직학적분화도코드','2','Moderately differentiated','2','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30530','조직학적분화도코드','3','Poorly differentiated','3','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30530','조직학적분화도코드','4','Combined','4','5'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30530','조직학적분화도코드','9','기타','5','5'),
+
+insert into ph_codebook (id, title, created_by) values ('30540','조직학적진단코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','01','Adenosquamous carcinoma','1','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','02','Carcinoma with lymphoid stroma','2','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','03','DCIS ; Ductal carcinoma in situ','3','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','04','Gastrointestinal stromal tumor','4','26'),
-
-insert into ph_codebook (id, title, created_by) values ('30540','조직학적진단코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','05','Hepatoid adenocarcinoma','5','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','06','ILC ;Invasive lobular carcinoma','6','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','07','Invasive ductal carcinoma ;IDC, micro IDC','7','26'),
@@ -545,8 +572,6 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','12','Metaplastic carcinoma','12','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','13','Mixed adenocarcinoma','13','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','14','Mucinous adenocarcinoma','14','26'),
-
-insert into ph_codebook (id, title, created_by) values ('30540','조직학적진단코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','15','Mucinous carcinoma','15','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','16','Neuroendocrine tumor','16','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','17','Paget''s disease','17','26'),
@@ -557,21 +582,23 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','22','Squamous cell carcinoma','22','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','23','Tubular adenocarcinoma','23','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','24','Tubular carcinoma','24','26'),
-
-insert into ph_codebook (id, title, created_by) values ('30540','조직학적진단코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','25','Undifferentiated carcinoma','25','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30540','조직학적진단코드','99','기타','26','26'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30550','존재여부구분코드','Y','Present','1','3'),
+
+insert into ph_codebook (id, title, created_by) values ('30550','존재여부구분코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30550','존재여부구분코드','N','Absent','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30550','존재여부구분코드','Z','Not evaluable','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('30560','종양코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','01','No residual','1','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','02','CIS only','2','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','03','Residual breast tumor','3','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','04','Residual LN meta','4','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','05','Residual breast tumor and LN meta','5','6'),
-
-insert into ph_codebook (id, title, created_by) values ('30560','종양코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30560','종양코드','99','기타','6','6'),
+
+insert into ph_codebook (id, title, created_by) values ('30580','진단검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','01','Albumin','1','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','02','Alkaline Phosphatase','2','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','03','ALT ','3','33'),
@@ -581,8 +608,6 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','07','CA-125','7','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','08','CA19-9','8','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','09','CA72-4','9','33'),
-
-insert into ph_codebook (id, title, created_by) values ('30580','진단검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','10','Calcium','10','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','11','CEA','11','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','12','Creatinine','12','33'),
@@ -593,8 +618,6 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','17','FSH','17','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','18','Glucose','18','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','19','Hb','19','33'),
-
-insert into ph_codebook (id, title, created_by) values ('30580','진단검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','20','Hematocrit','20','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','21','Hemoglobin','21','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','22','Iron','22','33'),
@@ -605,57 +628,63 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','27','Protein','27','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','28','RBC ','28','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','29','TIBC','29','33'),
-
-insert into ph_codebook (id, title, created_by) values ('30580','진단검사종류코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','30','Total Cholesterol','30','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','31','Vitamin B12','31','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','32','WBC','32','33'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30580','진단검사종류코드','99','기타','33','33'),
+
+insert into ph_codebook (id, title, created_by) values ('30600','침습장기코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','01','Colon','1','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','02','Spleen','2','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','03','Pancreas','3','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','04','Liver','4','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','05','Mesocolon','5','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','06','Adrenal gland','6','11'),
-
-insert into ph_codebook (id, title, created_by) values ('30600','침습장기코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','07','Diaphragm','7','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','08','Abdominal wall','8','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','09','Gallbladder','9','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','10','Retroperitoneum','10','11'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30600','침습장기코드','99','기타','11','11'),
+
+insert into ph_codebook (id, title, created_by) values ('30610','침윤정도코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','01','Mucosa','1','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','02','Submucosa','2','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','03','Proper muscle','3','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','04','Subseroca','4','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','05','Serosa','5','7'),
-
-insert into ph_codebook (id, title, created_by) values ('30610','침윤정도코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','06','Adjacent organ','6','7'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30610','침윤정도코드','99','기타','7','7'),
+
+insert into ph_codebook (id, title, created_by) values ('30620','편측성코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30620','편측성코드','1','Left','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30620','편측성코드','2','Right','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30620','편측성코드','3','Bilateral','3','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30620','편측성코드','9','기타','4','4'),
+
+insert into ph_codebook (id, title, created_by) values ('30630','포함여부구분코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30630','포함여부구분코드','Y','Involved','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30630','포함여부구분코드','N','Not involved','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('30630','포함여부구분코드','Z','No data','3','3'),
-insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','01','정상의 건강한 환자','1','6'),
 
 insert into ph_codebook (id, title, created_by) values ('40010','ASA점수코드','system');
+insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','01','정상의 건강한 환자','1','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','02','경도의 전신 질환을 가진 환자','2','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','03','중등도의 중증 전신질환을 가진 환자','3','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','04','지속적으로 생명을 위협하는 중증의 전신질환을 가진 환자','4','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','05','수술하지 않으면 생명을 유지할 수 없는 정도의 중증질환을 가진 환자','5','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40010','ASA점수코드','99','장기 공여를 위한 수술 예정인 뇌사자','6','6'),
+
+insert into ph_codebook (id, title, created_by) values ('40020','ESD결과코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40020','ESD결과코드','1','En bloc resection','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40020','ESD결과코드','2','Piecemeal resection','2','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40020','ESD결과코드','3','Failure','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('40030','ESD병변모양코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40030','ESD병변모양코드','1','Elevated (I, IIa, IIa+IIc)','1','3'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40030','ESD병변모양코드','2','flat (IIb)','2','3'),
-
-('40030','ESD병변모양코드','3','depressed  (IIcinsert into ph_codebook (id, systemy) values )','3','3');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40030','ESD병변모양코드','3','depressed  (IIc)','3','3'),
+
+insert into ph_codebook (id, title, created_by) values ('40040','ESD병변위치가로코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','ESD병변위치가로코드','1','Lessor curvature','1','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','ESD병변위치가로코드','2','Greater curvature','2','4'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','ESD병변위치가로코드','3','Posterior wall','3','4'),
@@ -827,7 +856,7 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40290','수술절개방법코드','05','Single port/ single incision','5','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40290','수술절개방법코드','99','기타','6','6'),
 
-insert into ph_codebook (id, title, created_by) values ('40300','수술절개방법코드','system');
+insert into ph_codebook (id, title, created_by) values ('40300','수술절개선유형코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40300','수술절개선유형코드','01','Periareolar','1','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40300','수술절개선유형코드','02','Radial','2','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40300','수술절개선유형코드','03','Curved linear','3','6'),
@@ -1032,7 +1061,6 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40530','항암요법부작용코드','04','Alopecia','4','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40530','항암요법부작용코드','05','Dry skin','5','6'),
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40530','항암요법부작용코드','99','기타','6','6'),
-
 
 insert into ph_codebook (id, title, created_by) values ('40540','항암요법부작용항목코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40540','항암요법부작용항목코드','01','Anorexia','1','13'),
