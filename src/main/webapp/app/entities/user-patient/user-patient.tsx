@@ -119,6 +119,8 @@ export const UserPatient = () => {
               visible={column.visible}
               width={column.width}
               format={column.format}
+              sortIndex={column.sortIndex}
+              sortOrder={column.sortOrder}
               alignment={'center'}
             />)}
             <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
