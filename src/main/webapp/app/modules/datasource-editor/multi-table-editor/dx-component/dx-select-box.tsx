@@ -51,7 +51,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
         isValid={isValid(validationFailedItems, data.column.name)}
-        buttons={isSelectBoxOpened ? [
+        buttons={isSudoUser && isSelectBoxOpened ? [
           {
             name: 'add',
             location: 'before',
