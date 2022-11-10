@@ -12,7 +12,7 @@
             <column name="title" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(255)"/>
+            <column name="description" type="varchar(50)"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -25,7 +25,7 @@
             <column name="codebook_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-            <column name="title" type="varchar(50)">
+            <column name="title" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="varchar(50)">
@@ -33,7 +33,7 @@
             </column>
             <column name="order_no" type="int"/>
         </createTable>
-        <addPrimaryKey columnNames="codebook_id, title" tableName="ph_codebook_lookup"/>
+        <addPrimaryKey columnNames="codebook_id, title, description" tableName="ph_codebook_lookup"/>
 
         <addForeignKeyConstraint baseColumnNames="codebook_id"
                                  baseTableName="ph_codebook_lookup"

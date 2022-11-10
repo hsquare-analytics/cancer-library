@@ -689,6 +689,8 @@ insert into ph_codebook_lookup (codebook_id, description, title, order_no) value
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','2','Greater curvature','2');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','3','Posterior wall','3');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40040','4','Anterior wall','4');
+
+insert into ph_codebook (id, title, created_by) values ('40050','ESD병변위치세로코드','system');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40050','01','Antrum','1');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40050','02','Angle','2');
 insert into ph_codebook_lookup (codebook_id, description, title, order_no) values ('40050','03','Lowerbody','3');
