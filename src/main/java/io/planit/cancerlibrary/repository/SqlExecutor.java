@@ -38,16 +38,16 @@ public class SqlExecutor {
         return keyChangeLowerMap(jdbcTemplate.queryForMap(sql));
     }
 
-    public Integer executeInsert(String sql) {
-        return jdbcTemplate.update(sql);
+    public Boolean executeInsert(String sql) {
+        return jdbcTemplate.update(sql) > 0;
     }
 
-    public Integer executeUpdate(String sql) {
-        return jdbcTemplate.update(sql);
+    public Boolean executeUpdate(String sql) {
+        return jdbcTemplate.update(sql) > 0;
     }
 
-    public Integer executeDelete(String sql) {
-        return jdbcTemplate.update(sql);
+    public Boolean executeDelete(String sql) {
+        return jdbcTemplate.update(sql) > 0;
     }
 
     public static Map<String, Object> keyChangeLowerMap(Map<String, Object> param) {

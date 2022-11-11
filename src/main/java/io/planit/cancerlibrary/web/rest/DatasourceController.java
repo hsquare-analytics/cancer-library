@@ -40,14 +40,14 @@ public class DatasourceController {
     }
 
     @PostMapping("/datasource/categories/{categoryId}/rows")
-    public ResponseEntity<Integer> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) {
+    public ResponseEntity<Boolean> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map<String, Object> mapWithIdx = new HashMap<>(map);
         mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
 
         String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-        Integer result = sqlExecutor.executeInsert(insertSQL);
+        Boolean result = sqlExecutor.executeInsert(insertSQL);
         return ResponseEntity.ok().body(result);
     }
 
@@ -79,7 +79,7 @@ public class DatasourceController {
     }
 
     @PutMapping("/datasource/categories/{categoryId}/rows/{rowId}")
-    public ResponseEntity<Integer> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+    public ResponseEntity<Boolean> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
                                                          @PathVariable(value = "rowId") final String rowId,
                                                        @RequestBody Map<String, Object> map) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
@@ -93,22 +93,22 @@ public class DatasourceController {
 
         if (founded.isEmpty()) {
             String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-            Integer result = sqlExecutor.executeInsert(insertSQL);
+            Boolean result = sqlExecutor.executeInsert(insertSQL);
             return ResponseEntity.ok().body(result);
         } else {
             String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
-            Integer result = sqlExecutor.executeUpdate(updateSQL);
+            Boolean result = sqlExecutor.executeUpdate(updateSQL);
             return ResponseEntity.ok().body(result);
         }
     }
 
     @DeleteMapping("/datasource/categories/{categoryId}/rows/{rowId}")
-    public ResponseEntity<Integer> deleteDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
+    public ResponseEntity<Boolean> deleteDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
                                                        @PathVariable(value = "rowId") final String rowId) {
         log.debug("REST request to delete Datasource row by category id: {}", categoryId);
 
         String deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
-        Integer result = sqlExecutor.executeDelete(deleteSQL);
+        Boolean result = sqlExecutor.executeDelete(deleteSQL);
         return ResponseEntity.ok().body(result);
     }
 }
