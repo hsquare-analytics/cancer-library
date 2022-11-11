@@ -62,7 +62,7 @@ export const getDxColumnConfig = (item: IItem) => {
     visibleIndex={item.property?.visibleIndex}
     allowEditing={item.property?.allowEditing}
     format={item.property?.format}
-    visible={item.activated}
+    visible={item.property?.visible}
     alignment={'center'}
     editCellComponent={getDxEditCellComponent(item)}
   >

@@ -28,6 +28,7 @@
         "dataType": "Data Type"
       },
       "property": {
+        "visible": "Visible",
         "visibleIndex": "Visible Index",
         "caption": "caption",
         "allowEditing": "Allow Editing",

@@ -67,6 +67,12 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.codebook?.title}</dd>
           <dt>
+            <span id="visible">
+              <Translate contentKey="cancerLibraryApp.item.property.visible">Visible</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.visible}</dd>
+          <dt>
             <span id="visibleIndex">
               <Translate contentKey="cancerLibraryApp.item.property.visibleIndex">Visible Index</Translate>
             </span>

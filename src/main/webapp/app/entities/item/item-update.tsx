@@ -147,6 +147,14 @@ export const ItemUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
+                label={translate('cancerLibraryApp.item.property.visible')}
+                id="item-visible"
+                name="property.visible"
+                data-cy="property.visible"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('cancerLibraryApp.item.property.visibleIndex')}
                 id="item-visibleIndex"
                 name="property.visibleIndex"

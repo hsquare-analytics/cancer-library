@@ -8,6 +8,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "category.title"},
   {dataField: "attribute.type"},
   {dataField: "codebook.title"},
+  {dataField: "property.visible"},
   {dataField: "property.visibleIndex"},
   {dataField: "property.caption"},
   {dataField: "property.allowEditing"},
