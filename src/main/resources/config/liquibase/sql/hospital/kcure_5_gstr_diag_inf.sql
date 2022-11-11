@@ -93,6 +93,3 @@ insert into ph_item_property (item_id, caption) values (5013, '생성일시');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (5014, 'PACT_ID', true, 5000, 'system');-- PACT_ID
 insert into ph_item_property (item_id, caption) values (5014, 'PACT_ID');
-
-insert into ph_item (id, title, activated, category_id, created_by) values (5015, 'idx', true, 5000, 'system');-- UI용 시퀀스
-insert into ph_item_property (item_id, caption) values (5015, 'UI용 시퀀스');
