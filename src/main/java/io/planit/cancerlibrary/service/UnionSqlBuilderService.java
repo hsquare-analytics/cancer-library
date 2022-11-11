@@ -42,8 +42,7 @@ public class UnionSqlBuilderService {
 
         SQL sql = new SQL();
         sql.SELECT("*")
-            .FROM(String.format("(%s%nUNION%n%s) AS T", updatedListSQL, notUpdatedListSQL))
-            .ORDER_BY(IDX_COLUMN);
+            .FROM(String.format("(%s%nUNION%n%s) AS T", updatedListSQL, notUpdatedListSQL));
 
         log.debug("Assembled final sql: {} ", sql);
         return sql.toString();
