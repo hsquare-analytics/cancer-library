@@ -47,7 +47,7 @@ public class DatasourceController {
         mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
 
         String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-        Boolean result = sqlExecutor.executeInsert(insertSQL);
+        Boolean result = sqlExecutor.executeDML(insertSQL);
         return ResponseEntity.ok().body(result);
     }
 
@@ -93,11 +93,11 @@ public class DatasourceController {
 
         if (founded.isEmpty()) {
             String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-            Boolean result = sqlExecutor.executeInsert(insertSQL);
+            Boolean result = sqlExecutor.executeDML(insertSQL);
             return ResponseEntity.ok().body(result);
         } else {
             String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
-            Boolean result = sqlExecutor.executeUpdate(updateSQL);
+            Boolean result = sqlExecutor.executeDML(updateSQL);
             return ResponseEntity.ok().body(result);
         }
     }
@@ -108,7 +108,7 @@ public class DatasourceController {
         log.debug("REST request to delete Datasource row by category id: {}", categoryId);
 
         String deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
-        Boolean result = sqlExecutor.executeDelete(deleteSQL);
+        Boolean result = sqlExecutor.executeDML(deleteSQL);
         return ResponseEntity.ok().body(result);
     }
 }

@@ -38,15 +38,7 @@ public class SqlExecutor {
         return keyChangeLowerMap(jdbcTemplate.queryForMap(sql));
     }
 
-    public Boolean executeInsert(String sql) {
-        return jdbcTemplate.update(sql) > 0;
-    }
-
-    public Boolean executeUpdate(String sql) {
-        return jdbcTemplate.update(sql) > 0;
-    }
-
-    public Boolean executeDelete(String sql) {
+    public Boolean executeDML(String sql) {
         return jdbcTemplate.update(sql) > 0;
     }
 

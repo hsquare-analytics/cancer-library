@@ -154,7 +154,7 @@ class DatasourceControllerIT {
     @Test
     @Transactional
     void testDatasourceExistRowUpdate() throws Exception {
-        sqlExecutor.executeInsert("insert into ph_test_updated (idx, name) values ('10001', 'zero')");
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values ('10001', 'zero')");
 
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -185,7 +185,7 @@ class DatasourceControllerIT {
     @Transactional
     void testGetDatasourceRow() throws Exception {
         // given
-        sqlExecutor.executeInsert("insert into ph_test (idx, name) values (10001, 'zero')");
+        sqlExecutor.executeDML("insert into ph_test (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
@@ -200,7 +200,7 @@ class DatasourceControllerIT {
     @Transactional
     void testDeleteDatasourceRow() throws Exception {
         // given
-        sqlExecutor.executeInsert("insert into ph_test_updated (idx, name) values (10001, 'zero')");
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10001, 'zero')");
 
         // then
         restDatasourceMockMvc.perform(
