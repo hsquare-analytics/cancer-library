@@ -146,12 +146,14 @@ insert into ph_item_attribute (item_id, data_type) values (2002, 'selectbox');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2003, 'adm_ymd', true, 2000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2003, '입원일자', false, true);
+insert into ph_item_attribute (item_id, data_type) values (2003, 'date');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2004, 'hlinf_seq', true, 2000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2004, '건강정보순번', false, true);
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2005, 'dsch_ymd', true, 2000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2005, '퇴원일자', false, true);
+insert into ph_item_attribute (item_id, data_type) values (2005, 'date');
 
 insert into ph_item (id, title, activated, category_id, created_by, codebook_id) values (2006, 'cur_drnk_yn_noans_spcd', true, 2000, 'system', 1);
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2006, '현재음주여부무응답구분코드', false, true);
@@ -328,6 +330,7 @@ insert into ph_item_property (item_id, caption, required, allow_editing) values 
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2057, 'crtn_dt', true, 2000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2057, '생성일시', false, true);
+insert into ph_item_attribute (item_id, data_type) values (2057, 'date');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2058, 'pact_id', true, 2000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2058, 'pact_id ui용', false, true);
