@@ -7,7 +7,7 @@
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_patient_authority.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_1_cncr_rgst.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_2_gstr_pt_hlinf.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_3_gstr_trtm_srpr.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_3_gstr_pt_fmht.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_common_code.sql"/>
     </changeSet>
 </databaseChangeLog>
