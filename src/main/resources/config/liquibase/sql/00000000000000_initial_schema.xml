@@ -8,6 +8,8 @@
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_1_cncr_rgst.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_2_gstr_pt_hlinf.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_3_gstr_pt_fmht.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_4_gstr_diag_aninf.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_5_gstr_diag_inf.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_common_code.sql"/>
     </changeSet>
 </databaseChangeLog>
