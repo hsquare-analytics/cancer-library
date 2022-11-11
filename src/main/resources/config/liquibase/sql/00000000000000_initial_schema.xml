@@ -5,9 +5,9 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="20220921131335-2" author="zero" context="hospital">
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_patient_authority.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_cncr_rgst.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_gstr_pt_hlinf.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_gstr_trtm_srpr.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_1_cncr_rgst.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_2_gstr_pt_hlinf.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_3_gstr_trtm_srpr.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_common_code.sql"/>
     </changeSet>
 </databaseChangeLog>
