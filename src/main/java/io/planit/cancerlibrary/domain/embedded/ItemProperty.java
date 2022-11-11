@@ -20,6 +20,8 @@ public class ItemProperty implements Serializable {
 
     private String sortDirection;
 
+    private Boolean visible;
+
     public Integer getVisibleIndex() {
         return visibleIndex;
     }
@@ -108,6 +110,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty sortDirection(String sortDirection) {
         this.setSortDirection(sortDirection);
+        return this;
+    }
+
+    public Boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(Boolean visible) {
+        this.visible = visible;
+    }
+
+    public ItemProperty visible(Boolean visible) {
+        this.setVisible(visible);
         return this;
     }
 }
