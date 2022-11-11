@@ -49,7 +49,7 @@ class UserPatientControllerIT {
     private UserPatientRepository userPatientRepository;
 
     @Test
-    @Transactional
+    @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithDivisiblePatientInfo() throws Exception {
         User user = UserResourceIT.createEntity(em);
@@ -71,7 +71,7 @@ class UserPatientControllerIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithIndiscerptiblePatient() throws Exception {
         Patient patient = PatientResourceIT.createPatientDTO();
@@ -87,7 +87,7 @@ class UserPatientControllerIT {
     }
 
     @Test
-    @Transactional
+    @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testCreateMultipleUserPatientAuthorizations() throws Exception {
         // given

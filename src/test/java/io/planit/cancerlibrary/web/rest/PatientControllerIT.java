@@ -51,7 +51,7 @@ class PatientControllerIT {
     private TimeService timeService;
 
     @Test
-    @Transactional(value = "jdbcTransactionManager")
+    @Transactional(value = "jdbcTemplateTransactionManager")
     @WithMockUser(username = "accessibleUser")
     void testFetchAccessiblePatientList() throws Exception {
 
@@ -61,6 +61,7 @@ class PatientControllerIT {
 
         Patient patient = PatientResourceIT.createPatientDTO();
         patientRepository.insert(patient);
+        patientRepository.insertPatientDetail(patient);
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
@@ -77,13 +78,14 @@ class PatientControllerIT {
     }
 
     @Test
-    @Transactional(value = "jdbcTransactionManager")
+    @Transactional(value = "jdbcTemplateTransactionManager")
     @WithMockUser(username = "supervisor", authorities = AuthoritiesConstants.SUPERVISOR)
     void testFetchAccessiblePatientListWithReviewer() throws Exception {
         // given
         BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
         Patient patient = PatientResourceIT.createPatientDTO().createdDate(timeService.getCurrentTime().minus(1, ChronoUnit.DAYS));
         patientRepository.insert(patient);
+        patientRepository.insertPatientDetail(patient);
 
         // when, them
         restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list")
