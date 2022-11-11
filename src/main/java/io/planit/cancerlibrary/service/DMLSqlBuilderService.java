@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
+import static io.planit.cancerlibrary.service.StreamUtils.distinctByKey;
 
 @Service
 public class DMLSqlBuilderService {
@@ -59,7 +60,7 @@ public class DMLSqlBuilderService {
         sql.VALUES(IDX_COLUMN, String.format("'%s'", map.get(parameterization(IDX_COLUMN))))
             .INSERT_INTO(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
-        itemList.forEach(item -> {
+        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (map.containsKey(mapKey)) {
                 sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
@@ -123,7 +124,7 @@ public class DMLSqlBuilderService {
 
         SQL sql = new SQL();
         sql.UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
-        itemList.forEach(item -> {
+        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (map.containsKey(mapKey)) {
                 sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));

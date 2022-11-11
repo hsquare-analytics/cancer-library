@@ -10,12 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
+import static io.planit.cancerlibrary.service.StreamUtils.distinctByKey;
 
 @Service
 public class UnionSqlBuilderService {
@@ -79,10 +76,4 @@ public class UnionSqlBuilderService {
 
         return sql;
     }
-
-    private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-        Set<Object> seen = ConcurrentHashMap.newKeySet();
-        return t -> seen.add(keyExtractor.apply(t));
-    }
-
 }
