@@ -10,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 
@@ -51,7 +55,7 @@ public class UnionSqlBuilderService {
         SQL sql = new SQL();
         sql.SELECT(IDX_COLUMN);
         getMarkingColumns().forEach(sql::SELECT);
-        itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
+        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
         sql.WHERE(String.format("PT_NO IN ('%s')", patientNo));
@@ -68,13 +72,18 @@ public class UnionSqlBuilderService {
         SQL sql = new SQL().SELECT(IDX_COLUMN);
         getMarkingColumns().stream().map(key -> String.format("NULL AS %s", key)).forEach(sql::SELECT);
 
-        itemList.forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
+        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(originTableName)
             .WHERE(String.format("%s NOT IN (%s)", IDX_COLUMN, excludeIdxSubQuery));
 
         sql.WHERE(String.format("PT_NO IN ('%s')", patientNo));
 
         return sql;
+    }
+
+    private <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
 }
