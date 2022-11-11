@@ -70,7 +70,7 @@ INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (3000, null, '위암_치료_시술');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (3001, 'pt_no', true, 3000, 'system');
-insert into ph_item_property (item_id, caption, required, allow_editing) values (3001, '환자대체번호', false, false);
+insert into ph_item_property (item_id, caption, required, allow_editing, visible) values (3001, '환자대체번호', false, false, false);
 
 insert into ph_item (id, title, activated, category_id, created_by) values (3002, 'hosp_cd', true, 3000, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (3002, '병원코드', true, true);

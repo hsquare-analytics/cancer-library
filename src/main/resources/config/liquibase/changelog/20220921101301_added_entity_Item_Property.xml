@@ -11,12 +11,12 @@
             </column>
             <column name="visible_index" type="int"/>
             <column name="caption" type="varchar(50)"/>
-            <column name="allow_editing" type="boolean" valueBoolean="true"/>
-            <column name="required" type="boolean" valueBoolean="true"/>
+            <column name="allow_editing" type="boolean" defaultValueBoolean="true"/>
+            <column name="required" type="boolean" defaultValueBoolean="false"/>
             <column name="format" type="varchar(50)"/>
             <column name="sort_index" type="int"/>
             <column name="sort_direction" type="varchar(10)"/>
-            <column name="visible" type="boolean"/>
+            <column name="visible" type="boolean" defaultValueBoolean="true"/>
             <column name="visibleIndex" type="int"/>
         </createTable>
 

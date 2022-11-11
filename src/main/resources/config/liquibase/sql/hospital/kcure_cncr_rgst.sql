@@ -127,7 +127,7 @@ INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (1001, null, '위암_환자_정보');
 
 insert into ph_item (id, title, description, activated, category_id, created_by) values (1000, 'pt_no', '', true, 1001, 'system');
-insert into ph_item_property (item_id, caption, required, allow_editing) values (1000,'환자번호', false, false);
+insert into ph_item_property (item_id, caption, required, allow_editing, visible) values (1000,'환자번호', false, false, false);
 
 insert into ph_item (id, title, description, activated, category_id, created_by) values (1001, 'hoode', '', true, 1001, 'system');
 insert into ph_item_property (item_id, caption, required, allow_editing) values (1001,'병원번호', true, true);

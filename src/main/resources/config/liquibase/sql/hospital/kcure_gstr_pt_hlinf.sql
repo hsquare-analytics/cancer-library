@@ -138,7 +138,7 @@ INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (2000, null, '위암_환자_건강_정보');
 
 insert into ph_item (id, title, activated, category_id, created_by) values (2001, 'pt_no', true, 2000, 'system');
-insert into ph_item_property (item_id, caption, required, allow_editing) values (2001, '환자대체번호', false, false);
+insert into ph_item_property (item_id, caption, required, allow_editing, visible) values (2001, '환자대체번호', false, false, false);
 
 insert into ph_item (id, title, activated, category_id, created_by, codebook_id) values (2002, 'hosp_cd', true, 2000, 'system', 1);
 insert into ph_item_property (item_id, caption, required, allow_editing) values (2002, '병원코드', false, true);
