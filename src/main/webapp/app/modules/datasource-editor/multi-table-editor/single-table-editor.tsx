@@ -145,6 +145,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }, (value) => dispatch(setValidateFailedItems(value))
           )}
         >
+          <Column type="buttons" width={80} buttons={[
+            {hint: "Edit", icon: "edit", onClick: (e) => dataGrid.current.instance.editRow(e.row.rowIndex)},
+            {hint: "Delete", icon: "trash", onClick: (e) => dataGrid.current.instance.deleteRow(e.row.rowIndex)}]
+          }/>
           {
             itemContainer[category.id].map(item => getDxColumnConfig(item))
           }
