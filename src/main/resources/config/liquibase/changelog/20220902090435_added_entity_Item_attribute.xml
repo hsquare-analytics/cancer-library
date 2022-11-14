@@ -19,6 +19,11 @@
             constraintName="fk_item_attribute_item_id"
             referencedColumnNames="id"
             referencedTableName="ph_item"/>
+        <addForeignKeyConstraint baseColumnNames="data_type"
+            baseTableName="ph_item_attribute"
+            constraintName="fk_item_attribute_data_type"
+            referencedColumnNames="name"
+            referencedTableName="ph_data_type"/>
     </changeSet>
 
     <changeSet id="20220902090435-1-data" author="jhipster" context="faker">

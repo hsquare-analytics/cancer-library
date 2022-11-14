@@ -24,12 +24,12 @@
     <include file="config/liquibase/changelog/20220831090435_added_entity_Item.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220830041201_added_entity_Point.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220831131335_added_entity_UserCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221020101301_added_entity_Data_Type.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220902090435_added_entity_Item_attribute.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220921101301_added_entity_Item_Property.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220922091301_added_entity_Review.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220927150435_added_entity_Category_Property.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20220929120135_added_entity_User_Patient.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20221020101301_added_entity_Data_Type.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221107041201_added_entity_Codebook.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221108041201_added_entity_Patient.xml" relativeToChangelogFile="false"/>
 
