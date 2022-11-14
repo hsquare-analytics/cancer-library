@@ -76,6 +76,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     const row = data.row.data;
     const rowIndex = data.rowIndex;
 
+    if (!row || !row.idx) {
+      return null;
+    }
+
     const canManaging = row.idx.includes(KCURE_PREFIX) && (isManager || row['created_by'] === login);
 
     return <Stack spacing={1} direction="row">
