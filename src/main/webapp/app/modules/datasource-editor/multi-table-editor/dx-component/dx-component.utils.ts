@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 export const isValid = (items: any[], columnName: string) => {
   return !items.find(item => item.title.toLowerCase() === columnName.toLowerCase());
@@ -32,6 +33,10 @@ export const isChangedCell = (data, originRow) => {
 
   const a = data.value;
   const b = originRow[data.column.dataField];
+
+  if (_.isNil(b) || b === '') {
+    return false;
+  }
 
   if (type === 'selectbox') {
     if (isNumeric(a) && isNumeric(b)) {
