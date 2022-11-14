@@ -9,7 +9,7 @@ import {
 
 interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
   data: any;
-  lookupDataSource?: any[];
+  lookupDataSource?: {title:string, description: string, label: string}[];
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
@@ -27,7 +27,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   if (lookupDataSource && lookupDataSource.length > 0) {
     const lookupItem = lookupDataSource.find(temp => temp.description === targetValue);
     if (lookupItem) {
-      targetValue = lookupItem.title + ' (' + lookupItem.description + ')';
+      targetValue = lookupItem.label;
     }
   }
 

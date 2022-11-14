@@ -41,9 +41,10 @@ const getDxLookupComponent = (item: IItem) => {
         dataSource={item.codebook.lookupList.filter(data => data).map(data => new Object({
           "codebookId": item.codebook.id,
           "title": data.title,
-          "description": data.description
+          "description": data.description,
+          "label": data.title + " (value: " + data.description + ")",
         }))}
-        displayExpr={"title"} valueExpr={"description"}/>;
+        displayExpr={"label"} valueExpr={"description"}/>;
     default:
       return undefined;
   }
