@@ -11,9 +11,9 @@ import reducer, {
   getUsableCategories,
   getUsableItems,
   reset,
-  resetDataSource,
   resetFlag,
   resetItem,
+  resetRawData,
   updateDatasourceRow,
 } from './datasource.container.reducer';
 
@@ -31,7 +31,7 @@ describe('User Patient selector module reducer tests', () => {
       container: {},
       count: 0
     },
-    dataSource: {
+    rawData: {
       container: {},
       count: 0
     },
@@ -48,9 +48,9 @@ describe('User Patient selector module reducer tests', () => {
       errorMessage: null,
     });
     expect(isEmpty(state.item.container));
-    expect(isEmpty(state.dataSource.container));
+    expect(isEmpty(state.rawData.container));
     expect(isNaN(state.item.count));
-    expect(isNaN(state.dataSource.count));
+    expect(isNaN(state.rawData.count));
   }
 
   function testMultipleTypes(types, payload, testFunction, error?) {
@@ -75,11 +75,11 @@ describe('User Patient selector module reducer tests', () => {
     it('should reset dataSource container', () => {
       expect(reducer({
         ...initialState,
-        dataSource: {
+        rawData: {
           container: {},
           count: 0
         }
-      }, resetDataSource())).toEqual({
+      }, resetRawData())).toEqual({
         ...initialState
       });
     });
@@ -190,7 +190,7 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        dataSource: {
+        rawData: {
           container: {
             fakeId: payload.data.dataSource
           },

@@ -8,8 +8,8 @@ import {
   getDataSources,
   getUsableCategories,
   getUsableItems,
-  resetDataSource,
-  resetItem
+  resetItem,
+  resetRawData
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 import _ from "lodash";
@@ -20,11 +20,11 @@ export const MultiTableEditor = () => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const categories = useAppSelector(state => state.datasourceContainer.categories);
 
-  const dataSourceCount = useAppSelector(state => state.datasourceContainer.dataSource.count);
+  const rawDataCount = useAppSelector(state => state.datasourceContainer.rawData.count);
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const itemCount = useAppSelector(state => state.datasourceContainer.item.count);
 
-  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length || dataSourceCount < categories.length;
+  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length || rawDataCount < categories.length;
 
   const [editedCategoryId, setEditedCategoryId] = useState(null);
 
@@ -53,7 +53,7 @@ export const MultiTableEditor = () => {
     }
 
     return () => {
-      dispatch(resetDataSource());
+      dispatch(resetRawData());
     }
   }, [JSON.stringify(patient?.ptNo)]);
 

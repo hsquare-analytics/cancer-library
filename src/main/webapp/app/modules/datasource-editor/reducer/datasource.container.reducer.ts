@@ -9,7 +9,7 @@ type userPatientSelectorType = {
     container: { [key: string]: IItem[] },
     count: number
   },
-  dataSource: {
+  rawData: {
     container: { [key: string]: any },
     count: number
   },
@@ -25,7 +25,7 @@ const initialState: userPatientSelectorType = {
     container: {},
     count: 0
   },
-  dataSource: {
+  rawData: {
     container: {},
     count: 0
   },
@@ -98,10 +98,10 @@ export const DatasourceContainer = createSlice({
         loading: false,
       }
     },
-    resetDataSource(state) {
+    resetRawData(state) {
       return {
         ...state,
-        dataSource: {
+        rawData: {
           container: {},
           count: 0
         }
@@ -144,12 +144,12 @@ export const DatasourceContainer = createSlice({
         const {data} = action.payload;
         return {
           ...state,
-          dataSource: {
+          rawData: {
             container: {
-              ...state.dataSource.container,
+              ...state.rawData.container,
               [data.categoryId]: data.dataSource
             },
-            count: state.dataSource.count + 1,
+            count: state.rawData.count + 1,
           }
         }
       })
@@ -178,7 +178,7 @@ export const DatasourceContainer = createSlice({
   }
 });
 
-export const {reset, resetDataSource, resetItem, resetFlag} = DatasourceContainer.actions;
+export const {reset, resetRawData, resetItem, resetFlag} = DatasourceContainer.actions;
 
 
 export default DatasourceContainer.reducer;

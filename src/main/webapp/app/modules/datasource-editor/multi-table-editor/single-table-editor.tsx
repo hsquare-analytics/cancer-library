@@ -51,7 +51,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const [actionType, setActionType] = useState(null);
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
-  const dataSourceContainer = useAppSelector(state => state.datasourceContainer.dataSource.container);
+  const rawDataContainer = useAppSelector(state => state.datasourceContainer.rawData.container);
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
@@ -66,7 +66,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     }
   }, [updateSuccess]);
 
-  const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && dataSourceContainer && dataSourceContainer[category.id];
+  const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && rawDataContainer && rawDataContainer[category.id];
 
   return canRender() ? (
     <Accordion defaultExpanded={true} className={"single-table-editor-wrapper"}>
@@ -86,7 +86,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       <AccordionDetails sx={{padding: "8px 0"}}>
         <DataGrid
           ref={dataGrid}
-          dataSource={JSON.parse(JSON.stringify(dataSourceContainer[category.id]))}
+          dataSource={JSON.parse(JSON.stringify(rawDataContainer[category.id]))}
           showBorders={true}
           filterRow={{visible: false}}
           headerFilter={{visible: true}}
