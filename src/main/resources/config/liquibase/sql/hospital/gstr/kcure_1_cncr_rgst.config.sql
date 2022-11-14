@@ -1,5 +1,7 @@
-CREATE TABLE CNCR_RGST (
-                           idx varchar(20) null,-- 추가 시퀀스용
+DROP TABLE IF EXISTS GSTR.CNCR_RGST;
+DROP TABLE IF EXISTS GSTR.CNCR_RGST_UPDATED;
+
+CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST (
                            hosp_cd varchar(4) NOT NULL, 			-- 병원번호
                            pt_no varchar(15) NOT NULL, 		-- 환자등록번호 ptno -> pt_no 변경
                            fdx varchar(8) NULL, 				-- 초진연월일
@@ -54,10 +56,13 @@ CREATE TABLE CNCR_RGST (
                            metacode2 varchar(20) NULL, -- 원격전이코드2
                            metacode3 varchar(20) NULL, -- 원격전이코드3
                            crtn_dt timestamp NOT NULL, -- 생성일시
+                            idx            varchar(20) not null,
+                            pt_nm          varchar(50),
+                            pt_brdy_dt     varchar(50),
                            CONSTRAINT cncr_rgst_pk PRIMARY KEY (idx)
 );
 
-CREATE TABLE CNCR_RGST_UPDATED (
+CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST_UPDATED (
                                    idx varchar(20) null,-- 추가 시퀀스용
                                    hosp_cd varchar(4) NOT NULL, 			-- 병원번호
                                    pt_no varchar(15) NOT NULL, 		-- 환자등록번호 ptno -> pt_no 변경

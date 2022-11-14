@@ -1,4 +1,7 @@
-CREATE TABLE GSTR_PT_FMHT (
+DROP TABLE IF EXISTS GSTR.GSTR_PT_FMHT;
+DROP TABLE IF EXISTS GSTR.GSTR_PT_FMHT_UPDATED;
+
+CREATE TABLE GSTR.GSTR_PT_FMHT (
                               hosp_cd varchar(20) NOT NULL, 							-- 병원코드
                               pt_no varchar(10) NOT NULL, 							-- 환자대체번호
                               fmht_rcrd_ymd varchar(8) NOT NULL, 						-- 가족력기록일자
@@ -30,7 +33,7 @@ CREATE TABLE GSTR_PT_FMHT (
                               CONSTRAINT gstr_pt_fmht_pk PRIMARY KEY (hosp_cd, pt_no, fmht_rcrd_ymd, fmht_rcrd_seq)
 );
 
-CREATE TABLE GSTR_PT_FMHT_UPDATED (
+CREATE TABLE GSTR.GSTR_PT_FMHT_UPDATED (
                               hosp_cd varchar(20) NOT NULL, 							-- 병원코드
                               pt_no varchar(10) NOT NULL, 							-- 환자대체번호
                               fmht_rcrd_ymd varchar(8) NOT NULL, 						-- 가족력기록일자
