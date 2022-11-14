@@ -17,6 +17,7 @@ import {
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+
 import {
   createDatasourceRow,
   deleteDatasourceRow,
@@ -33,6 +34,7 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
+import Stack from '@mui/material/Stack';
 
 
 export interface ISingleTableEditor {
@@ -69,6 +71,27 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   }, [updateSuccess]);
 
   const canRender: () => boolean = () => category && itemContainer && itemContainer[category.id] && rawDataContainer && rawDataContainer[category.id];
+
+  function buttonCellRender(data) {
+    const row = data.row.data;
+    const rowIndex = data.rowIndex;
+
+    const canManaging = row.idx.includes('KCURE') && (isManager || row['created_by'] === login);
+
+    return <Stack spacing={1} direction="row">
+      <Button variant="text" style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+              onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
+        <FontAwesomeIcon icon="pencil"/>
+      </Button>
+      {
+        canManaging &&
+        <Button variant="text" style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+                onClick={() => dataGrid.current.instance.deleteRow(rowIndex)}>
+          <FontAwesomeIcon icon="trash"/>
+        </Button>
+      }
+    </Stack>
+  }
 
   return canRender() ? (
     <Accordion defaultExpanded={true} className={"single-table-editor-wrapper"}>
@@ -145,10 +168,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }, (value) => dispatch(setValidateFailedItems(value))
           )}
         >
-          <Column type="buttons" width={80} buttons={[
-            {hint: "Edit", icon: "edit", onClick: (e) => dataGrid.current.instance.editRow(e.row.rowIndex)},
-            {hint: "Delete", icon: "trash", onClick: (e) => dataGrid.current.instance.deleteRow(e.row.rowIndex)}]
-          }/>
+          <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           {
             itemContainer[category.id].map(item => getDxColumnConfig(item))
           }
