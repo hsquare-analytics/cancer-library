@@ -112,6 +112,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         <DataGrid
           ref={dataGrid}
           dataSource={JSON.parse(JSON.stringify(rawDataContainer[category.id]))}
+          hoverStateEnabled={true}
           showBorders={true}
           filterRow={{visible: false}}
           headerFilter={{visible: true}}
@@ -165,6 +166,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               itemContainer
             }, (value) => dispatch(setValidateFailedItems(value))
           )}
+          onRowDblClick={(e) => dataGrid.current.instance.editRow(e.rowIndex)}
         >
           <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           {
