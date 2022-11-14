@@ -16,6 +16,8 @@
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/03_gstr_diag_aninf.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/04_gstr_diag_inf.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/04_gstr_diag_inf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/05_gstr_diag_stag.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/05_gstr_diag_stag.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_common_code.sql"/>
     </changeSet>
 
