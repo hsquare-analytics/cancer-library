@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST_UPDATED (
 );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (1000, 'CNCR_RGST', 'CNCR_RGST', true, 1, 999, 'system');
+VALUES (1000, 'GSTR.CNCR_RGST', '위암_환자_정보', true, 1, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (1000, null, '위암_환자_정보');

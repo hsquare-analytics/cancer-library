@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_ANINF_UPDATED (
 );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (4000, 'GSTR_DIAG_ANINF', '위암_진단_신체계측정보', true, 1, 999, 'system');
+VALUES (4000, 'GSTR.GSTR_DIAG_ANINF', '위암_진단_신체계측정보', true, 1, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (4000, null, '위암_진단_신체계측정보');

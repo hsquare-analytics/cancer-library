@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_HLINF_UPDATED (
 );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (2000, 'gstr_pt_hlinf', 'gstr_pt_hlinf', true, 1, 999, 'system');
+VALUES (2000, 'GSTR.GSTR_PT_HLINF', '위암_환자_건강_정보', true, 1, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (2000, null, '위암_환자_건강_정보');
