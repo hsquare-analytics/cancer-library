@@ -35,7 +35,7 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
   const validationFailedItemList = [];
 
   const isDxCellNil = (value: any): boolean => {
-    return _.isNil(value) || value === 'null';
+    return _.isNil(value) || value === 'null' || value === '';
   }
 
   items.forEach(item => {
