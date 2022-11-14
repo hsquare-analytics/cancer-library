@@ -90,9 +90,6 @@ insert into ph_item_property (item_id, caption) values (6011, '임상M병기값'
 insert into ph_item (id, title, activated, category_id, created_by) values (6012, 'crtn_dt', true, 6000, 'system');
 insert into ph_item_property (item_id, caption) values (6012, '생성일시');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (6013, 'idx', true, 6000, 'system');
-insert into ph_item_property (item_id, caption) values (6013, 'UI용 시퀀스');
-
 insert into ph_item (id, title, activated, category_id, created_by) values (6014, 'mdfm_id', true, 6000, 'system');
 insert into ph_item_property (item_id, caption) values (6014, 'UI용 서식ID');
 
