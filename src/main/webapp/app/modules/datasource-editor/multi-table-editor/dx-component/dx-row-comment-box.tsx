@@ -9,10 +9,11 @@ import {
 
 interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
   data: any;
+  lookupDataSource?: any[];
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
-  const {data, originRow, validationFailedItems} = props;
+  const {data, lookupDataSource, originRow, validationFailedItems} = props;
 
   const errorItem = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
 
@@ -22,10 +23,18 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
     </div>;
   }
 
+  let targetValue = originRow[data.column.dataField];
+  if (lookupDataSource && lookupDataSource.length > 0) {
+    const lookupItem = lookupDataSource.find(temp => temp.description === targetValue);
+    if (lookupItem) {
+      targetValue = lookupItem.title + ' (' + lookupItem.description + ')';
+    }
+  }
+
   if (isChangedCell(data, originRow)) {
     return <div>
       <div className="text-underline p-1">최초: {getFormattedValue({
-        value: originRow[data.column.dataField],
+        value: targetValue,
         type: data.column.dataType,
         format: data.column.format
       })}</div>
