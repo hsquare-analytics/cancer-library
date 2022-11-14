@@ -147,17 +147,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             const row = Object.assign({}, e.oldData, e.newData);
             dispatch(updateDatasourceRow({categoryId: category.id, row}));
           })}
-          onRowRemoving={(e) => {
-            const canManaging = e.data.idx.includes('KCURE') && (isManager || e.data['created_by'] === login);
-            onRowRemoving(e, {canManaging, category},
-              () => {
-                setActionType(ActionType.DELETE);
-                dispatch(setSelectedCategory(category));
-                setEditedRow(e.data);
-              }, (value) => {
-                dispatch(deleteDatasourceRow(value))
-              })
-          }}
+          onRowRemoving={(e) => onRowRemoving(e, category,
+            () => {
+              setActionType(ActionType.DELETE);
+              dispatch(setSelectedCategory(category));
+              setEditedRow(e.data);
+            }, (value) => {
+              dispatch(deleteDatasourceRow(value))
+            })
+          }
           scrolling={{mode: 'standard', showScrollbar: 'always'}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatusReducer())}

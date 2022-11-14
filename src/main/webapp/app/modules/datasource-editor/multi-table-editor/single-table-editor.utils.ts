@@ -69,22 +69,14 @@ export const makeCallBackOnPromise = (e, callback: () => void) => {
   });
 }
 
-export const onRowRemoving = (e, data: { canManaging: boolean, category: ICategory },
+export const onRowRemoving = (e, category: ICategory,
                               initialize: () => void,
                               resolveCallback: ({categoryId, row}) => void) => {
   initialize();
   e.cancel = new Promise<void>((resolve, reject) => {
     const row = Object.assign({}, e.data);
-    if (data.canManaging) {
-      resolveCallback({categoryId: data.category.id, row});
-      resolve();
-    } else {
-      const result = translate('cancerLibraryApp.datasourceEditor.singleTableEditor.deleteFail', {
-        table: data.category.title.toUpperCase(), row: row.idx
-      });
-      toast.error(result);
-      reject(result);
-    }
+    resolveCallback({categoryId: category.id, row});
+    resolve();
   });
 };
 
