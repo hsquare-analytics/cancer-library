@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {getDxColumnConfig} from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config";
 import {
   getOriginRow,
-  reset as resetDatasourceStatus,
+  reset as resetDatasourceStatusReducer,
   setCategory as setSelectedCategory,
   setValidateFailedItems
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
@@ -20,7 +20,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   createDatasourceRow,
   deleteDatasourceRow,
-  resetFlag,
+  resetFlag as resetDatasourceContainerFlag,
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
@@ -63,6 +63,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   useEffect(() => {
     if (updateSuccess && selectedCategory && category.id === selectedCategory.id) {
       toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
+      dispatch(resetDatasourceStatusReducer());
+      dispatch(resetDatasourceContainerFlag());
     }
   }, [updateSuccess]);
 
@@ -135,8 +137,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           }}
           scrolling={{mode: 'standard', showScrollbar: 'always'}}
           paging={{pageSize: 10}}
-          onEditCanceled={() => dispatch(resetDatasourceStatus())}
-          onSaved={() => dispatch(resetFlag())}
+          onEditCanceled={() => dispatch(resetDatasourceStatusReducer())}
           columnAutoWidth={true}
           onRowValidating={(e) => onRowValidating(e, {
               category,
