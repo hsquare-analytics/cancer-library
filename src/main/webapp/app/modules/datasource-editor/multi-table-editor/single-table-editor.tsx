@@ -33,7 +33,7 @@ import {
   toastApiResult
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {AUTHORITIES} from "app/config/constants";
+import {AUTHORITIES, KCURE_PREFIX} from "app/config/constants";
 import Stack from '@mui/material/Stack';
 
 
@@ -76,7 +76,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     const row = data.row.data;
     const rowIndex = data.rowIndex;
 
-    const canManaging = row.idx.includes('KCURE') && (isManager || row['created_by'] === login);
+    const canManaging = row.idx.includes(KCURE_PREFIX) && (isManager || row['created_by'] === login);
 
     return <Stack spacing={1} direction="row">
       <Button variant="text" style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
@@ -135,7 +135,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             setActionType(ActionType.UPDATE);
             setEditedRow(e.data);
 
-            if (!e.data['idx'].includes('KCURE')) {
+            if (!e.data['idx'].includes(KCURE_PREFIX)) {
               dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
             }
           }}
