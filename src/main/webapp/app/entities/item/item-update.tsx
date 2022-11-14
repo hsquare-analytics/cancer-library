@@ -70,6 +70,8 @@ export const ItemUpdate = () => {
         ...itemEntity,
       };
 
+  const dataTypeList = ['number', 'boolean', 'string', 'date', 'datetime', 'selectbox',];
+
   return (
     <div>
       <Row className="justify-content-center">
@@ -135,8 +137,11 @@ export const ItemUpdate = () => {
                 id="item-dataType"
                 name="attribute.dataType"
                 data-cy="attribute.dataType"
-                type="text"
-              />
+                type="select"
+              >
+                <option value="">-</option>
+                {_.orderBy(dataTypeList).map(data => <option value={data} key={data}> {data} </option>)}
+              </ValidatedField>
               <ValidatedField type="select" name="codebook.id" data-cy="codebook"
                               label={translate('cancerLibraryApp.item.codebook.title')}>
                 <option value="">-</option>

@@ -4,3 +4,4 @@ boolean
 string
 date
 datetime
+selectbox
