@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSTR.DIAG_ANINF;
-DROP TABLE IF EXISTS GSTR.DIAG_ANINF_UPDATED;
+DROP TABLE IF EXISTS GSTR.GSTR_DIAG_ANINF;
+DROP TABLE IF EXISTS GSTR.GSTR_DIAG_ANINF_UPDATED;
 
-CREATE TABLE GSTR.GSTR_DIAG_ANINF (
+CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_ANINF (
                                  hosp_cd varchar(20) NOT NULL, 					-- 병원코드
                                  pt_no varchar(10) NOT NULL, 					-- 환자대체번호
                                  anth_rcrd_ymd varchar(8) NOT NULL, 				-- 신체계측기록일자
@@ -19,7 +19,7 @@ CREATE TABLE GSTR.GSTR_DIAG_ANINF (
                                  CONSTRAINT gstr_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
 );
 
-CREATE TABLE GSTR.GSTR_DIAG_ANINF_UPDATED (
+CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_ANINF_UPDATED (
                                  hosp_cd varchar(20) NOT NULL, 					-- 병원코드
                                  pt_no varchar(10) NOT NULL, 					-- 환자대체번호
                                  anth_rcrd_ymd varchar(8) NOT NULL, 				-- 신체계측기록일자

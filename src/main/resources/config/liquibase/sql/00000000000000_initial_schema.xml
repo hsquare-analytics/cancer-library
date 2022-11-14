@@ -4,14 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <changeSet id="20220921131335-2" author="zero" context="hospital">
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/test_patient_authority.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_patient_authority.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_0_schema.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_1_cncr_rgst.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_1_cncr_rgst.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_2_gstr_pt_hlinf.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_3_gstr_pt_fmht.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_4_gstr_diag_aninf.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_5_gstr_diag_inf.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_2_gstr_pt_hlinf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_2_gstr_pt_hlinf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_3_gstr_pt_fmht.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_3_gstr_pt_fmht.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_4_gstr_diag_aninf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_4_gstr_diag_aninf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_5_gstr_diag_inf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/sql/hospital/gstr/kcure_5_gstr_diag_inf.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/sql/hospital/kcure_common_code.sql"/>
     </changeSet>
+
 </databaseChangeLog>

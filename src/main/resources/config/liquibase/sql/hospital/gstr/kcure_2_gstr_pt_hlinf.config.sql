@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS GSTR.GSTR_PT_HLINF;
 DROP TABLE IF EXISTS GSTR.GSTR_PT_HLINF_UPDATED;
 
 -- 01.위암_환자_건강정보
-CREATE TABLE GSTR.GSTR_PT_HLINF (
+CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_HLINF (
                                idx varchar(20) NOT NULL,
                                hosp_cd varchar(20) NOT NULL, -- 병원코드
                                pt_no varchar(10) NOT NULL, -- 환자대체번호
@@ -66,7 +66,7 @@ CREATE TABLE GSTR.GSTR_PT_HLINF (
                                CONSTRAINT gstr_pt_hlinf_pk PRIMARY KEY (idx)
 );
 
-CREATE TABLE GSTR.GSTR_PT_HLINF_UPDATED (
+CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_HLINF_UPDATED (
                                        idx varchar(20) NOT NULL,
                                        hosp_cd varchar(20) NOT NULL, -- 병원코드
                                        pt_no varchar(10) NOT NULL, -- 환자대체번호
