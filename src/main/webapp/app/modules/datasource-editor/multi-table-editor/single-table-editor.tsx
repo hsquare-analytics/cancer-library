@@ -35,7 +35,6 @@ import {
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import Stack from '@mui/material/Stack';
-import _ from "lodash";
 import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from "app/config/datasource-constants";
 
 
@@ -182,16 +181,20 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         >
           <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           {
-            _.orderBy(itemContainer[category.id], ['orderNo']).map(item => getDxColumnConfig(item))
+            itemContainer[category.id].map(item => getDxColumnConfig(item))
           }
           <Column dataField="last_modified_by"
                   caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
                   alignment={"center"} allowEditing={false}
-                  visibleIndex={9998}/>
+                  visibleIndex={9999998}
+                  formItem={{visibleIndex: 9999998}}
+          />
           <Column dataField="last_modified_date"
                   caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedDate')}
                   alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}
-                  visibleIndex={9999}/>
+                  visibleIndex={9999999}
+                  formItem={{visibleIndex: 9999999}}
+          />
         </DataGrid>
       </AccordionDetails>
     </Accordion>

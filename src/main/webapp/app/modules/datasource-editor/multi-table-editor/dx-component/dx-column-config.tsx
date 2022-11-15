@@ -66,6 +66,10 @@ export const getDxColumnConfig = (item: IItem) => {
     visible={item.property?.visible}
     alignment={'center'}
     editCellComponent={getDxEditCellComponent(item)}
+    formItem={{
+      visible: item.property?.visible,
+      visibleIndex: item.orderNo,
+    }}
   >
     {getDxLookupComponent(item)}
   </Column>
