@@ -173,6 +173,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }, (value) => dispatch(setValidateFailedItems(value))
           )}
           onRowDblClick={(e) => dataGrid.current.instance.editRow(e.rowIndex)}
+          onSaved={(e) => {
+            if (e.changes.length === 0) {
+              dispatch(resetDatasourceStatusReducer());
+              dispatch(resetDatasourceContainerFlag());
+            }
+          }}
         >
           <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           {
