@@ -142,17 +142,17 @@ INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9100, null, '위암_환자_건강_정보');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9101, 'hosp_cd', 9100, 'system', 9101);
-insert into ph_item_property (item_id, caption) values (9101, '병원코드');
+insert into ph_item_property (item_id, caption, required) values (9101, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9102, 'pt_no', 9100, 'system', 9102);
-insert into ph_item_property (item_id, caption) values (9102, '환자대체번호');
+insert into ph_item_property (item_id, caption, visible) values (9102, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9103, 'adm_ymd', 9100, 'system', 9103);
-insert into ph_item_property (item_id, caption) values (9103, '입원일자');
+insert into ph_item_property (item_id, caption, required) values (9103, '입원일자', true);
 insert into ph_item_attribute (item_id, data_type) values (9103, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9104, 'hlinf_seq', 9100, 'system', 9104);
-insert into ph_item_property (item_id, caption) values (9104, '건강정보순번');
+insert into ph_item_property (item_id, caption, required) values (9104, '건강정보순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9105, 'dsch_ymd', 9100, 'system', 9105);
 insert into ph_item_property (item_id, caption) values (9105, '퇴원일자');
