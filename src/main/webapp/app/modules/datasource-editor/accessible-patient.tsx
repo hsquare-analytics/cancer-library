@@ -6,7 +6,7 @@ import {
   updateEntity as updatePatient,
 } from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import DataGrid, {Column, Item, Lookup, Toolbar} from 'devextreme-react/data-grid';
-import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
+import {AUTHORITIES} from "app/config/constants";
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from "./accessible-patient.column";
 import {cleanEntity} from "app/shared/util/entity-utils";
@@ -21,6 +21,7 @@ import {setDateRange} from "app/modules/datasource-editor/reducer/datasource.sta
 import moment from "moment";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import {REVIEW_LIST} from "app/config/datasource-constants";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();

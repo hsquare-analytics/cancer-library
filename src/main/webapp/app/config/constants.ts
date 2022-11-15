@@ -4,14 +4,6 @@ export const AUTHORITIES = {
   SUPERVISOR: 'ROLE_SUPERVISOR',
 };
 
-export const REVIEW_LIST = {
-  SUBMITTED : 'REVIEW_SUBMITTED',
-  DECLINED : 'REVIEW_DECLINED',
-  APPROVED : 'REVIEW_APPROVED',
-}
-
-export const KCURE_PREFIX = 'KCURE';
-
 export const messages = {
   DATA_ERROR_ALERT: 'Internal Error',
 };

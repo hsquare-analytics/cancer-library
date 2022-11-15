@@ -33,9 +33,10 @@ import {
   toastApiResult
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor.utils";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {AUTHORITIES, KCURE_PREFIX} from "app/config/constants";
+import {AUTHORITIES} from "app/config/constants";
 import Stack from '@mui/material/Stack';
 import _ from "lodash";
+import {KCURE_PREFIX} from "app/config/datasource-constants";
 
 
 export interface ISingleTableEditor {

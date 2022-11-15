@@ -7,12 +7,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {IPatient} from "app/shared/model/patient.model";
 import {translate} from "react-jhipster";
 import Chip from '@mui/material/Chip';
-import {REVIEW_LIST} from "app/config/constants";
 import {useAppSelector} from "app/config/store";
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import PatientProfileCardDetail from "app/modules/datasource-editor/patient-profile/patient-profile-card-detail";
+import {REVIEW_LIST} from "app/config/datasource-constants";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {

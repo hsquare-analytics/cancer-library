@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {AUTHORITIES, REVIEW_LIST} from "app/config/constants";
+import {AUTHORITIES} from "app/config/constants";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from "app/config/store";
@@ -15,6 +15,7 @@ import {
   fireDeclineSwal,
   fireSubmitSwal
 } from "app/modules/datasource-editor/stack-button/datasource.swal-fires";
+import {REVIEW_LIST} from "app/config/datasource-constants";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
