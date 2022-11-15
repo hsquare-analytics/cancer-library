@@ -95,5 +95,5 @@ insert into ph_item_attribute (item_id, data_type) values (9413, 'date');
 insert into ph_item (id, title, category_id, created_by, order_no) values (9414, 'PACT_ID', 9400, 'system', 9414);
 insert into ph_item_property (item_id, caption) values (9414, 'UI용 PACT_ID');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9415, 'idx', 9400, 'system', 9415);
-insert into ph_item_property (item_id, caption) values (9415, 'UI용 시퀀스');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9415, 'idx', 9400, 'system', 9415);
+-- insert into ph_item_property (item_id, caption) values (9415, 'UI용 시퀀스');
