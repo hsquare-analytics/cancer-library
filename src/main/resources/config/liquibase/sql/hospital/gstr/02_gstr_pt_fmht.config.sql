@@ -85,7 +85,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9202,
 insert into ph_item_property (item_id, caption, visible) values (9202, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9203, 'fmht_rcrd_ymd', 9200, 'system', 9203);
-insert into ph_item_property (item_id, caption, required) values (9203, '가족력기록일자', true);
+insert into ph_item_property (item_id, caption, required, format) values (9203, '가족력기록일자', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9203, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9204, 'fmht_rcrd_seq', 9200, 'system', 9204);
@@ -163,7 +163,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9225,
 insert into ph_item_property (item_id, caption) values (9225, '가족병력기타내용');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9226, 'crtn_dt', 9200, 'system', 9226);
-insert into ph_item_property (item_id, caption, required) values (9226, '생성일시', true);
+insert into ph_item_property (item_id, caption, required, format) values (9226, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9226, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9227, 'pact_id', 9200, 'system', 9227);

@@ -59,7 +59,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9402,
 insert into ph_item_property (item_id, caption, visible) values (9402, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9403, 'diag_rgst_ymd', 9400, 'system', 9403);
-insert into ph_item_property (item_id, caption, required) values (9403, '진단등록일자', true);
+insert into ph_item_property (item_id, caption, required, format) values (9403, '진단등록일자', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9403, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9404, 'diag_rgst_seq', 9400, 'system', 9404);
@@ -91,7 +91,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9412,
 insert into ph_item_property (item_id, caption) values (9412, '진단SNOMEDCT명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9413, 'crtn_dt', 9400, 'system', 9413);
-insert into ph_item_property (item_id, caption, required) values (9413, '생성일시', true);
+insert into ph_item_property (item_id, caption, required, format) values (9413, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9413, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9414, 'PACT_ID', 9400, 'system', 9414);

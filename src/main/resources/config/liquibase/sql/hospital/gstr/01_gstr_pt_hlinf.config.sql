@@ -149,14 +149,14 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9102,
 insert into ph_item_property (item_id, caption, visible) values (9102, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9103, 'adm_ymd', 9100, 'system', 9103);
-insert into ph_item_property (item_id, caption, required) values (9103, '입원일자', true);
+insert into ph_item_property (item_id, caption, required, format) values (9103, '입원일자', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9103, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9104, 'hlinf_seq', 9100, 'system', 9104);
 insert into ph_item_property (item_id, caption, required) values (9104, '건강정보순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9105, 'dsch_ymd', 9100, 'system', 9105);
-insert into ph_item_property (item_id, caption) values (9105, '퇴원일자');
+insert into ph_item_property (item_id, caption, format) values (9105, '퇴원일자', 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9105, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9106, 'cur_drnk_yn_noans_spcd', 9100, 'system', 9106, 10040);
@@ -334,7 +334,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9156,
 insert into ph_item_property (item_id, caption) values (9156, '퇴원상태명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9157, 'crtn_dt', 9100, 'system', 9157);
-insert into ph_item_property (item_id, caption, required) values (9157, '생성일시', true);
+insert into ph_item_property (item_id, caption, required, format) values (9157, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9157, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9158, 'pact_id', 9100, 'system', 9158);
