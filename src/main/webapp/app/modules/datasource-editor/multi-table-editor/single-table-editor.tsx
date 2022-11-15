@@ -36,7 +36,7 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import Stack from '@mui/material/Stack';
 import _ from "lodash";
-import {KCURE_PREFIX} from "app/config/datasource-constants";
+import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from "app/config/datasource-constants";
 
 
 export interface ISingleTableEditor {
@@ -142,16 +142,16 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             setActionType(ActionType.UPDATE);
             setEditedRow(e.data);
 
-            if (!e.data['idx'].includes(KCURE_PREFIX)) {
+            if (!e.data[DATASOURCE_IDX].includes(KCURE_PREFIX)) {
               dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
             }
           }}
           onRowInserting={(e) => makeCallBackOnPromise(e, () => {
-            const row = Object.assign({}, e.data, {'pt_no': patient.ptNo});
+            const row = Object.assign({}, e.data, {[PATIENT_NO]: patient.ptNo});
             dispatch(createDatasourceRow({categoryId: category.id, row}));
           })}
           onRowUpdating={(e) => makeCallBackOnPromise(e, () => {
-            const row = Object.assign({}, {idx: e.oldData.idx, 'pt_no': patient.ptNo}, e.newData);
+            const row = Object.assign({}, {[DATASOURCE_IDX]: e.oldData.idx, [PATIENT_NO]: patient.ptNo}, e.newData);
             dispatch(updateDatasourceRow({categoryId: category.id, row}));
           })}
           onRowRemoving={(e) => onRowRemoving(e, category,
