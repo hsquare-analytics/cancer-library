@@ -14,7 +14,7 @@
             </column>
             <column name="description" type="varchar(30)">
             </column>
-            <column name="activated" type="boolean">
+            <column name="activated" type="boolean" defaultValueBoolean="true">
                 <constraints nullable="false" />
             </column>
             <column name="order_no" type="int">
