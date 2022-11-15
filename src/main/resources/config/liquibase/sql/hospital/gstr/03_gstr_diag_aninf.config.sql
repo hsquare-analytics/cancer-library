@@ -86,7 +86,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9311,
 insert into ph_item_property (item_id, caption) values (9311, 'ECOG명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9312, 'crtn_dt', 9300, 'system', 9312);
-insert into ph_item_property (item_id, caption) values (9312, '생성일시');
+insert into ph_item_property (item_id, caption, required) values (9312, '생성일시', true);
 insert into ph_item_attribute (item_id, data_type) values (9312, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9313, 'ecog_dt', 9300, 'system', 9313);

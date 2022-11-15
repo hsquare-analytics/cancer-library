@@ -334,7 +334,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9156,
 insert into ph_item_property (item_id, caption) values (9156, '퇴원상태명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9157, 'crtn_dt', 9100, 'system', 9157);
-insert into ph_item_property (item_id, caption) values (9157, '생성일시');
+insert into ph_item_property (item_id, caption, required) values (9157, '생성일시', true);
 insert into ph_item_attribute (item_id, data_type) values (9157, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9158, 'pact_id', 9100, 'system', 9158);
