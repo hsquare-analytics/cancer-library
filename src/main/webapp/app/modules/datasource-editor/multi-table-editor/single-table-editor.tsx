@@ -150,7 +150,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             dispatch(createDatasourceRow({categoryId: category.id, row}));
           })}
           onRowUpdating={(e) => makeCallBackOnPromise(e, () => {
-            const row = Object.assign({}, e.oldData, e.newData);
+            const row = Object.assign({}, {idx: e.oldData.idx, 'pt_no': patient.ptNo}, e.newData);
             dispatch(updateDatasourceRow({categoryId: category.id, row}));
           })}
           onRowRemoving={(e) => onRowRemoving(e, category,
