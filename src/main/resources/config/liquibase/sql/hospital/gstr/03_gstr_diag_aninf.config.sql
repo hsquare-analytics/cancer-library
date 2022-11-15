@@ -51,17 +51,17 @@ INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9300, null, '위암_진단_신체계측정보');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9301, 'hosp_cd', 9300, 'system', 9301);
-insert into ph_item_property (item_id, caption) values (9301, '병원코드');
+insert into ph_item_property (item_id, caption, required) values (9301, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9302, 'pt_no', 9300, 'system', 9302);
-insert into ph_item_property (item_id, caption) values (9302, '환자대체번호');
+insert into ph_item_property (item_id, caption, visible) values (9302, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9303, 'anth_rcrd_ymd', 9300, 'system', 9303);
-insert into ph_item_property (item_id, caption) values (9303, '신체계측기록일자');
+insert into ph_item_property (item_id, caption, required) values (9303, '신체계측기록일자', true);
 insert into ph_item_attribute (item_id, data_type) values (9303, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9304, 'anth_rcrd_seq', 9300, 'system', 9304);
-insert into ph_item_property (item_id, caption) values (9304, '신체계측기록순번');
+insert into ph_item_property (item_id, caption, required) values (9304, '신체계측기록순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9305, 'ht_msrm_vl', 9300, 'system', 9305);
 insert into ph_item_property (item_id, caption) values (9305, '신장측정값');

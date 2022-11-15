@@ -50,49 +50,50 @@ VALUES (9400, 'GSTR.GSTR_DIAG_INF', '위암_진단_정보', true, 1, 999, 'syste
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9400, null, '위암_진단_정보');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9401, 'hosp_cd', true, 9400, 'system');-- 병원코드
-insert into ph_item_property (item_id, caption) values (9401, '병원코드');
-insert into ph_item_attribute (item_id, data_type) values (9401, 'selectbox');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9401, 'hosp_cd', 9400, 'system', 9401);
+insert into ph_item_property (item_id, caption, required) values (9401, '병원코드', true);
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9402, 'pt_no', true, 9400, 'system');-- 환자대체번호
-insert into ph_item_property (item_id, caption) values (9402, '환자대체번호');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9402, 'pt_no', 9400, 'system', 9402);
+insert into ph_item_property (item_id, caption, visible) values (9402, '환자대체번호', false);
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9403, 'diag_rgst_ymd', true, 9400, 'system');-- 진단등록일자
-insert into ph_item_property (item_id, caption) values (9403, '진단등록일자');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9403, 'diag_rgst_ymd', 9400, 'system', 9403);
+insert into ph_item_property (item_id, caption, required) values (9403, '진단등록일자', true);
+insert into ph_item_attribute (item_id, data_type) values (9403, 'date');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9404, 'diag_rgst_seq', true, 9400, 'system');-- 진단등록순번
-insert into ph_item_property (item_id, caption) values (9404, '진단등록순번');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9404, 'diag_rgst_seq', 9400, 'system', 9404);
+insert into ph_item_property (item_id, caption, required) values (9404, '진단등록순번', true);
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9405, 'diag_kncd', true, 9400, 'system');-- 진단종류코드
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9405, 'diag_kncd', 9400, 'system', 9405, 20100);
 insert into ph_item_property (item_id, caption) values (9405, '진단종류코드');
 insert into ph_item_attribute (item_id, data_type) values (9405, 'selectbox');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9406, 'diag_knnm', true, 9400, 'system');-- 진단종류명
+insert into ph_item (id, title, category_id, created_by, order_no) values (9406, 'diag_knnm', 9400, 'system', 9406);
 insert into ph_item_property (item_id, caption) values (9406, '진단종류명');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9407, 'diag_cd', true, 9400, 'system');-- 진단코드
+insert into ph_item (id, title, category_id, created_by, order_no) values (9407, 'diag_cd', 9400, 'system', 9407);
 insert into ph_item_property (item_id, caption) values (9407, '진단코드');
-insert into ph_item_attribute (item_id, data_type) values (9407, 'selectbox');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9408, 'diag_nm', true, 9400, 'system');-- 진단명
+insert into ph_item (id, title, category_id, created_by, order_no) values (9408, 'diag_nm', 9400, 'system', 9408);
 insert into ph_item_property (item_id, caption) values (9408, '진단명');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9409, 'diag_kcd_cd', true, 9400, 'system');-- 진단KCD코드
+insert into ph_item (id, title, category_id, created_by, order_no) values (9409, 'diag_kcd_cd', 9400, 'system', 9409);
 insert into ph_item_property (item_id, caption) values (9409, '진단KCD코드');
-insert into ph_item_attribute (item_id, data_type) values (9409, 'selectbox');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9410, 'diag_kcd_nm', true, 9400, 'system');-- 진단KCD명
+insert into ph_item (id, title, category_id, created_by, order_no) values (9410, 'diag_kcd_nm', 9400, 'system', 9410);
 insert into ph_item_property (item_id, caption) values (9410, '진단KCD명');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9411, 'diag_smct_cd', true, 9400, 'system');-- 진단SNOMEDCT코드
+insert into ph_item (id, title, category_id, created_by, order_no) values (9411, 'diag_smct_cd', 9400, 'system', 9411);
 insert into ph_item_property (item_id, caption) values (9411, '진단SNOMEDCT코드');
-insert into ph_item_attribute (item_id, data_type) values (9411, 'selectbox');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9412, 'diag_smct_nm', true, 9400, 'system');-- 진단SNOMEDCT명
+insert into ph_item (id, title, category_id, created_by, order_no) values (9412, 'diag_smct_nm', 9400, 'system', 9412);
 insert into ph_item_property (item_id, caption) values (9412, '진단SNOMEDCT명');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9413, 'crtn_dt', true, 9400, 'system');-- 생성일시
+insert into ph_item (id, title, category_id, created_by, order_no) values (9413, 'crtn_dt', 9400, 'system', 9413);
 insert into ph_item_property (item_id, caption) values (9413, '생성일시');
+insert into ph_item_attribute (item_id, data_type) values (9413, 'date');
 
-insert into ph_item (id, title, activated, category_id, created_by) values (9414, 'PACT_ID', true, 9400, 'system');-- PACT_ID
-insert into ph_item_property (item_id, caption) values (9414, 'PACT_ID');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9414, 'PACT_ID', 9400, 'system', 9414);
+insert into ph_item_property (item_id, caption) values (9414, 'UI용 PACT_ID');
+
+insert into ph_item (id, title, category_id, created_by, order_no) values (9415, 'idx', 9400, 'system', 9415);
+insert into ph_item_property (item_id, caption) values (9415, 'UI용 시퀀스');
