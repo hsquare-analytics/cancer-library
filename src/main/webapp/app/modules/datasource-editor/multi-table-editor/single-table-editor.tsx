@@ -35,6 +35,7 @@ import {
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES, KCURE_PREFIX} from "app/config/constants";
 import Stack from '@mui/material/Stack';
+import _ from "lodash";
 
 
 export interface ISingleTableEditor {
@@ -174,7 +175,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         >
           <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           {
-            itemContainer[category.id].map(item => getDxColumnConfig(item))
+            _.orderBy(itemContainer[category.id], ['orderNo']).map(item => getDxColumnConfig(item))
           }
           <Column dataField="last_modified_by"
                   caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
