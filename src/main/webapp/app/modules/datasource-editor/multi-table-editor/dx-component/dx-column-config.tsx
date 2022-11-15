@@ -60,7 +60,7 @@ export const getDxColumnConfig = (item: IItem) => {
     dataField={item.title.toLowerCase()}
     dataType={item.attribute?.dataType}
     caption={item.property?.caption}
-    visibleIndex={item.property?.visibleIndex}
+    visibleIndex={item.orderNo}
     allowEditing={item.property?.allowEditing}
     format={item.property?.format}
     visible={item.property?.visible}

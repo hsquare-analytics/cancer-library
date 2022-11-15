@@ -10,6 +10,7 @@ export interface IItem extends IAbstractAuditing {
   title?: string;
   description?: string;
   activated?: boolean;
+  orderNo?: number;
   category?: ICategory;
   codebook?: ICodebook;
   attribute?: { dataType?: string };
@@ -21,6 +22,7 @@ export const defaultValue: Readonly<IItem> = {
   title: '',
   description: '',
   activated: false,
+  orderNo: 0,
   category: null,
   codebook: null,
   attribute: {dataType: ''},
