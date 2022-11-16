@@ -183,7 +183,7 @@ class DatasourceControllerIT {
 
     @Test
     @Transactional
-    void testGetDatasourceRow() throws Exception {
+    void testGetDatasourceOriginRow() throws Exception {
         // given
         sqlExecutor.executeDML("insert into ph_test (idx, name) values (10001, 'zero')");
 
@@ -194,6 +194,31 @@ class DatasourceControllerIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.idx").value("10001"))
             .andExpect(jsonPath("$.name").value("zero"));
+    }
+
+    @Test
+    @Transactional
+    void testCheckDatasourceUpdatedRowExist() throws Exception {
+        // given
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10001, 'zero')");
+
+        // then
+        restDatasourceMockMvc.perform(
+                get("/api/datasource/categories/{categoryId}/rows/{rowId}/check-updated-row-exist", category.getId(), 10001))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").value(true));
+    }
+
+    @Test
+    @Transactional
+    void testCheckDatasourceUpdatedRowNonExist() throws Exception {
+        // then
+        restDatasourceMockMvc.perform(
+                get("/api/datasource/categories/{categoryId}/rows/{rowId}/check-updated-row-exist", category.getId(), 10001))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").value(false));
     }
 
     @Test

@@ -67,7 +67,7 @@ public class DatasourceController {
     }
 
     @GetMapping("/datasource/categories/{categoryId}/rows/{rowIdx}")
-    public ResponseEntity<Map<String, Object>> getDatasourceRow(
+    public ResponseEntity<Map<String, Object>> getDatasourceOriginRow(
         @PathVariable(value = "categoryId") final Long categoryId, @PathVariable(value = "rowIdx") final String rowIdx) {
         log.debug("REST request to get Datasource row by category id: {}", categoryId);
 
@@ -76,6 +76,18 @@ public class DatasourceController {
         Map<String, Object> result = sqlExecutor.executeSelectOne(sql);
 
         return ResponseEntity.ok().body(result);
+    }
+
+    @GetMapping("/datasource/categories/{categoryId}/rows/{rowIdx}/check-updated-row-exist")
+    public ResponseEntity<Boolean> checkUpdatedRowExist(
+        @PathVariable(value = "categoryId") final Long categoryId, @PathVariable(value = "rowIdx") final String rowIdx) {
+        log.debug("REST request to Check update Datasource row exist by category id: {}", categoryId);
+
+        String sql = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, Map.of("idx", rowIdx));
+
+        List<Map<String, Object>> founded = sqlExecutor.executeSelectAll(sql);
+
+        return ResponseEntity.ok().body(founded.size() > 0);
     }
 
     @PutMapping("/datasource/categories/{categoryId}/rows/{rowId}")
