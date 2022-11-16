@@ -13,7 +13,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/03_gstr_diag_aninf.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/04_gstr_diag_inf.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/05_gstr_diag_stag.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/99_update_table_schema.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/00_cncr_rgst.data.sql"/>
