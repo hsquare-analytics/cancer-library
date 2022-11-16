@@ -108,7 +108,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       >
         {getCategoryTypography(category)}
         <Button variant="outlined" className={"me-2"} size={"small"}
-                color="secondary"
+                color="warning"
                 onClick={(e) => {
                   e.stopPropagation();
                   dataGrid.current.instance.addRow()
