@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS gstr.gstr_exam_imag_updated;
+
+CREATE TABLE gstr.gstr_exam_imag_updated AS
+    TABLE gstr.gstr_exam_imag
+    WITH NO DATA;
+
+ALTER TABLE gstr.gstr_exam_imag_updated
+    ADD COLUMN CREATED_BY CHARACTER VARYING(50),
+    ADD COLUMN CREATED_DATE TIMESTAMP,
+    ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50),
+    ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
