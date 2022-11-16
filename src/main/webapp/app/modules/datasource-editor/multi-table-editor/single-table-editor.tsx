@@ -36,6 +36,7 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import Stack from '@mui/material/Stack';
 import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from "app/config/datasource-constants";
+import axios from "axios";
 
 
 export interface ISingleTableEditor {
@@ -150,8 +151,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             dispatch(createDatasourceRow({categoryId: category.id, row}));
           })}
           onRowUpdating={(e) => makeCallBackOnPromise(e, () => {
-            const row = Object.assign({}, {[DATASOURCE_IDX]: e.oldData.idx, [PATIENT_NO]: patient.ptNo}, e.newData);
-            dispatch(updateDatasourceRow({categoryId: category.id, row}));
+            axios.get(`/api/datasource/categories/${category.id}/rows/${e.oldData.idx}/check-updated-row-exist`).then(({data}) => {
+              if (data) {
+                const row = Object.assign({}, {[DATASOURCE_IDX]: e.oldData.idx, [PATIENT_NO]: patient.ptNo}, e.newData);
+                dispatch(updateDatasourceRow({categoryId: category.id, row}));
+              } else {
+                const row = Object.assign({}, e.oldData, e.newData);
+                dispatch(createDatasourceRow({categoryId: category.id, row}));
+              }
+            });
           })}
           onRowRemoving={(e) => onRowRemoving(e, category,
             () => {

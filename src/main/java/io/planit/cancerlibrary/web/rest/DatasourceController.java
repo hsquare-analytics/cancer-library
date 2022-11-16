@@ -44,7 +44,9 @@ public class DatasourceController {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map<String, Object> mapWithIdx = new HashMap<>(map);
-        mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
+        if (!mapWithIdx.containsKey("idx")) {
+            mapWithIdx.put("idx", sequenceGenerator.getNextSequence());
+        }
 
         String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
         Boolean result = sqlExecutor.executeDML(insertSQL);
@@ -87,31 +89,18 @@ public class DatasourceController {
 
         List<Map<String, Object>> founded = sqlExecutor.executeSelectAll(sql);
 
-        return ResponseEntity.ok().body(founded.size() > 0);
+        return ResponseEntity.ok().body(!founded.isEmpty());
     }
 
     @PutMapping("/datasource/categories/{categoryId}/rows/{rowId}")
     public ResponseEntity<Boolean> updateDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-                                                         @PathVariable(value = "rowId") final String rowId,
+                                                       @PathVariable(value = "rowId") final String rowId,
                                                        @RequestBody Map<String, Object> map) {
-        log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
+        log.debug("REST request to inert Datasource updated row by category id: {}, row id: {}", categoryId, rowId);
 
-        Map<String, Object> mapWithIdx = new HashMap<>(map);
-        mapWithIdx.put("idx", rowId);
-
-        String readSQL = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, mapWithIdx);
-
-        List<Map<String, Object>> founded = sqlExecutor.executeSelectAll(readSQL);
-
-        if (founded.isEmpty()) {
-            String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
-            Boolean result = sqlExecutor.executeDML(insertSQL);
-            return ResponseEntity.ok().body(result);
-        } else {
-            String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
-            Boolean result = sqlExecutor.executeDML(updateSQL);
-            return ResponseEntity.ok().body(result);
-        }
+        String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, map);
+        Boolean result = sqlExecutor.executeDML(updateSQL);
+        return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/datasource/categories/{categoryId}/rows/{rowId}")
