@@ -45,6 +45,7 @@ insert into ph_item_property (item_id, caption, required) values (9504, '진단�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9505, 'clnc_tumr_prty_cd', 9500, 'system', 9505, 20050);
 insert into ph_item_property (item_id, caption) values (9505, '임상종양특성코드');
+insert into ph_item_attribute (item_id, data_type) values (9505, 'selectbox');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9506, 'clnc_tumr_prty_nm', 9500, 'system', 9506);
 insert into ph_item_property (item_id, caption) values (9506, '임상종양특성명');

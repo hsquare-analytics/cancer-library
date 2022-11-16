@@ -107,8 +107,9 @@ insert into ph_item_attribute (item_id, data_type) values (9218, 'selectbox');
 insert into ph_item (id, title, category_id, created_by, order_no) values (9219, 'fmhs_cncr_yn_noans_spnm', 9200, 'system', 9219);
 insert into ph_item_property (item_id, caption) values (9219, '가족병력암여부무응답구분명');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9220, 'fmht_cncr_kncd', 9200, 'system', 9220);
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9220, 'fmht_cncr_kncd', 9200, 'system', 9220, 10030);
 insert into ph_item_property (item_id, caption) values (9220, '가족력암종류코드');
+insert into ph_item_attribute (item_id, data_type) values (9220, 'selectbox');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9221, 'fmht_cncr_knnm', 9200, 'system', 9221);
 insert into ph_item_property (item_id, caption) values (9221, '가족력암종류명');
