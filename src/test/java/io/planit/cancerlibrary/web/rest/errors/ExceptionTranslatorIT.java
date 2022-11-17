@@ -123,4 +123,14 @@ class ExceptionTranslatorIT {
             .andExpect(jsonPath("$.message").value("error.http.400"))
             .andExpect(jsonPath("$.title").value("Bad Request"));
     }
+
+    @Test
+    void testParameterDeficiencyException() throws Exception {
+        mockMvc
+            .perform(get("/api/exception-translator-test/parameter-deficiency-exception"))
+            .andExpect(status().isBadRequest())
+            .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON))
+            .andExpect(jsonPath("$.message").value("error.parameterDeficiency"))
+            .andExpect(jsonPath("$.title").value("Parameter is deficiency!"));
+    }
 }

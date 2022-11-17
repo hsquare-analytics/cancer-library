@@ -71,4 +71,8 @@ public class ExceptionTranslatorTestController {
         throw new org.springframework.jdbc.BadSqlGrammarException("ddl", "select * from test", new SQLException());
     }
 
+    @GetMapping("/parameter-deficiency-exception")
+    public void parameterDeficiencyException() {
+        throw new ParameterDeficiencyException();
+    }
 }
