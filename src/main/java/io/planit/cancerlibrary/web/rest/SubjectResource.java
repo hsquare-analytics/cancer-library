@@ -53,8 +53,7 @@ public class SubjectResource {
     }
 
     @PutMapping("/subjects/{id}")
-    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody SubjectDTO subjectDTO)
-        throws URISyntaxException {
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody SubjectDTO subjectDTO) {
         log.debug("REST request to update Subject : {}, {}", id, subjectDTO);
         if (subjectDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

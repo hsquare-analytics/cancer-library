@@ -5,6 +5,11 @@ import java.util.Date;
 
 public class Patient {
 
+    public static final String PATIENT_VIEW_TABLE = "PH_PATIENT";
+
+    public static final String PATIENT_DETAIL_TABLE = "PH_PATIENT_DETAIL";
+
+
     private String ptNo;
     private String ptNm;
     private String sexTpCd;
@@ -189,5 +194,6 @@ public class Patient {
     }
 
     public Patient() {
+        // default constructor
     }
 }

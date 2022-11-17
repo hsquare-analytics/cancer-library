@@ -34,5 +34,5 @@
     <include file="config/liquibase/changelog/20221108041201_added_entity_Patient.xml" relativeToChangelogFile="false"/>
 
     <!--sql file-->
-    <include file="config/liquibase/sql/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/kcure/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

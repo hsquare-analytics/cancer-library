@@ -1,13 +1,13 @@
 package io.planit.cancerlibrary.config;
 
-import io.planit.cancerlibrary.security.*;
-import io.planit.cancerlibrary.security.jwt.*;
+import io.planit.cancerlibrary.security.AuthoritiesConstants;
+import io.planit.cancerlibrary.security.jwt.JWTConfigurer;
+import io.planit.cancerlibrary.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

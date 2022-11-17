@@ -9,6 +9,8 @@ import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,8 +18,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -67,20 +71,24 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testInsertSql() {
+        Timestamp timestamp = Timestamp.from(Instant.now());
         // given
-        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().category(category).title("column1").activated(true);
-        Item item2 = new Item().category(category).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("pt_no").activated(true);
+        Item item2 = new Item().category(category).title("column1").activated(true);
+        Item item3 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
+        itemRepository.saveAndFlush(item3);
 
         // when
         String result = dmlSqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
+            put("pt_no", "pt_no_test");
             put("idx", "idx_test");
             put("column1", "test1");
             put("column2", "test2");
@@ -88,9 +96,25 @@ class DMLSqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
-            .contains(
-                "VALUES ('idx_test', 'test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'REVIEW_SUBMITTED')");
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp));
+    }
+
+    @ParameterizedTest
+    @Transactional
+    @WithMockUser
+    @ValueSource(strings = {"idx", "pt_no"})
+    void test_insert_sql_parameter_parameter_deficiency_exception(String requiredParam) {
+        Long categoryId = category.getId();
+        HashMap<String, Object> params = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("pt_no", "idx_test");
+            put("column1", "test1");
+            put("column2", "test2");
+        }};
+
+        params.remove(requiredParam);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(categoryId, params)).isInstanceOf(ParameterDeficiencyException.class);
     }
 
     @Test
@@ -154,8 +178,9 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUpdateSql() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         // given
-        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
@@ -171,17 +196,30 @@ class DMLSqlBuilderServiceIT {
             put("idx", "test_idx");
             put("column1", "test1");
             put("column2", "test2");
-            put("status", "STATUS_APPROVED");
         }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(
-                "SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'")
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp))
             .contains("WHERE (IDX = 'test_idx')");
     }
 
-    public void testDeleteSql() {
+    @Test
+    @Transactional
+    @WithMockUser
+    void test_update_sql_idx_deficiency_exception() {
+        Long categoryId = category.getId();
+        HashMap<String, Object> params = new HashMap<>() {{
+            put("pt_no", "idx_test");
+            put("column1", "test1");
+            put("column2", "test2");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(categoryId, params)).isInstanceOf(ParameterDeficiencyException.class);
+    }
+
+    @Test
+    @Transactional
+    void testDeleteSql() {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -198,15 +236,16 @@ class DMLSqlBuilderServiceIT {
         }});
 
         // then
-        assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED");
-        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+        assertThat(result)
+            .contains("DELETE FROM " + category.getTitle() + "_UPDATED")
+            .contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
     @Transactional
     @WithMockUser
     void testInsertSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -218,7 +257,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testReadSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -238,7 +277,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testUpdateSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -250,7 +289,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testDeleteSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};

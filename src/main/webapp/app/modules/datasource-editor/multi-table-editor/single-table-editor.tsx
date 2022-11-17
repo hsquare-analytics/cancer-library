@@ -107,11 +107,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         id="panel1a-header"
       >
         {getCategoryTypography(category)}
-        <Button variant="text" onClick={(e) => {
-          e.stopPropagation();
-          dataGrid.current.instance.addRow()
-        }}>
-          <FontAwesomeIcon icon="plus"/>
+        <Button variant="outlined" className={"me-2"} size={"small"}
+                color="warning"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  dataGrid.current.instance.addRow()
+                }}>
+          <FontAwesomeIcon icon="plus" className={"me-3"}/>
+          {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
         </Button>
       </AccordionSummary>
       <AccordionDetails sx={{padding: "8px 0"}}>

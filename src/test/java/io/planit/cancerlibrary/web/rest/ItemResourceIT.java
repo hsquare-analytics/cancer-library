@@ -1,16 +1,10 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.domain.Category;
-import io.planit.cancerlibrary.domain.Item;
-import io.planit.cancerlibrary.domain.Subject;
-import io.planit.cancerlibrary.domain.Topic;
+import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.domain.embedded.ItemProperty;
-import io.planit.cancerlibrary.repository.CategoryRepository;
-import io.planit.cancerlibrary.repository.ItemRepository;
-import io.planit.cancerlibrary.repository.SubjectRepository;
-import io.planit.cancerlibrary.repository.TopicRepository;
+import io.planit.cancerlibrary.repository.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +47,8 @@ public class ItemResourceIT {
     private static final String ENTITY_API_URL = "/api/items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("AAAAAAAAAA");
-    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("BBBBBBBBBB");
+    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("string");
+    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("number");
 
     private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().visibleIndex(1).caption("AAAAAAAAAA").allowEditing(true).required(true).format("AAAAAAAAAA").sortIndex(1).sortDirection("AAAAAAAAAA").visible(true);
     private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().visibleIndex(2).caption("BBBBBBBBBB").allowEditing(false).required(false).format("BBBBBBBBBB").sortIndex(2).sortDirection("BBBBBBBBBB").visible(false);
@@ -73,6 +67,9 @@ public class ItemResourceIT {
 
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private DataTypeRepository dataTypeRepository;
 
     @Autowired
     private EntityManager em;
@@ -105,6 +102,8 @@ public class ItemResourceIT {
         category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
 
+        dataTypeRepository.save(new DataType().name("string"));
+        dataTypeRepository.save(new DataType().name("number"));
         item = createEntity(em, category);
     }
 

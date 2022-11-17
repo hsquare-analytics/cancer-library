@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
@@ -80,7 +81,7 @@ public class PatientResource {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!patientRepository.checkExistPatientByPatientNo(ptNo)) {
+        if (!patientRepository.checkRowExistByPtNoOnTable(Table.PATIENT_VIEW, ptNo)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
@@ -112,7 +113,7 @@ public class PatientResource {
             });
 
         return patient.map(response -> {
-                if (patientRepository.checkExistPatientDetailByPatientNo(ptNo)) {
+                if (patientRepository.checkRowExistByPtNoOnTable(Table.PATIENT_DETAIL, ptNo)) {
                     patientRepository.updatePatientDetail(response);
                 } else {
                     patientRepository.insertPatientDetail(response);
