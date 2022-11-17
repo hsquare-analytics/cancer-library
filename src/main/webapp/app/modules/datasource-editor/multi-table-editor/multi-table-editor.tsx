@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import SingleTableEditor from "app/modules/datasource-editor/multi-table-editor/single-table-editor";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {
   getDataSources,
@@ -24,9 +24,7 @@ export const MultiTableEditor = () => {
   const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
   const itemCount = useAppSelector(state => state.datasourceContainer.item.count);
 
-  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length || rawDataCount < categories.length;
-
-  const [editedCategoryId, setEditedCategoryId] = useState(null);
+  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length;
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -57,10 +55,31 @@ export const MultiTableEditor = () => {
     }
   }, [JSON.stringify(patient?.ptNo)]);
 
+  const progressValue = Math.round((rawDataCount + itemCount) / (categories.length * 2) * 100);
   return (<div>
     {
       !loading ? (
           <div>
+            <Box sx={{
+              position: 'relative',
+              flexDirection: 'row',
+              display: (progressValue === 100) ? 'none' : 'inline-flex'
+            }}>
+              <CircularProgress variant="determinate" value={progressValue}/>
+              <Box sx={{
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              >
+                <Typography variant="caption" component="div" color="text.secondary">{`${progressValue}%`}</Typography>
+              </Box>
+            </Box>
             {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
               key={category.id} category={category}/>)}
           </div>
