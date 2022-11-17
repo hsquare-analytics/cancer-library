@@ -158,6 +158,20 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
+    public ResponseEntity<Problem> handleParameterDeficiencyException(
+        io.planit.cancerlibrary.service.ParameterDeficiencyException ex,
+        NativeWebRequest request
+    ) {
+        ParameterDeficiencyException problem = new ParameterDeficiencyException();
+        return create(
+            problem,
+            request,
+            HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(),
+                problem.getMessage())
+        );
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Problem> handleInvalidPasswordException(
         io.planit.cancerlibrary.service.InvalidPasswordException ex,
         NativeWebRequest request

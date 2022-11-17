@@ -96,8 +96,8 @@ class DMLSqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
-            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s', 'REVIEW_SUBMITTED')", timestamp, timestamp));
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp));
     }
 
     @ParameterizedTest
@@ -196,12 +196,11 @@ class DMLSqlBuilderServiceIT {
             put("idx", "test_idx");
             put("column1", "test1");
             put("column2", "test2");
-            put("status", "STATUS_APPROVED");
         }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s', STATUS = 'STATUS_APPROVED'", timestamp))
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp))
             .contains("WHERE (IDX = 'test_idx')");
     }
 

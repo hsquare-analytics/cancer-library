@@ -1,6 +1,5 @@
 package io.planit.cancerlibrary.service;
 
-import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;
@@ -70,8 +69,7 @@ public class DMLSqlBuilderService {
         sql.VALUES(CREATED_BY, String.format("'%s'", user.getLogin()))
             .VALUES(CREATED_DATE, String.format("'%s'", timeService.getCurrentTimestamp()))
             .VALUES(LAST_MODIFIED_BY, String.format("'%s'", user.getLogin()))
-            .VALUES(LAST_MODIFIED_DATE, String.format("'%s'", timeService.getCurrentTimestamp()))
-            .VALUES(STATUS_COLUMN, String.format("'%s'", ReviewConstants.SUBMITTED));
+            .VALUES(LAST_MODIFIED_DATE, String.format("'%s'", timeService.getCurrentTimestamp()));
 
         loggingFinalSQL(sql);
         return sql.toString();
@@ -137,7 +135,6 @@ public class DMLSqlBuilderService {
 
         sql.SET(getSqlEqualSyntax(LAST_MODIFIED_BY, user.getLogin()))
             .SET(getSqlEqualSyntax(LAST_MODIFIED_DATE, timeService.getCurrentTimestamp()))
-            .SET(getSqlEqualSyntax(STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
             .WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 
         loggingFinalSQL(sql);
