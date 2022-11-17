@@ -53,7 +53,7 @@ class UserPatientControllerIT {
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
     void testWithDivisiblePatientInfo() throws Exception {
         User user = UserResourceIT.createEntity(em);
-        user.setLogin("test");
+        user.setLogin("userpatient");
         userRepository.saveAndFlush(user);
 
         Patient patient = PatientResourceIT.createPatientDTO();
@@ -62,7 +62,7 @@ class UserPatientControllerIT {
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
-        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
+        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "userpatient"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))

@@ -71,7 +71,7 @@ class DatasourceControllerIT {
 
     private final String DEFAULT_COLUMN_BIRTH = "birth";
 
-    private final String DEFAULT_COLUMN_CITY = "cty";
+    private final String DEFAULT_COLUMN_CITY = "city";
 
     private final String DEFAULT_COLUMN_GENDER = "gender";
 
@@ -98,6 +98,7 @@ class DatasourceControllerIT {
         String sequence = "KCURE0000000001";
         BDDMockito.given(sequenceGenerator.getNextSequence()).willReturn(sequence);
 
+        itemRepository.saveAndFlush(new Item().category(category).title("pt_no").activated(true));
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
             itemRepository.saveAndFlush(item);
@@ -106,7 +107,7 @@ class DatasourceControllerIT {
         // when, then
         restDatasourceMockMvc.perform(
                 post("/api/datasource/categories/{categoryId}/rows", category.getId()).contentType(
-                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
+                    MediaType.APPLICATION_JSON).content("{\"pt_no\": \"test\", \"name\":\"modified_zero\"}"))
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
@@ -143,12 +144,12 @@ class DatasourceControllerIT {
         restDatasourceMockMvc.perform(
                 put("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001).contentType(
                     MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").value(false));
 
         List<Map<String, Object>> result = sqlExecutor.executeSelectAll("select * from ph_test_updated where idx = 10001");
 
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0)).containsEntry("name", "modified_zero");
+        assertThat(result).isEmpty();
     }
 
     @Test

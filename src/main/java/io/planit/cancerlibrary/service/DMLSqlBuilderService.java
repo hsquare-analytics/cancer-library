@@ -48,6 +48,10 @@ public class DMLSqlBuilderService {
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!map.containsKey(parameterization(IDX_COLUMN))) {
+            throw new RuntimeException("Idx parameter is required");
+        }
+
         if (!map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
             throw new RuntimeException("Patient number parameter is required");
         }
@@ -115,6 +119,10 @@ public class DMLSqlBuilderService {
 
     public String getUpdateSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get update query by categoryId: {}", categoryId);
+
+        if (!map.containsKey(parameterization(IDX_COLUMN))) {
+            throw new RuntimeException("Idx parameter is required");
+        }
 
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);

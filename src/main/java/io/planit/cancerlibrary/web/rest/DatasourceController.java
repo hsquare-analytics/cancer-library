@@ -98,7 +98,10 @@ public class DatasourceController {
                                                        @RequestBody Map<String, Object> map) {
         log.debug("REST request to inert Datasource updated row by category id: {}, row id: {}", categoryId, rowId);
 
-        String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, map);
+        Map<String, Object> mapWithIdx = new HashMap<>(map);
+        mapWithIdx.put("idx", rowId);
+
+        String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
         Boolean result = sqlExecutor.executeDML(updateSQL);
         return ResponseEntity.ok().body(result);
     }

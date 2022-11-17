@@ -185,6 +185,9 @@ class DMLSqlBuilderServiceIT {
             .contains("WHERE (IDX = 'test_idx')");
     }
 
+
+    @Test
+    @Transactional
     public void testDeleteSql() {
         // given
         User user = UserResourceIT.createEntity(em);
