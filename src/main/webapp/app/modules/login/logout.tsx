@@ -11,6 +11,8 @@ export const Logout = () => {
     dispatch(logout());
     if (logoutUrl) {
       window.location.href = logoutUrl;
+    } else {
+      window.location.href = '/'
     }
   });
 

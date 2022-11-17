@@ -52,8 +52,8 @@
       "language": "언어"
     },
     "form": {
-      "username.label": "로그인 아이디",
-      "username.placeholder": "로그인 아이디",
+      "username.label": "아이디",
+      "username.placeholder": "아이디",
       "currentpassword.label": "Current password",
       "currentpassword.placeholder": "Current password",
       "newpassword.label": "새 비밀번호",
@@ -72,7 +72,7 @@
         },
         "register": {
           "noaccount": "아직 계정이 없습니까?",
-          "link": "새로운 계정을 등록하세요"
+          "link": "새 계정 등록하기"
         }
       },
       "error": {

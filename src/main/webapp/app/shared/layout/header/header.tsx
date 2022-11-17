@@ -18,7 +18,14 @@ export interface IHeaderProps {
   isInProduction: boolean;
   isOpenAPIEnabled: boolean;
   currentLocale: string;
+  children: JSX.Element
 }
+
+export const BrandIcon = props => (
+  <div {...props} className="brand-icon">
+    <img src="content/images/logo-planit-healthcare.png" alt="Logo"/>
+  </div>
+);
 
 const Header = (props: IHeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,41 +38,38 @@ const Header = (props: IHeaderProps) => {
     dispatch(setLocale(langKey));
   };
 
-  const renderDevRibbon = () =>
-    props.isInProduction === false ? (
-      <div className="ribbon dev">
-        <a href="">
-          <Translate contentKey={`global.ribbon.${props.ribbonEnv}`}/>
-        </a>
-      </div>
-    ) : null;
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
   return (
     <div id="app-header">
-      {renderDevRibbon()}
       <LoadingBar className="loading-bar"/>
-      <Navbar data-cy="navbar" dark expand="md" fixed="left" className="jh-navbar">
-        <NavbarToggler aria-label="Menu" onClick={toggleMenu}/>
-        <Brand/>
-        <Collapse isOpen={menuOpen} navbar>
-          <Nav id="header-tabs" className="ms-auto flex-column" navbar>
-            <Home/>
-            {props.isAuthenticated && <DatasourceEditorMenu/>}
-            {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
-            {props.isAuthenticated && props.isAdmin && (
-              <>
-                <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
-                <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange}/>
-              </>
-            )}
-            <AccountMenu isAuthenticated={props.isAuthenticated}/>
-          </Nav>
-        </Collapse>
-      </Navbar>
+
+      {
+        props.isAuthenticated ? <Navbar data-cy="navbar" dark expand="md" fixed="left" className="jh-navbar">
+          <NavbarToggler aria-label="Menu" onClick={toggleMenu}/>
+          <Brand/>
+          <Collapse isOpen={menuOpen} navbar>
+            <Nav id="header-tabs" className="ms-auto flex-column" navbar>
+              <Home/>
+              {props.isAuthenticated && <DatasourceEditorMenu/>}
+              {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
+              {props.isAuthenticated && props.isAdmin && (
+                <>
+                  <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
+                  <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange}/>
+                </>
+              )}
+              <AccountMenu isAuthenticated={props.isAuthenticated}/>
+            </Nav>
+          </Collapse>
+          {props.children}
+          <BrandIcon />
+        </Navbar> : null
+      }
+
+
     </div>
   );
 };

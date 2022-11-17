@@ -1,6 +1,6 @@
 import React from 'react';
 import { Translate, translate, ValidatedField } from 'react-jhipster';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Row, Col, Form } from 'reactstrap';
+import { Button, Alert, Row, Col, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -29,12 +29,9 @@ const LoginModal = (props: ILoginModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
+    <div className='wrap-login'>
       <Form onSubmit={handleLoginSubmit}>
-        <ModalHeader id="login-title" data-cy="loginTitle" toggle={handleClose}>
-          <Translate contentKey="login.title">Sign in</Translate>
-        </ModalHeader>
-        <ModalBody>
+        <div>
           <Row>
             <Col md="12">
               {loginError ? (
@@ -51,7 +48,6 @@ const LoginModal = (props: ILoginModalProps) => {
                 label={translate('global.form.username.label')}
                 placeholder={translate('global.form.username.placeholder')}
                 required
-                autoFocus
                 data-cy="username"
                 validate={{ required: 'Username cannot be empty!' }}
                 register={register}
@@ -81,30 +77,24 @@ const LoginModal = (props: ILoginModalProps) => {
             </Col>
           </Row>
           <div className="mt-1">&nbsp;</div>
-          <Alert color="warning">
-            <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector">
-              <Translate contentKey="login.password.forgot">Did you forget your password?</Translate>
-            </Link>
-          </Alert>
-          <Alert color="warning">
-            <span>
-              <Translate contentKey="global.messages.info.register.noaccount">You don&apos;t have an account yet?</Translate>
-            </span>{' '}
+          <div className='area-account'>
             <Link to="/account/register">
               <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
             </Link>
-          </Alert>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={handleClose} tabIndex={1}>
-            <Translate contentKey="entity.action.cancel">Cancel</Translate>
-          </Button>{' '}
-          <Button color="primary" type="submit" data-cy="submit">
+
+            <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector">
+              <Translate contentKey="login.password.forgot">Did you forget your password?</Translate>
+            </Link>
+          </div>
+        </div>
+
+        <div className='area-btn'>
+          <Button color="primary" type="submit" data-cy="submit" size='lg'>
             <Translate contentKey="login.form.button">Sign in</Translate>
           </Button>
-        </ModalFooter>
+        </div>
       </Form>
-    </Modal>
+    </div>
   );
 };
 

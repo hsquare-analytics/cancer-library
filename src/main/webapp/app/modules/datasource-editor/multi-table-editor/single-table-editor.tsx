@@ -85,7 +85,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     const canManaging = row.idx.includes(KCURE_PREFIX) && (isManager || row['created_by'] === login);
 
     return <Stack spacing={1} direction="row">
-      <Button variant="text" style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+      <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}}
               onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
         <FontAwesomeIcon icon="pencil"/>
       </Button>

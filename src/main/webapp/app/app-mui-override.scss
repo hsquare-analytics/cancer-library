@@ -1,0 +1,21 @@
+/*
+ * @mui Override
+ * Material UI 에 디자인 적용
+ */
+
+// Buttons
+.MuiButtonBase-root {
+
+
+  &.btn-outline {
+    background: var(---white);
+  }
+
+
+}
+
+
+
+/*
+ * devextreme mui Override
+ */

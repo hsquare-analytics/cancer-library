@@ -96,9 +96,9 @@ export const UserPatientDndGrid = () => {
           <Column dataField="id" caption="id" alignment={"center"} visible={false}/>
           <Column dataField="login" caption="Login" alignment={"center"}/>
         </DataGrid>
-        <Stack spacing={2} direction="row" className="justify-content-end my-3">
+        <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>저장</Button>
-          <Button variant="outlined" onClick={onClickCancel}>취소</Button>
+          <Button variant="outlined" onClick={onClickCancel} className='btn-outline'>취소</Button>
         </Stack>
       </div>
       <div className="tables">
