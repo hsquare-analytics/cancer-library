@@ -1,18 +1,22 @@
 package io.planit.cancerlibrary.web.websocket;
 
-import static io.planit.cancerlibrary.config.WebsocketConfiguration.IP_ADDRESS;
-
 import io.planit.cancerlibrary.web.websocket.dto.ActivityDTO;
-import java.security.Principal;
-import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.security.Principal;
+import java.time.Instant;
+import java.util.Map;
+
+import static io.planit.cancerlibrary.config.WebsocketConfiguration.IP_ADDRESS;
 
 @Controller
 public class ActivityService implements ApplicationListener<SessionDisconnectEvent> {
@@ -30,7 +34,10 @@ public class ActivityService implements ApplicationListener<SessionDisconnectEve
     public ActivityDTO sendActivity(@Payload ActivityDTO activityDTO, StompHeaderAccessor stompHeaderAccessor, Principal principal) {
         activityDTO.setUserLogin(principal.getName());
         activityDTO.setSessionId(stompHeaderAccessor.getSessionId());
-        activityDTO.setIpAddress(stompHeaderAccessor.getSessionAttributes().get(IP_ADDRESS).toString());
+        Map<String, Object> sessionAttr = stompHeaderAccessor.getSessionAttributes();
+        if (sessionAttr != null) {
+            activityDTO.setIpAddress(sessionAttr.get(IP_ADDRESS).toString());
+        }
         activityDTO.setTime(Instant.now());
         log.debug("Sending user tracking data {}", activityDTO);
         return activityDTO;
