@@ -113,24 +113,31 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
 
   return (
     <Stack direction="row-reverse" spacing={1}>
-      <Button variant="outlined" onClick={() => props.setPopupVisible(false)}>닫기</Button>
+      <Button variant="outlined" size={"small"} onClick={(e) => {
+        e.stopPropagation();
+        props.setPopupVisible(false);
+      }}>닫기</Button>
       {
         patient && patient.status === REVIEW_LIST.DECLINED && canNotDecline() &&
-        <Button variant="outlined" color="warning" onClick={() => {
+        <Button variant="outlined" color="warning" size={"small"} onClick={() => {
           onDeclineReasonButtonClick()
         }}>거부 사유</Button>
       }
       {canDecline ? (
         <>
-          <Button variant="contained" color="error" onClick={() => {
+          <Button variant="contained" color="error" size="small" onClick={(e) => {
+            e.stopPropagation();
             onDeclinedButtonClick()
           }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.decline")}</Button>
           <Button variant="contained" color="success"
-                  onClick={() => {
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
                     onApprovedButtonClick()
                   }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.approve")}</Button> </>
       ) : <Button variant="contained" color="info" disabled={canNotSubmit()}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     onSubmittedButtonClick()
                   }}>{translate("cancerLibraryApp.datasourceEditor.reviewButton.submit")}</Button>}
     </Stack>

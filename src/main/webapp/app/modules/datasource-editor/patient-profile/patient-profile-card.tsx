@@ -13,6 +13,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import PatientProfileCardDetail from "app/modules/datasource-editor/patient-profile/patient-profile-card-detail";
 import {REVIEW_LIST} from "app/config/datasource-constants";
+import DatasourceStackButton from "app/modules/datasource-editor/stack-button/datasource-stack-button";
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -27,18 +28,29 @@ const PatientStatusChip = (status: string) => {
   }
 }
 
-export const PatientProfileCard = () => {
+interface IPatientProfileCardProps {
+  setPopupVisible: (popupVisible: boolean) => void;
+}
+
+export const PatientProfileCard = (props: IPatientProfileCardProps) => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const loading = useAppSelector<IPatient>(state => state.datasourcePatient.loading);
 
   return (
-    <Accordion defaultExpanded={true}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
-        <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
-          {translate("cancerLibraryApp.datasourceEditor.profileCard.title", patient ? {
-            no: patient.ptNo, name: patient.ptNm
-          } : '')}</Typography>
-        {patient && PatientStatusChip(patient.status)}
+    <Accordion defaultExpanded={true}
+               sx={{
+                 '& .MuiAccordionSummary-contentGutters': {justifyContent: 'space-between',}
+               }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
+      >
+        <div className={"d-flex"}>
+          <Typography sx={{display: 'flex', alignItems: 'center', marginRight: "15px"}}>
+            {translate("cancerLibraryApp.datasourceEditor.profileCard.title", patient ? {
+              no: patient.ptNo, name: patient.ptNm
+            } : '')}</Typography>
+          {patient && PatientStatusChip(patient.status)}
+        </div>
+        <DatasourceStackButton setPopupVisible={props.setPopupVisible}/>
       </AccordionSummary>
       <AccordionDetails sx={{padding: "0 0 8px 0"}}>
         {!loading ?
