@@ -9,6 +9,8 @@ import io.planit.cancerlibrary.web.rest.TopicResourceIT;
 import io.planit.cancerlibrary.web.rest.UserResourceIT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +21,7 @@ import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -95,6 +98,23 @@ class DMLSqlBuilderServiceIT {
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
             .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
             .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s', 'REVIEW_SUBMITTED')", timestamp, timestamp));
+    }
+
+    @ParameterizedTest
+    @Transactional
+    @WithMockUser
+    @ValueSource(strings = {"idx", "pt_no"})
+    void test_insert_sql_parameter_parameter_deficiency_exception(String requiredParam) {
+        Long categoryId = category.getId();
+        HashMap<String, Object> params = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("pt_no", "idx_test");
+            put("column1", "test1");
+            put("column2", "test2");
+        }};
+
+        params.remove(requiredParam);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(categoryId, params)).isInstanceOf(ParameterDeficiencyException.class);
     }
 
     @Test
@@ -185,6 +205,18 @@ class DMLSqlBuilderServiceIT {
             .contains("WHERE (IDX = 'test_idx')");
     }
 
+    @Test
+    @Transactional
+    @WithMockUser
+    void test_update_sql_idx_deficiency_exception() {
+        Long categoryId = category.getId();
+        HashMap<String, Object> params = new HashMap<>() {{
+            put("pt_no", "idx_test");
+            put("column1", "test1");
+            put("column2", "test2");
+        }};
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(categoryId, params)).isInstanceOf(ParameterDeficiencyException.class);
+    }
 
     @Test
     @Transactional
@@ -214,7 +246,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testInsertSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -226,7 +258,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testReadSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -246,7 +278,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testUpdateSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};
@@ -258,7 +290,7 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser
     void testDeleteSqlConfigurationException() {
-        HashMap param = new HashMap<>() {{
+        Map<String, Object> param = new HashMap<>() {{
             put("idx", "idx_test");
             put("column1", "test1");
         }};

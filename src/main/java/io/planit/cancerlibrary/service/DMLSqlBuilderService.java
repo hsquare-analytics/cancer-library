@@ -48,16 +48,12 @@ public class DMLSqlBuilderService {
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!map.containsKey(parameterization(IDX_COLUMN))) {
-            throw new RuntimeException("Idx parameter is required");
-        }
-
-        if (!map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
-            throw new RuntimeException("Patient number parameter is required");
+        if (!map.containsKey(parameterization(IDX_COLUMN)) || !map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
+            throw new ParameterDeficiencyException();
         }
 
         if (itemList.stream().map(Item::getTitle).noneMatch(s -> parameterization(s).equals(parameterization(PATIENT_NUMBER_COLUMN)))) {
-            throw new RuntimeException("Patient number item is required");
+            throw new SetupDeficiencyException();
         }
 
         SQL sql = new SQL();
@@ -121,7 +117,7 @@ public class DMLSqlBuilderService {
         log.debug("Request to get update query by categoryId: {}", categoryId);
 
         if (!map.containsKey(parameterization(IDX_COLUMN))) {
-            throw new RuntimeException("Idx parameter is required");
+            throw new ParameterDeficiencyException();
         }
 
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
@@ -148,7 +144,7 @@ public class DMLSqlBuilderService {
         return sql.toString();
     }
 
-    public String getDeleteSQL(Long categoryId, Map<String, String> map) {
+    public String getDeleteSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get delete query by categoryId: {}", categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
