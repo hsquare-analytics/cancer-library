@@ -5,18 +5,10 @@ import {NavbarBrand, NavItem, NavLink} from 'reactstrap';
 import {NavLink as Link} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export const BrandIcon = props => (
-  <div {...props} className="brand-icon">
-    <img src="content/images/logo-planit-healthcare.png" alt="Logo"/>
-    <span className="navbar-version">{VERSION}</span>
-  </div>
-);
-
 export const Brand = () => (
   <NavbarBrand tag={Link} to="/" className="brand-logo d-flex flex-column">
-    <BrandIcon/>
     <span className="brand-title">
-      <Translate contentKey="global.title">CancerLibraryApp</Translate>
+      <Translate contentKey="global.title">Cancer Library App</Translate>
     </span>
   </NavbarBrand>
 );

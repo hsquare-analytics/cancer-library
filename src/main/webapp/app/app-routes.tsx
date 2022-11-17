@@ -32,9 +32,11 @@ const Admin = Loadable({
 
 const AppRoutes = () => {
   const location = useLocation();
+
   React.useEffect(() => {
     sendActivity(location.pathname);
   }, [location]);
+
   return (
     <div className="view-routes">
       <ErrorBoundaryRoutes>

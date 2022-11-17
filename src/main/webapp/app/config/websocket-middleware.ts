@@ -68,6 +68,9 @@ const connect = () => {
     sendActivity(window.location.pathname);
     alreadyConnectedOnce = true;
   });
+
+  // console.log 끔
+  stompClient.debug = () => {}
 };
 
 const disconnect = () => {

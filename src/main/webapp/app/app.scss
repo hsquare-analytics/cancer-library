@@ -1,9 +1,23 @@
 // Override Boostrap variables
 // Import Bootstrap source files from node_modules
 @import '~bootstrap/scss/bootstrap';
+
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", Helvetica, Arial, "Apple SD Gothic Neo", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --white: #fff;
+  --width-sidemenu: 210px;
+  --bg-sidemenu: #455364;
+}
+
+.app-container.dark {
+  --bg-sidemenu: #000;
+}
+
 body {
   background: #fafafa;
   margin: 0;
+  font-family: var(--font-family);
+  font-size: 1.6rem;
 }
 
 a {
@@ -14,6 +28,7 @@ a {
 * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+
   &:after,
   &::before {
     -moz-box-sizing: border-box;
@@ -23,22 +38,78 @@ a {
 
 .app-container {
   box-sizing: border-box;
+  padding-left: var(--width-sidemenu);
+
   .view-container {
     width: 100%;
     height: calc(100% - 40px);
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 1rem;
+    //padding: 1rem;
+    padding: 0;
+
     .card {
       padding: 1rem;
     }
+
     .view-routes {
       height: 100%;
+
       > div {
         height: 100%;
       }
+
+      // 메인 페이지
+      > .wrap-home {
+        height: calc(100vh);
+        background: #F8F9FF url("./asset/img/bg-main.png") right 50% no-repeat;
+        background-size: 940px;
+
+        display: flex;
+        align-items: center;
+
+        .area-home-title {
+          transform: translateY(-50px);
+        }
+
+        h1 {
+          font-size: 3rem;
+        }
+
+      }
     }
   }
+
+  .wrap-home {
+    padding-left: 318px;
+  }
+
+  &.no-auth {
+    padding-left: 0;
+  }
+
+  // 로그인
+  .wrap-login {
+    width: 420px;
+
+
+    .area-account {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .area-btn {
+      margin-top: 50px;
+
+      button {
+        display: block;
+        width: 100%;
+      }
+    }
+
+  }
+
 }
 
 .fullscreen {
@@ -72,10 +143,12 @@ Custom button styles
   border-color: transparent;
   padding: 0.5rem;
   line-height: 1rem;
+
   &:hover {
     background-color: transparent;
     border-color: transparent;
   }
+
   &:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -222,6 +295,7 @@ Generic styles
 .no-margin {
   margin: 0px;
 }
+
 @mixin voffset($size) {
   @if $size== '' {
     .voffset {
@@ -310,3 +384,19 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.area-theme-toggle {
+  color: var(--white);
+}
+
+.brand-icon {
+  position: absolute;
+  bottom: 34px;
+  left: 0;
+  width: var(--width-sidemenu);
+  text-align: center;
+
+  img {
+    width: 123px;
+  }
+}

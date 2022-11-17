@@ -3,9 +3,9 @@
     "title": "인증",
     "form": {
       "password": "비밀번호",
-      "password.placeholder": "당신의 비밀번호",
+      "password.placeholder": "비밀번호",
       "rememberme": "자동 로그인",
-      "button": "인증하기"
+      "button": "로그인"
     },
     "messages": {
       "error": {
@@ -13,7 +13,7 @@
       }
     },
     "password": {
-      "forgot": "비밀번호를 잊으셨나요?"
+      "forgot": "비밀번호 찾기"
     }
   }
 }
