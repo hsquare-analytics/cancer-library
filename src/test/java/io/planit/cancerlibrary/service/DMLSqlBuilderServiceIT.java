@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
 
@@ -67,20 +68,24 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testInsertSql() {
+        Timestamp timestamp = Timestamp.from(Instant.now());
         // given
-        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
-        Item item1 = new Item().category(category).title("column1").activated(true);
-        Item item2 = new Item().category(category).title("column2").activated(true);
+        Item item1 = new Item().category(category).title("pt_no").activated(true);
+        Item item2 = new Item().category(category).title("column1").activated(true);
+        Item item3 = new Item().category(category).title("column2").activated(true);
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
+        itemRepository.saveAndFlush(item3);
 
         // when
         String result = dmlSqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
+            put("pt_no", "pt_no_test");
             put("idx", "idx_test");
             put("column1", "test1");
             put("column2", "test2");
@@ -88,9 +93,8 @@ class DMLSqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
-            .contains(
-                "VALUES ('idx_test', 'test1', 'test2', 'test_login', '2020-01-01T00:00:00Z', 'test_login', '2020-01-01T00:00:00Z', 'REVIEW_SUBMITTED')");
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, STATUS)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s', 'REVIEW_SUBMITTED')", timestamp, timestamp));
     }
 
     @Test
@@ -154,8 +158,9 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUpdateSql() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         // given
-        BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
+        BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
@@ -176,8 +181,7 @@ class DMLSqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(
-                "SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '2020-01-01T00:00:00Z', STATUS = 'STATUS_APPROVED'")
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s', STATUS = 'STATUS_APPROVED'", timestamp))
             .contains("WHERE (IDX = 'test_idx')");
     }
 
