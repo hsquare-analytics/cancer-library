@@ -9,7 +9,7 @@ gstr_diag_inf
 gstr_diag_stag
 )
 
-cat /dev/null > meta/99_update_table_schema.sql
+cat /dev/null > 99_update_table_schema.sql
 for name in "${array[@]}"
 do
 DDLScript=$(cat <<EOF
@@ -26,6 +26,6 @@ ALTER TABLE gstr.${name}_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
 )
 
 printf "$DDLScript"
-echo "$DDLScript" >> meta/99_update_table_schema.sql
+echo "$DDLScript" >> 99_update_table_schema.sql
 done
 
