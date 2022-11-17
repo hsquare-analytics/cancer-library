@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.repository;
 
+import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.RowMapper;
@@ -19,13 +20,12 @@ import java.util.Optional;
 public class PatientRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String PATIENT_VIEW = "PH_PATIENT";
-
-    private static final String PATIENT_DETAIL = "PH_PATIENT_DETAIL";
+    private static final String PT_NO_EQUAL = "PT_NO = :ptNo";
 
     public PatientRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
     public List<Patient> findAll() {
         SQL sql = getFindAllPatientWithDetailSQL();
@@ -38,18 +38,18 @@ public class PatientRepository {
     }
 
     public List<Patient> findAllByPatientNos(List<String> patientNos) {
-        SQL sql = getFindAllPatientWithDetailSQL().WHERE(PATIENT_VIEW + ".PT_NO IN (:ptNos)");
+        SQL sql = getFindAllPatientWithDetailSQL().WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO IN (:ptNos)");
         return jdbcTemplate.query(sql.toString(), Map.of("ptNos", patientNos), new PatientMapper());
     }
 
     private SQL getFindAllPatientWithDetailSQL() {
-        return new SQL().SELECT("*").FROM(PATIENT_VIEW).LEFT_OUTER_JOIN(PATIENT_DETAIL + " ON " + PATIENT_VIEW + ".PT_NO = " + PATIENT_DETAIL + ".PT_NO");
+        return new SQL().SELECT("*").FROM(Table.PATIENT_VIEW.getTableName()).LEFT_OUTER_JOIN(Table.PATIENT_DETAIL.getTableName() + " ON " + Table.PATIENT_VIEW.getTableName() + ".PT_NO = " + Table.PATIENT_DETAIL.getTableName() + ".PT_NO");
     }
 
     public boolean insert(Patient patient) {
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
 
-        SQL sql1 = new SQL().INSERT_INTO(PATIENT_VIEW)
+        SQL sql1 = new SQL().INSERT_INTO(Table.PATIENT_VIEW.getTableName())
             .VALUES("PT_NO", ":ptNo")
             .VALUES("PT_NM", ":ptNm")
             .VALUES("SEX_TP_CD", ":sexTpCd")
@@ -59,23 +59,18 @@ public class PatientRepository {
         return jdbcTemplate.update(sql1.toString(), namedParameters) > 0;
     }
 
-    public boolean checkExistPatientByPatientNo(String patientNo) {
-        SQL sql = new SQL().SELECT("COUNT(*)").FROM(PATIENT_VIEW).WHERE("PT_NO = :ptNo");
-        return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
-    }
-
-    public boolean checkExistPatientDetailByPatientNo(String patientNo) {
-        SQL sql = new SQL().SELECT("COUNT(*)").FROM(PATIENT_DETAIL).WHERE("PT_NO = :ptNo");
+    public boolean checkRowExistByPtNoOnTable(Table table, String patientNo) {
+        SQL sql = new SQL().SELECT("COUNT(*)").FROM(table.getTableName()).WHERE(PT_NO_EQUAL);
         return jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), Integer.class) > 0;
     }
 
     public Optional<Patient> findByPatientNo(String patientNo) {
-        SQL sql = getFindAllPatientWithDetailSQL().WHERE(PATIENT_VIEW + ".PT_NO = :ptNo");
+        SQL sql = getFindAllPatientWithDetailSQL().WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO = :ptNo");
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
     public boolean updatePatientDetail(Patient patient) {
-        SQL sql = new SQL().UPDATE(PATIENT_DETAIL);
+        SQL sql = new SQL().UPDATE(Table.PATIENT_DETAIL.getTableName());
         sql.SET("LAST_MODIFIED_BY = :lastModifiedBy")
             .SET(String.format("LAST_MODIFIED_DATE = '%s'", Timestamp.from(patient.getLastModifiedDate())));
 
@@ -95,14 +90,14 @@ public class PatientRepository {
             sql.SET(String.format("CREATED_DATE = '%s'", Timestamp.from(patient.getCreatedDate())));
         }
 
-        sql.WHERE("PT_NO = :ptNo");
+        sql.WHERE(PT_NO_EQUAL);
 
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
         return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
     }
 
     public boolean insertPatientDetail(Patient patient) {
-        SQL sql = new SQL().INSERT_INTO(PATIENT_DETAIL)
+        SQL sql = new SQL().INSERT_INTO(Table.PATIENT_DETAIL.getTableName())
             .VALUES("PT_NO", ":ptNo")
             .VALUES("STATUS", ":status")
             .VALUES("CREATED_BY", ":createdBy")

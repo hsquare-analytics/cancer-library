@@ -188,7 +188,7 @@ class DMLSqlBuilderServiceIT {
 
     @Test
     @Transactional
-    public void testDeleteSql() {
+    void testDeleteSql() {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -205,8 +205,9 @@ class DMLSqlBuilderServiceIT {
         }});
 
         // then
-        assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED");
-        assertThat(result).contains("WHERE (IDX = 'test_idx')");
+        assertThat(result)
+            .contains("DELETE FROM " + category.getTitle() + "_UPDATED")
+            .contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
