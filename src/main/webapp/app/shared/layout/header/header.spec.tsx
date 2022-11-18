@@ -16,6 +16,7 @@ describe('Header', () => {
     ribbonEnv: 'dev',
     isInProduction: false,
     isOpenAPIEnabled: true,
+    children: <div>children</div>,
   };
   const prodProps = {
     ...devProps,
@@ -70,7 +71,7 @@ describe('Header', () => {
     // Find AccountMenu component
     expect(html).toContain('account-menu');
     // Ribbon
-    expect(html).toContain('ribbon');
+    // expect(html).toContain('ribbon');
   });
 
   it('Renders a Header component in prod profile with LoadingBar, Navbar, Nav.', () => {
@@ -120,13 +121,13 @@ describe('Header', () => {
     const html = wrapper(guestProps);
 
     // Find Navbar component
-    expect(html).toContain('navbar');
+    expect(html).not.toContain('navbar');
     // Not find AdminMenu component
     expect(html).not.toContain('admin-menu');
     // Find AccountMenu component
 
     // Custom header
-    expect(html).toContain('account-menu');
+    expect(html).not.toContain('account-menu');
     expect(html).not.toContain('datasource-editor-menu');
   });
 });
