@@ -67,9 +67,9 @@ describe('Header', () => {
     // Find Navbar component
     expect(html).toContain('navbar');
     // Find AdminMenu component
-    expect(html).toContain('admin-menu');
+    expect(html).not.toContain('admin-menu');
     // Find AccountMenu component
-    expect(html).toContain('account-menu');
+    expect(html).not.toContain('account-menu');
     // Ribbon
     // expect(html).toContain('ribbon');
   });
@@ -80,9 +80,9 @@ describe('Header', () => {
     // Find Navbar component
     expect(html).toContain('navbar');
     // Find AdminMenu component
-    expect(html).toContain('admin-menu');
+    expect(html).not.toContain('admin-menu');
     // Find AccountMenu component
-    expect(html).toContain('account-menu');
+    expect(html).not.toContain('account-menu');
     // No Ribbon
     expect(html).not.toContain('ribbon');
   });
@@ -95,7 +95,7 @@ describe('Header', () => {
     // Not find AdminMenu component
     expect(html).not.toContain('admin-menu');
     // Find AccountMenu component
-    expect(html).toContain('account-menu');
+    expect(html).not.toContain('account-menu');
 
     // Custom header
     expect(html).toContain('datasource-editor-menu');
@@ -110,7 +110,7 @@ describe('Header', () => {
     // Not find AdminMenu component
     expect(html).not.toContain('admin-menu');
     // Find AccountMenu component
-    expect(html).toContain('account-menu');
+    expect(html).not.toContain('account-menu');
 
     // Custom header
     expect(html).toContain('datasource-editor-menu');
