@@ -7,14 +7,32 @@
   --white: #fff;
   --width-sidemenu: 210px;
   --bg-sidemenu: #455364;
+  --bs-primary: #4285F4;
 }
 
 .app-container.dark {
   --bg-sidemenu: #000;
 }
 
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #0d6efd;
+  --bs-btn-hover-border-color: #0a58ca;
+  --bs-btn-focus-shadow-rgb: 49, 132, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #0a58ca;
+  --bs-btn-active-border-color: #0a53be;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #0d6efd;
+  --bs-btn-disabled-border-color: #0d6efd;
+}
+
 body {
-  background: #fafafa;
+  background: #fff;
   margin: 0;
   font-family: var(--font-family);
   font-size: 1.6rem;
@@ -62,18 +80,24 @@ a {
       // 메인 페이지
       > .wrap-home {
         height: calc(100vh);
-        background: #F8F9FF url("./asset/img/bg-main.png") right 50% no-repeat;
-        background-size: 940px;
+        background: #fff url("./asset/img/bg-main.png") right bottom no-repeat;
+        background-size: 2100px;
 
         display: flex;
         align-items: center;
 
         .area-home-title {
           transform: translateY(-50px);
+
+          .sub-title {
+            font-size: 22px;
+          }
+
         }
 
         h1 {
           font-size: 3rem;
+          font-weight: 700;
         }
 
       }
@@ -88,27 +112,71 @@ a {
     padding-left: 0;
   }
 
+  .area-snuh-logo {
+    display: block;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 152px;
+    height: 84px;
+    background: url("./asset/img/logo-snuh.png") 0 0 no-repeat;
+    background-size: 152px;
+  }
+
+  .area-bottom-logo {
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 157px;
+    height: 51px;
+    background: url("./asset/img/logo-p.png") 0 0 no-repeat;
+    background-size: 152px;
+  }
+
   // 로그인
-  .wrap-login {
-    width: 420px;
-
-
-    .area-account {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+  .area-login {
+    .sub-title {
+      font-size: 22px;
+      margin-bottom: 63px;
     }
 
-    .area-btn {
-      margin-top: 50px;
+    .box-login {
+      width: 420px;
 
-      button {
-        display: block;
-        width: 100%;
+      .box-login-field.mb-3 {
+        margin-bottom: 30px !important;
       }
+
+      .box-login-field.mb-3:last-child {
+        margin-bottom: 15px !important;
+      }
+
+      .area-account {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 15px;
+
+        a {
+          text-decoration: none;
+          font-weight: normal;
+        }
+      }
+
+      .area-btn {
+        margin-top: 50px;
+
+        button {
+          display: block;
+          width: 100%;
+        }
+      }
+
     }
 
   }
+
 
 }
 
@@ -387,6 +455,18 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 
 .area-theme-toggle {
   color: var(--white);
+  position: absolute;
+  left: 20px;
+  bottom: 100px;
+  cursor: pointer;
+}
+
+.area-logout-button {
+  position: absolute;
+  left: 20px;
+  bottom: 140px;
+  color: var(--white);
+  cursor: pointer;
 }
 
 .brand-icon {

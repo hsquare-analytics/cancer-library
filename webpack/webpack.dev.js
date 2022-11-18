@@ -40,6 +40,11 @@ module.exports = async options =>
             },
           ],
         },
+
+        {
+          test: /\.(jpe?g|png|gif|svg|woff(2)?|ttf|eot)$/i,
+          type: 'asset/resource',
+        },
       ],
     },
     devServer: {
@@ -63,6 +68,10 @@ module.exports = async options =>
       ],
       https: options.tls,
       historyApiFallback: true,
+      devMiddleware: {
+        publicPath: '/',
+        writeToDisk: true,
+      },
     },
     stats: process.env.JHI_DISABLE_WEBPACK_LOGS ? 'none' : options.stats,
     plugins: [

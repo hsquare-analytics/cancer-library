@@ -21,6 +21,7 @@ Developement Ribbon
   z-index: 99999;
   pointer-events: none;
   opacity: 0.75;
+
   a {
     color: #fff;
     display: block;
@@ -34,10 +35,23 @@ Developement Ribbon
   }
 }
 
+.navbar > .container-fluid {
+  padding: 0;
+}
+
+.navbar-collapse {
+  width: 100%;
+
+  .nav-item {
+
+  }
+
+}
+
 /* ==========================================================================
 Navbar styles
 ========================================================================== */
-.jh-navbar {
+.app-navbar {
   background-color: var(--bg-sidemenu);
 
   .profile-image {
@@ -46,31 +60,43 @@ Navbar styles
     width: 40px;
     border-radius: 50%;
   }
+
   .dropdown-item.active,
   .dropdown-item.active:focus,
   .dropdown-item.active:hover {
     background-color: #353d47;
   }
+
   .dropdown-toggle::after {
     margin-left: 0.15em;
   }
+
   ul.navbar-nav {
     padding-top: 0.8em;
-    width: 160px;
+    width: 100%;
+
     .nav-item {
-      margin-left: 0.5rem;
+      margin-left: 0;
     }
   }
+
   a.nav-link {
     font-weight: 400;
+
     > span {
-      margin-left: 5px;
+      margin-left: 17px;
+    }
+
+    &.active {
+      background: var(--bs-primary);
     }
   }
+
   .jh-navbar-toggler {
     color: #ccc;
     font-size: 1.5em;
     padding: 10px;
+
     &:hover {
       color: #fff;
     }
@@ -84,19 +110,25 @@ Navbar styles
     width: 210px;
     height: 100%;
     align-items: start;
+
     .container-fluid {
       flex-direction: column;
     }
   }
 }
+
 .navbar-brand {
   overflow: hidden;
 }
 
-.jh-navbar .navbar-nav .nav-link {
-  padding-right: 0;
-  padding-left: 0;
+.app-navbar .navbar-nav .nav-link {
+  //padding-right: 0;
+  //padding-left: 0;
   height: 50px;
+
+  img {
+    width: 22px;
+  }
 }
 
 .navbar-version {
@@ -109,10 +141,12 @@ Navbar styles
   &:hover {
     text-decoration: none;
   }
+
   .brand-icon {
     height: 35px;
     width: auto;
     display: inline-block;
+
     img {
       height: 25px;
     }
@@ -120,8 +154,9 @@ Navbar styles
 }
 
 .brand-title {
-  font-size: 15px;
+  font-size: 17px;
   color: $header-color;
+
   &:hover {
     color: $header-color-hover;
     text-decoration: none;
