@@ -3,6 +3,7 @@ const tsconfig = require('./tsconfig.test.json');
 module.exports = {
   testEnvironment: 'jsdom',
   transform: {
+    'node_modules/(react-dnd|dnd-core|@react-dnd|react-dnd-html5-backend)/.+\\.(j|t)sx?$': "ts-jest",
     '^.+\\.tsx?$': 'ts-jest',
   },
   testEnvironmentOptions: {
@@ -31,6 +32,9 @@ module.exports = {
     ...require('./webpack/environment'),
     DEVELOPMENT: false,
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(react-dnd|dnd-core|@react-dnd|react-dnd-html5-backend)/)'
+  ]
 };
 
 function mapTypescriptAliasToJestAlias(alias = {}) {
