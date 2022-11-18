@@ -71,13 +71,14 @@ export const AccessiblePatient = () => {
 
   const commentCellRender = (data) => {
     const comment = data.value;
-    const result = comment && comment.length > 0 ? true : false
+    const result = comment && comment.length > 0
     return <CheckBox value={result}/>
   };
 
   return <div>
     <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
     {!loading ? <DataGrid
+      id="accessible-patient-datagrid"
       ref={dataGrid}
       dataSource={JSON.parse(JSON.stringify(patientList))}
       showBorders={true}
