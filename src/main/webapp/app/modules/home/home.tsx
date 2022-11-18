@@ -1,52 +1,48 @@
 import './home.scss';
 
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Translate} from 'react-jhipster';
+import { Link } from 'react-router-dom';
+import { Translate } from 'react-jhipster';
 
-import {useAppSelector} from 'app/config/store';
-import Login from "app/modules/login/login";
+import { useAppSelector } from 'app/config/store';
+import Login from 'app/modules/login/login';
 
 export const Home = () => {
   const account = useAppSelector(state => state.authentication.account);
 
   return (
-    <div className='wrap-home'>
-      {
-        account?.login
-          ? (
-            <div className='area-home-title'>
-              <h1>
-                <p>
-                  <Translate contentKey="home.logged.message" interpolate={{username: account.login}}>
-                    {/* 님 안녕하세요 */}
-                  </Translate>
-                </p>
-                <p>
-                  <Translate contentKey="home.title">
-                    {/* SNUH의 암 라이브러리 어플리케이션 입니다. */}
-                  </Translate>
-                </p>
-              </h1>
+    <div className="wrap-home">
+      {account?.login ? (
+        <div className="area-home-title">
+          <h1>
+            <p>
+              <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
+                {/* 님 안녕하세요 */}
+              </Translate>
+            </p>
+            <p>
+              <Translate contentKey="home.title">{/* SNUH의 암 라이브러리 어플리케이션 입니다. */}</Translate>
+            </p>
+          </h1>
+          <p className="sub-title">권한을 할당받은 테이블을 선택하고 편집할 수 있습니다.</p>
+        </div>
+      ) : (
+        <>
+          <span className="area-snuh-logo"></span>
+          <div className="area-login">
+            <h1>
+              <Translate contentKey="home.title">{/* SNUH의 암 라이브러리 어플리케이션 입니다. */}</Translate>
+            </h1>
+            <p className="sub-title">권한을 할당받은 테이블을 선택하고 편집할 수 있습니다.</p>
 
-            </div>
-          )
-          : (
-            <div className='area-login'>
-              <h1>
-                <Translate contentKey="home.title">
-                  {/* SNUH의 암 라이브러리 어플리케이션 입니다. */}
-                </Translate>
-              </h1>
-              <p>권한을 할당받은 테이블을 선택하고 편집할 수 있습니다.</p>
+            <Login />
 
-              <Login />
-
-            </div>
-          )
-      }
+            <span className="area-bottom-logo"></span>
+          </div>
+        </>
+      )}
     </div>
-  )
+  );
 
   // return (
   //   <Row>
