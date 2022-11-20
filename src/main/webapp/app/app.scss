@@ -5,13 +5,21 @@
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", Helvetica, Arial, "Apple SD Gothic Neo", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --white: #fff;
+  --red: #ffee00;
   --width-sidemenu: 210px;
   --bg-sidemenu: #455364;
   --bs-primary: #4285F4;
 }
 
-.app-container.dark {
-  --bg-sidemenu: #000;
+// dark mode 변수모음
+.dark {
+  --white: #333;
+  --bs-primary: #454545;
+
+  .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--bg-sidemenu);
+  }
 }
 
 .btn-primary {
@@ -454,10 +462,10 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 .area-theme-toggle {
-  color: var(--white);
   position: absolute;
   left: 20px;
   bottom: 100px;
+  color: #e7e7e7;
   cursor: pointer;
 }
 
@@ -465,7 +473,7 @@ http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
   position: absolute;
   left: 20px;
   bottom: 140px;
-  color: var(--white);
+  color: #e7e7e7;
   cursor: pointer;
 }
 
