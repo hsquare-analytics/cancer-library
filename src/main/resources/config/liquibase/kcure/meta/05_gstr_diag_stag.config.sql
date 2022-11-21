@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_STAG (
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9500, 'GSTR.GSTR_DIAG_STAG', '위암_진단_병기', true, 1, 999, 'system');
+VALUES (9500, 'GSTR.GSTR_DIAG_STAG', '위암_진단_병기', true, 5, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9500, null, '위암_진단_병기');

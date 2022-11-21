@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_DIAG (
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9700, 'GSTR.GSTR_EXAM_DIAG', '07.위암_검사_진단', true, 6, 999, 'system');
+VALUES (9700, 'GSTR.GSTR_EXAM_DIAG', '07.위암_검사_진단', true, 7, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9700, null, '06.위암_진단_전이');

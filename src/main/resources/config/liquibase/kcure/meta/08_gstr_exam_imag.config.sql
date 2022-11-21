@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMAG (
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9800, 'GSTR.GSTR_EXAM_IMAG', '08.위암_검사_영상', true, 6, 999, 'system');
+VALUES (9800, 'GSTR.GSTR_EXAM_IMAG', '08.위암_검사_영상', true, 8, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9800, null, '08.위암_검사_영상');

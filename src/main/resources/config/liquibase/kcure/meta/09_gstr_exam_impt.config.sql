@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMPT (
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9900, 'GSTR.GSTR_EXAM_IMPT', '09.위암_검사_면역병리', true, 6, 999, 'system');
+VALUES (9900, 'GSTR.GSTR_EXAM_IMPT', '09.위암_검사_면역병리', true, 9, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
 VALUES (9900, null, '09.위암_검사_면역병리');
