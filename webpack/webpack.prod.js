@@ -44,6 +44,10 @@ module.exports = async () =>
             },
           ],
         },
+        {
+          test: /\.(jpe?g|png|gif|svg|woff(2)?|ttf|eot)$/i,
+          type: 'asset/resource',
+        },
       ],
     },
     optimization: {
