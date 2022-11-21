@@ -2,7 +2,8 @@
   "register": {
     "title": "등록",
     "form": {
-      "button": "등록"
+      "button": "등록",
+      "cancel": "취소"
     },
     "messages": {
       "validate": {

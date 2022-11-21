@@ -1,4 +1,53 @@
 /*
+ * reactstrap Override
+ * reactstrap 에 디자인 적용
+ */
+
+.btn-outline.btn-outline-white {
+  border-color: var(--bg-btn-outline-white-border);
+  color: var(--color-btn-outline-white);
+
+  &:hover {
+    background: var(--bg-btn-outline-white-hover);
+    border-color: var(--bg-btn-outline-white-border);
+  }
+}
+
+.badge-chip {
+  padding: 2px 10px;
+  border-radius: 3px;
+  background: var(--bg-badge-status-default);
+
+  &.approved {
+    background: var(--bg-badge-status-approved);
+  }
+
+  &.submitted {
+    background: var(--bg-badge-status-submitted);
+  }
+
+  &.declined {
+    color: var(--color-badge-status-declined);
+    background: var(--bg-badge-status-declined);
+  }
+
+}
+
+// Modal 에서 버튼 가운데 정렬, border 없는 경우 등 추가
+.modal-dialog {
+  .modal-footer {
+    &.center {
+      justify-content: center;
+    }
+
+    &.no-border-top {
+      border-top: none;
+    }
+  }
+}
+
+
+/*
  * @mui Override
  * Material UI 에 디자인 적용
  */
@@ -13,310 +62,54 @@
     background: var(--white);
   }
 
+  &.btn-error {
+    color: #fff;
+    background: var(--red);
+  }
+
 }
 
 
 /*
  * devextreme mui Override
- */
-/*
  * David 추가
- * grid filter 디자인 변경
- * grid fontawesome 교체
  */
-//.dx-datagrid .dx-column-indicators .dx-header-filter.dx-header-filter::before,
-//.dx-datagrid .dx-column-indicators .dx-sort.dx-header-filter::before,
-//.dx-datagrid .dx-column-indicators .dx-header-filter.dx-header-filter::after,
-//.dx-datagrid .dx-column-indicators .dx-sort.dx-header-filter::after {
-//  display: none;
-//}
-//
-//.dx-datagrid .dx-column-indicators .dx-header-filter.dx-header-filter {
-//  display: inline-block;
-//  position: relative;
-//}
-//
-//.dx-datagrid-focus-overlay {
-//  //border: 2px solid #83a2ff;
-//  border: 2px solid transparent;
-//}
-//
-//.dx-widget,
-//.dx-menu-base {
-//  font-family: 'Roboto', 'Noto Sans CJK KR', 'NanumSquare', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-//}
-//
-//.dx-datagrid-rowsview .dx-row {
-//  border-bottom-color: #e2e2e2;
-//}
-//
-//.dx-datagrid-headers .dx-texteditor-input {
-//  margin-top: 5px;
-//  margin-bottom: 5px;
-//  height: 28px;
-//  min-height: 28px;
-//  background: #fff;
-//}
-//
-//.dx-datagrid-headers .dx-texteditor-input:focus {
-//  border: #83a2ff 1px solid;
-//}
-//
-//// 돋보기 아이콘
-//.dx-menu-base .dx-menu-item .dx-menu-item-content {
-//  height: 28px;
-//}
-//
-//.dx-datagrid-content .dx-datagrid-table .dx-row .dx-editor-cell .dx-texteditor-container {
-//  //background: #f7f7f7;
-//  margin: 0;
-//}
-//
-//.dx-editor-cell .dx-texteditor,
-//.dx-editor-cell .dx-texteditor .dx-texteditor-input {
-//  //background: #f7f7f7;
-//}
-//
-//.dx-editor-cell .dx-texteditor {
-//  background: #f7f7f7;
-//}
-//
-//.dx-datagrid-content .dx-datagrid-table .dx-row .dx-editor-container {
-//  padding: 5px;
-//}
-//
-//.dx-datagrid-filter-row .dx-menu {
-//  margin-top: 5px;
-//  margin-left: 5px;
-//}
-//
-//.dx-datagrid-filter-row .dx-menu-item-has-submenu.dx-menu-item-expanded.dx-state-hover {
-//  background-color: transparent; //hover
-//}
-//
-//.dx-datagrid-filter-row .dx-menu-item-has-submenu.dx-menu-item-expanded.dx-state-hover .dx-item-content dx-menu-item-content {
-//  border-color: transparent;
-//}
-//
-//.dx-datagrid-filter-row .dx-menu-item-has-submenu.dx-menu-item-expanded.dx-state-hover .dx-menu-item-popout-container {
-//  border-color: transparent;
-//}
-//
-//.dx-context-menu-container-border {
-//  background-color: transparent;
-//  border-color: transparent;
-//  -webkit-box-shadow: none;
-//  box-shadow: none;
-//}
-//
-//.dx-menu-horizontal .dx-menu-item-wrapper {
-//  background: transparent;
-//}
-//
-//.dx-menu .dx-menu-item-expanded {
-//  background: transparent;
-//}
-//
-//.dx-context-menu-content-delimiter {
-//  display: none !important;
-//  //border-top: #e2e2e2 1px solid;
-//  //height: 1px!important;
-//}
-//
-//.dx-context-menu .dx-submenu {
-//  top: 10px;
-//  background-color: #fff;
-//  border: 1px solid #e2e2e2;
-//  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-//  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-//}
-//
-//.dx-menu-base {
-//  font-size: 13px;
-//}
-//
-//.dx-menu-item {
-//  color: #545454;
-//}
-//
-//.dx-menu-item-selected {
-//  color: var(--primary-color);
-//  background-color: #f7f9ff;
-//}
-//
-//.dx-editor-with-menu .dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default,
-//.dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default {
-//  //margin-top: -8px;
-//}
-//
-//.dx-datagrid-nowrap,
-//.dx-datagrid-nowrap .dx-header-row > td > .dx-datagrid-text-content {
-//  text-overflow: ellipsis;
-//}
-//
-//.dx-datagrid .dx-sort-down,
-//.dx-datagrid .dx-sort-up {
-//  transform: scale(0.7);
-//}
-//
-//.dx-datagrid .dx-sort-down::before,
-//.dx-datagrid .dx-sort-up::before {
-//  font: inherit;
-//  font-family: 'Font Awesome 5 Pro';
-//  font-size: 10px;
-//  font-weight: 600;
-//  text-rendering: auto;
-//  -webkit-font-smoothing: antialiased;
-//  color: var(--primary-color);
-//}
-//
-//.dx-datagrid .dx-sort-up::before {
-//  content: '\f077';
-//}
-//
-//.dx-datagrid .dx-sort-down::before {
-//  content: '\f078';
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-ends-with,
-//.dx-datagrid-container .dx-icon-filter-operation-ends-with,
-//.dx-datagrid .dx-icon-filter-operation-not-contains,
-//.dx-datagrid-container .dx-icon-filter-operation-not-contains,
-//.dx-datagrid .dx-icon-filter-operation-contains,
-//.dx-datagrid-container .dx-icon-filter-operation-contains,
-//.dx-datagrid .dx-icon-filter-operation-starts-with,
-//.dx-datagrid-container .dx-icon-filter-operation-starts-with,
-//.dx-datagrid .dx-icon-filter-operation-default,
-//.dx-datagrid-container .dx-icon-filter-operation-default,
-//.dx-datagrid .dx-sort-up,
-//.dx-datagrid .dx-header-filter,
-//.dx-datebox-calendar .dx-dropdowneditor-icon,
-//.dx-datagrid .dx-icon-filter-operation-equals,
-//.dx-datagrid-container .dx-icon-filter-operation-equals,
-//.dx-datagrid .dx-icon-filter-operation-not-equals,
-//.dx-datagrid-container .dx-icon-filter-operation-not-equals,
-//.dx-editor-with-menu .dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default,
-//.dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default {
-//  font: inherit;
-//  font-family: 'Font Awesome 5 Pro';
-//  font-weight: 400;
-//}
-//
-///* date picker */
-//.dx-calendar-navigator .dx-calendar-caption-button.dx-button .dx-button-content,
-//.dx-calendar-navigator-next-month.dx-button .dx-icon,
-//.dx-calendar-navigator-next-view.dx-button .dx-icon {
-//  color: var(--primary-color);
-//}
-//
-//.dx-datebox-calendar .dx-dropdowneditor-icon,
-//.dx-dropdowneditor-button {
-//  width: 28px;
-//  height: 28px;
-//}
-//
-//.dx-datebox-calendar .dx-dropdowneditor-icon::before {
-//  content: '\f073';
-//  margin-top: 0;
-//  margin-left: 0;
-//  left: 5px;
-//}
-//
-//.dx-datebox-calendar .dx-dropdowneditor-icon:hover,
-//.dx-dropdowneditor-button:hover {
-//  background: transparent;
-//  color: var(--primary-color);
-//}
-//
-//.dx-calendar-cell.dx-calendar-selected-date.dx-calendar-contoured-date,
-//.dx-calendar-cell.dx-calendar-selected-date.dx-calendar-today.dx-calendar-contoured-date {
-//  box-shadow: inset 0 0 0 1px var(--primary-color), inset 0 0 0 1000px var(--primary-color);
-//}
-//
-//.dx-button-mode-contained,
-//.dx-dropdowneditor-icon {
-//  color: #545454;
-//}
-//
-//.dx-popup-normal,
-//.dx-overlay-content {
-//  display: block !important;
-//}
-//
-//.dx-datagrid-container.dx-filter-menu .dx-menu-item-has-icon.dx-state-hover,
-//.dx-datagrid.dx-filter-menu .dx-menu-item-has-icon.dx-state-hover,
-//.dx-datagrid-container.dx-filter-menu .dx-menu-item-has-icon.dx-state-hover .dx-icon,
-//.dx-datagrid.dx-filter-menu .dx-menu-item-has-icon.dx-state-hover .dx-icon {
-//  color: var(--primary-color);
-//}
-//
-///* filter icon */
-//.dx-menu-base .dx-menu-item-content .dx-menu-item-text {
-//  padding-left: 25px;
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-contains::before,
-//.dx-datagrid-container .dx-icon-filter-operation-contains::before {
-//  content: '\f4a8';
-//  font-weight: 400;
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-not-contains::before,
-//.dx-datagrid-container .dx-icon-filter-operation-not-contains::before {
-//  content: '\f4a7';
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-starts-with::before,
-//.dx-datagrid-container .dx-icon-filter-operation-starts-with::before {
-//  content: '\f340';
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-ends-with::before,
-//.dx-datagrid-container .dx-icon-filter-operation-ends-with::before {
-//  content: '\f33e';
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-equals::before,
-//.dx-datagrid-container .dx-icon-filter-operation-equals::before {
-//  content: '\f52c';
-//}
-//
-//.dx-datagrid .dx-icon-filter-operation-not-equals::before,
-//.dx-datagrid-container .dx-icon-filter-operation-not-equals::before {
-//  content: '\f53e';
-//}
-//
-//// 돋보기
-//.dx-datagrid .dx-icon-filter-operation-default,
-//.dx-datagrid-container .dx-icon-filter-operation-default {
-//  margin-top: -2px;
-//}
-//
-//// 돋보기
-//.dx-datagrid .dx-icon-filter-operation-default::before,
-//.dx-datagrid-container .dx-icon-filter-operation-default::before {
-//  content: '\f002';
-//}
-//
-//// 리셋 (서브메뉴)
-//.dx-datagrid .dx-submenu .dx-menu-items-container .dx-menu-item-wrapper:last-child .dx-icon-filter-operation-default::before {
-//  content: '\f01e';
-//}
-//
-//.dx-datagrid .dx-submenu .dx-menu-items-container .dx-menu-item-wrapper:last-child .dx-icon-filter-operation-default {
-//  margin-top: -8px;
-//}
-//
-//.dx-editor-with-menu .dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default,
-//.dx-filter-menu .dx-menu-item-content .dx-icon.dx-icon-filter-operation-default {
-//  margin-top: -16px;
-//}
-//
-//.dx-filter-menu.dx-menu .dx-menu-item .dx-menu-item-content {
-//  padding-left: 8px;
-//}
-//
-//.dx-row dx-column-lines .dx-header-row td,
-//.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
-//  border-bottom: 0;
-//}
+.dx-datagrid-headers,
+.dx-datagrid-filter-row {
+  background-color: var(--bg-datagrid-headers);
+}
+
+// 헤더 검색필드
+.dx-texteditor.dx-state-active::before,
+.dx-texteditor.dx-state-focused::before {
+  border-bottom: 2px solid var(--bs-primary);
+}
+
+.dx-datagrid {
+  .dx-link {
+    color: var(--color-dx-link);
+
+    &.dx-link-icon {
+      width: 30px;
+      height: 30px;
+
+    }
+  }
+}
+
+// 페이징
+.dx-pager .dx-page-sizes .dx-selection,
+.dx-pager .dx-pages .dx-selection {
+  background-color: var(--bs-primary);
+}
+
+.dx-checkbox-checked .dx-checkbox-icon,
+.dx-checkbox-indeterminate .dx-checkbox-icon {
+  background-color: var(--bs-primary);
+}
+
+.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused) {
+  & > td:not(.dx-focused) {
+    background-color: var(--bg-datagrid-row-hover);
+  }
+}

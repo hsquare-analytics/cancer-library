@@ -3,7 +3,9 @@
     "request": {
       "title": "Reset your password",
       "form": {
-        "button": "Reset password"
+        "button": "Reset password",
+        "ok": "ok",
+        "cancel": "cancel"
       },
       "messages": {
         "info": "Enter the email address you used to register",

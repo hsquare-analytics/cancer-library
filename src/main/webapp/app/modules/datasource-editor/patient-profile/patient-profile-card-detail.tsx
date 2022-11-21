@@ -1,22 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {IPatient} from "app/shared/model/patient.model";
-import {translate} from "react-jhipster";
+import { IPatient } from 'app/shared/model/patient.model';
+import { translate } from 'react-jhipster';
 import Box from '@mui/material/Box';
 import TextBox from 'devextreme-react/text-box';
-import AccessiblePatientColumn from "app/modules/datasource-editor/accessible-patient.column";
+import AccessiblePatientColumn from 'app/modules/datasource-editor/accessible-patient.column';
 import TextArea from 'devextreme-react/text-area';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '@mui/material/Button';
-import {IDxColumn} from "app/shared/model/dx-column.model";
-import {convertDateFromServer, convertDateTimeFromServer} from "app/shared/util/date-utils";
-import {useAppDispatch, useAppSelector} from "app/config/store";
-import {Popup} from 'devextreme-react/popup';
-import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
-import "./patient-profile-card-detail.scss";
-
+import IconButton from '@mui/material/IconButton';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import { IDxColumn } from 'app/shared/model/dx-column.model';
+import { convertDateFromServer, convertDateTimeFromServer } from 'app/shared/util/date-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { Popup } from 'devextreme-react/popup';
+import { updateEntity } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
+import './patient-profile-card-detail.scss';
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -25,7 +26,7 @@ const getFormattedValue: (value: any, column: IDxColumn) => string = (value, col
     return convertDateTimeFromServer(value);
   }
   return value;
-}
+};
 
 interface IPatientProfileDetailProps {
   patient: IPatient;
@@ -35,7 +36,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const dispatch = useAppDispatch();
   const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
 
-  const {patient} = props;
+  const { patient } = props;
 
   const [commentValue, setCommentValue] = useState(patient ? patient.comment : '');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
@@ -45,60 +46,74 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
       <Box>
         <Card variant="outlined">
           <div className="d-flex align-items-center">
-            {AccessiblePatientColumn.map((column) => <CardContent key={column.dataField}>
-                <Typography color="text.secondary">
-                  {translate("cancerLibraryApp.patient." + column.dataField)}
-                </Typography>
+            {AccessiblePatientColumn.map(column => (
+              <CardContent key={column.dataField}>
+                <Typography color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
                 <Typography component="span" color="text.default">
-                  <TextBox value={getFormattedValue(patient[column.dataField], column)} readOnly={true}
-                           stylingMode={"underlined"}/>
+                  <TextBox value={getFormattedValue(patient[column.dataField], column)} readOnly={true} stylingMode={'underlined'} />
                 </Typography>
               </CardContent>
-            )}
+            ))}
           </div>
           <CardContent>
             <Typography color="text.secondary">
-              * {translate("cancerLibraryApp.datasourceEditor.profileCard.comment")}
-              <Button variant={"text"} onClick={() => setIsPopupVisible(true)}>
-                <FontAwesomeIcon icon={"pencil-alt"}/>
-              </Button>
+              * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
+              {/* <Button variant={"text"} onClick={() => setIsPopupVisible(true)}> */}
+              {/*   <FontAwesomeIcon icon={"pencil-alt"}/> */}
+              {/* </Button> */}
+              <IconButton onClick={() => setIsPopupVisible(true)} style={{ marginLeft: '3px' }}>
+                <CreateOutlinedIcon />
+              </IconButton>
             </Typography>
             {/* todo : 블러 버그  */}
-            <TextArea
-              id={"patient-profiel-card-detail-comment-text-area"}
-              height={100}
-              readOnly={true}
-              defaultValue={patient.comment}/>
+            <TextArea id={'patient-profiel-card-detail-comment-text-area'} height={100} readOnly={true} defaultValue={patient.comment} />
           </CardContent>
         </Card>
       </Box>
       <Popup
-        visible={isPopupVisible} onHiding={() => setIsPopupVisible(false)} dragEnabled={false} hideOnOutsideClick={true}
-        showCloseButton={false} showTitle={false} width={'60vw'} height={'50vh'}
-        toolbarItems={[{
-          location: 'after', widget: 'dxButton', toolbar: "bottom",
-          options: {
-            text: 'SAVE', onClick() {
-              dispatch(updateEntity({entity: {...patient, comment: commentValue}, dateRange}))
-              setIsPopupVisible(false);
+        visible={isPopupVisible}
+        onHiding={() => setIsPopupVisible(false)}
+        dragEnabled={false}
+        hideOnOutsideClick={true}
+        showCloseButton={false}
+        showTitle={false}
+        width={'60vw'}
+        height={'50vh'}
+        toolbarItems={[
+          {
+            location: 'after',
+            widget: 'dxButton',
+            toolbar: 'bottom',
+            options: {
+              text: 'SAVE',
+              onClick() {
+                dispatch(updateEntity({ entity: { ...patient, comment: commentValue }, dateRange }));
+                setIsPopupVisible(false);
+              },
             },
           },
-        }, {
-          location: 'after', widget: 'dxButton', toolbar: "bottom",
-          options: {
-            text: 'CANCEL', onClick() {
-              setCommentValue(patient.comment);
-              setIsPopupVisible(false);
+          {
+            location: 'after',
+            widget: 'dxButton',
+            toolbar: 'bottom',
+            options: {
+              text: 'CANCEL',
+              onClick() {
+                setCommentValue(patient.comment);
+                setIsPopupVisible(false);
+              },
             },
           },
-        },
         ]}
       >
         <TextArea
-          id={"patient-profiel-card-detail-comment-text-area"}
-          height={'43vh'} width={'100%'} defaultValue={patient.comment}
+          id={'patient-profiel-card-detail-comment-text-area'}
+          height={'43vh'}
+          width={'100%'}
+          defaultValue={patient.comment}
           value={commentValue}
-          onValueChanged={(e) => setCommentValue(e.value)}/>
+          onValueChanged={e => setCommentValue(e.value)}
+        />
       </Popup>
     </div>
   );

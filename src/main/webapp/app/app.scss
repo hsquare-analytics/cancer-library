@@ -5,10 +5,34 @@
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", Helvetica, Arial, "Apple SD Gothic Neo", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --white: #fff;
-  --red: #ffee00;
+  --red: #E55041;
   --width-sidemenu: 210px;
   --bg-sidemenu: #455364;
   --bs-primary: #4285F4;
+  --color-btn-outline-white: #222;
+  --bg-btn-outline-white-hover: #f7f7f7;
+  --bg-btn-outline-white-border: #eee;
+  --bg-datagrid-headers: #F1F4F8;
+  --bg-datagrid-row-hover: #f6f6f6;
+  --color-dx-link: #69707D;
+  --bg-badge-status-default: #E0E5EE;
+  --bg-badge-status-approved: #FFC65B;
+  --bg-badge-status-submitted: #88bfec;
+  --bg-badge-status-declined: #FFDEDE;
+  --color-badge-status-declined: #E55041;
+}
+
+.alert {
+  --bs-alert-border-radius: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+.alert-secondary {
+  --bs-alert-bg: #f6f6f6;
+  --bs-alert-border-color: #f6f6f6;
 }
 
 // dark mode 변수모음
@@ -183,6 +207,15 @@ a {
 
     }
 
+  }
+
+  // 페이지 레이아웃
+  .wrap-page {
+    padding: 20px;
+
+    .title-page {
+      font-size: 20px;
+    }
   }
 
 

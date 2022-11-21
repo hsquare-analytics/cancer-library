@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Translate, translate, ValidatedField } from 'react-jhipster';
 import { Button, Alert, Row, Col, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+
+import Register from 'app/modules/account/register/register';
+import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
 
 export interface ILoginModalProps {
   showModal: boolean;
@@ -16,17 +19,22 @@ const LoginModal = (props: ILoginModalProps) => {
     props.handleLogin(username, password, rememberMe);
   };
 
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
   const {
     handleSubmit,
     register,
     formState: { errors, touchedFields },
   } = useForm({ mode: 'onTouched' });
 
-  const { loginError, handleClose } = props;
+  const { loginError } = props;
 
   const handleLoginSubmit = e => {
     handleSubmit(login)(e);
   };
+
+  console.log('showRegisterModal?', showRegisterModal);
 
   return (
     <div className="box-login">
@@ -79,13 +87,21 @@ const LoginModal = (props: ILoginModalProps) => {
           </Col>
         </Row>
         <div className="area-account">
-          <Link to="/account/register">
-            <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
-          </Link>
+          {/* <Link to="/account/register"> */}
+          {/*   <Translate contentKey="global.messages.info.register.link">Register a new account</Translate> */}
+          {/* </Link> */}
 
-          <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector">
+          {/* <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector"> */}
+          {/*   <Translate contentKey="login.password.forgot">Did you forget your password?</Translate> */}
+          {/* </Link> */}
+
+          <a href="#" onClick={() => setShowRegisterModal(prevState => !prevState)}>
+            <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
+          </a>
+
+          <a href="#" onClick={() => setShowPasswordModal(prevState => !prevState)}>
             <Translate contentKey="login.password.forgot">Did you forget your password?</Translate>
-          </Link>
+          </a>
         </div>
 
         <div className="area-btn">
@@ -94,6 +110,9 @@ const LoginModal = (props: ILoginModalProps) => {
           </Button>
         </div>
       </Form>
+
+      <Register showRegisterModal={showRegisterModal} setShowRegisterModal={setShowRegisterModal} />
+      <PasswordResetInit showPasswordModal={showPasswordModal} setShowPasswordModal={setShowPasswordModal} />
     </div>
   );
 };
