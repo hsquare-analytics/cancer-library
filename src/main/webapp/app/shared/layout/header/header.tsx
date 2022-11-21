@@ -12,6 +12,7 @@ import {setLocale} from 'app/shared/reducers/locale';
 import AdminNew from 'app/shared/layout/menus/admin-new';
 import SideLogoutButton from 'app/shared/layout/header/side-logout-button';
 import AccountNew from 'app/shared/layout/menus/account-new';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -26,8 +27,22 @@ export interface IHeaderProps {
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
-    <img src="content/images/logo-planit-healthcare.png" alt="Logo" />
+    <img src="content/images/logo-planit-healthcare.png" alt="Logo"/>
   </div>
+);
+
+const customTheme = createTheme({
+    components: {
+      MuiAccordion: {
+        styleOverrides: {
+          root: ({theme}) => ({
+            color: theme.sidebar.color,
+            backgroundColor: theme.sidebar.backgroundColor,
+          }),
+        },
+      },
+    },
+  }
 );
 
 const Header = (props: IHeaderProps) => {
@@ -47,36 +62,38 @@ const Header = (props: IHeaderProps) => {
 
   return (
     <div id="app-header">
-      <LoadingBar className="loading-bar" />
+      <ThemeProvider theme={customTheme}>
+        <LoadingBar className="loading-bar"/>
 
-      {props.isAuthenticated ? (
-        <Navbar data-cy="navbar" dark expand="md" fixed="left" className="app-navbar">
-          <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
-          <Brand />
-          <Collapse isOpen={menuOpen} navbar>
-            <Nav id="header-tabs" className="flex-column" navbar>
-              <Home />
-              {props.isAuthenticated && <DatasourceEditorMenu />}
-              {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu />}
-              {props.isAuthenticated && props.isAdmin && (
-                <>
-                  {/* <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} /> */}
-                  {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}
-                  <AdminNew showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
-                </>
-              )}
-              {/* <AccountMenu isAuthenticated={props.isAuthenticated} /> */}
-              <AccountNew isAuthenticated={props.isAuthenticated} />
-            </Nav>
-          </Collapse>
+        {props.isAuthenticated ? (
+          <Navbar data-cy="navbar" dark expand="md" fixed="left" className="app-navbar">
+            <NavbarToggler aria-label="Menu" onClick={toggleMenu}/>
+            <Brand/>
+            <Collapse isOpen={menuOpen} navbar>
+              <Nav id="header-tabs" className="flex-column" navbar>
+                <Home/>
+                {props.isAuthenticated && <DatasourceEditorMenu/>}
+                {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
+                {props.isAuthenticated && props.isAdmin && (
+                  <>
+                    {/* <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} /> */}
+                    {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}
+                    <AdminNew showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
+                  </>
+                )}
+                {/* <AccountMenu isAuthenticated={props.isAuthenticated} /> */}
+                <AccountNew isAuthenticated={props.isAuthenticated}/>
+              </Nav>
+            </Collapse>
 
-          {props.children}
+            {props.children}
 
-          <SideLogoutButton />
+            <SideLogoutButton/>
 
-          <BrandIcon />
-        </Navbar>
-      ) : null}
+            <BrandIcon/>
+          </Navbar>
+        ) : null}
+      </ThemeProvider>
     </div>
   );
 };

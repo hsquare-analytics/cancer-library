@@ -50,12 +50,11 @@ function AccountNew(props: IAccountMenuProps) {
           expandIcon={<ExpandMoreIcon/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
-          sx={{backgroundColor: theme.sidebar.default}}
         >
           <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
           <span> <Translate contentKey="global.menu.account.main">account</Translate> </span>
         </AccordionSummary>
-        <AccordionDetails sx={{backgroundColor: theme.sidebar.default}}>
+        <AccordionDetails>
           {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
         </AccordionDetails>
       </Accordion>

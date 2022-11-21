@@ -29,14 +29,16 @@ const baseHref = document.querySelector('base').getAttribute('href').replace(/\/
 declare module '@mui/material/styles' {
   interface Theme {
     sidebar: {
-      default: string;
+      color: string;
+      backgroundColor: string;
     };
   }
 
   // allow configuration using `createTheme`
   interface ThemeOptions {
     sidebar?: {
-      default?: string;
+      color?: string;
+      backgroundColor?: string;
     };
   }
 }

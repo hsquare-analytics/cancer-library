@@ -4,7 +4,8 @@ import {PaletteMode} from "@mui/material";
 // @mui 가 아닌 케이스는 css variables 에 따른다
 export const getDesignTokens = (mode: PaletteMode) => ({
   sidebar: {
-    default: '#455364'
+    color: '#fff',
+    backgroundColor: '#455364'
   },
   palette: {
     mode,

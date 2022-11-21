@@ -83,14 +83,11 @@ function AdminNew(props: IAdminMenuProps) {
           expandIcon={<ExpandMoreIcon/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
-          sx={{backgroundColor: theme.sidebar.default}}
         >
           <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
           <span> <Translate contentKey="global.menu.admin.main">Administration</Translate> </span>
         </AccordionSummary>
-        <AccordionDetails
-          sx={{backgroundColor: theme.sidebar.default}}
-        >
+        <AccordionDetails>
           {AdminMenuItems()}
           {showOpenAPI && openAPIItem()}
           {showDatabase && databaseItem()}
