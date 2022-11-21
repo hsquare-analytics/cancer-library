@@ -17,6 +17,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/07_gstr_exam_diag.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/08_gstr_exam_imag.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/09_gstr_exam_impt.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/10_gstr_exam_mlpt.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
@@ -30,6 +31,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/07_gstr_exam_diag.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/08_gstr_exam_imag.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/09_gstr_exam_impt.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/10_gstr_exam_mlpt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/kcure_patient_authority.sql"/>
     </changeSet>
     <include file="config/liquibase/kcure/kcure_common_code.xml" relativeToChangelogFile="false"/>
