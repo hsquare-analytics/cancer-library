@@ -198,13 +198,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
                   alignment={"center"} allowEditing={false}
                   visibleIndex={9999998}
-                  formItem={{visibleIndex: 9999998}}
+                  formItem={{ visible: actionType === ActionType.UPDATE, visibleIndex: 9999998}}
           />
           <Column dataField="last_modified_date"
                   caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedDate')}
                   alignment={"center"} dataType={"datetime"} format={"yy/MM/dd hh:mm"} allowEditing={false}
                   visibleIndex={9999999}
-                  formItem={{visibleIndex: 9999999}}
+                  formItem={{ visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
         </DataGrid>
       </AccordionDetails>
