@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from "react-router-dom";
 import accountIcon from "app/asset/img/icon-config.svg";
-
+import {useTheme} from '@mui/material/styles';
 
 const AdminMenuItems = () => (
   <>
@@ -73,6 +73,8 @@ interface IAdminMenuProps {
 }
 
 function AdminNew(props: IAdminMenuProps) {
+  const theme = useTheme();
+
   const {showOpenAPI = false, showDatabase = false} = props;
   return (
     <div>
@@ -81,13 +83,13 @@ function AdminNew(props: IAdminMenuProps) {
           expandIcon={<ExpandMoreIcon/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
-          sx={{backgroundColor: "gray"}}
+          sx={{backgroundColor: theme.sidebar.default}}
         >
-          <img src={accountIcon} alt="계정"/>
+          <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
           <span> <Translate contentKey="global.menu.admin.main">Administration</Translate> </span>
         </AccordionSummary>
         <AccordionDetails
-          sx={{backgroundColor: "gray"}}
+          sx={{backgroundColor: theme.sidebar.default}}
         >
           {AdminMenuItems()}
           {showOpenAPI && openAPIItem()}

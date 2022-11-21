@@ -7,6 +7,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {useTheme} from '@mui/material/styles';
 
 const accountMenuItemsAuthenticated = () => (
   <>
@@ -38,6 +39,7 @@ interface IAccountMenuProps {
 }
 
 function AccountNew(props: IAccountMenuProps) {
+  const theme = useTheme();
 
   const {isAuthenticated = false} = props;
 
@@ -48,12 +50,12 @@ function AccountNew(props: IAccountMenuProps) {
           expandIcon={<ExpandMoreIcon/>}
           aria-controls="panel1a-content"
           id="panel1a-header"
-          sx={{backgroundColor: "gray"}}
+          sx={{backgroundColor: theme.sidebar.default}}
         >
-          <img src={accountIcon} alt="계정"/>
+          <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
           <span> <Translate contentKey="global.menu.account.main">account</Translate> </span>
         </AccordionSummary>
-        <AccordionDetails sx={{backgroundColor: "gray"}}>
+        <AccordionDetails sx={{backgroundColor: theme.sidebar.default}}>
           {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
         </AccordionDetails>
       </Accordion>
