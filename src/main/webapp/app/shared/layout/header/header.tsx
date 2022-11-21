@@ -1,14 +1,14 @@
 import './header.scss';
 
-import React, { useState } from 'react';
-import { Storage, Translate } from 'react-jhipster';
-import { Collapse, Nav, Navbar, NavbarToggler } from 'reactstrap';
+import React, {useState} from 'react';
+import {Storage} from 'react-jhipster';
+import {Collapse, Nav, Navbar, NavbarToggler} from 'reactstrap';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Brand, Home } from './header-components';
-import { AccountMenu, AdminMenu, DatasourceEditorMenu, LocaleMenu, UserPatientDndGridMenu } from '../menus';
-import { useAppDispatch } from 'app/config/store';
-import { setLocale } from 'app/shared/reducers/locale';
+import {Brand, Home} from './header-components';
+import {DatasourceEditorMenu, UserPatientDndGridMenu} from '../menus';
+import {useAppDispatch} from 'app/config/store';
+import {setLocale} from 'app/shared/reducers/locale';
 import AdminNew from 'app/shared/layout/menus/admin-new';
 import SideLogoutButton from 'app/shared/layout/header/side-logout-button';
 import AccountNew from 'app/shared/layout/menus/account-new';
@@ -62,11 +62,11 @@ const Header = (props: IHeaderProps) => {
                 <>
                   {/* <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} /> */}
                   {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}
-                  <AdminNew />
+                  <AdminNew showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
                 </>
               )}
               {/* <AccountMenu isAuthenticated={props.isAuthenticated} /> */}
-              <AccountNew />
+              <AccountNew isAuthenticated={props.isAuthenticated} />
             </Nav>
           </Collapse>
 
