@@ -35,6 +35,13 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
     }
   }
 
+  const getDefaultValue = (value: any) => {
+    if (Number(value)) {
+      return Number(value).toString();
+    }
+    return value;
+  }
+
   return (
     <div>
       {isSudoUser ? <LookupEditor visible={showLookup} setVisible={setShowLookup} codebookId={data.column.lookup.dataSource[0].codebookId} dataSource={data.column.lookup.dataSource}/> : null}
@@ -46,7 +53,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         showSelectionControls={true}
         applyValueMode="useButtons"
         searchEnabled={true}
-        defaultValue={data.value}
+        defaultValue={getDefaultValue(data.value)}
         onValueChanged={onValueChanged}
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
