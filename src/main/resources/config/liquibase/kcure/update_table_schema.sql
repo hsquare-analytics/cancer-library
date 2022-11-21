@@ -64,3 +64,58 @@ ALTER TABLE gstr.gstr_diag_stag_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER V
 ALTER TABLE gstr.gstr_diag_stag_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
 ---
 
+ --- gstr_diag_mtst
+DROP TABLE IF EXISTS gstr.gstr_diag_mtst_updated;
+
+CREATE TABLE gstr.gstr_diag_mtst_updated AS TABLE gstr.gstr_diag_mtst WITH NO DATA;
+
+ALTER TABLE gstr.gstr_diag_mtst_updated  ADD COLUMN CREATED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_diag_mtst_updated  ADD COLUMN CREATED_DATE TIMESTAMP;
+ALTER TABLE gstr.gstr_diag_mtst_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_diag_mtst_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
+---
+
+ --- gstr_exam_diag
+DROP TABLE IF EXISTS gstr.gstr_exam_diag_updated;
+
+CREATE TABLE gstr.gstr_exam_diag_updated AS TABLE gstr.gstr_exam_diag WITH NO DATA;
+
+ALTER TABLE gstr.gstr_exam_diag_updated  ADD COLUMN CREATED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_diag_updated  ADD COLUMN CREATED_DATE TIMESTAMP;
+ALTER TABLE gstr.gstr_exam_diag_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_diag_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
+---
+
+ --- gstr_exam_imag
+DROP TABLE IF EXISTS gstr.gstr_exam_imag_updated;
+
+CREATE TABLE gstr.gstr_exam_imag_updated AS TABLE gstr.gstr_exam_imag WITH NO DATA;
+
+ALTER TABLE gstr.gstr_exam_imag_updated  ADD COLUMN CREATED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_imag_updated  ADD COLUMN CREATED_DATE TIMESTAMP;
+ALTER TABLE gstr.gstr_exam_imag_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_imag_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
+---
+
+ --- gstr_exam_impt
+DROP TABLE IF EXISTS gstr.gstr_exam_impt_updated;
+
+CREATE TABLE gstr.gstr_exam_impt_updated AS TABLE gstr.gstr_exam_impt WITH NO DATA;
+
+ALTER TABLE gstr.gstr_exam_impt_updated  ADD COLUMN CREATED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_impt_updated  ADD COLUMN CREATED_DATE TIMESTAMP;
+ALTER TABLE gstr.gstr_exam_impt_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_impt_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
+---
+
+ --- gstr_exam_mlpt
+DROP TABLE IF EXISTS gstr.gstr_exam_mlpt_updated;
+
+CREATE TABLE gstr.gstr_exam_mlpt_updated AS TABLE gstr.gstr_exam_mlpt WITH NO DATA;
+
+ALTER TABLE gstr.gstr_exam_mlpt_updated  ADD COLUMN CREATED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_mlpt_updated  ADD COLUMN CREATED_DATE TIMESTAMP;
+ALTER TABLE gstr.gstr_exam_mlpt_updated  ADD COLUMN LAST_MODIFIED_BY CHARACTER VARYING(50);
+ALTER TABLE gstr.gstr_exam_mlpt_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
+---
+

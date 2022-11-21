@@ -89,8 +89,8 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9718,
 insert into ph_item_property (item_id, caption, format) values (9718, '생성일시', 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9718, 'date');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9719, 'idx', 9700, 'system', 9719);
-insert into ph_item_property (item_id, caption) values (9719, 'UI용 시퀀스');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9719, 'idx', 9700, 'system', 9719);
+-- insert into ph_item_property (item_id, caption) values (9719, 'UI용 시퀀스');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9720, 'pact_id', 9700, 'system', 9720);
 insert into ph_item_property (item_id, caption) values (9720, 'UI용 PACT_ID');

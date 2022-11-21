@@ -75,8 +75,8 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (10014
 insert into ph_item_property (item_id, caption, required, format) values (10014, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (10014, 'date');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (10015, 'idx', 10000, 'system', 10015);
-insert into ph_item_property (item_id, caption) values (10015, 'UI용 시퀀스');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (10015, 'idx', 10000, 'system', 10015);
+-- insert into ph_item_property (item_id, caption) values (10015, 'UI용 시퀀스');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10016, 'exm_no', 10000, 'system', 10016);
 insert into ph_item_property (item_id, caption) values (10016, 'UI용 검사번호');
