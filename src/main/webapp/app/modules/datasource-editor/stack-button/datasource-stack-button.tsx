@@ -119,7 +119,8 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
       }}>닫기</Button>
       {
         patient && patient.status === REVIEW_LIST.DECLINED && canNotDecline() &&
-        <Button variant="outlined" color="warning" size={"small"} onClick={() => {
+        <Button variant="outlined" color="warning" size={"small"} onClick={(e) => {
+          e.stopPropagation();
           onDeclineReasonButtonClick()
         }}>거부 사유</Button>
       }
