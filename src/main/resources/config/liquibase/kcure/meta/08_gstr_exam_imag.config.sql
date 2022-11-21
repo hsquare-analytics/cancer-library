@@ -69,7 +69,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9813,
 insert into ph_item_property (item_id, caption) values (9813, '영상검사결과내용');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9814, 'crtn_dt', 9800, 'system', 9814);
-insert into ph_item_property (item_id, caption, required) values (9814, '생성일시', true);
+insert into ph_item_property (item_id, caption, required, format) values (9814, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9814, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9815, 'idx', 9800, 'system', 9815);

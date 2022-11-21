@@ -35,7 +35,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9602,
 insert into ph_item_property (item_id, caption, visible) values (9602, '환자대체번호', false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9603, 'mtdg_ymd', 9600, 'system', 9603);
-insert into ph_item_property (item_id, caption, required) values (9603, '전이진단일자', true);
+insert into ph_item_property (item_id, caption, required, format) values (9603, '전이진단일자', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9603, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9604, 'mtdg_seq', 9600, 'system', 9604);
@@ -67,7 +67,7 @@ insert into ph_item_property (item_id, caption) values (9611, '전이치료코�
 insert into ph_item_attribute (item_id, data_type) values (9611, 'selectbox');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'crtn_dt', 9600, 'system', 9612);
-insert into ph_item_property (item_id, caption, required) values (9612, '생성일시', true);
+insert into ph_item_property (item_id, caption, required, format) values (9612, '생성일시', true, 'yyyy-MM-dd');
 insert into ph_item_attribute (item_id, data_type) values (9612, 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9613, 'idx', 9600, 'system', 9613);
