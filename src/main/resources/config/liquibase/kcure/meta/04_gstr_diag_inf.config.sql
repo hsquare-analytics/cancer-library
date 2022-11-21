@@ -24,10 +24,10 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_INF (
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9400, 'GSTR.GSTR_DIAG_INF', '위암_진단_정보', true, 1, 999, 'system');
+VALUES (9400, 'GSTR.GSTR_DIAG_INF', '04.위암_진단_정보', true, 4, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
-VALUES (9400, null, '위암_진단_정보');
+VALUES (9400, null, '04.위암_진단_정보');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9401, 'hosp_cd', 9400, 'system', 9401);
 insert into ph_item_property (item_id, caption, required) values (9401, '병원코드', true);

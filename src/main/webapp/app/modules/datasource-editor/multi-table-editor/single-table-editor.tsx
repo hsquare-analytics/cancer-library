@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import DataGrid, { Column } from 'devextreme-react/data-grid';
-import { ICategory } from 'app/shared/model/category.model';
+import React, {useEffect, useRef, useState} from 'react';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
+import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { translate } from 'react-jhipster';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getDxColumnConfig } from 'app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config';
+import {translate} from 'react-jhipster';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {getDxColumnConfig} from 'app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config';
 import {
   getOriginRow,
   reset as resetDatasourceStatusReducer,
@@ -16,7 +16,7 @@ import {
   setValidateFailedItems,
 } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import Button from '@mui/material/Button';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 import {
   createDatasourceRow,
@@ -24,7 +24,7 @@ import {
   resetFlag as resetDatasourceContainerFlag,
   updateDatasourceRow,
 } from 'app/modules/datasource-editor/reducer/datasource.container.reducer';
-import { IPatient } from 'app/shared/model/patient.model';
+import {IPatient} from 'app/shared/model/patient.model';
 import {
   ActionType,
   makeCallBackOnPromise,
@@ -32,10 +32,10 @@ import {
   onRowValidating,
   toastApiResult,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor.utils';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
-import { AUTHORITIES } from 'app/config/constants';
+import {hasAnyAuthority} from 'app/shared/auth/private-route';
+import {AUTHORITIES} from 'app/config/constants';
 import Stack from '@mui/material/Stack';
-import { DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO } from 'app/config/datasource-constants';
+import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from 'app/config/datasource-constants';
 import axios from 'axios';
 
 export interface ISingleTableEditor {
@@ -63,11 +63,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   );
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
 
-  const { category } = props;
+  const {category} = props;
 
   useEffect(() => {
     if (updateSuccess && selectedCategory && category.id === selectedCategory.id) {
-      toastApiResult(actionType, { table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null });
+      toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
       dispatch(resetDatasourceStatusReducer());
       dispatch(resetDatasourceContainerFlag());
     }
@@ -88,13 +88,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
     return (
       <Stack spacing={1} direction="row">
-        <Button variant="text" style={{ maxHeight: '30px', minHeight: '30px' }} onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
+        <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}} onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
           <FontAwesomeIcon icon="pencil" />
         </Button>
         {canManaging && (
           <Button
             variant="text"
-            style={{ maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' }}
+            style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
             onClick={() => dataGrid.current.instance.deleteRow(rowIndex)}
           >
             <FontAwesomeIcon icon="trash" />
@@ -122,21 +122,21 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
         </Button>
       </AccordionSummary>
-      <AccordionDetails sx={{ padding: '8px 0' }}>
+      <AccordionDetails sx={{padding: '8px 0'}}>
         <DataGrid
           ref={dataGrid}
           dataSource={JSON.parse(JSON.stringify(rawDataContainer[category.id]))}
           hoverStateEnabled={true}
           showBorders={true}
-          filterRow={{ visible: false }}
-          headerFilter={{ visible: true }}
+          filterRow={{visible: false}}
+          headerFilter={{visible: true}}
           allowColumnResizing={true}
-          pager={{ displayMode: 'compact', showNavigationButtons: true }}
+          pager={{displayMode: 'compact', showNavigationButtons: true}}
           editing={{
             mode: 'popup',
             allowUpdating: true,
             allowDeleting: true,
-            form: { colCount: 3 },
+            form: {colCount: 3},
             texts: {
               confirmDeleteMessage: translate('entity.delete.warning'),
             },
@@ -153,18 +153,18 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             setEditedRow(e.data);
 
             if (!e.data[DATASOURCE_IDX].includes(KCURE_PREFIX)) {
-              dispatch(getOriginRow({ categoryId: category.id, rowId: e.data.idx }));
+              dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
             }
           }}
           onRowInserting={e =>
             makeCallBackOnPromise(e, () => {
-              const row = Object.assign({}, e.data, { [PATIENT_NO]: patient.ptNo });
-              dispatch(createDatasourceRow({ categoryId: category.id, row }));
+              const row = Object.assign({}, e.data, {[PATIENT_NO]: patient.ptNo});
+              dispatch(createDatasourceRow({categoryId: category.id, row}));
             })
           }
           onRowUpdating={e =>
             makeCallBackOnPromise(e, () => {
-              axios.get(`/api/datasource/categories/${category.id}/rows/${e.oldData.idx}/check-updated-row-exist`).then(({ data }) => {
+              axios.get(`/api/datasource/categories/${category.id}/rows/${e.oldData.idx}/check-updated-row-exist`).then(({data}) => {
                 if (data) {
                   const row = Object.assign(
                     {},
@@ -174,10 +174,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                     },
                     e.newData
                   );
-                  dispatch(updateDatasourceRow({ categoryId: category.id, row }));
+                  dispatch(updateDatasourceRow({categoryId: category.id, row}));
                 } else {
                   const row = Object.assign({}, e.oldData, e.newData);
-                  dispatch(createDatasourceRow({ categoryId: category.id, row }));
+                  dispatch(createDatasourceRow({categoryId: category.id, row}));
                 }
               });
             })
@@ -196,8 +196,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               }
             )
           }
-          scrolling={{ mode: 'standard', showScrollbar: 'always' }}
-          paging={{ pageSize: 10 }}
+          scrolling={{mode: 'standard', showScrollbar: 'always'}}
+          paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatusReducer())}
           columnAutoWidth={true}
           onRowValidating={e =>
@@ -226,7 +226,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             alignment={'center'}
             allowEditing={false}
             visibleIndex={9999998}
-            formItem={{ visibleIndex: 9999998 }}
+            formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999998}}
           />
           <Column
             dataField="last_modified_date"
@@ -236,7 +236,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             format={'yy/MM/dd hh:mm'}
             allowEditing={false}
             visibleIndex={9999999}
-            formItem={{ visibleIndex: 9999999 }}
+            formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
         </DataGrid>
       </AccordionDetails>

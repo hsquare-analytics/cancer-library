@@ -25,7 +25,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
 
   let targetValue = originRow[data.column.dataField];
   if (lookupDataSource && lookupDataSource.length > 0) {
-    const lookupItem = lookupDataSource.find(temp => temp.description === targetValue);
+    const lookupItem = lookupDataSource.find(temp => temp.description === targetValue || Number(temp.description) === Number(targetValue));
     if (lookupItem) {
       targetValue = lookupItem.label;
     }

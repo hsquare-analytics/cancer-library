@@ -69,10 +69,10 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_HLINF (
 );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9100, 'GSTR.GSTR_PT_HLINF', '위암_환자_건강_정보', true, 1, 999, 'system');
+VALUES (9100, 'GSTR.GSTR_PT_HLINF', '01.위암_환자_건강정보', true, 1, 999, 'system');
 
 INSERT INTO ph_category_property (category_id, date_column, caption)
-VALUES (9100, null, '위암_환자_건강_정보');
+VALUES (9100, null, '01.위암_환자_건강정보');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9101, 'hosp_cd', 9100, 'system', 9101);
 insert into ph_item_property (item_id, caption, required) values (9101, '병원코드', true);

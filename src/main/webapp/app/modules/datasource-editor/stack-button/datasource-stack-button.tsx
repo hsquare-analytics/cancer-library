@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react';
-import { AUTHORITIES } from 'app/config/constants';
+import React, {useEffect} from 'react';
+import {AUTHORITIES} from 'app/config/constants';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
-import { getEntity, updateEntity as updatePatient } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
-import { translate } from 'react-jhipster';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {hasAnyAuthority} from 'app/shared/auth/private-route';
+import {getEntity, updateEntity as updatePatient} from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
+import {translate} from 'react-jhipster';
 import {
   fireApprovedSwal,
   fireDeclineReasonSwal,
   fireDeclineSwal,
   fireSubmitSwal,
 } from 'app/modules/datasource-editor/stack-button/datasource.swal-fires';
-import { REVIEW_LIST } from 'app/config/datasource-constants';
+import {REVIEW_LIST} from 'app/config/datasource-constants';
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
@@ -69,10 +69,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   };
 
   const onDeclinedButtonClick = () => {
-    fireDeclineSwal(patient).then(({ isConfirmed, text }) => {
+    fireDeclineSwal(patient).then(({isConfirmed, text}) => {
       if (isConfirmed) {
         const payload = {
-          entity: { ...getLocalPatient(REVIEW_LIST.DECLINED), declineReason: text },
+          entity: {...getLocalPatient(REVIEW_LIST.DECLINED), declineReason: text},
           dateRange,
         };
         dispatch(updatePatient(payload));
@@ -81,10 +81,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   };
 
   const onApprovedButtonClick = () => {
-    fireApprovedSwal(patient).then(({ isConfirmed }) => {
+    fireApprovedSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
         const payload = {
-          entity: { ...getLocalPatient(REVIEW_LIST.APPROVED) },
+          entity: {...getLocalPatient(REVIEW_LIST.APPROVED)},
           dateRange,
         };
         dispatch(updatePatient(payload));
@@ -93,10 +93,10 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   };
 
   const onSubmittedButtonClick = () => {
-    fireSubmitSwal(patient).then(({ isConfirmed }) => {
+    fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
         const payload = {
-          entity: { ...getLocalPatient(REVIEW_LIST.SUBMITTED) },
+          entity: {...getLocalPatient(REVIEW_LIST.SUBMITTED)},
           dateRange,
         };
         dispatch(updatePatient(payload));
@@ -125,13 +125,15 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
           variant="outlined"
           color="warning"
           size={'small'}
-          onClick={() => {
+          onClick={e => {
+            e.stopPropagation();
             onDeclineReasonButtonClick();
           }}
         >
           거부 사유
         </Button>
       )}
+
       {canDecline ? (
         <>
           <Button

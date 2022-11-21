@@ -1,15 +1,20 @@
 #!/bin/sh
 
 array=(
-cncr_rgst
-gstr_pt_hlinf
-gstr_pt_fmht
-gstr_diag_aninf
-gstr_diag_inf
-gstr_diag_stag
+cncr_rgst #00
+gstr_pt_hlinf #01
+gstr_pt_fmht #02
+gstr_diag_aninf #03
+gstr_diag_inf #04
+gstr_diag_stag #05
+gstr_diag_mtst #06
+gstr_exam_diag #07
+gstr_exam_imag #08
+gstr_exam_impt #09
+gstr_exam_mlpt #10
 )
 
-cat /dev/null > 99_update_table_schema.sql
+cat /dev/null > update_table_schema.sql
 for name in "${array[@]}"
 do
 DDLScript=$(cat <<EOF
@@ -26,6 +31,6 @@ ALTER TABLE gstr.${name}_updated  ADD COLUMN LAST_MODIFIED_DATE TIMESTAMP;
 )
 
 printf "$DDLScript"
-echo "$DDLScript" >> 99_update_table_schema.sql
+echo "$DDLScript" >> update_table_schema.sql
 done
 
