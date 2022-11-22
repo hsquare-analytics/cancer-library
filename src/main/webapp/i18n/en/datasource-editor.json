@@ -18,7 +18,9 @@
         "approved": "approved"
       },
       "profileCard": {
-        "title": "Patient - {{ name }} ({{no}})"
+        "title": "Patient - {{ name }} ({{no}})",
+        "comment": "Comment",
+        "noComment": "No comment"
       },
       "reviewButton": {
         "submit": "submit",
