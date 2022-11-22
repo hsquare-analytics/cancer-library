@@ -115,6 +115,15 @@ Navbar styles
       flex-direction: column;
     }
   }
+
+  .MuiAccordionSummary-root {
+    padding-right: var(--bs-navbar-nav-link-padding-x);
+    padding-left: var(--bs-navbar-nav-link-padding-x);
+
+    .MuiAccordionSummary-content > span {
+      margin-left: 17px;
+    }
+  }
 }
 
 .navbar-brand {
