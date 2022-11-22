@@ -9,9 +9,9 @@ import {Brand, Home} from './header-components';
 import {DatasourceEditorMenu, UserPatientDndGridMenu} from '../menus';
 import {useAppDispatch} from 'app/config/store';
 import {setLocale} from 'app/shared/reducers/locale';
-import AdminNew from 'app/shared/layout/menus/admin-new';
+import Admin from 'app/shared/layout/menus/admin';
 import SideLogoutButton from 'app/shared/layout/header/side-logout-button';
-import AccountNew from 'app/shared/layout/menus/account-new';
+import Account from 'app/shared/layout/menus/account';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 export interface IHeaderProps {
@@ -76,13 +76,11 @@ const Header = (props: IHeaderProps) => {
                 {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
                 {props.isAuthenticated && props.isAdmin && (
                   <>
-                    {/* <AdminMenu showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} /> */}
                     {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}
-                    <AdminNew showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
+                    <Admin showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
                   </>
                 )}
-                {/* <AccountMenu isAuthenticated={props.isAuthenticated} /> */}
-                <AccountNew isAuthenticated={props.isAuthenticated}/>
+                <Account isAuthenticated={props.isAuthenticated}/>
               </Nav>
             </Collapse>
 
