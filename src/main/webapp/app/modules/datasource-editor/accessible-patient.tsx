@@ -1,27 +1,27 @@
-import React, { useEffect, useRef } from 'react';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import React, {useEffect, useRef} from 'react';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {
   getEntities as getAccessiblePatients,
   getEntity as getPatient,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
-import DataGrid, { Column, Item, Lookup, Toolbar } from 'devextreme-react/data-grid';
-import { AUTHORITIES } from 'app/config/constants';
-import { translate } from 'react-jhipster';
+import DataGrid, {Column, Item, Lookup, Toolbar} from 'devextreme-react/data-grid';
+import {AUTHORITIES} from 'app/config/constants';
+import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
-import { cleanEntity } from 'app/shared/util/entity-utils';
-import { toast } from 'react-toastify';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
-import { getIndexColumnTemplate } from 'app/shared/util/dx-utils';
+import {cleanEntity} from 'app/shared/util/entity-utils';
+import {toast} from 'react-toastify';
+import {hasAnyAuthority} from 'app/shared/auth/private-route';
+import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 import './accessible-patient.scss';
-import { CheckBox } from 'devextreme-react/check-box';
-import { MultiTableEditorPopup } from 'app/modules/datasource-editor/multi-table-editor/multi-table-editor-popup';
+import {CheckBox} from 'devextreme-react/check-box';
+import {MultiTableEditorPopup} from 'app/modules/datasource-editor/multi-table-editor/multi-table-editor-popup';
 import CustomDateRangePopover from 'app/modules/datasource-editor/date-range-picker';
-import { setDateRange } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
+import {setDateRange} from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import moment from 'moment';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { REVIEW_LIST } from 'app/config/datasource-constants';
+import {REVIEW_LIST} from 'app/config/datasource-constants';
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -75,7 +75,7 @@ export const AccessiblePatient = () => {
   const commentCellRender = data => {
     const comment = data.value;
     const result = comment && comment.length > 0;
-    return <CheckBox value={result} />;
+    return <CheckBox disabled value={result} style={{backgroundColor: result ? 'blue' : 'none'}}/>;
   };
 
   return (
