@@ -5,7 +5,6 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {NavLink as Link} from "react-router-dom";
 import accountIcon from "app/asset/img/icon-config.svg";
 
@@ -61,8 +60,7 @@ const openAPIItem = () => (
 
 const databaseItem = () => (
   <NavLink tag="a" href="./h2-console/" target="_tab">
-    <FontAwesomeIcon icon="database" fixedWidth/> <Translate
-    contentKey="global.menu.admin.database">Database</Translate>
+    <Translate contentKey="global.menu.admin.database">Database</Translate>
   </NavLink>
 );
 
@@ -81,8 +79,10 @@ function AdminMenu(props: IAdminMenuProps) {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
-          <span> <Translate contentKey="global.menu.admin.main">Administration</Translate> </span>
+          <NavLink>
+            <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
+            <span> <Translate contentKey="global.menu.admin.main">Administration</Translate> </span>
+          </NavLink>
         </AccordionSummary>
         <AccordionDetails>
           {AdminMenuItems()}

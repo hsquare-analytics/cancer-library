@@ -46,8 +46,10 @@ export const AccountMenu = ({isAuthenticated = false}: IAccountMenuProps) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
-          <span> <Translate contentKey="global.menu.account.main">account</Translate> </span>
+          <NavLink>
+            <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
+            <span> <Translate contentKey="global.menu.account.main">account</Translate> </span>
+          </NavLink>
         </AccordionSummary>
         <AccordionDetails>
           {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}

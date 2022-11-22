@@ -117,11 +117,13 @@ Navbar styles
   }
 
   .MuiAccordionSummary-root {
-    padding-right: var(--bs-navbar-nav-link-padding-x);
-    padding-left: var(--bs-navbar-nav-link-padding-x);
+    padding: 0;
+    .MuiAccordionSummary-content {
+      margin: 0;
 
-    .MuiAccordionSummary-content > span {
-      margin-left: 17px;
+      & > span {
+        margin-left: 17px;
+      }
     }
   }
 
