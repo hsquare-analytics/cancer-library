@@ -6,7 +6,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Link} from "react-router-dom";
+import {NavLink as Link} from "react-router-dom";
 import accountIcon from "app/asset/img/icon-config.svg";
 import {useTheme} from '@mui/material/styles';
 
