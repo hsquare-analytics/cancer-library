@@ -36,7 +36,6 @@ const customTheme = createTheme({
       MuiAccordion: {
         styleOverrides: {
           root: ({theme}) => ({
-            color: theme.sidebar?.color,
             backgroundColor: theme.sidebar?.backgroundColor,
           }),
         },
