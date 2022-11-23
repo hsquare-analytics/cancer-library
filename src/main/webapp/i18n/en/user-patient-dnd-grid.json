@@ -5,6 +5,17 @@
       "updateAlert": {
         "title": "Update Complete",
         "description": "Patient authorization updated successfully"
+      },
+      "column": {
+        "id": "ID",
+        "login": "Login ID",
+        "name": "Name",
+        "assigned": "Assigned",
+        "missed": "Missed",
+        "summary": "Summary",
+        "submitted": "Submitted",
+        "approved": "Approved",
+        "declined": "Declined"
       }
     }
   }

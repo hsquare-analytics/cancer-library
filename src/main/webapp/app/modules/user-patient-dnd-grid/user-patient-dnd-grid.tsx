@@ -47,25 +47,25 @@ export const UserPatientDndGrid = () => {
   useEffect(() => {
     if (updateSuccess) {
       Swal.fire({
-        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', { name: selectedUser.login }),
+        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', {name: selectedUser.login}),
         icon: 'success',
       });
       dispatch(resetFlag());
     }
   }, [updateSuccess]);
 
-  const onSelectionChanged = ({ currentSelectedRowKeys }) => {
+  const onSelectionChanged = ({currentSelectedRowKeys}) => {
     setSelectedUser(currentSelectedRowKeys[0]);
   };
 
   const onClickSave = () => {
     Swal.fire({
-      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', { name: selectedUser.login }),
+      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', {name: selectedUser.login}),
       icon: 'warning',
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        dispatch(createUserPatientAuthorizations({ login: selectedUser.login, patients }));
+        dispatch(createUserPatientAuthorizations({login: selectedUser.login, patients}));
       }
     });
   };
@@ -81,22 +81,28 @@ export const UserPatientDndGrid = () => {
           height={'25vh'}
           dataSource={users}
           showBorders={true}
-          filterRow={{ visible: true }}
-          headerFilter={{ visible: true }}
+          filterRow={{visible: true}}
+          headerFilter={{visible: true}}
           allowColumnResizing={true}
-          selection={{ mode: 'single', showCheckBoxesMode: 'onClick' }}
-          paging={{ pageSize: 10 }}
+          selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
+          paging={{pageSize: 10}}
           onSelectionChanged={onSelectionChanged}
-          loadPanel={{ enabled: !loading }}
+          loadPanel={{enabled: !loading}}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
-          <Column dataField="id" caption="id" alignment={'center'} visible={false} />
-          <Column dataField="login" caption="Login" alignment={'center'} />
-          <Column dataField="name" caption="Name" alignment={'center'} />
-          <Column dataField="assigned" caption="Assigned" alignment={'center'} />
-          <Column dataField="submitted" caption="Submitted" alignment={'center'} />
-          <Column dataField="approved" caption="Approved" alignment={'center'} />
-          <Column dataField="declined" caption="Declined" alignment={'center'} />
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
+          <Column dataField="id" caption={translate('cancerLibraryApp.userPatientDndGrid.column.id')} alignment={'center'} visible={false}/>
+          <Column dataField="login" caption={translate('cancerLibraryApp.userPatientDndGrid.column.login')} alignment={'center'}/>
+          <Column dataField="name" caption={translate('cancerLibraryApp.userPatientDndGrid.column.name')} alignment={'center'}/>
+          <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')} alignment={'center'}/>
+          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')} alignment={'center'} calculateCellValue={(rowData) => {
+            return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
+          }}
+          />
+          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={"center"}>
+            <Column dataField="submitted" caption={translate('cancerLibraryApp.userPatientDndGrid.column.submitted')} alignment={'center'}/>
+            <Column dataField="approved" caption={translate('cancerLibraryApp.userPatientDndGrid.column.approved')} alignment={'center'}/>
+            <Column dataField="declined" caption={translate('cancerLibraryApp.userPatientDndGrid.column.declined')} alignment={'center'}/>
+          </Column>
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>
@@ -109,13 +115,13 @@ export const UserPatientDndGrid = () => {
       </div>
       <div className="tables">
         <div className="column">
-          <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
         </div>
         <div className="column d-flex align-items-center">
-          <FontAwesomeIcon icon="arrow-right" size={'2x'} />
+          <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
         </div>
         <div className="column">
-          <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
         </div>
       </div>
     </div>
