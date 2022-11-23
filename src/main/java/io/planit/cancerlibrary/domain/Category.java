@@ -1,26 +1,16 @@
 package io.planit.cancerlibrary.domain;
 
-import io.planit.cancerlibrary.domain.embedded.CategoryProperty;
-import java.io.Serializable;
-import java.util.Objects;
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import io.planit.cancerlibrary.domain.embedded.CategoryAttribute;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "ph_category")
-@SecondaryTable(name = "ph_category_property", pkJoinColumns = @PrimaryKeyJoinColumn(name = "category_id"))
+@SecondaryTable(name = "ph_category_attribute", pkJoinColumns = @PrimaryKeyJoinColumn(name = "category_id"))
 public class Category extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,9 +40,9 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     private Integer orderNo;
 
     @Embedded
-    @AttributeOverride(name = "dateColumn", column = @Column(name = "date_column", table = "ph_category_property"))
-    @AttributeOverride(name = "caption", column = @Column(table = "ph_category_property"))
-    private CategoryProperty property;
+    @AttributeOverride(name = "dateColumn", column = @Column(name = "date_column", table = "ph_category_attribute"))
+    @AttributeOverride(name = "caption", column = @Column(table = "ph_category_attribute"))
+    private CategoryAttribute attribute;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -124,16 +114,16 @@ public class Category extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public CategoryProperty getProperty() {
-        return property;
+    public CategoryAttribute getAttribute() {
+        return attribute;
     }
 
-    public void setProperty(CategoryProperty property) {
-        this.property = property;
+    public void setAttribute(CategoryAttribute attribute) {
+        this.attribute = attribute;
     }
 
-    public Category property(CategoryProperty property) {
-        this.property = property;
+    public Category attribute(CategoryAttribute attribute) {
+        this.attribute = attribute;
         return this;
     }
 
@@ -175,7 +165,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
             ", description='" + description + '\'' +
             ", activated=" + activated +
             ", orderNo=" + orderNo +
-            ", property=" + property +
+            ", attribute=" + attribute +
             ", topic=" + topic +
             '}';
     }

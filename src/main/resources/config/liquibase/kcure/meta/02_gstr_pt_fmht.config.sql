@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_FMHT (
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
 VALUES (9200, 'GSTR.GSTR_PT_FMHT', '02.위암_환자_가족력', true, 2, 999, 'system');
 
-INSERT INTO ph_category_property (category_id, date_column, caption)
+INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9200, null, '02.위암_환자_가족력');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9201, 'hosp_cd', 9200, 'system', 9201);

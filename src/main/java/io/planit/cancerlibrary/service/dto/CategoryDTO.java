@@ -2,7 +2,7 @@ package io.planit.cancerlibrary.service.dto;
 
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.embedded.CategoryProperty;
+import io.planit.cancerlibrary.domain.embedded.CategoryAttribute;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +26,7 @@ public class CategoryDTO {
     @NotNull
     private Integer orderNo;
 
-    private CategoryProperty property;
+    private CategoryAttribute attribute;
 
     @NotNull
     private Topic topic;
@@ -48,7 +48,7 @@ public class CategoryDTO {
         this.description = category.getDescription();
         this.activated = category.isActivated();
         this.orderNo = category.getOrderNo();
-        this.property = category.getProperty();
+        this.attribute = category.getAttribute();
         this.topic = category.getTopic();
         this.createdBy = category.getCreatedBy();
         this.createdDate = category.getCreatedDate();
@@ -63,7 +63,7 @@ public class CategoryDTO {
         category.setDescription(this.description);
         category.setActivated(this.activated);
         category.setOrderNo(this.orderNo);
-        category.setProperty(this.property);
+        category.setAttribute(this.attribute);
         category.setTopic(this.topic);
         category.setCreatedBy(this.createdBy);
         category.setCreatedDate(this.createdDate);
@@ -112,12 +112,12 @@ public class CategoryDTO {
         this.orderNo = orderNo;
     }
 
-    public CategoryProperty getProperty() {
-        return property;
+    public CategoryAttribute getAttribute() {
+        return attribute;
     }
 
-    public void setProperty(CategoryProperty property) {
-        this.property = property;
+    public void setAttribute(CategoryAttribute attribute) {
+        this.attribute = attribute;
     }
 
     public Topic getTopic() {

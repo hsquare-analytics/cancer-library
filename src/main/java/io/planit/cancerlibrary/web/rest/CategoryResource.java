@@ -103,7 +103,7 @@ public class CategoryResource {
 
                 existingCategory.setActivated(categoryDTO.isActivated());
 
-                existingCategory.property(categoryDTO.getProperty());
+                existingCategory.attribute(categoryDTO.getAttribute());
 
                 return existingCategory;
             })

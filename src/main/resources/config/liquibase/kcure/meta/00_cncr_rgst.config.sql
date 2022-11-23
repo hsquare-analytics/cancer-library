@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST (
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
 VALUES (9000, 'GSTR.CNCR_RGST', '00.암등록', true, 0, 999, 'system');
 
-INSERT INTO ph_category_property (category_id, date_column, caption)
+INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9000, null, '00.암등록');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9001, 'hosp_cd', 9000, 'system', 9001);

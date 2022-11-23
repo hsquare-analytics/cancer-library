@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_MTST (
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
 VALUES (9600, 'GSTR.GSTR_DIAG_MTST', '06.위암_진단_전이', true, 6, 999, 'system');
 
-INSERT INTO ph_category_property (category_id, date_column, caption)
+INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9600, null, '06.위암_진단_전이');
 
 

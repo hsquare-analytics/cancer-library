@@ -44,7 +44,7 @@ export interface ISingleTableEditor {
 }
 
 export const getCategoryTypography = (category: ICategory) => {
-  return <Typography>{`${category.property ? category.property?.caption + ' - ' : ''} ${category.title.toUpperCase()} `}</Typography>;
+  return <Typography>{`${category.attribute ? category.attribute?.caption + ' - ' : ''} ${category.title.toUpperCase()} `}</Typography>;
 };
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
