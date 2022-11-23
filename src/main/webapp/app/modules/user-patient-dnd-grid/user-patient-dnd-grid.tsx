@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DndGrid from 'app/modules/user-patient-dnd-grid/dnd-grid/dnd-grid';
-import DataGrid, { Column } from 'devextreme-react/data-grid';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
 import './user-patient-dnd-grid.scss';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { IUser } from 'app/shared/model/user.model';
+import {IUser} from 'app/shared/model/user.model';
 import {
   createUserPatientAuthorizations,
   getPatients,
@@ -14,8 +16,8 @@ import {
   resetFlag,
 } from 'app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer';
 import Swal from 'sweetalert2';
-import { translate } from 'react-jhipster';
-import { getIndexColumnTemplate } from 'app/shared/util/dx-utils';
+import {translate} from 'react-jhipster';
+import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 
 export const UserPatientDndGrid = () => {
   const dispatch = useAppDispatch();
@@ -47,25 +49,25 @@ export const UserPatientDndGrid = () => {
   useEffect(() => {
     if (updateSuccess) {
       Swal.fire({
-        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', { name: selectedUser.login }),
+        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', {name: selectedUser.login}),
         icon: 'success',
       });
       dispatch(resetFlag());
     }
   }, [updateSuccess]);
 
-  const onSelectionChanged = ({ currentSelectedRowKeys }) => {
+  const onSelectionChanged = ({currentSelectedRowKeys}) => {
     setSelectedUser(currentSelectedRowKeys[0]);
   };
 
   const onClickSave = () => {
     Swal.fire({
-      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', { name: selectedUser.login }),
+      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', {name: selectedUser.login}),
       icon: 'warning',
       showCancelButton: true,
     }).then(result => {
       if (result.isConfirmed) {
-        dispatch(createUserPatientAuthorizations({ login: selectedUser.login, patients }));
+        dispatch(createUserPatientAuthorizations({login: selectedUser.login, patients}));
       }
     });
   };
@@ -76,18 +78,19 @@ export const UserPatientDndGrid = () => {
 
   return (
     <div className="user-patient-two-grid-wrapper">
-      <div className="">
+      <div className="wrap-page">
+        <h1 className="title-page">리뷰어 정보</h1>
         <DataGrid
           height={'25vh'}
           dataSource={users}
           showBorders={true}
-          filterRow={{ visible: true }}
-          headerFilter={{ visible: true }}
+          filterRow={{visible: true}}
+          headerFilter={{visible: true}}
           allowColumnResizing={true}
-          selection={{ mode: 'single', showCheckBoxesMode: 'onClick' }}
-          paging={{ pageSize: 10 }}
+          selection={{mode: 'single', showCheckBoxesMode: 'onClick'}}
+          paging={{pageSize: 10}}
           onSelectionChanged={onSelectionChanged}
-          loadPanel={{ enabled: !loading }}
+          loadPanel={{enabled: !loading}}
         >
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} />
           <Column dataField="id" caption="id" alignment={'center'} visible={false} />
@@ -102,15 +105,23 @@ export const UserPatientDndGrid = () => {
           </Button>
         </Stack>
       </div>
-      <div className="tables">
-        <div className="column">
-          <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
-        </div>
-        <div className="column d-flex align-items-center">
-          <FontAwesomeIcon icon="arrow-right" size={'2x'} />
-        </div>
-        <div className="column">
-          <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+
+      <div className="wrap-page">
+        <h1 className="title-page">
+          데이터 할당 <HelpOutlineOutlinedIcon />
+          <span className="patient-text">원하는 데이터셋을 우측 대시보드 영역으로 드래그앤 드롭합니다.</span>
+        </h1>
+
+        <div className="tables">
+          <div className="column">
+            <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          </div>
+          <div className="column d-flex align-items-center">
+            <FontAwesomeIcon icon="arrow-right" size={'2x'} />
+          </div>
+          <div className="column">
+            <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          </div>
         </div>
       </div>
     </div>
