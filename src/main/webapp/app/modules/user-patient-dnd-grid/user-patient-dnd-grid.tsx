@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import DndGrid from 'app/modules/user-patient-dnd-grid/dnd-grid/dnd-grid';
-import DataGrid, { Column } from 'devextreme-react/data-grid';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
 import './user-patient-dnd-grid.scss';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { IUser } from 'app/shared/model/user.model';
+import {IUser} from 'app/shared/model/user.model';
 import {
   createUserPatientAuthorizations,
   getPatients,
@@ -14,8 +14,8 @@ import {
   resetFlag,
 } from 'app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer';
 import Swal from 'sweetalert2';
-import { translate } from 'react-jhipster';
-import { getIndexColumnTemplate } from 'app/shared/util/dx-utils';
+import {translate} from 'react-jhipster';
+import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 
 export const UserPatientDndGrid = () => {
   const dispatch = useAppDispatch();
@@ -92,6 +92,7 @@ export const UserPatientDndGrid = () => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} />
           <Column dataField="id" caption="id" alignment={'center'} visible={false} />
           <Column dataField="login" caption="Login" alignment={'center'} />
+          <Column dataField="name" caption="Name" alignment={'center'} />
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>
