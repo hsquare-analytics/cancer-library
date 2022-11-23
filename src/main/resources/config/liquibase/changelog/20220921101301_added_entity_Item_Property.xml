@@ -9,15 +9,10 @@
             <column name="item_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="visible_index" type="int"/>
-            <column name="caption" type="varchar(50)"/>
             <column name="allow_editing" type="boolean" defaultValueBoolean="true"/>
-            <column name="required" type="boolean" defaultValueBoolean="false"/>
-            <column name="format" type="varchar(50)"/>
             <column name="sort_index" type="int"/>
             <column name="sort_direction" type="varchar(10)"/>
             <column name="visible" type="boolean" defaultValueBoolean="true"/>
-            <column name="visibleIndex" type="int"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"
@@ -34,10 +29,7 @@
                   tableName="ph_item_property"
                   usePreparedStatements="true">
             <column name="item_id" type="numeric"/>
-            <column name="visible_index" type="numeric"/>
-            <column name="caption" type="string"/>
             <column name="allow_editing" type="boolean"/>
-            <column name="required" type="boolean"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>
