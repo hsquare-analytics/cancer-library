@@ -1,8 +1,11 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
+import io.planit.cancerlibrary.repository.PatientRepository;
+import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import org.slf4j.Logger;
@@ -26,8 +29,14 @@ public class UserController {
 
     private final UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    private final UserPatientRepository userPatientRepository;
+
+    private final PatientRepository patientRepository;
+
+    public UserController(UserRepository userRepository, UserPatientRepository userPatientRepository, PatientRepository patientRepository) {
         this.userRepository = userRepository;
+        this.userPatientRepository = userPatientRepository;
+        this.patientRepository = patientRepository;
     }
 
     @GetMapping("/users/normal-authorization-list")
@@ -39,7 +48,13 @@ public class UserController {
         List<NormalAuthorizationUserVM> result = userRepository.findAllByAuthoritiesNotIn(authorities)
             .stream()
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR))).collect(Collectors.toList())
-            .stream().map(NormalAuthorizationUserVM::new).collect(Collectors.toList());
+            .stream().map(user-> {
+                Integer assigned = userPatientRepository.countByUser(user);
+                Integer submitted = patientRepository.countPatientByStatus(ReviewConstants.SUBMITTED);
+                Integer approved = patientRepository.countPatientByStatus(ReviewConstants.APPROVED);
+                Integer declined = patientRepository.countPatientByStatus(ReviewConstants.DECLINED);
+                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
+            }).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(result);
     }
@@ -51,15 +66,29 @@ public class UserController {
         @JsonProperty("name")
         private String name;
 
-        @JsonProperty("lastName")
-        private String lastName;
+        @JsonProperty("assigned")
+        private Integer assigned;
 
-        public NormalAuthorizationUserVM(User user) {
+        @JsonProperty("submitted")
+        private Integer submitted;
+
+        @JsonProperty("approved")
+        private Integer approved;
+
+        @JsonProperty("declined")
+        private Integer declined;
+
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined) {
             this.login = user.getLogin();
             this.name = user.getName();
+            this.assigned = assigned;
+            this.submitted = submitted;
+            this.approved = approved;
+            this.declined = declined;
         }
 
         public NormalAuthorizationUserVM() {
         }
+
     }
 }

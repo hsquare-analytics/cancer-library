@@ -117,6 +117,11 @@ public class PatientRepository {
         return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
     }
 
+    public Integer countPatientByStatus(String status) {
+        SQL sql = new SQL().SELECT("COUNT(*)").FROM(Table.PATIENT_DETAIL.getTableName()).WHERE("STATUS = :status");
+        return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status), Integer.class);
+    }
+
     private static class PatientMapper implements RowMapper<Patient> {
         public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
             Patient patient = new Patient();
