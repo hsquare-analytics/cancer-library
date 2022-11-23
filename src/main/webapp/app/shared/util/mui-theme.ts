@@ -1,8 +1,11 @@
-import { PaletteMode } from "@mui/material";
+import {PaletteMode} from "@mui/material";
 
 // @mui 의 컴포넌트를 사용하는 경우 테마에 따른 컬러를 설정해줘야 함
 // @mui 가 아닌 케이스는 css variables 에 따른다
 export const getDesignTokens = (mode: PaletteMode) => ({
+  sidebar: {
+    backgroundColor: '#455364'
+  },
   palette: {
     mode,
     ...(mode === 'light'

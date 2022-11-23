@@ -16,8 +16,7 @@
       "title": "사용자"
     },
     "login": "로그인 아이디",
-    "firstName": "이름",
-    "lastName": "성",
+    "name": "이름",
     "email": "이메일",
     "activated": "활성",
     "deactivated": "비활성",

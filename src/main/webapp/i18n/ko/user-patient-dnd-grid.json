@@ -5,6 +5,17 @@
       "updateAlert": {
         "title": "Update Complete",
         "description": "{{name}}님의 환자 목록이 변경되었습니다."
+      },
+      "column": {
+        "id": "ID",
+        "login": "Login ID",
+        "name": "이름",
+        "assigned": "총 할당 환자 수",
+        "missed": "작업 전",
+        "summary": "작업 진행 정보",
+        "submitted": "제출",
+        "approved": "승인",
+        "declined": "반려"
       }
     }
   }

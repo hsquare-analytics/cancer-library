@@ -2,29 +2,44 @@ import 'react-toastify/dist/ReactToastify.css';
 import './app.scss';
 import 'devextreme/dist/css/dx.material.blue.light.css';
 import './app-override.scss';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 import 'app/config/dayjs.ts';
 
-import React, { useEffect, useCallback } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import React, {useCallback, useEffect} from 'react';
+import {BrowserRouter} from 'react-router-dom';
+import {toast, ToastContainer} from 'react-toastify';
 
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getSession } from 'app/shared/reducers/authentication';
-import { getProfile } from 'app/shared/reducers/application-profile';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {getSession} from 'app/shared/reducers/authentication';
+import {getProfile} from 'app/shared/reducers/application-profile';
 import Header from 'app/shared/layout/header/header';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import {hasAnyAuthority} from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
-import { AUTHORITIES } from 'app/config/constants';
+import {AUTHORITIES} from 'app/config/constants';
 import AppRoutes from 'app/app-routes';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import { getDesignTokens } from 'app/shared/util/mui-theme';
-import { PaletteMode } from '@mui/material';
+import {getDesignTokens} from 'app/shared/util/mui-theme';
+import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
+
+declare module '@mui/material/styles' {
+  interface Theme {
+    sidebar: {
+      backgroundColor: string;
+    };
+  }
+
+  // allow configuration using `createTheme`
+  interface ThemeOptions {
+    sidebar?: {
+      backgroundColor?: string;
+    };
+  }
+}
 
 export const App = () => {
   const dispatch = useAppDispatch();

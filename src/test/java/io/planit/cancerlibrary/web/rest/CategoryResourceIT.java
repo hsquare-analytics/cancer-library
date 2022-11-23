@@ -1,28 +1,13 @@
 package io.planit.cancerlibrary.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Subject;
 import io.planit.cancerlibrary.domain.Topic;
-import io.planit.cancerlibrary.domain.embedded.CategoryProperty;
+import io.planit.cancerlibrary.domain.embedded.CategoryAttribute;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.SubjectRepository;
 import io.planit.cancerlibrary.repository.TopicRepository;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +16,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IntegrationTest
 @AutoConfigureMockMvc
@@ -52,9 +47,9 @@ public class CategoryResourceIT {
     private static final Integer DEFAULT_ORDER_NO = 1;
     private static final Integer UPDATED_ORDER_NO = 1;
 
-    private static final CategoryProperty DEFAULT_PROPERTY = new CategoryProperty().dateColumn("AAAAAAAAA")
+    private static final CategoryAttribute DEFAULT_ATTRIBUTE = new CategoryAttribute().dateColumn("AAAAAAAAA")
         .caption("AAAAAAAAA");
-    private static final CategoryProperty UPDATED_PROPERTY = new CategoryProperty().dateColumn("BBBBBBBBB")
+    private static final CategoryAttribute UPDATED_ATTRIBUTE = new CategoryAttribute().dateColumn("BBBBBBBBB")
         .caption("BBBBBBBBB");
 
     private static final String ENTITY_API_URL = "/api/categories";
@@ -86,7 +81,7 @@ public class CategoryResourceIT {
 
     public static Category createEntity(EntityManager em, Topic topic) {
         Category category = new Category().title(DEFAULT_TITLE).description(DEFAULT_TABLE_DESCRIPTION).
-            activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).property(DEFAULT_PROPERTY)
+            activated(DEFAULT_ACTIVATED).orderNo(DEFAULT_ORDER_NO).attribute(DEFAULT_ATTRIBUTE)
             .topic(topic);
         return category;
     }
@@ -94,7 +89,7 @@ public class CategoryResourceIT {
     public static Category createUpdatedEntity(EntityManager em, Topic topic) {
         Category category = new Category().title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).
             activated(UPDATED_ACTIVATED).orderNo(UPDATED_ORDER_NO)
-            .property(UPDATED_PROPERTY).topic(topic);
+            .attribute(UPDATED_ATTRIBUTE).topic(topic);
         return category;
     }
 
@@ -125,8 +120,8 @@ public class CategoryResourceIT {
         assertThat(testCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testCategory.getDescription()).isEqualTo(DEFAULT_TABLE_DESCRIPTION);
         assertThat(testCategory.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
-        assertThat(testCategory.getProperty().getDateColumn()).isEqualTo(DEFAULT_PROPERTY.getDateColumn());
-        assertThat(testCategory.getProperty().getCaption()).isEqualTo(DEFAULT_PROPERTY.getCaption());
+        assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(DEFAULT_ATTRIBUTE.getDateColumn());
+        assertThat(testCategory.getAttribute().getCaption()).isEqualTo(DEFAULT_ATTRIBUTE.getCaption());
     }
 
     @Test
@@ -181,8 +176,8 @@ public class CategoryResourceIT {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_TABLE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
-            .andExpect(jsonPath("$.[*].property.dateColumn").value(hasItem(DEFAULT_PROPERTY.getDateColumn())))
-            .andExpect(jsonPath("$.[*].property.caption").value(hasItem(DEFAULT_PROPERTY.getCaption())));
+            .andExpect(jsonPath("$.[*].attribute.dateColumn").value(hasItem(DEFAULT_ATTRIBUTE.getDateColumn())))
+            .andExpect(jsonPath("$.[*].attribute.caption").value(hasItem(DEFAULT_ATTRIBUTE.getCaption())));
     }
 
     @Test
@@ -200,8 +195,8 @@ public class CategoryResourceIT {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.description").value(DEFAULT_TABLE_DESCRIPTION))
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
-            .andExpect(jsonPath("$.property.dateColumn").value(DEFAULT_PROPERTY.getDateColumn()))
-            .andExpect(jsonPath("$.property.caption").value(DEFAULT_PROPERTY.getCaption()))
+            .andExpect(jsonPath("$.attribute.dateColumn").value(DEFAULT_ATTRIBUTE.getDateColumn()))
+            .andExpect(jsonPath("$.attribute.caption").value(DEFAULT_ATTRIBUTE.getCaption()))
             .andExpect(jsonPath("$.topic.id").value(topic.getId().intValue()));
     }
 
@@ -245,8 +240,8 @@ public class CategoryResourceIT {
         assertThat(testCategory.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testCategory.getDescription()).isEqualTo(UPDATED_TABLE_DESCRIPTION);
         assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
-        assertThat(testCategory.getProperty().getDateColumn()).isEqualTo(DEFAULT_PROPERTY.getDateColumn());
-        assertThat(testCategory.getProperty().getCaption()).isEqualTo(DEFAULT_PROPERTY.getCaption());
+        assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(DEFAULT_ATTRIBUTE.getDateColumn());
+        assertThat(testCategory.getAttribute().getCaption()).isEqualTo(DEFAULT_ATTRIBUTE.getCaption());
         assertThat(testCategory.getTopic().getId()).isEqualTo(updatedTopic.getId().intValue());
     }
 
@@ -351,7 +346,7 @@ public class CategoryResourceIT {
         partialUpdatedCategory.setId(category.getId());
 
         partialUpdatedCategory.title(UPDATED_TITLE).description(UPDATED_TABLE_DESCRIPTION).activated(UPDATED_ACTIVATED)
-            .property(UPDATED_PROPERTY);
+            .attribute(UPDATED_ATTRIBUTE);
 
         restCategoryMockMvc
             .perform(
@@ -368,8 +363,8 @@ public class CategoryResourceIT {
         assertThat(testCategory.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testCategory.getDescription()).isEqualTo(UPDATED_TABLE_DESCRIPTION);
         assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED.booleanValue());
-        assertThat(testCategory.getProperty().getDateColumn()).isEqualTo(UPDATED_PROPERTY.getDateColumn());
-        assertThat(testCategory.getProperty().getCaption()).isEqualTo(UPDATED_PROPERTY.getCaption());
+        assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(UPDATED_ATTRIBUTE.getDateColumn());
+        assertThat(testCategory.getAttribute().getCaption()).isEqualTo(UPDATED_ATTRIBUTE.getCaption());
     }
 
     @Test

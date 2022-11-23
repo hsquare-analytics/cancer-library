@@ -132,16 +132,6 @@ export const ItemUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField
-                label={translate('cancerLibraryApp.item.attribute.dataType')}
-                id="item-dataType"
-                name="attribute.dataType"
-                data-cy="attribute.dataType"
-                type="select"
-              >
-                <option value="">-</option>
-                {_.orderBy(dataTypeList).map(data => <option value={data} key={data}> {data} </option>)}
-              </ValidatedField>
               <ValidatedField type="select" name="codebook.id" data-cy="codebook"
                               label={translate('cancerLibraryApp.item.codebook.title')}>
                 <option value="">-</option>
@@ -152,27 +142,37 @@ export const ItemUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
-                label={translate('cancerLibraryApp.item.property.visible')}
-                id="item-visible"
-                name="property.visible"
-                data-cy="property.visible"
+                label={translate('cancerLibraryApp.item.attribute.caption')}
+                id="item-caption"
+                name="attribute.caption"
+                data-cy="attribute.caption"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.attribute.required')}
+                id="item-required"
+                name="attribute.required"
+                data-cy="attribute.required"
                 check
                 type="checkbox"
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.item.property.visibleIndex')}
-                id="item-visibleIndex"
-                name="property.visibleIndex"
-                data-cy="property.visibleIndex"
-                type="number"
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.item.property.caption')}
-                id="item-caption"
-                name="property.caption"
-                data-cy="property.caption"
+                label={translate('cancerLibraryApp.item.attribute.format')}
+                id="item-format"
+                name="attribute.format"
+                data-cy="attribute.format"
                 type="text"
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.attribute.dataType')}
+                id="item-dataType"
+                name="attribute.dataType"
+                data-cy="attribute.dataType"
+                type="select"
+              >
+                <option value="">-</option>
+                {_.orderBy(dataTypeList).map(data => <option value={data} key={data}> {data} </option>)}
+              </ValidatedField>
               <ValidatedField
                 label={translate('cancerLibraryApp.item.property.allowEditing')}
                 id="item-allowEditing"
@@ -180,21 +180,6 @@ export const ItemUpdate = () => {
                 data-cy="property.allowEditing"
                 check
                 type="checkbox"
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.item.property.required')}
-                id="item-required"
-                name="property.required"
-                data-cy="property.required"
-                check
-                type="checkbox"
-              />
-              <ValidatedField
-                label={translate('cancerLibraryApp.item.property.format')}
-                id="item-format"
-                name="property.format"
-                data-cy="property.format"
-                type="text"
               />
               <ValidatedField
                 label={translate('cancerLibraryApp.item.property.sortIndex')}
@@ -209,6 +194,14 @@ export const ItemUpdate = () => {
                 name="property.sortDirection"
                 data-cy="property.sortDirection"
                 type="text"
+              />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.property.visible')}
+                id="item-visible"
+                name="property.visible"
+                data-cy="property.visible"
+                check
+                type="checkbox"
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace
                       color="info">

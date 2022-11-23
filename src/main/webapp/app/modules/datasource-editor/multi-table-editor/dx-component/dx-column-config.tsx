@@ -58,19 +58,19 @@ export const getDxColumnConfig = (item: IItem) => {
   return <Column
     key={item.id}
     dataField={item.title.toLowerCase()}
-    dataType={item.attribute?.dataType}
-    caption={item.property?.caption}
     visibleIndex={item.orderNo}
+    caption={item.attribute?.caption}
+    format={item.attribute?.format}
+    dataType={item.attribute?.dataType}
     allowEditing={item.property?.allowEditing}
-    format={item.property?.format}
     visible={item.property?.visible}
     alignment={'center'}
-    editCellComponent={getDxEditCellComponent(item)}
+    editCellComponent={item.attribute.dataType ? getDxEditCellComponent(item) : null}
     formItem={{
       visible: item.property?.visible,
       visibleIndex: item.orderNo,
     }}
   >
-    {getDxLookupComponent(item)}
+    {item.attribute.dataType ? getDxLookupComponent(item) : null}
   </Column>
 }

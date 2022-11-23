@@ -6,9 +6,9 @@ labels: request
 assignees: 'planit-zero'
 
 ---
-### k-cure 주간회의 수정 사항 
+## k-cure 주간회의 수정 사항 
 
-- 날짜: 2022-10-xx
+- 날짜: 2022-11-xx
 - 장소: 
 - 목록
   - [ ] xx

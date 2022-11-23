@@ -115,6 +115,25 @@ Navbar styles
       flex-direction: column;
     }
   }
+
+  .MuiAccordionSummary-root {
+    padding: 0;
+    .MuiAccordionSummary-content {
+      margin: 0;
+
+      & > span {
+        margin-left: 17px;
+      }
+    }
+  }
+
+  .MuiAccordionDetails-root {
+    padding: 0;
+
+    a span {
+      margin-left: 34px;
+    }
+  }
 }
 
 .navbar-brand {
@@ -125,6 +144,8 @@ Navbar styles
   //padding-right: 0;
   //padding-left: 0;
   height: 50px;
+  display: flex;
+  align-items: center;
 
   img {
     width: 22px;

@@ -45,7 +45,7 @@ export const getUsableItems = createAsyncThunk('datasource_container/fetch_usabl
 
 export const getUsableCategories = createAsyncThunk('datasource_container/fetch_usable_category_list', async () => {
     const requestUrl = `api/categories/usable-category-list`;
-    return axios.get<IItem[]>(requestUrl);
+    return axios.get<ICategory[]>(requestUrl);
   },
   {serializeError: serializeAxiosError}
 );

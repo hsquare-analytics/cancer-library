@@ -7,17 +7,20 @@ import io.planit.cancerlibrary.service.MailService;
 import io.planit.cancerlibrary.service.UserService;
 import io.planit.cancerlibrary.service.dto.AdminUserDTO;
 import io.planit.cancerlibrary.service.dto.PasswordChangeDTO;
-import io.planit.cancerlibrary.web.rest.errors.*;
+import io.planit.cancerlibrary.web.rest.errors.EmailAlreadyUsedException;
+import io.planit.cancerlibrary.web.rest.errors.InvalidPasswordException;
+import io.planit.cancerlibrary.web.rest.errors.LoginAlreadyUsedException;
 import io.planit.cancerlibrary.web.rest.vm.KeyAndPasswordVM;
 import io.planit.cancerlibrary.web.rest.vm.ManagedUserVM;
-import java.util.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -126,8 +129,7 @@ public class AccountResource {
             throw new AccountResourceException("User could not be found");
         }
         userService.updateUser(
-            userDTO.getFirstName(),
-            userDTO.getLastName(),
+            userDTO.getName(),
             userDTO.getEmail(),
             userDTO.getLangKey(),
             userDTO.getImageUrl()

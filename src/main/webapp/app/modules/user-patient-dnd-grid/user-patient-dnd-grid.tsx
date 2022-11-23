@@ -4,8 +4,11 @@ import DataGrid, {Column} from 'devextreme-react/data-grid';
 import './user-patient-dnd-grid.scss';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+<<<<<<< HEAD
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
+=======
+>>>>>>> origin/develop
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import {IUser} from 'app/shared/model/user.model';
@@ -92,9 +95,20 @@ export const UserPatientDndGrid = () => {
           onSelectionChanged={onSelectionChanged}
           loadPanel={{enabled: !loading}}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} />
-          <Column dataField="id" caption="id" alignment={'center'} visible={false} />
-          <Column dataField="login" caption="Login" alignment={'center'} />
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
+          <Column dataField="id" caption={translate('cancerLibraryApp.userPatientDndGrid.column.id')} alignment={'center'} visible={false}/>
+          <Column dataField="login" caption={translate('cancerLibraryApp.userPatientDndGrid.column.login')} alignment={'center'}/>
+          <Column dataField="name" caption={translate('cancerLibraryApp.userPatientDndGrid.column.name')} alignment={'center'}/>
+          <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')} alignment={'center'}/>
+          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')} alignment={'center'} calculateCellValue={(rowData) => {
+            return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
+          }}
+          />
+          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={"center"}>
+            <Column dataField="submitted" caption={translate('cancerLibraryApp.userPatientDndGrid.column.submitted')} alignment={'center'}/>
+            <Column dataField="approved" caption={translate('cancerLibraryApp.userPatientDndGrid.column.approved')} alignment={'center'}/>
+            <Column dataField="declined" caption={translate('cancerLibraryApp.userPatientDndGrid.column.declined')} alignment={'center'}/>
+          </Column>
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>
@@ -114,16 +128,18 @@ export const UserPatientDndGrid = () => {
 
         <div className="tables">
           <div className="column">
-            <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+            <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
           </div>
           <div className="column d-flex align-items-center">
-            <FontAwesomeIcon icon="arrow-right" size={'2x'} />
+            <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
           </div>
           <div className="column">
-            <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+            <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
           </div>
         </div>
+
       </div>
+
     </div>
   );
 };

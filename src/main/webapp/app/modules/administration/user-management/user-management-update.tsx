@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { Translate, translate, ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Button, Col, FormText, Row} from 'reactstrap';
+import {isEmail, translate, Translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { locales, languages } from 'app/config/translation';
-import { getUser, getRoles, updateUser, createUser, reset } from './user-management.reducer';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {languages, locales} from 'app/config/translation';
+import {createUser, getRoles, getUser, reset, updateUser} from './user-management.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 export const UserManagementUpdate = () => {
   const dispatch = useAppDispatch();
@@ -97,19 +97,8 @@ export const UserManagementUpdate = () => {
               />
               <ValidatedField
                 type="text"
-                name="firstName"
-                label={translate('userManagement.firstName')}
-                validate={{
-                  maxLength: {
-                    value: 50,
-                    message: translate('entity.validation.maxlength', { max: 50 }),
-                  },
-                }}
-              />
-              <ValidatedField
-                type="text"
-                name="lastName"
-                label={translate('userManagement.lastName')}
+                name="name"
+                label={translate('userManagement.name')}
                 validate={{
                   maxLength: {
                     value: 50,

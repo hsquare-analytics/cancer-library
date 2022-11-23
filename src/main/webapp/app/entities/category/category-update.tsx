@@ -130,17 +130,17 @@ export const CategoryUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.property.dateColumn')}
-                id="category-property"
-                name="property.dateColumn"
-                data-cy="property.dateColumn"
+                label={translate('cancerLibraryApp.category.attribute.dateColumn')}
+                id="category-attribute"
+                name="attribute.dateColumn"
+                data-cy="attribute.dateColumn"
                 type="text"
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.category.property.caption')}
-                id="category-property"
-                name="property.caption"
-                data-cy="property.caption"
+                label={translate('cancerLibraryApp.category.attribute.caption')}
+                id="category-attribute"
+                name="attribute.caption"
+                data-cy="attribute.caption"
                 type="text"
               />
               <ValidatedField type="select" name="topic.id" data-cy="topic"

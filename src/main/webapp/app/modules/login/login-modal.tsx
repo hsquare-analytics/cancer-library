@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Translate, translate, ValidatedField } from 'react-jhipster';
-import { Button, Alert, Row, Col, Form } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import React, {useState} from 'react';
+import {Translate, translate, ValidatedField} from 'react-jhipster';
+import {Alert, Button, Col, Form, Row} from 'reactstrap';
+import {useForm} from 'react-hook-form';
 
 import Register from 'app/modules/account/register/register';
 import PasswordResetInit from 'app/modules/account/password-reset/init/password-reset-init';
@@ -33,8 +32,6 @@ const LoginModal = (props: ILoginModalProps) => {
   const handleLoginSubmit = e => {
     handleSubmit(login)(e);
   };
-
-  console.log('showRegisterModal?', showRegisterModal);
 
   return (
     <div className="box-login">

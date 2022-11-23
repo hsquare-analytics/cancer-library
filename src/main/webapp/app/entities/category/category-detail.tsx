@@ -56,17 +56,17 @@ export const CategoryDetail = () => {
           </dt>
           <dd>{categoryEntity.orderNo}</dd>
           <dt>
-            <span id="property-dateColumn">
-              <Translate contentKey="cancerLibraryApp.category.property.dateColumn">Date Column</Translate>
+            <span id="attribute-dateColumn">
+              <Translate contentKey="cancerLibraryApp.category.attribute.dateColumn">Date Column</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.property.dateColumn}</dd>
+          <dd>{categoryEntity.attribute.dateColumn}</dd>
           <dt>
-            <span id="property-caption">
-              <Translate contentKey="cancerLibraryApp.category.property.caption">Caption</Translate>
+            <span id="attribute-caption">
+              <Translate contentKey="cancerLibraryApp.category.attribute.caption">Caption</Translate>
             </span>
           </dt>
-          <dd>{categoryEntity.property.caption}</dd>
+          <dd>{categoryEntity.attribute.caption}</dd>
           <dt>
             <span id="topic-name">
               <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>

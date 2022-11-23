@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Badge } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect} from 'react';
+import {Link, useParams} from 'react-router-dom';
+import {Badge, Button, Row} from 'reactstrap';
+import {TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT } from 'app/config/constants';
-import { languages } from 'app/config/translation';
-import { getUser } from './user-management.reducer';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {APP_DATE_FORMAT} from 'app/config/constants';
+import {languages} from 'app/config/translation';
+import {getUser} from './user-management.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 export const UserManagementDetail = () => {
   const dispatch = useAppDispatch();
@@ -43,13 +43,9 @@ export const UserManagementDetail = () => {
             )}
           </dd>
           <dt>
-            <Translate contentKey="userManagement.firstName">First Name</Translate>
+            <Translate contentKey="userManagement.name">Name</Translate>
           </dt>
-          <dd>{user.firstName}</dd>
-          <dt>
-            <Translate contentKey="userManagement.lastName">Last Name</Translate>
-          </dt>
-          <dd>{user.lastName}</dd>
+          <dd>{user.name}</dd>
           <dt>
             <Translate contentKey="userManagement.email">Email</Translate>
           </dt>

@@ -37,13 +37,14 @@ import {AUTHORITIES} from 'app/config/constants';
 import Stack from '@mui/material/Stack';
 import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from 'app/config/datasource-constants';
 import axios from 'axios';
+import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 
 export interface ISingleTableEditor {
   category: ICategory;
 }
 
 export const getCategoryTypography = (category: ICategory) => {
-  return <Typography>{`${category.property ? category.property?.caption + ' - ' : ''} ${category.title.toUpperCase()} `}</Typography>;
+  return <Typography>{`${category.attribute ? category.attribute?.caption + ' - ' : ''} ${category.title.toUpperCase()} `}</Typography>;
 };
 
 export const SingleTableEditor = (props: ISingleTableEditor) => {
@@ -88,8 +89,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
     return (
       <Stack spacing={1} direction="row">
-        <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}} onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
-          <FontAwesomeIcon icon="pencil" />
+        <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}}
+                onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
+          <FontAwesomeIcon icon="pencil"/>
         </Button>
         {canManaging && (
           <Button
@@ -97,7 +99,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
             onClick={() => dataGrid.current.instance.deleteRow(rowIndex)}
           >
-            <FontAwesomeIcon icon="trash" />
+            <FontAwesomeIcon icon="trash"/>
           </Button>
         )}
       </Stack>
@@ -106,7 +108,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   return canRender() ? (
     <Accordion defaultExpanded={true} className={'single-table-editor-wrapper'}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         {getCategoryTypography(category)}
         <Button
           variant="outlined"
@@ -118,7 +120,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             dataGrid.current.instance.addRow();
           }}
         >
-          <FontAwesomeIcon icon="plus" className={'me-3'} />
+          <FontAwesomeIcon icon="plus" className={'me-3'}/>
           {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
         </Button>
       </AccordionSummary>
@@ -218,7 +220,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }
           }}
         >
-          <Column type="buttons" width={80} cellRender={buttonCellRender} />
+          <Column type="buttons" width={80} cellRender={buttonCellRender}/>
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
+                  allowEditing={false}
+                  formItem={{visible: false}}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"

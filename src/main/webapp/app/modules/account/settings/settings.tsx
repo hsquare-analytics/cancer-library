@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Button, Col, Row } from 'reactstrap';
-import { Translate, translate, ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
-import { toast } from 'react-toastify';
+import React, {useEffect} from 'react';
+import {Button, Col, Row} from 'reactstrap';
+import {isEmail, translate, Translate, ValidatedField, ValidatedForm} from 'react-jhipster';
+import {toast} from 'react-toastify';
 
-import { locales, languages } from 'app/config/translation';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getSession } from 'app/shared/reducers/authentication';
-import { saveAccountSettings, reset } from './settings.reducer';
+import {languages, locales} from 'app/config/translation';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
+import {getSession} from 'app/shared/reducers/authentication';
+import {reset, saveAccountSettings} from './settings.reducer';
 
 export const SettingsPage = () => {
   const dispatch = useAppDispatch();
@@ -46,28 +46,16 @@ export const SettingsPage = () => {
           </h2>
           <ValidatedForm id="settings-form" onSubmit={handleValidSubmit} defaultValues={account}>
             <ValidatedField
-              name="firstName"
-              label={translate('settings.form.firstname')}
-              id="firstName"
-              placeholder={translate('settings.form.firstname.placeholder')}
+              name="name"
+              label={translate('settings.form.name')}
+              id="name"
+              placeholder={translate('settings.form.name.placeholder')}
               validate={{
-                required: { value: true, message: translate('settings.messages.validate.firstname.required') },
-                minLength: { value: 1, message: translate('settings.messages.validate.firstname.minlength') },
-                maxLength: { value: 50, message: translate('settings.messages.validate.firstname.maxlength') },
+                required: { value: true, message: translate('settings.messages.validate.name.required') },
+                minLength: { value: 1, message: translate('settings.messages.validate.name.minlength') },
+                maxLength: { value: 50, message: translate('settings.messages.validate.name.maxlength') },
               }}
-              data-cy="firstname"
-            />
-            <ValidatedField
-              name="lastName"
-              label={translate('settings.form.lastname')}
-              id="lastName"
-              placeholder={translate('settings.form.lastname.placeholder')}
-              validate={{
-                required: { value: true, message: translate('settings.messages.validate.lastname.required') },
-                minLength: { value: 1, message: translate('settings.messages.validate.lastname.minlength') },
-                maxLength: { value: 50, message: translate('settings.messages.validate.lastname.maxlength') },
-              }}
-              data-cy="lastname"
+              data-cy="name"
             />
             <ValidatedField
               name="email"

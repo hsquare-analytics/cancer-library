@@ -9,9 +9,14 @@
             <column name="item_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="data_type" type="varchar(30)">
+            <column name="caption" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
+            <column name="required" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false" />
+            </column>
+            <column name="data_type" type="varchar(30)"/>
+            <column name="format" type="varchar(50)"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"

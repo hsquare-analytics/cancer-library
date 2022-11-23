@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20220927150435-1" author="jhipster">
-        <createTable tableName="ph_category_property">
+        <createTable tableName="ph_category_attribute">
             <column name="category_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -14,17 +14,17 @@
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="category_id"
-            baseTableName="ph_category_property"
-            constraintName="fk_item_category_property_category_id"
+            baseTableName="ph_category_attribute"
+            constraintName="fk_item_category_attribute_category_id"
             referencedColumnNames="id"
             referencedTableName="ph_category"/>
     </changeSet>
 
     <changeSet id="20220927150435-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/category_property.csv"
+                  file="config/liquibase/fake-data/category_attribute.csv"
                   separator=";"
-                  tableName="ph_category_property">
+                  tableName="ph_category_attribute">
                   usePreparedStatements="true">
             <column name="date_column" type="string"/>
             <column name="caption" type="string"/>

@@ -1,10 +1,10 @@
 package io.planit.cancerlibrary.domain.embedded;
 
-import java.io.Serializable;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class CategoryProperty implements Serializable {
+public class CategoryAttribute implements Serializable {
 
     private String dateColumn;
 
@@ -18,7 +18,7 @@ public class CategoryProperty implements Serializable {
         this.dateColumn = dateColumn;
     }
 
-    public CategoryProperty dateColumn(String dateColumn) {
+    public CategoryAttribute dateColumn(String dateColumn) {
         this.setDateColumn(dateColumn);
         return this;
     }
@@ -31,7 +31,7 @@ public class CategoryProperty implements Serializable {
         this.caption = caption;
     }
 
-    public CategoryProperty caption(String caption) {
+    public CategoryAttribute caption(String caption) {
         this.setCaption(caption);
         return this;
     }
