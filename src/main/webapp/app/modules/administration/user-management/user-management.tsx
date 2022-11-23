@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table, Badge } from 'reactstrap';
-import { Translate, TextFormat, JhiPagination, JhiItemCount, getSortState } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useEffect, useState} from 'react';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Badge, Button, Table} from 'reactstrap';
+import {getSortState, JhiItemCount, JhiPagination, TextFormat, Translate} from 'react-jhipster';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { getUsersAsAdmin, updateUser } from './user-management.reducer';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {APP_DATE_FORMAT} from 'app/config/constants';
+import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
+import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
+import {getUsersAsAdmin, updateUser} from './user-management.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 export const UserManagement = () => {
   const dispatch = useAppDispatch();
@@ -109,6 +109,10 @@ export const UserManagement = () => {
               <Translate contentKey="userManagement.login">Login</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
+            <th className="hand" onClick={sort('name`')}>
+              <Translate contentKey="userManagement.name">Name</Translate>
+              <FontAwesomeIcon icon="sort" />
+            </th>
             <th className="hand" onClick={sort('email')}>
               <Translate contentKey="userManagement.email">Email</Translate>
               <FontAwesomeIcon icon="sort" />
@@ -145,6 +149,7 @@ export const UserManagement = () => {
                 </Button>
               </td>
               <td>{user.login}</td>
+              <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
                 {user.activated ? (
