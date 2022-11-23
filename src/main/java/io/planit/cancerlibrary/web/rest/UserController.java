@@ -50,9 +50,9 @@ public class UserController {
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR))).collect(Collectors.toList())
             .stream().map(user-> {
                 Integer assigned = userPatientRepository.countByUser(user);
-                Integer submitted = patientRepository.countPatientByStatus(ReviewConstants.SUBMITTED);
-                Integer approved = patientRepository.countPatientByStatus(ReviewConstants.APPROVED);
-                Integer declined = patientRepository.countPatientByStatus(ReviewConstants.DECLINED);
+                Integer submitted = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.SUBMITTED);
+                Integer approved = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.APPROVED);
+                Integer declined = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.DECLINED);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
             }).collect(Collectors.toList());
 

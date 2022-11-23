@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasItem;
@@ -72,16 +73,18 @@ class UserControllerIT {
     }
 
     @ParameterizedTest
-    @Transactional(value = "jdbcTemplateTransactionManager")
+    @Transactional
     @ValueSource(strings = {ReviewConstants.SUBMITTED, ReviewConstants.APPROVED, ReviewConstants.DECLINED})
+    @WithMockUser(username = "testLogin")
     void test_fetch_users_with_additional_info(String status) throws Exception {
-        User user = UserResourceIT.createEntity(em).authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
+        User user = UserResourceIT.createEntity(em).login("testLogin").authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
         userRepository.saveAndFlush(user);
 
-        UserPatient userPatient = new UserPatient().user(user).patientNo("ptNo");
+        String patientNo = "ptno" + status + new Random().nextInt(100);
+        UserPatient userPatient = new UserPatient().user(user).patientNo(patientNo);
         userPatientRepository.saveAndFlush(userPatient);
 
-        Patient patient = new Patient().ptNo("ptNo").status(status);
+        Patient patient = new Patient().ptNo(patientNo).status(status).createdBy(user.getLogin());
         patientRepository.insert(patient);
         patientRepository.insertPatientDetail(patient);
 
@@ -91,7 +94,7 @@ class UserControllerIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
             .andExpect(jsonPath("$.[*].assigned").value(hasItem(1)))
-            .andExpect(jsonPath("$.[*]."+ status.toLowerCase().split("_")[1]).value(hasItem(1)));
+            .andExpect(jsonPath("$.[*]." + status.toLowerCase().split("_")[1]).value(hasItem(1)));
     }
 }
 

@@ -89,10 +89,14 @@ export const UserPatientDndGrid = () => {
           onSelectionChanged={onSelectionChanged}
           loadPanel={{ enabled: !loading }}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} />
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
           <Column dataField="id" caption="id" alignment={'center'} visible={false} />
           <Column dataField="login" caption="Login" alignment={'center'} />
           <Column dataField="name" caption="Name" alignment={'center'} />
+          <Column dataField="assigned" caption="Assigned" alignment={'center'} />
+          <Column dataField="submitted" caption="Submitted" alignment={'center'} />
+          <Column dataField="approved" caption="Approved" alignment={'center'} />
+          <Column dataField="declined" caption="Declined" alignment={'center'} />
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>
