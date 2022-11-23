@@ -55,35 +55,35 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.category?.title}</dd>
           <dt>
-            <span id="type">
-              <Translate contentKey="cancerLibraryApp.item.attribute.dataType">Data Type</Translate>
-            </span>
-          </dt>
-          <dd>{itemEntity.attribute?.dataType}</dd>
-          <dt>
             <span id="codebook">
               <Translate contentKey="cancerLibraryApp.item.codebook.title">Codebook Title</Translate>
             </span>
           </dt>
           <dd>{itemEntity.codebook?.title}</dd>
           <dt>
-            <span id="visible">
-              <Translate contentKey="cancerLibraryApp.item.property.visible">Visible</Translate>
-            </span>
-          </dt>
-          <dd>{itemEntity.property?.visible}</dd>
-          <dt>
-            <span id="visibleIndex">
-              <Translate contentKey="cancerLibraryApp.item.property.visibleIndex">Visible Index</Translate>
-            </span>
-          </dt>
-          <dd>{itemEntity.property?.visibleIndex}</dd>
-          <dt>
             <span id="caption">
-              <Translate contentKey="cancerLibraryApp.item.property.caption">Caption</Translate>
+              <Translate contentKey="cancerLibraryApp.item.attribute.caption">Caption</Translate>
             </span>
           </dt>
-          <dd>{itemEntity.property?.caption}</dd>
+          <dd>{itemEntity.attribute?.caption}</dd>
+          <dt>
+            <span id="required">
+              <Translate contentKey="cancerLibraryApp.item.attribute.required">Required</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.attribute?.required}</dd>
+          <dt>
+            <span id="format">
+              <Translate contentKey="cancerLibraryApp.item.attribute.format">format</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.attribute?.format}</dd>
+          <dt>
+            <span id="type">
+              <Translate contentKey="cancerLibraryApp.item.attribute.dataType">Data Type</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.attribute?.dataType}</dd>
           <dt>
             <span id="allowEditing">
               <Translate contentKey="cancerLibraryApp.item.property.allowEditing">Allow Editing</Translate>
@@ -91,23 +91,17 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.property?.allowEditing}</dd>
           <dt>
-            <span id="format">
-              <Translate contentKey="cancerLibraryApp.item.property.format">format</Translate>
-            </span>
-          </dt>
-          <dd>{itemEntity.property?.format}</dd>
-          <dt>
-            <span id="required">
-              <Translate contentKey="cancerLibraryApp.item.property.required">Required</Translate>
-            </span>
-          </dt>
-          <dd>{itemEntity.property?.required}</dd>
-          <dt>
             <span id="sortIndex">
               <Translate contentKey="cancerLibraryApp.item.property.sortIndex">Sort Index</Translate>
             </span>
           </dt>
           <dd>{itemEntity.property?.sortIndex}</dd>
+          <dt>
+            <span id="visible">
+              <Translate contentKey="cancerLibraryApp.item.property.visible">Visible</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.visible}</dd>
           <dt>
             <span id="sortDirection">
               <Translate contentKey="cancerLibraryApp.item.property.sortDirection">Sort Direction</Translate>

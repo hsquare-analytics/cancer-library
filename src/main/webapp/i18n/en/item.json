@@ -25,17 +25,16 @@
       "category.title": "Category Title",
       "codebook.title": "Codebook Title",
       "attribute": {
+        "caption": "caption",
+        "required": "Required",
+        "format": "Format",
         "dataType": "Data Type"
       },
       "property": {
         "visible": "Visible",
-        "visibleIndex": "Visible Index",
-        "caption": "caption",
         "allowEditing": "Allow Editing",
-        "required": "Required",
-        "format": "Format",
-        "sortIndex": "Sort Index",
-        "sortDirection": "Sort Direction"
+        "sortIndex" : "Sort Index",
+        "sortDirection" : "Sort Direction"
       }
     }
   }

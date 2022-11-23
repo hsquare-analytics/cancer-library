@@ -39,11 +39,11 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
   }
 
   items.forEach(item => {
-    if (!item || !item.property) {
+    if (!item || !item.attribute) {
       return false;
     }
-    if (item.property.required && isDxCellNil(targetData[item.title.toLowerCase()])) {
-      const singleMessage = translate('cancerLibraryApp.datasourceEditor.singleTableEditor.validator.required', {field: item.property.caption || item.title});
+    if (item.attribute.required && isDxCellNil(targetData[item.title.toLowerCase()])) {
+      const singleMessage = translate('cancerLibraryApp.datasourceEditor.singleTableEditor.validator.required', {field: item.attribute.caption || item.title});
 
       validationFailedItemList.push({...item, message: singleMessage});
       e.isValid = false;
