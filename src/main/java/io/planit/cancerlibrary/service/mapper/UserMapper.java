@@ -4,12 +4,13 @@ import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.service.dto.AdminUserDTO;
 import io.planit.cancerlibrary.service.dto.UserDTO;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity {@link User} and its DTO called {@link UserDTO}.
@@ -47,8 +48,7 @@ public class UserMapper {
             User user = new User();
             user.setId(userDTO.getId());
             user.setLogin(userDTO.getLogin());
-            user.setFirstName(userDTO.getFirstName());
-            user.setLastName(userDTO.getLastName());
+            user.setName(userDTO.getName());
             user.setEmail(userDTO.getEmail());
             user.setImageUrl(userDTO.getImageUrl());
             user.setActivated(userDTO.isActivated());

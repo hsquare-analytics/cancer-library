@@ -1,12 +1,8 @@
 package io.planit.cancerlibrary.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.repository.UserRepository;
-import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +11,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Locale;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 /**
  * Integrations tests for {@link DomainUserDetailsService}.
@@ -44,8 +45,7 @@ class DomainUserDetailsServiceIT {
         userOne.setPassword(RandomStringUtils.randomAlphanumeric(60));
         userOne.setActivated(true);
         userOne.setEmail(USER_ONE_EMAIL);
-        userOne.setFirstName("userOne");
-        userOne.setLastName("doe");
+        userOne.setName("userOne");
         userOne.setLangKey("en");
         userRepository.save(userOne);
 
@@ -54,8 +54,7 @@ class DomainUserDetailsServiceIT {
         userTwo.setPassword(RandomStringUtils.randomAlphanumeric(60));
         userTwo.setActivated(true);
         userTwo.setEmail(USER_TWO_EMAIL);
-        userTwo.setFirstName("userTwo");
-        userTwo.setLastName("doe");
+        userTwo.setName("userTwo");
         userTwo.setLangKey("en");
         userRepository.save(userTwo);
 
@@ -64,8 +63,7 @@ class DomainUserDetailsServiceIT {
         userThree.setPassword(RandomStringUtils.randomAlphanumeric(60));
         userThree.setActivated(false);
         userThree.setEmail(USER_THREE_EMAIL);
-        userThree.setFirstName("userThree");
-        userThree.setLastName("doe");
+        userThree.setName("userThree");
         userThree.setLangKey("en");
         userRepository.save(userThree);
     }

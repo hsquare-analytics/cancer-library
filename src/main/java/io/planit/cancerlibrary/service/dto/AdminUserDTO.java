@@ -3,10 +3,14 @@ package io.planit.cancerlibrary.service.dto;
 import io.planit.cancerlibrary.config.Constants;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.constraints.*;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -21,10 +25,7 @@ public class AdminUserDTO {
     private String login;
 
     @Size(max = 50)
-    private String firstName;
-
-    @Size(max = 50)
-    private String lastName;
+    private String name;
 
     @Email
     @Size(min = 5, max = 254)
@@ -55,8 +56,7 @@ public class AdminUserDTO {
     public AdminUserDTO(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+        this.name = user.getName();
         this.email = user.getEmail();
         this.activated = user.isActivated();
         this.imageUrl = user.getImageUrl();
@@ -84,20 +84,12 @@ public class AdminUserDTO {
         this.login = login;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -177,8 +169,7 @@ public class AdminUserDTO {
     public String toString() {
         return "AdminUserDTO{" +
             "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
+            ", name='" + name + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
             ", activated=" + activated +

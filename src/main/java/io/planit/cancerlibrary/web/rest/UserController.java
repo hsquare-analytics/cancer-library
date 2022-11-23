@@ -48,16 +48,15 @@ public class UserController {
         @JsonProperty("login")
         private String login;
 
-        @JsonProperty("firstName")
-        private String firstName;
+        @JsonProperty("name")
+        private String name;
 
         @JsonProperty("lastName")
         private String lastName;
 
         public NormalAuthorizationUserVM(User user) {
             this.login = user.getLogin();
-            this.firstName = user.getFirstName();
-            this.lastName = user.getLastName();
+            this.name = user.getName();
         }
 
         public NormalAuthorizationUserVM() {
