@@ -61,7 +61,7 @@ public class DMLSqlBuilderService {
 
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
-            if (map.containsKey(mapKey)) {
+            if (map.containsKey(mapKey) && map.get(mapKey) != null) {
                 sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
             }
         });
@@ -128,7 +128,7 @@ public class DMLSqlBuilderService {
         sql.UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
-            if (map.containsKey(mapKey)) {
+            if (map.containsKey(mapKey) && map.get(mapKey) != null) {
                 sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
             }
         });
