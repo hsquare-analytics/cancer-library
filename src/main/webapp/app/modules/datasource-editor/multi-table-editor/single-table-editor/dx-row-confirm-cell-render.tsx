@@ -10,6 +10,7 @@ import axios from "axios";
 import {setCategory as setSelectedCategory,} from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import Chip from '@mui/material/Chip';
 import DoneIcon from '@mui/icons-material/Done';
+import {translate} from 'react-jhipster';
 
 
 export interface IDxRowConfirmCellRenderProps {
@@ -28,13 +29,13 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
 
   const onClickConfirm = () => {
     Swal.fire({
-      // title: 'Are you sure?',
-      text: '데이터가 이상없음을 확인하셨습니까?',
-      // icon: 'warning',
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.title'),
+      icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes'
+      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.cancel')
     }).then((result) => {
       if (result.isConfirmed) {
         axios.get(`/api/datasource/categories/${category.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
@@ -50,18 +51,16 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
 
 
   return row['created_by'] ? (
-    <Chip label="확인됨"
+    <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.confirmed')}
           icon={<DoneIcon/>}
           size={'small'}
-      // color="success"
           variant="outlined"
     />
   ) : (
-    <Chip label="? 미확인"
+    <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.notConfirmed')}
           color="primary"
           variant="outlined"
           size={'small'}
-          // icon={<QuestionMarkIcon/>}
           onClick={(e) => {
             e.stopPropagation();
             dispatch(setSelectedCategory(category));
