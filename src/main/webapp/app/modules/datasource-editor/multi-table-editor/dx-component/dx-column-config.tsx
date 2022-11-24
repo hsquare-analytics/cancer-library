@@ -8,6 +8,10 @@ import DxNumberBox from "app/modules/datasource-editor/multi-table-editor/dx-com
 import DxDateBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-date-box";
 
 const getDxEditCellComponent = (item: IItem) => {
+  if (!item.attribute.dataType) {
+    return DxTextBox;
+  }
+
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
       return DxTagBox;
@@ -30,6 +34,10 @@ const getDxEditCellComponent = (item: IItem) => {
 }
 
 const getDxLookupComponent = (item: IItem) => {
+  if (!item.attribute.dataType) {
+    return undefined;
+  }
+
   switch (item.attribute?.dataType.toLowerCase()) {
     case 'tagbox':
     case 'selectbox':
@@ -65,12 +73,12 @@ export const getDxColumnConfig = (item: IItem) => {
     allowEditing={item.property?.allowEditing}
     visible={item.property?.visible}
     alignment={'center'}
-    editCellComponent={item.attribute.dataType ? getDxEditCellComponent(item) : null}
+    editCellComponent={getDxEditCellComponent(item)}
     formItem={{
       visible: item.property?.visible,
       visibleIndex: item.orderNo,
     }}
   >
-    {item.attribute.dataType ? getDxLookupComponent(item) : null}
+    {getDxLookupComponent(item)}
   </Column>
 }
