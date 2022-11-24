@@ -4,6 +4,8 @@ import DataGrid, {Column} from 'devextreme-react/data-grid';
 import './user-patient-dnd-grid.scss';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import {IUser} from 'app/shared/model/user.model';
@@ -76,7 +78,8 @@ export const UserPatientDndGrid = () => {
 
   return (
     <div className="user-patient-two-grid-wrapper">
-      <div className="">
+      <div className="wrap-page">
+        <h1 className="title-page">리뷰어 정보</h1>
         <DataGrid
           height={'25vh'}
           dataSource={users}
@@ -89,19 +92,31 @@ export const UserPatientDndGrid = () => {
           onSelectionChanged={onSelectionChanged}
           loadPanel={{enabled: !loading}}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
-          <Column dataField="id" caption={translate('cancerLibraryApp.userPatientDndGrid.column.id')} alignment={'center'} visible={false}/>
-          <Column dataField="login" caption={translate('cancerLibraryApp.userPatientDndGrid.column.login')} alignment={'center'}/>
-          <Column dataField="name" caption={translate('cancerLibraryApp.userPatientDndGrid.column.name')} alignment={'center'}/>
-          <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')} alignment={'center'}/>
-          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')} alignment={'center'} calculateCellValue={(rowData) => {
-            return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
-          }}
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
+          <Column
+            dataField="id"
+            caption={translate('cancerLibraryApp.userPatientDndGrid.column.id')}
+            alignment={'center'}
+            visible={false}
           />
-          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={"center"}>
-            <Column dataField="submitted" caption={translate('cancerLibraryApp.userPatientDndGrid.column.submitted')} alignment={'center'}/>
-            <Column dataField="approved" caption={translate('cancerLibraryApp.userPatientDndGrid.column.approved')} alignment={'center'}/>
-            <Column dataField="declined" caption={translate('cancerLibraryApp.userPatientDndGrid.column.declined')} alignment={'center'}/>
+          <Column dataField="login" caption={translate('cancerLibraryApp.userPatientDndGrid.column.login')} alignment={'center'} />
+          <Column dataField="name" caption={translate('cancerLibraryApp.userPatientDndGrid.column.name')} alignment={'center'} />
+          <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')} alignment={'center'} />
+          <Column
+            caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')}
+            alignment={'center'}
+            calculateCellValue={rowData => {
+              return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
+            }}
+          />
+          <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={'center'}>
+            <Column
+              dataField="submitted"
+              caption={translate('cancerLibraryApp.userPatientDndGrid.column.submitted')}
+              alignment={'center'}
+            />
+            <Column dataField="approved" caption={translate('cancerLibraryApp.userPatientDndGrid.column.approved')} alignment={'center'} />
+            <Column dataField="declined" caption={translate('cancerLibraryApp.userPatientDndGrid.column.declined')} alignment={'center'} />
           </Column>
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
@@ -113,15 +128,23 @@ export const UserPatientDndGrid = () => {
           </Button>
         </Stack>
       </div>
-      <div className="tables">
-        <div className="column">
-          <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
-        </div>
-        <div className="column d-flex align-items-center">
-          <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
-        </div>
-        <div className="column">
-          <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
+
+      <div className="wrap-page">
+        <h1 className="title-page">
+          데이터 할당 <HelpOutlineOutlinedIcon />
+          <span className="patient-text">원하는 데이터셋을 우측 대시보드 영역으로 드래그앤 드롭합니다.</span>
+        </h1>
+
+        <div className="tables">
+          <div className="column">
+            <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          </div>
+          <div className="column d-flex align-items-center">
+            <FontAwesomeIcon icon="arrow-right" size={'2x'} />
+          </div>
+          <div className="column">
+            <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys} />
+          </div>
         </div>
       </div>
     </div>

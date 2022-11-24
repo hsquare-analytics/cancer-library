@@ -74,6 +74,10 @@
  * devextreme mui Override
  * David 추가
  */
+.dx-datagrid-header-panel {
+  padding: 0;
+}
+
 .dx-datagrid-headers,
 .dx-datagrid-filter-row {
   background-color: var(--bg-datagrid-headers);
