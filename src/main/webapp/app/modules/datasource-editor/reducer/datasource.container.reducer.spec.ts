@@ -27,14 +27,8 @@ describe('User Patient selector module reducer tests', () => {
   }
 
   const initialState = {
-    item: {
-      container: {},
-      count: 0
-    },
-    rawData: {
-      container: {},
-      count: 0
-    },
+    itemContainer: {},
+    dataContainer: {},
     loading: false,
     categories: [],
     errorMessage: null,
@@ -47,10 +41,8 @@ describe('User Patient selector module reducer tests', () => {
       loading: false,
       errorMessage: null,
     });
-    expect(isEmpty(state.item.container));
-    expect(isEmpty(state.rawData.container));
-    expect(isNaN(state.item.count));
-    expect(isNaN(state.rawData.count));
+    expect(isEmpty(state.itemContainer));
+    expect(isEmpty(state.dataContainer));
   }
 
   function testMultipleTypes(types, payload, testFunction, error?) {
@@ -75,10 +67,7 @@ describe('User Patient selector module reducer tests', () => {
     it('should reset dataSource container', () => {
       expect(reducer({
         ...initialState,
-        rawData: {
-          container: {},
-          count: 0
-        }
+        dataContainer: {1: [{id: 1, name: 'test'}]}
       }, resetRawData())).toEqual({
         ...initialState
       });
@@ -96,10 +85,7 @@ describe('User Patient selector module reducer tests', () => {
     it('should reset item container', () => {
       expect(reducer({
         ...initialState,
-        item: {
-          container: {},
-          count: 0
-        }
+        itemContainer: {1: [{id: 1, title: 'test'}]}
       }, resetItem())).toEqual({
         ...initialState
       });
@@ -173,12 +159,9 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        item: {
-          container: {
-            fakeId: payload.data
-          },
-          count: 1
-        }
+        itemContainer: {
+          fakeId: payload.data
+        },
       });
     });
 
@@ -190,12 +173,9 @@ describe('User Patient selector module reducer tests', () => {
         payload,
       })).toEqual({
         ...initialState,
-        rawData: {
-          container: {
-            fakeId: payload.data.dataSource
-          },
-          count: 1
-        }
+        dataContainer: {
+          fakeId: payload.data.dataSource
+        },
       });
     });
 

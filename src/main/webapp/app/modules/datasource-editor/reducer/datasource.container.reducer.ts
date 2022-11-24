@@ -5,14 +5,8 @@ import {ICategory} from "app/shared/model/category.model";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
 
 type userPatientSelectorType = {
-  item: {
-    container: { [key: string]: IItem[] },
-    count: number
-  },
-  rawData: {
-    container: { [key: string]: any },
-    count: number
-  },
+  itemContainer: { [key: string]: IItem[] },
+  dataContainer: { [key: string]: any },
   categories: ICategory[];
   loading: boolean,
   errorMessage: string | null;
@@ -21,14 +15,8 @@ type userPatientSelectorType = {
 };
 
 const initialState: userPatientSelectorType = {
-  item: {
-    container: {},
-    count: 0
-  },
-  rawData: {
-    container: {},
-    count: 0
-  },
+  itemContainer: {},
+  dataContainer: {},
   categories: [],
   loading: false,
   errorMessage: null,
@@ -101,19 +89,13 @@ export const DatasourceContainer = createSlice({
     resetRawData(state) {
       return {
         ...state,
-        rawData: {
-          container: {},
-          count: 0
-        }
+        dataContainer: {},
       }
     },
     resetItem(state) {
       return {
         ...state,
-        item: {
-          container: {},
-          count: 0
-        }
+        itemContainer: {},
       }
     },
   },
@@ -131,12 +113,9 @@ export const DatasourceContainer = createSlice({
         const {data} = action.payload;
         return {
           ...state,
-          item: {
-            container: {
-              ...state.item.container,
-              [data[0].category.id]: data
-            },
-            count: state.item.count + 1
+          itemContainer: {
+            ...state.itemContainer,
+            [data[0].category.id]: data
           }
         }
       })
@@ -144,13 +123,10 @@ export const DatasourceContainer = createSlice({
         const {data} = action.payload;
         return {
           ...state,
-          rawData: {
-            container: {
-              ...state.rawData.container,
-              [data.categoryId]: data.dataSource
-            },
-            count: state.rawData.count + 1,
-          }
+          dataContainer: {
+            ...state.dataContainer,
+            [data.categoryId]: data.dataSource
+          },
         }
       })
       .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state) => {

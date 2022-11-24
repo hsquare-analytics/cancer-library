@@ -55,8 +55,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const [actionType, setActionType] = useState(null);
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
-  const rawDataContainer = useAppSelector(state => state.datasourceContainer.rawData.container);
-  const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
+  const dataContainer = useAppSelector(state => state.datasourceContainer.dataContainer);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
   const isManager = useAppSelector(state =>
@@ -75,7 +75,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   }, [updateSuccess]);
 
   const canRender: () => boolean = () =>
-    category && itemContainer && itemContainer[category.id] && rawDataContainer && rawDataContainer[category.id];
+    category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
   function buttonCellRender(data) {
     const row = data.row.data;
@@ -127,7 +127,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       <AccordionDetails sx={{padding: '8px 0'}}>
         <DataGrid
           ref={dataGrid}
-          dataSource={JSON.parse(JSON.stringify(rawDataContainer[category.id]))}
+          dataSource={JSON.parse(JSON.stringify(dataContainer[category.id]))}
           hoverStateEnabled={true}
           showBorders={true}
           filterRow={{visible: false}}

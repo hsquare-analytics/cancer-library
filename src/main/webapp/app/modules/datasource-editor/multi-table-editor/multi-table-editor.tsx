@@ -20,11 +20,8 @@ export const MultiTableEditor = () => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const categories = useAppSelector(state => state.datasourceContainer.categories);
 
-  const rawDataCount = useAppSelector(state => state.datasourceContainer.rawData.count);
-  const itemContainer = useAppSelector(state => state.datasourceContainer.item.container);
-  const itemCount = useAppSelector(state => state.datasourceContainer.item.count);
-
-  const loading = useAppSelector(state => state.datasourceContainer.loading) || itemCount < categories.length;
+  const dataContainer = useAppSelector(state => state.datasourceContainer.dataContainer);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
 
   useEffect(() => {
     if (categories.length === 0) {
@@ -55,42 +52,36 @@ export const MultiTableEditor = () => {
     }
   }, [JSON.stringify(patient?.ptNo)]);
 
-  const progressValue = Math.round((rawDataCount + itemCount) / (categories.length * 2) * 100);
-  return (<div>
-    {
-      !loading ? (
-          <div>
-            <Box sx={{
-              position: 'relative',
-              flexDirection: 'row',
-              display: (progressValue === 100) ? 'none' : 'inline-flex'
-            }}>
-              <CircularProgress variant="determinate" value={progressValue}/>
-              <Box sx={{
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                position: 'absolute',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              >
-                <Typography variant="caption" component="div" color="text.secondary">{`${progressValue}%`}</Typography>
-              </Box>
-            </Box>
-            {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
-              key={category.id} category={category}/>)}
-          </div>
-        ) :
-        <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh'}}>
-          <CircularProgress/>
+  const containerCount = _.size(dataContainer) + _.size(itemContainer);
+  const progressValue = Math.round(containerCount / (categories.length * 2) * 100);
+  return (
+    <div>
+      <div>
+        <Box sx={{
+          position: 'relative',
+          flexDirection: 'row',
+          display: (progressValue === 100) ? 'none' : 'inline-flex'
+        }}>
+          <CircularProgress variant="determinate" value={progressValue}/>
+          <Box sx={{
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          >
+            <Typography variant="caption" component="div" color="text.secondary">{`${progressValue}%`}</Typography>
+          </Box>
         </Box>
-    }
-  </div>)
-
-
+        {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
+          key={category.id} category={category}/>)}
+      </div>
+    </div>
+  );
 }
 
 export default MultiTableEditor;
