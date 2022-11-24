@@ -185,16 +185,23 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           onSaved={e => {
             if (e.changes.length === 0) {
               dispatch(resetDatasourceStatusReducer());
-              dispatch(resetDatasourceContainerFlag());
+              dispatch(resetDatasourceContainerFlag())
             }
           }}
         >
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
-          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')} width={110} alignment={"center"}
-                  cellRender={(data) => <DxRowConfirmCellRender category={category} row={data.row.data}/>}/>
-          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')} width={80} alignment={"center"}
+          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
+                  width={110} alignment={"center"}
+                  cellRender={(data) => <DxRowConfirmCellRender category={category} row={data.row.data}
+                                                                setEditorStatus={() => {
+                                                                  setActionType(ActionType.UPDATE);
+                                                                  setEditedRow(data.row.data);
+                                                                  dispatch(setSelectedCategory(category));
+                                                                }}/>}/>
+          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}
+                  width={80} alignment={"center"}
                   cellRender={(data) => <DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column

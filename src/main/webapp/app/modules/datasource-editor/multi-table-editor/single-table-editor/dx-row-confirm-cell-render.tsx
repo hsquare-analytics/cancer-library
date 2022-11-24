@@ -7,7 +7,6 @@ import {
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
-import {setCategory as setSelectedCategory,} from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import Chip from '@mui/material/Chip';
 import DoneIcon from '@mui/icons-material/Done';
 import {translate} from 'react-jhipster';
@@ -16,6 +15,7 @@ import {translate} from 'react-jhipster';
 export interface IDxRowConfirmCellRenderProps {
   row: any;
   category: ICategory;
+  setEditorStatus: () => void;
 }
 
 const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
@@ -63,7 +63,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
           size={'small'}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setSelectedCategory(category));
+            props.setEditorStatus();
             onClickConfirm();
           }}/>
   )
