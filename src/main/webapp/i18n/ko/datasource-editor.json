@@ -59,7 +59,7 @@
           "title": "데이터가 이상없음을 확인하셨습니까?",
           "text": "정말로 삭제하시겠습니까?",
           "status" : {
-            "confirmed": "확인됨",
+            "confirmed": "확인",
             "notConfirmed": "? 미확인"
           },
           "button" : {

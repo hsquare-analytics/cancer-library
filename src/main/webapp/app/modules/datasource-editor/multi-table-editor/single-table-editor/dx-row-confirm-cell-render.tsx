@@ -52,6 +52,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
 
   return row['created_by'] ? (
     <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.confirmed')}
+          color="success"
           icon={<DoneIcon/>}
           size={'small'}
           variant="outlined"

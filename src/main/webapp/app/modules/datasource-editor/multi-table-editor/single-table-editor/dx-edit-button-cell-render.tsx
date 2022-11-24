@@ -30,16 +30,17 @@ const DxEditButtonCellRender = (props: IDxEditButtonCellRenderProps) => {
   const canManaging = row.idx.includes(KCURE_PREFIX) && (isManager || row['created_by'] === login);
 
   return (
-    <Stack spacing={1} direction="row">
-      <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}}
+    <Stack spacing={2} direction="row"
+           sx={{justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%'}}>
+      <Button variant="text"
+              style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', margin: 0}}
               onClick={() => dataGridRef.current.instance.editRow(rowIndex)}>
         <FontAwesomeIcon icon="pencil"/>
       </Button>
       {canManaging && (
-        <Button
-          variant="text"
-          style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-          onClick={() => dataGridRef.current.instance.deleteRow(rowIndex)}
+        <Button variant="text"
+                style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px', margin: 0}}
+                onClick={() => dataGridRef.current.instance.deleteRow(rowIndex)}
         >
           <FontAwesomeIcon icon="trash"/>
         </Button>

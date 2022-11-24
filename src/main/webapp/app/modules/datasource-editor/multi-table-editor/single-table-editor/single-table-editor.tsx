@@ -201,7 +201,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                                                                   dispatch(setSelectedCategory(category));
                                                                 }}/>}/>
           <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}
-                  width={80} alignment={"center"}
+                  width={110} alignment={"center"}
                   cellRender={(data) => <DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
