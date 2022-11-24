@@ -82,7 +82,7 @@ export const AccessiblePatient = () => {
     <section className="wrap-page">
       <h1 className="title-page">{translate('cancerLibraryApp.datasourceEditor.pageTitle')}</h1>
       <MultiTableEditorPopup ref={multiTableEditorPopupRef} />
-      {!loading ? (
+      {!loading || patientList.length > 0 ? (
         <DataGrid
           id="accessible-patient-datagrid"
           ref={dataGrid}
