@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import SingleTableEditor from "app/modules/datasource-editor/multi-table-editor/single-table-editor";
+import SingleTableEditor
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor";
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';

@@ -31,13 +31,12 @@ import {
   onRowRemoving,
   onRowValidating,
   toastApiResult,
-} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor.utils';
-import {hasAnyAuthority} from 'app/shared/auth/private-route';
-import {AUTHORITIES} from 'app/config/constants';
-import Stack from '@mui/material/Stack';
+} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
 import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from 'app/config/datasource-constants';
 import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
+import DxEditButtonCellRender
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-edit-button-cell-render";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -58,10 +57,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const dataContainer = useAppSelector(state => state.datasourceContainer.dataContainer);
   const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
-  const login = useAppSelector(state => state.authentication.account.login);
-  const isManager = useAppSelector(state =>
-    hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
-  );
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
 
   const {category} = props;
@@ -77,34 +72,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
-  function buttonCellRender(data) {
-    const row = data.row.data;
-    const rowIndex = data.rowIndex;
-
-    if (!row || !row.idx) {
-      return null;
-    }
-
-    const canManaging = row.idx.includes(KCURE_PREFIX) && (isManager || row['created_by'] === login);
-
-    return (
-      <Stack spacing={1} direction="row">
-        <Button variant="text" style={{maxHeight: '30px', minHeight: '30px'}}
-                onClick={() => dataGrid.current.instance.editRow(rowIndex)}>
-          <FontAwesomeIcon icon="pencil"/>
-        </Button>
-        {canManaging && (
-          <Button
-            variant="text"
-            style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-            onClick={() => dataGrid.current.instance.deleteRow(rowIndex)}
-          >
-            <FontAwesomeIcon icon="trash"/>
-          </Button>
-        )}
-      </Stack>
-    );
-  }
 
   return canRender() ? (
     <Accordion defaultExpanded={true} className={'single-table-editor-wrapper'}>
@@ -220,10 +187,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }
           }}
         >
-          <Column type="buttons" width={80} cellRender={buttonCellRender}/>
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
+          <Column type="buttons" caption={"편집"} width={80} cellRender={(data)=><DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"
