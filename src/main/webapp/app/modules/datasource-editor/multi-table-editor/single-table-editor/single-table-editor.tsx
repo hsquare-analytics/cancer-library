@@ -37,6 +37,8 @@ import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import DxEditButtonCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-edit-button-cell-render";
+import DxRowConfirmCellRender
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -190,7 +192,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
-          <Column type="buttons" caption={"편집"} width={80} cellRender={(data)=><DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
+          <Column type="buttons" caption={"상태"} width={110} alignment={"center"}
+                  cellRender={(data) => <DxRowConfirmCellRender category={category} row={data.row.data}/>}/>
+          <Column type="buttons" caption={"편집"} width={80} alignment={"center"}
+                  cellRender={(data) => <DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"
