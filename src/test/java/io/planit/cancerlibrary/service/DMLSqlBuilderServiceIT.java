@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.service;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.*;
+import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
@@ -25,6 +26,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @IntegrationTest
 class DMLSqlBuilderServiceIT {
@@ -74,6 +76,8 @@ class DMLSqlBuilderServiceIT {
         Timestamp timestamp = Timestamp.from(Instant.now());
         // given
         BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
+        BDDMockito.given(timeService.convertTimezoneStringToTimestamp(anyString())).willReturn(timestamp);
+
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
@@ -82,9 +86,12 @@ class DMLSqlBuilderServiceIT {
         Item item2 = new Item().category(category).title("column1").activated(true);
         Item item3 = new Item().category(category).title("column2").activated(true);
 
+        Item dateColumn = new Item().category(category).title("column3").activated(true).attribute(new ItemAttribute().caption("date_column").required(true).dataType("date"));
+
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
         itemRepository.saveAndFlush(item3);
+        itemRepository.saveAndFlush(dateColumn);
 
         // when
         String result = dmlSqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
@@ -92,12 +99,13 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
             put("column2", "test2");
+            put("column3", timestamp.toString());
         }});
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
-            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp));
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
     }
 
     @ParameterizedTest
@@ -178,29 +186,34 @@ class DMLSqlBuilderServiceIT {
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
     void testUpdateSql() {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp timestamp = Timestamp.from(Instant.now());
         // given
         BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
+        BDDMockito.given(timeService.convertTimezoneStringToTimestamp(anyString())).willReturn(timestamp);
+
         User user = UserResourceIT.createEntity(em);
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
         Item item1 = new Item().category(category).title("column1").activated(true);
         Item item2 = new Item().category(category).title("column2").activated(true);
+        Item dateColumn = new Item().category(category).title("column3").activated(true).attribute(new ItemAttribute().caption("date_column").required(true).dataType("date"));
 
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
+        itemRepository.saveAndFlush(dateColumn);
 
         // when
         String result = dmlSqlBuilderService.getUpdateSQL(category.getId(), new HashMap<>() {{
             put("idx", "test_idx");
             put("column1", "test1");
             put("column2", "test2");
+            put("column3", timestamp.toString());
         }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp))
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', COLUMN3 = '%s', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp, timestamp))
             .contains("WHERE (IDX = 'test_idx')");
     }
 

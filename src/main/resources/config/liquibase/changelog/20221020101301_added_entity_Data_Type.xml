@@ -12,7 +12,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20221020101301-1-data" author="jhipster" context="faker">
+    <changeSet id="20221020101301-1-data" author="jhipster" context="faker,test">
         <loadData
                   file="config/liquibase/fake-data/data_type.csv"
                   separator=";"

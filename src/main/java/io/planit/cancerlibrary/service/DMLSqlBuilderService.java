@@ -7,11 +7,13 @@ import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.repository.ItemRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +64,12 @@ public class DMLSqlBuilderService {
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (map.containsKey(mapKey) && map.get(mapKey) != null) {
-                sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
+                if (ObjectUtils.isNotEmpty(item.getAttribute()) && "date".equals(item.getAttribute().getDataType())) {
+                    Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
+                    sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", timestamp));
+                } else {
+                    sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
+                }
             }
         });
 
@@ -129,7 +136,12 @@ public class DMLSqlBuilderService {
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (map.containsKey(mapKey) && map.get(mapKey) != null) {
-                sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
+                if (ObjectUtils.isNotEmpty(item.getAttribute()) && "date".equals(item.getAttribute().getDataType())) {
+                    Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
+                    sql.SET(getSqlEqualSyntax(item.getTitle(), timestamp));
+                } else {
+                    sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
+                }
             }
         });
 
