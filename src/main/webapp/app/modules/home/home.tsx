@@ -1,10 +1,9 @@
 import './home.scss';
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Translate } from 'react-jhipster';
+import {Translate} from 'react-jhipster';
 
-import { useAppSelector } from 'app/config/store';
+import {useAppSelector} from 'app/config/store';
 import Login from 'app/modules/login/login';
 
 export const Home = () => {
@@ -16,7 +15,7 @@ export const Home = () => {
         <div className="area-home-title">
           <h1>
             <p>
-              <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
+              <Translate contentKey="home.logged.message" interpolate={{ username: account.name }}>
                 {/* 님 안녕하세요 */}
               </Translate>
             </p>
