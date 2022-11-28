@@ -6,8 +6,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './subject.reducer';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
-import SubjectColumns from "app/entities/subject/subject.column";
-import {getDxButtonColumns} from "app/entities/entities.utils";
+import SubjectColumns from 'app/entities/subject/subject.column';
+import {getDxButtonColumns} from 'app/entities/entities.utils';
 
 export const Subject = () => {
   const dispatch = useAppDispatch();
@@ -26,15 +26,15 @@ export const Subject = () => {
   };
 
   return (
-    <div>
-      <h2 id="subject-heading" data-cy="SubjectHeading">
+    <div className="wrap-page">
+      <h2 id="subject-heading" data-cy="SubjectHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.subject.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
           </Button>
           <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus"/>
+            <FontAwesomeIcon icon="plus" />
           </Link>
         </div>
       </h2>
@@ -50,26 +50,28 @@ export const Subject = () => {
             rowAlternationEnabled={true}
             showColumnHeaders={true}
             editing={{
-              mode: "row",
+              mode: 'row',
               useIcons: true,
               allowUpdating: true,
-              allowDeleting: true
+              allowDeleting: true,
             }}
             paging={{pageSize: 22}}
           >
-            {SubjectColumns.map((column, index) => <Column
-              key={index}
-              dataField={column.dataField}
-              caption={column.caption}
-              dataType={column.dataType}
-              visible={column.visible}
-              width={column.width}
-              format={column.format}
-              sortIndex={column.sortIndex}
-              sortOrder={column.sortOrder}
-              alignment={'center'}
-            />)}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+            {SubjectColumns.map((column, index) => (
+              <Column
+                key={index}
+                dataField={column.dataField}
+                caption={column.caption}
+                dataType={column.dataType}
+                visible={column.visible}
+                width={column.width}
+                format={column.format}
+                sortIndex={column.sortIndex}
+                sortOrder={column.sortOrder}
+                alignment={'center'}
+              />
+            ))}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
           </DataGrid>
         ) : (
           !loading && (

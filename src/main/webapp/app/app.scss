@@ -20,6 +20,7 @@
   --bg-badge-status-submitted: #88bfec;
   --bg-badge-status-declined: #FFDEDE;
   --color-badge-status-declined: #E55041;
+  --side-nav-link-color: #fff;
 }
 
 .alert {
@@ -39,6 +40,7 @@
 .dark {
   --white: #333;
   --bs-primary: #454545;
+  --side-nav-link-color: #fff;
 
   .btn-primary {
     --bs-btn-color: #fff;
@@ -113,7 +115,7 @@ a {
       > .wrap-home {
         height: calc(100vh);
         background: #fff url("./asset/img/bg-main.png") right bottom no-repeat;
-        background-size: 2100px;
+        background-size: contain;
 
         display: flex;
         align-items: center;
@@ -148,7 +150,7 @@ a {
     display: block;
     position: absolute;
     top: 30px;
-    left: 30px;
+    left: 25px;
     width: 152px;
     height: 84px;
     background: url("./asset/img/logo-snuh.png") 0 0 no-repeat;
@@ -159,7 +161,7 @@ a {
     display: block;
     position: absolute;
     bottom: 30px;
-    left: 30px;
+    left: 40px;
     width: 157px;
     height: 51px;
     background: url("./asset/img/logo-p.png") 0 0 no-repeat;

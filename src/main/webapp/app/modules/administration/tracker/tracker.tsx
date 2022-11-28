@@ -1,14 +1,14 @@
 import React from 'react';
-import { Translate } from 'react-jhipster';
+import {Translate} from 'react-jhipster';
 
-import { useAppSelector } from 'app/config/store';
+import {useAppSelector} from 'app/config/store';
 
 export const TrackerPage = () => {
   const activities = useAppSelector(state => state.administration.tracker.activities);
 
   return (
-    <div>
-      <h2>
+    <div className="wrap-page">
+      <h2 className="title-page">
         <Translate contentKey="tracker.title">Real-time user activities</Translate>
       </h2>
       <table className="table table-sm table-striped table-bordered">
