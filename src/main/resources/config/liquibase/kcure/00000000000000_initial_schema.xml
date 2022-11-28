@@ -33,6 +33,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/09_gscn_exam_impt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/10_gscn_exam_mlpt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/kcure_patient_authority.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/kcure_0_common_user.sql"/>
     </changeSet>
     <include file="config/liquibase/kcure/kcure_common_code.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
