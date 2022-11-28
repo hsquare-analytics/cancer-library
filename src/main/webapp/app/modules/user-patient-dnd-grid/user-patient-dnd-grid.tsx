@@ -82,7 +82,7 @@ export const UserPatientDndGrid = () => {
       <div className="wrap-page">
         <h1 className="title-page">리뷰어 정보</h1>
         <DataGrid
-          height={'25vh'}
+          height={'30vh'}
           dataSource={users}
           showBorders={true}
           filterRow={{visible: true}}
@@ -92,6 +92,7 @@ export const UserPatientDndGrid = () => {
           paging={{pageSize: 10}}
           onSelectionChanged={onSelectionChanged}
           loadPanel={{enabled: !loading}}
+          scrolling={{mode: 'standard', showScrollbar: 'always'}}
         >
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
           <Column
