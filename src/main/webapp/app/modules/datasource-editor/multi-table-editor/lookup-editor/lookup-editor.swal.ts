@@ -19,8 +19,9 @@ export const fireAddCardSwal = () => {
         description: $('#swal-input2').val(),
       };
     },
+    customClass: 'cancer-dialog',
     inputAttributes: {
-      autocapitalize: 'off'
+      autocapitalize: 'off',
     },
     showCancelButton: true,
     confirmButtonText: 'Add',
@@ -31,14 +32,15 @@ export const fireAddCardSwal = () => {
 export const fireSaveCardSwal = () => {
   return Swal.fire({
     text: translate('cancerLibraryApp.datasourceEditor.lookupEditor.saveAlert'),
-    icon: 'warning',
+    // icon: 'warning',
+    customClass: 'cancer-dialog',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.confirmButtonText'),
     cancelButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.cancelButtonText'),
   });
-}
+};
 
 export const fireDeleteCardSwal = () => {
   return Swal.fire({

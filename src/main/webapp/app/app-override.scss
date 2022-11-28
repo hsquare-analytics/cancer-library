@@ -123,3 +123,18 @@
     background-color: var(--bg-datagrid-row-hover);
   }
 }
+
+// sweetalert2 override
+// sweetalert2 의 customclass 를 cancer-dialog 로 한다.
+.cancer-dialog,
+.swal2-wide-textarea-container {
+  .swal2-styled.swal2-confirm {
+    background-color: var(--bs-primary);
+  }
+
+  .swal2-styled.swal2-confirm:focus {
+    box-shadow: 0 0 0 3px rgb(13 110 253 / 50%);
+  }
+
+}
+
