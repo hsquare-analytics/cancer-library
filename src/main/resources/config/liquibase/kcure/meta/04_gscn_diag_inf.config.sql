@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_INF (
                                pt_no varchar(10) NOT NULL, -- 환자대체번호
                                diag_rgst_ymd varchar(8) NOT NULL, -- 진단등록일자
                                diag_rgst_seq numeric(3) NOT NULL, -- 진단등록순번
-                               diag_kncd varchar(20) NULL, -- 진단종류코드
+                               diag_kncd varchar(20) NULL, -- 위암진단종류코드
                                diag_knnm varchar(200) NULL, -- 진단종류명
                                diag_cd varchar(20) NULL, -- 진단코드
                                diag_nm varchar(200) NULL, -- 진단명
@@ -43,7 +43,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9404,
 insert into ph_item_attribute (item_id, caption, required) values (9404, '진단등록순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9405, 'diag_kncd', 9400, 'system', 9405, 20100);
-insert into ph_item_attribute (item_id, caption, data_type) values (9405, '진단종류코드', 'selectbox');
+insert into ph_item_attribute (item_id, caption, data_type) values (9405, '위암진단종류코드', 'selectbox');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9406, 'diag_knnm', 9400, 'system', 9406);
 insert into ph_item_attribute (item_id, caption) values (9406, '진단종류명');
