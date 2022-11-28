@@ -70,11 +70,11 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (9512
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9513, 'idx', 9500, 'system', 9513);
 -- insert into ph_item_attribute (item_id, caption) values (9513, 'UI용 시퀀스');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9514, 'mdfm_id', 9500, 'system', 9514);
-insert into ph_item_attribute (item_id, caption) values (9514, 'UI용 서식ID');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9514, 'mdfm_id', 9500, 'system', 9514);
+-- insert into ph_item_attribute (item_id, caption) values (9514, 'UI용 서식ID');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9515, 'mdfm_nm', 9500, 'system', 9515);
-insert into ph_item_attribute (item_id, caption) values (9515, 'UI용 서식명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9515, 'mdfm_nm', 9500, 'system', 9515);
+-- insert into ph_item_attribute (item_id, caption) values (9515, 'UI용 서식명');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9516, 'clnc_cnte', 9500, 'system', 9516);
-insert into ph_item_attribute (item_id, caption) values (9516, 'UI용 임상내용');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9516, 'clnc_cnte', 9500, 'system', 9516);
+-- insert into ph_item_attribute (item_id, caption) values (9516, 'UI용 임상내용');

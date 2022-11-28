@@ -73,7 +73,7 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (9814
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9815, 'idx', 9800, 'system', 9815);
 -- insert into ph_item_attribute (item_id, caption) values (9815, 'UI용 시퀀스');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9816, 'pact_id', 9800, 'system', 9816);
-insert into ph_item_attribute (item_id, caption) values (9816, 'UI용 PACT_ID');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9816, 'pact_id', 9800, 'system', 9816);
+-- insert into ph_item_attribute (item_id, caption) values (9816, 'UI용 PACT_ID');
 
 

@@ -68,12 +68,11 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (9612
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9613, 'idx', 9600, 'system', 9613);
 -- insert into ph_item_attribute (item_id, caption) values (9613, 'UI용 시퀀스');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9614, 'mdfm_id', 9600, 'system', 9614);
-insert into ph_item_attribute (item_id, caption) values (9614, 'UI용 서식ID');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9615, 'mdfm_nm', 9600, 'system', 9615);
-insert into ph_item_attribute (item_id, caption) values (9615, 'UI용 서식명');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9616, 'mtst_site_nm_cnte', 9600, 'system', 9616);
-insert into ph_item_attribute (item_id, caption) values (9616, 'UI용 전이부위명');
-
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9614, 'mdfm_id', 9600, 'system', 9614);
+-- insert into ph_item_attribute (item_id, caption) values (9614, 'UI용 서식ID');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9615, 'mdfm_nm', 9600, 'system', 9615);
+-- insert into ph_item_attribute (item_id, caption) values (9615, 'UI용 서식명');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9616, 'mtst_site_nm_cnte', 9600, 'system', 9616);
+-- insert into ph_item_attribute (item_id, caption) values (9616, 'UI용 전이부위명');

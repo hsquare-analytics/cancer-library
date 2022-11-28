@@ -69,8 +69,8 @@ insert into ph_item_attribute (item_id, caption) values (9412, '진단SNOMEDCT�
 insert into ph_item (id, title, category_id, created_by, order_no) values (9413, 'crtn_dt', 9400, 'system', 9413);
 insert into ph_item_attribute (item_id, caption, format, data_type) values (9413, '생성일시', 'yyyy-MM-dd', 'date');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9414, 'PACT_ID', 9400, 'system', 9414);
-insert into ph_item_attribute (item_id, caption) values (9414, 'UI용 PACT_ID');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9414, 'PACT_ID', 9400, 'system', 9414);
+-- insert into ph_item_attribute (item_id, caption) values (9414, 'UI용 PACT_ID');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9415, 'idx', 9400, 'system', 9415);
 -- insert into ph_item_attribute (item_id, caption) values (9415, 'UI용 시퀀스');

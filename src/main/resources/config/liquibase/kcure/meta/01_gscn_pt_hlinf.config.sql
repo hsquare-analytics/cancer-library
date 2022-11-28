@@ -248,11 +248,11 @@ insert into ph_item_attribute (item_id, caption) values (9156, '퇴원상태명'
 insert into ph_item (id, title, category_id, created_by, order_no) values (9157, 'crtn_dt', 9100, 'system', 9157);
 insert into ph_item_attribute (item_id, caption, format, data_type) values (9157, '생성일시', 'yyyy-MM-dd', 'date');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9158, 'pact_id', 9100, 'system', 9158);
-insert into ph_item_attribute (item_id, caption) values (9158, 'pact_id(ui용)');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9159, 'rec_wrt_dtm', 9100, 'system', 9159);
-insert into ph_item_attribute (item_id, caption) values (9159, '작성일자(ui용)');
-
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9158, 'pact_id', 9100, 'system', 9158);
+-- insert into ph_item_attribute (item_id, caption) values (9158, 'pact_id(ui용)');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9159, 'rec_wrt_dtm', 9100, 'system', 9159);
+-- insert into ph_item_attribute (item_id, caption) values (9159, '작성일자(ui용)');
+--
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9160, 'idx', 9100, 'system', 9160);
 -- insert into ph_item_attribute (item_id, caption) values (9160, 'ui용 시퀀스');
