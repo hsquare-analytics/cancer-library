@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Translate } from 'react-jhipster';
+import React, {useState, useEffect} from 'react';
+import {Translate} from 'react-jhipster';
 
-import { getLoggers, changeLogLevel } from '../administration.reducer';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getLoggers, changeLogLevel} from '../administration.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 export const LogsPage = () => {
   const [filter, setFilter] = useState('');
@@ -22,15 +22,15 @@ export const LogsPage = () => {
 
   const filterFn = l => l.name.toUpperCase().includes(filter.toUpperCase());
 
-  const loggers = logs ? Object.entries(logs.loggers).map((e: any) => ({ name: e[0], level: e[1].effectiveLevel })) : [];
+  const loggers = logs ? Object.entries(logs.loggers).map((e: any) => ({name: e[0], level: e[1].effectiveLevel})) : [];
 
   return (
-    <div>
-      <h2 id="logs-page-heading" data-cy="logsPageHeading">
+    <div className="wrap-page">
+      <h2 id="logs-page-heading" data-cy="logsPageHeading" className="title-page">
         <Translate contentKey="logs.title">Logs</Translate>
       </h2>
       <p>
-        <Translate contentKey="logs.nbloggers" interpolate={{ total: loggers.length }}>
+        <Translate contentKey="logs.nbloggers" interpolate={{total: loggers.length}}>
           There are {loggers.length.toString()} loggers.
         </Translate>
       </p>

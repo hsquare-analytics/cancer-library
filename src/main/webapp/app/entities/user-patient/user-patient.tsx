@@ -8,8 +8,8 @@ import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-uti
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './user-patient.reducer';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
-import {getDxButtonColumns} from "app/entities/entities.utils";
-import UserPatientColumns from "app/entities/user-patient/user-patient.column";
+import {getDxButtonColumns} from 'app/entities/entities.utils';
+import UserPatientColumns from 'app/entities/user-patient/user-patient.column';
 
 export const UserPatient = () => {
   const dispatch = useAppDispatch();
@@ -81,14 +81,19 @@ export const UserPatient = () => {
   };
 
   return (
-    <div>
-      <h2 id="userPatient-heading" data-cy="UserPatientHeading">
+    <div className="wrap-page">
+      <h2 id="userPatient-heading" data-cy="UserPatientHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.userPatient.home.title">UserPatients</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} />{' '}
           </Button>
-          <Link to="/admin/user-patient/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link
+            to="/admin/user-patient/new"
+            className="btn btn-primary jh-create-entity"
+            id="jh-create-entity"
+            data-cy="entityCreateButton"
+          >
             <FontAwesomeIcon icon="plus" />
           </Link>
         </div>
@@ -105,26 +110,28 @@ export const UserPatient = () => {
             rowAlternationEnabled={true}
             showColumnHeaders={true}
             editing={{
-              mode: "row",
+              mode: 'row',
               useIcons: true,
               allowUpdating: true,
-              allowDeleting: true
+              allowDeleting: true,
             }}
             paging={{pageSize: 22}}
           >
-            {UserPatientColumns.map((column, index) => <Column
-              key={index}
-              dataField={column.dataField}
-              caption={column.caption}
-              dataType={column.dataType}
-              visible={column.visible}
-              width={column.width}
-              format={column.format}
-              sortIndex={column.sortIndex}
-              sortOrder={column.sortOrder}
-              alignment={'center'}
-            />)}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+            {UserPatientColumns.map((column, index) => (
+              <Column
+                key={index}
+                dataField={column.dataField}
+                caption={column.caption}
+                dataType={column.dataType}
+                visible={column.visible}
+                width={column.width}
+                format={column.format}
+                sortIndex={column.sortIndex}
+                sortOrder={column.sortOrder}
+                alignment={'center'}
+              />
+            ))}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
           </DataGrid>
         ) : (
           !loading && (

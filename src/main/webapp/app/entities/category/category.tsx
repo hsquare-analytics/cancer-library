@@ -6,8 +6,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './category.reducer';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
-import {getDxButtonColumns} from "app/entities/entities.utils";
-import CategoryColumns from "app/entities/category/category.column";
+import {getDxButtonColumns} from 'app/entities/entities.utils';
+import CategoryColumns from 'app/entities/category/category.column';
 
 export const Category = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +26,8 @@ export const Category = () => {
   };
 
   return (
-    <div>
-      <h2 id="category-heading" data-cy="CategoryHeading">
+    <div className="wrap-page">
+      <h2 id="category-heading" data-cy="CategoryHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.category.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
@@ -50,26 +50,28 @@ export const Category = () => {
             rowAlternationEnabled={true}
             showColumnHeaders={true}
             editing={{
-              mode: "row",
+              mode: 'row',
               useIcons: true,
               allowUpdating: true,
-              allowDeleting: true
+              allowDeleting: true,
             }}
             paging={{pageSize: 22}}
           >
-            {CategoryColumns.map((column, index) => <Column
-              key={index}
-              dataField={column.dataField}
-              caption={column.caption}
-              dataType={column.dataType}
-              visible={column.visible}
-              width={column.width}
-              format={column.format}
-              sortIndex={column.sortIndex}
-              sortOrder={column.sortOrder}
-              alignment={'center'}
-            />)}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+            {CategoryColumns.map((column, index) => (
+              <Column
+                key={index}
+                dataField={column.dataField}
+                caption={column.caption}
+                dataType={column.dataType}
+                visible={column.visible}
+                width={column.width}
+                format={column.format}
+                sortIndex={column.sortIndex}
+                sortOrder={column.sortOrder}
+                alignment={'center'}
+              />
+            ))}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
           </DataGrid>
         ) : (
           !loading && (

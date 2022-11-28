@@ -1,12 +1,13 @@
 import React from 'react';
 import {NavLink} from 'reactstrap';
 import {NavLink as Link} from 'react-router-dom';
-import accountIcon from 'app/asset/img/icon-config.svg';
+
 import {Translate} from 'react-jhipster';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 const accountMenuItemsAuthenticated = () => (
   <>
@@ -40,23 +41,21 @@ interface IAccountMenuProps {
 export const AccountMenu = ({isAuthenticated = false}: IAccountMenuProps) => {
   return (
     <div>
-      <Accordion>
+      <Accordion className="no-shadow">
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
+          expandIcon={<ExpandMoreIcon sx={{color: 'primary.contrastText'}} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <NavLink>
-            <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
-            <span> <Translate contentKey="global.menu.account.main">account</Translate> </span>
+            <AccountCircleOutlinedIcon />
+            <Translate contentKey="global.menu.account.main">account</Translate>{' '}
           </NavLink>
         </AccordionSummary>
-        <AccordionDetails>
-          {isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}
-        </AccordionDetails>
+        <AccordionDetails>{isAuthenticated ? accountMenuItemsAuthenticated() : accountMenuItems()}</AccordionDetails>
       </Accordion>
     </div>
-  )
-}
+  );
+};
 
 export default AccountMenu;

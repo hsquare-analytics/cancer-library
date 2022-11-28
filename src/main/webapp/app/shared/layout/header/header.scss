@@ -118,6 +118,7 @@ Navbar styles
 
   .MuiAccordionSummary-root {
     padding: 0;
+
     .MuiAccordionSummary-content {
       margin: 0;
 
@@ -146,6 +147,7 @@ Navbar styles
   height: 50px;
   display: flex;
   align-items: center;
+  color: var(--side-nav-link-color);
 
   img {
     width: 22px;

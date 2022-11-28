@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Input, Row, Col, Badge } from 'reactstrap';
-import { Translate } from 'react-jhipster';
+import React, {useState, useEffect} from 'react';
+import {Table, Input, Row, Col, Badge} from 'reactstrap';
+import {Translate} from 'react-jhipster';
 
-import { getConfigurations, getEnv } from '../administration.reducer';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {getConfigurations, getEnv} from '../administration.reducer';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 
 export const ConfigurationPage = () => {
   const [filter, setFilter] = useState('');
@@ -31,15 +31,15 @@ export const ConfigurationPage = () => {
   const getContextList = contexts =>
     Object.values(contexts)
       .map((v: any) => v.beans)
-      .reduce((acc, e) => ({ ...acc, ...e }));
+      .reduce((acc, e) => ({...acc, ...e}));
 
   const configProps = configuration?.configProps ?? {};
 
   const env = configuration?.env ?? {};
 
   return (
-    <div>
-      <h2 id="configuration-page-heading" data-cy="configurationPageHeading">
+    <div className="wrap-page">
+      <h2 id="configuration-page-heading" data-cy="configurationPageHeading" className="title-page">
         <Translate contentKey="configuration.title">Configuration</Translate>
       </h2>
       <span>

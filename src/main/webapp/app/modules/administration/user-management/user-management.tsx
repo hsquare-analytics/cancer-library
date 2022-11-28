@@ -85,8 +85,8 @@ export const UserManagement = () => {
   const loading = useAppSelector(state => state.userManagement.loading);
 
   return (
-    <div>
-      <h2 id="user-management-page-heading" data-cy="userManagementPageHeading">
+    <div className="wrap-page">
+      <h2 id="user-management-page-heading" data-cy="userManagementPageHeading" className="title-page">
         <Translate contentKey="userManagement.home.title">Users</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>

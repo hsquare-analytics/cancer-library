@@ -5,8 +5,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {NavLink as Link} from "react-router-dom";
-import accountIcon from "app/asset/img/icon-config.svg";
+import {NavLink as Link} from 'react-router-dom';
+import accountIcon from 'app/asset/img/icon-config.svg';
 
 const AdminMenuItems = () => (
   <>
@@ -75,13 +75,13 @@ function AdminMenu(props: IAdminMenuProps) {
     <div>
       <Accordion>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon/>}
+          expandIcon={<ExpandMoreIcon sx={{color: 'primary.contrastText'}} />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
           <NavLink>
-            <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}}/>
-            <span> <Translate contentKey="global.menu.admin.main">Administration</Translate> </span>
+            <img src={accountIcon} alt="계정" style={{transform: 'scale(0.95) translateX(2px)'}} />
+            <Translate contentKey="global.menu.admin.main">Administration</Translate>{' '}
           </NavLink>
         </AccordionSummary>
         <AccordionDetails>

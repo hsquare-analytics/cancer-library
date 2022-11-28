@@ -27,22 +27,21 @@ export interface IHeaderProps {
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
-    <img src="content/images/logo-planit-healthcare.png" alt="Logo"/>
+    <img src="content/images/logo-planit-healthcare.png" alt="Logo" />
   </div>
 );
 
 const customTheme = createTheme({
-    components: {
-      MuiAccordion: {
-        styleOverrides: {
-          root: ({theme}) => ({
-            backgroundColor: theme.sidebar?.backgroundColor,
-          }),
-        },
+  components: {
+    MuiAccordion: {
+      styleOverrides: {
+        root: ({theme}) => ({
+          backgroundColor: theme.sidebar?.backgroundColor,
+        }),
       },
     },
-  }
-);
+  },
+});
 
 const Header = (props: IHeaderProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,32 +61,32 @@ const Header = (props: IHeaderProps) => {
   return (
     <div id="app-header">
       <ThemeProvider theme={customTheme}>
-        <LoadingBar className="loading-bar"/>
+        <LoadingBar className="loading-bar" />
 
         {props.isAuthenticated ? (
           <Navbar data-cy="navbar" dark expand="md" fixed="left" className="app-navbar">
-            <NavbarToggler aria-label="Menu" onClick={toggleMenu}/>
-            <Brand/>
+            <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
+            <Brand />
             <Collapse isOpen={menuOpen} navbar>
               <Nav id="header-tabs" className="flex-column" navbar>
-                <Home/>
-                {props.isAuthenticated && <DatasourceEditorMenu/>}
-                {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu/>}
+                <Home />
+                {props.isAuthenticated && <DatasourceEditorMenu />}
+                {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu />}
                 {props.isAuthenticated && props.isAdmin && (
                   <>
                     {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}
-                    <Admin showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction}/>
+                    <Admin showOpenAPI={props.isOpenAPIEnabled} showDatabase={!props.isInProduction} />
                   </>
                 )}
-                <Account isAuthenticated={props.isAuthenticated}/>
+                <Account isAuthenticated={props.isAuthenticated} />
               </Nav>
             </Collapse>
 
             {props.children}
 
-            <SideLogoutButton/>
+            <SideLogoutButton />
 
-            <BrandIcon/>
+            <BrandIcon />
           </Navbar>
         ) : null}
       </ThemeProvider>

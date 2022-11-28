@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Translate } from 'react-jhipster';
-import { Table, Badge, Col, Row, Button } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, {useState, useEffect} from 'react';
+import {Translate} from 'react-jhipster';
+import {Table, Badge, Col, Row, Button} from 'reactstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 import HealthModal from './health-modal';
-import { getSystemHealth } from '../administration.reducer';
+import {getSystemHealth} from '../administration.reducer';
 
 export const HealthPage = () => {
   const [healthObject, setHealthObject] = useState({});
@@ -27,7 +27,7 @@ export const HealthPage = () => {
 
   const getSystemHealthInfo = (name, healthObj) => () => {
     setShowModal(true);
-    setHealthObject({ ...healthObj, name });
+    setHealthObject({...healthObj, name});
   };
 
   const getBadgeType = (status: string) => (status !== 'UP' ? 'danger' : 'success');
@@ -39,8 +39,8 @@ export const HealthPage = () => {
   const data = (health || {}).components || {};
 
   return (
-    <div>
-      <h2 id="health-page-heading" data-cy="healthPageHeading">
+    <div className="wrap-page">
+      <h2 id="health-page-heading" data-cy="healthPageHeading" className="title-page">
         <Translate contentKey="health.title">Health Checks</Translate>
       </h2>
       <p>
