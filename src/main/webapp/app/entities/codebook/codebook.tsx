@@ -8,8 +8,8 @@ import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-uti
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './codebook.reducer';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
-import {getDxButtonColumns} from "app/entities/entities.utils";
-import CodebookColumns from "app/entities/codebook/codebook.column";
+import {getDxButtonColumns} from 'app/entities/entities.utils';
+import CodebookColumns from 'app/entities/codebook/codebook.column';
 
 export const Codebook = () => {
   const dispatch = useAppDispatch();
@@ -81,16 +81,15 @@ export const Codebook = () => {
   };
 
   return (
-    <div>
-      <h2 id="codebook-heading" data-cy="CodebookHeading">
+    <div className="wrap-page">
+      <h2 id="codebook-heading" data-cy="CodebookHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.codebook.home.title">Codebooks</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
+            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
           </Button>
-          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
-                data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus"/>
+          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus" />
           </Link>
         </div>
       </h2>
@@ -106,26 +105,28 @@ export const Codebook = () => {
             rowAlternationEnabled={true}
             showColumnHeaders={true}
             editing={{
-              mode: "row",
+              mode: 'row',
               useIcons: true,
               allowUpdating: true,
-              allowDeleting: true
+              allowDeleting: true,
             }}
             paging={{pageSize: 22}}
           >
-            {CodebookColumns.map((column, index) => <Column
-              key={index}
-              dataField={column.dataField}
-              caption={column.caption}
-              dataType={column.dataType}
-              visible={column.visible}
-              width={column.width}
-              format={column.format}
-              sortIndex={column.sortIndex}
-              sortOrder={column.sortOrder}
-              alignment={'center'}
-            />)}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
+            {CodebookColumns.map((column, index) => (
+              <Column
+                key={index}
+                dataField={column.dataField}
+                caption={column.caption}
+                dataType={column.dataType}
+                visible={column.visible}
+                width={column.width}
+                format={column.format}
+                sortIndex={column.sortIndex}
+                sortOrder={column.sortOrder}
+                alignment={'center'}
+              />
+            ))}
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
           </DataGrid>
         ) : (
           !loading && (
@@ -138,8 +139,7 @@ export const Codebook = () => {
       {totalItems ? (
         <div className={codebookList && codebookList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems}
-                          itemsPerPage={paginationState.itemsPerPage} i18nEnabled/>
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination
