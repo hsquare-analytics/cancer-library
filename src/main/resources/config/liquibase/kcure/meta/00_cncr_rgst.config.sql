@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS GSCN.CNCR_RGST (
     methodetc varchar(50) NULL, 			-- 진단방법 임상검사2기타사항
     txcheckcode varchar(20) NULL,	 		-- 치료 시행 여부코드
     txcheckname varchar(50) NULL, 			-- 치료시행여부명
-    tx varchar(20) NULL, 					-- 요법
+    tx varchar(20) NULL, 					-- 치료
     txetc varchar(50) NULL, 				-- 기타치료
     recoyear varchar(50) NULL, 				-- 출생 연대 표기
     admisdate varchar(8) NULL,	 			-- 입원일
@@ -184,7 +184,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9037,
 insert into ph_item_attribute (item_id, caption) values (9037, '치료시행여부명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9038, 'tx', 9000, 'system', 9038);
-insert into ph_item_attribute (item_id, caption) values (9038, '요법');
+insert into ph_item_attribute (item_id, caption) values (9038, '치료');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9039, 'txetc', 9000, 'system', 9039);
 insert into ph_item_attribute (item_id, caption) values (9039, '기타치료');
