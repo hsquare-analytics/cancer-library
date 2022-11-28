@@ -8,30 +8,30 @@
     </changeSet>
     <changeSet id="20221116140400-2" author="zero" context="kcure">
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/00_cncr_rgst.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/01_gstr_pt_hlinf.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/02_gstr_pt_fmht.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/03_gstr_diag_aninf.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/04_gstr_diag_inf.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/05_gstr_diag_stag.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/06_gstr_diag_mtst.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/07_gstr_exam_diag.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/08_gstr_exam_imag.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/09_gstr_exam_impt.config.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/10_gstr_exam_mlpt.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/01_gscn_pt_hlinf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/02_gscn_pt_fmht.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/03_gscn_diag_aninf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/04_gscn_diag_inf.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/05_gscn_diag_stag.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/06_gscn_diag_mtst.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/07_gscn_exam_diag.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/08_gscn_exam_imag.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/09_gscn_exam_impt.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/10_gscn_exam_mlpt.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/00_cncr_rgst.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/01_gstr_pt_hlinf.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/02_gstr_pt_fmht.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/03_gstr_diag_aninf.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/04_gstr_diag_inf.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/05_gstr_diag_stag.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/06_gstr_diag_mtst.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/07_gstr_exam_diag.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/08_gstr_exam_imag.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/09_gstr_exam_impt.data.sql"/>
-        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/10_gstr_exam_mlpt.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/01_gscn_pt_hlinf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/02_gscn_pt_fmht.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/03_gscn_diag_aninf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/04_gscn_diag_inf.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/05_gscn_diag_stag.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/06_gscn_diag_mtst.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/07_gscn_exam_diag.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/08_gscn_exam_imag.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/09_gscn_exam_impt.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/10_gscn_exam_mlpt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/kcure_patient_authority.sql"/>
     </changeSet>
     <include file="config/liquibase/kcure/kcure_common_code.xml" relativeToChangelogFile="false"/>

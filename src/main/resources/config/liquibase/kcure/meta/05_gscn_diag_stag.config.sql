@@ -1,9 +1,9 @@
 --작업일시: 221115 am10:32
 
-DROP TABLE IF EXISTS GSTR.GSTR_DIAG_STAG;
-DROP TABLE IF EXISTS GSTR.GSTR_DIAG_STAG_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_DIAG_STAG;
+DROP TABLE IF EXISTS GSCN.GSCN_DIAG_STAG_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_STAG (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_STAG (
                                 hosp_cd varchar(20) NOT NULL, 				-- 병원코드
                                 pt_no varchar(10) NOT NULL, 				-- 환자대체번호
                                 diag_stag_rcrd_ymd varchar(8) NOT NULL, 	-- 진단병기기록일자
@@ -20,12 +20,12 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_STAG (
                                 mdfm_id varchar(20) null,					-- UI용 서식ID
                                 mdfm_nm varchar(50) null,					-- UI용 서식명
                                 clnc_cnte varchar(4000) null,				-- UI용 임상내용
-                                CONSTRAINT GSTR_DIAG_STAG_pk PRIMARY KEY (hosp_cd, pt_no, diag_stag_rcrd_ymd, diag_stag_rcrd_seq)
+                                CONSTRAINT GSCN_DIAG_STAG_pk PRIMARY KEY (hosp_cd, pt_no, diag_stag_rcrd_ymd, diag_stag_rcrd_seq)
 );
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9500, 'GSTR.GSTR_DIAG_STAG', '05.위암_진단_병기', true, 5, 999, 'system');
+VALUES (9500, 'GSCN.GSCN_DIAG_STAG', '05.위암_진단_병기', true, 5, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9500, null, '05.위암_진단_병기');

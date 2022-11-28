@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_DIAG;
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_DIAG_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_DIAG;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_DIAG_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_DIAG (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_DIAG (
     hosp_cd varchar(20) NOT NULL, 			-- 병원코드
     pt_no varchar(10) NOT NULL, 			-- 환자대체번호
     cexm_ymd timestamp NOT NULL, 			-- 진단검사일자
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_DIAG (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(20) null,				-- UI용 검체번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
-    CONSTRAINT gstr_exam_diag_pk PRIMARY KEY (hosp_cd, pt_no, cexm_ymd, cexm_seq)
+    CONSTRAINT gscn_exam_diag_pk PRIMARY KEY (hosp_cd, pt_no, cexm_ymd, cexm_seq)
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9700, 'GSTR.GSTR_EXAM_DIAG', '07.위암_검사_진단', true, 7, 999, 'system');
+VALUES (9700, 'GSCN.GSCN_EXAM_DIAG', '07.위암_검사_진단', true, 7, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9700, null, '06.위암_진단_전이');

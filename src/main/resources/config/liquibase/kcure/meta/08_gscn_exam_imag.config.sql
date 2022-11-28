@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_IMAG;
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_IMAG_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_IMAG;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_IMAG_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMAG (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_IMAG (
     hosp_cd varchar(20) NOT NULL, 			-- 병원코드
     pt_no varchar(10) NOT NULL, 			-- 환자대체번호
     imex_ymd timestamp NOT NULL, 			-- 영상검사일자
@@ -18,11 +18,11 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMAG (
     crtn_dt timestamp NOT NULL, 			-- 생성일시
     idx varchar(20) NULL, 					-- UI용 시퀀스
     pact_id varchar(50) null,				-- PACT_ID
-    CONSTRAINT gstr_exam_imag_pk PRIMARY KEY (hosp_cd, pt_no, imex_ymd, imex_seq)
+    CONSTRAINT gscn_exam_imag_pk PRIMARY KEY (hosp_cd, pt_no, imex_ymd, imex_seq)
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9800, 'GSTR.GSTR_EXAM_IMAG', '08.위암_검사_영상', true, 8, 999, 'system');
+VALUES (9800, 'GSCN.GSCN_EXAM_IMAG', '08.위암_검사_영상', true, 8, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9800, null, '08.위암_검사_영상');

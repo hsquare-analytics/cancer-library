@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_IMPT;
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_IMPT_updated;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_IMPT;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_IMPT_updated;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMPT (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_IMPT (
     hosp_cd varchar(20) NOT NULL, -- 병원코드
     pt_no varchar(10) NOT NULL, -- 환자대체번호
     imem_ymd timestamp NOT NULL, -- 면역병리검사일자
@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_IMPT (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(50) NULL, 				-- UI용 검사번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
-    CONSTRAINT gstr_exam_impt_pk PRIMARY KEY (hosp_cd, pt_no, imem_ymd, imem_seq)
+    CONSTRAINT gscn_exam_impt_pk PRIMARY KEY (hosp_cd, pt_no, imem_ymd, imem_seq)
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9900, 'GSTR.GSTR_EXAM_IMPT', '09.위암_검사_면역병리', true, 9, 999, 'system');
+VALUES (9900, 'GSCN.GSCN_EXAM_IMPT', '09.위암_검사_면역병리', true, 9, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9900, null, '09.위암_검사_면역병리');

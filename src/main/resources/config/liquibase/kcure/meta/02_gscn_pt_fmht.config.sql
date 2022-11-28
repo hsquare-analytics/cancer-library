@@ -1,9 +1,9 @@
 --작업일시: 221115 am10:23
 
-DROP TABLE IF EXISTS GSTR.GSTR_PT_FMHT;
-DROP TABLE IF EXISTS GSTR.GSTR_PT_FMHT_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_PT_FMHT;
+DROP TABLE IF EXISTS GSCN.GSCN_PT_FMHT_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_FMHT (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_PT_FMHT (
                               hosp_cd varchar(20) NOT NULL, 							-- 병원코드
                               pt_no varchar(10) NOT NULL, 							-- 환자대체번호
                               fmht_rcrd_ymd varchar(8) NOT NULL, 						-- 가족력기록일자
@@ -32,12 +32,12 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_PT_FMHT (
                               crtn_dt timestamp NOT NULL, -- 생성일시
                               pact_id varchar(50) null, -- UI용 PACT_ID
                               idx varchar(20) NULL, -- UI용 시퀀스
-                              CONSTRAINT gstr_pt_fmht_pk PRIMARY KEY (hosp_cd, pt_no, fmht_rcrd_ymd, fmht_rcrd_seq)
+                              CONSTRAINT gscn_pt_fmht_pk PRIMARY KEY (hosp_cd, pt_no, fmht_rcrd_ymd, fmht_rcrd_seq)
 );
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9200, 'GSTR.GSTR_PT_FMHT', '02.위암_환자_가족력', true, 2, 999, 'system');
+VALUES (9200, 'GSCN.GSCN_PT_FMHT', '02.위암_환자_가족력', true, 2, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9200, null, '02.위암_환자_가족력');

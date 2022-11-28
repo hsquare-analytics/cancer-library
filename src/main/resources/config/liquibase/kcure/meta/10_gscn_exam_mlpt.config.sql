@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_MLPT;
-DROP TABLE IF EXISTS GSTR.GSTR_EXAM_MLPT_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_MLPT;
+DROP TABLE IF EXISTS GSCN.GSCN_EXAM_MLPT_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_MLPT (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_MLPT (
     hosp_cd varchar(20) NOT NULL, -- 병원코드
     pt_no varchar(10) NOT NULL, -- 환자대체번호
     mlem_ymd timestamp NOT NULL, -- 분자병리검사일자
@@ -19,11 +19,11 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_EXAM_MLPT (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(50) NULL, 				-- UI용 검사번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
-    CONSTRAINT gstr_exam_mlpt_pk PRIMARY KEY (hosp_cd, pt_no, mlem_ymd, mlem_seq)
+    CONSTRAINT gscn_exam_mlpt_pk PRIMARY KEY (hosp_cd, pt_no, mlem_ymd, mlem_seq)
     );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (10000, 'GSTR.GSTR_EXAM_MLPT', '10.위암_검사_분자병리', true, 10, 999, 'system');
+VALUES (10000, 'GSCN.GSCN_EXAM_MLPT', '10.위암_검사_분자병리', true, 10, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (10000, null, '10.위암_검사_분자병리');

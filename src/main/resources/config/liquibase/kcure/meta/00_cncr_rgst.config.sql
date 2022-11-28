@@ -1,9 +1,9 @@
 --작업일시: 221121 am10:00
 
-DROP TABLE IF EXISTS GSTR.CNCR_RGST;
-DROP TABLE IF EXISTS GSTR.CNCR_RGST_UPDATED;
+DROP TABLE IF EXISTS GSCN.CNCR_RGST;
+DROP TABLE IF EXISTS GSCN.CNCR_RGST_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST (
+CREATE TABLE IF NOT EXISTS GSCN.CNCR_RGST (
     hosp_cd varchar(4) NOT NULL, 			-- 병원번호
     pt_no varchar(15) NOT NULL, 			-- 환자등록번호
     fdx varchar(8) NULL, 					-- 초진연월일
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS GSTR.CNCR_RGST (
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9000, 'GSTR.CNCR_RGST', '00.암등록', true, 0, 999, 'system');
+VALUES (9000, 'GSCN.CNCR_RGST', '00.암등록', true, 0, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9000, null, '00.암등록');

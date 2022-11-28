@@ -1,9 +1,9 @@
 --작업일시: 221115 am10:32
 
-DROP TABLE IF EXISTS GSTR.GSTR_DIAG_ANINF;
-DROP TABLE IF EXISTS GSTR.GSTR_DIAG_ANINF_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_DIAG_ANINF;
+DROP TABLE IF EXISTS GSCN.GSCN_DIAG_ANINF_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_ANINF (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_ANINF (
                                  hosp_cd varchar(20) NOT NULL, 					-- 병원코드
                                  pt_no varchar(10) NOT NULL, 					-- 환자대체번호
                                  anth_rcrd_ymd varchar(8) NOT NULL, 				-- 신체계측기록일자
@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS GSTR.GSTR_DIAG_ANINF (
                                  crtn_dt timestamp NOT NULL, 					-- 생성일시
                                  ecog_dt varchar(20) null,						-- UI용 ECOG 참고일자날짜
                                  idx varchar(20) NULL, -- UI용 시퀀스
-                                 CONSTRAINT gstr_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
+                                 CONSTRAINT gscn_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
 );
 
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9300, 'GSTR.GSTR_DIAG_ANINF', '03.위암_진단_신체계측정보', true, 3, 999, 'system');
+VALUES (9300, 'GSCN.GSCN_DIAG_ANINF', '03.위암_진단_신체계측정보', true, 3, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9300, null, '03.위암_진단_신체계측정보');
