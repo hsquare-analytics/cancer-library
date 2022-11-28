@@ -207,8 +207,8 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (9044
 insert into ph_item (id, title, category_id, created_by, order_no) values (9045, 'seeryear', 9000, 'system', 9045);
 insert into ph_item_attribute (item_id, caption) values (9045, 'SEERYEAR');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9046, 'seercode', 9000, 'system', 9046);
-insert into ph_item_attribute (item_id, caption) values (9046, 'SEERCODE(60110)');
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9046, 'seercode', 9000, 'system', 9046, 60110);
+insert into ph_item_attribute (item_id, caption, data_type) values (9046, 'SEERCODE', 'selectbox');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9047, 'seername', 9000, 'system', 9047);
 insert into ph_item_attribute (item_id, caption) values (9047, 'SEERNAME');
