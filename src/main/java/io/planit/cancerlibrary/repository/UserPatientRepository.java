@@ -13,6 +13,8 @@ public interface UserPatientRepository extends JpaRepository<UserPatient, Long> 
 
     List<UserPatient> findAllByUserLogin(String login);
 
+    List<UserPatient> findAllByUserLoginNot(String login);
+
     void deleteAllByUserLogin(String login);
 
     Integer countByUser(User user);

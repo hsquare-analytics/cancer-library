@@ -62,12 +62,22 @@ class UserPatientControllerIT {
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
+        // other user patient
+        Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("ptNo2");
+        patientRepository.insert(patient2);
+        User user2 = UserResourceIT.createEntity(em).login("userpatient2");
+        userRepository.saveAndFlush(user2);
+        UserPatient userPatient2 = new UserPatient().user(user2).patientNo(patient2.getPtNo());
+        userPatientRepository.saveAndFlush(userPatient2);
+
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "userpatient"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
-            .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)));
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)))
+            .andExpect(jsonPath("$.[*].ptNo").value(not(hasItem(patient2.getPtNo()))))
+        ;
     }
 
     @Test

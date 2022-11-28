@@ -46,7 +46,8 @@ public class UserPatientController {
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
 
-        List<Patient> patientList = patientRepository.findAll();
+        List<String> registeredToOtherPatientNos = userPatientRepository.findAllByUserLoginNot(login).stream().map(UserPatient::getPatientNo).collect(Collectors.toList());
+        List<Patient> patientList = patientRepository.findAllByPtNoNotIn(registeredToOtherPatientNos);
         List<String> authorizedPatientNoList = userPatientRepository
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
