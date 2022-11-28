@@ -119,7 +119,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9225,
 insert into ph_item_attribute (item_id, caption) values (9225, '가족병력기타내용');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9226, 'crtn_dt', 9200, 'system', 9226);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9226, '생성일시', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9226, '생성일시', 'yyyy-MM-dd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9227, 'pact_id', 9200, 'system', 9227);
 insert into ph_item_attribute (item_id, caption) values (9227, 'ui확인용 pact_id');
