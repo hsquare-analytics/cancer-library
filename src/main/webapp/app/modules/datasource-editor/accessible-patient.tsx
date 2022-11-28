@@ -67,7 +67,7 @@ export const AccessiblePatient = () => {
   const onRowUpdating = e => {
     e.cancel = new Promise<void>(resolve => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-      dispatch(updatePatient({ entity: row, dateRange: initialDateRange }));
+      dispatch(updatePatient({entity: row, dateRange: initialDateRange}));
       resolve();
     });
   };
@@ -75,7 +75,7 @@ export const AccessiblePatient = () => {
   const commentCellRender = data => {
     const comment = data.value;
     const result = comment && comment.length > 0;
-    return <CheckBox disabled value={result} style={{backgroundColor: result ? 'blue' : 'none'}}/>;
+    return <CheckBox disabled value={result} style={{backgroundColor: result ? 'var(--bs-primary)' : 'none'}} />;
   };
 
   return (
@@ -88,11 +88,11 @@ export const AccessiblePatient = () => {
           ref={dataGrid}
           dataSource={JSON.parse(JSON.stringify(patientList))}
           showBorders={true}
-          filterRow={{ visible: true }}
-          headerFilter={{ visible: true }}
-          searchPanel={{ visible: true }}
+          filterRow={{visible: true}}
+          headerFilter={{visible: true}}
+          searchPanel={{visible: true}}
           allowColumnResizing={true}
-          pager={{ displayMode: 'compact', showNavigationButtons: true }}
+          pager={{displayMode: 'compact', showNavigationButtons: true}}
           editing={{
             mode: 'row',
             allowAdding: false,
@@ -101,9 +101,9 @@ export const AccessiblePatient = () => {
           onRowUpdating={e => onRowUpdating(e)}
           onRowDblClick={onRowDblClick}
           height={'95vh'}
-          selection={{ mode: 'multiple' }}
+          selection={{mode: 'multiple'}}
           hoverStateEnabled={true}
-          paging={{ pageSize: 30 }}
+          paging={{pageSize: 30}}
         >
           <Toolbar>
             <Item name={'searchPanel'} />
@@ -166,7 +166,7 @@ export const AccessiblePatient = () => {
           />
         </DataGrid>
       ) : (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{display: 'flex'}}>
           <CircularProgress />
         </Box>
       )}

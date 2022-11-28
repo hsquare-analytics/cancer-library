@@ -1,75 +1,79 @@
-import {translate} from "react-jhipster";
-import Swal from "sweetalert2";
-import {IPatient} from "app/shared/model/patient.model";
+import {translate} from 'react-jhipster';
+import Swal from 'sweetalert2';
+import {IPatient} from 'app/shared/model/patient.model';
 
 export const fireDeclineSwal = async (patient: IPatient) => {
   const {value: text, isConfirmed: isConfirmed} = await Swal.fire({
-    text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.title", {
+    text: translate('cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.title', {
       name: patient.ptNm,
-      no: patient.ptNo
+      no: patient.ptNo,
     }),
     input: 'textarea',
-    inputValue: patient ? patient.declineReason : "",
-    inputPlaceholder: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.placeholder"),
+    inputValue: patient ? patient.declineReason : '',
+    inputPlaceholder: translate('cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.placeholder'),
     showCancelButton: true,
     customClass: {
       container: 'swal2-wide-textarea-container',
     },
-    confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
-    cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.cancel'),
   });
 
   if (isConfirmed) {
     const reConfirm = await Swal.fire({
-      text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.text", {
+      text: translate('cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.text', {
         name: patient.ptNm,
-        no: patient.ptNo
+        no: patient.ptNo,
       }),
-      icon: 'warning',
+      // icon: 'warning',
+      customClass: 'cancer-dialog',
       showCancelButton: true,
-      confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
-      cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
+      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.cancel'),
     });
 
     return {isConfirmed: reConfirm.isConfirmed, text};
   }
   return {isConfirmed: false, text};
-}
+};
 
-export const fireApprovedSwal = async (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.approvePopup.title", {
-    name: patient.ptNm,
-    no: patient.ptNo
-  }),
-  showCancelButton: true,
-  confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
-  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
-});
+export const fireApprovedSwal = async (patient: IPatient) =>
+  Swal.fire({
+    text: translate('cancerLibraryApp.datasourceEditor.reviewButton.approvePopup.title', {
+      name: patient.ptNm,
+      no: patient.ptNo,
+    }),
+    showCancelButton: true,
+    customClass: 'cancer-dialog',
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.cancel'),
+  });
 
-export const fireSubmitSwal = async (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.submitPopup.title", {
-    name: patient.ptNm,
-    no: patient.ptNo
-  }),
-  showCancelButton: true,
-  confirmButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.confirm"),
-  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
-});
+export const fireSubmitSwal = async (patient: IPatient) =>
+  Swal.fire({
+    text: translate('cancerLibraryApp.datasourceEditor.reviewButton.submitPopup.title', {
+      name: patient.ptNm,
+      no: patient.ptNo,
+    }),
+    customClass: 'cancer-dialog',
+    showCancelButton: true,
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.cancel'),
+  });
 
-
-export const fireDeclineReasonSwal = (patient: IPatient) => Swal.fire({
-  text: translate("cancerLibraryApp.datasourceEditor.reviewButton.declineReasonPopup.title", {
-    name: patient.ptNm,
-    no: patient.ptNo
-  }),
-  input: 'textarea',
-  inputValue: patient ? patient.declineReason : "",
-  showCloseButton: true,
-  showCancelButton: false,
-  showConfirmButton: false,
-  cancelButtonText: translate("cancerLibraryApp.datasourceEditor.reviewButton.cancel"),
-  customClass: {
-    container: 'swal2-wide-textarea-container',
-  },
-});
-
+export const fireDeclineReasonSwal = (patient: IPatient) =>
+  Swal.fire({
+    text: translate('cancerLibraryApp.datasourceEditor.reviewButton.declineReasonPopup.title', {
+      name: patient.ptNm,
+      no: patient.ptNo,
+    }),
+    input: 'textarea',
+    inputValue: patient ? patient.declineReason : '',
+    showCloseButton: true,
+    showCancelButton: false,
+    showConfirmButton: false,
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.reviewButton.cancel'),
+    customClass: {
+      container: 'swal2-wide-textarea-container',
+    },
+  });
