@@ -103,7 +103,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9010,
 insert into ph_item_attribute (item_id, caption) values (9010, '외국인명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9011, 'hmlscode', 9000, 'system', 9011);
-insert into ph_item_attribute (item_id, caption) values (9011, '행려환자');
+insert into ph_item_attribute (item_id, caption) values (9011, '행려환자코드');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9012, 'hmlsname', 9000, 'system', 9012);
 insert into ph_item_attribute (item_id, caption) values (9012, '행려환자');
