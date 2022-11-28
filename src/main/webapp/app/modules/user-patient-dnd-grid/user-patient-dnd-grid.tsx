@@ -52,6 +52,7 @@ export const UserPatientDndGrid = () => {
         text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', {name: selectedUser.login}),
         icon: 'success',
       });
+      dispatch(getUsers())
       dispatch(resetFlag());
     }
   }, [updateSuccess]);
