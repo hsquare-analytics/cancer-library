@@ -73,7 +73,7 @@ export class DndGrid extends React.Component<IGridProps> {
           filterValue={this.filterExpr}
           selection={{mode: 'multiple', selectAllMode: 'page'}}
           defaultPaging={{pageSize: 10}}
-          pager={{visible: true, showPageSizeSelector: true, allowedPageSizes: [5, 10, 15, 20, 25, 30, 50, 100]}}
+          pager={{visible: true, showPageSizeSelector: true, allowedPageSizes: [5, 10, 15, 20, 50, 100, 200]}}
           keyExpr="ptNo"
           // selectedRowKeys={this.props.selectedRowKeys[`${this.props.authorized}`]}
           onSelectionChanged={this.onSelectionChanged}
