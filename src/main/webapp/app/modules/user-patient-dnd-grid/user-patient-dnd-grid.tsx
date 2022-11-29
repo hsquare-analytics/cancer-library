@@ -167,25 +167,27 @@ export const UserPatientDndGrid = () => {
                     alignment={'center'}/>
           </Column>
         </DataGrid>
-        <Stack spacing={1} direction="row" className="justify-content-end my-3">
-          <Button variant="contained" onClick={onClickSave}>
-            {translate('cancerLibraryApp.userPatientDndGrid.button.save')}
-          </Button>
-          <Button variant="outlined" onClick={onClickCancel} className="btn-outline">
-            {translate('cancerLibraryApp.userPatientDndGrid.button.cancel')}
-          </Button>
-        </Stack>
       </div>
 
       <div className="wrap-page">
-        <h1 className="title-page d-flex">
-          <Typography variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
-            {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.title')}
-            <HelpOutlineOutlinedIcon/>
-          </Typography>
-          <span className="patient-text">
+        <h1 className="title-page d-flex justify-content-between">
+          <div className={'d-flex'}>
+            <Typography variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
+              {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.title')}
+              <HelpOutlineOutlinedIcon/>
+            </Typography>
+            <span className="patient-text">
             {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
           </span>
+          </div>
+          <Stack spacing={1} direction="row" className="justify-content-end">
+            <Button variant="contained" onClick={onClickSave}>
+              {translate('cancerLibraryApp.userPatientDndGrid.button.save')}
+            </Button>
+            <Button variant="outlined" onClick={onClickCancel} className="btn-outline">
+              {translate('cancerLibraryApp.userPatientDndGrid.button.cancel')}
+            </Button>
+          </Stack>
         </h1>
 
         {!loading ? <div className="tables">
