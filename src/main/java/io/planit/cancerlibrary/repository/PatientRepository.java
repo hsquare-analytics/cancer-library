@@ -38,9 +38,13 @@ public class PatientRepository {
         return jdbcTemplate.query(sql.toString(), Map.of("ptNos", ptNos), new PatientMapper());
     }
 
-    public List<Patient> findAllByCreatedDateBetween(Map<String, Timestamp> dateRange) {
+    public List<Patient> findAllByPtNoNotInAndCreatedDateBetween(List<String> ptNos, Map<String, Timestamp> dateRange) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE("CREATED_DATE BETWEEN :startDate AND :endDate");
-        return jdbcTemplate.query(sql.toString(), dateRange, new PatientMapper());
+        if (ptNos.size() > 0) {
+            sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO NOT IN (:ptNos)");
+        }
+        Map params = Map.of("ptNos", ptNos, "startDate", dateRange.get("startDate"), "endDate", dateRange.get("endDate"));
+        return jdbcTemplate.query(sql.toString(), params, new PatientMapper());
     }
 
     public List<Patient> findAllByPatientNos(List<String> patientNos) {

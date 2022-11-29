@@ -33,7 +33,7 @@ public class PatientController {
     private final PatientRepository patientRepository;
 
     public PatientController(UserPatientRepository userPatientRepository,
-        PatientRepository patientRepository) {
+                             PatientRepository patientRepository) {
         this.userPatientRepository = userPatientRepository;
         this.patientRepository = patientRepository;
     }
@@ -42,23 +42,24 @@ public class PatientController {
     public ResponseEntity<List<Patient>> getAccessiblePatientList(Instant startDate, Instant endDate) {
         log.debug("REST request to get accessible patient list");
 
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow().toLowerCase();
+        List<String> accessiblePatientNoList = userPatientRepository
+            .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
+            .collect(Collectors.toList());
+
+        List<Patient> result = patientRepository.findAllByPatientNos(accessiblePatientNoList);
+
         if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.SUPERVISOR, AuthoritiesConstants.ADMIN)) {
-           Map<String, Timestamp> dateRange = Map.of(
+            Map<String, Timestamp> dateRange = Map.of(
                 "startDate", Timestamp.from(startDate.minus(1, ChronoUnit.DAYS)),
                 "endDate", Timestamp.from(endDate.plus(1, ChronoUnit.DAYS))
-           );
-            List<Patient> result = patientRepository.findAllByCreatedDateBetween(dateRange);
-            return ResponseEntity.ok().body(result);
-        } else {
-            String login = SecurityUtils.getCurrentUserLogin().orElseThrow().toLowerCase();
-            List<String> accessiblePatientNoList = userPatientRepository
-                .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
-                .collect(Collectors.toList());
-
-            List<Patient> result = patientRepository.findAllByPatientNos(accessiblePatientNoList);
-
-            return ResponseEntity.ok().body(result);
+            );
+            List<String> excludePtNos = result.stream().map(Patient::getPtNo).collect(Collectors.toList());
+            List<Patient> adminUser = patientRepository.findAllByPtNoNotInAndCreatedDateBetween(excludePtNos, dateRange);
+            result.addAll(adminUser);
         }
+
+        return ResponseEntity.ok().body(result);
     }
 
 
