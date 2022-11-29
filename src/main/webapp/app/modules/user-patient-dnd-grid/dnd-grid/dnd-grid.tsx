@@ -78,6 +78,11 @@ export class DndGrid extends React.Component<IGridProps> {
           // selectedRowKeys={this.props.selectedRowKeys[`${this.props.authorized}`]}
           onSelectionChanged={this.onSelectionChanged}
           loadPanel={{enabled: !loading}}
+          onOptionChanged={(e) => {
+            if (e.name === 'paging') {
+              this.dataGrid.instance.clearSelection();
+            }
+          }}
           summary={{
             totalItems: [{
               column: 'ptNo',
