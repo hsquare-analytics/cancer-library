@@ -19,6 +19,8 @@ import Swal from 'sweetalert2';
 import {translate} from 'react-jhipster';
 import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 import {Typography} from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 
 export const UserPatientDndGrid = () => {
@@ -32,7 +34,7 @@ export const UserPatientDndGrid = () => {
   });
 
   const users = useAppSelector(state => state.userPatientDndGrid.users);
-  const loading = useAppSelector(state => state.userManagement.loading);
+  const loading = useAppSelector(state => state.userManagement.loading) || useAppSelector(state => state.userPatientDndGrid.loading);
   const patients = useAppSelector(state => state.userPatientDndGrid.patients);
   const updateSuccess = useAppSelector(state => state.userPatientDndGrid.updateSuccess);
 
@@ -155,18 +157,22 @@ export const UserPatientDndGrid = () => {
           </span>
         </h1>
 
-        <div className="tables">
-          <div className="column">
-            <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys}
-                     setSelectedRowKeys={setDndSelectedRowKeys}/>
+        {!loading ? <div className="tables">
+            <div className="column">
+              <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys}
+                       setSelectedRowKeys={setDndSelectedRowKeys}/>
+            </div>
+            <div className="column d-flex align-items-center">
+              <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
+            </div>
+            <div className="column">
+              <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys}
+                       setSelectedRowKeys={setDndSelectedRowKeys}/>
+            </div>
           </div>
-          <div className="column d-flex align-items-center">
-            <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
-          </div>
-          <div className="column">
-            <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys} setSelectedRowKeys={setDndSelectedRowKeys}/>
-          </div>
-        </div>
+          : <Box sx={{display: 'flex'}}>
+            <CircularProgress/>
+          </Box>}
       </div>
     </div>
   );
