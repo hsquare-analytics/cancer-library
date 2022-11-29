@@ -26,7 +26,6 @@ import java.util.Random;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -52,24 +51,19 @@ class UserControllerIT {
 
     @Test
     @Transactional
-    void test_fetch_users_having_normal_auth() throws Exception {
-        User testAuthAdmin = UserResourceIT.createEntity(em).login("testAuthAdmin")
-            .authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.ADMIN))));
-        userRepository.saveAndFlush(testAuthAdmin);
-        User testAuthSupervisor = UserResourceIT.createEntity(em).login("testAuthSupervisor")
-            .authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.SUPERVISOR))));
-        userRepository.saveAndFlush(testAuthSupervisor);
-        User testAuthNormalUser = UserResourceIT.createEntity(em).login("testAuthNormalUser")
-            .authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
-        userRepository.saveAndFlush(testAuthNormalUser);
+    void test_fetch_users_with_additional_field() throws Exception {
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
 
         restUserMockMvc
             .perform(get("/api/users/normal-authorization-list"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].login").value(not(hasItem(testAuthAdmin.getLogin()))))
-            .andExpect(jsonPath("$.[*].login").value(not(hasItem(testAuthSupervisor.getLogin()))))
-            .andExpect(jsonPath("$.[*].login").value(hasItem(testAuthNormalUser.getLogin())));
+            .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
+            .andExpect(jsonPath("$.[*].assigned").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].submitted").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].approved").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].declined").value(hasItem(0)));
     }
 
     @ParameterizedTest
@@ -80,7 +74,7 @@ class UserControllerIT {
         User user = UserResourceIT.createEntity(em).login("testLogin").authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
         userRepository.saveAndFlush(user);
 
-        String patientNo = "ptno" + status + new Random().nextInt(100);
+        String patientNo = "ptno" + new Random().nextInt(100);
         UserPatient userPatient = new UserPatient().user(user).patientNo(patientNo);
         userPatientRepository.saveAndFlush(userPatient);
 
