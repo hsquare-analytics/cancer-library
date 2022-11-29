@@ -227,6 +227,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             format={'yy/MM/dd hh:mm'}
             allowEditing={false}
             visibleIndex={9999999}
+            sortIndex={0}
+            sortOrder={'asc'}
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
         </DataGrid>
