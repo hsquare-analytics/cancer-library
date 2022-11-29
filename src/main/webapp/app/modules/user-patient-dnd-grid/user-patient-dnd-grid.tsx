@@ -14,6 +14,7 @@ import {
   getPatients,
   getUsers,
   resetFlag,
+  setPatients
 } from 'app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer';
 import Swal from 'sweetalert2';
 import {translate} from 'react-jhipster';
@@ -91,6 +92,21 @@ export const UserPatientDndGrid = () => {
     dispatch(getPatients(selectedUser.login));
   };
 
+  const onClickDndArrow = (targetSection) => {
+    const result = JSON.parse(JSON.stringify(patients)).map((item) => {
+      if (dndSelectedRowKeys[`${!targetSection}`].includes(item.ptNo)) {
+        item.authorized = targetSection;
+      }
+      return item;
+    });
+    dispatch(setPatients(result));
+
+    setDndSelectedRowKeys({
+      'false': [],
+      'true': [],
+    });
+  }
+
   return (
     <div className="user-patient-two-grid-wrapper">
       <div className="wrap-page">
@@ -162,6 +178,7 @@ export const UserPatientDndGrid = () => {
           </Typography>
           <span className="patient-text">
             {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
+            {JSON.stringify(dndSelectedRowKeys)}
           </span>
         </h1>
 
@@ -171,7 +188,14 @@ export const UserPatientDndGrid = () => {
                        setSelectedRowKeys={setDndSelectedRowKeys}/>
             </div>
             <div className="column d-flex align-items-center">
-              <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
+              <Stack spacing={2} direction="column">
+                <Button variant="text" onClick={() => onClickDndArrow(true)}>
+                  <FontAwesomeIcon icon="arrow-right" size={'2x'}/>
+                </Button>
+                <Button variant="text" onClick={() => onClickDndArrow(false)}>
+                  <FontAwesomeIcon icon="arrow-left" size={'2x'}/>
+                </Button>
+              </Stack>
             </div>
             <div className="column">
               <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys}
