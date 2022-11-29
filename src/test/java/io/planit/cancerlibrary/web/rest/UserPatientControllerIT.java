@@ -68,12 +68,20 @@ class UserPatientControllerIT {
         userPatientRepository.saveAndFlush(userPatient);
 
         // authorized to other
-        Patient otherPatient = PatientResourceIT.createPatientDTO().ptNo("ptNo" + RandomStringUtils.randomAlphabetic(5));
-        patientRepository.insert(otherPatient);
-        User otherUser = UserResourceIT.createEntity(em).login("userotherPatient" + RandomStringUtils.randomAlphabetic(5));
+        Patient otherUserPatient = PatientResourceIT.createPatientDTO().ptNo("otherUserPatient" + RandomStringUtils.randomAlphabetic(5));
+        patientRepository.insert(otherUserPatient);
+        User otherUser = UserResourceIT.createEntity(em).login(RandomStringUtils.randomAlphabetic(5));
         userRepository.saveAndFlush(otherUser);
-        UserPatient otherUsePatient = new UserPatient().user(otherUser).patientNo(otherPatient.getPtNo());
+        UserPatient otherUsePatient = new UserPatient().user(otherUser).patientNo(otherUserPatient.getPtNo());
         userPatientRepository.saveAndFlush(otherUsePatient);
+
+        // authorized to other admin
+        Patient otherAdminPatient = PatientResourceIT.createPatientDTO().ptNo("otherAdminPatient" + RandomStringUtils.randomAlphabetic(5));
+        patientRepository.insert(otherAdminPatient);
+        User otherAdminUser = UserResourceIT.createEntity(em).login(RandomStringUtils.randomAlphabetic(5)).authorities(Set.of(new Authority().name(AuthoritiesConstants.ADMIN)));
+        userRepository.saveAndFlush(otherAdminUser);
+        UserPatient otherAdminUserPatient = new UserPatient().user(otherAdminUser).patientNo(otherAdminPatient.getPtNo());
+        userPatientRepository.saveAndFlush(otherAdminUserPatient);
 
         restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", user.getLogin()))
             .andExpect(status().isOk())
@@ -81,7 +89,9 @@ class UserPatientControllerIT {
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
             .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)))
-            .andExpect(jsonPath("$.[*].ptNo").value(not(hasItem(otherPatient.getPtNo()))));
+            .andExpect(jsonPath("$.[*].ptNo").value(not(hasItem(otherUserPatient.getPtNo()))))
+            .andExpect(jsonPath("$.[*].ptNo").value(hasItem(otherAdminPatient.getPtNo())))
+        ;
     }
 
     @Test

@@ -57,8 +57,14 @@ public class UserPatientController {
         if (isAdmin) {
             patientList = patientRepository.findAll();
         } else {
-            List<String> registeredToOtherPatientNos = userPatientRepository.findAllByUserLoginNot(login).stream().map(UserPatient::getPatientNo).collect(Collectors.toList());
-            patientList = patientRepository.findAllByPtNoNotIn(registeredToOtherPatientNos);
+            // 1. 제외 권한 목록: 본인 계정 권한 이 아니고, 관리자가 아닌 사용자의 권한 목록
+            List<UserPatient> excludeUserPatients = userPatientRepository.findAll().stream()
+                .filter(userPatient -> !userPatient.getUser().getLogin().equals(login) && userPatient.getUser().getAuthorities().stream().map(Authority::getName)
+                    .noneMatch(authority -> authority.equals(AuthoritiesConstants.ADMIN) || authority.equals(AuthoritiesConstants.SUPERVISOR))
+                ).collect(Collectors.toList());
+
+            // 2. 전체 환자 리스트 중에 1.을 제외한 환자 목록
+            patientList = patientRepository.findAllByPtNoNotIn(excludeUserPatients.stream().map(UserPatient::getPatientNo).collect(Collectors.toList()));
         }
 
         List<String> authorizedPatientNoList = userPatientRepository
