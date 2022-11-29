@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
@@ -45,9 +46,21 @@ public class UserPatientController {
         " || hasRole('" + AuthoritiesConstants.SUPERVISOR + "')")
     public ResponseEntity<List<DivisiblePatientVM>> getDivisiblePatientList(String login) {
         log.debug("REST request to get divisible patient list");
+        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<String> registeredToOtherPatientNos = userPatientRepository.findAllByUserLoginNot(login).stream().map(UserPatient::getPatientNo).collect(Collectors.toList());
-        List<Patient> patientList = patientRepository.findAllByPtNoNotIn(registeredToOtherPatientNos);
+        boolean isAdmin = user.getAuthorities().stream()
+            .map(Authority::getName)
+            .anyMatch(authority -> authority.equals(AuthoritiesConstants.ADMIN) || authority.equals(AuthoritiesConstants.SUPERVISOR));
+
+        List<Patient> patientList;
+
+        if (isAdmin) {
+            patientList = patientRepository.findAll();
+        } else {
+            List<String> registeredToOtherPatientNos = userPatientRepository.findAllByUserLoginNot(login).stream().map(UserPatient::getPatientNo).collect(Collectors.toList());
+            patientList = patientRepository.findAllByPtNoNotIn(registeredToOtherPatientNos);
+        }
+
         List<String> authorizedPatientNoList = userPatientRepository
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
