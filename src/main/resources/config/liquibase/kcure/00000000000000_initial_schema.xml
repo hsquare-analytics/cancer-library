@@ -25,6 +25,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/15_gscn_trtm_oprt.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/16_gscn_trtm_srpr.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/17_gscn_exam_sgpt.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/18_gscn_diag_afoc.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
