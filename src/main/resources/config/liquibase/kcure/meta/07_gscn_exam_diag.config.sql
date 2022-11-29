@@ -84,8 +84,8 @@ insert into ph_item_attribute (item_id, caption) values (9716, '진단검사결�
 insert into ph_item (id, title, category_id, created_by, order_no) values (9717, 'cexm_nlrg_ref_vl', 9700, 'system', 9717);
 insert into ph_item_attribute (item_id, caption) values (9717, '진단검사정상범위참고값');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'crtn_dt', 9700, 'system', 9718);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9718, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'crtn_dt', 9700, 'system', 9718);
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9718, '생성일시', 'yyyy-MM-dd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9719, 'idx', 9700, 'system', 9719);
 -- insert into ph_item_attribute (item_id, caption) values (9719, 'UI용 시퀀스');

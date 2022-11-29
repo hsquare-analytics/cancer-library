@@ -68,8 +68,8 @@ insert into ph_item_attribute (item_id, caption) values (10012, '분자병리검
 insert into ph_item (id, title, category_id, created_by, order_no) values (10013, 'mlem_rslt_unit_cont', 10000, 'system', 10013);
 insert into ph_item_attribute (item_id, caption) values (10013, '분자병리검사결과단위내용');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'crtn_dt', 10000, 'system', 10014);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (10014, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'crtn_dt', 10000, 'system', 10014);
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (10014, '생성일시', 'yyyy-MM-dd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (10015, 'idx', 10000, 'system', 10015);
 -- insert into ph_item_attribute (item_id, caption) values (10015, 'UI용 시퀀스');

@@ -231,8 +231,8 @@ insert into ph_item_attribute (item_id, caption) values (9052, '원격전이코�
 insert into ph_item (id, title, category_id, created_by, order_no) values (9053, 'metacode3', 9000, 'system', 9053);
 insert into ph_item_attribute (item_id, caption) values (9053, '원격전이코드3');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'crtn_dt', 9000, 'system', 9054);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9054, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'crtn_dt', 9000, 'system', 9054);
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9054, '생성일시', 'yyyy-MM-dd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9055, 'idx', 9000, 'system', 9055);
 -- insert into ph_item_attribute (item_id, caption) values (9055, 'UI용 시퀀스');

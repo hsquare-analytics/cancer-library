@@ -72,8 +72,8 @@ insert into ph_item_attribute (item_id, caption, data_type) values (9913, '면�
 insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'imem_rslt_unit_nm', 9900, 'system', 9914);
 insert into ph_item_attribute (item_id, caption) values (9914, '면역병리검사결과단위명');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9915, 'crtn_dt', 9900, 'system', 9915);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9915, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9915, 'crtn_dt', 9900, 'system', 9915);
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9915, '생성일시', 'yyyy-MM-dd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9916, 'idx', 9900, 'system', 9916);
 -- insert into ph_item_attribute (item_id, caption) values (9916, 'UI용 시퀀스');

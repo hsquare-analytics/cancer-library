@@ -62,8 +62,8 @@ insert into ph_item_attribute (item_id, caption) values (9610, '전이양상명'
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9611, 'mtst_trtm_cd', 9600, 'system', 9611, 20090);
 insert into ph_item_attribute (item_id, caption, data_type) values (9611, '전이치료코드', 'selectbox');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'crtn_dt', 9600, 'system', 9612);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9612, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'crtn_dt', 9600, 'system', 9612);
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9612, '생성일시', 'yyyy-MM-dd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9613, 'idx', 9600, 'system', 9613);
 -- insert into ph_item_attribute (item_id, caption) values (9613, 'UI용 시퀀스');
