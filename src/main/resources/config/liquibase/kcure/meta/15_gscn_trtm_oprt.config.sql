@@ -83,6 +83,7 @@ insert into ph_item_attribute (item_id, caption, required) values (15001, '01 �
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (15002, 'pt_no', 15000, 'system', 15002);
 insert into ph_item_attribute (item_id, caption, required) values (15002, '02 환자대체번호', true);
+insert into ph_item_property (item_id, visible) values (15002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (15003, 'oprt_ymd', 15000, 'system', 15003);
 insert into ph_item_attribute (item_id, caption, required, format, data_type) values (15003, '03 수술일자', true, 'yyyy-MM-dd', 'date');

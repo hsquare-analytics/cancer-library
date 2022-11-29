@@ -36,6 +36,7 @@ insert into ph_item_attribute (item_id, caption, required) values (14001, '병�
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (14002, 'pt_no', 14000, 'system', 14002);
 insert into ph_item_attribute (item_id, caption, required) values (14002, '환자대체번호', true);
+insert into ph_item_property (item_id, visible) values (14002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (14003, 'eus_exam_ymd', 14000, 'system', 14003);
 insert into ph_item_attribute (item_id, caption, required, format, data_type) values (14003, 'EUS검사일자', true, 'yyyy-MM-dd', 'date');

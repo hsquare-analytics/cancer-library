@@ -38,6 +38,7 @@ insert into ph_item_attribute (item_id, caption, required) values (11001, '병�
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11002, 'pt_no', 11000, 'system', 11002);
 insert into ph_item_attribute (item_id, caption, required) values (11002, '환자대체번호', true);
+insert into ph_item_property (item_id, visible) values (11002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11003, 'bpsy_ymd', 11000, 'system', 11003);
 insert into ph_item_attribute (item_id, caption, required) values (11003, '생체검사일자', true);
