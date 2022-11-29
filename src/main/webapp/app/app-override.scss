@@ -107,6 +107,24 @@
   }
 }
 
+// 행 편집 팝업 입력창
+.dx-texteditor.dx-editor-filled::after {
+  border-bottom: #e0e0e0 1px solid;
+}
+
+.dx-texteditor.dx-editor-filled {
+  background-color: var(--bg-datagrid-headers);
+
+  &.dx-state-hover {
+    //background-color: var(--bg-datagrid-row-hover);
+    background-color: #edeff2;
+  }
+}
+
+.dx-button-mode-text.dx-button-default {
+  color: var(--bs-primary);
+}
+
 // 페이징
 .dx-pager .dx-page-sizes .dx-selection,
 .dx-pager .dx-pages .dx-selection {
