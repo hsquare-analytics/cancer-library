@@ -24,6 +24,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/14_gscn_exam_eus.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/15_gscn_trtm_oprt.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/16_gscn_trtm_srpr.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/17_gscn_exam_sgpt.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
@@ -44,6 +45,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/14_gscn_exam_eus.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/15_gscn_trtm_oprt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/16_gscn_trtm_srpr.data.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/17_gscn_exam_sgpt.data.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/fake-data/kcure_patient_authority.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/kcure_0_common_user.sql"/>
     </changeSet>
