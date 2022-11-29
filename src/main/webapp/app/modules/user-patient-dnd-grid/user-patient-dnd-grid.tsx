@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import DndGrid from 'app/modules/user-patient-dnd-grid/dnd-grid/dnd-grid';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import './user-patient-dnd-grid.scss';
@@ -33,6 +33,9 @@ export const UserPatientDndGrid = () => {
     false: [],
     true: [],
   });
+
+  const dndGridRef1 = useRef(null);
+  const dndGridRef2 = useRef(null);
 
   const users = useAppSelector(state => state.userPatientDndGrid.users);
   const loading = useAppSelector(state => state.userManagement.loading) || useAppSelector(state => state.userPatientDndGrid.loading);
@@ -105,6 +108,9 @@ export const UserPatientDndGrid = () => {
       'false': [],
       'true': [],
     });
+
+    dndGridRef1.current.dataGrid.instance.clearSelection()
+    dndGridRef2.current.dataGrid.instance.clearSelection()
   }
 
   return (
@@ -184,7 +190,9 @@ export const UserPatientDndGrid = () => {
 
         {!loading ? <div className="tables">
             <div className="column">
-              <DndGrid authorized={false} selectedRowKeys={dndSelectedRowKeys}
+              <DndGrid
+                ref={dndGridRef1}
+                authorized={false} selectedRowKeys={dndSelectedRowKeys}
                        setSelectedRowKeys={setDndSelectedRowKeys}/>
             </div>
             <div className="column d-flex align-items-center">
@@ -198,7 +206,9 @@ export const UserPatientDndGrid = () => {
               </Stack>
             </div>
             <div className="column">
-              <DndGrid authorized={true} selectedRowKeys={dndSelectedRowKeys}
+              <DndGrid
+                ref={dndGridRef2}
+                authorized={true} selectedRowKeys={dndSelectedRowKeys}
                        setSelectedRowKeys={setDndSelectedRowKeys}/>
             </div>
           </div>
