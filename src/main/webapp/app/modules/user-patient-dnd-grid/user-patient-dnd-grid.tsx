@@ -119,6 +119,7 @@ export const UserPatientDndGrid = () => {
         <h1 className="title-page">리뷰어 정보</h1>
         <DataGrid
           height={'30vh'}
+          style={{minHeight: '600px'}}
           dataSource={users}
           showBorders={true}
           filterRow={{visible: true}}
@@ -184,7 +185,6 @@ export const UserPatientDndGrid = () => {
           </Typography>
           <span className="patient-text">
             {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
-            {JSON.stringify(dndSelectedRowKeys)}
           </span>
         </h1>
 
