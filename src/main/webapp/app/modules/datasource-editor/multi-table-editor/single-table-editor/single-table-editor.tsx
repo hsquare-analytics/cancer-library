@@ -107,7 +107,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             mode: 'popup',
             allowUpdating: true,
             allowDeleting: true,
-            form: {colCount: 3},
+            form: {
+              colCountByScreen: {
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 3,
+              }
+            },
             texts: {
               confirmDeleteMessage: translate('entity.delete.warning'),
             },

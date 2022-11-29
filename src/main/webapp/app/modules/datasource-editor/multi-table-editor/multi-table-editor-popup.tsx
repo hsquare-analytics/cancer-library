@@ -19,8 +19,8 @@ export const MultiTableEditorPopup = React.forwardRef((props, ref) => {
     visible={popupVisible}
     onHiding={() => setPopupVisible(false)}
     resizeEnabled={true}
-    height={'95vh'}
-    width={'95vw'}
+    height={'98vh'}
+    width={'98vw'}
   >
     <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
       <PatientProfileCard setPopupVisible={setPopupVisible}/>
