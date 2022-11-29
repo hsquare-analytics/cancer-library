@@ -63,13 +63,21 @@ export const UserPatientDndGrid = () => {
   }, [updateSuccess]);
 
   const onSelectionChanged = ({currentSelectedRowKeys}) => {
-    setSelectedUser(currentSelectedRowKeys[0]);
+    if (currentSelectedRowKeys.length > 0) {
+      setSelectedUser(currentSelectedRowKeys[0]);
+    }
   };
 
   const onClickSave = () => {
+    if (!selectedUser) {
+      Swal.fire({
+        text: translate('cancerLibraryApp.userPatientDndGrid.selectUserAlert.description'),
+        customClass: 'cancer-dialog',
+      });
+      return;
+    }
     Swal.fire({
       text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', {name: selectedUser.login}),
-      // icon: 'warning',
       customClass: 'cancer-dialog',
       showCancelButton: true,
     }).then(result => {
