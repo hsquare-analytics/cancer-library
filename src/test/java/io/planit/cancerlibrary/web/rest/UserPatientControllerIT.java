@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
@@ -17,10 +18,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.shaded.org.apache.commons.lang3.RandomStringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -51,9 +55,10 @@ class UserPatientControllerIT {
     @Test
     @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    void testWithDivisiblePatientInfo() throws Exception {
+    void test_fetch_user_divisible_patient_list() throws Exception {
+        // authorized user
         User user = UserResourceIT.createEntity(em);
-        user.setLogin("userpatient");
+        user.setLogin("userLogin" + RandomStringUtils.randomAlphabetic(5));
         userRepository.saveAndFlush(user);
 
         Patient patient = PatientResourceIT.createPatientDTO();
@@ -62,44 +67,50 @@ class UserPatientControllerIT {
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
-        // other user patient
-        Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("ptNo2");
-        patientRepository.insert(patient2);
-        User user2 = UserResourceIT.createEntity(em).login("userpatient2");
-        userRepository.saveAndFlush(user2);
-        UserPatient userPatient2 = new UserPatient().user(user2).patientNo(patient2.getPtNo());
-        userPatientRepository.saveAndFlush(userPatient2);
+        // authorized to other
+        Patient otherPatient = PatientResourceIT.createPatientDTO().ptNo("ptNo" + RandomStringUtils.randomAlphabetic(5));
+        patientRepository.insert(otherPatient);
+        User otherUser = UserResourceIT.createEntity(em).login("userotherPatient" + RandomStringUtils.randomAlphabetic(5));
+        userRepository.saveAndFlush(otherUser);
+        UserPatient otherUsePatient = new UserPatient().user(otherUser).patientNo(otherPatient.getPtNo());
+        userPatientRepository.saveAndFlush(otherUsePatient);
 
-        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "userpatient"))
+        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", user.getLogin()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
             .andExpect(jsonPath("$.[*].authorized").value(hasItem(true)))
-            .andExpect(jsonPath("$.[*].ptNo").value(not(hasItem(patient2.getPtNo()))))
-        ;
+            .andExpect(jsonPath("$.[*].ptNo").value(not(hasItem(otherPatient.getPtNo()))));
     }
 
     @Test
     @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    void testWithIndiscerptiblePatient() throws Exception {
-        Patient patient = PatientResourceIT.createPatientDTO();
-        patientRepository.insert(patient);
+    void test_fetch_admin_divisible_patient_list() throws Exception {
+        User adminUser = UserResourceIT.createEntity(em).login("adminLogin" + RandomStringUtils.randomAlphabetic(5)).authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.ADMIN))));
+        userRepository.saveAndFlush(adminUser);
 
-        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", "test"))
+        // other user patient
+        Patient patient = PatientResourceIT.createPatientDTO().ptNo("ptNo" + RandomStringUtils.randomAlphabetic(5));
+        patientRepository.insert(patient);
+        User otherUser = UserResourceIT.createEntity(em).login("userpatient" + RandomStringUtils.randomAlphabetic(5));
+        userRepository.saveAndFlush(otherUser);
+        UserPatient otherUserPatient = new UserPatient().user(otherUser).patientNo(patient.getPtNo());
+        userPatientRepository.saveAndFlush(otherUserPatient);
+
+        restDatasourcePatientMockMvc.perform(get("/api/user-patients/divisible-patient-list").param("login", adminUser.getLogin()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(patient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(patient.getPtNm())))
-            .andExpect(jsonPath("$.[*].authorized").value(not(hasItem(true))));
-
+            .andExpect(jsonPath("$.[*].authorized").value(hasItem(false)));
     }
 
     @Test
     @Transactional("jdbcTemplateTransactionManager")
     @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
-    void testCreateMultipleUserPatientAuthorizations() throws Exception {
+    void test_create_multiple_user_patient_authorizations() throws Exception {
         // given
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
