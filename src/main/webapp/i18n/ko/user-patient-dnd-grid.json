@@ -16,6 +16,14 @@
         "submitted": "제출",
         "approved": "승인",
         "declined": "반려"
+      },
+      "button": {
+        "save": "저장",
+        "cancel": "취소"
+      },
+      "dndGuide" : {
+        "title": "대상 환자 할당",
+        "description": "원하는 데이터셋을 우측 대시보드 영역으로 드래그앤 드롭합니다."
       }
     }
   }

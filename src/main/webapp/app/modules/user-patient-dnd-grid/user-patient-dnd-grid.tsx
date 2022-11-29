@@ -104,6 +104,8 @@ export const UserPatientDndGrid = () => {
             caption={translate('cancerLibraryApp.userPatientDndGrid.column.id')}
             alignment={'center'}
             visible={false}
+            sortIndex={0}
+            sortOrder={'asc'}
           />
           <Column dataField="login" caption={translate('cancerLibraryApp.userPatientDndGrid.column.login')}
                   alignment={'center'}/>
@@ -132,20 +134,23 @@ export const UserPatientDndGrid = () => {
         </DataGrid>
         <Stack spacing={1} direction="row" className="justify-content-end my-3">
           <Button variant="contained" onClick={onClickSave}>
-            저장
+            {translate('cancerLibraryApp.userPatientDndGrid.button.save')}
           </Button>
           <Button variant="outlined" onClick={onClickCancel} className="btn-outline">
-            취소
+            {translate('cancerLibraryApp.userPatientDndGrid.button.cancel')}
           </Button>
         </Stack>
       </div>
 
       <div className="wrap-page">
         <h1 className="title-page d-flex">
-          <Typography variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) 님의` : null} 대상 환자
-            할당 <HelpOutlineOutlinedIcon/>
+          <Typography variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
+            {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.title')}
+            <HelpOutlineOutlinedIcon/>
           </Typography>
-          <span className="patient-text">원하는 데이터셋을 우측 대시보드 영역으로 드래그앤 드롭합니다.</span>
+          <span className="patient-text">
+            {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
+          </span>
         </h1>
 
         <div className="tables">

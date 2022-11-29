@@ -38,10 +38,7 @@ public class UserController {
 
     @GetMapping("/users/normal-authorization-list")
     public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
-        log.debug("REST request to get a page of Users");
-//        List<Authority> authorities = new ArrayList<>();
-//        authorities.add(new Authority().name(AuthoritiesConstants.ADMIN));
-//        authorities.add(new Authority().name(AuthoritiesConstants.SUPERVISOR));
+        log.debug("REST request to get all Users with work info");
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
             .stream().map(user-> {
                 Integer assigned = userPatientRepository.countByUser(user);
@@ -55,6 +52,9 @@ public class UserController {
     }
 
     static class NormalAuthorizationUserVM {
+        @JsonProperty("id")
+        private Long id;
+
         @JsonProperty("login")
         private String login;
 
@@ -73,7 +73,8 @@ public class UserController {
         @JsonProperty("declined")
         private Integer declined;
 
-        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined) {
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined){
+            this.id = user.getId();
             this.login = user.getLogin();
             this.name = user.getName();
             this.assigned = assigned;
