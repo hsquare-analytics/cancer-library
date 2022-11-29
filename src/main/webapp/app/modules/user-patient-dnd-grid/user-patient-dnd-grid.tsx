@@ -111,6 +111,8 @@ export const UserPatientDndGrid = () => {
                   alignment={'center'}/>
           <Column dataField="name" caption={translate('cancerLibraryApp.userPatientDndGrid.column.name')}
                   alignment={'center'}/>
+          <Column dataField="authority" caption={translate('cancerLibraryApp.userPatientDndGrid.column.authority')}
+                  alignment={'center'}/>
           <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')}
                   alignment={'center'}/>
           <Column

@@ -40,7 +40,7 @@ public class UserController {
     public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
         log.debug("REST request to get all Users with work info");
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
-            .stream().map(user-> {
+            .stream().map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
                 Integer submitted = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.SUBMITTED);
                 Integer approved = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.APPROVED);
@@ -73,7 +73,10 @@ public class UserController {
         @JsonProperty("declined")
         private Integer declined;
 
-        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined){
+        @JsonProperty("authority")
+        private String authority;
+
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined) {
             this.id = user.getId();
             this.login = user.getLogin();
             this.name = user.getName();
@@ -81,6 +84,13 @@ public class UserController {
             this.submitted = submitted;
             this.approved = approved;
             this.declined = declined;
+
+            boolean isAdmin = user.getAuthorities().stream().anyMatch(authority -> authority.getName().equals("ROLE_ADMIN") || authority.getName().equals("ROLE_SUPERVISOR"));
+            if (isAdmin) {
+                this.authority = "Supervisor";
+            } else {
+                this.authority = "Reviewer";
+            }
         }
 
         public NormalAuthorizationUserVM() {

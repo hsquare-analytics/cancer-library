@@ -15,7 +15,8 @@
         "summary": "작업 진행 정보",
         "submitted": "제출",
         "approved": "승인",
-        "declined": "반려"
+        "declined": "반려",
+        "authority": "권한"
       },
       "button": {
         "save": "저장",
