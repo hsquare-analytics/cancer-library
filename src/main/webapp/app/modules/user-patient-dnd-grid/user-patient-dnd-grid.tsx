@@ -109,9 +109,9 @@ export const UserPatientDndGrid = () => {
       'true': [],
     });
 
-    dndGridRef1.current.dataGrid.instance.clearSelection()
-    dndGridRef2.current.dataGrid.instance.clearSelection()
-  }
+    dndGridRef1.current.dataGrid.instance.clearSelection();
+    dndGridRef2.current.dataGrid.instance.clearSelection();
+  };
 
   return (
     <div className="user-patient-two-grid-wrapper">
@@ -193,7 +193,7 @@ export const UserPatientDndGrid = () => {
               <DndGrid
                 ref={dndGridRef1}
                 authorized={false} selectedRowKeys={dndSelectedRowKeys}
-                       setSelectedRowKeys={setDndSelectedRowKeys}/>
+                setSelectedRowKeys={setDndSelectedRowKeys}/>
             </div>
             <div className="column d-flex align-items-center">
               <Stack spacing={2} direction="column">
@@ -209,7 +209,7 @@ export const UserPatientDndGrid = () => {
               <DndGrid
                 ref={dndGridRef2}
                 authorized={true} selectedRowKeys={dndSelectedRowKeys}
-                       setSelectedRowKeys={setDndSelectedRowKeys}/>
+                setSelectedRowKeys={setDndSelectedRowKeys}/>
             </div>
           </div>
           : <Box sx={{display: 'flex'}}>
