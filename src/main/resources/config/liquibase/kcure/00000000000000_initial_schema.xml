@@ -29,6 +29,7 @@
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/19_gscn_trtm_bltr.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/20_gscn_trtm_drin.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/meta/21_gscn_trtm_antp.config.sql"/>
+        <sqlFile dbms="h2" path="config/liquibase/kcure/meta/22_gscn_trtm_rd.config.sql"/>
         <sqlFile dbms="h2" path="config/liquibase/kcure/update_table_schema.sql"/>
     </changeSet>
     <changeSet id="20221116140400-3" author="zero" context="kcure">
