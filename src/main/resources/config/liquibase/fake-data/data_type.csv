@@ -5,3 +5,4 @@ string
 date
 datetime
 selectbox
+textarea

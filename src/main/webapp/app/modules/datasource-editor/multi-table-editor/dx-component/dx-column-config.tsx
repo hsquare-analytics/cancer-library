@@ -6,6 +6,7 @@ import React from 'react';
 import DxTextBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-text-box";
 import DxNumberBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-number-box";
 import DxDateBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-date-box";
+import DxTextareaBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-textarea-box";
 
 const getDxEditCellComponent = (item: IItem) => {
   if (!item.attribute.dataType) {
@@ -28,6 +29,8 @@ const getDxEditCellComponent = (item: IItem) => {
     case 'date':
     case 'datetime':
       return DxDateBox;
+    case 'textarea':
+      return DxTextareaBox;
     default:
       return DxTextBox;
   }
