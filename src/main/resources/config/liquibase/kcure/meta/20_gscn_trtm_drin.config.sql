@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS GSCN.GSCN_TRTM_BLTR;
-DROP TABLE IF EXISTS GSCN.GSCN_TRTM_BLTR_UPDATED;
+DROP TABLE IF EXISTS GSCN.GSCN_TRTM_DRIN;
+DROP TABLE IF EXISTS GSCN.GSCN_TRTM_DRIN_UPDATED;
 
-CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_BLTR (
+CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_DRIN (
     hosp_cd                varchar(20) not null,
     pt_no                  varchar(10) not null,
     drug_prsc_ymd          timestamp   not null,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_BLTR (
 );
 
 INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (20000, 'GSCN.GSCN_TRTM_BLTR', '20.위암_치료_약제성분', true, 20, 999, 'system');
+VALUES (20000, 'GSCN.GSCN_TRTM_DRIN', '20.위암_치료_약제성분', true, 20, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (20000, null, '20.위암_치료_약제성분');
