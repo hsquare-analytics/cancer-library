@@ -44,7 +44,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (16001
 insert into ph_item_attribute (item_id, caption, required) values (16001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16002, 'pt_no', 16000, 'system', 16002);
-insert into ph_item_attribute (item_id, caption, required) values (16002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (16002, '환자대체번호');
 insert into ph_item_property (item_id, visible) values (16002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16003, 'esd_srpr_ymd', 16000, 'system', 16003);

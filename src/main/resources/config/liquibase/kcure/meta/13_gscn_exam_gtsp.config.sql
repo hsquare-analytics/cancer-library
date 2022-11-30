@@ -37,7 +37,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (13001
 insert into ph_item_attribute (item_id, caption, required) values (13001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (13002, 'pt_no', 13000, 'system', 13002);
-insert into ph_item_attribute (item_id, caption, required) values (13002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (13002, '환자대체번호');
 insert into ph_item_property (item_id, visible) values (13002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (13003, 'stmc_edex_ymd', 13000, 'system', 13003);

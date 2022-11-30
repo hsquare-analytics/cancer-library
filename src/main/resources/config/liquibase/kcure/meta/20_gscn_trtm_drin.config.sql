@@ -49,7 +49,8 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (20001
 insert into ph_item_attribute (item_id, caption, required) values (20001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (20002, 'pt_no', 20000, 'system', 20002);
-insert into ph_item_attribute (item_id, caption, required) values (20002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (20002, '환자대체번호');
+insert into ph_item_property (item_id, visible) values (20002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (20003, 'drug_prsc_ymd', 20000, 'system', 20003);
 insert into ph_item_attribute (item_id, caption, required, format, data_type) values (20003, '약제처방일자', true, 'yyyy-MM-dd', 'date');

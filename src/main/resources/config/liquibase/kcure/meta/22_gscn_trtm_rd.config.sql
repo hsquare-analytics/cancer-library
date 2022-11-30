@@ -48,7 +48,8 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (22001
 insert into ph_item_attribute (item_id, caption, required) values (22001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22002, 'pt_no', 22000, 'system', 22002);
-insert into ph_item_attribute (item_id, caption, required) values (22002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (22002, '환자대체번호');
+insert into ph_item_property (item_id, visible) values (22002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22003, 'rdt_prsc_ymd', 22000, 'system', 22003);
 insert into ph_item_attribute (item_id, caption, required, format, data_type) values (22003, '방사선치료처방일자', true, 'yyyy-MM-dd', 'date');
@@ -128,14 +129,14 @@ insert into ph_item_attribute (item_id, caption, data_type) values (22027, '방�
 insert into ph_item (id, title, category_id, created_by, order_no) values (22028, 'rdt_seff_grnm', 22000, 'system', 22028);
 insert into ph_item_attribute (item_id, caption) values (22028, '방사선치료부작용등급명');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22029, 'crtn_dt', 22000, 'system', 22029);
-insert into ph_item_attribute (item_id, caption) values (22029, '생성일시');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (22030, 'idx', 22000, 'system', 22030);
-insert into ph_item_attribute (item_id, caption) values (22030, 'UI용 시퀀스');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (22031, 'pact_id', 22000, 'system', 22031);
-insert into ph_item_attribute (item_id, caption) values (22031, 'UI용 PACT_ID');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (22032, 'comments', 22000, 'system', 22032);
-insert into ph_item_attribute (item_id, caption) values (22032, 'UI용 comments');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22029, 'crtn_dt', 22000, 'system', 22029);
+-- insert into ph_item_attribute (item_id, caption) values (22029, '생성일시');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22030, 'idx', 22000, 'system', 22030);
+-- insert into ph_item_attribute (item_id, caption) values (22030, 'UI용 시퀀스');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22031, 'pact_id', 22000, 'system', 22031);
+-- insert into ph_item_attribute (item_id, caption) values (22031, 'UI용 PACT_ID');
+--
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22032, 'comments', 22000, 'system', 22032);
+-- insert into ph_item_attribute (item_id, caption) values (22032, 'UI용 comments');

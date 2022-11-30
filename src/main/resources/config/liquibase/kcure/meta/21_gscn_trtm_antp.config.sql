@@ -41,7 +41,8 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (21001
 insert into ph_item_attribute (item_id, caption, required) values (21001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21002, 'pt_no', 21000, 'system', 21002);
-insert into ph_item_attribute (item_id, caption, required) values (21002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (21002, '환자대체번호');
+insert into ph_item_property (item_id, visible) values (21002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21003, 'antp_strt_ymd', 21000, 'system', 21003);
 insert into ph_item_attribute (item_id, caption, required, format, data_type) values (21003, '항암요법시작일자', true, 'yyyy-MM-dd', 'date');

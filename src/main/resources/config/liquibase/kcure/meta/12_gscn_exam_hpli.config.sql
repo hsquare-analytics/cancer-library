@@ -33,7 +33,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (12001
 insert into ph_item_attribute (item_id, caption, required) values (12001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (12002, 'pt_no', 12000, 'system', 12002);
-insert into ph_item_attribute (item_id, caption, required) values (12002, '환자대체번호', true);
+insert into ph_item_attribute (item_id, caption) values (12002, '환자대체번호');
 insert into ph_item_property (item_id, visible) values (12002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (12003, 'hpli_exam_ymd', 12000, 'system', 12003);
