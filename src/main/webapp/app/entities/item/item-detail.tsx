@@ -103,6 +103,12 @@ export const ItemDetail = () => {
           </dt>
           <dd>{itemEntity.property?.visible}</dd>
           <dt>
+            <span id="labelColumn">
+              <Translate contentKey="cancerLibraryApp.item.property.labelColumn">Label Column</Translate>
+            </span>
+          </dt>
+          <dd>{itemEntity.property?.labelColumn}</dd>
+          <dt>
             <span id="sortDirection">
               <Translate contentKey="cancerLibraryApp.item.property.sortDirection">Sort Direction</Translate>
             </span>

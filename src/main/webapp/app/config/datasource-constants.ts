@@ -9,3 +9,5 @@ export const KCURE_PREFIX = 'KCURE';
 export const DATASOURCE_IDX = "idx";
 
 export const PATIENT_NO = "pt_no";
+
+export const HOSPITAL_CODE = "hosp_cd";

@@ -14,6 +14,7 @@ public class ItemProperty implements Serializable {
 
     private Boolean visible;
 
+    private String labelColumn;
 
     public Boolean isAllowEditing() {
         return allowEditing;
@@ -64,6 +65,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty visible(Boolean visible) {
         this.setVisible(visible);
+        return this;
+    }
+
+    public String getLabelColumn() {
+        return labelColumn;
+    }
+
+    public void setLabelColumn(String labelColumn) {
+        this.labelColumn = labelColumn;
+    }
+
+    public ItemProperty labelColumn(String labelColumn) {
+        this.setLabelColumn(labelColumn);
         return this;
     }
 }
