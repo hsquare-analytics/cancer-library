@@ -98,9 +98,10 @@ insert into ph_item_attribute (item_id, caption) values (9008, '모집단구분�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9009, 'frgcode', 9000, 'system', 9009, 60030);
 insert into ph_item_attribute (item_id, caption, data_type) values (9009, '외국인코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9009, 'frgname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9010, 'frgname', 9000, 'system', 9010);
-insert into ph_item_attribute (item_id, caption) values (9010, '외국인명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9010, 'frgname', 9000, 'system', 9010);
+-- insert into ph_item_attribute (item_id, caption) values (9010, '외국인명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9011, 'hmlscode', 9000, 'system', 9011);
 insert into ph_item_attribute (item_id, caption) values (9011, '행려환자코드');
@@ -110,9 +111,10 @@ insert into ph_item_attribute (item_id, caption) values (9012, '행려환자');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9013, 'jobcode', 9000, 'system', 9013, 60050);
 insert into ph_item_attribute (item_id, caption, data_type) values (9013, '직업분류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9013, 'jobname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9014, 'jobname', 9000, 'system', 9014);
-insert into ph_item_attribute (item_id, caption) values (9014, '직업분류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9014, 'jobname', 9000, 'system', 9014);
+-- insert into ph_item_attribute (item_id, caption) values (9014, '직업분류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9015, 'job1', 9000, 'system', 9015);
 insert into ph_item_attribute (item_id, caption) values (9015, '직업분류기타');
@@ -122,9 +124,10 @@ insert into ph_item_attribute (item_id, caption) values (9016, '직업상세설�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9017, 'visitpathcode', 9000, 'system', 9017, 60060);
 insert into ph_item_attribute (item_id, caption, data_type) values (9017, '진단경로코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9017, 'visitpathname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9018, 'visitpathname', 9000, 'system', 9018);
-insert into ph_item_attribute (item_id, caption) values (9018, '진단경로명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9018, 'visitpathname', 9000, 'system', 9018);
+-- insert into ph_item_attribute (item_id, caption) values (9018, '진단경로명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9019, 'visitpath_desc', 9000, 'system', 9019);
 insert into ph_item_attribute (item_id, caption) values (9019, '진단경로5세부설명');
@@ -140,9 +143,10 @@ insert into ph_item_attribute (item_id, caption) values (9022, '원발부위코�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9023, 'latercode', 9000, 'system', 9023, 60070);
 insert into ph_item_attribute (item_id, caption, data_type) values (9023, '편측성코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9023, 'latername');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9024, 'latername', 9000, 'system', 9024);
-insert into ph_item_attribute (item_id, caption) values (9024, '편측성명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9024, 'latername', 9000, 'system', 9024);
+-- insert into ph_item_attribute (item_id, caption) values (9024, '편측성명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9025, 'mcode', 9000, 'system', 9025);
 insert into ph_item_attribute (item_id, caption) values (9025, '조직학적진단명코드');
@@ -155,9 +159,10 @@ insert into ph_item_attribute (item_id, caption) values (9027, '조직학적진�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9028, 'bunhwadocode', 9000, 'system', 9028, 60070);
 insert into ph_item_attribute (item_id, caption, data_type) values (9028, '분화도코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9028, 'bunhwadoname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9029, 'bunhwadoname', 9000, 'system', 9029);
-insert into ph_item_attribute (item_id, caption) values (9029, '분화도명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9029, 'bunhwadoname', 9000, 'system', 9029);
+-- insert into ph_item_attribute (item_id, caption) values (9029, '분화도명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9030, 'expire', 9000, 'system', 9030);
 insert into ph_item_attribute (item_id, caption, format, data_type) values (9030, '사망연월일', 'yyyy-MM-dd', 'date');
@@ -167,9 +172,10 @@ insert into ph_item_attribute (item_id, caption) values (9031, '사망원인');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9032, 'methodcode', 9000, 'system', 9032, 60090);
 insert into ph_item_attribute (item_id, caption, data_type) values (9032, '진단방법코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9032, 'methodname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9033, 'methodname', 9000, 'system', 9033);
-insert into ph_item_attribute (item_id, caption) values (9033, '진단방법명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9033, 'methodname', 9000, 'system', 9033);
+-- insert into ph_item_attribute (item_id, caption) values (9033, '진단방법명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9034, 'method2', 9000, 'system', 9034);
 insert into ph_item_attribute (item_id, caption) values (9034, '진단방법 임상검사2세부사항');
@@ -179,9 +185,10 @@ insert into ph_item_attribute (item_id, caption) values (9035, '진단방법 임
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9036, 'txcheckcode', 9000, 'system', 9036, 60100);
 insert into ph_item_attribute (item_id, caption, data_type) values (9036, '치료 시행 여부코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9036, 'txcheckname');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9037, 'txcheckname', 9000, 'system', 9037);
-insert into ph_item_attribute (item_id, caption) values (9037, '치료시행여부명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9037, 'txcheckname', 9000, 'system', 9037);
+-- insert into ph_item_attribute (item_id, caption) values (9037, '치료시행여부명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9038, 'tx', 9000, 'system', 9038);
 insert into ph_item_attribute (item_id, caption) values (9038, '치료');
@@ -209,9 +216,10 @@ insert into ph_item_attribute (item_id, caption) values (9045, 'SEERYEAR');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9046, 'seercode', 9000, 'system', 9046, 60110);
 insert into ph_item_attribute (item_id, caption, data_type) values (9046, 'SEERCODE', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9046, 'seername');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9047, 'seername', 9000, 'system', 9047);
-insert into ph_item_attribute (item_id, caption) values (9047, 'SEERNAME');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9047, 'seername', 9000, 'system', 9047);
+-- insert into ph_item_attribute (item_id, caption) values (9047, 'SEERNAME');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9048, 'stagecode', 9000, 'system', 9048);
 insert into ph_item_attribute (item_id, caption) values (9048, 'STAGE코드');

@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS GSCN.GSCN_DIAG_ANINF_UPDATED;
 CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_ANINF (
                                  hosp_cd varchar(20) NOT NULL, 					-- 병원코드
                                  pt_no varchar(10) NOT NULL, 					-- 환자대체번호
-                                 anth_rcrd_ymd varchar(8) NOT NULL, 				-- 신체계측기록일자
+                                 anth_rcrd_ymd timestamp NOT NULL, 				-- 신체계측기록일자
                                  anth_rcrd_seq numeric(3) NOT NULL, 				-- 신체계측기록순번
                                  ht_msrm_vl varchar(10) NULL, 					-- 신장측정값			-- numeric(5, 1)  쓰레기 데이터도 그냥 넘겨달라고함
                                  wt_msrm_vl varchar(10) NULL, 					-- 체중측정값			-- numeric(5, 1)  쓰레기 데이터도 그냥 넘겨달라고함
@@ -58,9 +58,10 @@ insert into ph_item_attribute (item_id, caption) values (9309, '수축혈압값'
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9310, 'ecog_cd', 9300, 'system', 9310, 20010);
 insert into ph_item_attribute (item_id, caption, data_type) values (9310, 'ECOG코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9310, 'ecog_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'ecog_nm', 9300, 'system', 9311);
-insert into ph_item_attribute (item_id, caption) values (9311, 'ECOG명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'ecog_nm', 9300, 'system', 9311);
+-- insert into ph_item_attribute (item_id, caption) values (9311, 'ECOG명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9312, 'crtn_dt', 9300, 'system', 9312);
 -- insert into ph_item_attribute (item_id, caption, format, data_type) values (9312, '생성일시', 'yyyy-MM-dd', 'date');

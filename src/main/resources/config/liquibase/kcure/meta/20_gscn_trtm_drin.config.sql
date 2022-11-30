@@ -60,21 +60,24 @@ insert into ph_item_attribute (item_id, caption, required) values (20004, '약�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (20005, 'drug_clcd', 20000, 'system', 20005, 40390);
 insert into ph_item_attribute (item_id, caption, data_type) values (20005, '약제분류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (20005, 'drug_clnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20006, 'drug_clnm', 20000, 'system', 20006);
-insert into ph_item_attribute (item_id, caption) values (20006, '약제분류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20006, 'drug_clnm', 20000, 'system', 20006);
+-- insert into ph_item_attribute (item_id, caption) values (20006, '약제분류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (20007, 'drug_spcd', 20000, 'system', 20007, 40380);
 insert into ph_item_attribute (item_id, caption, data_type) values (20007, '약제구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (20007, 'drug_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20008, 'drug_spnm', 20000, 'system', 20008);
-insert into ph_item_attribute (item_id, caption) values (20008, '약제구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20008, 'drug_spnm', 20000, 'system', 20008);
+-- insert into ph_item_attribute (item_id, caption) values (20008, '약제구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (20009, 'drin_kncd', 20000, 'system', 20009, 40400);
 insert into ph_item_attribute (item_id, caption, data_type) values (20009, '약제성분종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (20009, 'drin_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20010, 'drin_knnm', 20000, 'system', 20010);
-insert into ph_item_attribute (item_id, caption) values (20010, '약제성분종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20010, 'drin_knnm', 20000, 'system', 20010);
+-- insert into ph_item_attribute (item_id, caption) values (20010, '약제성분종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (20011, 'drin_cd', 20000, 'system', 20011);
 insert into ph_item_attribute (item_id, caption) values (20011, '약제성분코드');
@@ -120,15 +123,17 @@ insert into ph_item_attribute (item_id, caption) values (20024, '약제처방일
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (20025, 'drug_injc_pth_cd', 20000, 'system', 20025, 40440);
 insert into ph_item_attribute (item_id, caption, data_type) values (20025, '약제투여경로코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (20025, 'drug_injc_pth_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20026, 'drug_injc_pth_nm', 20000, 'system', 20026);
-insert into ph_item_attribute (item_id, caption) values (20026, '약제투여경로명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20026, 'drug_injc_pth_nm', 20000, 'system', 20026);
+-- insert into ph_item_attribute (item_id, caption) values (20026, '약제투여경로명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (20027, 'drug_prsc_capa_unit_cd', 20000, 'system', 20027, 40420);
 insert into ph_item_attribute (item_id, caption, data_type) values (20027, '약제처방용량단위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (20027, 'drug_prsc_capa_unit_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20028, 'drug_prsc_capa_unit_nm', 20000, 'system', 20028);
-insert into ph_item_attribute (item_id, caption) values (20028, '약제처방용량단위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20028, 'drug_prsc_capa_unit_nm', 20000, 'system', 20028);
+-- insert into ph_item_attribute (item_id, caption) values (20028, '약제처방용량단위명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (20029, 'drug_mdct_dtrn_mcnt', 20000, 'system', 20029);
 insert into ph_item_attribute (item_id, caption) values (20029, '약제투약기간월수');

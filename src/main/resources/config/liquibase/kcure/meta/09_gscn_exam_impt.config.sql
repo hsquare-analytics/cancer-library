@@ -53,24 +53,27 @@ insert into ph_item_attribute (item_id, caption) values (9907, '면역병리검�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9908, 'imem_kncd', 9900, 'system', 9908, 30170);
 insert into ph_item_attribute (item_id, caption, data_type) values (9908, '면역병리검사종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9908, 'imem_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9909, 'imem_knnm', 9900, 'system', 9909);
-insert into ph_item_attribute (item_id, caption) values (9909, '면역병리검사종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9909, 'imem_knnm', 9900, 'system', 9909);
+-- insert into ph_item_attribute (item_id, caption) values (9909, '면역병리검사종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9910, 'imem_opn_cd', 9900, 'system', 9910, 30160);
 insert into ph_item_attribute (item_id, caption, data_type) values (9910, '면역병리검사소견코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9910, 'imem_opn_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9911, 'imem_opn_nm', 9900, 'system', 9911);
-insert into ph_item_attribute (item_id, caption) values (9911, '면역병리검사소견명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9911, 'imem_opn_nm', 9900, 'system', 9911);
+-- insert into ph_item_attribute (item_id, caption) values (9911, '면역병리검사소견명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9912, 'imem_rslt_cont', 9900, 'system', 9912);
 insert into ph_item_attribute (item_id, caption) values (9912, '면역병리검사결과내용');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9913, 'imem_rslt_unit_cd', 9900, 'system', 9913, 30140);
 insert into ph_item_attribute (item_id, caption, data_type) values (9913, '면역병리검사결과단위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9913, 'imem_rslt_unit_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'imem_rslt_unit_nm', 9900, 'system', 9914);
-insert into ph_item_attribute (item_id, caption) values (9914, '면역병리검사결과단위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'imem_rslt_unit_nm', 9900, 'system', 9914);
+-- insert into ph_item_attribute (item_id, caption) values (9914, '면역병리검사결과단위명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9915, 'crtn_dt', 9900, 'system', 9915);
 -- insert into ph_item_attribute (item_id, caption, format, data_type) values (9915, '생성일시', 'yyyy-MM-dd', 'date');

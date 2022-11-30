@@ -46,21 +46,24 @@ insert into ph_item_attribute (item_id, caption, required) values (14004, 'EUS�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (14005, 'eus_t_stag_cd', 14000, 'system', 14005, 30050);
 insert into ph_item_attribute (item_id, caption, data_type) values (14005, 'EUS_T병기코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (14005, 'eus_t_stag_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (14006, 'eus_t_stag_nm', 14000, 'system', 14006);
-insert into ph_item_attribute (item_id, caption) values (14006, 'EUS_T병기명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (14006, 'eus_t_stag_nm', 14000, 'system', 14006);
+-- insert into ph_item_attribute (item_id, caption) values (14006, 'EUS_T병기명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (14007, 'eus_n_stag_cd', 14000, 'system', 14007, 30040);
 insert into ph_item_attribute (item_id, caption, data_type) values (14007, 'EUS_N병기코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (14007, 'eus_n_stag_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (14008, 'eus_n_stag_nm', 14000, 'system', 14008);
-insert into ph_item_attribute (item_id, caption) values (14008, 'EUS_N병기명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (14008, 'eus_n_stag_nm', 14000, 'system', 14008);
+-- insert into ph_item_attribute (item_id, caption) values (14008, 'EUS_N병기명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (14009, 'eus_m_stag_cd', 14000, 'system', 14009, 30030);
 insert into ph_item_attribute (item_id, caption, data_type) values (14009, 'EUS_M병기코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (14009, 'eus_m_stag_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (14010, 'eus_m_stag_nm', 14000, 'system', 14010);
-insert into ph_item_attribute (item_id, caption) values (14010, 'EUS_M병기명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (14010, 'eus_m_stag_nm', 14000, 'system', 14010);
+-- insert into ph_item_attribute (item_id, caption) values (14010, 'EUS_M병기명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (14011, 'eus_exam_opn_cont', 14000, 'system', 14011);
 insert into ph_item_attribute (item_id, caption) values (14011, 'EUS검사소견내용');
@@ -70,9 +73,10 @@ insert into ph_item_attribute (item_id, caption) values (14012, 'EUS검사결과
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (14013, 'eus_comp_cd', 14000, 'system', 14013, 30060);
 insert into ph_item_attribute (item_id, caption, data_type) values (14013, 'EUS합병증코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (14013, 'eus_comp_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (14014, 'eus_comp_nm', 14000, 'system', 14014);
-insert into ph_item_attribute (item_id, caption) values (14014, 'EUS합병증명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (14014, 'eus_comp_nm', 14000, 'system', 14014);
+-- insert into ph_item_attribute (item_id, caption) values (14014, 'EUS합병증명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (14015, 'crtn_dt', 14000, 'system', 14015);
 -- insert into ph_item_attribute (item_id, caption) values (14015, '생성일시');

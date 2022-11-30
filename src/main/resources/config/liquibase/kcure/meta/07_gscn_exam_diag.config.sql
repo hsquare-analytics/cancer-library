@@ -47,9 +47,10 @@ insert into ph_item_attribute (item_id, caption, required) values (9704, '진단
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9705, 'cexm_kncd', 9700, 'system', 9705, 30580);
 insert into ph_item_attribute (item_id, caption, data_type) values (9705, '진단검사종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9705, 'cexm_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9706, 'cexm_knnm', 9700, 'system', 9706);
-insert into ph_item_attribute (item_id, caption) values (9706, '진단검사종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9706, 'cexm_knnm', 9700, 'system', 9706);
+-- insert into ph_item_attribute (item_id, caption) values (9706, '진단검사종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9707, 'cexm_cd', 9700, 'system', 9707);
 insert into ph_item_attribute (item_id, caption) values (9707, '진단검사코드');

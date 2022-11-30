@@ -63,21 +63,24 @@ insert into ph_item_attribute (item_id, caption) values (13009, '위내시경검
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (13010, 'stmc_edex_rslt_tpcd', 13000, 'system', 13010, 30440);
 insert into ph_item_attribute (item_id, caption) values (13010, '위내시경검사결과유형코드');
+insert into ph_item_property (item_id, label_column) values (13010, 'stmc_edex_rslt_tpnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (13011, 'stmc_edex_rslt_tpnm', 13000, 'system', 13011);
-insert into ph_item_attribute (item_id, caption) values (13011, '위내시경검사결과유형명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (13011, 'stmc_edex_rslt_tpnm', 13000, 'system', 13011);
+-- insert into ph_item_attribute (item_id, caption) values (13011, '위내시경검사결과유형명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (13012, 'gtsp_comp_grcd', 13000, 'system', 13012, 30460);
 insert into ph_item_attribute (item_id, caption) values (13012, '위내시경합병증등급코드');
+insert into ph_item_property (item_id, label_column) values (13012, 'gtsp_comp_grnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (13013, 'gtsp_comp_grnm', 13000, 'system', 13013);
-insert into ph_item_attribute (item_id, caption) values (13013, '위내시경합병증등급명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (13013, 'gtsp_comp_grnm', 13000, 'system', 13013);
+-- insert into ph_item_attribute (item_id, caption) values (13013, '위내시경합병증등급명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (13014, 'gtsp_comp_cd', 13000, 'system', 13014, 30470);
 insert into ph_item_attribute (item_id, caption) values (13014, '위내시경합병증코드');
+insert into ph_item_property (item_id, label_column) values (13014, 'gtsp_comp_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (13015, 'gtsp_comp_nm', 13000, 'system', 13015);
-insert into ph_item_attribute (item_id, caption) values (13015, '위내시경합병증명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (13015, 'gtsp_comp_nm', 13000, 'system', 13015);
+-- insert into ph_item_attribute (item_id, caption) values (13015, '위내시경합병증명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (13016, 'crtn_dt', 13000, 'system', 13016);
 -- insert into ph_item_attribute (item_id, caption) values (13016, '생성일시');

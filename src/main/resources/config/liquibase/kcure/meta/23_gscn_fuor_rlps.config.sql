@@ -42,21 +42,24 @@ insert into ph_item_attribute (item_id, caption, required) values (23004, '재�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (23005, 'rldg_mtcd', 23000, 'system', 23005, 50040);
 insert into ph_item_attribute (item_id, caption, data_type) values (23005, '재발진단방법코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (23005, 'rldg_mtnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (23006, 'rldg_mtnm', 23000, 'system', 23006);
-insert into ph_item_attribute (item_id, caption) values (23006, '재발진단방법명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (23006, 'rldg_mtnm', 23000, 'system', 23006);
+-- insert into ph_item_attribute (item_id, caption) values (23006, '재발진단방법명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (23007, 'rlps_site_cd', 23000, 'system', 23007, 50010);
 insert into ph_item_attribute (item_id, caption, data_type) values (23007, '재발부위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (23007, 'rlps_site_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (23008, 'rlps_site_nm', 23000, 'system', 23008);
-insert into ph_item_attribute (item_id, caption) values (23008, '재발부위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (23008, 'rlps_site_nm', 23000, 'system', 23008);
+-- insert into ph_item_attribute (item_id, caption) values (23008, '재발부위명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (23009, 'rlps_kncd', 23000, 'system', 23009, 50020);
 insert into ph_item_attribute (item_id, caption, data_type) values (23009, '재발종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (23009, 'rlps_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (23010, 'rlps_knnm', 23000, 'system', 23010);
-insert into ph_item_attribute (item_id, caption) values (23010, '재발종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (23010, 'rlps_knnm', 23000, 'system', 23010);
+-- insert into ph_item_attribute (item_id, caption) values (23010, '재발종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (23011, 'rlps_trtm_cont', 23000, 'system', 23011);
 insert into ph_item_attribute (item_id, caption) values (23011, '재발치료내용');

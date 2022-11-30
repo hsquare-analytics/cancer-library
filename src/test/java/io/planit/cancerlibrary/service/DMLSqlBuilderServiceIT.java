@@ -3,6 +3,8 @@ package io.planit.cancerlibrary.service;
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.domain.embedded.ItemAttribute;
+import io.planit.cancerlibrary.domain.embedded.ItemProperty;
+import io.planit.cancerlibrary.domain.embedded.Lookup;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.web.rest.CategoryResourceIT;
 import io.planit.cancerlibrary.web.rest.SubjectResourceIT;
@@ -22,6 +24,7 @@ import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,6 +57,9 @@ class DMLSqlBuilderServiceIT {
 
     private Category category;
 
+    @Autowired
+    private CodebookRepository codebookRepository;
+
     @MockBean
     TimeService timeService;
 
@@ -72,7 +78,7 @@ class DMLSqlBuilderServiceIT {
     @Test
     @Transactional
     @WithMockUser(username = "test_login", authorities = "ROLE_USER")
-    void testInsertSql() {
+    void test_insert_sql() {
         Timestamp timestamp = Timestamp.from(Instant.now());
         // given
         BDDMockito.given(timeService.getCurrentTimestamp()).willReturn(timestamp);
@@ -88,10 +94,17 @@ class DMLSqlBuilderServiceIT {
 
         Item dateColumn = new Item().category(category).title("column3").activated(true).attribute(new ItemAttribute().caption("date_column").required(true).dataType("date"));
 
+        Codebook codebook = new Codebook().title("codebook1").lookupList(List.of(new Lookup().title("codebook-title").description("codebook-value")));
+        codebookRepository.saveAndFlush(codebook);
+        Item item4 = new Item().category(category).title("column4-value").activated(true)
+            .attribute(new ItemAttribute().caption("test").required(true).dataType("selectbox"))
+            .property(new ItemProperty().labelColumn("column4-label")).codebook(codebook);
+
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
         itemRepository.saveAndFlush(item3);
         itemRepository.saveAndFlush(dateColumn);
+        itemRepository.saveAndFlush(item4);
 
         // when
         String result = dmlSqlBuilderService.getInsertSQL(category.getId(), new HashMap<>() {{
@@ -100,12 +113,13 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
             put("column2", "test2");
             put("column3", timestamp.toString());
+            put("column4-value", "codebook-value");
         }});
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
-            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, COLUMN4-VALUE, COLUMN4-LABEL, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'codebook-value', 'codebook-title', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
     }
 
     @ParameterizedTest
@@ -144,8 +158,7 @@ class DMLSqlBuilderServiceIT {
         }});
 
         // then
-        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED"))
-            .contains("WHERE (IDX = 'test_idx')");
+        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle() + "_UPDATED")).contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
@@ -167,8 +180,7 @@ class DMLSqlBuilderServiceIT {
         }});
 
         // then
-        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle()))
-            .contains("WHERE (IDX = 'test_idx')");
+        assertThat(result).contains("SELECT *").contains(String.format("FROM %s", category.getTitle())).contains("WHERE (IDX = 'test_idx')");
     }
 
 
@@ -199,9 +211,16 @@ class DMLSqlBuilderServiceIT {
         Item item2 = new Item().category(category).title("column2").activated(true);
         Item dateColumn = new Item().category(category).title("column3").activated(true).attribute(new ItemAttribute().caption("date_column").required(true).dataType("date"));
 
+        Codebook codebook = new Codebook().title("codebook1").lookupList(List.of(new Lookup().title("codebook-title").description("codebook-value")));
+        codebookRepository.saveAndFlush(codebook);
+        Item item4 = new Item().category(category).title("column4-value").activated(true)
+            .attribute(new ItemAttribute().caption("test").required(true).dataType("selectbox"))
+            .property(new ItemProperty().labelColumn("column4-label")).codebook(codebook);
+
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
         itemRepository.saveAndFlush(dateColumn);
+        itemRepository.saveAndFlush(item4);
 
         // when
         String result = dmlSqlBuilderService.getUpdateSQL(category.getId(), new HashMap<>() {{
@@ -209,12 +228,12 @@ class DMLSqlBuilderServiceIT {
             put("column1", "test1");
             put("column2", "test2");
             put("column3", timestamp.toString());
+            put("column4-value", "codebook-value");
         }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', COLUMN3 = '%s', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp, timestamp))
-            .contains("WHERE (IDX = 'test_idx')");
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', COLUMN3 = '%s', COLUMN4-VALUE = 'codebook-value', COLUMN4-LABEL = 'codebook-title', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp, timestamp)).contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
@@ -249,9 +268,7 @@ class DMLSqlBuilderServiceIT {
         }});
 
         // then
-        assertThat(result)
-            .contains("DELETE FROM " + category.getTitle() + "_UPDATED")
-            .contains("WHERE (IDX = 'test_idx')");
+        assertThat(result).contains("DELETE FROM " + category.getTitle() + "_UPDATED").contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
@@ -262,8 +279,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(
-            SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
     }
 
     @Test
@@ -274,16 +290,14 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(
-            SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
     }
 
     @Test
     @Transactional
     @WithMockUser
     void testReadAllSqlConfigurationException() {
-        assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(
-            SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(SetupDeficiencyException.class);
     }
 
     @Test
@@ -294,8 +308,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(
-            SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
     }
 
     @Test
@@ -306,8 +319,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(
-            SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
     }
 }
 

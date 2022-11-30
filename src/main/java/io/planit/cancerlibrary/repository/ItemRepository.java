@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    @EntityGraph(attributePaths = {"category", "codebook.lookupList"})
     List<Item> findAllByCategoryId(Long id);
 
     @EntityGraph(attributePaths = {"category", "codebook.lookupList"})

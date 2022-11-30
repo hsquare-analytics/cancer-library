@@ -59,9 +59,10 @@ insert into ph_item_attribute (item_id, caption, required) values (22004, '방�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22005, 'rdt_kncd', 22000, 'system', 22005, 40180);
 insert into ph_item_attribute (item_id, caption, data_type) values (22005, '방사선치료종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22005, 'rdt_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22006, 'rdt_knnm', 22000, 'system', 22006);
-insert into ph_item_attribute (item_id, caption) values (22006, '방사선치료종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22006, 'rdt_knnm', 22000, 'system', 22006);
+-- insert into ph_item_attribute (item_id, caption) values (22006, '방사선치료종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22007, 'rdt_cd', 22000, 'system', 22007);
 insert into ph_item_attribute (item_id, caption) values (22007, '방사선치료코드');
@@ -83,15 +84,17 @@ insert into ph_item_attribute (item_id, caption) values (22012, '방사선치료
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22013, 'rdt_prps_cd', 22000, 'system', 22013, 40130);
 insert into ph_item_attribute (item_id, caption, data_type) values (22013, '방사선치료목적코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22013, 'rdt_prps_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22014, 'rdt_prps_nm', 22000, 'system', 22014);
-insert into ph_item_attribute (item_id, caption) values (22014, '방사선치료목적명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22014, 'rdt_prps_nm', 22000, 'system', 22014);
+-- insert into ph_item_attribute (item_id, caption) values (22014, '방사선치료목적명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22015, 'rdt_site_cd', 22000, 'system', 22015, 40140);
 insert into ph_item_attribute (item_id, caption, data_type) values (22015, '방사선치료부위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22015, 'rdt_site_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22016, 'rdt_site_nm', 22000, 'system', 22016);
-insert into ph_item_attribute (item_id, caption) values (22016, '방사선치료부위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22016, 'rdt_site_nm', 22000, 'system', 22016);
+-- insert into ph_item_attribute (item_id, caption) values (22016, '방사선치료부위명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22017, 'byst_rd_impl_nt', 22000, 'system', 22017);
 insert into ph_item_attribute (item_id, caption) values (22017, '부위별방사선시행횟수');
@@ -107,27 +110,31 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (2202
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22021, 'rdt_asmt_item_cd', 22000, 'system', 22021, 40200);
 insert into ph_item_attribute (item_id, caption, data_type) values (22021, '방사선치료평가항목코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22021, 'rdt_asmt_item_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22022, 'rdt_asmt_item_nm', 22000, 'system', 22022);
-insert into ph_item_attribute (item_id, caption) values (22022, '방사선치료평가항목명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22022, 'rdt_asmt_item_nm', 22000, 'system', 22022);
+-- insert into ph_item_attribute (item_id, caption) values (22022, '방사선치료평가항목명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22023, 'rdt_seff_perd_spcd', 22000, 'system', 22023, 40160);
 insert into ph_item_attribute (item_id, caption, data_type) values (22023, '방사선치료부작용시기구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22023, 'rdt_seff_perd_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22024, 'rdt_seff_perd_spnm', 22000, 'system', 22024);
-insert into ph_item_attribute (item_id, caption) values (22024, '방사선치료부작용시기구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22024, 'rdt_seff_perd_spnm', 22000, 'system', 22024);
+-- insert into ph_item_attribute (item_id, caption) values (22024, '방사선치료부작용시기구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22025, 'rdt_seff_kncd', 22000, 'system', 22025, 40170);
 insert into ph_item_attribute (item_id, caption, data_type) values (22025, '방사선치료부작용종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22025, 'rdt_seff_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22026, 'rdt_seff_knnm', 22000, 'system', 22026);
-insert into ph_item_attribute (item_id, caption) values (22026, '방사선치료부작용종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22026, 'rdt_seff_knnm', 22000, 'system', 22026);
+-- insert into ph_item_attribute (item_id, caption) values (22026, '방사선치료부작용종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22027, 'rdt_seff_grcd', 22000, 'system', 22027, 40150);
 insert into ph_item_attribute (item_id, caption, data_type) values (22027, '방사선치료부작용등급코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (22027, 'rdt_seff_grnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22028, 'rdt_seff_grnm', 22000, 'system', 22028);
-insert into ph_item_attribute (item_id, caption) values (22028, '방사선치료부작용등급명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22028, 'rdt_seff_grnm', 22000, 'system', 22028);
+-- insert into ph_item_attribute (item_id, caption) values (22028, '방사선치료부작용등급명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (22029, 'crtn_dt', 22000, 'system', 22029);
 -- insert into ph_item_attribute (item_id, caption) values (22029, '생성일시');

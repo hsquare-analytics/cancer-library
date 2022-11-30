@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS GSCN.GSCN_DIAG_STAG_UPDATED;
 CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_STAG (
                                 hosp_cd varchar(20) NOT NULL, 				-- 병원코드
                                 pt_no varchar(10) NOT NULL, 				-- 환자대체번호
-                                diag_stag_rcrd_ymd varchar(8) NOT NULL, 	-- 진단병기기록일자
+                                diag_stag_rcrd_ymd timestamp NOT NULL, 	-- 진단병기기록일자
                                 diag_stag_rcrd_seq numeric(3) NOT NULL, 	-- 진단병기기록순번
                                 clnc_tumr_prty_cd varchar(20) NULL, 		-- 임상종양특성코드
                                 clnc_tumr_prty_nm varchar(200) NULL, 		-- 임상종양특성명
@@ -45,9 +45,10 @@ insert into ph_item_attribute (item_id, caption, required) values (9504, '진단
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9505, 'clnc_tumr_prty_cd', 9500, 'system', 9505, 20050);
 insert into ph_item_attribute (item_id, caption, data_type) values (9505, '임상종양특성코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9505, 'clnc_tumr_prty_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9506, 'clnc_tumr_prty_nm', 9500, 'system', 9506);
-insert into ph_item_attribute (item_id, caption) values (9506, '임상종양특성명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9506, 'clnc_tumr_prty_nm', 9500, 'system', 9506);
+-- insert into ph_item_attribute (item_id, caption) values (9506, '임상종양특성명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9507, 'ajcc_yr', 9500, 'system', 9507);
 insert into ph_item_attribute (item_id, caption) values (9507, 'AJCC년도');

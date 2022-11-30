@@ -42,9 +42,10 @@ insert into ph_item_attribute (item_id, caption, required) values (9804, '영상
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9805, 'imex_kncd', 9800, 'system', 9805, 30410);
 insert into ph_item_attribute (item_id, caption, data_type) values (9805, '영상검사종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (9805, 'imex_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9806, 'imex_knnm', 9800, 'system', 9806);
-insert into ph_item_attribute (item_id, caption) values (9806, '영상검사종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9806, 'imex_knnm', 9800, 'system', 9806);
+-- insert into ph_item_attribute (item_id, caption) values (9806, '영상검사종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9807, 'imex_cd', 9800, 'system', 9807);
 insert into ph_item_attribute (item_id, caption) values (9807, '영상검사코드');

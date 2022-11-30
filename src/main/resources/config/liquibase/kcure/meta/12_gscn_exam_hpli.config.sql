@@ -44,15 +44,17 @@ insert into ph_item_attribute (item_id, caption, required) values (12004, 'HPYLO
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (12005, 'hpli_exam_mtcd', 12000, 'system', 12005, 30090);
 insert into ph_item_attribute (item_id, caption, data_type) values (12005, 'HPYLORI검사방법코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (12005, 'hpli_exam_mtnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (12006, 'hpli_exam_mtnm', 12000, 'system', 12006);
-insert into ph_item_attribute (item_id, caption) values (12006, 'HPYLORI검사방법명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (12006, 'hpli_exam_mtnm', 12000, 'system', 12006);
+-- insert into ph_item_attribute (item_id, caption) values (12006, 'HPYLORI검사방법명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (12007, 'hpli_exam_rslt_cd', 12000, 'system', 12007, 30080);
 insert into ph_item_attribute (item_id, caption, data_type) values (12007, 'HPYLORI검사결과코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (12007, 'hpli_exam_rslt_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (12008, 'hpli_exam_rslt_nm', 12000, 'system', 12008);
-insert into ph_item_attribute (item_id, caption) values (12008, 'HPYLORI검사결과명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (12008, 'hpli_exam_rslt_nm', 12000, 'system', 12008);
+-- insert into ph_item_attribute (item_id, caption) values (12008, 'HPYLORI검사결과명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (12009, 'crtn_dt', 12000, 'system', 12009);
 -- insert into ph_item_attribute (item_id, caption) values (12009, '생성일시');

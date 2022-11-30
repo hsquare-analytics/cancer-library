@@ -41,9 +41,10 @@ insert into ph_item_attribute (item_id, caption, required) values (19004, '수�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (19005, 'blpt_kncd', 19000, 'system', 19005, 40580);
 insert into ph_item_attribute (item_id, caption, data_type) values (19005, '혈액제제종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (19005, 'blpt_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (19006, 'blpt_knnm', 19000, 'system', 19006);
-insert into ph_item_attribute (item_id, caption) values (19006, '혈액제제종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (19006, 'blpt_knnm', 19000, 'system', 19006);
+-- insert into ph_item_attribute (item_id, caption) values (19006, '혈액제제종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (19007, 'blpt_cd', 19000, 'system', 19007);
 insert into ph_item_attribute (item_id, caption) values (19007, '혈액제제코드');

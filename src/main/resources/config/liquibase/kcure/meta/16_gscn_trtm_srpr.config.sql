@@ -54,55 +54,62 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (16004
 insert into ph_item_attribute (item_id, caption, required) values (16004, 'ESD시술순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16005, 'esd_srpr_strt_dt', 16000, 'system', 16005);
-insert into ph_item_attribute (item_id, caption, required) values (16005, 'ESD시술시작일시', true);
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16005, 'ESD시술시작일시', true, 'yyyy-MM-dd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16006, 'esd_srpr_end_dt', 16000, 'system', 16006);
-insert into ph_item_attribute (item_id, caption, required) values (16006, 'ESD시술종료일시', true);
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16006, 'ESD시술종료일시', true, 'yyyy-MM-dd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16007, 'esd_lesn_size_vl', 16000, 'system', 1600);
 insert into ph_item_attribute (item_id, caption) values (16007, 'ESD병변크기값');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16008, 'esd_lesn_shap_cd', 16000, 'system', 16008, 40030);
 insert into ph_item_attribute (item_id, caption, data_type) values (16008, 'ESD병변모양코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16008, 'esd_lesn_shap_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16009, 'esd_lesn_shap_nm', 16000, 'system', 16009);
-insert into ph_item_attribute (item_id, caption) values (16009, 'ESD병변모양명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16009, 'esd_lesn_shap_nm', 16000, 'system', 16009);
+-- insert into ph_item_attribute (item_id, caption) values (16009, 'ESD병변모양명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16010, 'esd_lesn_loca_wdth_cd', 16000, 'system', 16010, 40040);
 insert into ph_item_attribute (item_id, caption, data_type) values (16010, 'ESD병변위치가로코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16010, 'esd_lesn_loca_wdth_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16011, 'esd_lesn_loca_wdth_nm', 16000, 'system', 16011);
-insert into ph_item_attribute (item_id, caption) values (16011, 'ESD병변위치가로명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16011, 'esd_lesn_loca_wdth_nm', 16000, 'system', 16011);
+-- insert into ph_item_attribute (item_id, caption) values (16011, 'ESD병변위치가로명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16012, 'esd_lesn_loca_lgtd_cd', 16000, 'system', 16012, 40050);
 insert into ph_item_attribute (item_id, caption, data_type) values (16012, 'ESD병변위치세로코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16012, 'esd_lesn_loca_lgtd_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16013, 'esd_lesn_loca_lgtd_nm', 16000, 'system', 16013);
-insert into ph_item_attribute (item_id, caption) values (16013, 'ESD병변위치세로명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16013, 'esd_lesn_loca_lgtd_nm', 16000, 'system', 16013);
+-- insert into ph_item_attribute (item_id, caption) values (16013, 'ESD병변위치세로명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16014, 'esd_ulcr_yn_unid_spcd', 16000, 'system', 16014, 30380);
 insert into ph_item_attribute (item_id, caption, data_type) values (16014, 'ESD궤양여부확인불가구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16014, 'esd_ulcr_yn_unid_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16015, 'esd_ulcr_yn_unid_spnm', 16000, 'system', 16015);
-insert into ph_item_attribute (item_id, caption) values (16015, 'ESD궤양여부확인불가구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16015, 'esd_ulcr_yn_unid_spnm', 16000, 'system', 16015);
+-- insert into ph_item_attribute (item_id, caption) values (16015, 'ESD궤양여부확인불가구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16016, 'esd_perf_yn_unid_spcd', 16000, 'system', 16016, 30380);
 insert into ph_item_attribute (item_id, caption, data_type) values (16016, 'ESD천공여부확인불가구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16016, 'esd_perf_yn_unid_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16017, 'esd_perf_yn_unid_spnm', 16000, 'system', 16017);
-insert into ph_item_attribute (item_id, caption) values (16017, 'ESD천공여부확인불가구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16017, 'esd_perf_yn_unid_spnm', 16000, 'system', 16017);
+-- insert into ph_item_attribute (item_id, caption) values (16017, 'ESD천공여부확인불가구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16018, 'esd_perf_msre_cd', 16000, 'system', 16018, 40060);
 insert into ph_item_attribute (item_id, caption, data_type) values (16018, 'ESD천공조치코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16018, 'esd_perf_msre_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16019, 'esd_perf_msre_nm', 16000, 'system', 16019);
-insert into ph_item_attribute (item_id, caption) values (16019, 'ESD천공조치명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16019, 'esd_perf_msre_nm', 16000, 'system', 16019);
+-- insert into ph_item_attribute (item_id, caption) values (16019, 'ESD천공조치명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (16020, 'esd_rslt_cd', 16000, 'system', 16020, 40020);
 insert into ph_item_attribute (item_id, caption, data_type) values (16020, 'ESD결과코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (16020, 'esd_rslt_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (16021, 'esd_rslt_nm', 16000, 'system', 16021);
-insert into ph_item_attribute (item_id, caption) values (16021, 'ESD결과명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (16021, 'esd_rslt_nm', 16000, 'system', 16021);
+-- insert into ph_item_attribute (item_id, caption) values (16021, 'ESD결과명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16022, 'esd_opn_cont', 16000, 'system', 16022);
 insert into ph_item_attribute (item_id, caption) values (16022, 'ESD소견내용');

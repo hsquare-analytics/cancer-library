@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 import static io.planit.cancerlibrary.service.StreamUtils.distinctByKey;
@@ -34,7 +35,8 @@ public class DMLSqlBuilderService {
     private final TimeService timeService;
 
     public DMLSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-                                UserRepository userRepository, TimeService timeService) {
+                                UserRepository userRepository, TimeService timeService
+    ) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
@@ -63,10 +65,18 @@ public class DMLSqlBuilderService {
 
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
-            if (map.containsKey(mapKey) && map.get(mapKey) != null) {
-                if (ObjectUtils.isNotEmpty(item.getAttribute()) && "date".equals(item.getAttribute().getDataType())) {
+            if (isMapKeyExist(map, mapKey)) {
+                if (isDateColumn(item)) {
                     Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", timestamp));
+                } else if (isSelectLabelColumn(item)) {
+                    sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
+
+                    item.getCodebook().getLookupList().stream()
+                        .filter(Objects::nonNull)
+                        .filter(lookup -> lookup.getDescription().equals(map.get(mapKey)))
+                        .findFirst()
+                        .ifPresent(lookup -> sql.VALUES(sqlization(item.getProperty().getLabelColumn()), String.format("'%s'", lookup.getTitle())));
                 } else {
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
                 }
@@ -80,6 +90,18 @@ public class DMLSqlBuilderService {
 
         loggingFinalSQL(sql);
         return sql.toString();
+    }
+
+    private boolean isMapKeyExist(Map<String, Object> map, String key) {
+        return map.containsKey(key) && map.get(key) != null;
+    }
+
+    private boolean isDateColumn(Item item) {
+        return ObjectUtils.isNotEmpty(item.getAttribute()) && "date".equals(item.getAttribute().getDataType());
+    }
+
+    private boolean isSelectLabelColumn(Item item) {
+        return ObjectUtils.isNotEmpty(item.getProperty()) && ObjectUtils.isNotEmpty(item.getAttribute()) && ObjectUtils.isNotEmpty(item.getProperty().getLabelColumn()) && "selectbox".equals(item.getAttribute().getDataType());
     }
 
     public String getReadUpdatedRowSQL(Long categoryId, Map<String, Object> map) {
@@ -135,10 +157,18 @@ public class DMLSqlBuilderService {
         sql.UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
-            if (map.containsKey(mapKey) && map.get(mapKey) != null) {
-                if (ObjectUtils.isNotEmpty(item.getAttribute()) && "date".equals(item.getAttribute().getDataType())) {
+            if (isMapKeyExist(map, mapKey)) {
+                if (isDateColumn(item)) {
                     Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
                     sql.SET(getSqlEqualSyntax(item.getTitle(), timestamp));
+                } else if (isSelectLabelColumn(item)) {
+                    sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
+
+                    item.getCodebook().getLookupList().stream()
+                        .filter(Objects::nonNull)
+                        .filter(lookup -> lookup.getDescription().equals(map.get(mapKey)))
+                        .findFirst()
+                        .ifPresent(lookup -> sql.SET(getSqlEqualSyntax(item.getProperty().getLabelColumn(), lookup.getTitle())));
                 } else {
                     sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
                 }

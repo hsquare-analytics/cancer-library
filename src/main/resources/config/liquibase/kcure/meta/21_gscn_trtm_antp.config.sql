@@ -61,45 +61,51 @@ insert into ph_item_attribute (item_id, caption) values (21007, '항암요법총
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21008, 'antp_trtm_prps_cd', 21000, 'system', 21008, 40560);
 insert into ph_item_attribute (item_id, caption, data_type) values (21008, '항암요법치료목적코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21008, 'antp_trtm_prps_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21009, 'antp_trtm_prps_nm', 21000, 'system', 21009);
-insert into ph_item_attribute (item_id, caption) values (21009, '항암요법치료목적명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21009, 'antp_trtm_prps_nm', 21000, 'system', 21009);
+-- insert into ph_item_attribute (item_id, caption) values (21009, '항암요법치료목적명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21010, 'antp_nm', 21000, 'system', 21010);
 insert into ph_item_attribute (item_id, caption) values (21010, '항암요법명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21011, 'antp_temp_stop_yn_unid_spcd', 21000, 'system', 21011, 30380);
 insert into ph_item_attribute (item_id, caption, data_type) values (21011, '항암요법임시중단여부확인불가구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21011, 'antp_temp_stop_yn_unid_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21012, 'antp_temp_stop_yn_unid_spnm', 21000, 'system', 21012);
-insert into ph_item_attribute (item_id, caption) values (21012, '항암요법임시중단여부확인불가구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21012, 'antp_temp_stop_yn_unid_spnm', 21000, 'system', 21012);
+-- insert into ph_item_attribute (item_id, caption) values (21012, '항암요법임시중단여부확인불가구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21013, 'antp_end_resn_cd', 21000, 'system', 21013, 40550);
 insert into ph_item_attribute (item_id, caption, data_type) values (21013, '항암요법종료이유코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21013, 'antp_end_resn_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21014, 'antp_end_resn_nm', 21000, 'system', 21014);
-insert into ph_item_attribute (item_id, caption) values (21014, '항암요법종료이유명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21014, 'antp_end_resn_nm', 21000, 'system', 21014);
+-- insert into ph_item_attribute (item_id, caption) values (21014, '항암요법종료이유명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21015, 'antp_asmt_ymd', 21000, 'system', 21015);
 insert into ph_item_attribute (item_id, caption, format, data_type) values (21015, '항암요법평가일자', 'yyyy-MM-dd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21016, 'antp_asmt_item_cd', 21000, 'system', 21016, 40570);
 insert into ph_item_attribute (item_id, caption, data_type) values (21016, '항암요법평가항목코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21016, 'antp_asmt_item_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21017, 'antp_asmt_item_nm', 21000, 'system', 21017);
-insert into ph_item_attribute (item_id, caption) values (21017, '항암요법평가항목명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21017, 'antp_asmt_item_nm', 21000, 'system', 21017);
+-- insert into ph_item_attribute (item_id, caption) values (21017, '항암요법평가항목명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21018, 'antp_seff_cd', 21000, 'system', 21018, 40530);
 insert into ph_item_attribute (item_id, caption, data_type) values (21018, '항암요법부작용코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21018, 'antp_seff_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21019, 'antp_seff_nm', 21000, 'system', 21019);
-insert into ph_item_attribute (item_id, caption) values (21019, '항암요법부작용명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21019, 'antp_seff_nm', 21000, 'system', 21019);
+-- insert into ph_item_attribute (item_id, caption) values (21019, '항암요법부작용명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21020, 'antp_seff_grcd', 21000, 'system', 21020, 40520);
 insert into ph_item_attribute (item_id, caption, data_type) values (21020, '항암요법부작용등급코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (21020, 'antp_seff_grnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21021, 'antp_seff_grnm', 21000, 'system', 21021);
-insert into ph_item_attribute (item_id, caption) values (21021, '항암요법부작용등급명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21021, 'antp_seff_grnm', 21000, 'system', 21021);
+-- insert into ph_item_attribute (item_id, caption) values (21021, '항암요법부작용등급명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (21022, 'crtn_dt', 21000, 'system', 21022);
 -- insert into ph_item_attribute (item_id, caption) values (21022, '생성일시');

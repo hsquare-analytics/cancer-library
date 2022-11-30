@@ -52,15 +52,17 @@ insert into ph_item_attribute (item_id, caption) values (10007, '분자병리검
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (10008, 'mlem_kncd', 10000, 'system', 10008, 30230);
 insert into ph_item_attribute (item_id, caption, data_type) values (10008, '분자병리검사종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (10008, 'mlem_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (10009, 'mlem_knnm', 10000, 'system', 10009);
-insert into ph_item_attribute (item_id, caption) values (10009, '분자병리검사종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (10009, 'mlem_knnm', 10000, 'system', 10009);
+-- insert into ph_item_attribute (item_id, caption) values (10009, '분자병리검사종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (10010, 'mlem_opn_cd', 10000, 'system', 10010, 30220);
 insert into ph_item_attribute (item_id, caption, data_type) values (10010, '분자병리검사소견코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (10010, 'mlem_opn_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (10011, 'mlem_opn_nm', 10000, 'system', 10011);
-insert into ph_item_attribute (item_id, caption) values (10011, '분자병리검사소견명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (10011, 'mlem_opn_nm', 10000, 'system', 10011);
+-- insert into ph_item_attribute (item_id, caption) values (10011, '분자병리검사소견명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10012, 'mlem_rslt_cont', 10000, 'system', 10012);
 insert into ph_item_attribute (item_id, caption) values (10012, '분자병리검사결과내용');

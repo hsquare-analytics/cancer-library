@@ -40,15 +40,17 @@ insert into ph_item_attribute (item_id, caption, required) values (18004, '합�
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (18005, 'afoc_clcd', 18000, 'system', 18005, 20030);
 insert into ph_item_attribute (item_id, caption, data_type) values (18005, '수술후합병증분류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (18005, 'afoc_clnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (18006, 'afoc_clnm', 18000, 'system', 18006);
-insert into ph_item_attribute (item_id, caption) values (18006, '수술후합병증분류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (18006, 'afoc_clnm', 18000, 'system', 18006);
+-- insert into ph_item_attribute (item_id, caption) values (18006, '수술후합병증분류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (18007, 'afoc_cd', 18000, 'system', 18007, 20040);
 insert into ph_item_attribute (item_id, caption, data_type) values (18007, '수술후합병증코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (18007, 'afoc_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (18008, 'afoc_nm', 18000, 'system', 18008);
-insert into ph_item_attribute (item_id, caption) values (18008, '수술후합병증명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (18008, 'afoc_nm', 18000, 'system', 18008);
+-- insert into ph_item_attribute (item_id, caption) values (18008, '수술후합병증명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (18009, 'afop_etc_comp_cont', 18000, 'system', 18009);
 insert into ph_item_attribute (item_id, caption) values (18009, '수술후기타합병증내용');

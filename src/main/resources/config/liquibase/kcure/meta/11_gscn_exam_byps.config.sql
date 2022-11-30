@@ -41,7 +41,7 @@ insert into ph_item_attribute (item_id, caption) values (11002, '환자대체번
 insert into ph_item_property (item_id, visible) values (11002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11003, 'bpsy_ymd', 11000, 'system', 11003);
-insert into ph_item_attribute (item_id, caption, required) values (11003, '생체검사일자', true);
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (11003, '생체검사일자', true, 'yyyy-MM-dd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11004, 'bpsy_seq', 11000, 'system', 11004);
 insert into ph_item_attribute (item_id, caption, required) values (11004, '생체검사순번', true);
@@ -51,9 +51,10 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (1100
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (11006, 'bpsy_site_cd', 11000, 'system', 11006, 30310);
 insert into ph_item_attribute (item_id, caption, data_type) values (11006, '생체검사부위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (11006, 'bpsy_site_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (11007, 'bpsy_site_nm', 11000, 'system', 11007);
-insert into ph_item_attribute (item_id, caption) values (11007, '생체검사부위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (11007, 'bpsy_site_nm', 11000, 'system', 11007);
+-- insert into ph_item_attribute (item_id, caption) values (11007, '생체검사부위명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11008, 'bpsy_mtcd', 11000, 'system', 11008);
 insert into ph_item_attribute (item_id, caption) values (11008, '생체검사방법코드');
@@ -63,24 +64,27 @@ insert into ph_item_attribute (item_id, caption) values (11009, '생체검사방
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (11010, 'bpsy_mthd_kncd', 11000, 'system', 11010, 30290);
 insert into ph_item_attribute (item_id, caption, data_type) values (11010, '생체검사방법종류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (11010, 'bpsy_mthd_knnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (11011, 'bpsy_mthd_knnm', 11000, 'system', 11011);
-insert into ph_item_attribute (item_id, caption) values (11011, '생체검사방법종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (11011, 'bpsy_mthd_knnm', 11000, 'system', 11011);
+-- insert into ph_item_attribute (item_id, caption) values (11011, '생체검사방법종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11012, 'bpsy_rslt_cont', 11000, 'system', 11012);
 insert into ph_item_attribute (item_id, caption) values (11012, '생체검사결과내용');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (11013, 'htlg_diag_cd', 11000, 'system', 11013, 30540);
 insert into ph_item_attribute (item_id, caption, data_type) values (11013, '조직학적진단코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (11013, 'htlg_diag_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (11014, 'htlg_diag_nm', 11000, 'system', 11014);
-insert into ph_item_attribute (item_id, caption) values (11014, '조직학적진단명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (11014, 'htlg_diag_nm', 11000, 'system', 11014);
+-- insert into ph_item_attribute (item_id, caption) values (11014, '조직학적진단명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (11015, 'htlg_dfgd_cd', 11000, 'system', 11015, 30530);
 insert into ph_item_attribute (item_id, caption, data_type) values (11015, '조직학적분화도코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (11015, 'htlg_dfgd_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (11016, 'htlg_dfgd_nm', 11000, 'system', 11016);
-insert into ph_item_attribute (item_id, caption) values (11016, '조직학적분화도명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (11016, 'htlg_dfgd_nm', 11000, 'system', 11016);
+-- insert into ph_item_attribute (item_id, caption) values (11016, '조직학적분화도명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (11017, 'crtn_dt', 11000, 'system', 11017);
 -- insert into ph_item_attribute (item_id, caption) values (11017, '생성일시');

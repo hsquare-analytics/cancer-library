@@ -93,48 +93,55 @@ insert into ph_item_attribute (item_id, caption, format, data_type) values (1700
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17006, 'sgpt_hvst_site_cd', 17000, 'system', 17006, 30430);
 insert into ph_item_attribute (item_id, caption, data_type) values (17006, '외과병리채취부위코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17006, 'sgpt_hvst_site_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17007, 'sgpt_hvst_site_nm', 17000, 'system', 17007);
-insert into ph_item_attribute (item_id, caption) values (17007, '외과병리채취부위명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17007, 'sgpt_hvst_site_nm', 17000, 'system', 17007);
+-- insert into ph_item_attribute (item_id, caption) values (17007, '외과병리채취부위명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17008, 'srgc_ptem_rslt_tumr_cnt', 17000, 'system', 17008);
 insert into ph_item_attribute (item_id, caption) values (17008, '외과병리검사결과종양수(numeric(3) -> varchar(10))');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17009, 'htlg_diag_cd', 17000, 'system', 17009, 30540);
 insert into ph_item_attribute (item_id, caption, data_type) values (17009, '조직학적진단코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17009, 'htlg_diag_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17010, 'htlg_diag_nm', 17000, 'system', 17010);
-insert into ph_item_attribute (item_id, caption) values (17010, '조직학적진단명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17010, 'htlg_diag_nm', 17000, 'system', 17010);
+-- insert into ph_item_attribute (item_id, caption) values (17010, '조직학적진단명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17011, 'htlg_dfgd_cd', 17000, 'system', 17011, 30530);
 insert into ph_item_attribute (item_id, caption, data_type) values (17011, '조직학적분화도코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17011, 'htlg_dfgd_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17012, 'htlg_dfgd_nm', 17000, 'system', 17012);
-insert into ph_item_attribute (item_id, caption) values (17012, '조직학적분화도명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17012, 'htlg_dfgd_nm', 17000, 'system', 17012);
+-- insert into ph_item_attribute (item_id, caption) values (17012, '조직학적분화도명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17013, 'afop_crmr_tumr_loca_cd', 17000, 'system', 17013, 30340);
 insert into ph_item_attribute (item_id, caption, data_type) values (17013, '수술후둘레방향종양위치코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17013, 'afop_crmr_tumr_loca_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17014, 'afop_crmr_tumr_loca_nm', 17000, 'system', 17014);
-insert into ph_item_attribute (item_id, caption) values (17014, '수술후둘레방향종양위치명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17014, 'afop_crmr_tumr_loca_nm', 17000, 'system', 17014);
+-- insert into ph_item_attribute (item_id, caption) values (17014, '수술후둘레방향종양위치명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17015, 'afop_lngt_1_tumr_loca_cd', 17000, 'system', 17015, 30640);
 insert into ph_item_attribute (item_id, caption, data_type) values (17015, '수술후종방향1종양위치코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17015, 'afop_lngt_1_tumr_loca_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17016, 'afop_lngt_1_tumr_loca_nm', 17000, 'system', 17016);
-insert into ph_item_attribute (item_id, caption) values (17016, '수술후종방향1종양위치명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17016, 'afop_lngt_1_tumr_loca_nm', 17000, 'system', 17016);
+-- insert into ph_item_attribute (item_id, caption) values (17016, '수술후종방향1종양위치명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17017, 'afop_lngt_2_tumr_loca_cd', 17000, 'system', 17017, 30650);
 insert into ph_item_attribute (item_id, caption, data_type) values (17017, '수술후종방향2종양위치코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17017, 'afop_lngt_2_tumr_loca_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17018, 'afop_lngt_2_tumr_loca_nm', 17000, 'system', 17018);
-insert into ph_item_attribute (item_id, caption) values (17018, '수술후종방향2종양위치명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17018, 'afop_lngt_2_tumr_loca_nm', 17000, 'system', 17018);
+-- insert into ph_item_attribute (item_id, caption) values (17018, '수술후종방향2종양위치명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17118, 'gros_tpcd', 17000, 'system', 17018, 30070);
 insert into ph_item_attribute (item_id, caption, data_type) values (17118, 'GROSS유형코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17118, 'gros_tpnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17019, 'gros_tpnm', 17000, 'system', 17019);
-insert into ph_item_attribute (item_id, caption) values (17019, 'GROSS유형명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17019, 'gros_tpnm', 17000, 'system', 17019);
+-- insert into ph_item_attribute (item_id, caption) values (17019, 'GROSS유형명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17020, 'gros_type_cont', 17000, 'system', 17020);
 insert into ph_item_attribute (item_id, caption) values (17020, 'GROSS유형내용');
@@ -153,60 +160,68 @@ insert into ph_item_attribute (item_id, caption) values (17024, '종양최대직
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17025, 'iflt_orgn_cd', 17000, 'system', 17025, 30600);
 insert into ph_item_attribute (item_id, caption, data_type) values (17025, '침습장기코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17025, 'iflt_orgn_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17026, 'iflt_orgn_nm', 17000, 'system', 17026);
-insert into ph_item_attribute (item_id, caption) values (17026, '침습장기명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17026, 'iflt_orgn_nm', 17000, 'system', 17026);
+-- insert into ph_item_attribute (item_id, caption) values (17026, '침습장기명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17027, 'inva_dgre_cd', 17000, 'system', 17027, 30610);
 insert into ph_item_attribute (item_id, caption, data_type) values (17027, '침윤정도코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17027, 'inva_dgre_nm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17028, 'inva_dgre_nm', 17000, 'system', 17028);
-insert into ph_item_attribute (item_id, caption) values (17028, '침윤정도명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17028, 'inva_dgre_nm', 17000, 'system', 17028);
+-- insert into ph_item_attribute (item_id, caption) values (17028, '침윤정도명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17029, 'inva_dpth_vl', 17000, 'system', 17029);
 insert into ph_item_attribute (item_id, caption) values (17029, '침윤깊이값');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17030, 'lymp_inva_ex_yn_spcd', 17000, 'system', 17030, 30550);
 insert into ph_item_attribute (item_id, caption, data_type) values (17030, '림프성침윤존재여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17030, 'lymp_inva_ex_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17031, 'lymp_inva_ex_yn_spnm', 17000, 'system', 17031);
-insert into ph_item_attribute (item_id, caption) values (17031, '림프성침윤존재여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17031, 'lymp_inva_ex_yn_spnm', 17000, 'system', 17031);
+-- insert into ph_item_attribute (item_id, caption) values (17031, '림프성침윤존재여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17032, 'vasc_inva_ex_yn_spcd', 17000, 'system', 17032, 30550);
 insert into ph_item_attribute (item_id, caption, data_type) values (17032, '혈관성침윤존재여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17032, 'vasc_inva_ex_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17033, 'vasc_inva_ex_yn_spnm', 17000, 'system', 17033);
-insert into ph_item_attribute (item_id, caption) values (17033, '혈관성침윤존재여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17033, 'vasc_inva_ex_yn_spnm', 17000, 'system', 17033);
+-- insert into ph_item_attribute (item_id, caption) values (17033, '혈관성침윤존재여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17133, 'nerv_prex_ex_yn_spcd', 17000, 'system', 17033, 30550);
 insert into ph_item_attribute (item_id, caption, data_type) values (17133, '신경주위침윤존재여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17133, 'nerv_prex_ex_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17034, 'nerv_prex_ex_yn_spnm', 17000, 'system', 17034);
-insert into ph_item_attribute (item_id, caption) values (17034, '신경주위침윤존재여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17034, 'nerv_prex_ex_yn_spnm', 17000, 'system', 17034);
+-- insert into ph_item_attribute (item_id, caption) values (17034, '신경주위침윤존재여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17035, 'oprt_pmrg_rlcr_invl_yn_spcd', 17000, 'system', 17035, 30630);
 insert into ph_item_attribute (item_id, caption, data_type) values (17035, '수술근위절제면잔존암포함여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17035, 'oprt_pmrg_rlcr_invl_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17036, 'oprt_pmrg_rlcr_invl_yn_spnm', 17000, 'system', 17036);
-insert into ph_item_attribute (item_id, caption) values (17036, '수술근위절제면잔존암포함여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17036, 'oprt_pmrg_rlcr_invl_yn_spnm', 17000, 'system', 17036);
+-- insert into ph_item_attribute (item_id, caption) values (17036, '수술근위절제면잔존암포함여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17037, 'oprt_pmrg_size_vl', 17000, 'system', 17037);
 insert into ph_item_attribute (item_id, caption) values (17037, '수술근위절제면크기값');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17038, 'oprt_dmrg_rlcr_invl_yn_spcd', 17000, 'system', 17038, 30630);
 insert into ph_item_attribute (item_id, caption, data_type) values (17038, '수술원위절제면잔존암포함여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17038, 'oprt_dmrg_rlcr_invl_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17039, 'oprt_dmrg_rlcr_invl_yn_spnm', 17000, 'system', 17039);
-insert into ph_item_attribute (item_id, caption) values (17039, '수술원위절제면잔존암포함여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17039, 'oprt_dmrg_rlcr_invl_yn_spnm', 17000, 'system', 17039);
+-- insert into ph_item_attribute (item_id, caption) values (17039, '수술원위절제면잔존암포함여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17040, 'oprt_dmrg_size_vl', 17000, 'system', 17040);
 insert into ph_item_attribute (item_id, caption) values (17040, '수술원위절제면크기값');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17041, 'stes_bnst_cncr_clcd', 17000, 'system', 17041, 30480);
 insert into ph_item_attribute (item_id, caption, data_type) values (17041, '위식도경계부위암분류코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17041, 'stes_bnst_cncr_clnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17042, 'stes_bnst_cncr_clnm', 17000, 'system', 17042);
-insert into ph_item_attribute (item_id, caption) values (17042, '위식도경계부위암분류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17042, 'stes_bnst_cncr_clnm', 17000, 'system', 17042);
+-- insert into ph_item_attribute (item_id, caption) values (17042, '위식도경계부위암분류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17043, 'totl_ln_cnt', 17000, 'system', 17043);
 insert into ph_item_attribute (item_id, caption) values (17043, '총림프절수( numeric(3) -> varchar(100))');
@@ -234,18 +249,20 @@ insert into ph_item_attribute (item_id, caption) values (17050, '수술후병리
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17051, 'esd_vmrg_rlcr_pstv_yn_spcd', 17000, 'system', 17051, 30370);
 insert into ph_item_attribute (item_id, caption, data_type) values (17051, 'ESD수직절제면잔존암양성여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17051, 'esd_vmrg_rlcr_pstv_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17052, 'esd_vmrg_rlcr_pstv_yn_spnm', 17000, 'system', 17052);
-insert into ph_item_attribute (item_id, caption) values (17052, 'ESD수직절제면잔존암양성여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17052, 'esd_vmrg_rlcr_pstv_yn_spnm', 17000, 'system', 17052);
+-- insert into ph_item_attribute (item_id, caption) values (17052, 'ESD수직절제면잔존암양성여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17053, 'esd_vmrg_vl', 17000, 'system', 17053);
 insert into ph_item_attribute (item_id, caption) values (17053, 'ESD수직절제면값');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17054, 'esd_hmrg_rlcr_pstv_yn_spcd', 17000, 'system', 17054, 30370);
 insert into ph_item_attribute (item_id, caption, data_type) values (17054, 'ESD수평절제면잔존암양성여부구분코드', 'selectbox');
+insert into ph_item_property (item_id, label_column) values (17054, 'esd_hmrg_rlcr_pstv_yn_spnm');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (17055, 'esd_hmrg_rlcr_pstv_yn_spnm', 17000, 'system', 17055);
-insert into ph_item_attribute (item_id, caption) values (17055, 'ESD수평절제면잔존암양성여부구분명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (17055, 'esd_hmrg_rlcr_pstv_yn_spnm', 17000, 'system', 17055);
+-- insert into ph_item_attribute (item_id, caption) values (17055, 'ESD수평절제면잔존암양성여부구분명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17056, 'esd_hmrg_vl', 17000, 'system', 17056);
 insert into ph_item_attribute (item_id, caption) values (17056, 'ESD수평절제면값');
