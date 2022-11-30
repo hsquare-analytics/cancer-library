@@ -12,6 +12,19 @@ gscn_exam_diag #07
 gscn_exam_imag #08
 gscn_exam_impt #09
 gscn_exam_mlpt #10
+gscn_exam_byps #11
+gscn_exam_hpli #12
+gscn_exam_gtsp #13
+gscn_exam_eus #14
+gscn_trtm_oprt #15
+gscn_trtm_srpr #16
+gscn_exam_sgpt #17
+gscn_diag_afoc #18
+gscn_trtm_bltr #19
+gscn_trtm_drin #20
+gscn_trtm_antp #21
+gscn_trtm_rd #22
+gscn_fuor_rlps #23
 )
 
 cat /dev/null > update_table_schema.sql
