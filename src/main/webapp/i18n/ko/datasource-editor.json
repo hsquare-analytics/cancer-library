@@ -58,11 +58,11 @@
         "rowConfirm": {
           "title": "데이터를 확인하셨습니까?",
           "text": "정말로 삭제하시겠습니까?",
-          "status" : {
+          "status": {
             "confirmed": "확인",
             "notConfirmed": "? 미확인"
           },
-          "button" : {
+          "button": {
             "confirm": "확인",
             "cancel": "취소"
           }
@@ -72,7 +72,11 @@
         "confirmButtonText": "확인",
         "cancelButtonText": "취소",
         "saveAlert": "변경사항을 저장하시겠습니까?",
-        "deleteAlert": "해당 코드를 목록에서 삭제 하시겠습니까?"
+        "deleteAlert": "해당 코드를 목록에서 삭제 하시겠습니까?",
+        "dxRowCommentBox": {
+          "initialLabel": "최초값: ",
+          "indiscernibleLabel": "식별할 수 없는 최초값: "
+        }
       }
     }
   }

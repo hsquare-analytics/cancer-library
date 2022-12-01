@@ -5,11 +5,12 @@ import {
   getFormattedValue,
   isChangedCell
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
+import {translate} from "react-jhipster";
 
 
 interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
   data: any;
-  lookupDataSource?: {title:string, description: string, label: string}[];
+  lookupDataSource?: { title: string, description: string, label: string }[];
 }
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
@@ -23,21 +24,53 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
     </div>;
   }
 
-  let targetValue = originRow[data.column.dataField];
-  if (lookupDataSource && lookupDataSource.length > 0) {
-    const lookupItem = lookupDataSource.find(temp => temp.description === targetValue || Number(temp.description) === Number(targetValue));
-    if (lookupItem) {
-      targetValue = lookupItem.label;
+  const targetValue = originRow[data.column.dataField];
+  let lookupItem;
+
+  const initLookupItem = () => {
+    if (!lookupDataSource || lookupDataSource.length === 0) {
+      return undefined;
     }
+    lookupItem = lookupDataSource.find(temp => temp.description === targetValue || Number(temp.description) === Number(targetValue));
   }
 
-  if (isChangedCell(data, originRow)) {
+  initLookupItem();
+
+  const isIndiscernibleLookupItem = () => {
+    if (!targetValue) {
+      return false;
+    }
+    return lookupDataSource && lookupDataSource.length > 0 && !lookupItem;
+  }
+
+  const getCommentLabel = () => {
+    return isIndiscernibleLookupItem()
+      ? translate("cancerLibraryApp.datasourceEditor.lookupEditor.dxRowCommentBox.indiscernibleLabel")
+      : translate("cancerLibraryApp.datasourceEditor.lookupEditor.dxRowCommentBox.initialLabel")
+  }
+
+  const getCommentValue = () => {
+    let displayed;
+
+    if (lookupItem) {
+      displayed = `${lookupItem.title} (${lookupItem.description})`
+    } else {
+      displayed = targetValue;
+    }
+
+    return getFormattedValue({
+      value: displayed,
+      type: data.column.dataType,
+      format: data.column.format
+    });
+  }
+
+  if (isChangedCell(data, originRow) || isIndiscernibleLookupItem()) {
     return <div>
-      <div className="text-underline p-1">최초: {getFormattedValue({
-        value: targetValue,
-        type: data.column.dataType,
-        format: data.column.format
-      })}</div>
+      <div className="text-underline p-1">
+        {getCommentLabel()}
+        {getCommentValue()}
+      </div>
     </div>;
   }
 }
