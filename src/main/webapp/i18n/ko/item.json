@@ -34,7 +34,8 @@
         "visible": "Visible",
         "allowEditing": "Allow Editing",
         "sortIndex" : "Sort Index",
-        "sortDirection" : "Sort Direction"
+        "sortDirection" : "Sort Direction",
+        "labelColumn" : "Label Column"
       }
     }
   }
