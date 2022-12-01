@@ -53,9 +53,8 @@ const getDxLookupComponent = (item: IItem) => {
           "codebookId": item.codebook.id,
           "title": data.title,
           "description": data.description,
-          "label": data.title + " (value: " + data.description + ")",
         }))}
-        displayExpr={"label"} valueExpr={"description"}/>;
+        displayExpr={"title"} valueExpr={"description"}/>;
     default:
       return undefined;
   }

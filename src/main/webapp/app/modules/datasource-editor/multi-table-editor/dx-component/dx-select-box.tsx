@@ -37,7 +37,9 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
 
   return (
     <div>
-      {isSudoUser ? <LookupEditor visible={showLookup} setVisible={setShowLookup} codebookId={data.column.lookup.dataSource[0].codebookId} dataSource={data.column.lookup.dataSource}/> : null}
+      {isSudoUser ? <LookupEditor visible={showLookup} setVisible={setShowLookup}
+                                  codebookId={data.column.lookup.dataSource[0].codebookId}
+                                  dataSource={data.column.lookup.dataSource}/> : null}
       <SelectBox
         className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
         dataSource={data.column.lookup.dataSource}
@@ -51,6 +53,10 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
         isValid={isValid(validationFailedItems, data.column.name)}
+        itemTemplate={(option) => {
+          const label = `${option.title} (value: ${option.description})`;
+          return `<div class='item-with-tooltip' title='${label}'> ${label}</div>`;
+        }}
         buttons={isSudoUser && isSelectBoxOpened ? [
           {
             name: 'add',
