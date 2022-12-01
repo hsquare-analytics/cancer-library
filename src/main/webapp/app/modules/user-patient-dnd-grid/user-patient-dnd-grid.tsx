@@ -170,15 +170,15 @@ export const UserPatientDndGrid = () => {
       </div>
 
       <div className="wrap-page">
-        <h1 className="title-page d-flex justify-content-between">
+        <h1 className="title-page d-flex justify-content-end">
           <div className={'d-flex'}>
-            <Typography variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
+            <span className="patient-text me-3">
+            {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
+          </span>
+            <Typography className={"me-3"} variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
               {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.title')}
               <HelpOutlineOutlinedIcon/>
             </Typography>
-            <span className="patient-text">
-            {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
-          </span>
           </div>
           <Stack spacing={1} direction="row" className="justify-content-end">
             <Button variant="contained" onClick={onClickSave}>

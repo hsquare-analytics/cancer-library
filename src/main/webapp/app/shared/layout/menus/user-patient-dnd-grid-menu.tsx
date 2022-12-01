@@ -8,7 +8,7 @@ import patientGridIcon from '../../../asset/img/icon-patient.svg';
 export const UserPatientDndGridMenu = () => (
   <NavItem data-cy="user-patient-dnd-grid-menu">
     <NavLink tag={Link} to="/user-patient-authorization-editor" className="d-flex align-items-center">
-      <img src={patientGridIcon} alt="환자 권한 설정" style={{ transform: 'scale(0.8) translateX(2px)' }} />
+      <img src={patientGridIcon} alt="리뷰어 권한 설정" style={{ transform: 'scale(0.8) translateX(2px)' }} />
       <span>
         <Translate contentKey="global.menu.userPatientAuthorizationEditor">Patient Table Editor</Translate>
       </span>

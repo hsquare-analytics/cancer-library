@@ -17,7 +17,7 @@
       },
       "multi-table-editor": "다중 테이블 편집기",
       "datasource": "데이터 편집 모듈",
-      "userPatientAuthorizationEditor": "환자 권한 설정",
+      "userPatientAuthorizationEditor": "리뷰어 권한 설정",
       "editable-categories": "편집 테이블 목록",
       "approval-categories": "승인 테이블 목록",
       "account": {
@@ -46,7 +46,7 @@
         "group": "Group 설정",
         "item": "Item 설정",
         "user-category": "사용자 카테고리 권한 설정",
-        "user-patient": "사용자 환자 권한 설정",
+        "user-patient": "사용자 리뷰어 권한 설정",
         "codebook": "코드북 관리"
       },
       "language": "언어"

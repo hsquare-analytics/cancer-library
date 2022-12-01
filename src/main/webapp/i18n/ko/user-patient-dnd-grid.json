@@ -23,7 +23,7 @@
         "cancel": "취소"
       },
       "dndGuide" : {
-        "title": "대상 환자 할당",
+        "title": "대상환자 분배",
         "description": "원하는 데이터셋을 우측 대시보드 영역으로 드래그앤 드롭합니다."
       },
       "selectUserAlert" : {
