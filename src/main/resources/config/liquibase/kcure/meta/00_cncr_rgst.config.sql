@@ -157,7 +157,7 @@ insert into ph_item_attribute (item_id, caption) values (9026, '조직학적진�
 insert into ph_item (id, title, category_id, created_by, order_no) values (9027, 'mcode2', 9000, 'system', 9027);
 insert into ph_item_attribute (item_id, caption) values (9027, '조직학적진단명코드기타설명');
 
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9028, 'bunhwadocode', 9000, 'system', 9028, 60070);
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9028, 'bunhwadocode', 9000, 'system', 9028, 60080);
 insert into ph_item_attribute (item_id, caption, data_type) values (9028, '분화도코드', 'selectbox');
 insert into ph_item_property (item_id, label_column) values (9028, 'bunhwadoname');
 

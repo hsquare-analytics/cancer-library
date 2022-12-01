@@ -42,7 +42,7 @@ insert into ph_item_attribute (item_id, caption, required, format, data_type) va
 insert into ph_item (id, title, category_id, created_by, order_no) values (9404, 'diag_rgst_seq', 9400, 'system', 9404);
 insert into ph_item_attribute (item_id, caption, required) values (9404, '진단등록순번', true);
 
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9405, 'diag_kncd', 9400, 'system', 9405, 20100);
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9405, 'diag_kncd', 9400, 'system', 9405, 20090);
 insert into ph_item_attribute (item_id, caption, data_type) values (9405, '위암진단종류코드', 'selectbox');
 insert into ph_item_property (item_id, label_column) values (9405, 'diag_knnm');
 
