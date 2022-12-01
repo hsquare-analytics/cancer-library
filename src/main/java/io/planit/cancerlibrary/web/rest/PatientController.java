@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,7 +48,12 @@ public class PatientController {
             .findAllByUserLogin(login).stream().map(UserPatient::getPatientNo)
             .collect(Collectors.toList());
 
-        List<Patient> result = patientRepository.findAllByPatientNos(accessiblePatientNoList);
+        List<Patient> result = new ArrayList<>();
+
+        if (!accessiblePatientNoList.isEmpty()) {
+            result.addAll(patientRepository.findAllByPatientNos(accessiblePatientNoList));
+        }
+
 
         if (SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.SUPERVISOR, AuthoritiesConstants.ADMIN)) {
             Map<String, Timestamp> dateRange = Map.of(
