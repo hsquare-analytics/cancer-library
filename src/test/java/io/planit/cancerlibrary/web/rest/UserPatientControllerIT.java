@@ -61,7 +61,7 @@ class UserPatientControllerIT {
         user.setLogin("userLogin" + RandomStringUtils.randomAlphabetic(5));
         userRepository.saveAndFlush(user);
 
-        Patient patient = PatientResourceIT.createPatientDTO();
+        Patient patient = PatientResourceIT.createPatientDTO().ptNo("authUserPatient");
         patientRepository.insert(patient);
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
