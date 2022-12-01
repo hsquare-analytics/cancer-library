@@ -5,10 +5,6 @@ export const isValid = (items: any[], columnName: string) => {
   return !items.find(item => item.title.toLowerCase() === columnName.toLowerCase());
 }
 
-export const isNotValid = (items: any[], columnName: string) => {
-  return !isValid(items, columnName);
-}
-
 export const isEmpty = (element): boolean => {
   if (element instanceof Array) {
     return element.length === 0;
@@ -16,13 +12,6 @@ export const isEmpty = (element): boolean => {
     return Object.keys(element).length === 0;
   }
 }
-
-export const isNumeric = (str: string | number) => {
-  if (typeof str === "number") return true;
-  if (typeof str !== "string") return false // we only process strings!
-  return !isNaN(parseFloat(str));
-}
-
 
 export const isChangedCell = (data, originRow) => {
   if (isEmpty(data) || isEmpty(originRow)) {
@@ -39,9 +28,6 @@ export const isChangedCell = (data, originRow) => {
   }
 
   if (type === 'selectbox') {
-    if (isNumeric(a) && isNumeric(b)) {
-      return parseFloat(a) !== parseFloat(b);
-    }
     return a !== b;
   }
 

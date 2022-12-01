@@ -31,7 +31,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
     if (!lookupDataSource || lookupDataSource.length === 0) {
       return undefined;
     }
-    lookupItem = lookupDataSource.find(temp => temp.description === targetValue || Number(temp.description) === Number(targetValue));
+    lookupItem = lookupDataSource.find(temp => temp.description === targetValue);
   }
 
   initLookupItem();
