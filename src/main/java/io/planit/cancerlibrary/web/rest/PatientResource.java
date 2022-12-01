@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -90,15 +89,15 @@ public class PatientResource {
 
         Optional<Patient> patient = patientRepository.findByPatientNo(ptNo)
             .map(existPatient -> {
-                if (!ObjectUtils.isEmpty(patientDTO.getStatus())) {
+                if (Objects.nonNull(patientDTO.getStatus())) {
                     existPatient.setStatus(patientDTO.getStatus());
                 }
 
-                if (!ObjectUtils.isEmpty(patientDTO.getComment())) {
+                if (Objects.nonNull(patientDTO.getComment())) {
                     existPatient.setComment(patientDTO.getComment());
                 }
 
-                if (!ObjectUtils.isEmpty(patientDTO.getDeclineReason())) {
+                if (Objects.nonNull(patientDTO.getDeclineReason())) {
                     existPatient.setDeclineReason(patientDTO.getDeclineReason());
                 }
 
