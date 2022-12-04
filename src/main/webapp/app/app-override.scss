@@ -80,13 +80,29 @@
  * devextreme mui Override
  * David 추가
  */
+.dx-toolbar {
+  background-color: var(--bg-body);
+}
+
 .dx-datagrid-header-panel {
   padding: 0;
+  background-color: var(--bg-body);
 }
 
 .dx-datagrid-headers,
 .dx-datagrid-filter-row {
   background-color: var(--bg-datagrid-headers);
+}
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  border-bottom-color: var(--color-datagrid-border);
+  border-right-color: var(--color-datagrid-border);
+}
+
+.dx-datagrid-borders {
+  .dx-datagrid-rowsview {
+    border-color: var(--color-datagrid-border);
+  }
 }
 
 // 헤더 검색필드
@@ -95,7 +111,14 @@
   border-bottom: 2px solid var(--bs-primary);
 }
 
+//
+.dx-editor-cell .dx-texteditor .dx-texteditor-input {
+  background: var(--bg-datagrid-headers);
+}
+
 .dx-datagrid {
+  background-color: var(--bg-datagrid);
+
   .dx-link {
     color: var(--color-dx-link);
 

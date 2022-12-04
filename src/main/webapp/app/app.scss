@@ -7,7 +7,9 @@
   --white: #fff;
   --red: #E55041;
   --width-sidemenu: 210px;
+  --bg-body: #fff;
   --bg-sidemenu: #455364;
+  --color-side-menu-border: #455364;
   --bs-primary: #4285F4;
   --color-btn-outline-white: #222;
   --bg-btn-outline-white-hover: #f7f7f7;
@@ -21,6 +23,10 @@
   --bg-badge-status-declined: #FFDEDE;
   --color-badge-status-declined: #E55041;
   --side-nav-link-color: #fff;
+  --color-title-text: #545454;
+
+  --bg-datagrid: #fff;
+  --color-datagrid-border: #cdcdcd;
 }
 
 .alert {
@@ -39,8 +45,16 @@
 // dark mode 변수모음
 .dark {
   --white: #333;
+  --bg-body: #1e1e1e;
   --bs-primary: #454545;
-  --side-nav-link-color: #fff;
+  --bg-sidemenu: #1e1e1e;
+  --color-side-menu-border: #3e3e3e;
+  --side-nav-link-color: #aaa;
+  --color-title-text: #cdcdcd;
+
+  --bg-datagrid: #1f2128;
+  --bg-datagrid-headers: #1f2128;
+  --color-datagrid-border: #3e3e3e;
 
   .btn-primary {
     --bs-btn-color: #fff;
@@ -66,7 +80,8 @@
 }
 
 body {
-  background: #fff;
+  //background: #fff;
+  background-color: transparent !important;
   margin: 0;
   font-family: var(--font-family);
   font-size: 1.6rem;
@@ -89,6 +104,7 @@ a {
 }
 
 .app-container {
+  background: var(--bg-body);
   box-sizing: border-box;
   padding-left: var(--width-sidemenu);
 
@@ -143,6 +159,7 @@ a {
   }
 
   &.no-auth {
+    background: var(--white);
     padding-left: 0;
   }
 
@@ -217,6 +234,7 @@ a {
 
     .title-page {
       font-size: 20px;
+      color: var(--color-title-text);
 
       .patient-text {
         display: inline-block;
