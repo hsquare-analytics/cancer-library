@@ -23,6 +23,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {getDesignTokens} from 'app/shared/util/mui-theme';
 import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
+import dxPopup from "devextreme/ui/popup";
+
+dxPopup.defaultOptions({
+  options: {animation: null}
+});
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
@@ -74,7 +79,7 @@ export const App = () => {
   return (
     <BrowserRouter basename={baseHref}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
+        <CssBaseline/>
         {/* mode className 을 app-container 에 추가한다. 'dark' | 'light' */}
         <div className={`app-container ${mode} ${isAuthenticated ? '' : 'no-auth'}`}>
           <ToastContainer
@@ -94,13 +99,13 @@ export const App = () => {
               isInProduction={isInProduction}
               isOpenAPIEnabled={isOpenAPIEnabled}
             >
-              <ToggleTheme mode={mode} onToggleMode={onToggleMode} />
+              <ToggleTheme mode={mode} onToggleMode={onToggleMode}/>
             </Header>
           </ErrorBoundary>
 
           <div className="container-fluid view-container" id="app-view-container">
             <ErrorBoundary>
-              <AppRoutes />
+              <AppRoutes/>
             </ErrorBoundary>
           </div>
         </div>
