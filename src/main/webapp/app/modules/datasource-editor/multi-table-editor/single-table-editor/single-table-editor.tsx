@@ -101,8 +101,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           showBorders={true}
           filterRow={{visible: false}}
           headerFilter={{visible: true}}
-          allowColumnResizing={true}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
+          allowColumnReordering={true}
+          allowColumnResizing={true}
+          columnResizingMode={'widget'}
+          sorting={{mode: 'multiple'}}
           editing={{
             mode: 'popup',
             allowUpdating: true,
