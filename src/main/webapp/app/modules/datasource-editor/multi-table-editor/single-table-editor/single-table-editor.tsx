@@ -132,7 +132,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       <AccordionDetails sx={{padding: '8px 0'}}>
         <DataGrid
           ref={dataGrid}
-          dataSource={dataContainer[category.id]}
+          dataSource={JSON.parse(JSON.stringify(dataContainer[category.id]))}
           hoverStateEnabled={true}
           showBorders={true}
           filterRow={{visible: false}}
