@@ -5,7 +5,7 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './topic.reducer';
-import {getEntities as getSubjects} from "app/entities/subject/subject.reducer";
+import {getEntities as getSubjects} from 'app/entities/subject/subject.reducer';
 
 export const TopicUpdate = () => {
   const dispatch = useAppDispatch();
@@ -60,20 +60,19 @@ export const TopicUpdate = () => {
     isNew
       ? {}
       : {
-        ...topicEntity,
-      };
+          ...topicEntity,
+        };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.topic.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.topic.home.createOrEditLabel">Create or edit a
-              Category</Translate>
+          <h2 id="cancerLibraryApp.topic.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading" className="title-page">
+            <Translate contentKey="cancerLibraryApp.topic.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -126,19 +125,16 @@ export const TopicUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/topic" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/topic" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

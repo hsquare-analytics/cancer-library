@@ -6,8 +6,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './codebook.reducer';
 import MuiButton from '@mui/material/Button';
-import LookupEditor from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor";
-
+import LookupEditor from 'app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor';
 
 export const CodebookUpdate = () => {
   const dispatch = useAppDispatch();
@@ -59,20 +58,19 @@ export const CodebookUpdate = () => {
     isNew
       ? {}
       : {
-        ...codebookEntity,
-      };
+          ...codebookEntity,
+        };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.codebook.home.createOrEditLabel" data-cy="CodebookCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.codebook.home.createOrEditLabel">Create or edit a
-              Codebook</Translate>
+          <h2 id="cancerLibraryApp.codebook.home.createOrEditLabel" data-cy="CodebookCreateUpdateHeading" className="title-page">
+            <Translate contentKey="cancerLibraryApp.codebook.home.createOrEditLabel">Create or edit a Codebook</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -110,43 +108,44 @@ export const CodebookUpdate = () => {
               <div>
                 {translate('cancerLibraryApp.codebook.lookupList')}
                 <MuiButton variant="text" onClick={() => setShowLookup(true)}>
-                  <FontAwesomeIcon icon="pencil-alt"/>{' '}
+                  <FontAwesomeIcon icon="pencil-alt" />{' '}
                 </MuiButton>
-                {codebookEntity.lookupList ?
-                  <LookupEditor visible={showLookup} setVisible={setShowLookup} codebookId={codebookEntity.id}
-                                dataSource={codebookEntity.lookupList.filter(data => data).map(data => {
-                                  return {
-                                    codebookId: codebookEntity.id,
-                                    title: data.title,
-                                    description: data.description,
-                                  }
-                                })}/> : null}
-                <ValidatedField
-                  id="codebook-lookupList"
-                  name="lookupList"
-                  data-cy="lookupList"
-                  type="select"
-                  multiple
-                >
-                  {codebookEntity.lookupList?.filter(data => data).map(lookup => (
-                    <option value={lookup} key={lookup}>
-                      {lookup.title}
-                    </option>
-                  ))}
+                {codebookEntity.lookupList ? (
+                  <LookupEditor
+                    visible={showLookup}
+                    setVisible={setShowLookup}
+                    codebookId={codebookEntity.id}
+                    dataSource={codebookEntity.lookupList
+                      .filter(data => data)
+                      .map(data => {
+                        return {
+                          codebookId: codebookEntity.id,
+                          title: data.title,
+                          description: data.description,
+                        };
+                      })}
+                  />
+                ) : null}
+                <ValidatedField id="codebook-lookupList" name="lookupList" data-cy="lookupList" type="select" multiple>
+                  {codebookEntity.lookupList
+                    ?.filter(data => data)
+                    .map(lookup => (
+                      <option value={lookup} key={lookup}>
+                        {lookup.title}
+                      </option>
+                    ))}
                 </ValidatedField>
               </div>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/codebook" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/codebook" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

@@ -62,6 +62,14 @@ export const App = () => {
   const onToggleMode = useCallback(
     (value: PaletteMode) => {
       setMode(value);
+
+      const bodyClassList = document.body.classList;
+
+      if (!bodyClassList.contains('dark')) {
+        bodyClassList.add('dark');
+      } else {
+        bodyClassList.remove('dark');
+      }
     },
     [mode]
   );

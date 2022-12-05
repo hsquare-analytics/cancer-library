@@ -5,9 +5,9 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './item.reducer';
-import {getEntities as getCategories} from "app/entities/category/category.reducer";
-import {getEntities as getCodebooks} from "app/entities/codebook/codebook.reducer";
-import _ from "lodash";
+import {getEntities as getCategories} from 'app/entities/category/category.reducer';
+import {getEntities as getCodebooks} from 'app/entities/codebook/codebook.reducer';
+import _ from 'lodash';
 
 export const ItemUpdate = () => {
   const dispatch = useAppDispatch();
@@ -67,35 +67,28 @@ export const ItemUpdate = () => {
     isNew
       ? {}
       : {
-        ...itemEntity,
-      };
+          ...itemEntity,
+        };
 
-  const dataTypeList = ['number', 'boolean', 'string', 'date', 'datetime', 'selectbox',];
+  const dataTypeList = ['number', 'boolean', 'string', 'date', 'datetime', 'selectbox'];
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.item.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+          <h2 id="cancerLibraryApp.item.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading" className="title-page">
             <Translate contentKey="cancerLibraryApp.item.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? (
-                <ValidatedField
-                  name="id"
-                  required
-                  readOnly
-                  id="item-id"
-                  label={translate('global.field.id')}
-                  validate={{required: true}}
-                />
+                <ValidatedField name="id" required readOnly id="item-id" label={translate('global.field.id')} validate={{required: true}} />
               ) : null}
               <ValidatedField
                 label={translate('cancerLibraryApp.item.title')}
@@ -123,8 +116,7 @@ export const ItemUpdate = () => {
                 check
                 type="checkbox"
               />
-              <ValidatedField type="select" name="category.id" data-cy="category"
-                              label={translate('cancerLibraryApp.item.category.title')}>
+              <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.item.category.title')}>
                 <option value="">-</option>
                 {categories.map(category => (
                   <option value={category.id} key={category}>
@@ -132,8 +124,7 @@ export const ItemUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <ValidatedField type="select" name="codebook.id" data-cy="codebook"
-                              label={translate('cancerLibraryApp.item.codebook.title')}>
+              <ValidatedField type="select" name="codebook.id" data-cy="codebook" label={translate('cancerLibraryApp.item.codebook.title')}>
                 <option value="">-</option>
                 {_.orderBy(codebooks, 'title').map(codebook => (
                   <option value={codebook.id} key={codebook}>
@@ -171,7 +162,12 @@ export const ItemUpdate = () => {
                 type="select"
               >
                 <option value="">-</option>
-                {_.orderBy(dataTypeList).map(data => <option value={data} key={data}> {data} </option>)}
+                {_.orderBy(dataTypeList).map(data => (
+                  <option value={data} key={data}>
+                    {' '}
+                    {data}{' '}
+                  </option>
+                ))}
               </ValidatedField>
               <ValidatedField
                 label={translate('cancerLibraryApp.item.property.allowEditing')}
@@ -210,18 +206,16 @@ export const ItemUpdate = () => {
                 data-cy="property.labelColumn"
                 type="text"
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

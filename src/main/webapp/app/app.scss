@@ -7,20 +7,46 @@
   --white: #fff;
   --red: #E55041;
   --width-sidemenu: 210px;
+  --bg-body: #fff;
   --bg-sidemenu: #455364;
+  --bg-sidemenu-expanded: #384556;
+  --color-text: #333;
+  --color-side-menu-border: #455364;
   --bs-primary: #4285F4;
   --color-btn-outline-white: #222;
   --bg-btn-outline-white-hover: #f7f7f7;
   --bg-btn-outline-white-border: #eee;
-  --bg-datagrid-headers: #F1F4F8;
-  --bg-datagrid-row-hover: #f6f6f6;
-  --color-dx-link: #69707D;
+
   --bg-badge-status-default: #E0E5EE;
   --bg-badge-status-approved: #FFC65B;
   --bg-badge-status-submitted: #88bfec;
   --bg-badge-status-declined: #FFDEDE;
   --color-badge-status-declined: #E55041;
   --side-nav-link-color: #fff;
+  --color-title-text: #545454;
+  --bg-form-control: #fff;
+  --color-form-control-text: var(--bs-dark);
+  --color-form-control-border: var(--bs-gray-400);
+
+  --bg-datagrid: #fff;
+  --bg-datagrid-headers: #F1F4F8;
+  --bg-datagrid-row-hover: #f6f6f6;
+  --color-dx-link: #69707D;
+  --color-datagrid-border: #cdcdcd;
+  --color-input-focus-border: #4285F4;
+  --color-seachbox-icon: #a1a98d;
+  --bg-filter-icon: rgba(224, 224, 224, 0.87);
+  --color-filter-icon: #69707d;
+  --bg-datagrid-submenu: #fff;
+  --bg-datagrid-submenu-item-selected: #eee;
+  --color-datagrid-submenu-item: #666;
+  --bg-dx-popup-toolbar: #fff;
+  --bg-dx-popup-calendar: #fff;
+  --color-dx-calendar-cell: #222;
+  --bg-dx-calendar-cell-hover: #eee;
+  --bg-text-button-hover: rgba(0, 0, 0, 0.08);
+  --bg-datagrid-selected-row: #f7f7f7;
+  --color-datagrid-selected-row: var(--bs-primary);
 }
 
 .alert {
@@ -39,12 +65,50 @@
 // dark mode 변수모음
 .dark {
   --white: #333;
-  --bs-primary: #454545;
-  --side-nav-link-color: #fff;
+  --bg-body: #1e1e1e;
+  --bs-primary: #4285F4;
+  --bg-sidemenu: #1e1e1e;
+  --bg-sidemenu-expanded: #010101;
+  --color-text: #fff;
+  --color-side-menu-border: #3e3e3e;
+  --side-nav-link-color: #aaa;
+  --color-title-text: #cdcdcd;
+
+  --bg-form-control: #212121;
+  --color-form-control-text: var(--color-text);
+  --color-form-control-border: var(--color-datagrid-border);
+
+  --bg-datagrid: #1f2128;
+  --bg-datagrid-headers: #1f2128;
+  --color-dx-link: var(--bg-datagrid-submenu-item);
+  --color-datagrid-border: #3e3e3e;
+  --color-input-focus-border: #4285F4;
+  --bg-filter-icon: var(--bg-datagrid-submenu-item-selected);
+  --color-filter-icon: #A1A9BD;
+  --bg-datagrid-submenu: #313134;
+  --bg-datagrid-submenu-item-selected: #666;
+  --color-datagrid-submenu-item: #ddd;
+  --bg-dx-popup-toolbar: #666;
+  --bg-dx-popup-calendar: #363640;
+  --color-dx-calendar-cell: #ddd;
+  --bg-dx-calendar-cell-hover: #777;
+  --bg-text-button-hover: #222;
+  --bg-datagrid-selected-row: #444;
+  --color-datagrid-selected-row: #4ab0ff;
+
+  .progress {
+    --bs-progress-bg: #666;
+  }
 
   .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: var(--bg-sidemenu);
+    --bs-btn-bg: var(--bs-primary);
+  }
+
+  .btn-light {
+    --bs-btn-bg: #333;
+    --bs-btn-border-color: #333;
+    --bs-btn-color: var(--color-dx-link);
   }
 }
 
@@ -66,7 +130,8 @@
 }
 
 body {
-  background: #fff;
+  //background: #fff;
+  background-color: transparent !important;
   margin: 0;
   font-family: var(--font-family);
   font-size: 1.6rem;
@@ -89,6 +154,7 @@ a {
 }
 
 .app-container {
+  background: var(--bg-body);
   box-sizing: border-box;
   padding-left: var(--width-sidemenu);
 
@@ -122,6 +188,7 @@ a {
 
         .area-home-title {
           transform: translateY(-50px);
+          color: #333;
 
           .sub-title {
             font-size: 22px;
@@ -143,6 +210,7 @@ a {
   }
 
   &.no-auth {
+    background: var(--white);
     padding-left: 0;
   }
 
@@ -214,9 +282,11 @@ a {
   // 페이지 레이아웃
   .wrap-page {
     padding: 20px;
+    height: 100vh;
 
     .title-page {
       font-size: 20px;
+      color: var(--color-title-text);
 
       .patient-text {
         display: inline-block;

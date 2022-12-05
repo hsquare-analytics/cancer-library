@@ -89,6 +89,7 @@ Navbar styles
 
     &.active {
       background: var(--bs-primary);
+      color: #fff;
     }
   }
 
@@ -110,6 +111,7 @@ Navbar styles
     width: 210px;
     height: 100%;
     align-items: start;
+    border-right: var(--color-side-menu-border) 1px solid;
 
     .container-fluid {
       flex-direction: column;
@@ -118,6 +120,7 @@ Navbar styles
 
   .MuiAccordionSummary-root {
     padding: 0;
+    background-color: var(--bg-sidemenu);
 
     .MuiAccordionSummary-content {
       margin: 0;
