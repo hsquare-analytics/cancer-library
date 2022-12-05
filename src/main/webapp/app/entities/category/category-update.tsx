@@ -5,7 +5,7 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './category.reducer';
-import {getEntities as getTopics} from "app/entities/topic/topic.reducer";
+import {getEntities as getTopics} from 'app/entities/topic/topic.reducer';
 
 export const CategoryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -60,20 +60,19 @@ export const CategoryUpdate = () => {
     isNew
       ? {}
       : {
-        ...categoryEntity,
-      };
+          ...categoryEntity,
+        };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.category.home.createOrEditLabel">Create or edit a
-              Category</Translate>
+          <h2 id="cancerLibraryApp.category.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading" className="title-page">
+            <Translate contentKey="cancerLibraryApp.category.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -143,8 +142,7 @@ export const CategoryUpdate = () => {
                 data-cy="attribute.caption"
                 type="text"
               />
-              <ValidatedField type="select" name="topic.id" data-cy="topic"
-                              label={translate('cancerLibraryApp.category.topic.title')}>
+              <ValidatedField type="select" name="topic.id" data-cy="topic" label={translate('cancerLibraryApp.category.topic.title')}>
                 <option value="">-</option>
                 {topics.map(topic => (
                   <option value={topic.id} key={topic}>
@@ -152,18 +150,16 @@ export const CategoryUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/category" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/category" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

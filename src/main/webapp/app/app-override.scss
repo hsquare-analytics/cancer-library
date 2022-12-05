@@ -1,7 +1,37 @@
 /*
- * reactstrap Override
+ * reactstrap override
  * reactstrap 에 디자인 적용
  */
+
+.form-control {
+  background-color: var(--bg-form-control);
+  border-color: var(--color-form-control-border);
+  color: var(--color-form-control-text);
+
+  &:focus {
+    background-color: var(--bg-body);
+    color: var(--color-form-control-text);
+  }
+
+}
+
+.dark {
+  .form-select {
+    background-color: #555;
+    border-color: #333;
+    color: var(--color-text)
+  }
+}
+
+.table {
+  color: var(--color-text);
+  border-color: var(--color-datagrid-border);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  color: var(--color-text);
+}
+
 
 .btn-outline.btn-outline-white {
   border-color: var(--bg-btn-outline-white-border);
@@ -48,7 +78,7 @@
 
 
 /*
- * @mui Override
+ * @mui override
  * Material UI 에 디자인 적용
  */
 
@@ -75,10 +105,13 @@
   }
 }
 
+.MuiPaper-root.MuiAccordion-root.Mui-expanded {
+  background-color: var(--bg-sidemenu-expanded);
+}
+
 
 /*
- * devextreme mui Override
- * David 추가
+ * devextreme mui override
  */
 .dx-toolbar {
   background-color: var(--bg-body);
@@ -92,6 +125,7 @@
 .dx-datagrid-headers,
 .dx-datagrid-filter-row {
   background-color: var(--bg-datagrid-headers);
+  color: var(--color-text);
 }
 
 .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
@@ -99,10 +133,12 @@
   border-right-color: var(--color-datagrid-border);
 }
 
-.dx-datagrid-borders {
-  .dx-datagrid-rowsview {
-    border-color: var(--color-datagrid-border);
-  }
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td:hover .dx-datagrid-text-content {
+  color: var(--color-text);
+}
+
+.dx-datagrid-headers.dx-header-multi-row .dx-datagrid-content .dx-datagrid-table .dx-row.dx-header-row > td {
+  border-right-color: var(--color-datagrid-border);
 }
 
 // 헤더 검색필드
@@ -111,13 +147,18 @@
   border-bottom: 2px solid var(--bs-primary);
 }
 
-//
-.dx-editor-cell .dx-texteditor .dx-texteditor-input {
-  background: var(--bg-datagrid-headers);
-}
-
 .dx-datagrid {
   background-color: var(--bg-datagrid);
+  color: var(--color-text);
+
+  // 필터 아이콘
+  .dx-header-filter-empty {
+    color: var(--color-filter-icon);
+  }
+
+  .dx-editor-cell .dx-texteditor .dx-texteditor-input {
+    background: var(--bg-datagrid-headers);
+  }
 
   .dx-link {
     color: var(--color-dx-link);
@@ -128,24 +169,226 @@
 
     }
   }
+
+  // 그리드 border
+  .dx-row-lines > td {
+    border-bottom-color: var(--color-datagrid-border);
+  }
+
+  .dx-column-lines > td {
+    border-right-color: var(--color-datagrid-border);
+  }
+
+  .dx-row-alt > td {
+    background-color: var(--bg-datagrid-selected-row);
+    border-top-color: var(--color-datagrid-border);
+  }
+
 }
 
-// 행 편집 팝업 입력창
-.dx-texteditor.dx-editor-filled::after {
-  border-bottom: #e0e0e0 1px solid;
+// 그리드 border
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused).dx-row-lines > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover.dx-row-lines > td {
+  border-bottom-color: var(--color-datagrid-border);
+}
+
+// 선택된 row
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
+  background-color: var(--bg-datagrid-selected-row);
+  color: var(--color-datagrid-selected-row);
+}
+
+// 검색창 focused 시 하단 라인 컬러...
+.dx-datagrid-focus-overlay:after {
+  background-color: var(--color-input-focus-border);
+}
+
+.dx-datagrid-borders > .dx-datagrid-rowsview,
+.dx-datagrid-borders > .dx-datagrid-headers {
+  border-left-color: var(--color-datagrid-border);
+  border-right-color: var(--color-datagrid-border);
+}
+
+.dx-datagrid-borders > .dx-datagrid-filter-panel,
+.dx-datagrid-borders > .dx-datagrid-headers {
+  border-top-color: var(--color-datagrid-border);
+}
+
+// 정렬 화살표 아이콘
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td .dx-sort,
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td:hover .dx-sort,
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td .dx-sort-indicator,
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td:hover .dx-datagrid-text-content {
+  color: var(--color-filter-icon);
+}
+
+// 그리드의 각종 텍스트 입력창
+.dx-texteditor-input {
+  color: var(--color-text);
 }
 
 .dx-texteditor.dx-editor-filled {
   background-color: var(--bg-datagrid-headers);
 
+  &::after {
+    border-bottom-color: var(--color-datagrid-border);
+  }
+
   &.dx-state-hover {
     //background-color: var(--bg-datagrid-row-hover);
-    background-color: #edeff2;
+    background-color: var(--bg-datagrid-headers);
+    //background-color: #edeff2;
+    &::after {
+      border-bottom-color: var(--color-datagrid-border);
+    }
   }
+
+  &.dx-state-focused::before {
+    border-bottom: var(--color-input-focus-border) 1px solid;
+  }
+}
+
+.dx-searchbox .dx-icon-search {
+  color: var(--color-seachbox-icon);
+
+  &::before {
+    color: inherit;
+  }
+}
+
+// 필터메뉴: 그리드 헤더 돋보기 아이콘 오버 시 나타나는 드롭다운 메뉴들...
+.dx-context-menu {
+  .dx-submenu {
+    background-color: var(--bg-datagrid-submenu);
+  }
+
+  .dx-menu-item {
+    color: var(--color-datagrid-submenu-item);
+  }
+}
+
+.dx-menu-item-selected {
+  background-color: var(--bg-datagrid-submenu-item-selected);
+}
+
+.dx-datagrid.dx-filter-menu .dx-menu-item-content .dx-icon {
+  color: var(--color-datagrid-submenu-item);
+}
+
+.dx-menu-item-expanded,
+.dx-menu-item-expanded.dx-state-focused {
+  background: var(--bg-filter-icon);
+}
+
+.dx-item.dx-state-hover {
+  background: var(--bg-filter-icon);
+}
+
+.dx-dropdowneditor-icon,
+.dx-dropdowneditor.dx-dropdowneditor-active .dx-dropdowneditor-icon {
+  color: var(--color-filter-icon);
+}
+
+
+// 셀렉트 하단 드롭다운
+.dx-list {
+  background: var(--bg-datagrid-submenu);
+
+  .dx-empty-message {
+    color: var(--color-datagrid-submenu-item);
+  }
+}
+
+.dx-list-item {
+  color: var(--color-datagrid-submenu-item);
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected {
+  background-color: var(--bg-datagrid-submenu-item-selected);
+  color: var(--color-datagrid-submenu-item);
+}
+
+.dx-list:not(.dx-list-select-decorator-enabled) .dx-list-item.dx-list-item-selected.dx-state-hover:not(.dx-state-focused) {
+  background-color: var(--bg-datagrid-submenu-item-selected);
+  color: var(--color-datagrid-submenu-item);
+}
+
+.dx-list-select-all::after {
+  background-color: var(--color-datagrid-border);
+}
+
+.dx-header-filter-menu .dx-popup-content {
+  border-bottom-color: var(--color-datagrid-border);
+}
+
+.dx-datagrid-borders > .dx-datagrid-rowsview,
+.dx-datagrid-borders > .dx-datagrid-total-footer {
+  border-bottom-color: var(--color-datagrid-border);
+}
+
+// 각종 드롭다운의 컨테이너가 팝업...
+.dx-popup-wrapper > .dx-overlay-content,
+.dx-popup-wrapper .dx-toolbar {
+  background: var(--bg-datagrid-submenu);
+}
+
+.dx-popup-wrapper {
+  .dx-calendar {
+    background: var(--bg-dx-popup-calendar);
+  }
+
+  .dx-calendar-navigator .dx-button {
+    color: var(--bs-primary);
+  }
+}
+
+.dx-calendar-body table th {
+  color: var(--color-dx-calendar-cell);
+}
+
+.dx-calendar-navigator-previous-month.dx-button .dx-icon,
+.dx-calendar-navigator-previous-view.dx-button .dx-icon {
+  color: var(--bs-primary);
+}
+
+.dx-calendar-cell {
+  color: var(--color-dx-calendar-cell);
+}
+
+.dx-calendar-cell.dx-calendar-today {
+  color: var(--color-input-focus-border);
+}
+
+//.dx-calendar-cell.dx-calendar-today span,
+.dx-calendar-cell.dx-calendar-selected-date span,
+.dx-calendar-cell.dx-calendar-selected-date.dx-calendar-today span {
+  background: var(--bs-primary);
+  color: #fff;
+}
+
+.dx-calendar-cell.dx-state-hover {
+  background: var(--bg-dx-calendar-cell-hover);
+}
+
+.dx-widget {
+  color: var(--color-text);
 }
 
 .dx-button-mode-text.dx-button-default {
   color: var(--bs-primary);
+}
+
+.dx-button-mode-text.dx-button-default.dx-state-focused,
+.dx-button-mode-text.dx-button-default.dx-state-hover {
+  background-color: var(--bg-text-button-hover);
+}
+
+// 체크박스
+.dx-checkbox-icon {
+  border-color: var(--color-filter-icon);
 }
 
 // 페이징
@@ -159,11 +402,20 @@
   background-color: var(--bs-primary);
 }
 
+.dx-checkbox.dx-checkbox-checked.dx-state-disabled .dx-checkbox-icon,
+.dx-checkbox.dx-checkbox-checked.dx-state-readonly .dx-checkbox-icon,
+.dx-checkbox.dx-checkbox-indeterminate.dx-state-disabled .dx-checkbox-icon,
+.dx-checkbox.dx-checkbox-indeterminate.dx-state-readonly .dx-checkbox-icon {
+  background-color: var(--bs-primary);
+  opacity: 0.3;
+}
+
 .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused) {
   & > td:not(.dx-focused) {
     background-color: var(--bg-datagrid-row-hover);
   }
 }
+
 
 // sweetalert2 override
 // sweetalert2 의 customclass 를 cancer-dialog 로 한다.

@@ -5,14 +5,14 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './user-patient.reducer';
-import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
+import {getUsers} from 'app/modules/administration/user-management/user-management.reducer';
 
 export const UserPatientUpdate = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const { id } = useParams<'id'>();
+  const {id} = useParams<'id'>();
   const isNew = id === undefined;
 
   const userPatientEntity = useAppSelector(state => state.userPatient.entity);
@@ -32,10 +32,9 @@ export const UserPatientUpdate = () => {
       dispatch(getEntity(id));
     }
 
-     if (users.length === 0) {
-          dispatch(getUsers({}));
-      }
-
+    if (users.length === 0) {
+      dispatch(getUsers({}));
+    }
   }, []);
 
   useEffect(() => {
@@ -65,15 +64,15 @@ export const UserPatientUpdate = () => {
         };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.userPatient.home.createOrEditLabel" data-cy="PointCreateUpdateHeading">
+          <h2 id="cancerLibraryApp.userPatient.home.createOrEditLabel" data-cy="PointCreateUpdateHeading" className="title-page">
             <Translate contentKey="cancerLibraryApp.userPatient.home.createOrEditLabel">Create or edit a Point</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -86,26 +85,30 @@ export const UserPatientUpdate = () => {
                   readOnly
                   id="user-patient-id"
                   label={translate('global.field.id')}
-                  validate={{ required: true }}
+                  validate={{required: true}}
                 />
               ) : null}
-                <ValidatedField type="select" name="user.id" data-cy="user"
-                                label={translate('cancerLibraryApp.userPatient.user.login')}
-                                validate={{required: true}} >
-                    <option value="">-</option>
-                    {users.map(user => (
-                        <option value={user.id} key={user}>
-                            {user.login}
-                        </option>
-                    ))}
-                </ValidatedField>
+              <ValidatedField
+                type="select"
+                name="user.id"
+                data-cy="user"
+                label={translate('cancerLibraryApp.userPatient.user.login')}
+                validate={{required: true}}
+              >
+                <option value="">-</option>
+                {users.map(user => (
+                  <option value={user.id} key={user}>
+                    {user.login}
+                  </option>
+                ))}
+              </ValidatedField>
               <ValidatedField
                 label={translate('cancerLibraryApp.userPatient.patientNo')}
                 id="user-patient-patientNo"
                 name="patientNo"
                 data-cy="patientNo"
                 type="text"
-                validate={{ required: { value: true, message: translate('entity.validation.required') }, }}
+                validate={{required: {value: true, message: translate('entity.validation.required')}}}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/user-patient" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
