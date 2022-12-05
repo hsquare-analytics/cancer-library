@@ -19,10 +19,13 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
+  const [className, setClassName] = useState(getDxCellClass(props.data, props.originRow, isValid(props.validationFailedItems, props.data.column.name)));
+
   const {data, originRow, validationFailedItems, isSudoUser} = props;
 
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
+    setClassName(getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name)));
   }
 
   const onSelectionChanged = () => {
@@ -41,7 +44,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
                                   codebookId={data.column.lookup.dataSource[0].codebookId}
                                   dataSource={data.column.lookup.dataSource}/> : null}
       <SelectBox
-        className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
+        className={className}
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
         displayExpr={data.column.lookup.displayExpr}

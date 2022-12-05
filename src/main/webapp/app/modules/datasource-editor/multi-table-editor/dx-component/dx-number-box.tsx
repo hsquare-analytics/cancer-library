@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import NumberBox from 'devextreme-react/number-box';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
@@ -16,12 +16,15 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
 const DxTextBox = (props: IDxEditCellRenderProps) => {
   const {data, originRow, validationFailedItems} = props;
 
+  const [className, setClassName] = useState(getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name)));
+
   const onValueChanged = (e) => {
     props.data.setValue(e.value);
+    setClassName(getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name)));
   }
 
   return <div>
-    <NumberBox className={getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name))}
+    <NumberBox className={className}
                isValid={isValid(validationFailedItems, data.column.name)}
                defaultValue={props.data.value}
                onValueChanged={onValueChanged}
