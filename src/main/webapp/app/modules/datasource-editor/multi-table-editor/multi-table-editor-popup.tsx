@@ -15,15 +15,15 @@ export const MultiTableEditorPopup = React.forwardRef((props, ref) => {
   }))
 
   return <Popup
-    showTitle={false}
+    wrapperAttr={{class: 'multi-table-editor-popup'}}
     visible={popupVisible}
     onHiding={() => setPopupVisible(false)}
     resizeEnabled={true}
     height={'98vh'}
     width={'98vw'}
+    titleComponent={() => <PatientProfileCard setPopupVisible={setPopupVisible}/>}
   >
     <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
-      <PatientProfileCard setPopupVisible={setPopupVisible}/>
       <MultiTableEditor/>
     </ScrollView>
   </Popup>

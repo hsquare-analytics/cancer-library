@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import DataGrid, {Column} from 'devextreme-react/data-grid';
+import DataGrid, {Column, ColumnChooser} from 'devextreme-react/data-grid';
 import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -79,19 +79,33 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     <Accordion defaultExpanded={true} className={'single-table-editor-wrapper'}>
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         {getCategoryTypography(category)}
-        <Button
-          variant="outlined"
-          className={'me-2'}
-          size={'small'}
-          color="warning"
-          onClick={e => {
-            e.stopPropagation();
-            dataGrid.current.instance.addRow();
-          }}
-        >
-          <FontAwesomeIcon icon="plus" className={'me-3'}/>
-          {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
-        </Button>
+        <div>
+          <Button
+            variant="outlined"
+            className={'me-2'}
+            size={'small'}
+            onClick={e => {
+              e.stopPropagation();
+              dataGrid.current.instance.showColumnChooser();
+            }}
+          >
+            <FontAwesomeIcon icon="list" className={'me-3'}/>
+            {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.columnList')}
+          </Button>
+          <Button
+            variant="outlined"
+            className={'me-2'}
+            size={'small'}
+            color={"info"}
+            onClick={e => {
+              e.stopPropagation();
+              dataGrid.current.instance.addRow();
+            }}
+          >
+            <FontAwesomeIcon icon="plus" className={'me-3'}/>
+            {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
+          </Button>
+        </div>
       </AccordionSummary>
       <AccordionDetails sx={{padding: '8px 0'}}>
         <DataGrid
@@ -101,8 +115,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           showBorders={true}
           filterRow={{visible: false}}
           headerFilter={{visible: true}}
-          allowColumnResizing={true}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
+          allowColumnReordering={true}
+          allowColumnResizing={true}
+          columnResizingMode={'widget'}
+          sorting={{mode: 'multiple'}}
           editing={{
             mode: 'popup',
             allowUpdating: true,
@@ -196,6 +213,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }
           }}
         >
+          <ColumnChooser
+            title={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.columnList')}
+            mode="select"/>
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
