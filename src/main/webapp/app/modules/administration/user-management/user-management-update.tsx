@@ -13,7 +13,7 @@ export const UserManagementUpdate = () => {
 
   const navigate = useNavigate();
 
-  const { login } = useParams<'login'>();
+  const {login} = useParams<'login'>();
   const isNew = login === undefined;
 
   useEffect(() => {
@@ -48,29 +48,22 @@ export const UserManagementUpdate = () => {
   const authorities = useAppSelector(state => state.userManagement.authorities);
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h1>
+          <h1 className="title-page">
             <Translate contentKey="userManagement.home.createOrEditLabel">Create or edit a User</Translate>
           </h1>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
           ) : (
             <ValidatedForm onSubmit={saveUser} defaultValues={user}>
               {user.id ? (
-                <ValidatedField
-                  type="text"
-                  name="id"
-                  required
-                  readOnly
-                  label={translate('global.field.id')}
-                  validate={{ required: true }}
-                />
+                <ValidatedField type="text" name="id" required readOnly label={translate('global.field.id')} validate={{required: true}} />
               ) : null}
               <ValidatedField
                 type="text"
@@ -102,7 +95,7 @@ export const UserManagementUpdate = () => {
                 validate={{
                   maxLength: {
                     value: 50,
-                    message: translate('entity.validation.maxlength', { max: 50 }),
+                    message: translate('entity.validation.maxlength', {max: 50}),
                   },
                 }}
               />

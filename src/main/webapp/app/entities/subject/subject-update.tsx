@@ -54,20 +54,19 @@ export const SubjectUpdate = () => {
     isNew
       ? {}
       : {
-        ...subjectEntity,
-      };
+          ...subjectEntity,
+        };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.subject.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.subject.home.createOrEditLabel">Create or edit a
-              Category</Translate>
+          <h2 className="title-page" id="cancerLibraryApp.subject.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
+            <Translate contentKey="cancerLibraryApp.subject.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -112,18 +111,16 @@ export const SubjectUpdate = () => {
                   required: {value: true, message: translate('entity.validation.required')},
                 }}
               />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/subject" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/subject" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>

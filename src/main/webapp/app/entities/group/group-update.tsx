@@ -5,7 +5,7 @@ import {Translate, translate, ValidatedField, ValidatedForm} from 'react-jhipste
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {createEntity, getEntity, reset, updateEntity} from './group.reducer';
-import {getEntities as getCategories} from "app/entities/category/category.reducer";
+import {getEntities as getCategories} from 'app/entities/category/category.reducer';
 
 export const GroupUpdate = () => {
   const dispatch = useAppDispatch();
@@ -60,20 +60,19 @@ export const GroupUpdate = () => {
     isNew
       ? {}
       : {
-        ...groupEntity,
-      };
+          ...groupEntity,
+        };
 
   return (
-    <div>
-      <Row className="justify-content-center">
+    <div className="wrap-page">
+      <Row>
         <Col md="8">
-          <h2 id="cancerLibraryApp.group.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading">
-            <Translate contentKey="cancerLibraryApp.group.home.createOrEditLabel">Create or edit a
-              Category</Translate>
+          <h2 id="cancerLibraryApp.group.home.createOrEditLabel" data-cy="CategoryCreateUpdateHeading" className="title-page">
+            <Translate contentKey="cancerLibraryApp.group.home.createOrEditLabel">Create or edit a Category</Translate>
           </h2>
         </Col>
       </Row>
-      <Row className="justify-content-center">
+      <Row>
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -118,7 +117,12 @@ export const GroupUpdate = () => {
                   required: {value: true, message: translate('entity.validation.required')},
                 }}
               />
-              <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.group.category.title')}>
+              <ValidatedField
+                type="select"
+                name="category.id"
+                data-cy="category"
+                label={translate('cancerLibraryApp.group.category.title')}
+              >
                 <option value="">-</option>
                 {categories.map(category => (
                   <option value={category.id} key={category}>
@@ -126,19 +130,16 @@ export const GroupUpdate = () => {
                   </option>
                 ))}
               </ValidatedField>
-
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/group" replace
-                      color="info">
-                <FontAwesomeIcon icon="arrow-left"/>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/group" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">
                   <Translate contentKey="entity.action.back">Back</Translate>
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit"
-                      disabled={updating}>
-                <FontAwesomeIcon icon="save"/>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
