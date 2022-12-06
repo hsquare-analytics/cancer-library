@@ -64,7 +64,7 @@ const Header = (props: IHeaderProps) => {
         <LoadingBar className="loading-bar" />
 
         {props.isAuthenticated ? (
-          <Navbar data-cy="navbar" dark expand="md" fixed="left" className="app-navbar">
+          <Navbar data-cy="navbar" dark expand="md" fixed="left" className="app-navbar app-side-menu">
             <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
             <Brand />
             <Collapse isOpen={menuOpen} navbar>

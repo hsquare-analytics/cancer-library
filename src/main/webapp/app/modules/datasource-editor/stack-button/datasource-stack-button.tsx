@@ -112,6 +112,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
     <Stack direction="row-reverse" spacing={1}>
       <Button
         variant="outlined"
+        color="secondary"
         size={'small'}
         onClick={e => {
           e.stopPropagation();
