@@ -47,6 +47,9 @@
   --bg-text-button-hover: rgba(0, 0, 0, 0.08);
   --bg-datagrid-selected-row: #f7f7f7;
   --color-datagrid-selected-row: var(--bs-primary);
+
+  --bg-mui-text-field: #fff;
+
 }
 
 .alert {
@@ -78,8 +81,24 @@
   --color-form-control-text: var(--color-text);
   --color-form-control-border: var(--color-datagrid-border);
 
+  .box-login-field {
+    --bg-form-control: #fff;
+    --color-form-control-text: var(--bs-dark);
+    --color-form-control-border: var(--bs-gray-400);
+  }
+
+  --bg-badge-status-default: transparent;
+  --bg-badge-status-approved: transparent;
+  --bg-badge-status-submitted: transparent;
+  --bg-badge-status-declined: transparent;
+  --color-badge-status-default: #A1A9BD;
+  --color-badge-status-approved: #FFC65B;
+  --color-badge-status-submitted: #88bfec;
+  --color-badge-status-declined: #E55041;
+
   --bg-datagrid: #1f2128;
   --bg-datagrid-headers: #1f2128;
+  --bg-datagrid-row-hover: #3e3e3e;
   --color-dx-link: var(--bg-datagrid-submenu-item);
   --color-datagrid-border: #3e3e3e;
   --color-input-focus-border: #4285F4;
@@ -95,6 +114,8 @@
   --bg-text-button-hover: #222;
   --bg-datagrid-selected-row: #444;
   --color-datagrid-selected-row: #4ab0ff;
+
+  --bg-mui-text-field: #3e3e3e;
 
   .progress {
     --bs-progress-bg: #666;
