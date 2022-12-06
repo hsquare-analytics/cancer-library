@@ -120,7 +120,7 @@ export const Codebook = () => {
               allowUpdating: true,
               allowDeleting: true,
             }}
-            paging={{pageSize: 22}}
+            paging={{pageSize: 20}}
 columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
           >
             {CodebookColumns.map((column, index) => (

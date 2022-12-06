@@ -124,7 +124,7 @@ export const UserPatient = () => {
               allowUpdating: true,
               allowDeleting: true,
             }}
-            paging={{pageSize: 22}}
+            paging={{pageSize: 20}}
 columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
           >
             {UserPatientColumns.map((column, index) => (
