@@ -31,10 +31,11 @@ export const Group = () => {
         <Translate contentKey="cancerLibraryApp.group.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
-          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
+          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
+                data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus"/>
           </Link>
         </div>
       </h2>
@@ -49,6 +50,10 @@ export const Group = () => {
             showRowLines={true}
             rowAlternationEnabled={true}
             showColumnHeaders={true}
+            hoverStateEnabled={true}
+            allowColumnReordering={true}
+            allowColumnResizing={true}
+            columnResizingMode={'widget'}
             editing={{
               mode: 'row',
               useIcons: true,
@@ -71,7 +76,7 @@ export const Group = () => {
                 alignment={'center'}
               />
             ))}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
           </DataGrid>
         ) : (
           !loading && (

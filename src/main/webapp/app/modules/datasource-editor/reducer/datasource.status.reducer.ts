@@ -24,8 +24,11 @@ export const DatasourceStatusReducer = createSlice({
   name,
   initialState,
   reducers: {
-    reset() {
-      return initialState;
+    reset(state) {
+      return {
+        ...initialState,
+        openAll: state.openAll,
+      }
     },
     setCategory(state, action) {
       state.selected.category = action.payload;

@@ -86,7 +86,7 @@ export const UserPatient = () => {
         <Translate contentKey="cancerLibraryApp.userPatient.home.title">UserPatients</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
           <Link
             to="/admin/user-patient/new"
@@ -94,7 +94,7 @@ export const UserPatient = () => {
             id="jh-create-entity"
             data-cy="entityCreateButton"
           >
-            <FontAwesomeIcon icon="plus" />
+            <FontAwesomeIcon icon="plus"/>
           </Link>
         </div>
       </h2>
@@ -109,6 +109,10 @@ export const UserPatient = () => {
             showRowLines={true}
             rowAlternationEnabled={true}
             showColumnHeaders={true}
+            hoverStateEnabled={true}
+            allowColumnReordering={true}
+            allowColumnResizing={true}
+            columnResizingMode={'widget'}
             editing={{
               mode: 'row',
               useIcons: true,
@@ -131,7 +135,7 @@ export const UserPatient = () => {
                 alignment={'center'}
               />
             ))}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
           </DataGrid>
         ) : (
           !loading && (
@@ -144,7 +148,8 @@ export const UserPatient = () => {
       {totalItems ? (
         <div className={userPatientList && userPatientList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
+            <JhiItemCount page={paginationState.activePage} total={totalItems}
+                          itemsPerPage={paginationState.itemsPerPage} i18nEnabled/>
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination

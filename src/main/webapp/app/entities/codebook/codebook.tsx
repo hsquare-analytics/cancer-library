@@ -86,10 +86,11 @@ export const Codebook = () => {
         <Translate contentKey="cancerLibraryApp.codebook.home.title">Codebooks</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
-          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
+          <Link to="/admin/codebook/new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
+                data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus"/>
           </Link>
         </div>
       </h2>
@@ -104,6 +105,10 @@ export const Codebook = () => {
             showRowLines={true}
             rowAlternationEnabled={true}
             showColumnHeaders={true}
+            hoverStateEnabled={true}
+            allowColumnReordering={true}
+            allowColumnResizing={true}
+            columnResizingMode={'widget'}
             editing={{
               mode: 'row',
               useIcons: true,
@@ -126,7 +131,7 @@ export const Codebook = () => {
                 alignment={'center'}
               />
             ))}
-            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)} />
+            <Column type="buttons" width={110} buttons={getDxButtonColumns(navigate)}/>
           </DataGrid>
         ) : (
           !loading && (
@@ -139,7 +144,8 @@ export const Codebook = () => {
       {totalItems ? (
         <div className={codebookList && codebookList.length > 0 ? '' : 'd-none'}>
           <div className="justify-content-center d-flex">
-            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} i18nEnabled />
+            <JhiItemCount page={paginationState.activePage} total={totalItems}
+                          itemsPerPage={paginationState.itemsPerPage} i18nEnabled/>
           </div>
           <div className="justify-content-center d-flex">
             <JhiPagination
