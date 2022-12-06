@@ -151,6 +151,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           allowColumnResizing={true}
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
+          selection={{mode: 'single'}}
           editing={{
             mode: 'popup',
             allowUpdating: true,
