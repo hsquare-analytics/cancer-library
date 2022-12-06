@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import {useAppDispatch} from "app/config/store";
 import {
   createDatasourceRow,
+  deleteDatasourceRow,
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {ICategory} from "app/shared/model/category.model";
@@ -49,6 +50,23 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
     });
   };
 
+  const onClickCancelConfirm = () => {
+    Swal.fire({
+      title: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.title'),
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.text'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.button.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.button.cancel')
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteDatasourceRow({categoryId: category.id, row: {idx: row.idx, pt_no: row.pt_no}}));
+      }
+    });
+  }
+
 
   return row['created_by'] ? (
     <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.confirmed')}
@@ -56,6 +74,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
           icon={<DoneIcon/>}
           size={'small'}
           variant="outlined"
+          onClick={onClickCancelConfirm}
     />
   ) : (
     <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.notConfirmed')}
