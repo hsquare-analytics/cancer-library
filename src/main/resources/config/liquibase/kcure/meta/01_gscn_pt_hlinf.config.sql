@@ -201,11 +201,11 @@ insert into ph_item_property (item_id, label_column) values (9137, 'mhis_cncr_yn
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9138, 'mhis_cncr_yn_noans_spnm', 9100, 'system', 9138);
 -- insert into ph_item_attribute (item_id, caption) values (9138, '병력암여부무응답구분명');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9139, 'mhis_cncr_kncd', 9100, 'system', 9139);
+insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9139, 'mhis_cncr_kncd', 9100, 'system', 9139, 10030);
 insert into ph_item_attribute (item_id, caption) values (9139, '병력암종류코드');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9140, 'mhis_cncr_knnm', 9100, 'system', 9140);
-insert into ph_item_attribute (item_id, caption) values (9140, '병력암종류명');
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9140, 'mhis_cncr_knnm', 9100, 'system', 9140);
+-- insert into ph_item_attribute (item_id, caption) values (9140, '병력암종류명');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9141, 'mhis_depr_yn_noans_spcd', 9100, 'system', 9141, 10040);
 insert into ph_item_attribute (item_id, caption, data_type) values (9141, '병력우울증여부무응답구분코드', 'selectbox');
