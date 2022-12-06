@@ -38,6 +38,7 @@ import {faMaximize} from '@fortawesome/free-solid-svg-icons/faMaximize';
 import {faMinimize} from '@fortawesome/free-solid-svg-icons/faMinimize';
 import {faFolderOpen} from '@fortawesome/free-solid-svg-icons/faFolderOpen';
 import {faFolder} from '@fortawesome/free-solid-svg-icons/faFolder';
+import {faCodeCompare} from '@fortawesome/free-solid-svg-icons/faCodeCompare';
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 
@@ -82,6 +83,7 @@ export const loadIcons = () => {
     faMaximize,
     faMinimize,
     faFolderOpen,
-    faFolder
+    faFolder,
+    faCodeCompare
   );
 };
