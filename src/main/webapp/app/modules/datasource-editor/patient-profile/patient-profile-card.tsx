@@ -15,7 +15,8 @@ import {REVIEW_LIST} from 'app/config/datasource-constants';
 import DatasourceStackButton from 'app/modules/datasource-editor/stack-button/datasource-stack-button';
 import {setOpenAll} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
 
 
 const PatientStatusChip = (status: string) => {
@@ -63,16 +64,18 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         <div className={'d-flex'} style={{alignItems: 'center'}}>
-          <Button variant="text" color="secondary" className={"me-1"}
-                  style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-                  onClick={
-                    (e) => {
-                      e.stopPropagation();
-                      dispatch(setOpenAll(!openAll))
-                    }
-                  }>
-            {openAll ? <FontAwesomeIcon icon="folder-open"/> : <FontAwesomeIcon icon="folder"/>}
-          </Button>
+          <Tooltip title="toggle expand">
+            <IconButton
+              className={"me-2"}
+              onClick={
+                (e) => {
+                  e.stopPropagation();
+                  dispatch(setOpenAll(!openAll))
+                }}
+            >
+              {openAll ? <FontAwesomeIcon icon="folder-open"/> : <FontAwesomeIcon icon="folder"/>}
+            </IconButton>
+          </Tooltip>
           <Typography sx={{display: 'flex', alignItems: 'center', marginRight: '15px'}}>
             {translate(
               'cancerLibraryApp.datasourceEditor.profileCard.title',
