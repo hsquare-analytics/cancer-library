@@ -39,6 +39,7 @@ import DxEditButtonCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-edit-button-cell-render";
 import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
+import Swal from "sweetalert2";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -74,6 +75,27 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
+  const onClickRowConfirmBtn = (row: any) => {
+    Swal.fire({
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.title'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.cancel')
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.get(`/api/datasource/categories/${selectedCategory.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
+          if (data) {
+            dispatch(updateDatasourceRow({categoryId: category.id, row}));
+          } else {
+            dispatch(createDatasourceRow({categoryId: category.id, row}));
+          }
+        });
+      }
+    });
+  };
 
   return canRender() ? (
     <Accordion defaultExpanded={true} className={'single-table-editor-wrapper'}>
@@ -207,7 +229,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           }
           onRowDblClick={e => dataGrid.current.instance.editRow(e.rowIndex)}
           onSaved={e => {
-            if (e.changes.length === 0) {
+            if (e.changes.length === 0 && !editedRow['created_by']) {
+              onClickRowConfirmBtn(editedRow);
+            } else if (e.changes.length === 0) {
               dispatch(resetDatasourceStatusReducer());
               dispatch(resetDatasourceContainerFlag())
             }
@@ -221,7 +245,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   formItem={{visible: false}}/>
           <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
                   width={110} alignment={"center"}
-                  cellRender={(data) => <DxRowConfirmCellRender category={category} row={data.row.data}
+                  cellRender={(data) => <DxRowConfirmCellRender category={category}
+                                                                row={data.row.data}
                                                                 setEditorStatus={() => {
                                                                   setActionType(ActionType.UPDATE);
                                                                   setEditedRow(data.row.data);

@@ -114,12 +114,12 @@ export const UserPatientDndGrid = () => {
   };
 
   return (
-    <div className="user-patient-two-grid-wrapper">
-      <div className="wrap-page">
+    <div className="user-patient-two-grid-wrapper wrap-page">
+      <div>
         <h1 className="title-page">리뷰어 정보</h1>
         <DataGrid
-          height={'30vh'}
-          style={{minHeight: '600px'}}
+          height={'40vh'}
+          style={{minHeight: '500px'}}
           dataSource={users}
           showBorders={true}
           filterRow={{visible: true}}
@@ -169,7 +169,7 @@ export const UserPatientDndGrid = () => {
         </DataGrid>
       </div>
 
-      <div className="wrap-page">
+      <div>
         <h1 className="title-page d-flex justify-content-end">
           <div className={'d-flex'}>
             <span className="patient-text me-3">
