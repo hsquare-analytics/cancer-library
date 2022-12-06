@@ -29,6 +29,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
               defaultValue={props.data.value}
               onValueChanged={onValueChanged}
               disabled={!props.data.column.allowEditing}
+              height={150}
     />
     <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
