@@ -36,15 +36,15 @@ const theme = createTheme({
     MuiInput: {
       styleOverrides: {
         root: {
-          '&:before': {
-            borderBottom: '1px dotted rgba(0, 0, 0, 0.42)',
-          },
-          '&:hover:not(.Mui-disabled):before': {
-            borderBottom: '1px dotted rgba(0, 0, 0, 0.42)',
-          }
-        }
-      }
-    }
+          // '&:before': {
+          //   borderBottom: '1px dotted rgba(0, 0, 0, 0.42)',
+          // },
+          // '&:hover:not(.Mui-disabled):before': {
+          //   borderBottom: '1px dotted rgba(0, 0, 0, 0.42)',
+          // },
+        },
+      },
+    },
   },
 });
 
@@ -60,17 +60,19 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   return (
     <div>
       <ThemeProvider theme={theme}>
-
         <Box>
-          <Card variant="outlined">
+          <Card variant="outlined" className="box-patient-profile">
             <div className="d-flex align-items-center">
               {AccessiblePatientColumn.map(column => (
                 <CardContent key={column.dataField}>
-                  <Typography
-                    color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
+                  <Typography color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
                   <Typography component="span" color="text.default">
-                    <TextField value={getFormattedValue(patient[column.dataField], column)} variant={"standard"}
-                               InputProps={{readOnly: true}}/>
+                    <TextField
+                      value={getFormattedValue(patient[column.dataField], column)}
+                      variant={'standard'}
+                      InputProps={{readOnly: true}}
+                      className="text-field"
+                    />
                   </Typography>
                 </CardContent>
               ))}
@@ -78,14 +80,19 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             <CardContent>
               <Typography color="text.secondary">
                 * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
-                <IconButton onClick={() => setIsPopupVisible(true)} style={{marginLeft: '3px'}}>
-                  <CreateOutlinedIcon/>
+                <IconButton onClick={() => setIsPopupVisible(true)} style={{marginLeft: '3px'}} className="icon-patient-detail">
+                  <CreateOutlinedIcon />
                 </IconButton>
               </Typography>
               <Box>
                 {patient.comment && patient.comment.length > 0 ? (
-                  <TextArea id={'patient-profiel-card-detail-comment-text-area'} height={100} readOnly={true}
-                            defaultValue={patient.comment}/>) : (
+                  <TextArea
+                    id={'patient-profiel-card-detail-comment-text-area'}
+                    height={100}
+                    readOnly={true}
+                    defaultValue={patient.comment}
+                  />
+                ) : (
                   <Typography component="span" color="text.default">
                     {translate('cancerLibraryApp.datasourceEditor.profileCard.noComment')}
                   </Typography>

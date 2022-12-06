@@ -47,20 +47,26 @@
   padding: 2px 10px;
   border-radius: 3px;
   background: var(--bg-badge-status-default);
+  color: var(--color-text);
+  border: var(--color-badge-status-default) 1px solid;
 
   &.approved {
     background: var(--bg-badge-status-approved);
+    color: var(--color-badge-status-approved);
+    border: var(--color-badge-status-approved) 1px solid;
   }
 
   &.submitted {
     background: var(--bg-badge-status-submitted);
+    color: var(--color-badge-status-submitted);
+    border: var(--color-badge-status-submitted) 1px solid;
   }
 
   &.declined {
-    color: var(--color-badge-status-declined);
     background: var(--bg-badge-status-declined);
+    color: var(--color-badge-status-declined);
+    border: var(--color-badge-status-declined) 1px solid;
   }
-
 }
 
 // Modal 에서 버튼 가운데 정렬, border 없는 경우 등 추가
@@ -105,8 +111,36 @@
   }
 }
 
-.MuiPaper-root.MuiAccordion-root.Mui-expanded {
-  background-color: var(--bg-sidemenu-expanded);
+.app-side-menu {
+  // 사이드메뉴 아코디언
+  .MuiPaper-root.MuiAccordion-root.Mui-expanded {
+    background-color: var(--bg-sidemenu-expanded);
+  }
+}
+
+
+// 환자정보
+.MuiCard-root.box-patient-profile {
+  background-color: var(--bg-datagrid);
+
+  .MuiTypography-root {
+    color: var(--color-text);
+  }
+
+  .icon-patient-detail {
+    color: var(--color-text);
+  }
+
+}
+
+.MuiTextField-root.text-field .MuiInput-root {
+  color: var(--color-text);
+  background-color: var(--bg-datagrid);
+
+  &:before {
+    border-bottom: var(--bg-datagrid-submenu-item-selected) 1px solid;
+    opacity: 1;
+  }
 }
 
 
@@ -200,6 +234,14 @@
   background-color: var(--bg-datagrid-selected-row);
   color: var(--color-datagrid-selected-row);
 }
+
+.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused) {
+  & > td:not(.dx-focused) {
+    background-color: var(--bg-datagrid-row-hover);
+    color: inherit
+  }
+}
+
 
 // 검색창 focused 시 하단 라인 컬러...
 .dx-datagrid-focus-overlay:after {
@@ -302,6 +344,12 @@
   }
 }
 
+// 데이터 그리드 편집 팝업에 있는 셀렉트
+.dx-selectbox-popup-wrapper .dx-list {
+  background: var(--bg-datagrid-submenu);
+}
+
+
 .dx-list-item {
   color: var(--color-datagrid-submenu-item);
 }
@@ -377,6 +425,10 @@
   color: var(--color-text);
 }
 
+.dx-button-mode-text .dx-icon {
+  color: var(--color-text);
+}
+
 .dx-button-mode-text.dx-button-default {
   color: var(--bs-primary);
 }
@@ -410,12 +462,51 @@
   opacity: 0.3;
 }
 
-.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused) {
-  & > td:not(.dx-focused) {
-    background-color: var(--bg-datagrid-row-hover);
+.dx-widget.dx-radiobutton {
+  color: var(--color-filter-icon)
+}
+
+.dx-radiobutton-icon::before {
+  background-color: transparent;
+  border-color: var(--color-filter-icon);
+}
+
+.dx-list.dx-list-select-decorator-enabled .dx-list-item.dx-state-hover {
+  .dx-radiobutton-icon::before {
+    border-color: var(--color-filter-icon);
+  }
+
+  .dx-radiobutton-icon-checked {
+    .dx-radiobutton-icon-dot {
+      background: var(--color-filter-icon);
+    }
+
+    &::before {
+      border-color: var(--color-filter-icon)
+    }
+  }
+
+}
+
+.dx-radiobutton-icon-checked {
+
+  .dx-radiobutton-icon-dot {
+    background: var(--bs-primary);
+  }
+
+  &::before {
+    border-color: var(--bs-primary)
   }
 }
 
+
+.dx-treeview-item-with-checkbox .dx-treeview-item {
+  color: var(--color-text);
+}
+
+.dx-field-item-label-text {
+  color: var(--color-text);
+}
 
 // sweetalert2 override
 // sweetalert2 의 customclass 를 cancer-dialog 로 한다.
