@@ -54,6 +54,7 @@ export const ItemUpdate = () => {
     const entity = {
       ...itemEntity,
       ...values,
+      codebook : values.codebook.id === null ? null : values.codebook,
     };
 
     if (isNew) {
