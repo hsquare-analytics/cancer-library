@@ -56,11 +56,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const [editedRow, setEditedRow] = useState(null);
   const [actionType, setActionType] = useState(null);
 
+  const [accordionExpanded, setAccordionExpanded] = useState(true);
+
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const dataContainer = useAppSelector(state => state.datasourceContainer.dataContainer);
   const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
+  const openAll = useAppSelector(state => state.datasourceStatus.openAll);
 
   const {category} = props;
 
@@ -71,6 +74,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
       dispatch(resetDatasourceContainerFlag());
     }
   }, [updateSuccess]);
+
+  useEffect(() => {
+    setAccordionExpanded(openAll);
+  }, [openAll]);
 
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
@@ -98,7 +105,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
   return canRender() ? (
-    <Accordion defaultExpanded={true} className={'single-table-editor-wrapper'}>
+    <Accordion defaultExpanded={openAll} expanded={accordionExpanded} onClick={(e) => {
+      setAccordionExpanded(!accordionExpanded);
+    }} className={'single-table-editor-wrapper'}>
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         {getCategoryTypography(category)}
         <div>

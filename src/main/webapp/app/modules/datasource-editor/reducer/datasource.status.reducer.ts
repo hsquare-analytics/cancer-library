@@ -12,6 +12,7 @@ const initialState = {
     startDate: null,
     endDate: null,
   },
+  openAll: false,
   loading: false,
   errorMessage: null,
   updating: false,
@@ -34,6 +35,9 @@ export const DatasourceStatusReducer = createSlice({
     },
     setDateRange(state, action) {
       state.dateRange = action.payload;
+    },
+    setOpenAll(state, action) {
+      state.openAll = action.payload;
     }
   },
   extraReducers(builder) {
@@ -62,6 +66,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset, setCategory, setValidateFailedItems, setDateRange} = DatasourceStatusReducer.actions;
+export const {reset, setCategory, setValidateFailedItems, setDateRange, setOpenAll} = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;

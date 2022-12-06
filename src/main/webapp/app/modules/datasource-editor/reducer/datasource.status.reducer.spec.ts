@@ -7,7 +7,8 @@ import sinon from 'sinon';
 import reducer, {
   getOriginRow,
   reset,
-  setCategory, setDateRange,
+  setCategory,
+  setDateRange,
   setValidateFailedItems,
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
@@ -31,6 +32,7 @@ describe("datasourceStatusReducer", () => {
       startDate: null,
       endDate: null,
     },
+    openAll: true,
     loading: false,
     errorMessage: null,
     updating: false,
@@ -85,6 +87,14 @@ describe("datasourceStatusReducer", () => {
         },
       });
     });
+
+    it('should set openAll', () => {
+      expect(reducer(initialState, {type: setDateRange, payload: false})).toEqual({
+        ...initialState,
+        openAll: false,
+      });
+    });
+
   });
 
   describe("Requests", () => {

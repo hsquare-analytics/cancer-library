@@ -34,6 +34,10 @@ import {faUsersCog} from '@fortawesome/free-solid-svg-icons/faUsersCog';
 import {faWrench} from '@fortawesome/free-solid-svg-icons/faWrench';
 import {faTable} from '@fortawesome/free-solid-svg-icons/faTable';
 import {faColumns} from '@fortawesome/free-solid-svg-icons/faColumns';
+import {faMaximize} from '@fortawesome/free-solid-svg-icons/faMaximize';
+import {faMinimize} from '@fortawesome/free-solid-svg-icons/faMinimize';
+import {faFolderOpen} from '@fortawesome/free-solid-svg-icons/faFolderOpen';
+import {faFolder} from '@fortawesome/free-solid-svg-icons/faFolder';
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 
@@ -74,6 +78,10 @@ export const loadIcons = () => {
     faUsersCog,
     faWrench,
     faTable,
-    faColumns
+    faColumns,
+    faMaximize,
+    faMinimize,
+    faFolderOpen,
+    faFolder
   );
 };

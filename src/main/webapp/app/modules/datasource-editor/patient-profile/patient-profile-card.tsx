@@ -4,17 +4,19 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IPatient } from 'app/shared/model/patient.model';
-import { translate } from 'react-jhipster';
-import Chip from '@mui/material/Chip';
-import { useAppSelector } from 'app/config/store';
+import {IPatient} from 'app/shared/model/patient.model';
+import {translate} from 'react-jhipster';
+import {useAppDispatch, useAppSelector} from 'app/config/store';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
 import PatientProfileCardDetail from 'app/modules/datasource-editor/patient-profile/patient-profile-card-detail';
-import { REVIEW_LIST } from 'app/config/datasource-constants';
+import {REVIEW_LIST} from 'app/config/datasource-constants';
 import DatasourceStackButton from 'app/modules/datasource-editor/stack-button/datasource-stack-button';
-import { Badge } from 'reactstrap';
+import {setOpenAll} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Button from '@mui/material/Button';
+
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
@@ -46,36 +48,49 @@ interface IPatientProfileCardProps {
 }
 
 export const PatientProfileCard = (props: IPatientProfileCardProps) => {
+  const dispatch = useAppDispatch();
+
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const loading = useAppSelector<IPatient>(state => state.datasourcePatient.loading);
+  const openAll = useAppSelector(state => state.datasourceStatus.openAll);
 
   return (
     <Accordion
       defaultExpanded={true}
       sx={{
-        '& .MuiAccordionSummary-contentGutters': { justifyContent: 'space-between' },
+        '& .MuiAccordionSummary-contentGutters': {justifyContent: 'space-between'},
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-        <div className={'d-flex'} style={{ alignItems: 'center' }}>
-          <Typography sx={{ display: 'flex', alignItems: 'center', marginRight: '15px' }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
+        <div className={'d-flex'} style={{alignItems: 'center'}}>
+          <Button variant="text" color="secondary" className={"me-1"}
+                  style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+                  onClick={
+                    (e) => {
+                      e.stopPropagation();
+                      dispatch(setOpenAll(!openAll))
+                    }
+                  }>
+            {openAll ? <FontAwesomeIcon icon="folder-open"/> : <FontAwesomeIcon icon="folder"/>}
+          </Button>
+          <Typography sx={{display: 'flex', alignItems: 'center', marginRight: '15px'}}>
             {translate(
               'cancerLibraryApp.datasourceEditor.profileCard.title',
               patient
                 ? {
-                    no: patient.ptNo,
-                    name: patient.ptNm,
-                  }
+                  no: patient.ptNo,
+                  name: patient.ptNm,
+                }
                 : ''
             )}
           </Typography>
           {patient && PatientStatusChip(patient.status)}
         </div>
-        <DatasourceStackButton setPopupVisible={props.setPopupVisible} />
+        <DatasourceStackButton setPopupVisible={props.setPopupVisible}/>
       </AccordionSummary>
-      <AccordionDetails sx={{ padding: '0 0 8px 0' }}>
+      <AccordionDetails sx={{padding: '0 0 8px 0'}}>
         {!loading ? (
-          <PatientProfileCardDetail patient={patient} />
+          <PatientProfileCardDetail patient={patient}/>
         ) : (
           <Box
             sx={{
@@ -88,7 +103,7 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
             }}
           >
             {' '}
-            <CircularProgress />{' '}
+            <CircularProgress/>{' '}
           </Box>
         )}
       </AccordionDetails>
