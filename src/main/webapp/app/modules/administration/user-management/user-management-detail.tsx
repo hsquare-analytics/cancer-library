@@ -12,7 +12,7 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 export const UserManagementDetail = () => {
   const dispatch = useAppDispatch();
 
-  const { login } = useParams<'login'>();
+  const {login} = useParams<'login'>();
 
   useEffect(() => {
     dispatch(getUser(login));
@@ -21,8 +21,8 @@ export const UserManagementDetail = () => {
   const user = useAppSelector(state => state.userManagement.user);
 
   return (
-    <div>
-      <h2>
+    <div className="wrap-page">
+      <h2 className="title-page">
         <Translate contentKey="userManagement.detail.title">User</Translate> [<strong>{user.login}</strong>]
       </h2>
       <Row size="md">
