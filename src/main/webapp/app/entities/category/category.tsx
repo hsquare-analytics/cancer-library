@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {Translate} from 'react-jhipster';
@@ -13,9 +13,11 @@ export const Category = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+  const dataGrid = useRef(null);
 
   const categoryList = useAppSelector(state => state.category.entities);
   const loading = useAppSelector(state => state.category.loading);
+
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -30,6 +32,9 @@ export const Category = () => {
       <h2 id="category-heading" data-cy="CategoryHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.category.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
+          <Button className="me-2" color="secondary" onClick={() => dataGrid.current.instance.showColumnChooser()}>
+            <FontAwesomeIcon icon="book"/>{' '}
+          </Button>
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
@@ -42,6 +47,7 @@ export const Category = () => {
       <div className="table-responsive">
         {categoryList && categoryList.length > 0 ? (
           <DataGrid
+            ref={dataGrid}
             dataSource={categoryList}
             showBorders={true}
             filterRow={{visible: true}}
@@ -61,6 +67,7 @@ export const Category = () => {
               allowDeleting: true,
             }}
             paging={{pageSize: 22}}
+            columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
           >
             {CategoryColumns.map((column, index) => (
               <Column

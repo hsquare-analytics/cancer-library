@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {getSortState, JhiItemCount, JhiPagination, Translate} from 'react-jhipster';
@@ -16,6 +16,7 @@ export const Codebook = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const dataGrid = useRef(null);
 
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
@@ -85,6 +86,9 @@ export const Codebook = () => {
       <h2 id="codebook-heading" data-cy="CodebookHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.codebook.home.title">Codebooks</Translate>
         <div className="d-flex justify-content-end">
+          <Button className="me-2" color="secondary" onClick={() => dataGrid.current.instance.showColumnChooser()}>
+            <FontAwesomeIcon icon="book"/>{' '}
+          </Button>
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
@@ -97,6 +101,7 @@ export const Codebook = () => {
       <div className="table-responsive">
         {codebookList && codebookList.length > 0 ? (
           <DataGrid
+            ref={dataGrid}
             dataSource={codebookList}
             showBorders={true}
             filterRow={{visible: true}}
@@ -116,6 +121,7 @@ export const Codebook = () => {
               allowDeleting: true,
             }}
             paging={{pageSize: 22}}
+columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
           >
             {CodebookColumns.map((column, index) => (
               <Column

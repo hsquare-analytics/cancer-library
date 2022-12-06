@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {Translate} from 'react-jhipster';
@@ -13,6 +13,7 @@ export const Topic = () => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+  const dataGrid = useRef(null);
 
   const topicList = useAppSelector(state => state.topic.entities);
   const loading = useAppSelector(state => state.topic.loading);
@@ -30,6 +31,9 @@ export const Topic = () => {
       <h2 id="topic-heading" data-cy="SubjectHeading" className="title-page">
         <Translate contentKey="cancerLibraryApp.topic.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
+          <Button className="me-2" color="secondary" onClick={() => dataGrid.current.instance.showColumnChooser()}>
+            <FontAwesomeIcon icon="book"/>{' '}
+          </Button>
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
           </Button>
@@ -42,6 +46,7 @@ export const Topic = () => {
       <div className="table-responsive">
         {topicList && topicList.length > 0 ? (
           <DataGrid
+            ref={dataGrid}
             dataSource={topicList}
             showBorders={true}
             filterRow={{visible: true}}
@@ -61,6 +66,7 @@ export const Topic = () => {
               allowDeleting: true,
             }}
             paging={{pageSize: 22}}
+columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
           >
             {TopicColumns.map((column, index) => (
               <Column
