@@ -81,6 +81,12 @@
   --color-form-control-text: var(--color-text);
   --color-form-control-border: var(--color-datagrid-border);
 
+  .box-login-field {
+    --bg-form-control: #fff;
+    --color-form-control-text: var(--bs-dark);
+    --color-form-control-border: var(--bs-gray-400);
+  }
+
   --bg-badge-status-default: transparent;
   --bg-badge-status-approved: transparent;
   --bg-badge-status-submitted: transparent;
