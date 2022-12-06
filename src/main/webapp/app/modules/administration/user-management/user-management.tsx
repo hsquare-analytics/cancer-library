@@ -1,70 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {Badge, Button, Table} from 'reactstrap';
-import {getSortState, JhiItemCount, JhiPagination, TextFormat, Translate} from 'react-jhipster';
+import React, {useEffect, useRef} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {Badge, Button} from 'reactstrap';
+import {Translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
-import {APP_DATE_FORMAT} from 'app/config/constants';
-import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
-import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
 import {getUsersAsAdmin, updateUser} from './user-management.reducer';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
+import DataGrid, {Column} from 'devextreme-react/data-grid';
+import UserManagementColumns from "app/modules/administration/user-management/user-management.column";
+
 
 export const UserManagement = () => {
   const dispatch = useAppDispatch();
 
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const [pagination, setPagination] = useState(
-    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
-  );
+  const dataGrid = useRef(null);
 
   const getUsersFromProps = () => {
-    dispatch(
-      getUsersAsAdmin({
-        page: pagination.activePage - 1,
-        size: pagination.itemsPerPage,
-        sort: `${pagination.sort},${pagination.order}`,
-      })
-    );
-    const endURL = `?page=${pagination.activePage}&sort=${pagination.sort},${pagination.order}`;
-    if (location.search !== endURL) {
-      navigate(`${location.pathname}${endURL}`);
-    }
+    dispatch(getUsersAsAdmin({}));
   };
 
   useEffect(() => {
     getUsersFromProps();
-  }, [pagination.activePage, pagination.order, pagination.sort]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const page = params.get('page');
-    const sortParam = params.get(SORT);
-    if (page && sortParam) {
-      const sortSplit = sortParam.split(',');
-      setPagination({
-        ...pagination,
-        activePage: +page,
-        sort: sortSplit[0],
-        order: sortSplit[1],
-      });
-    }
-  }, [location.search]);
-
-  const sort = p => () =>
-    setPagination({
-      ...pagination,
-      order: pagination.order === ASC ? DESC : ASC,
-      sort: p,
-    });
-
-  const handlePagination = currentPage =>
-    setPagination({
-      ...pagination,
-      activePage: currentPage,
-    });
+  }, []);
 
   const handleSyncList = () => {
     getUsersFromProps();
@@ -79,152 +36,94 @@ export const UserManagement = () => {
     );
   };
 
-  const account = useAppSelector(state => state.authentication.account);
   const users = useAppSelector(state => state.userManagement.users);
-  const totalItems = useAppSelector(state => state.userManagement.totalItems);
   const loading = useAppSelector(state => state.userManagement.loading);
+
+  const ProfileColumn = <Column dataField={"profiles"} cellRender={({data}) => {
+    const authorities = data.authorities;
+    return <div>
+      {authorities
+        ? authorities.map((authority, j) => {
+          return <Badge key={authority + j} color="info">{authority}</Badge>;
+        })
+        : null}
+    </div>;
+  }}/>
 
   return (
     <div className="wrap-page">
-      <h2 id="user-management-page-heading" data-cy="userManagementPageHeading" className="title-page">
-        <Translate contentKey="userManagement.home.title">Users</Translate>
+      <h2 id="userManagement-heading" data-cy="CategoryHeading" className="title-page">
+        <Translate contentKey="userManagement.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} />{' '}
-            <Translate contentKey="userManagement.home.refreshListLabel">Refresh List</Translate>
+          <Button className="me-2" color="secondary" onClick={() => dataGrid.current.instance.showColumnChooser()}>
+            <FontAwesomeIcon icon="book"/>{' '}
           </Button>
-          <Link to="new" className="btn btn-primary jh-create-entity">
-            <FontAwesomeIcon icon="plus" /> <Translate contentKey="userManagement.home.createLabel">Create a new user</Translate>
+          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+            <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
+          </Button>
+          <Link to="./new" className="btn btn-primary jh-create-entity" id="jh-create-entity"
+                data-cy="entityCreateButton">
+            <FontAwesomeIcon icon="plus"/>
           </Link>
         </div>
       </h2>
-      <Table responsive striped>
-        <thead>
-          <tr>
-            <th className="hand" onClick={sort('id')}>
-              <Translate contentKey="global.field.id">ID</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th className="hand" onClick={sort('login')}>
-              <Translate contentKey="userManagement.login">Login</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th className="hand" onClick={sort('name`')}>
-              <Translate contentKey="userManagement.name">Name</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th className="hand" onClick={sort('email')}>
-              <Translate contentKey="userManagement.email">Email</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th />
-            <th className="hand" onClick={sort('langKey')}>
-              <Translate contentKey="userManagement.langKey">Lang Key</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th>
-              <Translate contentKey="userManagement.profiles">Profiles</Translate>
-            </th>
-            <th className="hand" onClick={sort('createdDate')}>
-              <Translate contentKey="userManagement.createdDate">Created Date</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th className="hand" onClick={sort('lastModifiedBy')}>
-              <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th id="modified-date-sort" className="hand" onClick={sort('lastModifiedDate')}>
-              <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, i) => (
-            <tr id={user.login} key={`user-${i}`}>
-              <td>
-                <Button tag={Link} to={user.login} color="link" size="sm">
-                  {user.id}
-                </Button>
-              </td>
-              <td>{user.login}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                {user.activated ? (
-                  <Button color="success" onClick={toggleActive(user)}>
-                    <Translate contentKey="userManagement.activated">Activated</Translate>
-                  </Button>
-                ) : (
-                  <Button color="danger" onClick={toggleActive(user)}>
-                    <Translate contentKey="userManagement.deactivated">Deactivated</Translate>
-                  </Button>
-                )}
-              </td>
-              <td>{user.langKey}</td>
-              <td>
-                {user.authorities
-                  ? user.authorities.map((authority, j) => (
-                      <div key={`user-auth-${i}-${j}`}>
-                        <Badge color="info">{authority}</Badge>
-                      </div>
-                    ))
-                  : null}
-              </td>
-              <td>
-                {user.createdDate ? <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
-              </td>
-              <td>{user.lastModifiedBy}</td>
-              <td>
-                {user.lastModifiedDate ? (
-                  <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
-                ) : null}
-              </td>
-              <td className="text-end">
-                <div className="btn-group flex-btn-group-container">
-                  <Button tag={Link} to={user.login} color="info" size="sm">
-                    <FontAwesomeIcon icon="eye" />{' '}
-                    <span className="d-none d-md-inline">
-                      <Translate contentKey="entity.action.view">View</Translate>
-                    </span>
-                  </Button>
-                  <Button tag={Link} to={`${user.login}/edit`} color="primary" size="sm">
-                    <FontAwesomeIcon icon="pencil-alt" />{' '}
-                    <span className="d-none d-md-inline">
-                      <Translate contentKey="entity.action.edit">Edit</Translate>
-                    </span>
-                  </Button>
-                  <Button tag={Link} to={`${user.login}/delete`} color="danger" size="sm" disabled={account.login === user.login}>
-                    <FontAwesomeIcon icon="trash" />{' '}
-                    <span className="d-none d-md-inline">
-                      <Translate contentKey="entity.action.delete">Delete</Translate>
-                    </span>
-                  </Button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      {totalItems ? (
-        <div className={users?.length > 0 ? '' : 'd-none'}>
-          <div className="justify-content-center d-flex">
-            <JhiItemCount page={pagination.activePage} total={totalItems} itemsPerPage={pagination.itemsPerPage} i18nEnabled />
-          </div>
-          <div className="justify-content-center d-flex">
-            <JhiPagination
-              activePage={pagination.activePage}
-              onSelect={handlePagination}
-              maxButtons={5}
-              itemsPerPage={pagination.itemsPerPage}
-              totalItems={totalItems}
-            />
-          </div>
-        </div>
-      ) : (
-        ''
-      )}
+      <div className="table-responsive">
+        {users && users.length > 0 ? (
+          <DataGrid
+            ref={dataGrid}
+            dataSource={users}
+            showBorders={true}
+            filterRow={{visible: true}}
+            headerFilter={{visible: true}}
+            showColumnLines={true}
+            showRowLines={true}
+            rowAlternationEnabled={true}
+            showColumnHeaders={true}
+            hoverStateEnabled={true}
+            allowColumnReordering={true}
+            allowColumnResizing={true}
+            columnResizingMode={'widget'}
+            editing={{
+              mode: 'row',
+              useIcons: true,
+              allowUpdating: true,
+              allowDeleting: true,
+            }}
+            paging={{pageSize: 20}}
+            columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allowSearch: true}}
+          >
+            {UserManagementColumns.map((column, index) => {
+              if (column.dataField === 'profiles') {
+                return ProfileColumn;
+              }
+              return <Column
+                key={index}
+                dataField={column.dataField}
+                caption={column.caption}
+                dataType={column.dataType}
+                visible={column.visible}
+                width={column.width}
+                format={column.format}
+                sortIndex={column.sortIndex}
+                sortOrder={column.sortOrder}
+                alignment={'center'}
+              />
+            })}
+            <Column type="buttons" width={110} buttons={[
+              {hint: "View", icon: "check", onClick: (e) => navigate(`./${e.row.data.login}`)},
+              {hint: "Edit", icon: "edit", onClick: (e) => navigate(`./${e.row.data.login}/edit`)},
+              {hint: "Delete", icon: "trash", onClick: (e) => navigate(`./${e.row.data.login}/delete`)}
+            ]}/>
+
+          </DataGrid>
+        ) : (
+          !loading && (
+            <div className="alert alert-warning">
+              <Translate contentKey="cancerLibraryApp.userManagement.home.notFound">No Categoies found</Translate>
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 };
