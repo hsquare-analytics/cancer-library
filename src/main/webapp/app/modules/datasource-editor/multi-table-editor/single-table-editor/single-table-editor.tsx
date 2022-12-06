@@ -105,10 +105,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   };
 
   return canRender() ? (
-    <Accordion defaultExpanded={openAll} expanded={accordionExpanded} onClick={(e) => {
-      setAccordionExpanded(!accordionExpanded);
-    }} className={'single-table-editor-wrapper'}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
+    <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
+                        onClick={(e) => setAccordionExpanded(!accordionExpanded)}
+      >
         {getCategoryTypography(category)}
         <div>
           <Button
