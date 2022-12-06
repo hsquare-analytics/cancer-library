@@ -248,7 +248,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         >
           <ColumnChooser
             title={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.columnList')}
-            mode="select"/>
+            mode="select"
+            allowSearch={true}
+            sortOrder={'asc'}
+            height={500}
+          />
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
