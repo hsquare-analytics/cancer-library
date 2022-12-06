@@ -13,7 +13,10 @@
             <column name="sex_tp_cd" type="varchar"/>
             <column name="pt_brdy_dt" type="varchar"/>
             <column name="hsp_tp_cd" type="varchar"/>
-            <column name="idx_dt" type="datetime"/>
+            <column name="gid" type="varchar"/>
+            <column name="fsr_med_dt" type="timestamp"/>
+            <column name="idx_dt" type="timestamp"/>
+            <column name="crtn_dt" type="timestamp"/>
         </createTable>
         <createTable tableName="ph_patient_detail">
             <column name="pt_no" type="varchar">
