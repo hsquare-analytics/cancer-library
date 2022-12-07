@@ -144,14 +144,16 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           dataSource={JSON.parse(JSON.stringify(dataContainer[category.id]))}
           hoverStateEnabled={true}
           showBorders={true}
-          filterRow={{visible: false}}
-          headerFilter={{visible: true}}
+          // filterRow={{visible: true}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
           allowColumnReordering={true}
           allowColumnResizing={true}
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
           selection={{mode: 'single'}}
+          filterPanel={category.attribute.dateColumn ? {visible: true} : undefined}
+          defaultFilterValue={category.attribute.dateColumn ? [category.attribute.dateColumn, '>=', new Date(patient.fsrMedDt)] : []}
+          headerFilter={{allowSearch: true, visible: true}}
           editing={{
             mode: 'popup',
             allowUpdating: true,

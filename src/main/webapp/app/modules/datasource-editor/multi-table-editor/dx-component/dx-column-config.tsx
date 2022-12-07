@@ -76,6 +76,8 @@ export const getDxColumnConfig = (item: IItem) => {
     visible={item.property?.visible}
     alignment={'center'}
     editCellComponent={getDxEditCellComponent(item)}
+    sortIndex={item.category.attribute.dateColumn === item.title ? 0 : item.property?.sortIndex}
+    sortOrder={item.category.attribute.dateColumn === item.title ? 'desc' : item.property?.sortDirection}
     formItem={{
       visible: item.property?.visible,
       visibleIndex: item.orderNo,

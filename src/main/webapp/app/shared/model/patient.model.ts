@@ -15,7 +15,10 @@ export interface IPatient extends IAbstractAuditing {
   sexTpCd?: string;
   ptBrdyDt?: string;
   hspTpCd?: string;
+  gid?: string;
+  fsrMedDt?: Date;
   idxDt?: Date;
+  crtdDt?: Date;
   detail?: IPatientDetail;
 }
 
@@ -25,7 +28,10 @@ export const defaultValue: Readonly<IPatient> = {
   sexTpCd: "",
   ptBrdyDt: "",
   hspTpCd: "",
-  idxDt: new Date(),
+  gid: "",
+  fsrMedDt: null,
+  idxDt: null,
+  crtdDt: null,
   detail: {
     comment: "",
     declineReason: "",
