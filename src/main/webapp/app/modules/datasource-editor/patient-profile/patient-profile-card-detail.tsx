@@ -54,7 +54,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
 
   const {patient} = props;
 
-  const [commentValue, setCommentValue] = useState(patient ? patient.comment : '');
+  const [commentValue, setCommentValue] = useState(patient && patient.detail ? patient.detail.comment : '');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   return (
@@ -65,10 +65,11 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             <div className="d-flex align-items-center">
               {AccessiblePatientColumn.map(column => (
                 <CardContent key={column.dataField}>
-                  <Typography color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
+                  <Typography
+                    color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
                   <Typography component="span" color="text.default">
                     <TextField
-                      value={getFormattedValue(patient[column.dataField], column)}
+                      value={getFormattedValue(patient[column.dataField] || patient.detail[column.dataField], column)}
                       variant={'standard'}
                       InputProps={{readOnly: true}}
                       className="text-field"
@@ -80,17 +81,18 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             <CardContent>
               <Typography color="text.secondary">
                 * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
-                <IconButton onClick={() => setIsPopupVisible(true)} style={{marginLeft: '3px'}} className="icon-patient-detail">
-                  <CreateOutlinedIcon />
+                <IconButton onClick={() => setIsPopupVisible(true)} style={{marginLeft: '3px'}}
+                            className="icon-patient-detail">
+                  <CreateOutlinedIcon/>
                 </IconButton>
               </Typography>
               <Box>
-                {patient.comment && patient.comment.length > 0 ? (
+                {patient.detail.comment && patient.detail.comment.length > 0 ? (
                   <TextArea
                     id={'patient-profiel-card-detail-comment-text-area'}
                     height={100}
                     readOnly={true}
-                    defaultValue={patient.comment}
+                    defaultValue={patient.detail.comment}
                   />
                 ) : (
                   <Typography component="span" color="text.default">
@@ -118,7 +120,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               options: {
                 text: 'SAVE',
                 onClick() {
-                  dispatch(updateEntity({entity: {...patient, comment: commentValue}, dateRange}));
+                  dispatch(updateEntity({entity: {...patient, detail: {comment: commentValue}}, dateRange}));
                   setIsPopupVisible(false);
                 },
               },
@@ -130,7 +132,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               options: {
                 text: 'CANCEL',
                 onClick() {
-                  setCommentValue(patient.comment);
+                  setCommentValue(patient.detail.comment);
                   setIsPopupVisible(false);
                 },
               },
@@ -141,7 +143,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             id={'patient-profiel-card-detail-comment-text-area'}
             height={'43vh'}
             width={'100%'}
-            defaultValue={patient.comment}
+            defaultValue={patient.detail.comment}
             value={commentValue}
             onValueChanged={e => setCommentValue(e.value)}
           />

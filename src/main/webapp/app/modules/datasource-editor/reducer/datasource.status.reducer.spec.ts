@@ -9,6 +9,7 @@ import reducer, {
   reset,
   setCategory,
   setDateRange,
+  setOpenAll,
   setValidateFailedItems,
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
@@ -89,7 +90,7 @@ describe("datasourceStatusReducer", () => {
     });
 
     it('should set openAll', () => {
-      expect(reducer(initialState, {type: setDateRange, payload: false})).toEqual({
+      expect(reducer(initialState, {type: setOpenAll, payload: false})).toEqual({
         ...initialState,
         openAll: false,
       });

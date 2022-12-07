@@ -10,7 +10,7 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 import {Popup} from 'devextreme-react/popup';
 import ScrollView from 'devextreme-react/scroll-view';
-import ReactDiffViewer from 'react-diff-viewer';
+import ReactDiffViewer from 'react-diff-viewer-continued';
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 

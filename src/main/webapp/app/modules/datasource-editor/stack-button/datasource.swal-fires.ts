@@ -9,7 +9,7 @@ export const fireDeclineSwal = async (patient: IPatient) => {
       no: patient.ptNo,
     }),
     input: 'textarea',
-    inputValue: patient ? patient.declineReason : '',
+    inputValue: patient && patient.detail ? patient.detail.declineReason : '',
     inputPlaceholder: translate('cancerLibraryApp.datasourceEditor.reviewButton.declinePopup.placeholder'),
     showCancelButton: true,
     customClass: {
@@ -68,7 +68,7 @@ export const fireDeclineReasonSwal = (patient: IPatient) =>
       no: patient.ptNo,
     }),
     input: 'textarea',
-    inputValue: patient ? patient.declineReason : '',
+    inputValue: patient && patient.detail ? patient.detail.declineReason : '',
     showCloseButton: true,
     showCancelButton: false,
     showConfirmButton: false,

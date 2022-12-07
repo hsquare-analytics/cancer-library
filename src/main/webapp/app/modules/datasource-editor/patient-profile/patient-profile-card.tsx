@@ -87,7 +87,7 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
                 : ''
             )}
           </Typography>
-          {patient && PatientStatusChip(patient.status)}
+          {patient && PatientStatusChip(patient.detail.status)}
         </div>
         <DatasourceStackButton setPopupVisible={props.setPopupVisible}/>
       </AccordionSummary>
