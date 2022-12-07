@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 import {
@@ -6,7 +6,11 @@ import {
   isChangedCell
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 import {translate} from "react-jhipster";
-
+import {Popup} from 'devextreme-react/popup';
+import ScrollView from 'devextreme-react/scroll-view';
+import ReactDiffViewer from 'react-diff-viewer-continued';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import IconButton from '@mui/material/IconButton';
 
 interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
   data: any;
@@ -15,6 +19,8 @@ interface IDxRowCommentBoxProps extends StateProps, DispatchProps {
 
 const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
   const {data, lookupDataSource, originRow, validationFailedItems} = props;
+
+  const [popupVisible, setPopupVisible] = useState(false);
 
   const errorItem = validationFailedItems.find(temp => temp.title.toLowerCase() === data.column.name.toLowerCase());
 
@@ -70,7 +76,25 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
       <div className="text-underline p-1">
         {getCommentLabel()}
         {getCommentValue()}
+        <IconButton className={"ms-1"} onClick={() => setPopupVisible(true)} size="small" color="info">
+          <FontAwesomeIcon icon="code-compare"/>
+        </IconButton>
       </div>
+      <Popup
+        closeOnOutsideClick={true}
+        showTitle={false}
+        visible={popupVisible}
+        dragEnabled={false}
+        width={'80vw'}
+        height={'40vh'}
+        onHiding={() => setPopupVisible(false)}
+        showCloseButton={true}
+      >
+        <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
+          <ReactDiffViewer oldValue={originRow[data.column.dataField].toString()} newValue={data.value.toString()} splitView={true}/>
+        </ScrollView>
+      </Popup>
+
     </div>;
   }
 }
