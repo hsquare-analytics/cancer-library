@@ -3,15 +3,20 @@
     "patient": {
       "ptNo": "환자번호",
       "ptNm": "환자명",
-      "sexTpCd": "성별 코드",
-      "ptBrdyDt": "생일 코드",
-      "hspTpCd": "병원 코드",
-      "idxDt": "등록일",
-      "status": "상태",
-      "createdBy": "제출자",
-      "createdDate": "제출일",
-      "lastModifiedBy": "최종 수정자",
-      "lastModifiedDate": "최종 수정일"
+      "sexTpCd": "성별",
+      "ptBrdyDt": "생년월일",
+      "hspTpCd": "병원구분",
+      "gid": "가명화환자번호",
+      "idxDt": "암등록일",
+      "fsrMedDt": "최초진료일",
+      "crtnDt": "생성일자",
+      "detail" : {
+        "status": "상태",
+        "createdBy": "제출자",
+        "createdDate": "제출일",
+        "lastModifiedBy": "최종 수정자",
+        "lastModifiedDate": "최종 수정일"
+      }
     }
   }
 }

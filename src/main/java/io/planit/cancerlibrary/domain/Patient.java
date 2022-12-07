@@ -2,7 +2,7 @@ package io.planit.cancerlibrary.domain;
 
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Patient {
 
@@ -13,7 +13,10 @@ public class Patient {
     private String sexTpCd;
     private String ptBrdyDt;
     private String hspTpCd;
-    private Date idxDt;
+    private String gid;
+    private Timestamp fsrMedDt;
+    private Timestamp idxDt;
+    private Timestamp crtnDt;
     private PatientDetail detail;
 
     public String getPtNo() {
@@ -81,16 +84,55 @@ public class Patient {
         return this;
     }
 
-    public Date getIdxDt() {
+    public String getGid() {
+        return gid;
+    }
+
+    public void setGid(String gid) {
+        this.gid = gid;
+    }
+
+    public Patient gid(String gid) {
+        this.gid = gid;
+        return this;
+    }
+
+    public Timestamp getFsrMedDt() {
+        return fsrMedDt;
+    }
+
+    public void setFsrMedDt(Timestamp fsrMedDt) {
+        this.fsrMedDt = fsrMedDt;
+    }
+
+    public Patient fsrMedDt(Timestamp fsrMedDt) {
+        this.fsrMedDt = fsrMedDt;
+        return this;
+    }
+
+    public Timestamp getIdxDt() {
         return idxDt;
     }
 
-    public void setIdxDt(Date idxDt) {
+    public void setIdxDt(Timestamp idxDt) {
         this.idxDt = idxDt;
     }
 
-    public Patient idxDt(Date idxDt) {
+    public Patient idxDt(Timestamp idxDt) {
         this.idxDt = idxDt;
+        return this;
+    }
+
+    public Timestamp getCrtnDt() {
+        return crtnDt;
+    }
+
+    public void setCrtnDt(Timestamp crtnDt) {
+        this.crtnDt = crtnDt;
+    }
+
+    public Patient crtnDt(Timestamp crtnDt) {
+        this.crtnDt = crtnDt;
         return this;
     }
 

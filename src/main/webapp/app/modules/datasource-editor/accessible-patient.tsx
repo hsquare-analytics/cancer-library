@@ -91,7 +91,13 @@ export const AccessiblePatient = () => {
           filterRow={{visible: true}}
           headerFilter={{visible: true}}
           searchPanel={{visible: true}}
+          columnAutoWidth={true}
+          showRowLines={true}
+          showColumnHeaders={true}
+          allowColumnReordering={true}
           allowColumnResizing={true}
+          columnResizingMode={'widget'}
+          selection={{mode: 'single'}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
           editing={{
             mode: 'row',
@@ -101,7 +107,6 @@ export const AccessiblePatient = () => {
           onRowUpdating={e => onRowUpdating(e)}
           onRowDblClick={onRowDblClick}
           height={'95vh'}
-          selection={{mode: 'multiple'}}
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
         >
@@ -118,7 +123,7 @@ export const AccessiblePatient = () => {
             <Column
               key={item.dataField}
               dataField={item.dataField}
-              caption={translate('cancerLibraryApp.patient.' + item.dataField)}
+              caption={translate(item.caption) || item.dataField}
               dataType={item.dataType}
               visibleIndex={item.visibleIndex}
               format={item.format}

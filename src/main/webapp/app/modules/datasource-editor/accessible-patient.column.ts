@@ -3,32 +3,63 @@ import {IDxColumn} from "app/shared/model/dx-column.model";
 const AccessiblePatientColumn: IDxColumn[] = [
   {
     dataField: "ptNo",
+    caption: "cancerLibraryApp.patient.ptNo",
   },
   {
     dataField: "ptNm",
+    caption: "cancerLibraryApp.patient.ptNm",
   },
   {
     dataField: "sexTpCd",
+    caption: "cancerLibraryApp.patient.sexTpCd",
   },
   {
     dataField: "ptBrdyDt",
+    caption: "cancerLibraryApp.patient.ptBrdyDt",
   },
   {
     dataField: "hspTpCd",
+    caption: "cancerLibraryApp.patient.hspTpCd",
   },
   {
-    dataField: "createdBy",
+    dataField: "gid",
+    caption: "cancerLibraryApp.patient.gid",
   },
   {
-    dataField: "createdDate",
+    dataField: "fsrMedDt",
+    caption: "cancerLibraryApp.patient.fsrMedDt",
+    dataType: "date",
+    format: "yyyy-MM-dd",
+  },
+  {
+    dataField: "idxDt",
+    caption: "cancerLibraryApp.patient.idxDt",
+    dataType: "date",
+    format: "yyyy-MM-dd",
+  },
+  {
+    dataField: "crtnDt",
+    caption: "cancerLibraryApp.patient.crtnDt",
+    dataType: "date",
+    format: "yyyy-MM-dd",
+  },
+  {
+    dataField: "detail.createdBy",
+    caption: "cancerLibraryApp.patient.detail.createdBy",
+  },
+  {
+    dataField: "detail.createdDate",
+    caption: "cancerLibraryApp.patient.detail.createdDate",
     dataType: "datetime",
     format: "yyyy-MM-dd HH:mm:ss",
   },
   {
-    dataField: "lastModifiedBy",
+    dataField: "detail.lastModifiedBy",
+    caption: "cancerLibraryApp.patient.detail.lastModifiedBy",
   },
   {
-    dataField: "lastModifiedDate",
+    dataField: "detail.lastModifiedDate",
+    caption: "cancerLibraryApp.patient.detail.lastModifiedDate",
     dataType: "datetime",
     format: "yyyy-MM-dd HH:mm:ss",
   }

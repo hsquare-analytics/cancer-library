@@ -48,6 +48,23 @@ const theme = createTheme({
   },
 });
 
+const getTextFieldCardContent = (column: IDxColumn, patient: IPatient) => {
+  const value = patient[column.dataField] || patient.detail[column.dataField.split(".")[1]];
+  const formatted = getFormattedValue(value, column);
+  return <CardContent key={column.dataField}>
+    <Typography
+      color="text.secondary">{translate(column.caption) || column.dataField}</Typography>
+    <Typography component="span" color="text.default">
+      <TextField
+        value={formatted}
+        variant={'standard'}
+        InputProps={{readOnly: true}}
+        className="text-field"
+      />
+    </Typography>
+  </CardContent>;
+}
+
 export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const dispatch = useAppDispatch();
   const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
@@ -63,20 +80,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
         <Box>
           <Card variant="outlined" className="box-patient-profile">
             <div className="d-flex align-items-center">
-              {AccessiblePatientColumn.map(column => (
-                <CardContent key={column.dataField}>
-                  <Typography
-                    color="text.secondary">{translate('cancerLibraryApp.patient.' + column.dataField)}</Typography>
-                  <Typography component="span" color="text.default">
-                    <TextField
-                      value={getFormattedValue(patient[column.dataField] || patient.detail[column.dataField], column)}
-                      variant={'standard'}
-                      InputProps={{readOnly: true}}
-                      className="text-field"
-                    />
-                  </Typography>
-                </CardContent>
-              ))}
+              {AccessiblePatientColumn.map(column => getTextFieldCardContent(column, patient))}
             </div>
             <CardContent>
               <Typography color="text.secondary">

@@ -88,7 +88,10 @@ public class PatientRepository {
             patient.setSexTpCd(resultSet.getString("sex_tp_cd"));
             patient.setPtBrdyDt(resultSet.getString("pt_brdy_dt"));
             patient.setHspTpCd(resultSet.getString("hsp_tp_cd"));
-            patient.setIdxDt(resultSet.getDate("idx_dt"));
+            patient.setGid(resultSet.getString("gid"));
+            patient.setFsrMedDt(resultSet.getTimestamp("fsr_med_dt"));
+            patient.setCrtnDt(resultSet.getTimestamp("crtn_dt"));
+            patient.setIdxDt(resultSet.getTimestamp("idx_dt"));
 
             PatientDetail detail = new PatientDetail();
             detail.setDeclineReason(resultSet.getString("decline_reason"));
