@@ -3,7 +3,7 @@ package io.planit.cancerlibrary.domain.embedded;
 import java.time.Instant;
 
 public class PatientDetail {
-    public static final String PATIENT_DETAIL_TABLE = "PH_PATIENT_DETAIL";
+    public static final String TABLE = "PH_PATIENT_DETAIL";
 
     private String comment;
     private String declineReason;

@@ -6,6 +6,8 @@ import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
+import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
@@ -44,6 +46,9 @@ class UserControllerIT {
     private PatientRepository patientRepository;
 
     @Autowired
+    private PatientDetailRepository patientDetailRepository;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -78,9 +83,9 @@ class UserControllerIT {
         UserPatient userPatient = new UserPatient().user(user).patientNo(patientNo);
         userPatientRepository.saveAndFlush(userPatient);
 
-        Patient patient = new Patient().ptNo(patientNo).status(status).createdBy(user.getLogin());
+        Patient patient = new Patient().ptNo(patientNo).detail(new PatientDetail().status(status).createdBy(user.getLogin()));
         patientRepository.insert(patient);
-        patientRepository.insertPatientDetail(patient);
+        patientDetailRepository.insert(patient.getPtNo(), patient.getDetail());
 
         restUserMockMvc
             .perform(get("/api/users/normal-authorization-list"))

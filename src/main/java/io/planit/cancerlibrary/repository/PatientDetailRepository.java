@@ -48,7 +48,7 @@ public class PatientDetailRepository {
 
     public boolean insert(String ptNo, PatientDetail detail) {
         SQL sql = new SQL().INSERT_INTO(Table.PATIENT_DETAIL.getTableName())
-            .VALUES("PT_NO", ptNo)
+            .VALUES("PT_NO", String.format("'%s'", ptNo))
             .VALUES("STATUS", ":status")
             .VALUES("CREATED_BY", ":createdBy")
             .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")

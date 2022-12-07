@@ -3,7 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.repository.PatientRepository;
+import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import org.slf4j.Logger;
@@ -28,12 +28,12 @@ public class UserController {
 
     private final UserPatientRepository userPatientRepository;
 
-    private final PatientRepository patientRepository;
+    private final PatientDetailRepository patientDetailRepository;
 
-    public UserController(UserRepository userRepository, UserPatientRepository userPatientRepository, PatientRepository patientRepository) {
+    public UserController(UserRepository userRepository, UserPatientRepository userPatientRepository, PatientDetailRepository patientDetailRepository) {
         this.userRepository = userRepository;
         this.userPatientRepository = userPatientRepository;
-        this.patientRepository = patientRepository;
+        this.patientDetailRepository = patientDetailRepository;
     }
 
     @GetMapping("/users/normal-authorization-list")
@@ -42,9 +42,9 @@ public class UserController {
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
             .stream().map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
-                Integer submitted = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.SUBMITTED);
-                Integer approved = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.APPROVED);
-                Integer declined = patientRepository.countPatientByStatus(user.getLogin(), ReviewConstants.DECLINED);
+                Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.SUBMITTED);
+                Integer approved = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.APPROVED);
+                Integer declined = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.DECLINED);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
             }).collect(Collectors.toList());
 
@@ -85,7 +85,7 @@ public class UserController {
             this.approved = approved;
             this.declined = declined;
 
-            boolean isAdmin = user.getAuthorities().stream().anyMatch(authority -> authority.getName().equals("ROLE_ADMIN") || authority.getName().equals("ROLE_SUPERVISOR"));
+            boolean isAdmin = user.getAuthorities().stream().anyMatch(data -> data.getName().equals("ROLE_ADMIN") || data.getName().equals("ROLE_SUPERVISOR"));
             if (isAdmin) {
                 this.authority = "Supervisor";
             } else {

@@ -3,6 +3,8 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.ReviewConstants;
 import io.planit.cancerlibrary.domain.Patient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
+import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,13 +36,9 @@ public class PatientResourceIT {
     private static final String DEFAULT_PT_BRDY_DT = "AAAAAAAAAA";
     private static final String DEFAULT_HSP_TP_CD = "AAAAAAAAAA";
     private static final Date DEFAULT_IDX_DT = Date.from(Instant.ofEpochMilli(0L));
-    private static final String DEFAULT_STATUS = ReviewConstants.SUBMITTED;
-    private static final String DEFAULT_CREATED_BY = "AAAAAAAAAA";
-    private static final Instant DEFAULT_CREATED_DATE = Instant.now();
-    private static final String DEFAULT_LAST_MODIFIED_BY = "AAAAAAAAAA";
-    private static final Instant DEFAULT_LAST_MODIFIED_DATE = Instant.now();
-    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
-    private static final String DEFAULT_DECLINE_REASON = "AAAAAAAAAA";
+    private static final PatientDetail DEFAULT_PATIENT_DETAIL = new PatientDetail().comment("AAAAAAAAAA")
+        .declineReason("AAAAAAAAAA").status(ReviewConstants.SUBMITTED).createdBy("AAAAAAAAAA")
+        .createdDate(Instant.now()).lastModifiedBy("AAAAAAAAAA").lastModifiedDate(Instant.now());
 
     private static final String UPDATED_PT_NO = "BBBBBBBBBB";
     private static final String UPDATED_PT_NM = "BBBBBBBBBB";
@@ -48,18 +46,17 @@ public class PatientResourceIT {
     private static final String UPDATED_PT_BRDY_DT = "BBBBBBBBBB";
     private static final String UPDATED_HSP_TP_CD = "BBBBBBBBBB";
     private static final Date UPDATED_IDX_DT = Date.from(Instant.ofEpochMilli(0L));
-    private static final String UPDATED_STATUS = ReviewConstants.APPROVED;
-    private static final String UPDATED_CREATED_BY = "BBBBBBBBBB";
-    private static final Instant UPDATED_CREATED_DATE = Instant.now();
-    private static final String UPDATED_LAST_MODIFIED_BY = "BBBBBBBBBB";
-    private static final Instant UPDATED_LAST_MODIFIED_DATE = Instant.now().plus(1, ChronoUnit.DAYS);
-    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
-    private static final String UPDATED_DECLINE_REASON = "BBBBBBBBBB";
+    private static final PatientDetail UPDATED_PATIENT_DETAIL = new PatientDetail().comment("BBBBBBBBBB")
+        .declineReason("BBBBBBBBBB").status(ReviewConstants.APPROVED).createdBy("BBBBBBBBBB")
+        .createdDate(Instant.now()).lastModifiedBy("BBBBBBBBBB").lastModifiedDate(Instant.now().plus(1, ChronoUnit.DAYS));
 
     private static final String ENTITY_API_URL = "/api/patients";
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @Autowired
+    private PatientDetailRepository patientDetailRepository;
 
     @Autowired
     private MockMvc restPatientMockMvc;
@@ -74,13 +71,7 @@ public class PatientResourceIT {
             .ptBrdyDt(DEFAULT_PT_BRDY_DT)
             .hspTpCd(DEFAULT_HSP_TP_CD)
             .idxDt(DEFAULT_IDX_DT)
-            .status(DEFAULT_STATUS)
-            .createdBy(DEFAULT_CREATED_BY)
-            .createdDate(DEFAULT_CREATED_DATE)
-            .lastModifiedBy(DEFAULT_LAST_MODIFIED_BY)
-            .lastModifiedDate(DEFAULT_LAST_MODIFIED_DATE)
-            .comment(DEFAULT_COMMENT)
-            .declineReason(DEFAULT_DECLINE_REASON);
+            .detail(DEFAULT_PATIENT_DETAIL);
     }
 
     public static Patient createUpdatedPatientDTO() {
@@ -91,13 +82,7 @@ public class PatientResourceIT {
             .ptBrdyDt(UPDATED_PT_BRDY_DT)
             .hspTpCd(UPDATED_HSP_TP_CD)
             .idxDt(UPDATED_IDX_DT)
-            .status(UPDATED_STATUS)
-            .createdBy(UPDATED_CREATED_BY)
-            .createdDate(UPDATED_CREATED_DATE)
-            .lastModifiedBy(UPDATED_LAST_MODIFIED_BY)
-            .lastModifiedDate(UPDATED_LAST_MODIFIED_DATE)
-            .comment(UPDATED_COMMENT)
-            .declineReason(UPDATED_DECLINE_REASON);
+            .detail(UPDATED_PATIENT_DETAIL);
     }
 
     @BeforeEach
@@ -123,18 +108,18 @@ public class PatientResourceIT {
         assertThat(testPatient.getPtBrdyDt()).isEqualTo(DEFAULT_PT_BRDY_DT);
         assertThat(testPatient.getHspTpCd()).isEqualTo(DEFAULT_HSP_TP_CD);
 
-        assertThat(testPatient.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testPatient.getCreatedBy()).isEqualTo(DEFAULT_CREATED_BY);
-        assertThat(testPatient.getLastModifiedBy()).isEqualTo(DEFAULT_LAST_MODIFIED_BY);
-        assertThat(testPatient.getComment()).isEqualTo(DEFAULT_COMMENT);
-        assertThat(testPatient.getDeclineReason()).isEqualTo(DEFAULT_DECLINE_REASON);
+        assertThat(testPatient.getDetail().getStatus()).isEqualTo(DEFAULT_PATIENT_DETAIL.getStatus());
+        assertThat(testPatient.getDetail().getCreatedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getCreatedBy());
+        assertThat(testPatient.getDetail().getLastModifiedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getLastModifiedBy());
+        assertThat(testPatient.getDetail().getComment()).isEqualTo(DEFAULT_PATIENT_DETAIL.getComment());
+        assertThat(testPatient.getDetail().getDeclineReason()).isEqualTo(DEFAULT_PATIENT_DETAIL.getDeclineReason());
     }
 
     @Test
     @Transactional("jdbcTemplateTransactionManager")
     void testGetAllPatient() throws Exception {
         patientRepository.insert(patient);
-        patientRepository.insertPatientDetail(patient);
+        patientDetailRepository.insert(patient.getPtNo(), patient.getDetail());
 
         restPatientMockMvc
             .perform(get(ENTITY_API_URL))
@@ -145,13 +130,13 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(DEFAULT_SEX_TP_CD)))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(DEFAULT_PT_BRDY_DT)))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(DEFAULT_HSP_TP_CD)))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
-            .andExpect(jsonPath("$.[*].createdBy").value(hasItem(DEFAULT_CREATED_BY)))
-            .andExpect(jsonPath("$.[*].createdDate").value(hasItem(DEFAULT_CREATED_DATE.toString())))
-            .andExpect(jsonPath("$.[*].lastModifiedBy").value(hasItem(DEFAULT_LAST_MODIFIED_BY)))
-            .andExpect(jsonPath("$.[*].lastModifiedDate").value(hasItem(DEFAULT_LAST_MODIFIED_DATE.toString())))
-            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)))
-            .andExpect(jsonPath("$.[*].declineReason").value(hasItem(DEFAULT_DECLINE_REASON)))
+            .andExpect(jsonPath("$.[*].detail.comment").value(hasItem(DEFAULT_PATIENT_DETAIL.getComment())))
+            .andExpect(jsonPath("$.[*].detail.declineReason").value(hasItem(DEFAULT_PATIENT_DETAIL.getDeclineReason())))
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(DEFAULT_PATIENT_DETAIL.getStatus())))
+            .andExpect(jsonPath("$.[*].detail.createdBy").value(hasItem(DEFAULT_PATIENT_DETAIL.getCreatedBy())))
+            .andExpect(jsonPath("$.[*].detail.createdDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getCreatedDate().toString())))
+            .andExpect(jsonPath("$.[*].detail.lastModifiedBy").value(hasItem(DEFAULT_PATIENT_DETAIL.getLastModifiedBy())))
+            .andExpect(jsonPath("$.[*].detail.lastModifiedDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getLastModifiedDate().toString())))
         ;
     }
 
@@ -164,9 +149,7 @@ public class PatientResourceIT {
 
         // when
         patient.setPtNm(UPDATED_PT_NM);
-        patient.setStatus(UPDATED_STATUS);
-        patient.setComment(UPDATED_COMMENT);
-        patient.setDeclineReason(UPDATED_DECLINE_REASON);
+        patient.detail(UPDATED_PATIENT_DETAIL);
         restPatientMockMvc.perform(patch(ENTITY_API_URL + "/{ptNo}", patient.getPtNo())
                 .contentType("application/merge-patch+json")
                 .content(TestUtil.convertObjectToJsonBytes(patient)))
@@ -176,10 +159,10 @@ public class PatientResourceIT {
         List<Patient> patientList = patientRepository.findAll();
         assertThat(patientList).hasSize(databaseSizeBeforeUpdate);
         Patient testPatient = patientList.get(patientList.size() - 1);
-        assertThat(testPatient.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testPatient.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testPatient.getPtNm()).isNotEqualTo(UPDATED_PT_NM);
-        assertThat(testPatient.getDeclineReason()).isEqualTo(UPDATED_DECLINE_REASON);
+        assertThat(testPatient.getDetail().getStatus()).isEqualTo(UPDATED_PATIENT_DETAIL.getStatus());
+        assertThat(testPatient.getDetail().getComment()).isEqualTo(UPDATED_PATIENT_DETAIL.getComment());
+        assertThat(testPatient.getDetail().getDeclineReason()).isEqualTo(UPDATED_PATIENT_DETAIL.getDeclineReason());
     }
 
     @Test
@@ -193,6 +176,6 @@ public class PatientResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.ptNo").value(DEFAULT_PT_NO))
-            .andExpect(jsonPath("$.ptNm").value(DEFAULT_PT_NM)) ;
+            .andExpect(jsonPath("$.ptNm").value(DEFAULT_PT_NM));
     }
 }

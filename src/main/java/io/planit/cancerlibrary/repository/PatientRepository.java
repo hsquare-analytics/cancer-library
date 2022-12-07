@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.repository;
 
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -40,10 +41,10 @@ public class PatientRepository {
 
     public List<Patient> findAllByPtNoNotInAndCreatedDateBetween(List<String> ptNos, Map<String, Timestamp> dateRange) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE("CREATED_DATE BETWEEN :startDate AND :endDate");
-        if (ptNos.size() > 0) {
+        if (ptNos.isEmpty()) {
             sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO NOT IN (:ptNos)");
         }
-        Map params = Map.of("ptNos", ptNos, "startDate", dateRange.get("startDate"), "endDate", dateRange.get("endDate"));
+        Map<String, ?> params = Map.of("ptNos", ptNos, "startDate", dateRange.get("startDate"), "endDate", dateRange.get("endDate"));
         return jdbcTemplate.query(sql.toString(), params, new PatientMapper());
     }
 
@@ -79,59 +80,6 @@ public class PatientRepository {
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
-    public boolean updatePatientDetail(Patient patient) {
-        SQL sql = new SQL().UPDATE(Table.PATIENT_DETAIL.getTableName());
-        sql.SET("LAST_MODIFIED_BY = :lastModifiedBy")
-            .SET(String.format("LAST_MODIFIED_DATE = '%s'", Timestamp.from(patient.getLastModifiedDate())));
-
-        if (patient.getStatus() != null) {
-            sql.SET("STATUS = :status");
-        }
-        if (patient.getComment() != null) {
-            sql.SET("COMMENT = :comment");
-        }
-        if (patient.getDeclineReason() != null) {
-            sql.SET("DECLINE_REASON = :declineReason");
-        }
-        if (patient.getCreatedBy() != null) {
-            sql.SET("CREATED_BY = :createdBy");
-        }
-        if (patient.getCreatedDate() != null) {
-            sql.SET(String.format("CREATED_DATE = '%s'", Timestamp.from(patient.getCreatedDate())));
-        }
-
-        sql.WHERE(PT_NO_EQUAL);
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
-    }
-
-    public boolean insertPatientDetail(Patient patient) {
-        SQL sql = new SQL().INSERT_INTO(Table.PATIENT_DETAIL.getTableName())
-            .VALUES("PT_NO", ":ptNo")
-            .VALUES("STATUS", ":status")
-            .VALUES("CREATED_BY", ":createdBy")
-            .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
-            .VALUES("COMMENT", ":comment")
-            .VALUES("DECLINE_REASON", ":declineReason");
-
-        if (patient.getCreatedDate() != null) {
-            sql.VALUES("CREATED_DATE", String.format("'%s'", Timestamp.from(patient.getCreatedDate())));
-        }
-
-        if (patient.getLastModifiedDate() != null) {
-            sql.VALUES("LAST_MODIFIED_DATE", String.format("'%s'", Timestamp.from(patient.getLastModifiedDate())));
-        }
-
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
-    }
-
-    public Integer countPatientByStatus(String login, String status) {
-        SQL sql = new SQL().SELECT("COUNT(*)").FROM(Table.PATIENT_DETAIL.getTableName()).WHERE("STATUS = :status AND CREATED_BY = :login");
-        return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status, "login", login), Integer.class);
-    }
-
     private static class PatientMapper implements RowMapper<Patient> {
         public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
             Patient patient = new Patient();
@@ -141,17 +89,21 @@ public class PatientRepository {
             patient.setPtBrdyDt(resultSet.getString("pt_brdy_dt"));
             patient.setHspTpCd(resultSet.getString("hsp_tp_cd"));
             patient.setIdxDt(resultSet.getDate("idx_dt"));
-            patient.setStatus(resultSet.getString("status"));
-            patient.setCreatedBy(resultSet.getString("created_by"));
+
+            PatientDetail detail = new PatientDetail();
+            detail.setDeclineReason(resultSet.getString("decline_reason"));
+            detail.setComment(resultSet.getString("comment"));
+            detail.setStatus(resultSet.getString("status"));
+            detail.setCreatedBy(resultSet.getString("created_by"));
             if (resultSet.getTimestamp("created_date") != null) {
-                patient.setCreatedDate(resultSet.getTimestamp("created_date").toInstant());
+                detail.setCreatedDate(resultSet.getTimestamp("created_date").toInstant());
             }
-            patient.setLastModifiedBy(resultSet.getString("last_modified_by"));
+            detail.setLastModifiedBy(resultSet.getString("last_modified_by"));
             if (resultSet.getTimestamp("last_modified_date") != null) {
-                patient.setLastModifiedDate(resultSet.getTimestamp("last_modified_date").toInstant());
+                detail.setLastModifiedDate(resultSet.getTimestamp("last_modified_date").toInstant());
             }
-            patient.setDeclineReason(resultSet.getString("decline_reason"));
-            patient.setComment(resultSet.getString("comment"));
+
+            patient.detail(detail);
 
             return patient;
         }

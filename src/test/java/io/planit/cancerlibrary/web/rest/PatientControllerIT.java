@@ -4,6 +4,8 @@ import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
+import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
@@ -45,6 +47,9 @@ class PatientControllerIT {
     private PatientRepository patientRepository;
 
     @Autowired
+    private PatientDetailRepository patientDetailRepository;
+
+    @Autowired
     private UserPatientRepository userPatientRepository;
 
     @MockBean
@@ -61,7 +66,7 @@ class PatientControllerIT {
 
         Patient patient = PatientResourceIT.createPatientDTO();
         patientRepository.insert(patient);
-        patientRepository.insertPatientDetail(patient);
+        patientDetailRepository.insert(patient.getPtNo(), patient.getDetail());
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(patient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
@@ -74,7 +79,7 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(patient.getSexTpCd())))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(patient.getPtBrdyDt())))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(patient.getHspTpCd())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(patient.getStatus())));
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(patient.getDetail().getStatus())));
     }
 
     @Test
@@ -89,16 +94,16 @@ class PatientControllerIT {
 
         Patient authorizedPatient = PatientResourceIT.createPatientDTO().ptNo("authorizedPatient");
         patientRepository.insert(authorizedPatient);
-        patientRepository.insertPatientDetail(authorizedPatient);
+        patientDetailRepository.insert(authorizedPatient.getPtNo(), authorizedPatient.getDetail());
 
         UserPatient userPatient = new UserPatient().user(user).patientNo(authorizedPatient.getPtNo());
         userPatientRepository.saveAndFlush(userPatient);
 
         // patient2 - not authorized but in submitted user
         BDDMockito.given(timeService.getCurrentTime()).willReturn(Instant.parse("2020-01-01T00:00:00Z"));
-        Patient submittedPatient = PatientResourceIT.createPatientDTO().ptNo("submittedPatient").createdDate(timeService.getCurrentTime().minus(1, ChronoUnit.DAYS));
+        Patient submittedPatient = PatientResourceIT.createPatientDTO().ptNo("submittedPatient").detail(new PatientDetail().createdDate(timeService.getCurrentTime().minus(1, ChronoUnit.DAYS)));
         patientRepository.insert(submittedPatient);
-        patientRepository.insertPatientDetail(submittedPatient);
+        patientDetailRepository.insert(submittedPatient.getPtNo(), submittedPatient.getDetail());
 
         // when, them
         restDatasourcePatientMockMvc.perform(get("/api/patients/accessible-patient-list")
@@ -111,13 +116,13 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(authorizedPatient.getSexTpCd())))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(authorizedPatient.getPtBrdyDt())))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(authorizedPatient.getHspTpCd())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(authorizedPatient.getStatus())))
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(authorizedPatient.getDetail().getStatus())))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(submittedPatient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(submittedPatient.getPtNm())))
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(submittedPatient.getSexTpCd())))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(submittedPatient.getPtBrdyDt())))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(submittedPatient.getHspTpCd())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(submittedPatient.getStatus())))
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(submittedPatient.getDetail().getStatus())))
         ;
     }
 }

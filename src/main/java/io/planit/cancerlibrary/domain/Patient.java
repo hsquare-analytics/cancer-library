@@ -1,14 +1,12 @@
 package io.planit.cancerlibrary.domain;
 
-import java.time.Instant;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
+
 import java.util.Date;
 
 public class Patient {
 
-    public static final String PATIENT_VIEW_TABLE = "PH_PATIENT";
-
-    public static final String PATIENT_DETAIL_TABLE = "PH_PATIENT_DETAIL";
-
+    public static final String TABLE = "PH_PATIENT";
 
     private String ptNo;
     private String ptNm;
@@ -16,13 +14,7 @@ public class Patient {
     private String ptBrdyDt;
     private String hspTpCd;
     private Date idxDt;
-    private String status;
-    private String createdBy;
-    private Instant createdDate;
-    private String lastModifiedBy;
-    private Instant lastModifiedDate;
-    private String declineReason;
-    private String comment;
+    private PatientDetail detail;
 
     public String getPtNo() {
         return ptNo;
@@ -102,94 +94,16 @@ public class Patient {
         return this;
     }
 
-    public String getStatus() {
-        return status;
+    public PatientDetail getDetail() {
+        return detail;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDetail(PatientDetail detail) {
+        this.detail = detail;
     }
 
-    public Patient status(String status) {
-        this.status = status;
-        return this;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Patient createdBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Patient createdDate(Instant createdDate) {
-        this.createdDate = createdDate;
-        return this;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public Patient lastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-        return this;
-    }
-
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Patient lastModifiedDate(Instant lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-        return this;
-    }
-
-    public String getDeclineReason() {
-        return declineReason;
-    }
-
-    public void setDeclineReason(String declineReason) {
-        this.declineReason = declineReason;
-    }
-
-    public Patient declineReason(String declineReason) {
-        this.declineReason = declineReason;
-        return this;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public Patient comment(String comment) {
-        this.comment = comment;
+    public Patient detail(PatientDetail detail) {
+        this.detail = detail;
         return this;
     }
 
