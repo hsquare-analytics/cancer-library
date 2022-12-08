@@ -79,7 +79,7 @@ export const getDxColumnConfig = (item: IItem) => {
     sortIndex={item.category.attribute.dateColumn === item.title ? 0 : item.property?.sortIndex}
     sortOrder={item.category.attribute.dateColumn === item.title ? 'desc' : item.property?.sortDirection}
     formItem={{
-      visible: item.title !== 'pt_no',
+      visible: !item.activated || item.title !== 'pt_no',
       visibleIndex: item.orderNo,
     }}
   >
