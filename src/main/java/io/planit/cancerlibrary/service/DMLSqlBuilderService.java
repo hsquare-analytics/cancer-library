@@ -83,7 +83,9 @@ public class DMLSqlBuilderService {
             }
         });
 
-        sql.VALUES(CREATED_BY, String.format("'%s'", user.getLogin()))
+        sql
+            .VALUES(STATUS_COLUMN, String.format("'%s'", map.get(parameterization(STATUS_COLUMN))))
+            .VALUES(CREATED_BY, String.format("'%s'", user.getLogin()))
             .VALUES(CREATED_DATE, String.format("'%s'", timeService.getCurrentTimestamp()))
             .VALUES(LAST_MODIFIED_BY, String.format("'%s'", user.getLogin()))
             .VALUES(LAST_MODIFIED_DATE, String.format("'%s'", timeService.getCurrentTimestamp()));
@@ -175,7 +177,9 @@ public class DMLSqlBuilderService {
             }
         });
 
-        sql.SET(getSqlEqualSyntax(LAST_MODIFIED_BY, user.getLogin()))
+        sql
+            .SET(getSqlEqualSyntax(STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
+            .SET(getSqlEqualSyntax(LAST_MODIFIED_BY, user.getLogin()))
             .SET(getSqlEqualSyntax(LAST_MODIFIED_DATE, timeService.getCurrentTimestamp()))
             .WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));
 

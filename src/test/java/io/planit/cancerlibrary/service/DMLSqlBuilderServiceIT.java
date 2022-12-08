@@ -114,12 +114,13 @@ class DMLSqlBuilderServiceIT {
             put("column2", "test2");
             put("column3", timestamp.toString());
             put("column4-value", "codebook-value");
+            put("status", "status_test");
         }});
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, COLUMN4-VALUE, COLUMN4-LABEL, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
-            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'codebook-value', 'codebook-title', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
+            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, COLUMN4-VALUE, COLUMN4-LABEL, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'codebook-value', 'codebook-title', 'status_test', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
     }
 
     @ParameterizedTest
@@ -229,11 +230,12 @@ class DMLSqlBuilderServiceIT {
             put("column2", "test2");
             put("column3", timestamp.toString());
             put("column4-value", "codebook-value");
+            put("status", "status_test");
         }});
 
         // then
         assertThat(result).contains("UPDATE " + category.getTitle() + "_UPDATED")
-            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', COLUMN3 = '%s', COLUMN4-VALUE = 'codebook-value', COLUMN4-LABEL = 'codebook-title', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp, timestamp)).contains("WHERE (IDX = 'test_idx')");
+            .contains(String.format("SET COLUMN1 = 'test1', COLUMN2 = 'test2', COLUMN3 = '%s', COLUMN4-VALUE = 'codebook-value', COLUMN4-LABEL = 'codebook-title', STATUS = 'status_test', LAST_MODIFIED_BY = 'test_login', LAST_MODIFIED_DATE = '%s'", timestamp, timestamp)).contains("WHERE (IDX = 'test_idx')");
     }
 
     @Test
