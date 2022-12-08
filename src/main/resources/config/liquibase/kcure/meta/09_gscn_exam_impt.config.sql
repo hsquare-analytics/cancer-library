@@ -37,13 +37,13 @@ insert into ph_item_attribute (item_id, caption) values (9902, '환자대체번�
 insert into ph_item_property (item_id, visible) values (9902, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9903, 'imem_ymd', 9900, 'system', 9903);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9903, '면역병리검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9903, '면역병리검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9904, 'imem_seq', 9900, 'system', 9904);
 insert into ph_item_attribute (item_id, caption, required) values (9904, '면역병리검사순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9905, 'impt_read_ymd', 9900, 'system', 9905);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9905, '면역병리판독일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9905, '면역병리판독일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9906, 'imem_cd', 9900, 'system', 9906);
 insert into ph_item_attribute (item_id, caption) values (9906, '면역병리검사코드');
@@ -76,7 +76,7 @@ insert into ph_item_property (item_id, label_column) values (9913, 'imem_rslt_un
 -- insert into ph_item_attribute (item_id, caption) values (9914, '면역병리검사결과단위명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9915, 'crtn_dt', 9900, 'system', 9915);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9915, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9915, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9916, 'idx', 9900, 'system', 9916);
 -- insert into ph_item_attribute (item_id, caption) values (9916, 'UI용 시퀀스');

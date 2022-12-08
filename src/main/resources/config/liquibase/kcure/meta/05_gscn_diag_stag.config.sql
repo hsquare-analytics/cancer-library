@@ -38,7 +38,7 @@ insert into ph_item_attribute (item_id, caption) values (9502, '환자대체번�
 insert into ph_item_property (item_id, visible) values (9502, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9503, 'diag_stag_rcrd_ymd', 9500, 'system', 9503);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9503, '진단병기기록일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9503, '진단병기기록일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9504, 'diag_stag_rcrd_seq', 9500, 'system', 9504);
 insert into ph_item_attribute (item_id, caption, required) values (9504, '진단병기기록순번', true);
@@ -66,7 +66,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9511,
 insert into ph_item_attribute (item_id, caption) values (9511, '임상M병기값');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9512, 'crtn_dt', 9500, 'system', 9512);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9512, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9512, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9513, 'idx', 9500, 'system', 9513);
 -- insert into ph_item_attribute (item_id, caption) values (9513, 'UI용 시퀀스');

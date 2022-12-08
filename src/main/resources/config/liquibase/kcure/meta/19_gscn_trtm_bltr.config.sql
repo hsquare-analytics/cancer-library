@@ -34,7 +34,7 @@ insert into ph_item_attribute (item_id, caption) values (19002, '환자대체번
 insert into ph_item_property (item_id, visible) values (19002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (19003, 'bltr_prsc_ymd', 19000, 'system', 19003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (19003, '수혈처방일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (19003, '수혈처방일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (19004, 'bltr_prsc_seq', 19000, 'system', 19004);
 insert into ph_item_attribute (item_id, caption, required) values (19004, '수혈처방순번', true);

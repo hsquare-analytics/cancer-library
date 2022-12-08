@@ -35,7 +35,7 @@ insert into ph_item_attribute (item_id, caption) values (23002, '환자대체번
 insert into ph_item_property (item_id, visible) values (23002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (23003, 'rldg_ymd', 23000, 'system', 23003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (23003, '재발진단일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (23003, '재발진단일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (23004, 'rldg_seq', 23000, 'system', 23004);
 insert into ph_item_attribute (item_id, caption, required) values (23004, '재발진단순번', true);

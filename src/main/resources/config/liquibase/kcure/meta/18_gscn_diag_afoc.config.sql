@@ -33,7 +33,7 @@ insert into ph_item_attribute (item_id, caption) values (18002, '환자대체번
 insert into ph_item_property (item_id, visible) values (18002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (18003, 'comp_ocrn_oprt_ymd', 18000, 'system', 18003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (18003, '합병증발생수술일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (18003, '합병증발생수술일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (18004, 'comp_ocrn_oprt_seq', 18000, 'system', 18004);
 insert into ph_item_attribute (item_id, caption, required) values (18004, '합병증발생수술순번', true);

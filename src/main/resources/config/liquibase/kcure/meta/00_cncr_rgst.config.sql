@@ -165,7 +165,7 @@ insert into ph_item_property (item_id, label_column) values (9028, 'bunhwadoname
 -- insert into ph_item_attribute (item_id, caption) values (9029, '분화도명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9030, 'expire', 9000, 'system', 9030);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9030, '사망연월일', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9030, '사망연월일', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9031, 'sain', 9000, 'system', 9031);
 insert into ph_item_attribute (item_id, caption) values (9031, '사망원인');
@@ -200,16 +200,16 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9040,
 insert into ph_item_attribute (item_id, caption) values (9040, '출생 연대 표기');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9041, 'admisdate', 9000, 'system', 9041);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9041, '입원일', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9041, '입원일', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9042, 'disdate', 9000, 'system', 9042);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9042, '퇴원일', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9042, '퇴원일', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9043, 'dbyear', 9000, 'system', 9043);
 insert into ph_item_attribute (item_id, caption) values (9043, '자료등록년도');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9044, 'inputday', 9000, 'system', 9044);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9044, '입력일', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9044, '입력일', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9045, 'seeryear', 9000, 'system', 9045);
 insert into ph_item_attribute (item_id, caption) values (9045, 'SEERYEAR');
@@ -240,7 +240,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9053,
 insert into ph_item_attribute (item_id, caption) values (9053, '원격전이코드3');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'crtn_dt', 9000, 'system', 9054);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9054, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9054, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9055, 'idx', 9000, 'system', 9055);
 -- insert into ph_item_attribute (item_id, caption) values (9055, 'UI용 시퀀스');

@@ -37,7 +37,7 @@ insert into ph_item_attribute (item_id, caption) values (12002, '환자대체번
 insert into ph_item_property (item_id, visible) values (12002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (12003, 'hpli_exam_ymd', 12000, 'system', 12003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (12003, 'HPYLORI검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (12003, 'HPYLORI검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (12004, 'hpli_exam_seq', 12000, 'system', 12004);
 insert into ph_item_attribute (item_id, caption, required) values (12004, 'HPYLORI검사순번', true);

@@ -36,7 +36,7 @@ insert into ph_item_attribute (item_id, caption) values (9302, '환자대체번�
 insert into ph_item_property (item_id, visible) values (9302, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9303, 'anth_rcrd_ymd', 9300, 'system', 9303);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9303, '신체계측기록일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9303, '신체계측기록일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9304, 'anth_rcrd_seq', 9300, 'system', 9304);
 insert into ph_item_attribute (item_id, caption, required) values (9304, '신체계측기록순번', true);
@@ -64,10 +64,10 @@ insert into ph_item_property (item_id, label_column) values (9310, 'ecog_nm');
 -- insert into ph_item_attribute (item_id, caption) values (9311, 'ECOG명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9312, 'crtn_dt', 9300, 'system', 9312);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9312, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9312, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9313, 'ecog_dt', 9300, 'system', 9313);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9313, 'UI용 ECOG 참고일자날짜', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9313, 'UI용 ECOG 참고일자날짜', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9314, 'idx', 9300, 'system', 9314);
 -- insert into ph_item_attribute (item_id, caption) values (9314, 'UI용 시퀀스');

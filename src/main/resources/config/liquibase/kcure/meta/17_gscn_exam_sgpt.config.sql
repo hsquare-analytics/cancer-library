@@ -83,13 +83,13 @@ insert into ph_item_attribute (item_id, caption) values (17002, '환자대체번
 insert into ph_item_property (item_id, visible) values (17002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17003, 'srgc_ptem_ymd', 17000, 'system', 17003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (17003, '외과병리검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (17003, '외과병리검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17004, 'srgc_ptem_seq', 17000, 'system', 17004);
 insert into ph_item_attribute (item_id, caption, required) values (17004, '외과병리검사순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (17005, 'sgpt_read_ymd', 17000, 'system', 17005);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (17005, '외과병리판독일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (17005, '외과병리판독일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (17006, 'sgpt_hvst_site_cd', 17000, 'system', 17006, 30430);
 insert into ph_item_attribute (item_id, caption, data_type) values (17006, '외과병리채취부위코드', 'selectbox');

@@ -41,13 +41,13 @@ insert into ph_item_attribute (item_id, caption) values (11002, '환자대체번
 insert into ph_item_property (item_id, visible) values (11002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11003, 'bpsy_ymd', 11000, 'system', 11003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (11003, '생체검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (11003, '생체검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11004, 'bpsy_seq', 11000, 'system', 11004);
 insert into ph_item_attribute (item_id, caption, required) values (11004, '생체검사순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (11005, 'bpsy_read_ymd', 11000, 'system', 11005);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (11005, '생체검사판독일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (11005, '생체검사판독일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (11006, 'bpsy_site_cd', 11000, 'system', 11006, 30310);
 insert into ph_item_attribute (item_id, caption, data_type) values (11006, '생체검사부위코드', 'selectbox');

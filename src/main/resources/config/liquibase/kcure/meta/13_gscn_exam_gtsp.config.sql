@@ -41,7 +41,7 @@ insert into ph_item_attribute (item_id, caption) values (13002, '환자대체번
 insert into ph_item_property (item_id, visible) values (13002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (13003, 'stmc_edex_ymd', 13000, 'system', 13003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (13003, '위내시경검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (13003, '위내시경검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (13004, 'stmc_edex_seq', 13000, 'system', 13004);
 insert into ph_item_attribute (item_id, caption, required) values (13004, '위내시경검사순번', true);

@@ -82,13 +82,13 @@ insert into ph_item_attribute (item_id, caption) values (9102, '환자대체번�
 insert into ph_item_property (item_id, visible) values (9102, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9103, 'adm_ymd', 9100, 'system', 9103);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9103, '입원일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9103, '입원일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9104, 'hlinf_seq', 9100, 'system', 9104);
 insert into ph_item_attribute (item_id, caption, required) values (9104, '건강정보순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9105, 'dsch_ymd', 9100, 'system', 9105);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (9105, '퇴원일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (9105, '퇴원일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9106, 'cur_drnk_yn_noans_spcd', 9100, 'system', 9106, 10040);
 insert into ph_item_attribute (item_id, caption, data_type) values (9106, '현재음주여부무응답구분코드', 'selectbox');
@@ -263,7 +263,7 @@ insert into ph_item_property (item_id, label_column) values (9155, 'dsch_stnm');
 -- insert into ph_item_attribute (item_id, caption) values (9156, '퇴원상태명');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9157, 'crtn_dt', 9100, 'system', 9157);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9157, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9157, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9158, 'pact_id', 9100, 'system', 9158);
 -- insert into ph_item_attribute (item_id, caption) values (9158, 'pact_id(ui용)');

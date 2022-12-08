@@ -45,13 +45,13 @@ insert into ph_item_attribute (item_id, caption) values (21002, '환자대체번
 insert into ph_item_property (item_id, visible) values (21002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21003, 'antp_strt_ymd', 21000, 'system', 21003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (21003, '항암요법시작일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (21003, '항암요법시작일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21004, 'antp_seq', 21000, 'system', 21004);
 insert into ph_item_attribute (item_id, caption, required) values (21004, '항암요법순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21005, 'antp_end_ymd', 21000, 'system', 21005);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (21005, '항암요법종료일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (21005, '항암요법종료일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21006, 'antp_line_cnt', 21000, 'system', 21006);
 insert into ph_item_attribute (item_id, caption) values (21006, '항암요법라인수');
@@ -84,7 +84,7 @@ insert into ph_item_property (item_id, label_column) values (21013, 'antp_end_re
 -- insert into ph_item_attribute (item_id, caption) values (21014, '항암요법종료이유명');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21015, 'antp_asmt_ymd', 21000, 'system', 21015);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (21015, '항암요법평가일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (21015, '항암요법평가일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (21016, 'antp_asmt_item_cd', 21000, 'system', 21016, 40570);
 insert into ph_item_attribute (item_id, caption, data_type) values (21016, '항암요법평가항목코드', 'selectbox');

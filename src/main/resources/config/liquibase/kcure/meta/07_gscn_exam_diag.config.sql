@@ -40,7 +40,7 @@ insert into ph_item_attribute (item_id, caption) values (9702, '환자대체번�
 insert into ph_item_property (item_id, visible) values (9702, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9703, 'cexm_ymd', 9700, 'system', 9703);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9703, '진단검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9703, '진단검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9704, 'cexm_seq', 9700, 'system', 9704);
 insert into ph_item_attribute (item_id, caption, required) values (9704, '진단검사순번', true);
@@ -86,7 +86,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9717,
 insert into ph_item_attribute (item_id, caption) values (9717, '진단검사정상범위참고값');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'crtn_dt', 9700, 'system', 9718);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9718, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (9718, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9719, 'idx', 9700, 'system', 9719);
 -- insert into ph_item_attribute (item_id, caption) values (9719, 'UI용 시퀀스');

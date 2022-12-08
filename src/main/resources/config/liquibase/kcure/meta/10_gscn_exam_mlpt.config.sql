@@ -36,13 +36,13 @@ insert into ph_item_attribute (item_id, caption) values (10002, '환자대체번
 insert into ph_item_property (item_id, visible) values (10002, false);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10003, 'mlem_ymd', 10000, 'system', 10003);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (10003, '분자병리검사일자', true, 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (10003, '분자병리검사일자', true, 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10004, 'mlem_seq', 10000, 'system', 10004);
 insert into ph_item_attribute (item_id, caption, required) values (10004, '분자병리검사순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10005, 'mlpt_read_ymd', 10000, 'system', 10005);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (10005, '분자병리판독일자', 'yyyy-MM-dd', 'date');
+insert into ph_item_attribute (item_id, caption, format, data_type) values (10005, '분자병리판독일자', 'yyyyMMdd', 'date');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10006, 'mlem_cd', 10000, 'system', 10006);
 insert into ph_item_attribute (item_id, caption) values (10006, '분자병리검사코드');
@@ -71,7 +71,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (10013
 insert into ph_item_attribute (item_id, caption) values (10013, '분자병리검사결과단위내용');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'crtn_dt', 10000, 'system', 10014);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (10014, '생성일시', 'yyyy-MM-dd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_type) values (10014, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (10015, 'idx', 10000, 'system', 10015);
 -- insert into ph_item_attribute (item_id, caption) values (10015, 'UI용 시퀀스');
