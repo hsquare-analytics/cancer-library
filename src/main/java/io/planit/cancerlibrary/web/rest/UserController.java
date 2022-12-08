@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
@@ -42,9 +42,9 @@ public class UserController {
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
             .stream().map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
-                Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.SUBMITTED);
-                Integer approved = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.APPROVED);
-                Integer declined = patientDetailRepository.countByStatus(user.getLogin(), ReviewConstants.DECLINED);
+                Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.SUBMITTED);
+                Integer approved = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.APPROVED);
+                Integer declined = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.DECLINED);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
             }).collect(Collectors.toList());
 

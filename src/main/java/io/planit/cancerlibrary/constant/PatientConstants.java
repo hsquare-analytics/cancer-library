@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.constant;
 
-public final class ReviewConstants {
+public final class PatientConstants {
 
     public static final String SUBMITTED = "REVIEW_SUBMITTED";
 
@@ -8,6 +8,6 @@ public final class ReviewConstants {
 
     public static final String APPROVED = "REVIEW_APPROVED";
 
-    private ReviewConstants() {
+    private PatientConstants() {
     }
 }

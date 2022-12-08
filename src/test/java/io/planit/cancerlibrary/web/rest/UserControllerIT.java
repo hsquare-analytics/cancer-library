@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.constant.ReviewConstants;
+import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
@@ -73,7 +73,7 @@ class UserControllerIT {
 
     @ParameterizedTest
     @Transactional
-    @ValueSource(strings = {ReviewConstants.SUBMITTED, ReviewConstants.APPROVED, ReviewConstants.DECLINED})
+    @ValueSource(strings = {PatientConstants.SUBMITTED, PatientConstants.APPROVED, PatientConstants.DECLINED})
     @WithMockUser(username = "testLogin")
     void test_fetch_users_with_additional_info(String status) throws Exception {
         User user = UserResourceIT.createEntity(em).login("testLogin").authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
