@@ -91,7 +91,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
         showCloseButton={true}
       >
         <ScrollView width='100%' height='100%' showScrollbar={"onScroll"}>
-          <ReactDiffViewer oldValue={originRow[data.column.dataField].toString()} newValue={data.value.toString()} splitView={true}/>
+          <ReactDiffViewer oldValue={originRow[data.column.dataField]?.toString()} newValue={data.value?.toString()} splitView={true}/>
         </ScrollView>
       </Popup>
 
