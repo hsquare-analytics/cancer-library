@@ -3,15 +3,16 @@ import Swal, {SweetAlertOptions} from 'sweetalert2';
 import {useAppDispatch} from "app/config/store";
 import {
   createDatasourceRow,
-  deleteDatasourceRow,
   updateDatasourceRow
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 import Chip from '@mui/material/Chip';
+import PauseIcon from '@mui/icons-material/Pause';
 import DoneIcon from '@mui/icons-material/Done';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {translate} from 'react-jhipster';
-import {RowStatus} from "app/config/datasource-constants";
+import {DATASOURCE_ROW_STATUS, RowStatus} from "app/config/datasource-constants";
 
 
 export interface IDxRowConfirmCellRenderProps {
@@ -43,21 +44,36 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
       text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsInProgress.title'),
     }) as SweetAlertOptions).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteDatasourceRow({categoryId: category.id, row: {idx: row.idx, pt_no: row.pt_no}}));
+        const payload = {
+          categoryId: category.id,
+          row: {
+            ...row,
+            [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+          }
+        }
+        dispatch(updateDatasourceRow(payload));
       }
     });
   };
 
   const transformAsCompleted = () => {
     Swal.fire(Object.assign({}, SwalCommonOptions, {
-      title: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsCompleted.title'),
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsCompleted.title'),
     }) as SweetAlertOptions).then((result) => {
       if (result.isConfirmed) {
         axios.get(`/api/datasource/categories/${category.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
+          const payload = {
+            categoryId: category.id,
+            row: {
+              ...row,
+              [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
+            }
+          }
+
           if (data) {
-            dispatch(updateDatasourceRow({categoryId: category.id, row}));
+            dispatch(updateDatasourceRow(payload));
           } else {
-            dispatch(createDatasourceRow({categoryId: category.id, row}));
+            dispatch(createDatasourceRow(payload));
           }
         });
       }
@@ -67,14 +83,15 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
   switch (row.status) {
     case RowStatus.COMPLETED:
       return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.completed')}
-                   color="success"
                    icon={<DoneIcon/>}
+                   color="success"
                    size={'small'}
                    variant="outlined"
                    onClick={transformAsInProgress}
       />;
     case RowStatus.IN_PROGRESS:
       return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.inProgress')}
+                   icon={<PauseIcon/>}
                    color="warning"
                    size={'small'}
                    variant="outlined"
@@ -83,6 +100,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
     default:
       return <Chip
         label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.notStarted')}
+        icon={<PlayArrowIcon/>}
         color="info"
         size={'small'}
         variant="outlined"
