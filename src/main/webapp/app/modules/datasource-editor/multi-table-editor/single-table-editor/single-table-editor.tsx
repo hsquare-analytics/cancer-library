@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import DataGrid, {Column, ColumnChooser} from 'devextreme-react/data-grid';
+import DataGrid, {Button as DxButton, Column, ColumnChooser} from 'devextreme-react/data-grid';
 import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -32,14 +32,20 @@ import {
   onRowValidating,
   toastApiResult,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
-import {DATASOURCE_IDX, KCURE_PREFIX, PATIENT_NO} from 'app/config/datasource-constants';
+import {
+  DATASOURCE_IDX,
+  DATASOURCE_ROW_STATUS,
+  KCURE_PREFIX,
+  PATIENT_NO,
+  RowStatus
+} from 'app/config/datasource-constants';
 import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
-import DxEditButtonCellRender
-  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-edit-button-cell-render";
 import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
 import Swal from "sweetalert2";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -64,6 +70,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const updateSuccess = useAppSelector(state => state.datasourceContainer.updateSuccess);
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const openAll = useAppSelector(state => state.datasourceStatus.openAll);
+  const login = useAppSelector(state => state.authentication.account.login);
+
+  const isManager = useAppSelector(state =>
+    hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
+  );
 
   const {category} = props;
 
@@ -166,11 +177,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 xs: 1,
                 sm: 1,
                 md: 1,
-                lg: 3,
+                lg: 6,
               },
-            },
-            texts: {
-              confirmDeleteMessage: translate('entity.delete.warning'),
             },
           }}
           onInitNewRow={e =>
@@ -190,7 +198,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           }}
           onRowInserting={e =>
             makeCallBackOnPromise(e, () => {
-              const row = Object.assign({}, e.data, {[PATIENT_NO]: patient.ptNo});
+              const row = Object.assign({}, e.data, {
+                  [PATIENT_NO]: patient.ptNo,
+                  [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                }
+              );
               dispatch(createDatasourceRow({categoryId: category.id, row}));
             })
           }
@@ -203,6 +215,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                     {
                       [DATASOURCE_IDX]: e.oldData.idx,
                       [PATIENT_NO]: patient.ptNo,
+                      [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
                     },
                     e.newData
                   );
@@ -262,8 +275,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
                   formItem={{visible: false}}/>
-          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
-                  width={110} alignment={"center"}
+          <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
+                  width={130} alignment={"center"}
+                  formItem={{visible: false}}
                   cellRender={(data) => <DxRowConfirmCellRender category={category}
                                                                 row={data.row.data}
                                                                 setEditorStatus={() => {
@@ -271,16 +285,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                                                                   setEditedRow(data.row.data);
                                                                   dispatch(setSelectedCategory(category));
                                                                 }}/>}/>
-          <Column type="buttons" caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}
-                  width={110} alignment={"center"}
-                  cellRender={(data) => <DxEditButtonCellRender data={data} dataGridRef={dataGrid}/>}/>
+          <Column dataField={DATASOURCE_ROW_STATUS} alignment={"center"} formItem={{visible: false}}/>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"
             caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
             alignment={'center'}
             allowEditing={false}
-            visibleIndex={9999998}
+            visibleIndex={9999997}
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999998}}
           />
           <Column
@@ -290,9 +302,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             dataType={'datetime'}
             format={'yy/MM/dd hh:mm'}
             allowEditing={false}
-            visibleIndex={9999999}
+            visibleIndex={9999998}
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
+          <Column type="buttons" width={110} visibleIndex={9999999}>
+            <DxButton name="edit"/>
+            <DxButton name="delete"
+                      visible={(e) => e.row.data.idx.includes(KCURE_PREFIX) && (isManager || e.row.data['created_by'] === login)}
+            />
+          </Column>
         </DataGrid>
       </AccordionDetails>
     </Accordion>
