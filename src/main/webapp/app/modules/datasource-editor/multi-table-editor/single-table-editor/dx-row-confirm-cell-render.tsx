@@ -1,5 +1,5 @@
 import React from 'react';
-import Swal from 'sweetalert2';
+import Swal, {SweetAlertOptions} from 'sweetalert2';
 import {useAppDispatch} from "app/config/store";
 import {
   createDatasourceRow,
@@ -29,16 +29,29 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
     return null;
   }
 
-  const onClickConfirm = () => {
-    Swal.fire({
-      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.title'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.confirm'),
-      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.cancel')
-    }).then((result) => {
+  const SwalCommonOptions = {
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.cancel')
+  }
+
+  const transformAsInProgress = () => {
+    Swal.fire(Object.assign({}, SwalCommonOptions, {
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsInProgress.title'),
+    }) as SweetAlertOptions).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteDatasourceRow({categoryId: category.id, row: {idx: row.idx, pt_no: row.pt_no}}));
+      }
+    });
+  };
+
+  const transformAsCompleted = () => {
+    Swal.fire(Object.assign({}, SwalCommonOptions, {
+      title: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsCompleted.title'),
+    }) as SweetAlertOptions).then((result) => {
       if (result.isConfirmed) {
         axios.get(`/api/datasource/categories/${category.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
           if (data) {
@@ -49,48 +62,31 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
         });
       }
     });
-  };
-
-  const onClickCancelConfirm = () => {
-    Swal.fire({
-      title: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.title'),
-      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.text'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.button.confirm'),
-      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.cancelRowConfirm.button.cancel')
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteDatasourceRow({categoryId: category.id, row: {idx: row.idx, pt_no: row.pt_no}}));
-      }
-    });
   }
 
   switch (row.status) {
     case RowStatus.COMPLETED:
-      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.completed')}
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.completed')}
                    color="success"
                    icon={<DoneIcon/>}
                    size={'small'}
                    variant="outlined"
-                   onClick={onClickCancelConfirm}
+                   onClick={transformAsInProgress}
       />;
     case RowStatus.IN_PROGRESS:
-      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.inProgress')}
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.inProgress')}
                    color="warning"
                    size={'small'}
                    variant="outlined"
-                   onClick={onClickCancelConfirm}
+                   onClick={transformAsCompleted}
       />;
     default:
       return <Chip
-        label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.notStarted')}
-        color="error"
+        label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.notStarted')}
+        color="info"
         size={'small'}
         variant="outlined"
-        onClick={onClickConfirm}
+        onClick={transformAsCompleted}
       />;
 
   }
