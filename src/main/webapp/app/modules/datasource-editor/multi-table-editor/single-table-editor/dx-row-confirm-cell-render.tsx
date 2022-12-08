@@ -11,6 +11,7 @@ import axios from "axios";
 import Chip from '@mui/material/Chip';
 import DoneIcon from '@mui/icons-material/Done';
 import {translate} from 'react-jhipster';
+import {RowStatus} from "app/config/datasource-constants";
 
 
 export interface IDxRowConfirmCellRenderProps {
@@ -67,26 +68,32 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
     });
   }
 
+  switch (row.status) {
+    case RowStatus.COMPLETED:
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.completed')}
+                   color="success"
+                   icon={<DoneIcon/>}
+                   size={'small'}
+                   variant="outlined"
+                   onClick={onClickCancelConfirm}
+      />;
+    case RowStatus.IN_PROGRESS:
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.inProgress')}
+                   color="warning"
+                   size={'small'}
+                   variant="outlined"
+                   onClick={onClickCancelConfirm}
+      />;
+    default:
+      return <Chip
+        label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.notStarted')}
+        color="error"
+        size={'small'}
+        variant="outlined"
+        onClick={onClickConfirm}
+      />;
 
-  return row['created_by'] ? (
-    <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.confirmed')}
-          color="success"
-          icon={<DoneIcon/>}
-          size={'small'}
-          variant="outlined"
-          onClick={onClickCancelConfirm}
-    />
-  ) : (
-    <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.status.notConfirmed')}
-          color="primary"
-          variant="outlined"
-          size={'small'}
-          onClick={(e) => {
-            e.stopPropagation();
-            props.setEditorStatus();
-            onClickConfirm();
-          }}/>
-  )
+  }
 };
 
 export default DxRowConfirmCellRender;
