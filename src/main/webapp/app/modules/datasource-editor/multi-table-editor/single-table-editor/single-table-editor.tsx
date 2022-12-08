@@ -156,6 +156,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           headerFilter={{allowSearch: true, visible: true}}
           editing={{
             mode: 'popup',
+            popup: {
+              resizeEnabled: true,
+            },
             allowUpdating: true,
             allowDeleting: true,
             form: {
@@ -164,7 +167,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 sm: 1,
                 md: 1,
                 lg: 3,
-              }
+              },
             },
             texts: {
               confirmDeleteMessage: translate('entity.delete.warning'),
