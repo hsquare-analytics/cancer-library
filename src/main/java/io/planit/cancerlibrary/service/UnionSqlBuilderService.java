@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.service;
 
+import io.planit.cancerlibrary.constant.RowStatus;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.repository.CategoryRepository;
@@ -49,7 +50,7 @@ public class UnionSqlBuilderService {
         String updatedTableName = category.getTitle().toUpperCase() + UPDATED_SUFFIX;
 
         SQL sql = new SQL();
-        sql.SELECT(IDX_COLUMN);
+        sql.SELECT(IDX_COLUMN).SELECT(STATUS_COLUMN);
         getMarkingColumns().forEach(sql::SELECT);
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
@@ -65,7 +66,7 @@ public class UnionSqlBuilderService {
 
         SQL excludeIdxSubQuery = new SQL().SELECT(IDX_COLUMN).FROM(updatedTableName);
 
-        SQL sql = new SQL().SELECT(IDX_COLUMN);
+        SQL sql = new SQL().SELECT(IDX_COLUMN).SELECT(String.format("'%s' AS STATUS", RowStatus.NOT_STARTED));
         getMarkingColumns().stream().map(key -> String.format("NULL AS %s", key)).forEach(sql::SELECT);
 
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));

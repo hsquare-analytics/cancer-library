@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.service;
 
 import io.planit.cancerlibrary.IntegrationTest;
 import io.planit.cancerlibrary.constant.DatasourceConstants;
+import io.planit.cancerlibrary.constant.RowStatus;
 import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.web.rest.*;
@@ -70,8 +71,8 @@ class UnionSqlBuilderServiceIT {
 
     private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, NULL AS STATUS, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
-                    DatasourceConstants.IDX_COLUMN))
+                String.format("SELECT %s, '%s' AS STATUS, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+                    DatasourceConstants.IDX_COLUMN, RowStatus.NOT_STARTED))
             .contains(String.format("FROM %s", originTableName))
             .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
                 DatasourceConstants.IDX_COLUMN))
