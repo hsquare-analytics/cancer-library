@@ -95,7 +95,7 @@ export class DndGrid extends React.Component<IGridProps> {
           <RowDragging data={this.props.authorized} group="tasksGroup" onAdd={this.onAdd}/>
           <Column dataField="ptNo" dataType="string" caption="환자번호" alignment={'center'}/>
           <Column dataField="ptNm" dataType="string" caption="환자명" alignment={'center'}/>
-          <Column dataField="idxDt" dataType="date" caption="암초진일" alignment={'center'} format={'yyyy-MM-dd'}
+          <Column dataField="idxDt" dataType="date" caption="암등록일" alignment={'center'} format={'yyyy-MM-dd'}
                   sortIndex={0}
                   sortOrder={'desc'}/>
           <Column dataField="authorized" dataType="boolean" visible={false}/>
