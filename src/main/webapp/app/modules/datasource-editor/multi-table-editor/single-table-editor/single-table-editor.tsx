@@ -17,6 +17,8 @@ import {
 } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
+
 
 import {
   createDatasourceRow,
@@ -43,7 +45,6 @@ import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
-import Swal from "sweetalert2";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 
@@ -93,27 +94,36 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
-  const onClickRowConfirmBtn = (row: any) => {
+  const transformAsCompleted = (row: any) => {
     Swal.fire({
-      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.title'),
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.confirm'),
-      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowConfirm.button.cancel')
-    }).then((result) => {
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.confirm'),
+        cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.cancel'),
+        text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsCompleted.title')
+      }
+    ).then((result) => {
       if (result.isConfirmed) {
-        axios.get(`/api/datasource/categories/${selectedCategory.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
+        axios.get(`/api/datasource/categories/${category.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
+          const payload = {
+            categoryId: category.id,
+            row: {
+              ...row,
+              [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
+            }
+          }
+
           if (data) {
-            dispatch(updateDatasourceRow({categoryId: category.id, row}));
+            dispatch(updateDatasourceRow(payload));
           } else {
-            dispatch(createDatasourceRow({categoryId: category.id, row}));
+            dispatch(createDatasourceRow(payload));
           }
         });
       }
     });
-  };
+  }
 
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
@@ -257,8 +267,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           }
           onRowDblClick={e => dataGrid.current.instance.editRow(e.rowIndex)}
           onSaved={e => {
-            if (e.changes.length === 0 && !editedRow['created_by']) {
-              onClickRowConfirmBtn(editedRow);
+            if (e.changes.length === 0 && editedRow.status !== RowStatus.COMPLETED) {
+              transformAsCompleted(editedRow);
             } else if (e.changes.length === 0) {
               dispatch(resetDatasourceStatusReducer());
               dispatch(resetDatasourceContainerFlag())
