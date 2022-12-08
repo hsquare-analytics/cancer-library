@@ -26,7 +26,7 @@ public final class DatasourceConstants {
     }
 
     public static List<String> getMarkingColumns() {
-        return List.of(CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE);
+        return List.of(STATUS_COLUMN, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE);
     }
 
     public static String getSqlEqualSyntax(String key, Object value) {

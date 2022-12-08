@@ -63,14 +63,14 @@ class UnionSqlBuilderServiceIT {
     }
 
     private void assertUpdateListSQL(String result, String updatedTableName) {
-        assertThat(result).contains(String.format("SELECT %s, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+        assertThat(result).contains(String.format("SELECT %s, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
                 DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", updatedTableName));
     }
 
     private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
         assertThat(result).contains(
-                String.format("SELECT %s, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
+                String.format("SELECT %s, NULL AS STATUS, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
                     DatasourceConstants.IDX_COLUMN))
             .contains(String.format("FROM %s", originTableName))
             .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
