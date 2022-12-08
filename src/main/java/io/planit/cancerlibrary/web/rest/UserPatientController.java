@@ -152,6 +152,7 @@ public class UserPatientController {
         public DivisiblePatientVM(Patient patient, boolean authorized) {
             this.ptNo(patient.getPtNo());
             this.ptNm(patient.getPtNm());
+            this.idxDt(patient.getIdxDt());
             this.authorized = authorized;
         }
 
