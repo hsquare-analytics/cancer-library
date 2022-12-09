@@ -251,7 +251,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               }
             )
           }
-          scrolling={{mode: 'standard', showScrollbar: 'always'}}
+          scrolling={{mode: 'standard', showScrollbar: 'always', useNative: true}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatusReducer())}
           columnAutoWidth={true}
