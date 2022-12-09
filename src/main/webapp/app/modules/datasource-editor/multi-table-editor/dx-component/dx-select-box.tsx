@@ -60,6 +60,9 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           const label = `${option.title} (value: ${option.description})`;
           return `<div class='item-with-tooltip' title='${label}'> ${label}</div>`;
         }}
+        dropDownOptions={{
+          resizeEnabled: true,
+        }}
         buttons={isSudoUser && isSelectBoxOpened ? [
           {
             name: 'add',
