@@ -8,6 +8,8 @@ import {Popup} from 'devextreme-react/popup';
 export const MultiTableEditorPopup = React.forwardRef((props, ref) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
+  const [profileExpanded, setProfileExpanded] = useState(true);
+
   React.useImperativeHandle(ref, () => ({
     setPopupVisible(value) {
       setPopupVisible(value);
@@ -21,9 +23,10 @@ export const MultiTableEditorPopup = React.forwardRef((props, ref) => {
     resizeEnabled={true}
     height={'98vh'}
     width={'98vw'}
-    titleComponent={() => <PatientProfileCard setPopupVisible={setPopupVisible}/>}
+    titleComponent={() => <PatientProfileCard setPopupVisible={setPopupVisible} profileExpanded={profileExpanded}
+                                              setProfileExpanded={setProfileExpanded}/>}
   >
-    <ScrollView width='100%' height='75%' showScrollbar={"always"}>
+    <ScrollView width='100%' height={profileExpanded ? '70%' : '95%'} showScrollbar={"always"}>
       <MultiTableEditor/>
     </ScrollView>
   </Popup>

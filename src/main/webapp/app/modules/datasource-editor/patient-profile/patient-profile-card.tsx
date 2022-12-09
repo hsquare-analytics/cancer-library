@@ -45,6 +45,8 @@ const PatientStatusChip = (status: string) => {
 };
 
 interface IPatientProfileCardProps {
+  profileExpanded: boolean;
+  setProfileExpanded: (value: boolean) => void;
   setPopupVisible: (popupVisible: boolean) => void;
 }
 
@@ -57,10 +59,11 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
 
   return (
     <Accordion
-      defaultExpanded={true}
+      expanded={props.profileExpanded}
       sx={{
         '& .MuiAccordionSummary-contentGutters': {justifyContent: 'space-between'},
       }}
+      onChange={() => props.setProfileExpanded(!props.profileExpanded)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header">
         <div className={'d-flex'} style={{alignItems: 'center'}}>
