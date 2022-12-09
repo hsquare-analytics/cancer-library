@@ -128,7 +128,7 @@ export const AccessiblePatient = () => {
             allowEditing={false}
           />
           <Column
-            caption={translate('cancerLibraryApp.datasourceEditor.column.status')}
+            caption={translate('cancerLibraryApp.patient.detail.status')}
             dataField={'detail.status'}
             alignment={'center'}
             minWidth={150}

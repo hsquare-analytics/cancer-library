@@ -11,6 +11,7 @@
       "fsrMedDt": "암초진일",
       "crtnDt": "생성일자",
       "detail" : {
+        "declineReason": "반려사유",
         "status": "상태",
         "createdBy": "제출자",
         "createdDate": "제출일",
