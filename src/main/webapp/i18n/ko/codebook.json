@@ -18,9 +18,9 @@
         "title": "Codebook"
       },
       "id": "ID",
-      "title": "Title",
-      "description": "Description",
-      "lookupList": "Lookup List",
+      "title": "코드북 이름",
+      "description": "상세설명",
+      "lookupList": "값 목록",
       "createdBy": "Created by",
       "createdDate": "Created date",
       "lastModifiedBy": "Modified by",
