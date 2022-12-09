@@ -26,7 +26,7 @@ export const MultiTableEditorPopup = React.forwardRef((props, ref) => {
     titleComponent={() => <PatientProfileCard setPopupVisible={setPopupVisible} profileExpanded={profileExpanded}
                                               setProfileExpanded={setProfileExpanded}/>}
   >
-    <ScrollView width='100%' height={profileExpanded ? '70%' : '95%'} showScrollbar={"always"}>
+    <ScrollView width='100%' height={profileExpanded ? 'calc(100vh - 460px)' : 'calc(100vh - 140px)'} showScrollbar={"always"}>
       <MultiTableEditor/>
     </ScrollView>
   </Popup>
