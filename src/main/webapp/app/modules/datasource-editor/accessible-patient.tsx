@@ -119,22 +119,17 @@ export const AccessiblePatient = () => {
             ) : null}
           </Toolbar>
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
-          {AccessiblePatientColumn.map(item => (
-            <Column
-              key={item.dataField}
-              dataField={item.dataField}
-              caption={translate(item.caption) || item.dataField}
-              dataType={item.dataType}
-              visibleIndex={item.visibleIndex}
-              format={item.format}
-              allowEditing={false}
-              alignment={'center'}
-              minWidth={150}
-            />
-          ))}
+          <Column
+            dataField="detail.comment"
+            caption={translate('cancerLibraryApp.datasourceEditor.column.comment')}
+            width={150}
+            alignment={'center'}
+            cellRender={commentCellRender}
+            allowEditing={false}
+          />
           <Column
             caption={translate('cancerLibraryApp.datasourceEditor.column.status')}
-            dataField={'status'}
+            dataField={'detail.status'}
             alignment={'center'}
             minWidth={150}
             allowEditing={true}
@@ -161,14 +156,19 @@ export const AccessiblePatient = () => {
               valueExpr={'valueExpr'}
             />
           </Column>
-          <Column
-            dataField="comment"
-            caption={translate('cancerLibraryApp.datasourceEditor.column.comment')}
-            width={150}
-            alignment={'center'}
-            cellRender={commentCellRender}
-            allowEditing={false}
-          />
+          {AccessiblePatientColumn.map(item => (
+            <Column
+              key={item.dataField}
+              dataField={item.dataField}
+              caption={translate(item.caption) || item.dataField}
+              dataType={item.dataType}
+              visibleIndex={item.visibleIndex}
+              format={item.format}
+              allowEditing={false}
+              alignment={'center'}
+              minWidth={150}
+            />
+          ))}
         </DataGrid>
       ) : (
         <Box sx={{display: 'flex'}}>

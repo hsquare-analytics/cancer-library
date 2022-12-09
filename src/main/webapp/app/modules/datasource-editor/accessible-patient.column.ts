@@ -17,10 +17,10 @@ const AccessiblePatientColumn: IDxColumn[] = [
     dataField: "ptBrdyDt",
     caption: "cancerLibraryApp.patient.ptBrdyDt",
   },
-  {
-    dataField: "hspTpCd",
-    caption: "cancerLibraryApp.patient.hspTpCd",
-  },
+  // {
+  //   dataField: "hspTpCd",
+  //   caption: "cancerLibraryApp.patient.hspTpCd",
+  // },
   {
     dataField: "gid",
     caption: "cancerLibraryApp.patient.gid",
