@@ -45,7 +45,7 @@ public class DMLSqlBuilderService {
 
     public String getInsertSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
-        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
@@ -149,7 +149,7 @@ public class DMLSqlBuilderService {
             throw new ParameterDeficiencyException();
         }
 
-        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
