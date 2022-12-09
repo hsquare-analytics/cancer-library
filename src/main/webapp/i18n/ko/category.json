@@ -18,11 +18,11 @@
         "title": "Category"
       },
       "id": "ID",
-      "title": "물리적 명칭",
+      "title": "테이블명",
       "description": "상세 설명",
       "attribute" : {
         "dateColumn" : "날짜 기준 컬럼",
-        "caption" : "표시 이름"
+        "caption" : "화면 표시 명칭"
       },
       "activated": "활성화 여부",
       "orderNo": "정렬순서",

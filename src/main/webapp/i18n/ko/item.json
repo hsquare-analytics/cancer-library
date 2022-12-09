@@ -18,24 +18,24 @@
         "title": "Item"
       },
       "id": "ID",
-      "title": "Title",
-      "description": "Description",
-      "activated": "Activated",
-      "orderNo": "orderNo",
-      "category.title": "Category Title",
-      "codebook.title": "Codebook Title",
+      "title": "컬럼명",
+      "description": "상세 설명",
+      "activated": "활성화 여부",
+      "orderNo": "순서",
+      "category.title": "테이블명",
+      "codebook.title": "코드북명",
       "attribute": {
-        "caption": "caption",
-        "required": "Required",
-        "format": "Format",
-        "dataType": "Data Type"
+        "caption": "화면 표시 명칭",
+        "required": "필수 여부",
+        "format": "화면 표시 형식",
+        "dataType": "데이터 형식"
       },
       "property": {
-        "visible": "Visible",
-        "allowEditing": "Allow Editing",
-        "sortIndex" : "Sort Index",
-        "sortDirection" : "Sort Direction",
-        "labelColumn" : "Label Column"
+        "visible": "화면 표시 여부",
+        "allowEditing": "수정 가능 여부",
+        "sortIndex" : "정렬 순서",
+        "sortDirection" : "정렬 방향",
+        "labelColumn" : "라벨 컬럼(코드북)"
       },
       "createdBy": "Created by",
       "createdDate": "Created date",
