@@ -1,13 +1,12 @@
 import React, {useEffect, useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Badge, Button} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {getUsersAsAdmin, updateUser} from './user-management.reducer';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import DataGrid, {Column} from 'devextreme-react/data-grid';
 import UserManagementColumns from "app/modules/administration/user-management/user-management.column";
-
 
 export const UserManagement = () => {
   const dispatch = useAppDispatch();
@@ -99,7 +98,7 @@ export const UserManagement = () => {
               return <Column
                 key={index}
                 dataField={column.dataField}
-                caption={column.caption}
+                caption={translate('userManagement.' + column.dataField)}
                 dataType={column.dataType}
                 visible={column.visible}
                 width={column.width}

@@ -5,7 +5,7 @@ const GroupColumns: IDxColumn[] = [
   {dataField: "title"},
   {dataField: "activated"},
   {dataField: "orderNo"},
-  {dataField: "topic.title"},
+  {dataField: "category.title"},
   {dataField: "createdBy"},
   {dataField: "createdDate", dataType: "datetime", format: "yyyy-MM-dd HH:mm:ss"},
   {dataField: "lastModifiedBy"},

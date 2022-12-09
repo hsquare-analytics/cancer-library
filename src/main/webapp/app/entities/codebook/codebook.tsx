@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
-import {getSortState, JhiItemCount, JhiPagination, Translate} from 'react-jhipster';
+import {getSortState, JhiItemCount, JhiPagination, Translate, translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {ASC, DESC, ITEMS_PER_PAGE, SORT} from 'app/shared/util/pagination.constants';
 import {overridePaginationStateWithQueryParams} from 'app/shared/util/entity-utils';
@@ -127,7 +127,7 @@ columnChooser={{mode: 'select', height: 600, width: 500, sortOrder: 'asc', allow
               <Column
                 key={index}
                 dataField={column.dataField}
-                caption={column.caption}
+                caption={translate('cancerLibraryApp.codebook.' + column.dataField)}
                 dataType={column.dataType}
                 visible={column.visible}
                 width={column.width}

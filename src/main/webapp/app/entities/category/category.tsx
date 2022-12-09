@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {Button} from 'reactstrap';
-import {Translate} from 'react-jhipster';
+import {Translate, translate} from 'react-jhipster';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getEntities} from './category.reducer';
@@ -73,7 +73,7 @@ export const Category = () => {
               <Column
                 key={index}
                 dataField={column.dataField}
-                caption={column.caption}
+                caption={translate('cancerLibraryApp.category.' + column.dataField)}
                 dataType={column.dataType}
                 visible={column.visible}
                 width={column.width}

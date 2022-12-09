@@ -6,7 +6,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "description"},
   {dataField: "activated"},
   {dataField: "category.title"},
-  {dataField: "attribute.type"},
+  {dataField: "attribute.dataType"},
   {dataField: "codebook.title"},
   {dataField: "attribute.caption"},
   {dataField: "attribute.required"},

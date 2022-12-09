@@ -20,7 +20,11 @@
       "id": "ID",
       "title": "Title",
       "description": "Description",
-      "lookupList": "Lookup List"
+      "lookupList": "Lookup List",
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified date"
     }
   }
 }

@@ -36,7 +36,11 @@
         "sortIndex" : "Sort Index",
         "sortDirection" : "Sort Direction",
         "labelColumn" : "Label Column"
-      }
+      },
+      "createdBy": "Created by",
+      "createdDate": "Created date",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified date"
     }
   }
 }
