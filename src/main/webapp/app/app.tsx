@@ -24,17 +24,6 @@ import {getDesignTokens} from 'app/shared/util/mui-theme';
 import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
 import dxPopup from "devextreme/ui/popup";
-import {Cookies} from "react-cookie";
-
-const cookies = new Cookies();
-
-export const setCookie = (name: string, value: string, options: any) => {
-    cookies.set(name, value, options);
-}
-
-export const getCookie = (name: string) => {
-    return cookies.get(name);
-}
 
 dxPopup.defaultOptions({
   options: {animation: null}
@@ -68,7 +57,6 @@ export const App = () => {
   useEffect(() => {
     dispatch(getSession());
     dispatch(getProfile());
-    setMode(getCookie('theme') as PaletteMode);
   }, []);
 
   const onToggleMode = useCallback(
@@ -78,10 +66,8 @@ export const App = () => {
       const bodyClassList = document.body.classList;
 
       if (!bodyClassList.contains('dark')) {
-        setCookie('theme', 'dark', {path: baseHref});
         bodyClassList.add('dark');
       } else {
-        setCookie('theme', 'light', {path: baseHref});
         bodyClassList.remove('dark');
       }
     },
