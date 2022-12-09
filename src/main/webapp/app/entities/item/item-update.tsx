@@ -190,8 +190,12 @@ export const ItemUpdate = () => {
                 id="item-sortDirection"
                 name="property.sortDirection"
                 data-cy="property.sortDirection"
-                type="text"
-              />
+                type="select"
+              >
+                <option value="">-</option>
+                <option value="asc">asc</option>
+                <option value="desc">desc</option>
+              </ValidatedField>
               <ValidatedField
                 label={translate('cancerLibraryApp.item.property.visible')}
                 id="item-visible"
