@@ -1,9 +1,11 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.constant.RowStatus;
 import io.planit.cancerlibrary.repository.SqlExecutor;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
 import io.planit.cancerlibrary.service.SequenceGenerator;
 import io.planit.cancerlibrary.service.UnionSqlBuilderService;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +115,31 @@ public class DatasourceController {
 
         String deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
         Boolean result = sqlExecutor.executeDML(deleteSQL);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PutMapping("/datasource/categories/{categoryId}/update-bulk-datasource-rows")
+    public ResponseEntity<Integer> updateBulkDatasourceRows(@PathVariable(value = "categoryId") final Long categoryId,
+                                                            @RequestBody List<Map<String, Object>> rows) {
+        log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
+
+        Integer result = 0;
+
+        for (Map<String, Object> row : rows) {
+            row.put("status", RowStatus.COMPLETED);
+            String sql = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, row);
+
+            String dmlSql;
+            if (ObjectUtils.isEmpty(sqlExecutor.executeSelectOne(sql))) {
+                dmlSql = dmlSqlBuilderService.getInsertSQL(categoryId, row);
+            } else {
+                dmlSql = dmlSqlBuilderService.getUpdateSQL(categoryId, row);
+            }
+            if (Boolean.TRUE.equals(sqlExecutor.executeDML(dmlSql))) {
+                result++;
+            }
+        }
+
         return ResponseEntity.ok().body(result);
     }
 }

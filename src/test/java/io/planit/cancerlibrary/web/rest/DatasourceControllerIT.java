@@ -76,7 +76,7 @@ class DatasourceControllerIT {
     private final String DEFAULT_COLUMN_GENDER = "gender";
 
     private final String[] DEFAULT_COLUMN_NAME_ARRAY = {"name", "birth", "city", "gender", "join_dt", "mail",
-        "login_ip"};
+        "login_ip", "pt_no"};
 
     @BeforeEach
     void initTest() {
@@ -237,5 +237,33 @@ class DatasourceControllerIT {
             "select * from ph_test_updated where idx = '10001'");
 
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    @Transactional
+    void testUpdateBulkDatasourceRows() throws Exception {
+        // given
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().category(category).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10001, 'one')");
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10002, 'two')");
+
+        // then
+        restDatasourceMockMvc.perform(
+                put("/api/datasource/categories/{categoryId}/update-bulk-datasource-rows", category.getId()).contentType(
+                    MediaType.APPLICATION_JSON).content("[{\"idx\":\"10001\", \"name\":\"modified_one\"}, {\"idx\":\"10002\", \"name\":\"modified_two\"}, {\"idx\":\"10003\", \"name\":\"modified_three\", \"pt_no\":\"12345\"}]"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$").value(3));
+
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
+            "select * from ph_test_updated where idx in ('10001', '10002', '10003')");
+
+        assertThat(result).hasSize(3);
+        assertThat(result.get(0)).containsEntry("name", "modified_one").containsEntry("status", "COMPLETED");
+        assertThat(result.get(1)).containsEntry("name", "modified_two").containsEntry("status", "COMPLETED");
+        assertThat(result.get(2)).containsEntry("name", "modified_three").containsEntry("status", "COMPLETED");
     }
 }

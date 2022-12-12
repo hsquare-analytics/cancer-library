@@ -4,10 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -35,7 +32,11 @@ public class SqlExecutor {
     }
 
     public Map<String, Object> executeSelectOne(String sql) {
-        return keyChangeLowerMap(jdbcTemplate.queryForMap(sql));
+        try {
+            return keyChangeLowerMap(jdbcTemplate.queryForMap(sql));
+        } catch (Exception e) {
+            return Collections.emptyMap();
+        }
     }
 
     public Boolean executeDML(String sql) {
