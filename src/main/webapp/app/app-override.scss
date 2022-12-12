@@ -523,16 +523,6 @@
 }
 
 .dx-item-content.dx-list-item-content {
-  padding: 12px;
-}
-
-.dx-list-item-before-bag.dx-list-select-checkbox-container, .dx-list-item-before-bag.dx-list-select-radiobutton-container {
-  width: 30px;
-}
-
-.dx-list-item-before-bag .dx-list-select-checkbox,
-.dx-list-item-before-bag .dx-list-select-radiobutton {
-  margin-top: -1px;
-  margin-bottom: -3px;
-  margin-left: 10px;
+  white-space: break-spaces;
+  padding-left: 0px;
 }
