@@ -2,10 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import DataGrid, {Button as DxButton, Column, ColumnChooser} from 'devextreme-react/data-grid';
 import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {translate} from 'react-jhipster';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {getDxColumnConfig} from 'app/modules/datasource-editor/multi-table-editor/dx-component/dx-column-config';
@@ -15,8 +13,6 @@ import {
   setCategory as setSelectedCategory,
   setValidateFailedItems,
 } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
-import Button from '@mui/material/Button';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
 
 
@@ -48,6 +44,9 @@ import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
+import {
+  SingleTableEditorAccordionSummary
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -128,38 +127,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
-                        onClick={(e) => setAccordionExpanded(!accordionExpanded)}
-      >
-        {getCategoryTypography(category)}
-        <div>
-          <Button
-            variant="outlined"
-            className={'me-2'}
-            size={'small'}
-            onClick={e => {
-              e.stopPropagation();
-              dataGrid.current.instance.showColumnChooser();
-            }}
-          >
-            <FontAwesomeIcon icon="list" className={'me-3'}/>
-            {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.columnList')}
-          </Button>
-          <Button
-            variant="outlined"
-            className={'me-2'}
-            size={'small'}
-            color={"info"}
-            onClick={e => {
-              e.stopPropagation();
-              dataGrid.current.instance.addRow();
-            }}
-          >
-            <FontAwesomeIcon icon="plus" className={'me-3'}/>
-            {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.addRow')}
-          </Button>
-        </div>
-      </AccordionSummary>
+      <SingleTableEditorAccordionSummary category={category} dataGrid={dataGrid}
+                                         accordionExpanded={accordionExpanded}
+                                         setAccordionExpanded={setAccordionExpanded}/>
       <AccordionDetails sx={{padding: '8px 0'}}>
         <DataGrid
           ref={dataGrid}
