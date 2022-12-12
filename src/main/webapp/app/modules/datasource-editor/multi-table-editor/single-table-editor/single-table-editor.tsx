@@ -141,7 +141,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           allowColumnResizing={true}
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
-          selection={{mode: 'multiple', selectAllMode: 'allPages', showCheckBoxesMode: 'always'}}
+          selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           filterPanel={category.attribute.dateColumn ? {visible: true} : undefined}
           defaultFilterValue={category.attribute.dateColumn ? [category.attribute.dateColumn, '>=', new Date(patient.fsrMedDt)] : []}
           headerFilter={{allowSearch: true, visible: true}}
