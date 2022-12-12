@@ -8,6 +8,8 @@ import {ICategory} from "app/shared/model/category.model";
 import Button from '@mui/material/Button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {translate} from 'react-jhipster';
+import {useAppDispatch} from "app/config/store";
+import {updateBulkDatasourceRows} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 
 export interface SingleTableAccordionSummaryProps {
   category: ICategory
@@ -17,6 +19,8 @@ export interface SingleTableAccordionSummaryProps {
 }
 
 export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSummaryProps) => {
+  const dispatch = useAppDispatch();
+
   const {category, dataGrid, accordionExpanded} = props;
   return (
     <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
@@ -32,6 +36,10 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           onClick={e => {
             e.stopPropagation();
             dataGrid.current.instance.getSelectedRowsData();
+            dispatch(updateBulkDatasourceRows({
+              categoryId: category.id,
+              rows: dataGrid.current.instance.getSelectedRowsData()
+            }));
           }}
         >
           <FontAwesomeIcon icon="check-double" className={'me-3'}/>

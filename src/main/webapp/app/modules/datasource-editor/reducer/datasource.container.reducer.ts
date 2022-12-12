@@ -70,7 +70,7 @@ export const deleteDatasourceRow = createAsyncThunk('datasource_container/delete
 );
 
 export const updateBulkDatasourceRows = createAsyncThunk('datasource_container/update_bulk_data_sources_row', async (data: { categoryId: number, rows: any[] }, thunkAPI) => {
-  const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/update-bulk-rows`, data.rows);
+  const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/update-bulk-datasource-rows`, data.rows);
   thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.rows[0]['pt_no']}));
   return result;
 });
