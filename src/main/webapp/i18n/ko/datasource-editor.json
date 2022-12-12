@@ -47,6 +47,7 @@
       "singleTableEditor": {
         "addRow": "행 추가",
         "columnList": "열 목록",
+        "bulkConfirm": "일괄 승인",
         "status": "상태",
         "editRow": "행 편집",
         "createSuccess": "{{ table }} 테이블에 행이 추가되었습니다.",

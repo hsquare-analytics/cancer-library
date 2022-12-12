@@ -28,6 +28,19 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           variant="outlined"
           className={'me-2'}
           size={'small'}
+          color={'warning'}
+          onClick={e => {
+            e.stopPropagation();
+            dataGrid.current.instance.getSelectedRowsData();
+          }}
+        >
+          <FontAwesomeIcon icon="check-double" className={'me-3'}/>
+          {translate('cancerLibraryApp.datasourceEditor.singleTableEditor.bulkConfirm')}
+        </Button>
+        <Button
+          variant="outlined"
+          className={'me-2'}
+          size={'small'}
           onClick={e => {
             e.stopPropagation();
             dataGrid.current.instance.showColumnChooser();

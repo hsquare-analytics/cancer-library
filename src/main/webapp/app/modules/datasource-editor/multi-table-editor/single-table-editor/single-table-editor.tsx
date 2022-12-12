@@ -29,7 +29,6 @@ import {
   onRowRemoving,
   onRowValidating,
   toastApiResult,
-  toggleRowSelection,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
 import {
   DATASOURCE_IDX,
@@ -236,7 +235,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               value => dispatch(setValidateFailedItems(value))
             )
           }
-          onRowClick={e => toggleRowSelection(e, dataGrid)}
           onRowDblClick={e => dataGrid.current.instance.editRow(e.rowIndex)}
           onSaved={e => {
             if (e.changes.length === 0 && editedRow.status !== RowStatus.COMPLETED) {
