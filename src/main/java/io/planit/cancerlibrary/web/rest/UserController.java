@@ -2,10 +2,12 @@ package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
+import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +42,9 @@ public class UserController {
     public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
         log.debug("REST request to get all Users with work info");
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
-            .stream().map(user -> {
+            .stream()
+            .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR)))
+            .map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
                 Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.SUBMITTED);
                 Integer approved = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.APPROVED);

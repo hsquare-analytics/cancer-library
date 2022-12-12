@@ -124,7 +124,7 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               options: {
                 text: 'SAVE',
                 onClick() {
-                  dispatch(updateEntity({entity: {...patient, detail: {comment: commentValue}}, dateRange}));
+                  dispatch(updateEntity({...patient, detail: {comment: commentValue}}));
                   setIsPopupVisible(false);
                 },
               },

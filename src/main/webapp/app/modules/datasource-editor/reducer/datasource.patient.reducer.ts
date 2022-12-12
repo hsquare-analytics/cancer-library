@@ -14,19 +14,10 @@ const initialState: EntityState<IPatient> = {
   updateSuccess: false,
 };
 
-interface IDateRange {
-  startDate?: Date;
-  endDate?: Date;
-}
 
-export const getEntities = createAsyncThunk('datasource_patient/fetch_accessible_patient_list', async (dateRange: IDateRange) => {
+export const getEntities = createAsyncThunk('datasource_patient/fetch_accessible_patient_list', async () => {
   const requestUrl = `api/patients/accessible-patient-list`;
-  return axios.get<IPatient[]>(requestUrl, {
-    params: {
-      startDate: dateRange.startDate,
-      endDate: dateRange.endDate,
-    }
-  });
+  return axios.get<IPatient[]>(requestUrl);
 });
 
 export const getEntity = createAsyncThunk('datasource_patient/fetch_entity', async (id: string | number) => {
@@ -36,12 +27,9 @@ export const getEntity = createAsyncThunk('datasource_patient/fetch_entity', asy
   {serializeError: serializeAxiosError}
 );
 
-export const updateEntity = createAsyncThunk('datasource_patient/update_entity', async (data: {
-    entity: IPatient, dateRange: IDateRange
-  }, thunkAPI) => {
-
-    const result = await axios.patch<IPatient>(`api/patients/${data.entity.ptNo}`, cleanEntity(data.entity));
-    thunkAPI.dispatch(getEntities(data.dateRange));
+export const updateEntity = createAsyncThunk('datasource_patient/update_entity', async (entity: IPatient, thunkAPI) => {
+    const result = await axios.patch<IPatient>(`api/patients/${entity.ptNo}`, cleanEntity(entity));
+    thunkAPI.dispatch(getEntities());
     return result;
   },
   {serializeError: serializeAxiosError}

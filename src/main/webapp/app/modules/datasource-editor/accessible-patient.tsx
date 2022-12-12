@@ -5,7 +5,7 @@ import {
   getEntity as getPatient,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
-import DataGrid, {Column, Item, Lookup, Toolbar} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
@@ -16,9 +16,6 @@ import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 import './accessible-patient.scss';
 import {CheckBox} from 'devextreme-react/check-box';
 import {MultiTableEditorPopup} from 'app/modules/datasource-editor/multi-table-editor/multi-table-editor-popup';
-import CustomDateRangePopover from 'app/modules/datasource-editor/date-range-picker';
-import {setDateRange} from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
-import moment from 'moment';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
@@ -38,14 +35,8 @@ export const AccessiblePatient = () => {
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const loading = useAppSelector(state => state.datasourcePatient.loading);
 
-  const initialDateRange = {
-    startDate: moment(new Date()).subtract(1, 'week').toDate(),
-    endDate: new Date(),
-  };
-
   useEffect(() => {
-    dispatch(setDateRange(initialDateRange));
-    dispatch(getAccessiblePatients(initialDateRange));
+    dispatch(getAccessiblePatients());
   }, []);
 
   useEffect(() => {
@@ -67,7 +58,7 @@ export const AccessiblePatient = () => {
   const onRowUpdating = e => {
     e.cancel = new Promise<void>(resolve => {
       const row = cleanEntity(Object.assign({}, e.oldData, e.newData));
-      dispatch(updatePatient({entity: row, dateRange: initialDateRange}));
+      dispatch(updatePatient(row));
       resolve();
     });
   };
@@ -110,14 +101,6 @@ export const AccessiblePatient = () => {
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
         >
-          <Toolbar>
-            <Item name={'searchPanel'} />
-            {isSudoUser ? (
-              <Item location={'before'}>
-                <CustomDateRangePopover />
-              </Item>
-            ) : null}
-          </Toolbar>
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
           <Column
             dataField="detail.comment"
@@ -167,6 +150,8 @@ export const AccessiblePatient = () => {
               allowEditing={false}
               alignment={'center'}
               minWidth={150}
+              sortIndex={item.sortIndex}
+              sortOrder={item.sortOrder}
             />
           ))}
         </DataGrid>

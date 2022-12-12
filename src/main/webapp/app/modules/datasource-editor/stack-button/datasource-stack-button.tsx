@@ -82,11 +82,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
       if (isConfirmed) {
         const entity = {...getLocalPatient(REVIEW_LIST.DECLINED)};
         entity['detail']['declineReason'] = text;
-        const payload = {
-          entity,
-          dateRange,
-        };
-        dispatch(updatePatient(payload));
+        dispatch(updatePatient(entity));
       }
     });
   };
@@ -94,11 +90,8 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onApprovedButtonClick = () => {
     fireApprovedSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const payload = {
-          entity: {...getLocalPatient(REVIEW_LIST.APPROVED)},
-          dateRange,
-        };
-        dispatch(updatePatient(payload));
+        const entity = getLocalPatient(REVIEW_LIST.APPROVED);
+        dispatch(updatePatient(entity));
       }
     });
   };
@@ -106,11 +99,8 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onSubmittedButtonClick = () => {
     fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const payload = {
-          entity: {...getLocalPatient(REVIEW_LIST.SUBMITTED)},
-          dateRange,
-        };
-        dispatch(updatePatient(payload));
+        const entity =  getLocalPatient(REVIEW_LIST.SUBMITTED);
+        dispatch(updatePatient(entity));
       }
     });
   };

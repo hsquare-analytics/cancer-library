@@ -8,10 +8,6 @@ const initialState = {
   },
   validationFailedItems: [],
   originRow: {},
-  dateRange: {
-    startDate: null,
-    endDate: null,
-  },
   openAll: false,
   loading: false,
   errorMessage: null,
@@ -35,9 +31,6 @@ export const DatasourceStatusReducer = createSlice({
     },
     setValidateFailedItems(state, action) {
       state.validationFailedItems = action.payload;
-    },
-    setDateRange(state, action) {
-      state.dateRange = action.payload;
     },
     setOpenAll(state, action) {
       state.openAll = action.payload;
@@ -69,6 +62,6 @@ export const getOriginRow = createAsyncThunk("datasource_origin/get_row", async 
 );
 
 
-export const {reset, setCategory, setValidateFailedItems, setDateRange, setOpenAll} = DatasourceStatusReducer.actions;
+export const {reset, setCategory, setValidateFailedItems, setOpenAll} = DatasourceStatusReducer.actions;
 
 export default DatasourceStatusReducer.reducer;

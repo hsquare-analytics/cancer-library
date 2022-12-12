@@ -36,6 +36,8 @@ const AccessiblePatientColumn: IDxColumn[] = [
     caption: "cancerLibraryApp.patient.idxDt",
     dataType: "date",
     format: "yyyy-MM-dd",
+    sortOrder: "desc",
+    sortIndex: 1,
   },
   {
     dataField: "crtnDt",
@@ -62,6 +64,8 @@ const AccessiblePatientColumn: IDxColumn[] = [
     caption: "cancerLibraryApp.patient.detail.lastModifiedDate",
     dataType: "datetime",
     format: "yyyy-MM-dd HH:mm:ss",
+    sortOrder: "desc",
+    sortIndex: 0,
   }
 ];
 

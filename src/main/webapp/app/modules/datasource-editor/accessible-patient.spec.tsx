@@ -34,12 +34,6 @@ describe('AccessiblePatient', () => {
         count: 0,
       }
     },
-    datasourceStatus: {
-      dateRange: {
-        startDate: new Date(),
-        endDate: new Date(),
-      }
-    }
   };
 
   const wrapper = (fakeState) => {
