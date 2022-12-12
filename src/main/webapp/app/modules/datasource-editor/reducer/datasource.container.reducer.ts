@@ -69,6 +69,12 @@ export const deleteDatasourceRow = createAsyncThunk('datasource_container/delete
   {serializeError: serializeAxiosError}
 );
 
+export const updateBulkDatasourceRows = createAsyncThunk('datasource_container/update_bulk_data_sources_row', async (data: { categoryId: number, rows: any[] }, thunkAPI) => {
+  const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/update-bulk-rows`, data.rows);
+  thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.rows[0]['pt_no']}));
+  return result;
+});
+
 const name = 'datasource-container'
 export const DatasourceContainer = createSlice({
   name,
@@ -129,7 +135,7 @@ export const DatasourceContainer = createSlice({
           },
         }
       })
-      .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state) => {
+      .addMatcher(isFulfilled(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow, updateBulkDatasourceRows), (state) => {
         state.updating = false
         state.loading = false;
         state.updateSuccess = true;
@@ -140,12 +146,12 @@ export const DatasourceContainer = createSlice({
         state.errorMessage = null;
         state.updateSuccess = false;
       })
-      .addMatcher(isPending(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state) => {
+      .addMatcher(isPending(updateDatasourceRow, createDatasourceRow, deleteDatasourceRow, updateBulkDatasourceRows), (state) => {
         state.errorMessage = null;
         state.updating = true;
         state.updateSuccess = false;
       })
-      .addMatcher(isRejected(getUsableCategories, updateDatasourceRow, createDatasourceRow, deleteDatasourceRow), (state, action) => {
+      .addMatcher(isRejected(getUsableCategories, updateDatasourceRow, createDatasourceRow, deleteDatasourceRow, updateBulkDatasourceRows), (state, action) => {
         state.errorMessage = action.error.message;
         state.loading = false;
         state.updating = false;
