@@ -201,7 +201,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   );
                   dispatch(updateDatasourceRow({categoryId: category.id, row}));
                 } else {
-                  const row = Object.assign({}, e.oldData, e.newData);
+                  const row = Object.assign({}, e.oldData, e.newData, {
+                    [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                  });
                   dispatch(createDatasourceRow({categoryId: category.id, row}));
                 }
               });
