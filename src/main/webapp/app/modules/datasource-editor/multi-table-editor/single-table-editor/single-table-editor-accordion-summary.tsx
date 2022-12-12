@@ -10,6 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {translate} from 'react-jhipster';
 import {useAppDispatch} from "app/config/store";
 import {updateBulkDatasourceRows} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
+import Swal from "sweetalert2";
 
 export interface SingleTableAccordionSummaryProps {
   category: ICategory
@@ -22,6 +23,23 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
   const dispatch = useAppDispatch();
 
   const {category, dataGrid, accordionExpanded} = props;
+  const swalUpdateBulkDatasourceRows = () => {
+    Swal.fire({
+      text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.updateBulkDatasourceRows.title'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.cancel'),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dataGrid.current.instance.getSelectedRowsData();
+        dispatch(updateBulkDatasourceRows({
+          categoryId: category.id,
+          rows: dataGrid.current.instance.getSelectedRowsData()
+        }));
+      }
+    })
+  }
   return (
     <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
                       onClick={(e) => props.setAccordionExpanded(!accordionExpanded)}
@@ -35,11 +53,7 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           color={'warning'}
           onClick={e => {
             e.stopPropagation();
-            dataGrid.current.instance.getSelectedRowsData();
-            dispatch(updateBulkDatasourceRows({
-              categoryId: category.id,
-              rows: dataGrid.current.instance.getSelectedRowsData()
-            }));
+            swalUpdateBulkDatasourceRows();
           }}
         >
           <FontAwesomeIcon icon="check-double" className={'me-3'}/>
