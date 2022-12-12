@@ -22,6 +22,7 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+        <addUniqueConstraint columnNames="user_id, patient_no" tableName="ph_user_patient"/>
     </changeSet>
 
     <changeSet id="20220929120135-1-data" author="jhipster" context="faker">
