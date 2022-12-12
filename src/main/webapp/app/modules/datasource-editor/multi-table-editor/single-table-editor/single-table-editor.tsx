@@ -33,6 +33,7 @@ import {
   onRowRemoving,
   onRowValidating,
   toastApiResult,
+  toggleRowSelection,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
 import {
   DATASOURCE_IDX,
@@ -171,7 +172,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           allowColumnResizing={true}
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
-          selection={{mode: 'single'}}
+          selection={{mode: 'multiple', selectAllMode: 'allPages', showCheckBoxesMode: 'always'}}
           filterPanel={category.attribute.dateColumn ? {visible: true} : undefined}
           defaultFilterValue={category.attribute.dateColumn ? [category.attribute.dateColumn, '>=', new Date(patient.fsrMedDt)] : []}
           headerFilter={{allowSearch: true, visible: true}}
@@ -265,6 +266,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               value => dispatch(setValidateFailedItems(value))
             )
           }
+          onRowClick={e => toggleRowSelection(e, dataGrid)}
           onRowDblClick={e => dataGrid.current.instance.editRow(e.rowIndex)}
           onSaved={e => {
             if (e.changes.length === 0 && editedRow.status !== RowStatus.COMPLETED) {

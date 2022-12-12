@@ -80,3 +80,12 @@ export const onRowRemoving = (e, category: ICategory,
   });
 };
 
+export const toggleRowSelection = (e, dataGrid) => {
+  if (dataGrid.current.instance.getSelectedRowKeys().includes(e.key)) {
+    dataGrid.current.instance.deselectRows([e.key]);
+  } else {
+    const selectedRowKeys = dataGrid.current.instance.getSelectedRowKeys();
+    selectedRowKeys.push(e.key);
+    dataGrid.current.instance.selectRows(selectedRowKeys);
+  }
+}
