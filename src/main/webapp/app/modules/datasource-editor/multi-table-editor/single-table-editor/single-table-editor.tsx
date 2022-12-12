@@ -288,7 +288,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
           <Column type="buttons" width={110} visibleIndex={9999999}>
-            <DxButton name="edit"/>
             <DxButton name="delete"
                       visible={(e) => e.row.data.idx.includes(KCURE_PREFIX) && (isManager || e.row.data['created_by'] === login)}
             />
