@@ -157,7 +157,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 xs: 1,
                 sm: 1,
                 md: 1,
-                lg: 6,
+                lg: 5,
               },
             },
           }}
