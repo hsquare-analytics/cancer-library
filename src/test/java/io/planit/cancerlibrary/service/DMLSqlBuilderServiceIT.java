@@ -142,6 +142,20 @@ class DMLSqlBuilderServiceIT {
 
     @Test
     @Transactional
+    @WithMockUser
+    void test_insert_sql_abnormal_setup_exception() {
+        Long categoryId = category.getId();
+        HashMap<String, Object> params = new HashMap<>() {{
+            put("idx", "idx_test");
+            put("pt_no", "idx_test");
+            put("hosp_cd", "hosp_test");
+        }};
+
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(categoryId, params)).isInstanceOf(AbnormalSetupException.class);
+    }
+
+    @Test
+    @Transactional
     void testReadUpdatedRowSql() {
         // given
         User user = UserResourceIT.createEntity(em);
@@ -283,7 +297,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getInsertSQL(99999L, param)).isInstanceOf(AbnormalSetupException.class);
     }
 
     @Test
@@ -294,14 +308,14 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadUpdatedRowSQL(99999L, param)).isInstanceOf(AbnormalSetupException.class);
     }
 
     @Test
     @Transactional
     @WithMockUser
     void testReadAllSqlConfigurationException() {
-        assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getReadAllSQL(99999L)).isInstanceOf(AbnormalSetupException.class);
     }
 
     @Test
@@ -312,7 +326,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getUpdateSQL(99999L, param)).isInstanceOf(AbnormalSetupException.class);
     }
 
     @Test
@@ -323,7 +337,7 @@ class DMLSqlBuilderServiceIT {
             put("idx", "idx_test");
             put("column1", "test1");
         }};
-        assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(SetupDeficiencyException.class);
+        assertThatThrownBy(() -> dmlSqlBuilderService.getDeleteSQL(99999L, param)).isInstanceOf(AbnormalSetupException.class);
     }
 }
 

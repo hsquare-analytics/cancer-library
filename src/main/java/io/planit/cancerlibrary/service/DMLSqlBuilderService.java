@@ -53,7 +53,7 @@ public class DMLSqlBuilderService {
 
     public String getInsertSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
@@ -99,7 +99,7 @@ public class DMLSqlBuilderService {
         List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
 
         if (itemList.stream().map(Item::getTitle).noneMatch(s -> parameterization(s).equals(parameterization(PATIENT_NUMBER_COLUMN)))) {
-            throw new SetupDeficiencyException();
+            throw new AbnormalSetupException();
         }
 
         return itemList.stream().filter(distinctByKey(Item::getTitle)).filter(item -> !reservedColumns.contains(parameterization(item.getTitle()))).collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class DMLSqlBuilderService {
 
     private void validateInsertCondition(Map<String, Object> map) {
         if (map.containsKey(parameterization(HOSPITAL_CODE))) {
-            throw new RuntimeException("Hospital code is not allowed to be inserted");
+            throw new AbnormalSetupException("Hospital code is not allowed to be inserted");
         }
 
         if (!map.containsKey(parameterization(IDX_COLUMN)) || !map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
@@ -130,7 +130,7 @@ public class DMLSqlBuilderService {
 
     public String getReadUpdatedRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         SQL sql = new SQL().
             SELECT("*").
@@ -143,7 +143,7 @@ public class DMLSqlBuilderService {
 
     public String getReadOriginRowSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get read query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         SQL sql = new SQL().
             SELECT("*").
@@ -156,7 +156,7 @@ public class DMLSqlBuilderService {
 
     public String getReadAllSQL(Long categoryId) {
         log.debug("Request to get read all query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         SQL sql = new SQL().SELECT("*").FROM(sqlization(category.getTitle() + UPDATED_SUFFIX));
 
@@ -171,7 +171,7 @@ public class DMLSqlBuilderService {
             throw new ParameterDeficiencyException();
         }
 
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
@@ -208,7 +208,7 @@ public class DMLSqlBuilderService {
 
     public String getDeleteSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get delete query by categoryId: {}", categoryId);
-        Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
+        Category category = categoryRepository.findById(categoryId).orElseThrow(AbnormalSetupException::new);
 
         SQL sql = new SQL()
             .DELETE_FROM(sqlization(category.getTitle() + UPDATED_SUFFIX))

@@ -33,7 +33,7 @@ public class UnionSqlBuilderService {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
         List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(SetupDeficiencyException::new);
+            .orElseThrow(AbnormalSetupException::new);
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, patientNo);
         SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, patientNo);
