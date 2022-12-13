@@ -28,4 +28,19 @@
     padding: 14px 24px 0 24px;
     border-bottom: none;
   }
+
+  .dx-item-content.dx-list-item-content {
+    white-space: break-spaces;
+    padding-left: 0px;
+  }
+
+  .dx-datagrid .dx-datagrid-table .dx-header-row > td {
+    //padding-right: 10px;
+    //padding-left: 10px;
+    padding: 10px 5px;
+  }
+
+  .dx-datagrid .dx-row-lines > td {
+    padding: 10px 5px;
+  }
 }
