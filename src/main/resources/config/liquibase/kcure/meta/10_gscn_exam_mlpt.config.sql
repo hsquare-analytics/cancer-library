@@ -28,8 +28,8 @@ VALUES (10000, 'GSCN.GSCN_EXAM_MLPT', '10.위암_검사_분자병리', true, 10,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (10000, null, '10.위암_검사_분자병리');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (10001, 'hosp_cd', 10000, 'system', 10001);
-insert into ph_item_attribute (item_id, caption, required) values (10001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (10001, 'hosp_cd', 10000, 'system', 10001);
+-- insert into ph_item_attribute (item_id, caption, required) values (10001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (10002, 'pt_no', 10000, 'system', 10002);
 insert into ph_item_attribute (item_id, caption) values (10002, '환자대체번호');

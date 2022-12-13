@@ -37,8 +37,8 @@ VALUES (21000, 'GSCN.GSCN_TRTM_ANTP', '21.위암_치료_항암요법', true, 21,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (21000, null, '21.위암_치료_항암요법');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (21001, 'hosp_cd', 21000, 'system', 21001);
-insert into ph_item_attribute (item_id, caption, required) values (21001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (21001, 'hosp_cd', 21000, 'system', 21001);
+-- insert into ph_item_attribute (item_id, caption, required) values (21001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (21002, 'pt_no', 21000, 'system', 21002);
 insert into ph_item_attribute (item_id, caption) values (21002, '환자대체번호');

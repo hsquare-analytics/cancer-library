@@ -30,8 +30,8 @@ VALUES (9500, 'GSCN.GSCN_DIAG_STAG', '05.위암_진단_병기', true, 5, 999, 's
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9500, null, '05.위암_진단_병기');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9501, 'hosp_cd', 9500, 'system', 9501);
-insert into ph_item_attribute (item_id, caption, required) values (9501, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9501, 'hosp_cd', 9500, 'system', 9501);
+-- insert into ph_item_attribute (item_id, caption, required) values (9501, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9502, 'pt_no', 9500, 'system', 9502);
 insert into ph_item_attribute (item_id, caption) values (9502, '환자대체번호');

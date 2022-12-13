@@ -29,8 +29,8 @@ VALUES (9900, 'GSCN.GSCN_EXAM_IMPT', '09.위암_검사_면역병리', true, 9, 9
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9900, null, '09.위암_검사_면역병리');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9901, 'hosp_cd', 9900, 'system', 9901);
-insert into ph_item_attribute (item_id, caption, required) values (9901, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9901, 'hosp_cd', 9900, 'system', 9901);
+-- insert into ph_item_attribute (item_id, caption, required) values (9901, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9902, 'pt_no', 9900, 'system', 9902);
 insert into ph_item_attribute (item_id, caption) values (9902, '환자대체번호');

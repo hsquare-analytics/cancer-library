@@ -29,8 +29,8 @@ VALUES (12000, 'GSCN.GSCN_EXAM_HPLI', '12.위암_검사_HPYLORI', true, 12, 999,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (12000, null, '12.위암_검사_HPYLORI');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (12001, 'hosp_cd', 12000, 'system', 12001);
-insert into ph_item_attribute (item_id, caption, required) values (12001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (12001, 'hosp_cd', 12000, 'system', 12001);
+-- insert into ph_item_attribute (item_id, caption, required) values (12001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (12002, 'pt_no', 12000, 'system', 12002);
 insert into ph_item_attribute (item_id, caption) values (12002, '환자대체번호');

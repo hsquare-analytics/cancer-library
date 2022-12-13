@@ -27,8 +27,8 @@ VALUES (9800, 'GSCN.GSCN_EXAM_IMAG', '08.위암_검사_영상', true, 8, 999, 's
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9800, null, '08.위암_검사_영상');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9801, 'hosp_cd', 9800, 'system', 9801);
-insert into ph_item_attribute (item_id, caption, required) values (9801, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9801, 'hosp_cd', 9800, 'system', 9801);
+-- insert into ph_item_attribute (item_id, caption, required) values (9801, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9802, 'pt_no', 9800, 'system', 9802);
 insert into ph_item_attribute (item_id, caption) values (9802, '환자대체번호');

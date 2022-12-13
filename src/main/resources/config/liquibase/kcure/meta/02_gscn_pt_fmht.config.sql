@@ -42,8 +42,8 @@ VALUES (9200, 'GSCN.GSCN_PT_FMHT', '02.위암_환자_가족력', true, 2, 999, '
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9200, null, '02.위암_환자_가족력');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9201, 'hosp_cd', 9200, 'system', 9201);
-insert into ph_item_attribute (item_id, caption, required) values (9201, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9201, 'hosp_cd', 9200, 'system', 9201);
+-- insert into ph_item_attribute (item_id, caption, required) values (9201, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9202, 'pt_no', 9200, 'system', 9202);
 insert into ph_item_attribute (item_id, caption) values (9202, '환자대체번호');

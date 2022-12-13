@@ -78,8 +78,8 @@ VALUES (15000, 'GSCN.GSCN_TRTM_OPRT', '15.위암_치료_수술', true, 14, 999, 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (15000, null, '15.위암_치료_수술');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (15001, 'hosp_cd', 15000, 'system', 15001);
-insert into ph_item_attribute (item_id, caption, required) values (15001, '01 병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (15001, 'hosp_cd', 15000, 'system', 15001);
+-- insert into ph_item_attribute (item_id, caption, required) values (15001, '01 병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (15002, 'pt_no', 15000, 'system', 15002);
 insert into ph_item_attribute (item_id, caption) values (15002, '02 환자대체번호');

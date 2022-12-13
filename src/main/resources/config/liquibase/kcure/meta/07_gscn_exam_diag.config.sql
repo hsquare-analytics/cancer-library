@@ -32,8 +32,8 @@ VALUES (9700, 'GSCN.GSCN_EXAM_DIAG', '07.위암_검사_진단', true, 7, 999, 's
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9700, null, '07.위암_검사_진단');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9701, 'hosp_cd', 9700, 'system', 9701);
-insert into ph_item_attribute (item_id, caption, required) values (9701, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9701, 'hosp_cd', 9700, 'system', 9701);
+-- insert into ph_item_attribute (item_id, caption, required) values (9701, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9702, 'pt_no', 9700, 'system', 9702);
 insert into ph_item_attribute (item_id, caption) values (9702, '환자대체번호');
