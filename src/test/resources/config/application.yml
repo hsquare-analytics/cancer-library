@@ -115,7 +115,9 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  hospital:
+    code: code_test
 management:
   health:
     mail:

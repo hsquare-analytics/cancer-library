@@ -210,7 +210,9 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  hospital:
+    code: SNUH
 
 jasypt:
   encryptor:

@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.service;
 
+import io.planit.cancerlibrary.config.ApplicationProperties;
 import io.planit.cancerlibrary.domain.Category;
 import io.planit.cancerlibrary.domain.Item;
 import io.planit.cancerlibrary.domain.User;
@@ -17,6 +18,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 import static io.planit.cancerlibrary.service.StreamUtils.distinctByKey;
@@ -34,36 +37,34 @@ public class DMLSqlBuilderService {
 
     private final TimeService timeService;
 
+    private final ApplicationProperties applicationProperties;
+
+    private final Set<String> reservedColumns = Set.of(HOSPITAL_CODE, IDX_COLUMN, STATUS_COLUMN, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE);
+
     public DMLSqlBuilderService(CategoryRepository categoryRepository, ItemRepository itemRepository,
-                                UserRepository userRepository, TimeService timeService
-    ) {
+                                UserRepository userRepository, TimeService timeService,
+                                ApplicationProperties applicationProperties) {
         this.categoryRepository = categoryRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.timeService = timeService;
+        this.applicationProperties = applicationProperties;
     }
 
     public String getInsertSQL(Long categoryId, Map<String, Object> map) {
         log.debug("Request to get insert query by categoryId: {}", categoryId);
-        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!map.containsKey(parameterization(IDX_COLUMN)) || !map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
-            throw new ParameterDeficiencyException();
-        }
+        validateInsertCondition(map);
 
-        if (itemList.stream().map(Item::getTitle).noneMatch(s -> parameterization(s).equals(parameterization(PATIENT_NUMBER_COLUMN)))) {
-            throw new SetupDeficiencyException();
-        }
+        SQL sql = new SQL().INSERT_INTO(sqlization(category.getTitle() + UPDATED_SUFFIX))
+            .VALUES(HOSPITAL_CODE, String.format("'%s'", applicationProperties.getHospital().getCode()))
+            .VALUES(IDX_COLUMN, String.format("'%s'", map.get(parameterization(IDX_COLUMN))));
 
-        SQL sql = new SQL();
-        sql.VALUES(IDX_COLUMN, String.format("'%s'", map.get(parameterization(IDX_COLUMN))))
-            .INSERT_INTO(sqlization(category.getTitle() + UPDATED_SUFFIX));
-
-        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
+        getValidItemsByCategoryId(categoryId).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (isMapKeyExist(map, mapKey)) {
                 if (isDateColumn(item)) {
@@ -92,6 +93,27 @@ public class DMLSqlBuilderService {
 
         loggingFinalSQL(sql);
         return sql.toString();
+    }
+
+    private List<Item> getValidItemsByCategoryId(Long categoryId) {
+        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
+
+        if (itemList.stream().map(Item::getTitle).noneMatch(s -> parameterization(s).equals(parameterization(PATIENT_NUMBER_COLUMN)))) {
+            throw new SetupDeficiencyException();
+        }
+
+        return itemList.stream().filter(distinctByKey(Item::getTitle)).filter(item -> !reservedColumns.contains(parameterization(item.getTitle()))).collect(Collectors.toList());
+    }
+
+
+    private void validateInsertCondition(Map<String, Object> map) {
+        if (map.containsKey(parameterization(HOSPITAL_CODE))) {
+            throw new RuntimeException("Hospital code is not allowed to be inserted");
+        }
+
+        if (!map.containsKey(parameterization(IDX_COLUMN)) || !map.containsKey(parameterization(PATIENT_NUMBER_COLUMN))) {
+            throw new ParameterDeficiencyException();
+        }
     }
 
     private boolean isMapKeyExist(Map<String, Object> map, String key) {
@@ -149,15 +171,13 @@ public class DMLSqlBuilderService {
             throw new ParameterDeficiencyException();
         }
 
-        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId).orElseThrow(SetupDeficiencyException::new);
 
         String login = SecurityUtils.getCurrentUserLogin().orElseThrow(SecurityContextUserNotFoundException::new);
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
 
-        SQL sql = new SQL();
-        sql.UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
-        itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> {
+        SQL sql = new SQL().UPDATE(sqlization(category.getTitle() + UPDATED_SUFFIX));
+        getValidItemsByCategoryId(categoryId).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (isMapKeyExist(map, mapKey)) {
                 if (isDateColumn(item)) {
@@ -177,8 +197,7 @@ public class DMLSqlBuilderService {
             }
         });
 
-        sql
-            .SET(getSqlEqualSyntax(STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
+        sql.SET(getSqlEqualSyntax(STATUS_COLUMN, map.get(parameterization(STATUS_COLUMN))))
             .SET(getSqlEqualSyntax(LAST_MODIFIED_BY, user.getLogin()))
             .SET(getSqlEqualSyntax(LAST_MODIFIED_DATE, timeService.getCurrentTimestamp()))
             .WHERE(getSqlEqualSyntax(IDX_COLUMN, map.get(parameterization(IDX_COLUMN))));

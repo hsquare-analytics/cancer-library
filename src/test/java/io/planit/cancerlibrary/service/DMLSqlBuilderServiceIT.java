@@ -119,8 +119,8 @@ class DMLSqlBuilderServiceIT {
 
         // then
         assertThat(result).contains("INSERT INTO " + category.getTitle() + "_UPDATED")
-            .contains("(IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, COLUMN4-VALUE, COLUMN4-LABEL, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
-            .contains(String.format("VALUES ('idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'codebook-value', 'codebook-title', 'status_test', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
+            .contains("(HOSP_CD, IDX, PT_NO, COLUMN1, COLUMN2, COLUMN3, COLUMN4-VALUE, COLUMN4-LABEL, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE)")
+            .contains(String.format("VALUES ('code_test', 'idx_test', 'pt_no_test', 'test1', 'test2', '%s', 'codebook-value', 'codebook-title', 'status_test', 'test_login', '%s', 'test_login', '%s')", timestamp, timestamp, timestamp));
     }
 
     @ParameterizedTest
@@ -208,6 +208,7 @@ class DMLSqlBuilderServiceIT {
         user.setLogin("test_login");
         userRepository.saveAndFlush(user);
 
+        Item ptNoColumn = new Item().category(category).title("pt_no").activated(true);
         Item item1 = new Item().category(category).title("column1").activated(true);
         Item item2 = new Item().category(category).title("column2").activated(true);
         Item dateColumn = new Item().category(category).title("column3").activated(true).attribute(new ItemAttribute().caption("date_column").required(true).dataType("date"));
@@ -218,6 +219,7 @@ class DMLSqlBuilderServiceIT {
             .attribute(new ItemAttribute().caption("test").required(true).dataType("selectbox"))
             .property(new ItemProperty().labelColumn("column4-label")).codebook(codebook);
 
+        itemRepository.saveAndFlush(ptNoColumn);
         itemRepository.saveAndFlush(item1);
         itemRepository.saveAndFlush(item2);
         itemRepository.saveAndFlush(dateColumn);

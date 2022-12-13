@@ -10,7 +10,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
-    // jhipster-needle-application-properties-property
-    // jhipster-needle-application-properties-property-getter
-    // jhipster-needle-application-properties-property-class
+    private final Hospital hospital = new Hospital();
+
+    public static class Hospital {
+        private String code;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+    }
+
+    public Hospital getHospital() {
+        return hospital;
+    }
 }

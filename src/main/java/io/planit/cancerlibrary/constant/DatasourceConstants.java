@@ -5,6 +5,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import java.util.List;
 
 public final class DatasourceConstants {
+    public static final String HOSPITAL_CODE = "HOSP_CD";
     public static final String IDX_COLUMN = "IDX";
     public static final String PATIENT_NUMBER_COLUMN = "PT_NO";
     public static final String STATUS_COLUMN = "STATUS";
