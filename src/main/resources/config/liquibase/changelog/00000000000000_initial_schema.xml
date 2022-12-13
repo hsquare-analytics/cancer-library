@@ -127,6 +127,7 @@
             <column name="join_dt" type="varchar(50)"/>
             <column name="mail" type="varchar(50)"/>
             <column name="login_ip" type="varchar(50)"/>
+            <column name="hosp_cd" type="varchar(50)"/>
         </createTable>
         <createTable tableName="ph_test_updated">
             <column name="idx" type="varchar(50)"/>
@@ -138,6 +139,7 @@
             <column name="join_dt" type="varchar(50)"/>
             <column name="mail" type="varchar(50)"/>
             <column name="login_ip" type="varchar(50)"/>
+            <column name="hosp_cd" type="varchar(50)"/>
             <column name="status" type="varchar(50)"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>

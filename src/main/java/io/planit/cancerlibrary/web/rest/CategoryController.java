@@ -3,7 +3,7 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.repository.CategoryRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.dto.CategoryDTO;
-import io.planit.cancerlibrary.web.rest.errors.SetupDeficiencyException;
+import io.planit.cancerlibrary.web.rest.errors.AbnormalSetupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +38,7 @@ public class CategoryController {
             .collect(Collectors.toList());
 
         if (categoryList.isEmpty()) {
-            throw new SetupDeficiencyException();
+            throw new AbnormalSetupException();
         }
         return ResponseEntity.ok(categoryList);
     }

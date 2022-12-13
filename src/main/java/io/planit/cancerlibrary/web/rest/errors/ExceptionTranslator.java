@@ -1,6 +1,5 @@
 package io.planit.cancerlibrary.web.rest.errors;
 
-import io.planit.cancerlibrary.service.AbnormalSetupException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -145,11 +144,11 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     }
 
     @ExceptionHandler
-    public ResponseEntity<Problem> handleSetupDeficiencyException(
-        AbnormalSetupException ex,
+    public ResponseEntity<Problem> handleAbnormalSetupException(
+        io.planit.cancerlibrary.service.AbnormalSetupException ex,
         NativeWebRequest request
     ) {
-        SetupDeficiencyException problem = new SetupDeficiencyException();
+        AbnormalSetupException problem = new AbnormalSetupException();
         return create(
             problem,
             request,
