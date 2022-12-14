@@ -16,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +33,18 @@ public class UserPatientController {
 
     private final PatientRepository patientRepository;
 
+    private final EntityManager entityManager;
+
     public UserPatientController(
         UserRepository userRepository,
         UserPatientRepository userPatientRepository,
-        PatientRepository patientRepository) {
+        PatientRepository patientRepository,
+        EntityManager entityManager
+        ) {
         this.userRepository = userRepository;
         this.userPatientRepository = userPatientRepository;
         this.patientRepository = patientRepository;
+        this.entityManager = entityManager;
     }
 
     @GetMapping("/user-patients/divisible-patient-list")
@@ -91,6 +97,7 @@ public class UserPatientController {
             .orElseThrow(() -> new UserPatientControllerException("User not found"));
 
         userPatientRepository.deleteAllByUserLogin(user.getLogin());
+        entityManager.flush();
         userPatientAuthorizationsVM.getPatients().stream().filter(DivisiblePatientVM::isAuthorized).forEach(patient -> {
             if (!patientRepository.findByPatientNo(patient.getPtNo()).isPresent()) {
                 throw new UserPatientControllerException("Patient not found");
