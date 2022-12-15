@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -6,17 +6,15 @@ import {IPatient} from 'app/shared/model/patient.model';
 import {translate} from 'react-jhipster';
 import Box from '@mui/material/Box';
 import AccessiblePatientColumn from 'app/modules/datasource-editor/accessible-patient.column';
-import TextArea from 'devextreme-react/text-area';
-import IconButton from '@mui/material/IconButton';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import {IDxColumn} from 'app/shared/model/dx-column.model';
 import {convertDateFromServer, convertDateTimeFromServer} from 'app/shared/util/date-utils';
-import {useAppDispatch, useAppSelector} from 'app/config/store';
-import {Popup} from 'devextreme-react/popup';
-import {updateEntity} from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
 import './patient-profile-card-detail.scss';
 import TextField from '@mui/material/TextField';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import {
+  PatientProfileCardTextarea
+} from "app/modules/datasource-editor/patient-profile/textarea/patient-profile-card-textarea";
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -66,13 +64,7 @@ const getTextFieldCardContent = (column: IDxColumn, patient: IPatient) => {
 }
 
 export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
-  const dispatch = useAppDispatch();
-  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
-
   const {patient} = props;
-
-  const [commentValue, setCommentValue] = useState(patient && patient.detail ? patient.detail.comment : '');
-  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   return (
     <div>
@@ -83,75 +75,17 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
               {AccessiblePatientColumn.map(column => getTextFieldCardContent(column, patient))}
             </div>
             <CardContent>
-              <Typography color="text.secondary">
-                * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
-                <IconButton onClick={() => setIsPopupVisible(true)} style={{marginLeft: '3px'}}
-                            className="icon-patient-detail">
-                  <CreateOutlinedIcon/>
-                </IconButton>
-              </Typography>
               <Box>
-                {patient.detail.comment && patient.detail.comment.length > 0 ? (
-                  <TextArea
-                    id={'patient-profiel-card-detail-comment-text-area'}
-                    height={100}
-                    readOnly={true}
-                    defaultValue={patient.detail.comment}
-                  />
-                ) : (
-                  <Typography component="span" color="text.default">
-                    {translate('cancerLibraryApp.datasourceEditor.profileCard.noComment')}
-                  </Typography>
-                )}
+                <Grid container spacing={2}>
+                  <PatientProfileCardTextarea/>
+                  <PatientProfileCardTextarea/>
+                </Grid>
               </Box>
+
             </CardContent>
           </Card>
         </Box>
-        <Popup
-          visible={isPopupVisible}
-          onHiding={() => setIsPopupVisible(false)}
-          dragEnabled={false}
-          hideOnOutsideClick={true}
-          showCloseButton={false}
-          showTitle={false}
-          width={'60vw'}
-          height={'50vh'}
-          toolbarItems={[
-            {
-              location: 'after',
-              widget: 'dxButton',
-              toolbar: 'bottom',
-              options: {
-                text: 'SAVE',
-                onClick() {
-                  dispatch(updateEntity({...patient, detail: {comment: commentValue}}));
-                  setIsPopupVisible(false);
-                },
-              },
-            },
-            {
-              location: 'after',
-              widget: 'dxButton',
-              toolbar: 'bottom',
-              options: {
-                text: 'CANCEL',
-                onClick() {
-                  setCommentValue(patient.detail.comment);
-                  setIsPopupVisible(false);
-                },
-              },
-            },
-          ]}
-        >
-          <TextArea
-            id={'patient-profiel-card-detail-comment-text-area'}
-            height={'43vh'}
-            width={'100%'}
-            defaultValue={patient.detail.comment}
-            value={commentValue}
-            onValueChanged={e => setCommentValue(e.value)}
-          />
-        </Popup>
+
       </ThemeProvider>
     </div>
   );
