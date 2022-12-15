@@ -46,6 +46,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
     } else {
       dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, comment: value, category: selectedCategory}));
     }
+    setPopupVisible(false);
   }
 
   return <Popup
@@ -65,12 +66,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
         options: {
           text: 'SAVE',
           onClick() {
-            // dispatch(updateEntity({...patient, detail: {comment: commentValue}}));
-            dispatch(updateEntity({
-              ...comment,
-              comment: value,
-            }))
-            setPopupVisible(false);
+            onClickSave();
           },
         },
       },
