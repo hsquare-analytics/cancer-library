@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech.jhipster.web.util.ResponseUtil;
 
 import java.util.Optional;
 
@@ -32,11 +31,11 @@ public class CommentController {
     }
 
     @GetMapping("/comments/categories/{categoryId}/rows/{rowId}")
-    public ResponseEntity<CommentDTO> getComment(@PathVariable Long categoryId, @PathVariable String rowId) {
+    public ResponseEntity<Optional<CommentDTO>> getComment(@PathVariable Long categoryId, @PathVariable String rowId) {
         log.debug("REST request to get Comment CategoryId, RowId : {}, {}", categoryId, rowId);
 
         Optional<CommentDTO> comment = commentRepository.findByCategoryIdAndRowId(categoryId, rowId).map(CommentDTO::new);
-        return ResponseUtil.wrapOrNotFound(comment);
+        return ResponseEntity.ok(comment);
     }
 
 }
