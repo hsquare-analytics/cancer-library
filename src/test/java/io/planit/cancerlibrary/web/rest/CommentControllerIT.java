@@ -80,6 +80,21 @@ class CommentControllerIT {
             .andExpect(jsonPath("$.rowId").value(comment.getRowId()))
             .andExpect(jsonPath("$.comment").value(comment.getComment()))
             .andExpect(jsonPath("$.category.id").value(comment.getCategory().getId().intValue()));
-        ;
+    }
+
+    @Test
+    @Transactional
+    void test_fetch_all_comments_by_categoy_id_and_patient_no() throws Exception {
+        commentRepository.saveAndFlush(comment);
+
+        restCommentMockMvc
+            .perform(get(ENTITY_API_URL + "/categories/{categoryId}/ptNo/{ptNo}", comment.getCategory().getId(), comment.getPtNo()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(comment.getId().intValue()))
+            .andExpect(jsonPath("$.[*].ptNo").value(comment.getPtNo()))
+            .andExpect(jsonPath("$.[*].rowId").value(comment.getRowId()))
+            .andExpect(jsonPath("$.[*].comment").value(comment.getComment()))
+            .andExpect(jsonPath("$.[*].category.id").value(comment.getCategory().getId().intValue()));
     }
 }
