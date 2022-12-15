@@ -17,12 +17,8 @@ const initialState: EntityState<IComment> = {
 const apiUrl = 'api/comments';
 
 // Actions
-export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', async ({
-                                                                                      page,
-                                                                                      size,
-                                                                                      sort
-                                                                                    }: IQueryParams) => {
-  const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
+export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', async (ptNo: string) => {
+  const requestUrl = `${apiUrl}/ptNo/${ptNo}`;
   return axios.get<IComment[]>(requestUrl);
 });
 
@@ -42,17 +38,16 @@ export const createEntity = createAsyncThunk(
   'row-comment/create_entity',
   async (entity: IComment, thunkAPI) => {
     const result = await axios.post<IComment>(apiUrl, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
+    // thunkAPI.dispatch(getEntities({}));
     return result;
   },
   {serializeError: serializeAxiosError}
 );
 
-export const updateEntity = createAsyncThunk(
-  'row-comment/update_entity',
+export const updateEntity = createAsyncThunk('row-comment/update_entity',
   async (entity: IComment, thunkAPI) => {
     const result = await axios.put<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
+    // thunkAPI.dispatch(getEntities({}));
     return result;
   },
   {serializeError: serializeAxiosError}
@@ -62,7 +57,7 @@ export const partialUpdateEntity = createAsyncThunk(
   'row-comment/partial_update_entity',
   async (entity: IComment, thunkAPI) => {
     const result = await axios.patch<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    thunkAPI.dispatch(getEntities({}));
+    // thunkAPI.dispatch(getEntities({}));
     return result;
   },
   {serializeError: serializeAxiosError}
@@ -73,7 +68,7 @@ export const deleteEntity = createAsyncThunk(
   async (id: string | number, thunkAPI) => {
     const requestUrl = `${apiUrl}/${id}`;
     const result = await axios.delete<IComment>(requestUrl);
-    thunkAPI.dispatch(getEntities({}));
+    // thunkAPI.dispatch(getEntities({}));
     return result;
   },
   {serializeError: serializeAxiosError}

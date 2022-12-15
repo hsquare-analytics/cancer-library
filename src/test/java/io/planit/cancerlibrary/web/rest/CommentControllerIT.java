@@ -88,7 +88,7 @@ class CommentControllerIT {
         commentRepository.saveAndFlush(comment);
 
         restCommentMockMvc
-            .perform(get(ENTITY_API_URL + "/categories/{categoryId}/ptNo/{ptNo}", comment.getCategory().getId(), comment.getPtNo()))
+            .perform(get(ENTITY_API_URL + "/categories/ptNo/{ptNo}", comment.getPtNo()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(comment.getId().intValue()))

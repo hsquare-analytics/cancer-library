@@ -12,5 +12,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     Optional<Comment> findByCategoryIdAndRowId(Long categoryId, String rowId);
 
-    List<Comment> findAllByCategoryIdAndPtNo(Long categoryId, String ptNo);
+    List<Comment> findAllByPtNo(String ptNo);
 }

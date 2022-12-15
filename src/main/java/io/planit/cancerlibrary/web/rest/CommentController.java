@@ -40,11 +40,11 @@ public class CommentController {
         return ResponseEntity.ok(comment);
     }
 
-    @GetMapping("/comments/categories/{categoryId}/ptNo/{ptNo}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentByCategoryIdAndPtNo(@PathVariable Long categoryId, @PathVariable String ptNo) {
-        log.debug("REST request to get Comment CategoryId, PtNo : {}, {}", categoryId, ptNo);
+    @GetMapping("/comments/ptNo/{ptNo}")
+    public ResponseEntity<List<CommentDTO>> getAllCommentByCategoryIdAndPtNo(@PathVariable String ptNo) {
+        log.debug("REST request to get Comment CategoryId, PtNo : {}, {}", ptNo);
 
-        List<CommentDTO> result = commentRepository.findAllByCategoryIdAndPtNo(categoryId, ptNo).stream().map(CommentDTO::new).collect(Collectors.toList());
+        List<CommentDTO> result = commentRepository.findAllByPtNo(ptNo).stream().map(CommentDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 
