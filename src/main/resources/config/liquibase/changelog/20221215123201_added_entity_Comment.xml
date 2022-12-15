@@ -10,8 +10,8 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="category_id" type="bigint"/>
-            <column name="pt_no" type="varchar(200)"/>
             <column name="row_id" type="varchar(200)"/>
+            <column name="pt_no" type="varchar(200)"/>
             <column name="comment" type="varchar(200)"/>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
@@ -25,12 +25,13 @@
                                  constraintName="fk_comment_category_id"
                                  referencedColumnNames="id"
                                  referencedTableName="ph_category"/>
+        <addUniqueConstraint tableName="ph_comment" columnNames="row_id"/>
     </changeSet>
 
     <changeSet id="20221215123201-1-data" author="jhipster" context="faker">
         <loadData file="config/liquibase/fake-data/comment.csv"
-            separator=";"
-            tableName="ph_comment">
+                  separator=";"
+                  tableName="ph_comment">
             usePreparedStatements="true">
         </loadData>
     </changeSet>
