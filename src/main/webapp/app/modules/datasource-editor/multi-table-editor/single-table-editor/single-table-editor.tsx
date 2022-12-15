@@ -26,7 +26,6 @@ import {IPatient} from 'app/shared/model/patient.model';
 import {
   ActionType,
   makeCallBackOnPromise,
-  onRowRemoving,
   onRowValidating,
   toastApiResult,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
@@ -41,8 +40,6 @@ import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
-import {hasAnyAuthority} from "app/shared/auth/private-route";
-import {AUTHORITIES} from "app/config/constants";
 import {
   SingleTableEditorAccordionSummary
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
@@ -71,10 +68,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const openAll = useAppSelector(state => state.datasourceStatus.openAll);
   const login = useAppSelector(state => state.authentication.account.login);
-
-  const isManager = useAppSelector(state =>
-    hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
-  );
 
   const {category} = props;
 
@@ -209,20 +202,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               });
             })
           }
-          onRowRemoving={e =>
-            onRowRemoving(
-              e,
-              category,
-              () => {
-                setActionType(ActionType.DELETE);
-                dispatch(setSelectedCategory(category));
-                setEditedRow(e.data);
-              },
-              value => {
-                dispatch(deleteDatasourceRow(value));
-              }
-            )
-          }
+          onRowRemoving={e => {
+            setActionType(ActionType.DELETE);
+            dispatch(setSelectedCategory(category));
+            setEditedRow(e.data);
+            const row = Object.assign({}, e.data);
+            dispatch(deleteDatasourceRow({categoryId: category.id, row}));
+          }}
           scrolling={{mode: 'standard', showScrollbar: 'always', useNative: true}}
           paging={{pageSize: 10}}
           onEditCanceled={() => dispatch(resetDatasourceStatusReducer())}
@@ -289,7 +275,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column type="buttons" width={110} visibleIndex={9999999}>
             <DxButton name="delete"
-                      visible={(e) => e.row.data.idx.includes(KCURE_PREFIX) && (isManager || e.row.data['created_by'] === login)}
+                      visible={(e) => {
+                        if (e.row.data.idx.includes(KCURE_PREFIX)) {
+                          return e.row.data['created_by'] === login
+                        } else {
+                          return true;
+                        }
+                      }}
             />
           </Column>
         </DataGrid>

@@ -8,6 +8,7 @@ export enum RowStatus {
   COMPLETED = 'COMPLETED',
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_STARTED = 'NOT_STARTED',
+  DISABLED = 'DISABLED',
 }
 
 export const KCURE_PREFIX = 'KCURE';

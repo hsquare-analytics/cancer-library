@@ -110,11 +110,27 @@ public class DatasourceController {
 
     @DeleteMapping("/datasource/categories/{categoryId}/rows/{rowId}")
     public ResponseEntity<Boolean> deleteDatasourceRow(@PathVariable(value = "categoryId") final Long categoryId,
-                                                       @PathVariable(value = "rowId") final String rowId) {
+                                                       @PathVariable(value = "rowId") final String rowId,
+                                                       @RequestBody Map<String, Object> map) {
         log.debug("REST request to delete Datasource row by category id: {}", categoryId);
 
-        String deleteSQL = dmlSqlBuilderService.getDeleteSQL(categoryId, Map.of("idx", rowId));
-        Boolean result = sqlExecutor.executeDML(deleteSQL);
+        String sql = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, Map.of("idx", rowId));
+
+        Map<String, Object> founded = sqlExecutor.executeSelectOne(sql);
+
+        Boolean result;
+        if (ObjectUtils.isEmpty(founded)) {
+            Map<String, Object> insertMap = new HashMap<>(map);
+            insertMap.put("status", RowStatus.DISABLED);
+            insertMap.remove("hosp_cd");
+            String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, insertMap);
+            result = sqlExecutor.executeDML(insertSQL);
+        } else {
+            Map<String, Object> updateMap = Map.of("idx", rowId, "pt_no", founded.get("pt_no"), "status", RowStatus.DISABLED);
+            String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, updateMap);
+            result = sqlExecutor.executeDML(updateSQL);
+        }
+
         return ResponseEntity.ok().body(result);
     }
 

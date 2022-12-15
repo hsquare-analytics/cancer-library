@@ -11,6 +11,7 @@ import Chip from '@mui/material/Chip';
 import PauseIcon from '@mui/icons-material/Pause';
 import DoneIcon from '@mui/icons-material/Done';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import {translate} from 'react-jhipster';
 import {DATASOURCE_ROW_STATUS, RowStatus} from "app/config/datasource-constants";
 
@@ -96,6 +97,14 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                    size={'small'}
                    variant="outlined"
                    onClick={transformAsCompleted}
+      />;
+    case RowStatus.DISABLED:
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.disabled')}
+                    icon={<RemoveCircleIcon/>}
+                    color="error"
+                    size={'small'}
+                    variant="outlined"
+                    onClick={transformAsInProgress}
       />;
     default:
       return <Chip

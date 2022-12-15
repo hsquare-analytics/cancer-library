@@ -62,7 +62,9 @@ export const createDatasourceRow = createAsyncThunk('datasource_container/create
 );
 
 export const deleteDatasourceRow = createAsyncThunk('datasource_container/delete_data_sources_row', async (data: { categoryId: number, row: any }, thunkAPI) => {
-    const result = await axios.delete<any>(`api/datasource/categories/${data.categoryId}/rows/${data.row.idx}`);
+    const result = await axios.delete<any>(`api/datasource/categories/${data.categoryId}/rows/${data.row.idx}`, {
+      data: data.row
+    });
     thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.row['pt_no']}));
     return result;
   },

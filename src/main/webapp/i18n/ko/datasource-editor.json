@@ -61,6 +61,7 @@
           "notStarted": "작업전",
           "inProgress": "임시저장",
           "completed": "완료",
+          "disabled": "비활성화",
           "button": {
             "confirm": "확인",
             "cancel": "취소"
