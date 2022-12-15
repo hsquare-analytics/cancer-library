@@ -26,6 +26,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (popupVisible && selectedCategory && selectedRow) {
+      setValue('');
       dispatch(getEntity({categoryId: selectedCategory.id, rowId: selectedRow.idx}));
     }
   }, [selectedCategory, selectedRow]);
@@ -34,7 +35,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
     if (comment) {
       setValue(comment.comment);
     }
-  },[comment]);
+  }, [comment]);
 
   const onClickSave = () => {
     if (comment && comment.id) {
@@ -80,7 +81,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
         options: {
           text: 'CANCEL',
           onClick() {
-            setValue(comment.comment);
+            setValue(comment ? comment.comment : '');
             setPopupVisible(false);
           },
         },
