@@ -287,7 +287,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
           <Column type="buttons" width={110} visibleIndex={9999999}>
-            <DxButton name="comment" icon="comment" onClick={() => rowCommentPopupRef.current.setPopupVisible(true)}/>
+            <DxButton name="comment" icon="comment" onClick={(e) => rowCommentPopupRef.current.setPopupVisible(true, {
+              ptNo: patient.ptNo,
+              rowId: e.row.data.idx,
+              category: category
+            })}/>
             <DxButton name="delete"
                       visible={(e) => {
                         if (e.row.data.idx.includes(KCURE_PREFIX)) {

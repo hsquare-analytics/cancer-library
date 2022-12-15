@@ -1,15 +1,19 @@
 import React, {useState} from "react";
 import {Popup} from 'devextreme-react/popup';
 import TextArea from 'devextreme-react/text-area';
+import {IComment} from "app/shared/model/comment.model";
 
 export const RowCommentPopup = React.forwardRef((props, ref) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const [profileExpanded, setProfileExpanded] = useState(true);
 
+  const [comment, setComment] = useState<IComment>(null);
+
   React.useImperativeHandle(ref, () => ({
-    setPopupVisible(value) {
+    setPopupVisible(value, comment) {
       setPopupVisible(value);
+      setComment(comment);
     },
   }))
 
@@ -49,12 +53,13 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
       },
     ]}
   >
+    {JSON.stringify(comment)}
     <TextArea
       id={''}
       height={'43vh'}
       width={'100%'}
       // defaultValue={patient.detail.comment}
-      // value={commentValue}
+      // value={data}
       // onValueChanged={e => setCommentValue(e.value)}
     />
   </Popup>
