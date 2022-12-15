@@ -20,7 +20,7 @@ export const toastApiResult = (type: ActionType, data: { table: string, row?: st
       toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.updateSuccess', data));
       break;
     case ActionType.DELETE:
-      toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.deleteSuccess', data));
+      toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.disableSuccess', data));
       break;
     default:
       break;
