@@ -14,10 +14,13 @@ import {Popup} from 'devextreme-react/popup';
 import {getEntities} from "app/modules/row-comment-editor/row-comment.reducer";
 
 interface IPatientDeclineReasonarea {
+  xs: number;
 }
 
-export const PatientDeclineReasonArea = (props: IPatientDeclineReasonarea) => {
+export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
   const dispatch = useAppDispatch();
+
+  const {xs} = props;
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const category = useAppSelector(state => state.datasourceStatus.selected.category);
@@ -31,7 +34,7 @@ export const PatientDeclineReasonArea = (props: IPatientDeclineReasonarea) => {
   }, [patient]);
 
 
-  return <Grid item xs={6}>
+  return <Grid item xs={xs}>
     <Typography color="text.secondary">
       * {translate('cancerLibraryApp.datasourceEditor.profileCard.declineReason')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}

@@ -13,18 +13,21 @@ import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.pat
 import {Popup} from 'devextreme-react/popup';
 
 interface IPatientProfileCardTextarea {
+  xs: number;
 }
 
-export const PatientCommentArea = (props: IPatientProfileCardTextarea) => {
+export const GridCommentItem = (props: IPatientProfileCardTextarea) => {
   const dispatch = useAppDispatch();
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+
+  const {xs} = props;
 
   const [commentValue, setCommentValue] = useState(patient && patient.detail ? patient.detail.comment : '');
   const [popupVisible, setPopupVisible] = useState(false);
 
 
-  return <Grid item xs={6}>
+  return <Grid item xs={xs}>
     <Typography color="text.secondary">
       * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}
