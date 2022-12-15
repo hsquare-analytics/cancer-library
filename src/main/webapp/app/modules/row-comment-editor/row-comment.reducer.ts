@@ -14,7 +14,7 @@ const initialState: EntityState<IComment> = {
   updateSuccess: false,
 };
 
-const apiUrl = 'api/row-comments';
+const apiUrl = 'api/comments';
 
 // Actions
 export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
@@ -24,8 +24,11 @@ export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', asy
 
 export const getEntity = createAsyncThunk(
   'row-comment/fetch_entity',
-  async (id: string | number) => {
-    const requestUrl = `${apiUrl}/${id}`;
+  async (data: {
+    categoryId: number;
+    rowId: string;
+  }) => {
+    const requestUrl = `${apiUrl}/categories/${data.categoryId}/rows/${data.rowId}`;
     return axios.get<IComment>(requestUrl);
   },
   { serializeError: serializeAxiosError }
@@ -44,7 +47,7 @@ export const createEntity = createAsyncThunk(
 export const updateEntity = createAsyncThunk(
   'row-comment/update_entity',
   async (entity: IComment, thunkAPI) => {
-    const result = await axios.put<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
+    const result = await axios.put<IComment>(`${apiUrl}/${data.categoryId}/${entity.id}/${data.rowId}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },

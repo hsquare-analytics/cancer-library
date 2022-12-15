@@ -11,6 +11,7 @@ import {
   getOriginRow,
   reset as resetDatasourceStatusReducer,
   setCategory as setSelectedCategory,
+  setRow as setSelectedRow,
   setValidateFailedItems,
 } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
 import Swal from 'sweetalert2';
@@ -287,7 +288,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
           <Column type="buttons" width={110} visibleIndex={9999999}>
-            <DxButton name="comment" icon="comment" onClick={(e) => rowCommentPopupRef.current.setPopupVisible(true)}/>
+            <DxButton name="comment" icon="comment" onClick={(e) => {
+              dispatch(setSelectedCategory(category));
+              dispatch(setSelectedRow(e.row.data));
+              rowCommentPopupRef.current.setPopupVisible(true);
+            }}/>
             <DxButton name="delete"
                       visible={(e) => {
                         if (e.row.data.idx.includes(KCURE_PREFIX)) {
