@@ -43,6 +43,9 @@ import DxRowConfirmCellRender
 import {
   SingleTableEditorAccordionSummary
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
+import {
+  DxRowCommentPopup
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-comment-popup";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -68,6 +71,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const openAll = useAppSelector(state => state.datasourceStatus.openAll);
   const login = useAppSelector(state => state.authentication.account.login);
+
+  const rowCommentPopupRef = useRef(null);
 
   const {category} = props;
 
@@ -284,6 +289,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
           <Column type="buttons" width={110} visibleIndex={9999999}>
+            <DxButton name="comment" icon="comment" onClick={() => rowCommentPopupRef.current.setPopupVisible(true)}/>
             <DxButton name="delete"
                       visible={(e) => {
                         if (e.row.data.idx.includes(KCURE_PREFIX)) {
@@ -296,6 +302,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           </Column>
         </DataGrid>
       </AccordionDetails>
+      <DxRowCommentPopup ref={rowCommentPopupRef}/>
     </Accordion>
   ) : null;
 };
