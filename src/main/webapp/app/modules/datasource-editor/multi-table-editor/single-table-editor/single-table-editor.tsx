@@ -145,7 +145,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
-          filterPanel={category.attribute.dateColumn ? {visible: true} : undefined}
+          filterPanel={{visible: true}}
           defaultFilterValue={getDefaultFilter()}
           headerFilter={{allowSearch: true, visible: true}}
           editing={{

@@ -96,7 +96,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                    color="warning"
                    size={'small'}
                    variant="outlined"
-                   onClick={transformAsCompleted}
+                   onClick={transformAsInProgress}
       />;
     case RowStatus.DISABLED:
       return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.disabled')}
