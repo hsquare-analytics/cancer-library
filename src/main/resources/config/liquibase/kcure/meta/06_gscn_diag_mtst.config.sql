@@ -28,8 +28,8 @@ INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9600, null, '06.위암_진단_전이');
 
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9601, 'hosp_cd', 9600, 'system', 9601);
-insert into ph_item_attribute (item_id, caption, required) values (9601, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9601, 'hosp_cd', 9600, 'system', 9601);
+-- insert into ph_item_attribute (item_id, caption, required) values (9601, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9602, 'pt_no', 9600, 'system', 9602);
 insert into ph_item_attribute (item_id, caption) values (9602, '환자대체번호');

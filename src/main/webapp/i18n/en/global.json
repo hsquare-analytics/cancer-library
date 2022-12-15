@@ -160,7 +160,7 @@
       "could.not.extract": "Could not extract file",
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     },
-    "setupDeficiency": "Contact your manager, required setup deficiency"
+    "abnormalSetup": "Contact your manager, abnormal setup"
   },
   "footer": "This is your footer"
 }

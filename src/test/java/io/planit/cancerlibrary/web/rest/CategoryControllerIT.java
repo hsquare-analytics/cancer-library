@@ -75,9 +75,9 @@ class CategoryControllerIT {
         restNavigationMockMvc
             .perform(get(API_URL))
             .andExpect(status().isBadRequest())
-            .andExpect(header().string("X-cancerlibraryApp-error", "error.setupDeficiency"))
+            .andExpect(header().string("X-cancerlibraryApp-error", "error.abnormalSetup"))
             .andExpect(header().string("X-cancerlibraryApp-params", "setup"))
-            .andExpect(jsonPath("title").value("There is some deficiency of setup"))
+            .andExpect(jsonPath("title").value("There is abnormal setup"))
         ;
     }
 

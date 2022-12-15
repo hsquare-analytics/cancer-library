@@ -44,8 +44,8 @@ VALUES (22000, 'GSCN.GSCN_TRTM_RD', '22.위암_치료_방사선', true, 22, 999,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (22000, null, '22.위암_치료_방사선');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (22001, 'hosp_cd', 22000, 'system', 22001);
-insert into ph_item_attribute (item_id, caption, required) values (22001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (22001, 'hosp_cd', 22000, 'system', 22001);
+-- insert into ph_item_attribute (item_id, caption, required) values (22001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22002, 'pt_no', 22000, 'system', 22002);
 insert into ph_item_attribute (item_id, caption) values (22002, '환자대체번호');

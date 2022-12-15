@@ -65,14 +65,17 @@ export const AccessiblePatient = () => {
 
   const commentCellRender = data => {
     const comment = data.value;
-    const result = comment && comment.length > 0;
-    return <CheckBox disabled value={result} style={{backgroundColor: result ? 'var(--bs-primary)' : 'none'}} />;
+    let result = comment && comment.length > 0;
+    if (typeof result !== 'boolean') {
+      result = false;
+    }
+    return <CheckBox disabled value={result} style={{backgroundColor: result ? 'var(--bs-primary)' : 'none'}}/>;
   };
 
   return (
     <section className="wrap-page">
       <h1 className="title-page">{translate('cancerLibraryApp.datasourceEditor.pageTitle')}</h1>
-      <MultiTableEditorPopup ref={multiTableEditorPopupRef} />
+      <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
       {!loading || patientList.length > 0 ? (
         <DataGrid
           id="accessible-patient-datagrid"
@@ -101,7 +104,7 @@ export const AccessiblePatient = () => {
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80} />
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
           <Column
             dataField="detail.comment"
             caption={translate('cancerLibraryApp.datasourceEditor.column.comment')}
@@ -157,7 +160,7 @@ export const AccessiblePatient = () => {
         </DataGrid>
       ) : (
         <Box sx={{display: 'flex'}}>
-          <CircularProgress />
+          <CircularProgress/>
         </Box>
       )}
     </section>

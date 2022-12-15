@@ -45,8 +45,8 @@ VALUES (20000, 'GSCN.GSCN_TRTM_DRIN', '20.위암_치료_약제성분', true, 20,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (20000, null, '20.위암_치료_약제성분');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (20001, 'hosp_cd', 20000, 'system', 20001);
-insert into ph_item_attribute (item_id, caption, required) values (20001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (20001, 'hosp_cd', 20000, 'system', 20001);
+-- insert into ph_item_attribute (item_id, caption, required) values (20001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (20002, 'pt_no', 20000, 'system', 20002);
 insert into ph_item_attribute (item_id, caption) values (20002, '환자대체번호');

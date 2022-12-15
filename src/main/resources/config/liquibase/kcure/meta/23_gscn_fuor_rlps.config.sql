@@ -27,8 +27,8 @@ VALUES (23000, 'GSCN.GSCN_FUOR_RLPS', '23.위암_추적관찰_재발', true, 23,
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (23000, null, '23.위암_추적관찰_재발');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (23001, 'hosp_cd', 23000, 'system', 23001);
-insert into ph_item_attribute (item_id, caption, required) values (23001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (23001, 'hosp_cd', 23000, 'system', 23001);
+-- insert into ph_item_attribute (item_id, caption, required) values (23001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (23002, 'pt_no', 23000, 'system', 23002);
 insert into ph_item_attribute (item_id, caption) values (23002, '환자대체번호');

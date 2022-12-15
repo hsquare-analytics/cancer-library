@@ -29,8 +29,8 @@ VALUES (9400, 'GSCN.GSCN_DIAG_INF', '04.위암_진단_정보', true, 4, 999, 'sy
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9400, null, '04.위암_진단_정보');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9401, 'hosp_cd', 9400, 'system', 9401);
-insert into ph_item_attribute (item_id, caption, required) values (9401, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9401, 'hosp_cd', 9400, 'system', 9401);
+-- insert into ph_item_attribute (item_id, caption, required) values (9401, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9402, 'pt_no', 9400, 'system', 9402);
 insert into ph_item_attribute (item_id, caption) values (9402, '환자대체번호');

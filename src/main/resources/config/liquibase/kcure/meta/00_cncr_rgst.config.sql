@@ -71,8 +71,8 @@ VALUES (9000, 'GSCN.CNCR_RGST', '00.암등록', true, 0, 999, 'system');
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (9000, null, '00.암등록');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9001, 'hosp_cd', 9000, 'system', 9001);
-insert into ph_item_attribute (item_id, caption, required) values (9001, '병원번호', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (9001, 'hosp_cd', 9000, 'system', 9001);
+-- insert into ph_item_attribute (item_id, caption, required) values (9001, '병원번호', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (9002, 'pt_no', 9000, 'system', 9002);
 insert into ph_item_attribute (item_id, caption) values (9002, '환자등록번호');

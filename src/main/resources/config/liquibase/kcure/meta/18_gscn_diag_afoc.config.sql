@@ -25,8 +25,8 @@ VALUES (18000, 'GSCN.GSCN_DIAG_AFOC', '18.위암_진단_수술후합병증', tru
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
 VALUES (18000, null, '18.위암_진단_수술후합병증');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (18001, 'hosp_cd', 18000, 'system', 18001);
-insert into ph_item_attribute (item_id, caption, required) values (18001, '병원코드', true);
+-- insert into ph_item (id, title, category_id, created_by, order_no) values (18001, 'hosp_cd', 18000, 'system', 18001);
+-- insert into ph_item_attribute (item_id, caption, required) values (18001, '병원코드', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (18002, 'pt_no', 18000, 'system', 18002);
 insert into ph_item_attribute (item_id, caption) values (18002, '환자대체번호');

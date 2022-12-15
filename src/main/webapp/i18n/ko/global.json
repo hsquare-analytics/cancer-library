@@ -162,7 +162,7 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     },
     "sqlSyntax": "SQL Syntax Error",
-    "setupDeficiency": "필수 설정 정보가 부족합니다. \n 관리자에게 문의 하세요."
+    "abnormalSetup": "비정상적인 설정 정보가 있습니다. 관리자에게 문의 하세요."
   },
   "footer": "하단영역"
 }
