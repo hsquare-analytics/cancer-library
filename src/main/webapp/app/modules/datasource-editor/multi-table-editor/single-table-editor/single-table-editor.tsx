@@ -117,6 +117,16 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     });
   }
 
+  const getDefaultFilter = () => {
+    const filter: any[] = [['status', '<>', RowStatus.DISABLED], 'and'];
+
+    if (category.attribute.dateColumn) {
+      filter.push([category.attribute.dateColumn, '>=', new Date(patient.fsrMedDt)]);
+    }
+
+    return filter;
+  }
+
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
       <SingleTableEditorAccordionSummary category={category} dataGrid={dataGrid}
@@ -136,7 +146,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           sorting={{mode: 'multiple'}}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           filterPanel={category.attribute.dateColumn ? {visible: true} : undefined}
-          defaultFilterValue={category.attribute.dateColumn ? [category.attribute.dateColumn, '>=', new Date(patient.fsrMedDt)] : []}
+          defaultFilterValue={getDefaultFilter()}
           headerFilter={{allowSearch: true, visible: true}}
           editing={{
             mode: 'popup',
