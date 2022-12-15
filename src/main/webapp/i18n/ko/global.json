@@ -13,6 +13,7 @@
         "user-category": "User Category",
         "user-patient": "User Patient",
         "codebook": "Code Book",
+        "comment" : "Comment",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "multi-table-editor": "다중 테이블 편집기",
@@ -47,7 +48,8 @@
         "item": "Item 설정",
         "user-category": "사용자 카테고리 권한 설정",
         "user-patient": "사용자 리뷰어 권한 설정",
-        "codebook": "코드북 관리"
+        "codebook": "코드북 관리",
+        "comment" : "Comment 관리"
       },
       "language": "언어"
     },

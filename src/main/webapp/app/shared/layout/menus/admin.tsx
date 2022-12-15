@@ -34,6 +34,9 @@ const AdminMenuItems = () => (
     <NavLink tag={Link} icon="table" to="/admin/codebook">
       <Translate contentKey="global.menu.admin.codebook">Code Book</Translate>
     </NavLink>
+    <NavLink tag={Link} icon="table" to="/admin/comment">
+      <Translate contentKey="global.menu.admin.comment">Code Book</Translate>
+    </NavLink>
     <NavLink tag={Link} icon="eye" to="/admin/tracker">
       <Translate contentKey="global.menu.admin.tracker">User tracker</Translate>
     </NavLink>

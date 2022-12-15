@@ -10,6 +10,7 @@ import Topic from "app/entities/topic";
 import Group from "app/entities/group";
 import UserPatient from "app/entities/user-patient";
 import Codebook from "app/entities/codebook";
+import Comment from "app/entities/comment";
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -25,6 +26,7 @@ export default () => {
         <Route path="user-category/*" element={<UserCategory />} />
         <Route path="user-patient/*" element={<UserPatient />} />
         <Route path="codebook/*" element={<Codebook />} />
+        <Route path="comment/*" element={<Comment />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

@@ -27,6 +27,9 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/user-patient">
         <Translate contentKey="global.menu.entities.user-patient" />
       </MenuItem>
+      <MenuItem icon="asterisk" to="/comment">
+        <Translate contentKey="global.menu.entities.comment" />
+      </MenuItem>
     </>
   );
 };

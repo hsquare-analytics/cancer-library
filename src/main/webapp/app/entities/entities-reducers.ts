@@ -6,18 +6,20 @@ import group from 'app/entities/group/group.reducer';
 import userCategory from 'app/entities/user-category/user-category.reducer';
 import userPatient from 'app/entities/user-patient/user-patient.reducer';
 import codebook from 'app/entities/codebook/codebook.reducer';
+import comment from 'app/entities/comment/comment.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
-    item,
-    userCategory,
-    subject,
-    topic,
-    category,
-    group,
-    userPatient,
-    codebook
-    /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
+  item,
+  userCategory,
+  subject,
+  topic,
+  category,
+  group,
+  userPatient,
+  codebook,
+  comment
+  /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 
 export default entitiesReducers;
