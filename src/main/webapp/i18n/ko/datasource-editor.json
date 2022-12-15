@@ -63,6 +63,7 @@
           "inProgress": "임시저장",
           "completed": "완료",
           "disabled": "비활성화",
+          "rejected": "반려",
           "button": {
             "confirm": "확인",
             "cancel": "취소"

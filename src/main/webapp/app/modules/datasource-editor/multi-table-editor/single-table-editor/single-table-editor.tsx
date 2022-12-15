@@ -131,6 +131,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     return filter;
   }
 
+
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
       <SingleTableEditorAccordionSummary category={category} dataGrid={dataGrid}
@@ -156,6 +157,67 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             mode: 'popup',
             popup: {
               resizeEnabled: true,
+              toolbarItems: [
+                {
+                  location: 'after',
+                  toolbar: 'bottom',
+                  widget: 'dxButton',
+                  options: {
+                    text: 'rejected',
+                    onClick(e) {
+                      const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+
+                      const row = {
+                        ...data,
+                        [DATASOURCE_ROW_STATUS]: RowStatus.REJECTED
+                      }
+                      dispatch(updateDatasourceRow({categoryId: category.id, row}));
+                      dataGrid.current.instance.cancelEditData();
+                    },
+                  },
+                },
+                {
+                  location: 'after',
+                  toolbar: 'bottom',
+                  widget: 'dxButton',
+                  options: {
+                    text: 'pause',
+                    onClick(e) {
+                      const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+
+                      const row = {
+                        ...data,
+                        [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                      }
+                      dispatch(updateDatasourceRow({categoryId: category.id, row}));
+                      dataGrid.current.instance.cancelEditData();
+                    },
+                  },
+                },
+
+                {
+                  location: 'after',
+                  toolbar: 'bottom',
+                  widget: 'dxButton',
+                  options: {
+                    text: 'save',
+                    onClick() {
+                      dataGrid.current.instance.saveEditData();
+                    }
+                  }
+                },
+                {
+                  location: 'after',
+                  toolbar: 'bottom',
+                  widget: 'dxButton',
+                  options: {
+                    text: 'cancel',
+                    onClick() {
+                      dataGrid.current.instance.cancelEditData();
+                    }
+                  }
+                }
+              ]
             },
             allowUpdating: true,
             allowDeleting: true,

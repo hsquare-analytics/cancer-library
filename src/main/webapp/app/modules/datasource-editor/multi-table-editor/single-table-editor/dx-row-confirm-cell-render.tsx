@@ -106,6 +106,14 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                     variant="outlined"
                     onClick={transformAsInProgress}
       />;
+    case RowStatus.REJECTED:
+      return <Chip label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.rejected')}
+                    icon={<PauseIcon/>}
+                    color="error"
+                    size={'small'}
+                    variant="outlined"
+                    onClick={transformAsInProgress}
+      />;
     default:
       return <Chip
         label={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.notStarted')}
