@@ -13,8 +13,11 @@ import TextField from '@mui/material/TextField';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import {
-  PatientProfileCardTextarea
-} from "app/modules/datasource-editor/patient-profile/textarea/patient-profile-card-textarea";
+  PatientCommentArea
+} from "app/modules/datasource-editor/patient-profile/textarea/patient-comment-area";
+import {
+  PatientDeclineReasonArea
+} from "app/modules/datasource-editor/patient-profile/textarea/patient-decline-reason-area";
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -77,8 +80,8 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             <CardContent>
               <Box>
                 <Grid container spacing={2}>
-                  <PatientProfileCardTextarea/>
-                  <PatientProfileCardTextarea/>
+                  <PatientCommentArea/>
+                  <PatientDeclineReasonArea/>
                 </Grid>
               </Box>
 

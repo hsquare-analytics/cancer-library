@@ -21,7 +21,8 @@
       "profileCard": {
         "title": "환자 정보 - {{ name }} ({{no}})",
         "comment": "특이사항",
-        "noComment": "특이사항이 없습니다."
+        "declineReason": "반려 사유",
+        "emptyContent": "-"
       },
       "reviewButton": {
         "submit": "제출",
