@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Popup} from 'devextreme-react/popup';
 import TextArea from 'devextreme-react/text-area';
 
-export const DxRowCommentPopup = React.forwardRef((props, ref) => {
+export const RowCommentPopup = React.forwardRef((props, ref) => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const [profileExpanded, setProfileExpanded] = useState(true);

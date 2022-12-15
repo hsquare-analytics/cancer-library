@@ -43,9 +43,7 @@ import DxRowConfirmCellRender
 import {
   SingleTableEditorAccordionSummary
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
-import {
-  DxRowCommentPopup
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-comment-popup";
+import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -302,7 +300,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           </Column>
         </DataGrid>
       </AccordionDetails>
-      <DxRowCommentPopup ref={rowCommentPopupRef}/>
+      <RowCommentPopup ref={rowCommentPopupRef}/>
     </Accordion>
   ) : null;
 };
