@@ -9,6 +9,7 @@ import reducer, {
   reset,
   setCategory,
   setOpenAll,
+  setRow,
   setValidateFailedItems,
 } from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 
@@ -25,6 +26,7 @@ describe("datasourceStatusReducer", () => {
   const initialState = {
     selected: {
       category: {},
+      row: {}
     },
     validationFailedItems: [],
     originRow: {},
@@ -61,10 +63,22 @@ describe("datasourceStatusReducer", () => {
       expect(reducer(initialState, {type: setCategory, payload: {id: 1}})).toEqual({
         ...initialState,
         selected: {
+          ...initialState.selected,
           category: {id: 1},
         }
       });
     });
+
+    it('should set row', () => {
+      expect(reducer(initialState, {type: setRow, payload: {id: 1}})).toEqual({
+        ...initialState,
+        selected: {
+          ...initialState.selected,
+          row: {id: 1},
+        }
+      });
+    });
+
 
     it('should set validationFailedItems', () => {
       expect(reducer(initialState, {type: setValidateFailedItems, payload: [{id: 1}]})).toEqual({
