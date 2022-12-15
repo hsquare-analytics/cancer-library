@@ -17,7 +17,11 @@ const initialState: EntityState<IComment> = {
 const apiUrl = 'api/comments';
 
 // Actions
-export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getEntities = createAsyncThunk('row-comment/fetch_entity_list', async ({
+                                                                                      page,
+                                                                                      size,
+                                                                                      sort
+                                                                                    }: IQueryParams) => {
   const requestUrl = `${apiUrl}?cacheBuster=${new Date().getTime()}`;
   return axios.get<IComment[]>(requestUrl);
 });
@@ -31,7 +35,7 @@ export const getEntity = createAsyncThunk(
     const requestUrl = `${apiUrl}/categories/${data.categoryId}/rows/${data.rowId}`;
     return axios.get<IComment>(requestUrl);
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 export const createEntity = createAsyncThunk(
@@ -41,17 +45,17 @@ export const createEntity = createAsyncThunk(
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 export const updateEntity = createAsyncThunk(
   'row-comment/update_entity',
   async (entity: IComment, thunkAPI) => {
-    const result = await axios.put<IComment>(`${apiUrl}/${data.categoryId}/${entity.id}/${data.rowId}`, cleanEntity(entity));
+    const result = await axios.put<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 export const partialUpdateEntity = createAsyncThunk(
@@ -61,7 +65,7 @@ export const partialUpdateEntity = createAsyncThunk(
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 export const deleteEntity = createAsyncThunk(
@@ -72,7 +76,7 @@ export const deleteEntity = createAsyncThunk(
     thunkAPI.dispatch(getEntities({}));
     return result;
   },
-  { serializeError: serializeAxiosError }
+  {serializeError: serializeAxiosError}
 );
 
 // slice
@@ -92,7 +96,7 @@ export const RowCommentSlice = createEntitySlice({
         state.entity = {};
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
-        const { data } = action.payload;
+        const {data} = action.payload;
 
         return {
           ...state,
@@ -119,7 +123,7 @@ export const RowCommentSlice = createEntitySlice({
   },
 });
 
-export const { reset } = RowCommentSlice.actions;
+export const {reset} = RowCommentSlice.actions;
 
 // Reducer
 export default RowCommentSlice.reducer;

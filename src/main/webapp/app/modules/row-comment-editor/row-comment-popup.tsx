@@ -2,7 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Popup} from 'devextreme-react/popup';
 import TextArea from 'devextreme-react/text-area';
 import {useAppDispatch, useAppSelector} from "app/config/store";
-import {getEntity, updateEntity} from "app/modules/row-comment-editor/row-comment.reducer";
+import {createEntity, getEntity, updateEntity} from "app/modules/row-comment-editor/row-comment.reducer";
+import {IPatient} from "app/shared/model/patient.model";
 
 export const RowCommentPopup = React.forwardRef((props, ref) => {
 
@@ -10,23 +11,41 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
 
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const [value, setValue] = useState('');
-
   React.useImperativeHandle(ref, () => ({
     setPopupVisible(value) {
       setPopupVisible(value);
     },
   }))
 
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const comment = useAppSelector(state => state.rowCommentReducer.entity);
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const selectedRow = useAppSelector(state => state.datasourceStatus.selected.row);
+
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     if (popupVisible && selectedCategory && selectedRow) {
       dispatch(getEntity({categoryId: selectedCategory.id, rowId: selectedRow.idx}));
     }
   }, [selectedCategory, selectedRow]);
+
+  useEffect(() => {
+    if (comment) {
+      setValue(comment.comment);
+    }
+  },[comment]);
+
+  const onClickSave = () => {
+    if (comment && comment.id) {
+      dispatch(updateEntity({
+        ...comment,
+        comment: value,
+      }));
+    } else {
+      dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, comment: value, category: selectedCategory}));
+    }
+  }
 
   return <Popup
     visible={popupVisible}
@@ -61,19 +80,17 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
         options: {
           text: 'CANCEL',
           onClick() {
-            // setCommentValue(patient.detail.comment);
+            setValue(comment.comment);
             setPopupVisible(false);
           },
         },
       },
     ]}
   >
-    {JSON.stringify(comment)}
     <TextArea
       id={''}
       height={'43vh'}
       width={'100%'}
-      defaultValue={comment ? comment.comment : ''}
       value={value}
       onValueChanged={e => setValue(e.value)}
     />
