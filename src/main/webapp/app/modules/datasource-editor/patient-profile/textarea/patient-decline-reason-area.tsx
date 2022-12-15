@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Typography from '@mui/material/Typography';
 import {translate} from 'react-jhipster';
 import Box from '@mui/material/Box';
@@ -11,6 +11,7 @@ import {IPatient} from "app/shared/model/patient.model";
 import Grid from '@mui/material/Grid';
 import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import {Popup} from 'devextreme-react/popup';
+import {getEntities} from "app/modules/row-comment-editor/row-comment.reducer";
 
 interface IPatientDeclineReasonarea {
 }
@@ -19,9 +20,15 @@ export const PatientDeclineReasonArea = (props: IPatientDeclineReasonarea) => {
   const dispatch = useAppDispatch();
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+  const category = useAppSelector(state => state.datasourceStatus.selected.category);
+  const rowComments = useAppSelector(state => state.rowCommentReducer.entities);
 
   const [value, setValue] = useState(patient && patient.detail ? patient.detail.declineReason : '');
   const [popupVisible, setPopupVisible] = useState(false);
+
+  useEffect(() => {
+    dispatch(getEntities(patient.ptNo));
+  }, [patient]);
 
 
   return <Grid item xs={6}>
@@ -83,11 +90,20 @@ export const PatientDeclineReasonArea = (props: IPatientDeclineReasonarea) => {
       >
         <TextArea
           id={'patient-profiel-card-detail-comment-text-area'}
-          height={'43vh'}
+          height={'15vh'}
           width={'100%'}
           defaultValue={patient.detail.declineReason}
           value={value}
           onValueChanged={e => setValue(e.value)}
+        />
+        <TextArea
+          style={{marginTop: '3vh'}}
+          height={'25vh'}
+          readOnly={true}
+          value={rowComments.map(comment => {
+              return `* ${comment.category.attribute.caption} \n ${comment.comment}`;
+            }
+          ).join("\n\n")}
         />
       </Popup>
     </Box>

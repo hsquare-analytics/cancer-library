@@ -22,7 +22,7 @@
         "title": "환자 정보 - {{ name }} ({{no}})",
         "comment": "특이사항",
         "declineReason": "반려 사유",
-        "emptyContent": "-"
+        "emptyContent": "내용 없음"
       },
       "reviewButton": {
         "submit": "제출",
