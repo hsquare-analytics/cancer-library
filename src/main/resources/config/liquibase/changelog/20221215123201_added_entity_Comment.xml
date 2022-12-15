@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20221215123201-1" author="jhipster">
+        <createTable tableName="ph_comment">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category_id" type="bigint"/>
+            <column name="pt_no" type="varchar(200)"/>
+            <column name="row_id" type="varchar(200)"/>
+            <column name="comment" type="varchar(200)"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="ph_comment"
+                                 constraintName="fk_comment_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ph_category"/>
+    </changeSet>
+
+    <changeSet id="20221215123201-1-data" author="jhipster" context="faker">
+        <loadData file="config/liquibase/fake-data/comment.csv"
+            separator=";"
+            tableName="ph_comment">
+            usePreparedStatements="true">
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
