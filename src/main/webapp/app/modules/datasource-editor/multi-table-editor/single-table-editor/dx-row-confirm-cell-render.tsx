@@ -16,7 +16,7 @@ import {translate} from 'react-jhipster';
 import {DATASOURCE_ROW_STATUS, RowStatus} from "app/config/datasource-constants";
 import {
   transformAsCompleted, transformAsInProgress
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.row-status.utils";
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 
 
 export interface IDxRowConfirmCellRenderProps {

@@ -29,7 +29,7 @@ import {
   makeCallBackOnPromise,
   onRowValidating,
   toastApiResult,
-} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor.utils';
+} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.utils';
 import {
   DATASOURCE_IDX,
   DATASOURCE_ROW_STATUS,
