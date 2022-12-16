@@ -46,7 +46,7 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
 import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
 import {
-  transformAsCompleted
+  transformAsCompleted, transformAsInProgress, transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 
 export interface ISingleTableEditor {
@@ -136,13 +136,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   options: {
                     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected'),
                     onClick(e) {
-                      const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
-
-                      const row = {
-                        ...data,
-                        [DATASOURCE_ROW_STATUS]: RowStatus.REJECTED
-                      }
-                      dispatch(updateDatasourceRow({categoryId: category.id, row}));
+                      const row = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+                      transformAsRejected(dispatch, category, row);
                       dataGrid.current.instance.cancelEditData();
                     },
                   },
@@ -155,12 +150,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.pause'),
                     onClick(e) {
                       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
-
-                      const row = {
-                        ...data,
-                        [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
-                      }
-                      dispatch(updateDatasourceRow({categoryId: category.id, row}));
+                      transformAsInProgress(dispatch, category, data);
                       dataGrid.current.instance.cancelEditData();
                     },
                   },

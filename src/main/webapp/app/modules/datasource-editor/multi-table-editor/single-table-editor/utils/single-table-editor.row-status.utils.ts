@@ -58,3 +58,23 @@ export const transformAsCompleted = (dispatchHook, category: ICategory, row: any
     }
   });
 }
+
+export const transformAsDisabled = (dispatchHook, category: ICategory, row: any) => {
+  Swal.fire(Object.assign({}, getSwalCommonOptions(), {
+    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsDisabled.title'),
+  }) as SweetAlertOptions).then((result) => {
+    if (result.isConfirmed) {
+      updateRowStatus(dispatchHook, category, row, RowStatus.DISABLED);
+    }
+  });
+}
+
+export const transformAsRejected = (dispatchHook, category: ICategory, row: any) => {
+  Swal.fire(Object.assign({}, getSwalCommonOptions(), {
+    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsRejected.title'),
+  }) as SweetAlertOptions).then((result) => {
+    if (result.isConfirmed) {
+      updateRowStatus(dispatchHook, category, row, RowStatus.REJECTED);
+    }
+  });
+}
