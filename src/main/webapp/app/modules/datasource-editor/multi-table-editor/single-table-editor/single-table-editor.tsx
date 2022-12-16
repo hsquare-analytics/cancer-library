@@ -48,6 +48,7 @@ import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup"
 import {
   transformAsCompleted, transformAsInProgress, transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
+import "./single-table-editor.scss";
 
 export interface ISingleTableEditor {
   category: ICategory;
