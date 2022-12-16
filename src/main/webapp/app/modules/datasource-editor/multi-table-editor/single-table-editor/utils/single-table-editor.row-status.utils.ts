@@ -5,7 +5,6 @@ import {
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import Swal, {SweetAlertOptions} from 'sweetalert2';
 import {translate} from 'react-jhipster';
-import {useAppDispatch} from "app/config/store";
 import {ICategory} from "app/shared/model/category.model";
 import axios from "axios";
 

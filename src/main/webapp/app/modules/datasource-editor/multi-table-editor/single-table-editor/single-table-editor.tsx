@@ -129,33 +129,32 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             popup: {
               resizeEnabled: true,
               toolbarItems: [
-                {
-                  location: 'after',
-                  toolbar: 'bottom',
-                  widget: 'dxButton',
-                  options: {
-                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected'),
-                    onClick(e) {
-                      const row = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
-                      transformAsRejected(dispatch, category, row);
-                      dataGrid.current.instance.cancelEditData();
-                    },
-                  },
-                },
-                {
-                  location: 'after',
-                  toolbar: 'bottom',
-                  widget: 'dxButton',
-                  options: {
-                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.pause'),
-                    onClick(e) {
-                      const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
-                      transformAsInProgress(dispatch, category, data);
-                      dataGrid.current.instance.cancelEditData();
-                    },
-                  },
-                },
-
+                // {
+                //   location: 'after',
+                //   toolbar: 'bottom',
+                //   widget: 'dxButton',
+                //   options: {
+                //     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected'),
+                //     onClick(e) {
+                //       const row = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+                //       transformAsRejected(dispatch, category, row);
+                //       dataGrid.current.instance.cancelEditData();
+                //     },
+                //   },
+                // },
+                // {
+                //   location: 'after',
+                //   toolbar: 'bottom',
+                //   widget: 'dxButton',
+                //   options: {
+                //     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.pause'),
+                //     onClick(e) {
+                //       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+                //       transformAsInProgress(dispatch, category, data);
+                //       dataGrid.current.instance.cancelEditData();
+                //     },
+                //   },
+                // },
                 {
                   location: 'after',
                   toolbar: 'bottom',
@@ -279,8 +278,11 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   allowEditing={false}
-                  formItem={{visible: false}}/>
+                  formItem={{visible: false}}
+                  visibleIndex={1}
+          />
           <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
+                  visibleIndex={2}
                   width={130} alignment={"center"}
                   formItem={{visible: false}}
                   cellRender={(data) => <DxRowConfirmCellRender category={category}
@@ -290,7 +292,27 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                                                                   setEditedRow(data.row.data);
                                                                   dispatch(setSelectedCategory(category));
                                                                 }}/>}/>
-          <Column dataField={DATASOURCE_ROW_STATUS} alignment={"center"} formItem={{visible: false}}/>
+          <Column dataField={DATASOURCE_ROW_STATUS} alignment={"center"} formItem={{visible: false}}
+                  visibleIndex={3}
+          />
+          <Column type="buttons" width={110} visibleIndex={4}>
+            <DxButton name="comment" icon="comment"
+                      hint={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected')}
+                      onClick={(e) => {
+              dispatch(setSelectedCategory(category));
+              dispatch(setSelectedRow(e.row.data));
+              rowCommentPopupRef.current.setPopupVisible(true);
+            }}/>
+            <DxButton name="delete"
+                      visible={(e) => {
+                        if (e.row.data.idx.includes(KCURE_PREFIX)) {
+                          return e.row.data['created_by'] === login
+                        } else {
+                          return true;
+                        }
+                      }}
+            />
+          </Column>
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"
@@ -310,22 +332,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             visibleIndex={9999998}
             formItem={{visible: actionType === ActionType.UPDATE, visibleIndex: 9999999}}
           />
-          <Column type="buttons" width={110} visibleIndex={9999999}>
-            <DxButton name="comment" icon="comment" onClick={(e) => {
-              dispatch(setSelectedCategory(category));
-              dispatch(setSelectedRow(e.row.data));
-              rowCommentPopupRef.current.setPopupVisible(true);
-            }}/>
-            <DxButton name="delete"
-                      visible={(e) => {
-                        if (e.row.data.idx.includes(KCURE_PREFIX)) {
-                          return e.row.data['created_by'] === login
-                        } else {
-                          return true;
-                        }
-                      }}
-            />
-          </Column>
         </DataGrid>
       </AccordionDetails>
       <RowCommentPopup ref={rowCommentPopupRef}/>

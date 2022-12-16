@@ -4,6 +4,9 @@ import TextArea from 'devextreme-react/text-area';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {createEntity, getEntity, updateEntity} from "app/modules/row-comment-editor/row-comment.reducer";
 import {IPatient} from "app/shared/model/patient.model";
+import {
+  transformAsRejected
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 
 export const RowCommentPopup = React.forwardRef((props, ref) => {
 
@@ -46,6 +49,8 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
     } else {
       dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, comment: value, category: selectedCategory}));
     }
+
+    transformAsRejected(dispatch, selectedCategory, selectedRow);
     setPopupVisible(false);
   }
 
