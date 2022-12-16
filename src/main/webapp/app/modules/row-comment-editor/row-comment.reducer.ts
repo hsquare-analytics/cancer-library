@@ -38,7 +38,7 @@ export const createEntity = createAsyncThunk(
   'row-comment/create_entity',
   async (entity: IComment, thunkAPI) => {
     const result = await axios.post<IComment>(apiUrl, cleanEntity(entity));
-    // thunkAPI.dispatch(getEntities({}));
+    thunkAPI.dispatch(getEntities(entity.ptNo));
     return result;
   },
   {serializeError: serializeAxiosError}
@@ -47,7 +47,7 @@ export const createEntity = createAsyncThunk(
 export const updateEntity = createAsyncThunk('row-comment/update_entity',
   async (entity: IComment, thunkAPI) => {
     const result = await axios.put<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    // thunkAPI.dispatch(getEntities({}));
+    thunkAPI.dispatch(getEntities(entity.ptNo));
     return result;
   },
   {serializeError: serializeAxiosError}
