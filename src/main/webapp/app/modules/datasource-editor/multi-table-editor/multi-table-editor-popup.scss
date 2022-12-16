@@ -1,0 +1,20 @@
+.multi-table-editor-popup {
+  .dx-popup-title {
+    padding: 14px 24px 0 24px;
+    border-bottom: none;
+  }
+
+  .dx-datagrid .dx-datagrid-table .dx-header-row > td {
+    padding: 10px 5px;
+  }
+
+  .dx-datagrid .dx-row-lines > td {
+    padding: 10px 5px;
+  }
+
+  .dx-row.dx-header-row {
+    .cell-highlighted {
+      background-color: yellow;
+    }
+  }
+}

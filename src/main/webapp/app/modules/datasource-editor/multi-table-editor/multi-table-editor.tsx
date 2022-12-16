@@ -14,6 +14,7 @@ import {
 } from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import {IPatient} from "app/shared/model/patient.model";
 import _ from "lodash";
+import "./multi-table-editor-popup.scss";
 
 export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
