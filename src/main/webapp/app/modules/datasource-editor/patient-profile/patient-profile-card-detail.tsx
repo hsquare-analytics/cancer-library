@@ -14,10 +14,10 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import {
   GridCommentItem
-} from "app/modules/datasource-editor/patient-profile/textarea/grid-comment-item";
+} from "app/modules/datasource-editor/patient-profile/grid-item/grid-comment-item";
 import {
   GridDeclineReasonItem
-} from "app/modules/datasource-editor/patient-profile/textarea/grid-decline-reason-item";
+} from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {

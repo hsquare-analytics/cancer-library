@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Typography from '@mui/material/Typography';
 import {translate} from 'react-jhipster';
 import Box from '@mui/material/Box';
@@ -11,44 +11,37 @@ import {IPatient} from "app/shared/model/patient.model";
 import Grid from '@mui/material/Grid';
 import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import {Popup} from 'devextreme-react/popup';
-import {getEntities} from "app/modules/row-comment-editor/row-comment.reducer";
 
-interface IPatientDeclineReasonarea {
+interface IPatientProfileCardTextarea {
   xs: number;
 }
 
-export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
+export const GridCommentItem = (props: IPatientProfileCardTextarea) => {
   const dispatch = useAppDispatch();
 
   const {xs} = props;
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
-  const category = useAppSelector(state => state.datasourceStatus.selected.category);
-  const rowComments = useAppSelector(state => state.rowCommentReducer.entities);
 
-  const [value, setValue] = useState(patient && patient.detail ? patient.detail.declineReason : '');
+  const [value, setValue] = useState(patient && patient.detail ? patient.detail.comment : '');
   const [popupVisible, setPopupVisible] = useState(false);
-
-  useEffect(() => {
-    dispatch(getEntities(patient.ptNo));
-  }, [patient]);
 
 
   return <Grid item xs={xs}>
     <Typography color="text.secondary">
-      * {translate('cancerLibraryApp.datasourceEditor.profileCard.declineReason')}
+      * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}
                   className="icon-patient-detail">
         <CreateOutlinedIcon/>
       </IconButton>
     </Typography>
     <Box>
-      {patient.detail.declineReason && patient.detail.declineReason.length > 0 ? (
+      {patient.detail.comment && patient.detail.comment.length > 0 ? (
         <TextArea
           id={'patient-profiel-card-detail-comment-text-area'}
           height={100}
           readOnly={true}
-          defaultValue={patient.detail.declineReason}
+          defaultValue={patient.detail.comment}
         />
       ) : (
         <Typography component="span" color="text.default">
@@ -72,7 +65,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
             options: {
               text: 'SAVE',
               onClick() {
-                dispatch(updateEntity({...patient, detail: {declineReason: value}}));
+                dispatch(updateEntity({...patient, detail: {comment: value}}));
                 setPopupVisible(false);
               },
             },
@@ -84,7 +77,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
             options: {
               text: 'CANCEL',
               onClick() {
-                setValue(patient.detail.declineReason);
+                setValue(patient.detail.comment);
                 setPopupVisible(false);
               },
             },
@@ -93,20 +86,11 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
       >
         <TextArea
           id={'patient-profiel-card-detail-comment-text-area'}
-          height={'15vh'}
+          height={'43vh'}
           width={'100%'}
-          defaultValue={patient.detail.declineReason}
+          defaultValue={patient.detail.comment}
           value={value}
           onValueChanged={e => setValue(e.value)}
-        />
-        <TextArea
-          style={{marginTop: '3vh'}}
-          height={'25vh'}
-          readOnly={true}
-          value={rowComments.map(comment => {
-              return `* ${comment.category.attribute.caption} \n ${comment.comment}`;
-            }
-          ).join("\n\n")}
         />
       </Popup>
     </Box>
