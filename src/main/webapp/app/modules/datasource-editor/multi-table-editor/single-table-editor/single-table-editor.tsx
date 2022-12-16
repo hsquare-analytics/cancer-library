@@ -302,7 +302,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
                   visibleIndex={2}
-                  width={80} alignment={"center"}
+                  width={90} alignment={"center"}
                   formItem={{visible: false}}
                   cellRender={(data) => <DxRowConfirmCellRender category={category}
                                                                 row={data.row.data}
