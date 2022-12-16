@@ -295,7 +295,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           <Column dataField={DATASOURCE_ROW_STATUS} alignment={"center"} formItem={{visible: false}}
                   visibleIndex={3}
           />
-          <Column type="buttons" width={110} visibleIndex={4}>
+          <Column type="buttons" width={110} visibleIndex={4} alignment={"center"}
+                  caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}>
             <DxButton name="comment" icon="comment"
                       hint={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected')}
                       onClick={(e) => {
