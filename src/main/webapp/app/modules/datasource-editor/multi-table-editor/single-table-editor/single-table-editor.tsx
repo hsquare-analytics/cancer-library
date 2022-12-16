@@ -277,7 +277,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             sortOrder={'asc'}
             height={500}
           />
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={40}
                   allowEditing={false}
                   formItem={{visible: false}}
                   visibleIndex={1}
@@ -285,7 +285,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
                   visibleIndex={2}
-                  width={130} alignment={"center"}
+                  width={100} alignment={"center"}
                   formItem={{visible: false}}
                   cellRender={(data) => <DxRowConfirmCellRender category={category}
                                                                 row={data.row.data}
