@@ -63,7 +63,7 @@
           "notStarted": "작업전",
           "inProgress": "임시저장",
           "completed": "완료",
-          "disabled": "비활성화",
+          "disabled": "삭제됨",
           "rejected": "반려",
           "button": {
             "confirm": "확인",
@@ -85,7 +85,7 @@
           "title": "임시저장 상태로 변경 하시겠습니까?"
         },
         "transformAsDisabled": {
-          "title": "비활성화 상태로 변경 하시겠습니까?"
+          "title": "삭제 하시겠습니까?"
         },
         "transformAsRejected": {
           "title": "반려 상태로 변경 하시겠습니까?"
