@@ -22,7 +22,7 @@
         "title": "환자 정보 - {{ name }} ({{no}})",
         "comment": "특이사항",
         "declineReason": "반려 사유",
-        "rowComment" : "행별 특이사항",
+        "rowComment": "행별 특이사항",
         "emptyContent": "내용 없음"
       },
       "reviewButton": {
@@ -67,6 +67,14 @@
           "rejected": "반려",
           "button": {
             "confirm": "확인",
+            "cancel": "취소"
+          }
+        },
+        "editForm": {
+          "button": {
+            "rejected": "반려",
+            "pause": "임시저장",
+            "save": "완료",
             "cancel": "취소"
           }
         },

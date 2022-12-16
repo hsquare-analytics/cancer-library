@@ -163,7 +163,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: 'rejected',
+                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected'),
                     onClick(e) {
                       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
 
@@ -181,7 +181,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: 'pause',
+                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.pause'),
                     onClick(e) {
                       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
 
@@ -200,7 +200,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: 'save',
+                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.save'),
                     onClick() {
                       dataGrid.current.instance.saveEditData();
                     }
@@ -211,7 +211,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: 'cancel',
+                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.cancel'),
                     onClick() {
                       dataGrid.current.instance.cancelEditData();
                     }
