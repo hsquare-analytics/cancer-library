@@ -45,6 +45,9 @@ import {
   SingleTableEditorAccordionSummary
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
 import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
+import {
+  transformAsCompleted
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -90,37 +93,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
-  const transformAsCompleted = (row: any) => {
-    Swal.fire({
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.confirm'),
-        cancelButtonText: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.rowStatus.button.cancel'),
-        text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.transformAsCompleted.title')
-      }
-    ).then((result) => {
-      if (result.isConfirmed) {
-        axios.get(`/api/datasource/categories/${category.id}/rows/${row.idx}/check-updated-row-exist`).then(({data}) => {
-          const payload = {
-            categoryId: category.id,
-            row: {
-              ...row,
-              [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
-            }
-          }
-
-          if (data) {
-            dispatch(updateDatasourceRow(payload));
-          } else {
-            dispatch(createDatasourceRow(payload));
-          }
-        });
-      }
-    });
-  }
-
   const getDefaultFilter = () => {
     const filter: any[] = [['status', '<>', RowStatus.DISABLED], 'and'];
 
@@ -130,7 +102,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
     return filter;
   }
-
 
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
@@ -302,7 +273,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           onRowDblClick={e => dataGrid.current.instance.editRow(e.rowIndex)}
           onSaved={e => {
             if (e.changes.length === 0 && editedRow.status !== RowStatus.COMPLETED) {
-              transformAsCompleted(editedRow);
+              transformAsCompleted(dispatch, category, editedRow);
             } else if (e.changes.length === 0) {
               dispatch(resetDatasourceStatusReducer());
               dispatch(resetDatasourceContainerFlag())
