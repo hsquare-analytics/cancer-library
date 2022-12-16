@@ -18,6 +18,7 @@ import {
 import {
   GridDeclineReasonItem
 } from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
+import {GridRowCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-row-comment-item";
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -80,8 +81,9 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
             <CardContent>
               <Box>
                 <Grid container spacing={2}>
-                  <GridCommentItem xs={6}/>
-                  <GridDeclineReasonItem xs={6}/>
+                  <GridCommentItem xs={4}/>
+                  <GridDeclineReasonItem xs={4}/>
+                  <GridRowCommentItem xs={4}/>
                 </Grid>
               </Box>
 
