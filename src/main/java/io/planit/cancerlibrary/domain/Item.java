@@ -59,6 +59,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @AttributeOverride(name = "sortDirection", column = @Column(name = "sort_direction", table = "ph_item_property"))
     @AttributeOverride(name = "visible", column = @Column(name = "visible", table = "ph_item_property"))
     @AttributeOverride(name = "labelColumn", column = @Column(name = "label_column", table = "ph_item_property"))
+    @AttributeOverride(name = "cssClass", column = @Column(name = "css_class", table = "ph_item_property"))
     private ItemProperty property;
 
     public Long getId() {

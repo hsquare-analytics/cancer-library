@@ -74,6 +74,7 @@ export const getDxColumnConfig = (item: IItem) => {
     dataType={item.attribute?.dataType}
     allowEditing={item.property?.allowEditing}
     visible={item.property?.visible}
+    cssClass={item.property?.cssClass}
     alignment={'center'}
     editCellComponent={getDxEditCellComponent(item)}
     sortIndex={item.category.attribute.dateColumn === item.title ? 0 : item.property?.sortIndex}

@@ -17,6 +17,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "property.sortDirection"},
   {dataField: "property.visible"},
   {dataField: "property.labelColumn"},
+  {dataField: "property.cssClass"},
   {dataField: "createdBy"},
   {dataField: "createdDate", dataType: "datetime", format: "yyyy-MM-dd HH:mm:ss"},
   {dataField: "lastModifiedBy"},

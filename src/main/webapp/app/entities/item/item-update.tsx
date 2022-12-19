@@ -211,6 +211,13 @@ export const ItemUpdate = () => {
                 data-cy="property.labelColumn"
                 type="text"
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.property.cssClass')}
+                id="item-cssClass"
+                name="property.cssClass"
+                data-cy="property.cssClass"
+                type="text"
+              />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/admin/item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

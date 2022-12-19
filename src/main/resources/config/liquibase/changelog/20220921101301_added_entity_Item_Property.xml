@@ -14,6 +14,7 @@
             <column name="sort_direction" type="varchar(10)"/>
             <column name="visible" type="boolean" defaultValueBoolean="true"/>
             <column name="label_column" type="varchar(50)"/>
+            <column name="css_class" type="varchar(50)"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"

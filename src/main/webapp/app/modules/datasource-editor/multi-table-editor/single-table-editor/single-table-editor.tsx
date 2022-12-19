@@ -104,6 +104,23 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     return filter;
   }
 
+  const getCustomizeRowStatusText = (cellInfo) => {
+    switch (cellInfo.value) {
+      case RowStatus.COMPLETED:
+        return "COMP";
+      case RowStatus.DISABLED:
+        return "DEL";
+      case RowStatus.NOT_STARTED:
+        return "NEW";
+      case RowStatus.IN_PROGRESS:
+        return "WIP";
+      case RowStatus.REJECTED:
+        return "RJCT";
+      default:
+        return "NEW";
+    }
+  }
+
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
       <SingleTableEditorAccordionSummary category={category} dataGrid={dataGrid}
@@ -277,7 +294,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             sortOrder={'asc'}
             height={500}
           />
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={40}
                   allowEditing={false}
                   formItem={{visible: false}}
                   visibleIndex={1}
@@ -285,7 +302,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
                   visibleIndex={2}
-                  width={130} alignment={"center"}
+                  width={90} alignment={"center"}
                   formItem={{visible: false}}
                   cellRender={(data) => <DxRowConfirmCellRender category={category}
                                                                 row={data.row.data}
@@ -296,16 +313,17 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                                                                 }}/>}/>
           <Column dataField={DATASOURCE_ROW_STATUS} alignment={"center"} formItem={{visible: false}}
                   visibleIndex={3}
+                  customizeText={getCustomizeRowStatusText}
           />
-          <Column type="buttons" width={110} visibleIndex={4} alignment={"center"}
+          <Column type="buttons" width={90} visibleIndex={4} alignment={"center"}
                   caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}>
             <DxButton name="comment" icon="comment"
                       hint={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected')}
                       onClick={(e) => {
-              dispatch(setSelectedCategory(category));
-              dispatch(setSelectedRow(e.row.data));
-              rowCommentPopupRef.current.setPopupVisible(true);
-            }}/>
+                        dispatch(setSelectedCategory(category));
+                        dispatch(setSelectedRow(e.row.data));
+                        rowCommentPopupRef.current.setPopupVisible(true);
+                      }}/>
             <DxButton name="delete"
                       visible={(e) => {
                         if (e.row.data.idx.includes(KCURE_PREFIX)) {

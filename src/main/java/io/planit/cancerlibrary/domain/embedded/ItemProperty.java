@@ -16,6 +16,8 @@ public class ItemProperty implements Serializable {
 
     private String labelColumn;
 
+    private String cssClass;
+
     public Boolean isAllowEditing() {
         return allowEditing;
     }
@@ -78,6 +80,19 @@ public class ItemProperty implements Serializable {
 
     public ItemProperty labelColumn(String labelColumn) {
         this.setLabelColumn(labelColumn);
+        return this;
+    }
+
+    public String getCssClass() {
+        return cssClass;
+    }
+
+    public void setCssClass(String cssClass) {
+        this.cssClass = cssClass;
+    }
+
+    public ItemProperty cssClass(String cssClass) {
+        this.setCssClass(cssClass);
         return this;
     }
 }
