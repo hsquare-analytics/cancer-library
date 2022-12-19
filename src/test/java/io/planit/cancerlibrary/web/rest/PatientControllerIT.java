@@ -139,7 +139,7 @@ class PatientControllerIT {
         Instant now = Instant.now();
 
         Patient updatedPatient = PatientResourceIT.createPatientDTO().ptNo(patient.getPtNo()).fsrMedDt(new Timestamp(now.toEpochMilli()));
-        restDatasourcePatientMockMvc.perform(patch("/api/patients/{ptNo}/update-first-visit-date", patient.getPtNo())
+        restDatasourcePatientMockMvc.perform(patch("/api/patients/{ptNo}/first-visit-date", patient.getPtNo())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(updatedPatient)))
             .andExpect(status().isOk());

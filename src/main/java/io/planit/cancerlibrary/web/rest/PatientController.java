@@ -49,7 +49,7 @@ public class PatientController {
 
     }
 
-    @PatchMapping("/patients/{ptNo}/update-first-visit-date")
+    @PatchMapping("/patients/{ptNo}/first-visit-date")
     public ResponseEntity<Boolean> updatePatientMedicalVisitInfo(
         @PathVariable String ptNo,
         @RequestBody Patient patient) {
