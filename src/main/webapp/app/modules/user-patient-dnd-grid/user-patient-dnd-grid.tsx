@@ -148,13 +148,13 @@ export const UserPatientDndGrid = () => {
                   alignment={'center'}/>
           <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')}
                   alignment={'center'}/>
-          <Column
-            caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')}
-            alignment={'center'}
-            calculateCellValue={rowData => {
-              return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
-            }}
-          />
+          {/*<Column*/}
+          {/*  caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')}*/}
+          {/*  alignment={'center'}*/}
+          {/*  calculateCellValue={rowData => {*/}
+          {/*    return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;*/}
+          {/*  }}*/}
+          {/*/>*/}
           <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={'center'}>
             <Column
               dataField="submitted"
