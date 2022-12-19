@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -19,6 +19,10 @@ import {
   GridDeclineReasonItem
 } from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
 import {GridRowCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-row-comment-item";
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
+import IconButton from '@mui/material/IconButton';
+import {PatientProfileCalendar} from "app/modules/datasource-editor/patient-profile/patient-profile-calendar";
+
 
 const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
   if (column.dataType === 'date') {
@@ -70,12 +74,14 @@ const getTextFieldCardContent = (column: IDxColumn, patient: IPatient) => {
 export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
   const {patient} = props;
 
+
   return (
     <div>
       <ThemeProvider theme={theme}>
         <Box>
           <Card variant="outlined" className="box-patient-profile">
             <div className="d-flex align-items-center">
+              <PatientProfileCalendar patient={patient}/>
               {AccessiblePatientColumn.map(column => getTextFieldCardContent(column, patient))}
             </div>
             <CardContent>

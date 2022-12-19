@@ -25,12 +25,12 @@ const AccessiblePatientColumn: IDxColumn[] = [
     dataField: "gid",
     caption: "cancerLibraryApp.patient.gid",
   },
-  {
-    dataField: "fsrMedDt",
-    caption: "cancerLibraryApp.patient.fsrMedDt",
-    dataType: "date",
-    format: "yyyy-MM-dd",
-  },
+  // {
+  //   dataField: "fsrMedDt",
+  //   caption: "cancerLibraryApp.patient.fsrMedDt",
+  //   dataType: "date",
+  //   format: "yyyy-MM-dd",
+  // },
   {
     dataField: "idxDt",
     caption: "cancerLibraryApp.patient.idxDt",
