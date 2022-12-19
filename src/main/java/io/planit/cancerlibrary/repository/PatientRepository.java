@@ -35,7 +35,10 @@ public class PatientRepository {
 
     public List<Patient> findAllByPtNoNotIn(List<String> ptNos) {
         SQL sql = getFindAllPatientWithDetailSQL();
-        sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO NOT IN (:ptNos)");
+
+        if (ptNos != null && !ptNos.isEmpty()) {
+            sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO NOT IN (:ptNos)");
+        }
         return jdbcTemplate.query(sql.toString(), Map.of("ptNos", ptNos), new PatientMapper());
     }
 
@@ -48,9 +51,13 @@ public class PatientRepository {
         return jdbcTemplate.query(sql.toString(), params, new PatientMapper());
     }
 
-    public List<Patient> findAllByPatientNos(List<String> patientNos) {
+    public List<Patient> findAllByPatientNos(List<String> ptNos) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO IN (:ptNos)");
-        return jdbcTemplate.query(sql.toString(), Map.of("ptNos", patientNos), new PatientMapper());
+
+        if (ptNos != null && !ptNos.isEmpty()) {
+            sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO IN (:ptNos)");
+        }
+        return jdbcTemplate.query(sql.toString(), Map.of("ptNos", ptNos), new PatientMapper());
     }
 
     private SQL getFindAllPatientWithDetailSQL() {
