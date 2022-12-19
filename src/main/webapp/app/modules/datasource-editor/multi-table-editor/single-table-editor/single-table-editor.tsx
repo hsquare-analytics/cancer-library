@@ -298,7 +298,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   allowEditing={false}
                   formItem={{visible: false}}
                   visibleIndex={1}
-                  cssClass="cell-highlighted"
           />
           <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
                   visibleIndex={2}
