@@ -49,8 +49,10 @@ public class PatientController {
 
     }
 
-    @PutMapping("/patients/update-first-medical-visit-date")
-    public ResponseEntity<Boolean> updatePatientMedicalVisitInfo(@RequestBody Patient patient) {
+    @PatchMapping("/patients/{ptNo}/update-first-visit-date")
+    public ResponseEntity<Boolean> updatePatientMedicalVisitInfo(
+        @PathVariable String ptNo,
+        @RequestBody Patient patient) {
         log.debug("REST request to update patient medical visit info");
 
         boolean result = patientRepository.partialUpdatePatient(patient);

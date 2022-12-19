@@ -29,8 +29,7 @@ import java.time.temporal.ChronoUnit;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IntegrationTest
@@ -140,7 +139,7 @@ class PatientControllerIT {
         Instant now = Instant.now();
 
         Patient updatedPatient = PatientResourceIT.createPatientDTO().ptNo(patient.getPtNo()).fsrMedDt(new Timestamp(now.toEpochMilli()));
-        restDatasourcePatientMockMvc.perform(put("/api/patients/update-first-medical-visit-date")
+        restDatasourcePatientMockMvc.perform(patch("/api/patients/{ptNo}/update-first-visit-date", patient.getPtNo())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(updatedPatient)))
             .andExpect(status().isOk());
