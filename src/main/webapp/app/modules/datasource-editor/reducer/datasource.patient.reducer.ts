@@ -35,6 +35,11 @@ export const updateEntity = createAsyncThunk('datasource_patient/update_entity',
   {serializeError: serializeAxiosError}
 );
 
+export const updateFirstVisitDate = createAsyncThunk('datasource_patient/update_first_visit_date', async (entity: IPatient, thunkAPI) => {
+  const result = await axios.patch<IPatient>(`api/patients/${entity.ptNo}/first-visit-date`, cleanEntity(entity));
+  thunkAPI.dispatch(getEntity(entity.ptNo));
+  return result;
+});
 
 export const DatasourcePatientSlice = createEntitySlice({
     name: 'datasource-patient',

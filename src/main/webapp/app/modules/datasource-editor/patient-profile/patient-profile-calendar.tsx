@@ -19,6 +19,8 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import {useAppDispatch} from "app/config/store";
+import {updateFirstVisitDate} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 
 
 interface IPatientProfileDetailProps {
@@ -26,6 +28,7 @@ interface IPatientProfileDetailProps {
 }
 
 export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
+  const dispatch = useAppDispatch();
   const {patient} = props;
 
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
@@ -40,6 +43,16 @@ export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
   useEffect(() => {
     setValue(dayjs(patient['fsrMedDt']));
   }, [patient]);
+
+
+  const onClickSave = () => {
+    setOpen(false);
+    dispatch(updateFirstVisitDate({
+      ptNo: patient.ptNo,
+      fsrMedDt: new Date(value.toString())
+    }));
+
+  }
 
 
   return <div>
@@ -90,9 +103,7 @@ export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
         </LocalizationProvider>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => {
-          setOpen(false)
-        }} autoFocus>
+        <Button onClick={() => onClickSave()} autoFocus>
           Save
         </Button>
         <Button autoFocus onClick={() => setOpen(false)}>
