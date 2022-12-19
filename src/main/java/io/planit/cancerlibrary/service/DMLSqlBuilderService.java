@@ -117,7 +117,7 @@ public class DMLSqlBuilderService {
     }
 
     private boolean isMapKeyExist(Map<String, Object> map, String key) {
-        return map.containsKey(key) && map.get(key) != null;
+        return map.containsKey(key);
     }
 
     private boolean isDateColumn(Item item) {

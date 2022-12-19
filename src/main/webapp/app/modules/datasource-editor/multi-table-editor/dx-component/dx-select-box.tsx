@@ -55,6 +55,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
         onValueChanged={onValueChanged}
         onSelectionChanged={onSelectionChanged}
         onOptionChanged={onOptionChanged}
+        showClearButton={true}
         isValid={isValid(validationFailedItems, data.column.name)}
         itemTemplate={(option) => {
           const label = `${option.title} (value: ${option.description})`;
