@@ -87,6 +87,19 @@ public class PatientRepository {
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
+    public boolean partialUpdatePatient(Patient patient) {
+        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
+        SQL sql = new SQL().UPDATE(Table.PATIENT_VIEW.getTableName());
+
+        if (patient.getFsrMedDt() != null) {
+            sql.SET("FSR_MED_DT = :fsrMedDt");
+        }
+
+        namedParameters = new BeanPropertySqlParameterSource(patient);
+
+        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
+    }
+
     private static class PatientMapper implements RowMapper<Patient> {
         public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
             Patient patient = new Patient();

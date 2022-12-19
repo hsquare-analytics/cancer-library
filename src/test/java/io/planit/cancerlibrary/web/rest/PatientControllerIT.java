@@ -11,6 +11,7 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.TimeService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IntegrationTest
@@ -124,5 +128,24 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(submittedPatient.getHspTpCd())))
             .andExpect(jsonPath("$.[*].detail.status").value(hasItem(submittedPatient.getDetail().getStatus())))
         ;
+    }
+
+    @Test
+    @Transactional(value = "jdbcTemplateTransactionManager")
+    void test_update_first_medical_visit_info() throws Exception {
+        Patient patient = PatientResourceIT.createPatientDTO();
+        patientRepository.insert(patient);
+        patientDetailRepository.insert(patient.getPtNo(), patient.getDetail());
+
+        Instant now = Instant.now();
+
+        Patient updatedPatient = PatientResourceIT.createPatientDTO().ptNo(patient.getPtNo()).fsrMedDt(new Timestamp(now.toEpochMilli()));
+        restDatasourcePatientMockMvc.perform(put("/api/patients/update-first-medical-visit-date")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(updatedPatient)))
+            .andExpect(status().isOk());
+
+        Timestamp result = patientRepository.findByPatientNo(patient.getPtNo()).map(Patient::getFsrMedDt).orElse(null);
+        assertThat(result).isEqualTo(new Timestamp(now.toEpochMilli()));
     }
 }

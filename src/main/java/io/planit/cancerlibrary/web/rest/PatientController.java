@@ -10,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,6 +47,14 @@ public class PatientController {
 
         return ResponseEntity.ok(patientRepository.findAllByPatientNos(accessiblePatientNoList));
 
+    }
+
+    @PutMapping("/patients/update-first-medical-visit-date")
+    public ResponseEntity<Boolean> updatePatientMedicalVisitInfo(@RequestBody Patient patient) {
+        log.debug("REST request to update patient medical visit info");
+
+        boolean result = patientRepository.partialUpdatePatient(patient);
+        return ResponseEntity.ok().body(result);
     }
 
 
