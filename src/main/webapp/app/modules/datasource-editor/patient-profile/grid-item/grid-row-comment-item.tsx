@@ -36,7 +36,7 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
 
   useEffect(() => {
     const result = commentEntitites?.map(comment => {
-      return `* ${comment.category.attribute.caption} \n ${comment.comment}`;
+      return `${comment.category.attribute.caption} : ${comment.comment}`;
     }).join("\n\n");
 
     setValue(result);
