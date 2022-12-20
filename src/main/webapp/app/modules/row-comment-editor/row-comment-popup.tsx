@@ -36,7 +36,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (comment) {
-      setValue(comment.comment);
+      setValue(comment.title);
     }
   }, [comment]);
 
