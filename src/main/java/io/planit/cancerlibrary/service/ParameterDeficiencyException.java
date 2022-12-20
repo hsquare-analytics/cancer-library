@@ -6,4 +6,8 @@ public class ParameterDeficiencyException extends RuntimeException {
     public ParameterDeficiencyException() {
         super("There is a parameter deficiency");
     }
+
+    public ParameterDeficiencyException(String message) {
+        super(message);
+    }
 }

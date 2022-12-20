@@ -25,8 +25,8 @@ public class Comment extends AbstractAuditingEntity implements Serializable {
     private String rowId;
 
     @NotNull
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "title")
+    private String title;
 
     @NotNull
     @ManyToOne(optional = false)
@@ -71,16 +71,16 @@ public class Comment extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
-    public String getComment() {
-        return comment;
+    public String getTitle() {
+        return title;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Comment comment(String comment) {
-        this.comment = comment;
+    public Comment title(String title) {
+        this.title = title;
         return this;
     }
 
@@ -103,7 +103,7 @@ public class Comment extends AbstractAuditingEntity implements Serializable {
             "id=" + id +
             ", ptNo='" + ptNo + '\'' +
             ", rowId='" + rowId + '\'' +
-            ", comment='" + comment + '\'' +
+            ", title='" + title + '\'' +
             ", category=" + category +
             '}';
     }

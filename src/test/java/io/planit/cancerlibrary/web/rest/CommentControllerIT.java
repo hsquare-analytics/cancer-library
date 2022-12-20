@@ -78,7 +78,7 @@ class CommentControllerIT {
             .andExpect(jsonPath("$.id").value(comment.getId().intValue()))
             .andExpect(jsonPath("$.ptNo").value(comment.getPtNo()))
             .andExpect(jsonPath("$.rowId").value(comment.getRowId()))
-            .andExpect(jsonPath("$.comment").value(comment.getComment()))
+            .andExpect(jsonPath("$.title").value(comment.getTitle()))
             .andExpect(jsonPath("$.category.id").value(comment.getCategory().getId().intValue()));
     }
 
@@ -88,13 +88,13 @@ class CommentControllerIT {
         commentRepository.saveAndFlush(comment);
 
         restCommentMockMvc
-            .perform(get(ENTITY_API_URL + "/categories/ptNo/{ptNo}", comment.getPtNo()))
+            .perform(get(ENTITY_API_URL + "/ptNo/{ptNo}", comment.getPtNo()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(comment.getId().intValue()))
             .andExpect(jsonPath("$.[*].ptNo").value(comment.getPtNo()))
             .andExpect(jsonPath("$.[*].rowId").value(comment.getRowId()))
-            .andExpect(jsonPath("$.[*].comment").value(comment.getComment()))
+            .andExpect(jsonPath("$.[*].title").value(comment.getTitle()))
             .andExpect(jsonPath("$.[*].category.id").value(comment.getCategory().getId().intValue()));
     }
 }

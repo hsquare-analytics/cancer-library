@@ -44,10 +44,10 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
     if (comment && comment.id) {
       dispatch(updateEntity({
         ...comment,
-        comment: value,
+        title: value,
       }));
     } else {
-      dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, comment: value, category: selectedCategory}));
+      dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, title: value, category: selectedCategory}));
     }
 
     transformAsRejected(dispatch, selectedCategory, selectedRow);
@@ -82,7 +82,7 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
         options: {
           text: 'CANCEL',
           onClick() {
-            setValue(comment ? comment.comment : '');
+            setValue(comment ? comment.title : '');
             setPopupVisible(false);
           },
         },

@@ -10,7 +10,7 @@ export interface IComment extends IAbstractAuditing {
   id?: any;
   ptNo?: string;
   rowId?: string;
-  comment?: string;
+  title?: string;
   category?: ICategory;
 }
 
@@ -18,7 +18,7 @@ export const defaultValue: Readonly<IComment> = {
   id: '',
   ptNo: '',
   rowId: '',
-  comment: '',
+  title: '',
   category: null,
   ...abstractAuditingDefaultValue
 };

@@ -6,10 +6,8 @@ import sinon from 'sinon';
 
 import reducer, {
   createEntity,
-  deleteEntity,
   getEntities,
   getEntity,
-  partialUpdateEntity,
   reset,
   updateEntity
 } from './row-comment.reducer';
@@ -70,7 +68,7 @@ describe('Entities reducer tests', () => {
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [createEntity.pending.type, updateEntity.pending.type, partialUpdateEntity.pending.type, deleteEntity.pending.type],
+        [createEntity.pending.type, updateEntity.pending.type, ],
         {},
         state => {
           expect(state).toMatchObject({
@@ -97,8 +95,6 @@ describe('Entities reducer tests', () => {
           getEntity.rejected.type,
           createEntity.rejected.type,
           updateEntity.rejected.type,
-          partialUpdateEntity.rejected.type,
-          deleteEntity.rejected.type,
         ],
         'some message',
         state => {
@@ -158,18 +154,6 @@ describe('Entities reducer tests', () => {
         entity: payload.data,
       });
     });
-
-    it('should delete entity', () => {
-      const payload = 'fake payload';
-      const toTest = reducer(undefined, {
-        type: deleteEntity.fulfilled.type,
-        payload,
-      });
-      expect(toTest).toMatchObject({
-        updating: false,
-        updateSuccess: true,
-      });
-    });
   });
 
   describe('Actions', () => {
@@ -196,7 +180,7 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getEntities({}));
+      await store.dispatch(getEntities('1'));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
@@ -211,7 +195,10 @@ describe('Entities reducer tests', () => {
           payload: resolvedObject,
         },
       ];
-      await store.dispatch(getEntity(42666));
+      await store.dispatch(getEntity({
+        categoryId: 1,
+        rowId: "1",
+      }));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
     });
@@ -254,43 +241,6 @@ describe('Entities reducer tests', () => {
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
     });
 
-    it('dispatches PARTIAL_UPDATE_CATEGORY actions', async () => {
-      const expectedActions = [
-        {
-          type: partialUpdateEntity.pending.type,
-        },
-        {
-          type: getEntities.pending.type,
-        },
-        {
-          type: partialUpdateEntity.fulfilled.type,
-          payload: resolvedObject,
-        },
-      ];
-      await store.dispatch(partialUpdateEntity({ id: 123 }));
-      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
-      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
-      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
-    });
-
-    it('dispatches DELETE_CATEGORY actions', async () => {
-      const expectedActions = [
-        {
-          type: deleteEntity.pending.type,
-        },
-        {
-          type: getEntities.pending.type,
-        },
-        {
-          type: deleteEntity.fulfilled.type,
-          payload: resolvedObject,
-        },
-      ];
-      await store.dispatch(deleteEntity(42666));
-      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
-      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
-      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
-    });
 
     it('dispatches RESET actions', async () => {
       const expectedActions = [reset()];

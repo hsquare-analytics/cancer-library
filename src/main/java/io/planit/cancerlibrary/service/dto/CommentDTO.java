@@ -17,7 +17,7 @@ public class CommentDTO {
     private String rowId;
 
     @NotNull
-    private String comment;
+    private String title;
 
     @NotNull
     private Category category;
@@ -37,7 +37,7 @@ public class CommentDTO {
         this.id = comment.getId();
         this.ptNo = comment.getPtNo();
         this.rowId = comment.getRowId();
-        this.comment = comment.getComment();
+        this.title = comment.getTitle();
         this.category = comment.getCategory();
         this.createdBy = comment.getCreatedBy();
         this.createdDate = comment.getCreatedDate();
@@ -50,7 +50,7 @@ public class CommentDTO {
         comment.setId(this.id);
         comment.setPtNo(this.ptNo);
         comment.setRowId(this.rowId);
-        comment.setComment(this.comment);
+        comment.setTitle(this.title);
         comment.setCategory(this.category);
         comment.setCreatedBy(this.createdBy);
         comment.setCreatedDate(this.createdDate);
@@ -83,12 +83,12 @@ public class CommentDTO {
         this.rowId = rowId;
     }
 
-    public String getComment() {
-        return comment;
+    public String getTitle() {
+        return title;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setTitle(String comment) {
+        this.title = comment;
     }
 
     public Category getCategory() {

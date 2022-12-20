@@ -42,8 +42,8 @@ public class CommentResourceIT {
     private static final String DEFAULT_ROWID = "AAAAAAAAAA";
     private static final String UPDATED_ROWID = "BBBBBBBBBB";
 
-    private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
-    private static final String UPDATED_COMMENT = "BBBBBBBBBB";
+    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/comments";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -74,13 +74,13 @@ public class CommentResourceIT {
 
     public static Comment createEntity(EntityManager em, Category category) {
         Comment comment = new Comment()
-            .ptNo(DEFAULT_PTNO).rowId(DEFAULT_ROWID).comment(DEFAULT_COMMENT).category(category);
+            .ptNo(DEFAULT_PTNO).rowId(DEFAULT_ROWID).title(DEFAULT_TITLE).category(category);
         return comment;
     }
 
     public static Comment createUpdatedEntity(EntityManager em, Category category) {
         Comment comment = new Comment()
-            .ptNo(DEFAULT_PTNO).rowId(DEFAULT_ROWID).comment(DEFAULT_COMMENT).category(category);
+            .ptNo(DEFAULT_PTNO).rowId(DEFAULT_ROWID).title(DEFAULT_TITLE).category(category);
         return comment;
     }
 
@@ -111,7 +111,7 @@ public class CommentResourceIT {
         Comment testComment = commentList.get(commentList.size() - 1);
         assertThat(testComment.getPtNo()).isEqualTo(DEFAULT_PTNO);
         assertThat(testComment.getRowId()).isEqualTo(DEFAULT_ROWID);
-        assertThat(testComment.getComment()).isEqualTo(DEFAULT_COMMENT);
+        assertThat(testComment.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testComment.getCategory().getId()).isEqualTo(category.getId());
 
     }
@@ -171,13 +171,13 @@ public class CommentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(comment.getId().intValue())))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(DEFAULT_PTNO)))
             .andExpect(jsonPath("$.[*].rowId").value(hasItem(DEFAULT_ROWID)))
-            .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)))
+            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].category.id").value(hasItem(comment.getCategory().getId().intValue())));
     }
 
     @Test
     @Transactional
-    void getComment() throws Exception {
+    void getTitle() throws Exception {
         commentRepository.saveAndFlush(comment);
 
         restCommentMockMvc
@@ -187,7 +187,7 @@ public class CommentResourceIT {
             .andExpect(jsonPath("$.id").value(comment.getId().intValue()))
             .andExpect(jsonPath("$.ptNo").value(DEFAULT_PTNO))
             .andExpect(jsonPath("$.rowId").value(DEFAULT_ROWID))
-            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT))
+            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.category.id").value(comment.getCategory().getId().intValue()));
         ;
     }
@@ -217,7 +217,7 @@ public class CommentResourceIT {
         categoryRepository.saveAndFlush(updatedCategory);
 
         em.detach(updatedComment);
-        updatedComment.ptNo(UPDATED_PTNO).rowId(UPDATED_ROWID).comment(UPDATED_COMMENT).category(updatedCategory);
+        updatedComment.ptNo(UPDATED_PTNO).rowId(UPDATED_ROWID).title(UPDATED_TITLE).category(updatedCategory);
 
         restCommentMockMvc
             .perform(
@@ -232,7 +232,7 @@ public class CommentResourceIT {
         Comment testComment = commentList.get(commentList.size() - 1);
         assertThat(testComment.getPtNo()).isEqualTo(UPDATED_PTNO);
         assertThat(testComment.getRowId()).isEqualTo(UPDATED_ROWID);
-        assertThat(testComment.getComment()).isEqualTo(UPDATED_COMMENT);
+        assertThat(testComment.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testComment.getCategory().getId()).isEqualTo(updatedCategory.getId());
     }
 
@@ -296,7 +296,7 @@ public class CommentResourceIT {
         Comment partialUpdatedComment = new Comment();
         partialUpdatedComment.setId(comment.getId());
 
-        partialUpdatedComment.comment(UPDATED_COMMENT);
+        partialUpdatedComment.title(UPDATED_TITLE);
 
         restCommentMockMvc
             .perform(
@@ -311,7 +311,7 @@ public class CommentResourceIT {
         Comment testComment = commentList.get(commentList.size() - 1);
         assertThat(testComment.getPtNo()).isEqualTo(DEFAULT_PTNO);
         assertThat(testComment.getRowId()).isEqualTo(DEFAULT_ROWID);
-        assertThat(testComment.getComment()).isEqualTo(UPDATED_COMMENT);
+        assertThat(testComment.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testComment.getCategory().getId()).isEqualTo(comment.getCategory().getId());
     }
 

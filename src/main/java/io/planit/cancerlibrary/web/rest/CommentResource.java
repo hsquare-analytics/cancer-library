@@ -93,8 +93,8 @@ public class CommentResource {
         Optional<CommentDTO> result = commentRepository
             .findById(commentDTO.getId())
             .map(existingComment -> {
-                if (commentDTO.getComment() != null) {
-                    existingComment.setComment(commentDTO.getComment());
+                if (commentDTO.getTitle() != null) {
+                    existingComment.setTitle(commentDTO.getTitle());
                 }
 
                 return existingComment;

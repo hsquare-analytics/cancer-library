@@ -53,29 +53,6 @@ export const updateEntity = createAsyncThunk('row-comment/update_entity',
   {serializeError: serializeAxiosError}
 );
 
-export const partialUpdateEntity = createAsyncThunk(
-  'row-comment/partial_update_entity',
-  async (entity: IComment, thunkAPI) => {
-    const result = await axios.patch<IComment>(`${apiUrl}/${entity.id}`, cleanEntity(entity));
-    // thunkAPI.dispatch(getEntities({}));
-    return result;
-  },
-  {serializeError: serializeAxiosError}
-);
-
-export const deleteEntity = createAsyncThunk(
-  'row-comment/delete_entity',
-  async (id: string | number, thunkAPI) => {
-    const requestUrl = `${apiUrl}/${id}`;
-    const result = await axios.delete<IComment>(requestUrl);
-    // thunkAPI.dispatch(getEntities({}));
-    return result;
-  },
-  {serializeError: serializeAxiosError}
-);
-
-// slice
-
 export const RowCommentSlice = createEntitySlice({
   name: 'row-comment',
   initialState,
@@ -84,11 +61,6 @@ export const RowCommentSlice = createEntitySlice({
       .addCase(getEntity.fulfilled, (state, action) => {
         state.loading = false;
         state.entity = action.payload.data;
-      })
-      .addCase(deleteEntity.fulfilled, state => {
-        state.updating = false;
-        state.updateSuccess = true;
-        state.entity = {};
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
         const {data} = action.payload;
@@ -99,7 +71,7 @@ export const RowCommentSlice = createEntitySlice({
           entities: data,
         };
       })
-      .addMatcher(isFulfilled(createEntity, updateEntity, partialUpdateEntity), (state, action) => {
+      .addMatcher(isFulfilled(createEntity, updateEntity), (state, action) => {
         state.updating = false;
         state.loading = false;
         state.updateSuccess = true;
@@ -110,7 +82,7 @@ export const RowCommentSlice = createEntitySlice({
         state.updateSuccess = false;
         state.loading = true;
       })
-      .addMatcher(isPending(createEntity, updateEntity, partialUpdateEntity, deleteEntity), state => {
+      .addMatcher(isPending(createEntity, updateEntity), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.updating = true;

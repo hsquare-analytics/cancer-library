@@ -224,19 +224,49 @@ class DatasourceControllerIT {
 
     @Test
     @Transactional
-    void testDeleteDatasourceRow() throws Exception {
+    void testDeleteNonExistRow() throws Exception {
         // given
-        sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10001, 'zero')");
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().category(category).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        sqlExecutor.executeDML("insert into ph_test (idx, name, pt_no) values (10001, 'zero', 'test')");
 
         // then
         restDatasourceMockMvc.perform(
-                delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001))
+                delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001)
+                    .contentType( MediaType.APPLICATION_JSON)
+                    .content("{\"idx\":\"test_idx\", \"pt_no\":\"test_ptno\"}"))
             .andExpect(status().isOk());
 
         List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
+            "select * from ph_test_updated where idx = 'test_idx'");
+
+        assertThat(result).hasSize(1);
+    }
+    @Test
+    @Transactional
+    void testDeleteExistRow() throws Exception {
+        // given
+        Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
+            Item item = new Item().category(category).title(columnName).activated(true);
+            itemRepository.saveAndFlush(item);
+        });
+
+        sqlExecutor.executeDML("insert into ph_test_updated (idx, name, pt_no) values (10001, 'zero', 'test_ptno')");
+
+        // then
+        restDatasourceMockMvc.perform(
+                delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001)
+                    .contentType( MediaType.APPLICATION_JSON)
+                    .content("{\"idx\":\"10001\", \"name\":\"modified_name\"}"))
+            .andExpect(status().isOk());
+
+        Map<String, Object> result = sqlExecutor.executeSelectOne(
             "select * from ph_test_updated where idx = '10001'");
 
-        assertThat(result).isEmpty();
+        assertThat(result.get("status")).isEqualTo("DISABLED");
     }
 
     @Test
