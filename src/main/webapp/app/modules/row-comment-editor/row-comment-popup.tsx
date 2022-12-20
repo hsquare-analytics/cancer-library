@@ -7,6 +7,10 @@ import {IPatient} from "app/shared/model/patient.model";
 import {
   transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
+import Swal from "sweetalert2";
+import {translate} from "react-jhipster";
 
 export const RowCommentPopup = React.forwardRef((props, ref) => {
 
@@ -25,6 +29,8 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const selectedRow = useAppSelector(state => state.datasourceStatus.selected.row);
 
+  const isSudoUser = hasAnyAuthority(useAppSelector(state => state.authentication.account.authorities), [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
+
   const [value, setValue] = useState('');
 
   useEffect(() => {
@@ -41,16 +47,28 @@ export const RowCommentPopup = React.forwardRef((props, ref) => {
   }, [comment]);
 
   const onClickSave = () => {
-    if (comment && comment.id) {
-      dispatch(updateEntity({
-        ...comment,
-        title: value,
-      }));
-    } else {
-      dispatch(createEntity({ptNo: patient.ptNo, rowId: selectedRow.idx, title: value, category: selectedCategory}));
-    }
+    Swal.fire({
+      text: translate('cancerLibraryApp.rowCommentPopup.sweetAlert.text'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: translate('cancerLibraryApp.rowCommentPopup.sweetAlert.confirmButtonText'),
+      cancelButtonText: translate('cancerLibraryApp.rowCommentPopup.sweetAlert.cancelButtonText')
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (comment && comment.id) {
+          dispatch(updateEntity({ ...comment, title: value, }));
+        } else {
+          dispatch(createEntity({ ptNo: patient.ptNo, rowId: selectedRow.idx, title: value, category: selectedCategory }));
+        }
 
-    transformAsRejected(dispatch, selectedCategory, selectedRow);
+        if (isSudoUser) {
+          transformAsRejected(dispatch, selectedCategory, selectedRow);
+        }
+      }
+    });
+
     setPopupVisible(false);
   }
 

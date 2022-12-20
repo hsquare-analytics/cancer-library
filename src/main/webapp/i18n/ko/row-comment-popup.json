@@ -1,0 +1,11 @@
+{
+  "cancerLibraryApp": {
+    "rowCommentPopup": {
+      "sweetAlert": {
+        "text": "행에 대한 코멘트를 저장하시겠습니까?",
+        "confirmButtonText": "확인",
+        "cancelButtonText": "취소"
+      }
+    }
+  }
+}
