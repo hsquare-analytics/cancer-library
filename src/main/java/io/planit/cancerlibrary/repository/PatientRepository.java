@@ -90,6 +90,7 @@ public class PatientRepository {
     public boolean partialUpdatePatient(Patient patient) {
         SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
         SQL sql = new SQL().UPDATE(Table.PATIENT_VIEW.getTableName());
+        sql.WHERE(PT_NO_EQUAL);
 
         if (patient.getFsrMedDt() != null) {
             sql.SET("FSR_MED_DT = :fsrMedDt");

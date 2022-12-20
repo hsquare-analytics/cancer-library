@@ -78,6 +78,8 @@ public class DMLSqlBuilderService {
                         .filter(lookup -> lookup.getDescription().equals(map.get(mapKey)))
                         .findFirst()
                         .ifPresent(lookup -> sql.VALUES(sqlization(item.getProperty().getLabelColumn()), String.format("'%s'", lookup.getTitle())));
+                } else if (map.get(mapKey) == null) {
+                    sql.VALUES(sqlization(item.getTitle()), "null");
                 } else {
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", map.get(mapKey)));
                 }
@@ -191,6 +193,8 @@ public class DMLSqlBuilderService {
                         .filter(lookup -> lookup.getDescription().equals(map.get(mapKey)))
                         .findFirst()
                         .ifPresent(lookup -> sql.SET(getSqlEqualSyntax(item.getProperty().getLabelColumn(), lookup.getTitle())));
+                } else if (map.get(mapKey) == null) {
+                    sql.SET(getSqlEqualSyntax(item.getTitle(), null));
                 } else {
                     sql.SET(getSqlEqualSyntax(item.getTitle(), map.get(mapKey)));
                 }
