@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getEntities, getEntity, reset, updateEntity} from './datasource.patient.reducer';
+import reducer, {getEntities, getEntity, reset, updateEntity, updateFirstVisitDate} from './datasource.patient.reducer';
 import {EntityState} from 'app/shared/reducers/reducer.utils';
 import {defaultValue, IPatient} from "app/shared/model/patient.model";
 
@@ -62,7 +62,7 @@ describe('Entities reducer tests', () => {
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [updateEntity.pending.type],
+        [updateEntity.pending.type, updateFirstVisitDate.pending.type],
         {},
         state => {
           expect(state).toMatchObject({
@@ -88,6 +88,7 @@ describe('Entities reducer tests', () => {
           getEntities.rejected.type,
           getEntity.rejected.type,
           updateEntity.rejected.type,
+          updateFirstVisitDate.rejected.type
         ],
         'some message',
         state => {
@@ -146,6 +147,15 @@ describe('Entities reducer tests', () => {
         updateSuccess: true,
         entity: payload.data,
       });
+    });
+
+    it('should update fisrt visit date', () => {
+      expect(reducer(undefined, {type: updateFirstVisitDate.fulfilled.type,}))
+        .toEqual({
+          ...initialState,
+          updating: false,
+          updateSuccess: true,
+        });
     });
 
   });
@@ -208,6 +218,25 @@ describe('Entities reducer tests', () => {
         },
       ];
       await store.dispatch(updateEntity({ptNo: "1"}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
+    it('dispatches UPDATE_FIRST_VISIT_DATE actions', async () => {
+      const expectedActions = [
+        {
+          type: updateFirstVisitDate.pending.type,
+        },
+        {
+          type: getEntity.pending.type,
+        },
+        {
+          type: updateFirstVisitDate.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(updateFirstVisitDate({ptNo: "1"}));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);

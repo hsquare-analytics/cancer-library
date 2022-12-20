@@ -65,12 +65,17 @@ export const DatasourcePatientSlice = createEntitySlice({
           state.updateSuccess = true;
           state.entity = action.payload.data;
         })
+        .addMatcher(isFulfilled(updateFirstVisitDate), (state, action) => {
+          state.updating = false;
+          state.loading = false;
+          state.updateSuccess = true;
+        })
         .addMatcher(isPending(getEntities, getEntity), state => {
           state.errorMessage = null;
           state.updateSuccess = false;
           state.loading = true;
         })
-        .addMatcher(isPending(updateEntity), state => {
+        .addMatcher(isPending(updateEntity, updateFirstVisitDate), state => {
           state.errorMessage = null;
           state.updateSuccess = false;
           state.updating = true;
