@@ -59,10 +59,10 @@ export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
     <CardContent>
       <Typography
         color="text.secondary">{translate("cancerLibraryApp.patient.fsrMedDt")}
-        <IconButton onClick={() => setOpen(true)} style={{padding: '0', marginLeft: '3px'}}
-                    className="icon-patient-detail">
-          <CalendarMonthIcon/>
-        </IconButton>
+        {/*<IconButton onClick={() => setOpen(true)} style={{padding: '0', marginLeft: '3px'}}*/}
+        {/*            className="icon-patient-detail">*/}
+        {/*  <CalendarMonthIcon/>*/}
+        {/*</IconButton>*/}
       </Typography>
       <Typography component="span" color="text.default">
         <TextField
