@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import {updateEntity} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import {Popup} from 'devextreme-react/popup';
 import {getEntities} from "app/modules/row-comment-editor/row-comment.reducer";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 interface IPatientDeclineReasonarea {
   xs: number;
@@ -26,6 +28,10 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
 
   const [value, setValue] = useState(patient && patient.detail ? patient.detail.declineReason : '');
   const [popupVisible, setPopupVisible] = useState(false);
+
+  const isSudoUser: boolean = useAppSelector(state =>
+    hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
+  );
 
   return <Grid item xs={xs}>
     <Typography color="text.secondary">
@@ -59,6 +65,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
         height={'50vh'}
         toolbarItems={[
           {
+            disabled: !isSudoUser,
             location: 'after',
             widget: 'dxButton',
             toolbar: 'bottom',
