@@ -67,7 +67,7 @@ public class DMLSqlBuilderService {
         getValidItemsByCategoryId(categoryId).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (isMapKeyExist(map, mapKey)) {
-                if (isDateColumn(item)) {
+                if (isDateColumn(item) && map.get(mapKey) != null) {
                     Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", timestamp));
                 } else if (isSelectLabelColumn(item)) {
@@ -180,7 +180,7 @@ public class DMLSqlBuilderService {
         getValidItemsByCategoryId(categoryId).forEach(item -> {
             String mapKey = parameterization(item.getTitle());
             if (isMapKeyExist(map, mapKey)) {
-                if (isDateColumn(item)) {
+                if (isDateColumn(item) && map.get(mapKey) != null) {
                     Timestamp timestamp = timeService.convertTimezoneStringToTimestamp((String) map.get(mapKey));
                     sql.SET(getSqlEqualSyntax(item.getTitle(), timestamp));
                 } else if (isSelectLabelColumn(item)) {
