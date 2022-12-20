@@ -87,7 +87,7 @@ export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
       }}
     >
       <DialogTitle id="responsive-dialog-title">
-        {"초진일 변경"}
+        {"암초진일 변경"}
       </DialogTitle>
       <DialogContent>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
