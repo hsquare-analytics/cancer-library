@@ -4,7 +4,7 @@ const CommentColumns: IDxColumn[] = [
   {dataField: "id"},
   {dataField: "ptNo"},
   {dataField: "rowId"},
-  {dataField: "comment"},
+  {dataField: "title"},
   {dataField: "category.title"},
   {dataField: "createdBy"},
   {dataField: "createdDate", dataType: "datetime", format: "yyyy-MM-dd HH:mm:ss"},
