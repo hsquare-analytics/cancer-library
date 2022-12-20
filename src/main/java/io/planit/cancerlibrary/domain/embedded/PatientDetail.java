@@ -8,6 +8,7 @@ public class PatientDetail {
     private String comment;
     private String declineReason;
     private String status;
+    private Instant standardDate;
     private String createdBy;
     private Instant createdDate;
     private String lastModifiedBy;
@@ -48,6 +49,19 @@ public class PatientDetail {
 
     public PatientDetail status(String status) {
         this.status = status;
+        return this;
+    }
+
+    public Instant getStandardDate() {
+        return standardDate;
+    }
+
+    public void setStandardDate(Instant standardDate) {
+        this.standardDate = standardDate;
+    }
+
+    public PatientDetail standardDate(Instant standardDate) {
+        this.standardDate = standardDate;
         return this;
     }
 

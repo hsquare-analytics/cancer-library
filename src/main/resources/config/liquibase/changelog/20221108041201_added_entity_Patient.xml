@@ -25,6 +25,7 @@
             <column name="status" type="varchar(50)"/>
             <column name="comment" type="varchar(2000)"/>
             <column name="decline_reason" type="varchar(2000)"/>
+            <column name="standard_date" type="timestamp"/>
             <column name="created_by" type="varchar(50)"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_by" type="varchar(50)"/>

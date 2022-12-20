@@ -37,8 +37,8 @@ public class PatientResourceIT {
     private static final String DEFAULT_HSP_TP_CD = "AAAAAAAAAA";
     private static final Timestamp DEFAULT_IDX_DT = Timestamp.from(Instant.ofEpochMilli(0L));
     private static final PatientDetail DEFAULT_PATIENT_DETAIL = new PatientDetail().comment("AAAAAAAAAA")
-        .declineReason("AAAAAAAAAA").status(PatientConstants.SUBMITTED).createdBy("AAAAAAAAAA")
-        .createdDate(Instant.now()).lastModifiedBy("AAAAAAAAAA").lastModifiedDate(Instant.now());
+        .declineReason("AAAAAAAAAA").status(PatientConstants.SUBMITTED).standardDate(Instant.now())
+        .createdBy("AAAAAAAAAA").createdDate(Instant.now()).lastModifiedBy("AAAAAAAAAA").lastModifiedDate(Instant.now());
 
     private static final String UPDATED_PT_NO = "BBBBBBBBBB";
     private static final String UPDATED_PT_NM = "BBBBBBBBBB";
@@ -47,8 +47,8 @@ public class PatientResourceIT {
     private static final String UPDATED_HSP_TP_CD = "BBBBBBBBBB";
     private static final Timestamp UPDATED_IDX_DT = Timestamp.from(Instant.ofEpochMilli(0L));
     private static final PatientDetail UPDATED_PATIENT_DETAIL = new PatientDetail().comment("BBBBBBBBBB")
-        .declineReason("BBBBBBBBBB").status(PatientConstants.APPROVED).createdBy("BBBBBBBBBB")
-        .createdDate(Instant.now()).lastModifiedBy("BBBBBBBBBB").lastModifiedDate(Instant.now().plus(1, ChronoUnit.DAYS));
+        .declineReason("BBBBBBBBBB").status(PatientConstants.APPROVED).standardDate(Instant.now())
+        .createdBy("BBBBBBBBBB").createdDate(Instant.now()).lastModifiedBy("BBBBBBBBBB").lastModifiedDate(Instant.now().plus(1, ChronoUnit.DAYS));
 
     private static final String ENTITY_API_URL = "/api/patients";
 
@@ -109,10 +109,11 @@ public class PatientResourceIT {
         assertThat(testPatient.getHspTpCd()).isEqualTo(DEFAULT_HSP_TP_CD);
 
         assertThat(testPatient.getDetail().getStatus()).isEqualTo(DEFAULT_PATIENT_DETAIL.getStatus());
-        assertThat(testPatient.getDetail().getCreatedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getCreatedBy());
-        assertThat(testPatient.getDetail().getLastModifiedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getLastModifiedBy());
         assertThat(testPatient.getDetail().getComment()).isEqualTo(DEFAULT_PATIENT_DETAIL.getComment());
         assertThat(testPatient.getDetail().getDeclineReason()).isEqualTo(DEFAULT_PATIENT_DETAIL.getDeclineReason());
+        assertThat(testPatient.getDetail().getStandardDate()).isEqualTo(DEFAULT_PATIENT_DETAIL.getStandardDate().toString());
+        assertThat(testPatient.getDetail().getCreatedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getCreatedBy());
+        assertThat(testPatient.getDetail().getLastModifiedBy()).isEqualTo(DEFAULT_PATIENT_DETAIL.getLastModifiedBy());
     }
 
     @Test
@@ -133,11 +134,11 @@ public class PatientResourceIT {
             .andExpect(jsonPath("$.[*].detail.comment").value(hasItem(DEFAULT_PATIENT_DETAIL.getComment())))
             .andExpect(jsonPath("$.[*].detail.declineReason").value(hasItem(DEFAULT_PATIENT_DETAIL.getDeclineReason())))
             .andExpect(jsonPath("$.[*].detail.status").value(hasItem(DEFAULT_PATIENT_DETAIL.getStatus())))
+            .andExpect(jsonPath("$.[*].detail.standardDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getStandardDate().toString())))
             .andExpect(jsonPath("$.[*].detail.createdBy").value(hasItem(DEFAULT_PATIENT_DETAIL.getCreatedBy())))
             .andExpect(jsonPath("$.[*].detail.createdDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getCreatedDate().toString())))
             .andExpect(jsonPath("$.[*].detail.lastModifiedBy").value(hasItem(DEFAULT_PATIENT_DETAIL.getLastModifiedBy())))
-            .andExpect(jsonPath("$.[*].detail.lastModifiedDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getLastModifiedDate().toString())))
-        ;
+            .andExpect(jsonPath("$.[*].detail.lastModifiedDate").value(hasItem(DEFAULT_PATIENT_DETAIL.getLastModifiedDate().toString())));
     }
 
     @Test

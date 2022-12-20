@@ -112,6 +112,10 @@ public class PatientResource {
                     existDetail.setCreatedDate(Instant.now());
                 }
 
+                if (Objects.nonNull(patientDTO.getDetail().getStandardDate())) {
+                    existDetail.setStandardDate(patientDTO.getDetail().getStandardDate());
+                }
+
                 existDetail.setLastModifiedBy(login);
                 existDetail.setLastModifiedDate(Instant.now());
                 return existPatient.detail(existDetail);

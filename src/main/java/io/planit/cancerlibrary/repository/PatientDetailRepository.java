@@ -53,7 +53,8 @@ public class PatientDetailRepository {
             .VALUES("CREATED_BY", ":createdBy")
             .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
             .VALUES("COMMENT", ":comment")
-            .VALUES("DECLINE_REASON", ":declineReason");
+            .VALUES("DECLINE_REASON", ":declineReason")
+            .VALUES("STANDARD_DATE", ":standardDate");
 
         if (detail.getCreatedDate() != null) {
             sql.VALUES("CREATED_DATE", String.format("'%s'", Timestamp.from(detail.getCreatedDate())));

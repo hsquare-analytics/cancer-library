@@ -118,6 +118,9 @@ public class PatientRepository {
             detail.setDeclineReason(resultSet.getString("decline_reason"));
             detail.setComment(resultSet.getString("comment"));
             detail.setStatus(resultSet.getString("status"));
+            if (resultSet.getTimestamp("standard_date") != null) {
+                detail.setStandardDate(resultSet.getTimestamp("standard_date").toInstant());
+            }
             detail.setCreatedBy(resultSet.getString("created_by"));
             if (resultSet.getTimestamp("created_date") != null) {
                 detail.setCreatedDate(resultSet.getTimestamp("created_date").toInstant());
