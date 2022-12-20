@@ -7,6 +7,7 @@ import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.service.PatientService;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,9 +38,12 @@ public class PatientResource {
 
     private final PatientDetailRepository patientDetailRepository;
 
-    public PatientResource(PatientRepository patientRepository, PatientDetailRepository patientDetailRepository) {
+    private final PatientService patientService;
+
+    public PatientResource(PatientRepository patientRepository, PatientDetailRepository patientDetailRepository, PatientService patientService) {
         this.patientRepository = patientRepository;
         this.patientDetailRepository = patientDetailRepository;
+        this.patientService = patientService;
     }
 
     @PostMapping("/patients")
@@ -89,46 +93,9 @@ public class PatientResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        String login = SecurityUtils.getCurrentUserLogin()
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
+        Optional<Patient> patient = patientService.updatePatient(patientDTO);
 
-        Optional<Patient> patient = patientRepository.findByPatientNo(ptNo)
-            .map(existPatient -> {
-                PatientDetail existDetail = existPatient.getDetail();
-                if (Objects.nonNull(patientDTO.getDetail().getStatus())) {
-                    existDetail.setStatus(patientDTO.getDetail().getStatus());
-                }
-
-                if (Objects.nonNull(patientDTO.getDetail().getComment())) {
-                    existDetail.setComment(patientDTO.getDetail().getComment());
-                }
-
-                if (Objects.nonNull(patientDTO.getDetail().getDeclineReason())) {
-                    existDetail.setDeclineReason(patientDTO.getDetail().getDeclineReason());
-                }
-
-                if (PatientConstants.SUBMITTED.equals(patientDTO.getDetail().getStatus())) {
-                    existDetail.setCreatedBy(login);
-                    existDetail.setCreatedDate(Instant.now());
-                }
-
-                if (Objects.nonNull(patientDTO.getDetail().getStandardDate())) {
-                    existDetail.setStandardDate(patientDTO.getDetail().getStandardDate());
-                }
-
-                existDetail.setLastModifiedBy(login);
-                existDetail.setLastModifiedDate(Instant.now());
-                return existPatient.detail(existDetail);
-            });
-
-        return patient.map(response -> {
-                if (patientRepository.checkRowExistByPtNoOnTable(Table.PATIENT_DETAIL, ptNo)) {
-                    patientDetailRepository.update(ptNo, response.getDetail());
-                } else {
-                    patientDetailRepository.insert(ptNo, response.getDetail());
-                }
-                return ResponseEntity.ok().body(response);
-            })
+        return patient.map(response -> ResponseEntity.ok().body(response))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
