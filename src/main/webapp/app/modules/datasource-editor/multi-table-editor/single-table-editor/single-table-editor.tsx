@@ -93,7 +93,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 
-  const getDefaultFilter = () => {
+  const getFilterValue = () => {
     const filter: any[] = [['status', '<>', RowStatus.DISABLED], 'and'];
 
     if (category.attribute.dateColumn) {
@@ -139,7 +139,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           sorting={{mode: 'multiple'}}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           filterPanel={{visible: true}}
-          defaultFilterValue={getDefaultFilter()}
+          filterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
           editing={{
             mode: 'popup',
