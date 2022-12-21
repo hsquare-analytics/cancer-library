@@ -23,7 +23,8 @@
       "deleted": "{{param}} 님의 정보가 성공적으로 삭제 되었습니다.",
       "review_submitted" : "{{param}} 님의 정보가 성공적으로 제출 되었습니다.",
       "review_declined" : "{{param}} 님의 정보가 성공적으로 반려 되었습니다.",
-      "review_approved" : "{{param}} 님의 정보가 성공적으로 승인 되었습니다."
+      "review_approved" : "{{param}} 님의 정보가 성공적으로 승인 되었습니다.",
+	  "firstVisitDateUpdated" : "초진일 정보가 성공적으로 수정 되었습니다."
     }
   }
 }

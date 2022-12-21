@@ -10,6 +10,8 @@ import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,11 @@ public class PatientController {
 
     private final Logger log = LoggerFactory.getLogger(PatientController.class);
 
+    private static final String ENTITY_NAME = "patient";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final UserPatientRepository userPatientRepository;
 
     private final PatientRepository patientRepository;
@@ -33,7 +40,7 @@ public class PatientController {
 
     public PatientController(UserPatientRepository userPatientRepository,
                              PatientRepository patientRepository,
-                                PatientService patientService) {
+                             PatientService patientService) {
         this.userPatientRepository = userPatientRepository;
         this.patientRepository = patientRepository;
         this.patientService = patientService;
@@ -63,7 +70,11 @@ public class PatientController {
         log.debug("REST request to update patient medical visit info");
 
         Optional<Patient> result = patientService.updatePatient(patient);
-        return ResponseEntity.ok().body(result.isPresent());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-" + applicationName + "-alert", applicationName + "." + ENTITY_NAME + "." + "firstVisitDateUpdated");
+
+        return ResponseEntity.ok().headers(headers).body(result.isPresent());
     }
 
 
