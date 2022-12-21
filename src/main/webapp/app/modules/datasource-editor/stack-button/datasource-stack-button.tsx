@@ -139,7 +139,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               onDeclinedButtonClick();
             }}
           >
-            {translate('cancerLibraryApp.datasourceEditor.reviewButton.decline')}
+            {translate('cancerLibraryApp.datasource.reviewButton.decline')}
           </Button>
           <Button
             variant="contained"
@@ -149,7 +149,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               onApprovedButtonClick();
             }}
           >
-            {translate('cancerLibraryApp.datasourceEditor.reviewButton.approve')}
+            {translate('cancerLibraryApp.datasource.reviewButton.approve')}
           </Button>{' '}
         </>
       ) : (
@@ -162,7 +162,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
             onSubmittedButtonClick();
           }}
         >
-          {translate('cancerLibraryApp.datasourceEditor.reviewButton.submit')}
+          {translate('cancerLibraryApp.datasource.reviewButton.submit')}
         </Button>
       )}
     </Stack>

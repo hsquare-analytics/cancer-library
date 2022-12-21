@@ -51,8 +51,8 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
 
   const getCommentLabel = () => {
     return isIndiscernibleLookupItem()
-      ? translate("cancerLibraryApp.datasourceEditor.lookupEditor.dxRowCommentBox.indiscernibleLabel")
-      : translate("cancerLibraryApp.datasourceEditor.lookupEditor.dxRowCommentBox.initialLabel")
+      ? translate("cancerLibraryApp.datasource.lookupEditor.dxRowCommentBox.indiscernibleLabel")
+      : translate("cancerLibraryApp.datasource.lookupEditor.dxRowCommentBox.initialLabel")
   }
 
   const getCommentValue = () => {

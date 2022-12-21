@@ -1,7 +1,15 @@
 {
   "cancerLibraryApp": {
-    "datasourceEditor": {
+    "datasource": {
       "pageTitle": "데이터 편집 모듈",
+      "created" : "새로운 행이 추가 되었습니다.",
+      "updated" : "{{ param }} 행이 수정 되었습니다.",
+      "deleted" : "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
+      "completed" : "{{ param }} 행이 완료 상태로 변경 되었습니다.",
+      "in_progress" : "{{ param }} 행이 임시저장 상태로 변경 되었습니다.",
+      "not_started" : "{{ param }} 행이 작업전 상태로 변경 되었습니다.",
+      "disabled" : "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
+      "rejected" : "{{ param }} 행이 반려 상태로 변경 되었습니다.",
       "column": {
         "createdBy": "생성자",
         "createdDate": "생성일",

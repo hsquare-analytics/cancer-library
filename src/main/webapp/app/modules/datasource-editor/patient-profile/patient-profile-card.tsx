@@ -23,23 +23,23 @@ const PatientStatusChip = (status: string) => {
   switch (status) {
     case REVIEW_LIST.DECLINED:
       return (
-        // <Chip label={translate('cancerLibraryApp.datasourceEditor.review.declined')} color="error" size="small" />
-        <span className="badge-chip declined">{translate('cancerLibraryApp.datasourceEditor.review.declined')}</span>
+        // <Chip label={translate('cancerLibraryApp.datasource.review.declined')} color="error" size="small" />
+        <span className="badge-chip declined">{translate('cancerLibraryApp.datasource.review.declined')}</span>
       );
     case REVIEW_LIST.APPROVED:
       return (
-        // <Chip label={translate('cancerLibraryApp.datasourceEditor.review.approved')} color="success" size="small" />
-        <span className="badge-chip approved">{translate('cancerLibraryApp.datasourceEditor.review.approved')}</span>
+        // <Chip label={translate('cancerLibraryApp.datasource.review.approved')} color="success" size="small" />
+        <span className="badge-chip approved">{translate('cancerLibraryApp.datasource.review.approved')}</span>
       );
     case REVIEW_LIST.SUBMITTED:
       return (
-        // <Chip label={translate('cancerLibraryApp.datasourceEditor.review.submitted')} color="info" size="small" />
-        <span className="badge-chip submitted">{translate('cancerLibraryApp.datasourceEditor.review.submitted')}</span>
+        // <Chip label={translate('cancerLibraryApp.datasource.review.submitted')} color="info" size="small" />
+        <span className="badge-chip submitted">{translate('cancerLibraryApp.datasource.review.submitted')}</span>
       );
     default:
       return (
-        // <Chip label={translate('cancerLibraryApp.datasourceEditor.review.initial')} color="secondary" size="small" />
-        <span className="badge-chip">{translate('cancerLibraryApp.datasourceEditor.review.initial')}</span>
+        // <Chip label={translate('cancerLibraryApp.datasource.review.initial')} color="secondary" size="small" />
+        <span className="badge-chip">{translate('cancerLibraryApp.datasource.review.initial')}</span>
       );
   }
 };
@@ -81,7 +81,7 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
           </Tooltip>
           <Typography sx={{display: 'flex', alignItems: 'center', marginRight: '15px'}}>
             {translate(
-              'cancerLibraryApp.datasourceEditor.profileCard.title',
+              'cancerLibraryApp.datasource.profileCard.title',
               patient
                 ? {
                   no: patient.ptNo,

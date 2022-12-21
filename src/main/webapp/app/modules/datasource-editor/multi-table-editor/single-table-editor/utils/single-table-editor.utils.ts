@@ -14,13 +14,13 @@ export enum ActionType {
 export const toastApiResult = (type: ActionType, data: { table: string, row?: string }) => {
   switch (type) {
     case ActionType.CREATE:
-      toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.createSuccess', data));
+      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', data));
       break;
     case ActionType.UPDATE:
-      toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.updateSuccess', data));
+      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', data));
       break;
     case ActionType.DELETE:
-      toast.info(translate('cancerLibraryApp.datasourceEditor.singleTableEditor.disableSuccess', data));
+      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.disableSuccess', data));
       break;
     default:
       break;
@@ -43,7 +43,7 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
       return false;
     }
     if (item.attribute.required && isDxCellNil(targetData[item.title.toLowerCase()])) {
-      const singleMessage = translate('cancerLibraryApp.datasourceEditor.singleTableEditor.validator.required', {field: item.attribute.caption || item.title});
+      const singleMessage = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: item.attribute.caption || item.title});
 
       validationFailedItemList.push({...item, message: singleMessage});
       e.isValid = false;
@@ -53,7 +53,7 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
 
   if (validationFailedItemList.length > 0) {
     callback(validationFailedItemList);
-    const concatenatedMessage = translate('cancerLibraryApp.datasourceEditor.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property?.caption || item.title).join(', ')});
+    const concatenatedMessage = translate('cancerLibraryApp.datasource.singleTableEditor.validator.required', {field: validationFailedItemList.map(item => item.property?.caption || item.title).join(', ')});
     // e.errorText = concatenatedMessage;
     Swal.fire({
       icon: 'error',

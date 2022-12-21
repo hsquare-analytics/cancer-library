@@ -31,25 +31,25 @@ export const fireAddCardSwal = () => {
 
 export const fireSaveCardSwal = () => {
   return Swal.fire({
-    text: translate('cancerLibraryApp.datasourceEditor.lookupEditor.saveAlert'),
+    text: translate('cancerLibraryApp.datasource.lookupEditor.saveAlert'),
     // icon: 'warning',
     customClass: 'cancer-dialog',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.confirmButtonText'),
-    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.cancelButtonText'),
+    confirmButtonText: translate('cancerLibraryApp.datasource.lookupEditor.confirmButtonText'),
+    cancelButtonText: translate('cancerLibraryApp.datasource.lookupEditor.cancelButtonText'),
   });
 };
 
 export const fireDeleteCardSwal = () => {
   return Swal.fire({
-    text: translate('cancerLibraryApp.datasourceEditor.lookupEditor.deleteAlert'),
+    text: translate('cancerLibraryApp.datasource.lookupEditor.deleteAlert'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.confirmButtonText'),
-    cancelButtonText: translate('cancerLibraryApp.datasourceEditor.lookupEditor.cancelButtonText'),
+    confirmButtonText: translate('cancerLibraryApp.datasource.lookupEditor.confirmButtonText'),
+    cancelButtonText: translate('cancerLibraryApp.datasource.lookupEditor.cancelButtonText'),
   });
 };

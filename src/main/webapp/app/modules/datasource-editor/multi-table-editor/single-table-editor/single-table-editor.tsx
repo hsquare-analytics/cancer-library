@@ -81,7 +81,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
   useEffect(() => {
     if (updateSuccess && selectedCategory && category.id === selectedCategory.id) {
-      toastApiResult(actionType, {table: category.title.toUpperCase(), row: editedRow ? editedRow.idx : null});
       dispatch(resetDatasourceStatusReducer());
       dispatch(resetDatasourceContainerFlag());
     }
@@ -152,7 +151,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 //   toolbar: 'bottom',
                 //   widget: 'dxButton',
                 //   options: {
-                //     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected'),
+                //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
                 //     onClick(e) {
                 //       const row = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
                 //       transformAsRejected(dispatch, category, row);
@@ -165,7 +164,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 //   toolbar: 'bottom',
                 //   widget: 'dxButton',
                 //   options: {
-                //     text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.pause'),
+                //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
                 //     onClick(e) {
                 //       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
                 //       transformAsInProgress(dispatch, category, data);
@@ -178,7 +177,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.save'),
+                    text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.save'),
                     onClick() {
                       dataGrid.current.instance.saveEditData();
                     }
@@ -189,7 +188,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   toolbar: 'bottom',
                   widget: 'dxButton',
                   options: {
-                    text: translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.cancel'),
+                    text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.cancel'),
                     onClick() {
                       dataGrid.current.instance.cancelEditData();
                     }
@@ -288,7 +287,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           }}
         >
           <ColumnChooser
-            title={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.columnList')}
+            title={translate('cancerLibraryApp.datasource.singleTableEditor.columnList')}
             mode="select"
             allowSearch={true}
             sortOrder={'asc'}
@@ -299,7 +298,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   formItem={{visible: false}}
                   visibleIndex={1}
           />
-          <Column caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.status')}
+          <Column caption={translate('cancerLibraryApp.datasource.singleTableEditor.status')}
                   visibleIndex={2}
                   width={90} alignment={"center"}
                   formItem={{visible: false}}
@@ -315,9 +314,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   customizeText={getCustomizeRowStatusText}
           />
           <Column type="buttons" width={90} visibleIndex={4} alignment={"center"}
-                  caption={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editRow')}>
+                  caption={translate('cancerLibraryApp.datasource.singleTableEditor.editRow')}>
             <DxButton name="comment" icon="comment"
-                      hint={translate('cancerLibraryApp.datasourceEditor.singleTableEditor.editForm.button.rejected')}
+                      hint={translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected')}
                       onClick={(e) => {
                         dispatch(setSelectedCategory(category));
                         dispatch(setSelectedRow(e.row.data));
@@ -336,7 +335,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           {itemContainer[category.id].map(item => getDxColumnConfig(item))}
           <Column
             dataField="last_modified_by"
-            caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedBy')}
+            caption={translate('cancerLibraryApp.datasource.column.lastModifiedBy')}
             alignment={'center'}
             allowEditing={false}
             visibleIndex={9999997}
@@ -344,7 +343,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           />
           <Column
             dataField="last_modified_date"
-            caption={translate('cancerLibraryApp.datasourceEditor.column.lastModifiedDate')}
+            caption={translate('cancerLibraryApp.datasource.column.lastModifiedDate')}
             alignment={'center'}
             dataType={'datetime'}
             format={'yy/MM/dd hh:mm'}

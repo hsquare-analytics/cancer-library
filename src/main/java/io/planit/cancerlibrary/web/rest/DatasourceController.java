@@ -3,15 +3,21 @@ package io.planit.cancerlibrary.web.rest;
 import io.planit.cancerlibrary.constant.RowStatus;
 import io.planit.cancerlibrary.repository.SqlExecutor;
 import io.planit.cancerlibrary.service.DMLSqlBuilderService;
+import io.planit.cancerlibrary.service.DatasourceHeaderService;
 import io.planit.cancerlibrary.service.SequenceGenerator;
 import io.planit.cancerlibrary.service.UnionSqlBuilderService;
+import liquibase.pro.packaged.U;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import tech.jhipster.web.util.HeaderUtil;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +29,11 @@ public class DatasourceController {
 
     private final Logger log = LoggerFactory.getLogger(DatasourceController.class);
 
+    private static final String ENTITY_NAME = "datasource";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final UnionSqlBuilderService unionSqlBuilderService;
 
     private final DMLSqlBuilderService dmlSqlBuilderService;
@@ -31,18 +42,22 @@ public class DatasourceController {
 
     private final SqlExecutor sqlExecutor;
 
+    private final DatasourceHeaderService datasourceHeaderService;
+
     public DatasourceController(UnionSqlBuilderService unionSqlBuilderService,
                                 DMLSqlBuilderService dmlSqlBuilderService,
                                 SequenceGenerator sequenceGenerator,
-                                SqlExecutor sqlExecutor) {
+                                SqlExecutor sqlExecutor,
+                                DatasourceHeaderService datasourceHeaderService) {
         this.unionSqlBuilderService = unionSqlBuilderService;
         this.sqlExecutor = sqlExecutor;
         this.sequenceGenerator = sequenceGenerator;
         this.dmlSqlBuilderService = dmlSqlBuilderService;
+        this.datasourceHeaderService = datasourceHeaderService;
     }
 
     @PostMapping("/datasource/categories/{categoryId}/rows")
-    public ResponseEntity<Boolean> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) {
+    public ResponseEntity<Boolean> createDatasourceRow(@PathVariable Long categoryId, @RequestBody Map<String, Object> map) throws URISyntaxException {
         log.debug("Request to create datasource row by categoryId: {}", categoryId);
 
         Map<String, Object> mapWithIdx = new HashMap<>(map);
@@ -52,7 +67,10 @@ public class DatasourceController {
 
         String insertSQL = dmlSqlBuilderService.getInsertSQL(categoryId, mapWithIdx);
         Boolean result = sqlExecutor.executeDML(insertSQL);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity
+            .created(new URI("/api/datasource/categories/" + categoryId + "/rows"))
+            .headers(datasourceHeaderService.getCreateHeader(map))
+            .body(result);
     }
 
     @GetMapping("/datasource/categories/{categoryId}/rows")
@@ -105,7 +123,9 @@ public class DatasourceController {
 
         String updateSQL = dmlSqlBuilderService.getUpdateSQL(categoryId, mapWithIdx);
         Boolean result = sqlExecutor.executeDML(updateSQL);
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok()
+            .headers(datasourceHeaderService.getUpdateHeader(map))
+            .body(result);
     }
 
     @DeleteMapping("/datasource/categories/{categoryId}/rows/{rowId}")
@@ -131,7 +151,9 @@ public class DatasourceController {
             result = sqlExecutor.executeDML(updateSQL);
         }
 
-        return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, rowId))
+            .body(result);
     }
 
     @PutMapping("/datasource/categories/{categoryId}/update-bulk-datasource-rows")

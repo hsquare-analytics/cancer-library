@@ -35,7 +35,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
 
   return <Grid item xs={xs}>
     <Typography color="text.secondary">
-      * {translate('cancerLibraryApp.datasourceEditor.profileCard.declineReason')}
+      * {translate('cancerLibraryApp.datasource.profileCard.declineReason')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}
                   className="icon-patient-detail">
         <CreateOutlinedIcon/>
@@ -51,7 +51,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
         />
       ) : (
         <Typography component="span" color="text.default">
-          {translate('cancerLibraryApp.datasourceEditor.profileCard.emptyContent')}
+          {translate('cancerLibraryApp.datasource.profileCard.emptyContent')}
         </Typography>
       )}
       <Popup

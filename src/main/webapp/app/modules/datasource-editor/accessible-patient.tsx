@@ -66,7 +66,7 @@ export const AccessiblePatient = () => {
 
   return (
     <section className="wrap-page">
-      <h1 className="title-page">{translate('cancerLibraryApp.datasourceEditor.pageTitle')}</h1>
+      <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
       <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
       {!loading || patientList.length > 0 ? (
         <DataGrid
@@ -99,7 +99,7 @@ export const AccessiblePatient = () => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
           <Column
             dataField="detail.comment"
-            caption={translate('cancerLibraryApp.datasourceEditor.column.comment')}
+            caption={translate('cancerLibraryApp.datasource.column.comment')}
             width={150}
             alignment={'center'}
             cellRender={commentCellRender}
@@ -117,17 +117,17 @@ export const AccessiblePatient = () => {
                 {
                   id: 1,
                   valueExpr: REVIEW_LIST.SUBMITTED,
-                  displayExpr: translate('cancerLibraryApp.datasourceEditor.review.submitted'),
+                  displayExpr: translate('cancerLibraryApp.datasource.review.submitted'),
                 },
                 {
                   id: 2,
                   valueExpr: REVIEW_LIST.DECLINED,
-                  displayExpr: translate('cancerLibraryApp.datasourceEditor.review.declined'),
+                  displayExpr: translate('cancerLibraryApp.datasource.review.declined'),
                 },
                 {
                   id: 3,
                   valueExpr: REVIEW_LIST.APPROVED,
-                  displayExpr: translate('cancerLibraryApp.datasourceEditor.review.approved'),
+                  displayExpr: translate('cancerLibraryApp.datasource.review.approved'),
                 },
               ]}
               displayExpr={'displayExpr'}

@@ -29,7 +29,7 @@ export const GridCommentItem = (props: IPatientProfileCardTextarea) => {
 
   return <Grid item xs={xs}>
     <Typography color="text.secondary">
-      * {translate('cancerLibraryApp.datasourceEditor.profileCard.comment')}
+      * {translate('cancerLibraryApp.datasource.profileCard.comment')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}
                   className="icon-patient-detail">
         <CreateOutlinedIcon/>
@@ -45,7 +45,7 @@ export const GridCommentItem = (props: IPatientProfileCardTextarea) => {
         />
       ) : (
         <Typography component="span" color="text.default">
-          {translate('cancerLibraryApp.datasourceEditor.profileCard.emptyContent')}
+          {translate('cancerLibraryApp.datasource.profileCard.emptyContent')}
         </Typography>
       )}
       <Popup

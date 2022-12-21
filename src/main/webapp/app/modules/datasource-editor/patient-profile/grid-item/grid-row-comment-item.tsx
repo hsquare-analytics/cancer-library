@@ -40,7 +40,7 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
 
   return <Grid item xs={xs}>
     <Typography color="text.secondary">
-      * {translate('cancerLibraryApp.datasourceEditor.profileCard.rowComment')}
+      * {translate('cancerLibraryApp.datasource.profileCard.rowComment')}
       <IconButton onClick={() => setPopupVisible(true)} style={{marginLeft: '3px'}}
                   className="icon-patient-detail">
         <RemoveRedEyeOutlinedIcon/>
@@ -57,7 +57,7 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
           />
         ) : (
           <Typography component="span" color="text.default">
-            {translate('cancerLibraryApp.datasourceEditor.profileCard.emptyContent')}
+            {translate('cancerLibraryApp.datasource.profileCard.emptyContent')}
           </Typography>
         )}
         <Popup
