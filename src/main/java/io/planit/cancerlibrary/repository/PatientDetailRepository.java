@@ -35,7 +35,7 @@ public class PatientDetailRepository {
         }
 
         if (detail.getStandardDate() != null) {
-            sql.SET("STANDARD_DATE = :standardDate");
+            sql.SET(String.format("STANDARD_DATE = '%s'", Timestamp.from(detail.getStandardDate())));
         }
 
         if (detail.getCreatedBy() != null) {
