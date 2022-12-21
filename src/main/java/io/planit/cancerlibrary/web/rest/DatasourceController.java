@@ -11,6 +11,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,14 @@ import tech.jhipster.web.util.HeaderUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static io.planit.cancerlibrary.constant.DatasourceConstants.STATUS_COLUMN;
+import static io.planit.cancerlibrary.constant.DatasourceConstants.parameterization;
 
 @RestController
 @RequestMapping("/api")
@@ -178,6 +184,10 @@ public class DatasourceController {
             }
         }
 
-        return ResponseEntity.ok().body(result);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-" + applicationName + "-alert", applicationName + ".datasource.updateBulkRows");
+        headers.add("X-" + applicationName + "-params", result.toString());
+
+        return ResponseEntity.ok().headers(headers).body(result);
     }
 }
