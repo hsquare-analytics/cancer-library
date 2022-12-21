@@ -27,7 +27,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (9300, 'GSCN.GSCN_DIAG_ANINF', '03.위암_진단_신체계측정보', true, 3, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (9300, null, '03.위암_진단_신체계측정보');
+VALUES (9300, 'anth_rcrd_ymd', '03.위암_진단_신체계측정보');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9301, 'hosp_cd', 9300, 'system', 9301);
 -- insert into ph_item_attribute (item_id, caption, required) values (9301, '병원코드', true);

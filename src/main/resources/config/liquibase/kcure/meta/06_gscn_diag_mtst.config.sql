@@ -26,7 +26,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (9600, 'GSCN.GSCN_DIAG_MTST', '06.위암_진단_전이', true, 6, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (9600, null, '06.위암_진단_전이');
+VALUES (9600, 'mtdg_ymd', '06.위암_진단_전이');
 
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9601, 'hosp_cd', 9600, 'system', 9601);

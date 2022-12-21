@@ -25,7 +25,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (19000, 'GSCN.GSCN_TRTM_BLTR', '19.위암_치료_수혈', true, 19, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (19000, null, '19.위암_치료_수혈');
+VALUES (19000, 'bltr_prsc_ymd', '19.위암_치료_수혈');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (19001, 'hosp_cd', 19000, 'system', 19001);
 -- insert into ph_item_attribute (item_id, caption, required) values (19001, '병원코드', true);

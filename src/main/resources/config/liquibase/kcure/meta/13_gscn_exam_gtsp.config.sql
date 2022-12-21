@@ -32,7 +32,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (13000, 'GSCN.GSCN_EXAM_GTSP', '13.위암_검사_위내시경', true, 12, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (13000, null, '13.위암_검사_위내시경');
+VALUES (13000, 'stmc_edex_ymd', '13.위암_검사_위내시경');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (13001, 'hosp_cd', 13000, 'system', 13001);
 -- insert into ph_item_attribute (item_id, caption, required) values (13001, '병원코드', true);

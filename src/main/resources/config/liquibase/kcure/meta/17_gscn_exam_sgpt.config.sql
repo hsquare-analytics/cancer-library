@@ -74,7 +74,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (17000, 'GSCN.GSCN_EXAM_SGPT', '17.위암_검사_외과병리', true, 17, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (17000, null, '17.위암_검사_외과병리');
+VALUES (17000, 'srgc_ptem_ymd', '17.위암_검사_외과병리');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (17001, 'hosp_cd', 17000, 'system', 17001);
 -- insert into ph_item_attribute (item_id, caption, required) values (17001, '병원코드', true);

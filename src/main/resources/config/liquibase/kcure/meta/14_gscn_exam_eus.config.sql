@@ -30,7 +30,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (14000, 'GSCN.GSCN_EXAM_EUS', '14.위암_검사_EUS', true, 14, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (14000, null, '14.위암_검사_EUS');
+VALUES (14000, 'eus_exam_ymd', '14.위암_검사_EUS');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (14001, 'hosp_cd', 14000, 'system', 14001);
 -- insert into ph_item_attribute (item_id, caption, required) values (14001, '병원코드', true);

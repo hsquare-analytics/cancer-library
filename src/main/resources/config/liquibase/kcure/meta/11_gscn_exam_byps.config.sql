@@ -32,7 +32,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (11000, 'GSCN.GSCN_EXAM_BYPS', '11.위암_검사_생체', true, 11, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (11000, null, '11.위암_검사_생체');
+VALUES (11000, 'bpsy_ymd', '11.위암_검사_생체');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (11001, 'hosp_cd', 11000, 'system', 11001);
 -- insert into ph_item_attribute (item_id, caption, required) values (11001, '병원코드', true);

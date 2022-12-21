@@ -28,7 +28,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (9900, 'GSCN.GSCN_EXAM_IMPT', '09.위암_검사_면역병리', true, 9, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (9900, null, '09.위암_검사_면역병리');
+VALUES (9900, 'imem_ymd', '09.위암_검사_면역병리');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9901, 'hosp_cd', 9900, 'system', 9901);
 -- insert into ph_item_attribute (item_id, caption, required) values (9901, '병원코드', true);

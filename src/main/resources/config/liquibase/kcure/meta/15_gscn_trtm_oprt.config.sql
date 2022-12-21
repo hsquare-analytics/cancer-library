@@ -77,7 +77,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (15000, 'GSCN.GSCN_TRTM_OPRT', '15.위암_치료_수술', true, 14, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (15000, null, '15.위암_치료_수술');
+VALUES (15000, 'oprt_ymd', '15.위암_치료_수술');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (15001, 'hosp_cd', 15000, 'system', 15001);
 -- insert into ph_item_attribute (item_id, caption, required) values (15001, '01 병원코드', true);

@@ -24,7 +24,7 @@ INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, 
 VALUES (18000, 'GSCN.GSCN_DIAG_AFOC', '18.위암_진단_수술후합병증', true, 18, 999, 'system');
 
 INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (18000, null, '18.위암_진단_수술후합병증');
+VALUES (18000, 'comp_ocrn_oprt_ymd', '18.위암_진단_수술후합병증');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (18001, 'hosp_cd', 18000, 'system', 18001);
 -- insert into ph_item_attribute (item_id, caption, required) values (18001, '병원코드', true);
