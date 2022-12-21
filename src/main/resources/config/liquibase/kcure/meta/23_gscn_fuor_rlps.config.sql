@@ -76,5 +76,5 @@ insert into ph_item_attribute (item_id, caption) values (23011, '재발치료내
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (23015, 'comments', 23000, 'system', 23015);
 -- insert into ph_item_attribute (item_id, caption) values (23015, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (23012, 'sort_seq', 23000, 'system', 23012);
-insert into ph_item_attribute (item_id, caption) values (23012, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (23012, 'sort_seq', 23000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (23012, '정렬순번');

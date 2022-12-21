@@ -282,5 +282,5 @@ insert into ph_item_attribute (item_id, caption) values (17057, 'ESD수평절제
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (17061, 'comments', 17000, 'system', 17061);
 -- insert into ph_item_attribute (item_id, caption) values (17061, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (17058, 'sort_seq', 17000, 'system', 17058);
-insert into ph_item_attribute (item_id, caption) values (17058, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (17058, 'sort_seq', 17000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (17058, '정렬순번');

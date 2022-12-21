@@ -72,6 +72,6 @@ insert into ph_item_property (item_id, label_column) values (9310, 'ecog_nm');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9314, 'idx', 9300, 'system', 9314);
 -- insert into ph_item_attribute (item_id, caption) values (9314, 'UI용 시퀀스');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'sort_seq', 9300, 'system', 9311);
-insert into ph_item_attribute (item_id, caption) values (9311, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'sort_seq', 9300, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9311, '정렬순번');
 

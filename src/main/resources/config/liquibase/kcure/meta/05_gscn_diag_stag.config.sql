@@ -80,5 +80,5 @@ insert into ph_item_attribute (item_id, caption) values (9511, '임상M병기값
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9516, 'clnc_cnte', 9500, 'system', 9516);
 -- insert into ph_item_attribute (item_id, caption) values (9516, 'UI용 임상내용');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9512, 'sort_seq', 9500, 'system', 9512);
-insert into ph_item_attribute (item_id, caption) values (9512, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9512, 'sort_seq', 9500, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9512, '정렬순번');

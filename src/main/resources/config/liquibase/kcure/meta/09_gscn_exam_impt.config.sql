@@ -87,5 +87,5 @@ insert into ph_item_property (item_id, label_column) values (9913, 'imem_rslt_un
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9918, 'pact_id', 9900, 'system', 9918);
 -- insert into ph_item_attribute (item_id, caption) values (9918, 'UI용 PACT_ID');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'sort_seq', 9900, 'system', 9914);
-insert into ph_item_attribute (item_id, caption) values (9914, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'sort_seq', 9900, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9914, '정렬순번');

@@ -94,5 +94,5 @@ insert into ph_item_property (item_id, label_column) values (14013, 'eus_comp_nm
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (14019, 'comments', 14000, 'system', 14019);
 -- insert into ph_item_attribute (item_id, caption) values (14019, 'UI용 comments');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (14014, 'sort_seq', 14000, 'system', 14014);
-insert into ph_item_attribute (item_id, caption) values (14014, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (14014, 'sort_seq', 14000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (14014, '정렬순번');

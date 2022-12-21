@@ -132,5 +132,5 @@ insert into ph_item_attribute (item_id, caption) values (16023, 'ESD결과내용
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (16028, 'comments', 16000, 'system', 16028);
 -- insert into ph_item_attribute (item_id, caption) values (16028, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (16024, 'sort_seq', 16000, 'system', 16024);
-insert into ph_item_attribute (item_id, caption) values (16024, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (16024, 'sort_seq', 16000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (16024, '정렬순번');

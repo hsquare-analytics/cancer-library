@@ -70,5 +70,5 @@ insert into ph_item_attribute (item_id, caption) values (19011, '수혈총량');
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (19015, 'comments', 19000, 'system', 19015);
 -- insert into ph_item_attribute (item_id, caption) values (19015, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (19012, 'sort_seq', 19000, 'system', 19012);
-insert into ph_item_attribute (item_id, caption) values (19012, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (19012, 'sort_seq', 19000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (19012, '정렬순번');

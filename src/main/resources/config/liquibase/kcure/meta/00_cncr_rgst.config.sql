@@ -252,5 +252,5 @@ insert into ph_item_attribute (item_id, caption) values (9053, '원격전이코�
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9057, 'pt_brdy_dt', 9000, 'system', 9057);
 -- insert into ph_item_attribute (item_id, caption) values (9057, 'UI용 생년월일');
 
-insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'sort_seq', 9000, 'system', 9054);
-insert into ph_item_attribute (item_id, caption) values (9054, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'sort_seq', 9000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9054, '정렬순번');

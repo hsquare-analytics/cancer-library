@@ -82,5 +82,5 @@ insert into ph_item_attribute (item_id, caption) values (10013, '분자병리검
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (10017, 'pact_id', 10000, 'system', 10017);
 -- insert into ph_item_attribute (item_id, caption) values (10017, 'UI용 PACT_ID');
-insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'sort_seq', 10000, 'system', 10014);
-insert into ph_item_attribute (item_id, caption) values (10014, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'sort_seq', 10000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (10014, '정렬순번');

@@ -76,5 +76,5 @@ insert into ph_item_attribute (item_id, caption) values (9412, '진단SNOMEDCT�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9415, 'idx', 9400, 'system', 9415);
 -- insert into ph_item_attribute (item_id, caption) values (9415, 'UI용 시퀀스');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9413, 'sort_seq', 9400, 'system', 9413);
-insert into ph_item_attribute (item_id, caption) values (9413, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9413, 'sort_seq', 9400, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9413, '정렬순번');

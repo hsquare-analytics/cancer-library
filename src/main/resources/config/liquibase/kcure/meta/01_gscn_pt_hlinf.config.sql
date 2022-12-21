@@ -274,5 +274,5 @@ insert into ph_item_property (item_id, label_column) values (9155, 'dsch_stnm');
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9160, 'idx', 9100, 'system', 9160);
 -- insert into ph_item_attribute (item_id, caption) values (9160, 'ui용 시퀀스');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9156, 'sort_seq', 9100, 'system', 9156);
-insert into ph_item_attribute (item_id, caption) values (9156, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9156, 'sort_seq', 9100, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9156, '정렬순번');

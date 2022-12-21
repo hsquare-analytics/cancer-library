@@ -77,5 +77,5 @@ insert into ph_item_property (item_id, label_column) values (12007, 'hpli_exam_r
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (12014, 'comments', 12000, 'system', 12014);
 -- insert into ph_item_attribute (item_id, caption) values (12014, 'UI용 코멘트');
-insert into ph_item (id, title, category_id, created_by, order_no) values (12008, 'sort_seq', 12000, 'system', 12008);
-insert into ph_item_attribute (item_id, caption) values (12008, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (12008, 'sort_seq', 12000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (12008, '정렬순번');

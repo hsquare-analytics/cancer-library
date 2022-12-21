@@ -97,5 +97,5 @@ insert into ph_item_attribute (item_id, caption) values (9717, '진단검사정�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9721, 'exm_no', 9700, 'system', 9721);
 -- insert into ph_item_attribute (item_id, caption) values (9721, 'UI용 검체번호');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'sort_seq', 9700, 'system', 9718);
-insert into ph_item_attribute (item_id, caption) values (9718, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'sort_seq', 9700, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9718, '정렬순번');

@@ -99,6 +99,6 @@ insert into ph_item_property (item_id, label_column) values (11015, 'htlg_dfgd_n
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (11020, 'comments', 11000, 'system', 11020);
 -- insert into ph_item_attribute (item_id, caption) values (11020, 'UI용 코멘트');
 --
-insert into ph_item (id, title, category_id, created_by, order_no) values (11016, 'sort_seq', 11000, 'system', 11016);
-insert into ph_item_attribute (item_id, caption) values (11016, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (11016, 'sort_seq', 11000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (11016, '정렬순번');
 

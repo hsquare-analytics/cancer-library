@@ -133,5 +133,5 @@ insert into ph_item_attribute (item_id, caption) values (9225, '가족병력기�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9227, 'pact_id', 9200, 'system', 9227);
 -- insert into ph_item_attribute (item_id, caption) values (9227, 'ui확인용 pact_id');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9226, 'sort_seq', 9200, 'system', 9226);
-insert into ph_item_attribute (item_id, caption) values (9226, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9226, 'sort_seq', 9200, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9226, '정렬순번');

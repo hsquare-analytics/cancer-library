@@ -296,5 +296,5 @@ insert into ph_item_property (item_id, label_column) values (15060, 'asct_yn_uni
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (15065, 'procedure_cnte', 15000, 'system', 15065);
 -- insert into ph_item_attribute (item_id, caption) values (15065, is 'UI용 PROCEDURE_CNTE내용');
-insert into ph_item (id, title, category_id, created_by, order_no) values (15061, 'sort_seq', 15000, 'system', 15061);
-insert into ph_item_attribute (item_id, caption) values (15061, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (15061, 'sort_seq', 15000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (15061, '정렬순번');

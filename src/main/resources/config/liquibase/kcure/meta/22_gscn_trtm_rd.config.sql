@@ -148,5 +148,5 @@ insert into ph_item_property (item_id, label_column) values (22027, 'rdt_seff_gr
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (22032, 'comments', 22000, 'system', 22032);
 -- insert into ph_item_attribute (item_id, caption) values (22032, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (22028, 'sort_seq', 22000, 'system', 22028);
-insert into ph_item_attribute (item_id, caption) values (22028, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (22028, 'sort_seq', 22000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (22028, '정렬순번');

@@ -80,5 +80,5 @@ insert into ph_item_attribute (item_id, caption, data_type) values (9611, '전�
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9616, 'mtst_site_nm_cnte', 9600, 'system', 9616);
 -- insert into ph_item_attribute (item_id, caption) values (9616, 'UI용 전이부위명');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'sort_seq', 9600, 'system', 9612);
-insert into ph_item_attribute (item_id, caption) values (9612, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'sort_seq', 9600, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (9612, '정렬순번');

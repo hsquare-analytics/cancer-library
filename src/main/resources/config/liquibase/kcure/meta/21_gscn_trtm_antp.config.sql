@@ -119,6 +119,6 @@ insert into ph_item_property (item_id, label_column) values (21020, 'antp_seff_g
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (21025, 'comments', 21000, 'system', 21025);
 -- insert into ph_item_attribute (item_id, caption) values (21025, 'UI용 comments');
-insert into ph_item (id, title, category_id, created_by, order_no) values (21021, 'sort_seq', 21000, 'system', 21021);
-insert into ph_item_attribute (item_id, caption) values (21021, '정렬순서');
+insert into ph_item (id, title, category_id, created_by, order_no) values (21021, 'sort_seq', 21000, 'system', 5);
+insert into ph_item_attribute (item_id, caption) values (21021, '정렬순번');
 
