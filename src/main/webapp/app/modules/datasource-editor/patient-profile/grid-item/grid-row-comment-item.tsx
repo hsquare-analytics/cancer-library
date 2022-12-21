@@ -31,7 +31,7 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
 
   useEffect(() => {
     const result = commentEntitites?.filter(comment => comment.title).map(comment => {
-      return `* ${comment.category.attribute.caption} \n ${comment.title} (by: ${comment.lastModifiedBy})`;
+      return `* ${comment.category.attribute.caption} : ${comment.title} (by: ${comment.lastModifiedBy})`;
     }).join("\n\n");
 
     setValue(result);
