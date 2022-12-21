@@ -17,7 +17,13 @@
         "createdDate": "제출일",
         "lastModifiedBy": "최종 수정자",
         "lastModifiedDate": "최종 수정일"
-      }
+      },
+      "created": "{{param}} 님의 정보가 성공적으로 생성 되었습니다.",
+      "updated": "{{param}} 님의 정보가 성공적으로 수정 되었습니다.",
+      "deleted": "{{param}} 님의 정보가 성공적으로 삭제 되었습니다.",
+      "review_submitted" : "{{param}} 님의 정보가 성공적으로 제출 되었습니다.",
+      "review_declined" : "{{param}} 님의 정보가 성공적으로 반려 되었습니다.",
+      "review_approved" : "{{param}} 님의 정보가 성공적으로 승인 되었습니다."
     }
   }
 }

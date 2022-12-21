@@ -32,15 +32,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
     return !canDecline;
   };
   const patient = useAppSelector(state => state.datasourcePatient.entity);
-  const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const login = useAppSelector(state => state.authentication.account.login);
-  const dateRange = useAppSelector(state => state.datasourceStatus.dateRange);
-
-  useEffect(() => {
-    if (updateSuccess) {
-      dispatch(getEntity(patient.ptNo));
-    }
-  }, [updateSuccess]);
 
   const canSubmit = () => {
     if (!patient) {

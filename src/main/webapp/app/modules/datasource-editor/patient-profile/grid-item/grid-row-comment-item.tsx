@@ -9,7 +9,6 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {IPatient} from "app/shared/model/patient.model";
 import Grid from '@mui/material/Grid';
 import {Popup} from 'devextreme-react/popup';
-import {getEntities} from "app/modules/row-comment-editor/row-comment.reducer";
 import {IComment} from "app/shared/model/comment.model";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -29,10 +28,6 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
 
   const [value, setValue] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
-
-  useEffect(() => {
-    dispatch(getEntities(patient.ptNo));
-  }, []);
 
   useEffect(() => {
     const result = commentEntitites?.filter(comment => comment.title).map(comment => {

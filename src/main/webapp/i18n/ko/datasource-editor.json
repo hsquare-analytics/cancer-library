@@ -2,8 +2,6 @@
   "cancerLibraryApp": {
     "datasourceEditor": {
       "pageTitle": "데이터 편집 모듈",
-      "updateSuccess": "{{ name }} ({{no}}) 님의 정보가 성공적으로 업데이트 되었습니다.",
-      "updateFailed": "{{ name }} ({{no}}) 님의 정보 업데이트에 실패하였습니다.",
       "column": {
         "createdBy": "생성자",
         "createdDate": "생성일",

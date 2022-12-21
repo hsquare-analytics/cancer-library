@@ -5,6 +5,7 @@ import {
   getEntity as getPatient,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
+import {getEntities as getPatientComments} from "app/modules/row-comment-editor/row-comment.reducer";
 import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
@@ -39,19 +40,10 @@ export const AccessiblePatient = () => {
     dispatch(getAccessiblePatients());
   }, []);
 
-  useEffect(() => {
-    if (updateSuccess) {
-      toast.success(
-        translate('cancerLibraryApp.datasourceEditor.updateSuccess', {
-          no: patient.ptNo,
-          name: patient.ptNm,
-        })
-      );
-    }
-  }, [updateSuccess]);
-
   const onRowDblClick = e => {
     dispatch(getPatient(e.data.ptNo));
+    dispatch(getPatientComments(e.data.ptNo));
+
     multiTableEditorPopupRef.current.setPopupVisible(true);
   };
 

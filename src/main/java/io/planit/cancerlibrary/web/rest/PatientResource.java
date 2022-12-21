@@ -11,15 +11,21 @@ import io.planit.cancerlibrary.service.PatientService;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import tech.jhipster.web.util.HeaderUtil;
 
 import javax.validation.constraints.NotNull;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
@@ -33,6 +39,9 @@ public class PatientResource {
     private final Logger log = LoggerFactory.getLogger(PatientResource.class);
 
     private static final String ENTITY_NAME = "patient";
+
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
 
     private final PatientRepository patientRepository;
 
@@ -95,7 +104,24 @@ public class PatientResource {
 
         Optional<Patient> patient = patientService.updatePatient(patientDTO);
 
-        return patient.map(response -> ResponseEntity.ok().body(response))
+        return patient.map(response ->
+                ResponseEntity.ok().headers(getUpdateHeader(patientDTO)).body(response))
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    private HttpHeaders getUpdateHeader(Patient patient) {
+        HttpHeaders headers = new HttpHeaders();
+        if (patient.getDetail() != null && patient.getDetail().getStatus() != null) {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient." + patient.getDetail().getStatus().toLowerCase());
+        } else {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient.updated");
+        }
+        try {
+            String params = patient.getPtNm() + "(" + patient.getPtNo() + ")";
+            headers.add("X-" + applicationName + "-params", URLEncoder.encode(params, StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            log.error("Failed to encode params", e);
+        }
+        return headers;
     }
 }
