@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_IMAG (
     crtn_dt timestamp NOT NULL, 			-- 생성일시
     idx varchar(20) NULL, 					-- UI용 시퀀스
     pact_id varchar(50) null,				-- PACT_ID
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT gscn_exam_imag_pk PRIMARY KEY (hosp_cd, pt_no, imex_ymd, imex_seq)
     );
 
@@ -76,5 +77,8 @@ insert into ph_item_attribute (item_id, caption) values (9813, '영상검사결�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9816, 'pact_id', 9800, 'system', 9816);
 -- insert into ph_item_attribute (item_id, caption) values (9816, 'UI용 PACT_ID');
+
+insert into ph_item (id, title, category_id, created_by, order_no) values (9814, 'sort_seq', 9800, 'system', 9814);
+insert into ph_item_attribute (item_id, caption) values (9814, '정렬순서');
 
 

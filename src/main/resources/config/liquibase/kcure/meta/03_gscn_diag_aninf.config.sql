@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_ANINF (
                                  crtn_dt timestamp NOT NULL, 					-- 생성일시
                                  ecog_dt varchar(20) null,						-- UI용 ECOG 참고일자날짜
                                  idx varchar(20) NULL, -- UI용 시퀀스
-                                 CONSTRAINT gscn_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
+    CONSTRAINT gscn_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
 );
 
 
@@ -71,3 +72,6 @@ insert into ph_item_property (item_id, label_column) values (9310, 'ecog_nm');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9314, 'idx', 9300, 'system', 9314);
 -- insert into ph_item_attribute (item_id, caption) values (9314, 'UI용 시퀀스');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'sort_seq', 9300, 'system', 9311);
+insert into ph_item_attribute (item_id, caption) values (9311, '정렬순서');
+

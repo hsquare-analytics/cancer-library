@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_MLPT (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(50) NULL, 				-- UI용 검사번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT gscn_exam_mlpt_pk PRIMARY KEY (hosp_cd, pt_no, mlem_ymd, mlem_seq)
     );
 
@@ -81,3 +82,5 @@ insert into ph_item_attribute (item_id, caption) values (10013, '분자병리검
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (10017, 'pact_id', 10000, 'system', 10017);
 -- insert into ph_item_attribute (item_id, caption) values (10017, 'UI용 PACT_ID');
+insert into ph_item (id, title, category_id, created_by, order_no) values (10014, 'sort_seq', 10000, 'system', 10014);
+insert into ph_item_attribute (item_id, caption) values (10014, '정렬순서');

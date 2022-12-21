@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_BYPS
     idx            varchar(100),
     exm_no         varchar(50),
     comments       varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_exam_byps_pk
     primary key (hosp_cd, pt_no, bpsy_ymd, bpsy_seq)
     );
@@ -98,4 +99,6 @@ insert into ph_item_property (item_id, label_column) values (11015, 'htlg_dfgd_n
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (11020, 'comments', 11000, 'system', 11020);
 -- insert into ph_item_attribute (item_id, caption) values (11020, 'UI용 코멘트');
 --
+insert into ph_item (id, title, category_id, created_by, order_no) values (11016, 'sort_seq', 11000, 'system', 11016);
+insert into ph_item_attribute (item_id, caption) values (11016, '정렬순서');
 

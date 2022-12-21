@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_BLTR (
     idx           varchar(100),
     pact_id       varchar(50),
     comments      varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_trtm_bltr_pk
     primary key (hosp_cd, pt_no, bltr_prsc_ymd, bltr_prsc_seq)
 );
@@ -69,3 +70,5 @@ insert into ph_item_attribute (item_id, caption) values (19011, '수혈총량');
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (19015, 'comments', 19000, 'system', 19015);
 -- insert into ph_item_attribute (item_id, caption) values (19015, 'UI용 comments');
+insert into ph_item (id, title, category_id, created_by, order_no) values (19012, 'sort_seq', 19000, 'system', 19012);
+insert into ph_item_attribute (item_id, caption) values (19012, '정렬순서');

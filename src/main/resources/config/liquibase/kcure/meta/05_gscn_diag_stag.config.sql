@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_STAG (
                                 mdfm_id varchar(20) null,					-- UI용 서식ID
                                 mdfm_nm varchar(50) null,					-- UI용 서식명
                                 clnc_cnte varchar(4000) null,				-- UI용 임상내용
-                                CONSTRAINT GSCN_DIAG_STAG_pk PRIMARY KEY (hosp_cd, pt_no, diag_stag_rcrd_ymd, diag_stag_rcrd_seq)
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
+    CONSTRAINT GSCN_DIAG_STAG_pk PRIMARY KEY (hosp_cd, pt_no, diag_stag_rcrd_ymd, diag_stag_rcrd_seq)
 );
 
 
@@ -79,3 +80,5 @@ insert into ph_item_attribute (item_id, caption) values (9511, '임상M병기값
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9516, 'clnc_cnte', 9500, 'system', 9516);
 -- insert into ph_item_attribute (item_id, caption) values (9516, 'UI용 임상내용');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9512, 'sort_seq', 9500, 'system', 9512);
+insert into ph_item_attribute (item_id, caption) values (9512, '정렬순서');

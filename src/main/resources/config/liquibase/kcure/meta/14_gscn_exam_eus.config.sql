@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_EUS (
     pact_id            varchar(50),
     exm_cd_nm          varchar(4000),
     comments           varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_exam_eus_pk
     primary key (hosp_cd, pt_no, eus_exam_ymd, eus_exam_seq)
 );
@@ -92,3 +93,6 @@ insert into ph_item_property (item_id, label_column) values (14013, 'eus_comp_nm
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (14019, 'comments', 14000, 'system', 14019);
 -- insert into ph_item_attribute (item_id, caption) values (14019, 'UI용 comments');
+
+insert into ph_item (id, title, category_id, created_by, order_no) values (14014, 'sort_seq', 14000, 'system', 14014);
+insert into ph_item_attribute (item_id, caption) values (14014, '정렬순서');

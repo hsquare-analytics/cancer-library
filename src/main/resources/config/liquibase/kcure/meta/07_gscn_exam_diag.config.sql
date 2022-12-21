@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_DIAG (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(20) null,				-- UI용 검체번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT gscn_exam_diag_pk PRIMARY KEY (hosp_cd, pt_no, cexm_ymd, cexm_seq)
     );
 
@@ -96,3 +97,5 @@ insert into ph_item_attribute (item_id, caption) values (9717, '진단검사정�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9721, 'exm_no', 9700, 'system', 9721);
 -- insert into ph_item_attribute (item_id, caption) values (9721, 'UI용 검체번호');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9718, 'sort_seq', 9700, 'system', 9718);
+insert into ph_item_attribute (item_id, caption) values (9718, '정렬순서');

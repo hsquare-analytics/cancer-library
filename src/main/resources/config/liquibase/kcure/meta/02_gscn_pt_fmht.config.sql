@@ -32,7 +32,8 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_PT_FMHT (
                               crtn_dt timestamp NOT NULL, -- 생성일시
                               pact_id varchar(50) null, -- UI용 PACT_ID
                               idx varchar(20) NULL, -- UI용 시퀀스
-                              CONSTRAINT gscn_pt_fmht_pk PRIMARY KEY (hosp_cd, pt_no, fmht_rcrd_ymd, fmht_rcrd_seq)
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
+    CONSTRAINT gscn_pt_fmht_pk PRIMARY KEY (hosp_cd, pt_no, fmht_rcrd_ymd, fmht_rcrd_seq)
 );
 
 
@@ -132,3 +133,5 @@ insert into ph_item_attribute (item_id, caption) values (9225, '가족병력기�
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9227, 'pact_id', 9200, 'system', 9227);
 -- insert into ph_item_attribute (item_id, caption) values (9227, 'ui확인용 pact_id');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9226, 'sort_seq', 9200, 'system', 9226);
+insert into ph_item_attribute (item_id, caption) values (9226, '정렬순서');

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_GTSP (
     idx                 varchar(100),
     pact_id             varchar(50),
     comments            varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_exam_gtsp_pk
     primary key (hosp_cd, pt_no, stmc_edex_ymd, stmc_edex_seq)
 );
@@ -93,3 +94,6 @@ insert into ph_item_property (item_id, label_column) values (13014, 'gtsp_comp_n
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (13019, 'comments', 13000, 'system', 13019);
 -- insert into ph_item_attribute (item_id, caption) values (13019, 'UI용 comments');
+insert into ph_item (id, title, category_id, created_by, order_no) values (13015, 'sort_seq', 13000, 'system', 13015);
+insert into ph_item_attribute (item_id, caption) values (13015, '정렬순서');
+

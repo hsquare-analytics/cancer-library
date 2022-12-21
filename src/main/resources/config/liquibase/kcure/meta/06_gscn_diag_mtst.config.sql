@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_MTST (
     mdfm_id varchar(20) null,				-- UI용 서식ID
     mdfm_nm varchar(50) null,				-- UI용 서식명
     mtst_site_nm_cnte varchar(200) NULL, 	-- UI용 전이부위명
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT gscn_diag_mtst_pk PRIMARY KEY (hosp_cd, pt_no, mtdg_ymd, mtdg_seq)
     );
 
@@ -79,3 +80,5 @@ insert into ph_item_attribute (item_id, caption, data_type) values (9611, '전�
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9616, 'mtst_site_nm_cnte', 9600, 'system', 9616);
 -- insert into ph_item_attribute (item_id, caption) values (9616, 'UI용 전이부위명');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'sort_seq', 9600, 'system', 9612);
+insert into ph_item_attribute (item_id, caption) values (9612, '정렬순서');

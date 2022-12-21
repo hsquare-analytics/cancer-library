@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_PT_HLINF (
                                crtn_dt timestamp NOT NULL, -- 생성일시
                                pact_id varchar(50) null, -- pact_id ui용
                                REC_WRT_DTM varchar(20) null, -- 작성일자 ui용
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
                                CONSTRAINT gscn_pt_hlinf_pk PRIMARY KEY (idx)
 );
 
@@ -273,3 +274,5 @@ insert into ph_item_property (item_id, label_column) values (9155, 'dsch_stnm');
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9160, 'idx', 9100, 'system', 9160);
 -- insert into ph_item_attribute (item_id, caption) values (9160, 'ui용 시퀀스');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9156, 'sort_seq', 9100, 'system', 9156);
+insert into ph_item_attribute (item_id, caption) values (9156, '정렬순서');

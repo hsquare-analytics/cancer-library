@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_OPRT (
     pact_id                    varchar(50),
     procedure_cnte             varchar(4000),
     comments                   varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_trtm_oprt_pk
     primary key (hosp_cd, pt_no, oprt_ymd, oprt_seq)
 );
@@ -295,3 +296,5 @@ insert into ph_item_property (item_id, label_column) values (15060, 'asct_yn_uni
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (15065, 'procedure_cnte', 15000, 'system', 15065);
 -- insert into ph_item_attribute (item_id, caption) values (15065, is 'UI용 PROCEDURE_CNTE내용');
+insert into ph_item (id, title, category_id, created_by, order_no) values (15061, 'sort_seq', 15000, 'system', 15061);
+insert into ph_item_attribute (item_id, caption) values (15061, '정렬순서');

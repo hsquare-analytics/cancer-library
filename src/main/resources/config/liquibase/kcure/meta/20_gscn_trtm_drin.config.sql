@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_TRTM_DRIN (
     idx                    varchar(100),
     pact_id                varchar(50),
     comments               varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_trtm_drin_pk
     primary key (hosp_cd, pt_no, drug_prsc_ymd, drug_prsc_seq)
 );
@@ -149,3 +150,6 @@ insert into ph_item_attribute (item_id, caption) values (20029, '약제투약기
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (20033, 'comments', 20000, 'system', 20033);
 -- insert into ph_item_attribute (item_id, caption) values (20033, 'UI용 comments');
+insert into ph_item (id, title, category_id, created_by, order_no) values (20030, 'sort_seq', 20000, 'system', 20030);
+insert into ph_item_attribute (item_id, caption) values (20030, '정렬순서');
+

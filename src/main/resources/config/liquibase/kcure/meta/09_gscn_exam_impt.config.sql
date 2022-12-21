@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_IMPT (
     idx varchar(20) NULL, 					-- UI용 시퀀스
     exm_no varchar(50) NULL, 				-- UI용 검사번호
     pact_id varchar(50) null,				-- UI용 PACT_ID
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT gscn_exam_impt_pk PRIMARY KEY (hosp_cd, pt_no, imem_ymd, imem_seq)
     );
 
@@ -86,3 +87,5 @@ insert into ph_item_property (item_id, label_column) values (9913, 'imem_rslt_un
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9918, 'pact_id', 9900, 'system', 9918);
 -- insert into ph_item_attribute (item_id, caption) values (9918, 'UI용 PACT_ID');
+insert into ph_item (id, title, category_id, created_by, order_no) values (9914, 'sort_seq', 9900, 'system', 9914);
+insert into ph_item_attribute (item_id, caption) values (9914, '정렬순서');

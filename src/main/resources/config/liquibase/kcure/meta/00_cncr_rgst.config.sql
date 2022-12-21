@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS GSCN.CNCR_RGST (
     idx varchar(20) null,					-- UI용 시퀀스용
     PT_NM VARCHAR(50) null, 				-- UI용 환자명
     PT_BRDY_DT VARCHAR(50) null, 			-- UI용 생년월일
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     CONSTRAINT cncr_rgst_pk PRIMARY KEY (hosp_cd, pt_no, idx)
 );
 
@@ -240,7 +241,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (9053,
 insert into ph_item_attribute (item_id, caption) values (9053, '원격전이코드3');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'crtn_dt', 9000, 'system', 9054);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9054, '생성일시', 'yyyyMMdd', 'date');
+-- insert into ph_item_attribute (item_id, caption, format, data_   type) values (9054, '생성일시', 'yyyyMMdd', 'date');
 
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9055, 'idx', 9000, 'system', 9055);
 -- insert into ph_item_attribute (item_id, caption) values (9055, 'UI용 시퀀스');
@@ -250,3 +251,6 @@ insert into ph_item_attribute (item_id, caption) values (9053, '원격전이코�
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (9057, 'pt_brdy_dt', 9000, 'system', 9057);
 -- insert into ph_item_attribute (item_id, caption) values (9057, 'UI용 생년월일');
+
+insert into ph_item (id, title, category_id, created_by, order_no) values (9054, 'sort_seq', 9000, 'system', 9054);
+insert into ph_item_attribute (item_id, caption) values (9054, '정렬순서');

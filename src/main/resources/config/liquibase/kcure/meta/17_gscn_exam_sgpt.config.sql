@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_EXAM_SGPT (
     idx                         varchar(100),
     pact_id                     varchar(50),
     comments                    varchar(4000),
+    SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
     constraint gscn_exam_sgpt_pk
     primary key (hosp_cd, pt_no, srgc_ptem_ymd, srgc_ptem_seq)
 );
@@ -281,3 +282,5 @@ insert into ph_item_attribute (item_id, caption) values (17057, 'ESD수평절제
 --
 -- insert into ph_item (id, title, category_id, created_by, order_no) values (17061, 'comments', 17000, 'system', 17061);
 -- insert into ph_item_attribute (item_id, caption) values (17061, 'UI용 comments');
+insert into ph_item (id, title, category_id, created_by, order_no) values (17058, 'sort_seq', 17000, 'system', 17058);
+insert into ph_item_attribute (item_id, caption) values (17058, '정렬순서');
