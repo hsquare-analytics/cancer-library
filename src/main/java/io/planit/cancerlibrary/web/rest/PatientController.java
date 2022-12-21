@@ -2,10 +2,12 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,10 +29,14 @@ public class PatientController {
 
     private final PatientRepository patientRepository;
 
+    private final PatientService patientService;
+
     public PatientController(UserPatientRepository userPatientRepository,
-                             PatientRepository patientRepository) {
+                             PatientRepository patientRepository,
+                                PatientService patientService) {
         this.userPatientRepository = userPatientRepository;
         this.patientRepository = patientRepository;
+        this.patientService = patientService;
     }
 
     @GetMapping("/patients/accessible-patient-list")
@@ -55,8 +62,8 @@ public class PatientController {
         @RequestBody Patient patient) {
         log.debug("REST request to update patient medical visit info");
 
-        boolean result = patientRepository.partialUpdatePatient(patient);
-        return ResponseEntity.ok().body(result);
+        Optional<Patient> result = patientService.updatePatient(patient);
+        return ResponseEntity.ok().body(result.isPresent());
     }
 
 

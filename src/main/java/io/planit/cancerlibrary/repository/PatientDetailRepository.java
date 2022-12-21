@@ -33,6 +33,11 @@ public class PatientDetailRepository {
         if (detail.getDeclineReason() != null) {
             sql.SET("DECLINE_REASON = :declineReason");
         }
+
+        if (detail.getStandardDate() != null) {
+            sql.SET("STANDARD_DATE = :standardDate");
+        }
+
         if (detail.getCreatedBy() != null) {
             sql.SET("CREATED_BY = :createdBy");
         }

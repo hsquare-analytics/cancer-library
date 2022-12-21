@@ -136,15 +136,15 @@ class PatientControllerIT {
         patientRepository.insert(patient);
         patientDetailRepository.insert(patient.getPtNo(), patient.getDetail());
 
-        Instant now = Instant.now();
+        Instant now = Instant.parse("2020-01-01T00:00:00Z");
 
-        Patient updatedPatient = PatientResourceIT.createPatientDTO().ptNo(patient.getPtNo()).fsrMedDt(new Timestamp(now.toEpochMilli()));
+        Patient updatedPatient = PatientResourceIT.createPatientDTO().ptNo(patient.getPtNo()).detail(patient.getDetail().standardDate(now));
         restDatasourcePatientMockMvc.perform(patch("/api/patients/{ptNo}/first-visit-date", patient.getPtNo())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(updatedPatient)))
             .andExpect(status().isOk());
 
-        Timestamp result = patientRepository.findByPatientNo(patient.getPtNo()).map(Patient::getFsrMedDt).orElse(null);
-        assertThat(result).isEqualTo(new Timestamp(now.toEpochMilli()));
+        Instant result = patientRepository.findByPatientNo(patient.getPtNo()).map(Patient::getDetail).map(PatientDetail::getStandardDate).orElse(null);
+        assertThat(result).isEqualTo(now);
     }
 }

@@ -7,6 +7,7 @@ export interface IPatientDetail extends IAbstractAuditing {
   comment?: string;
   declineReason?: string;
   status?: string;
+  standardDate?: Date;
 }
 
 export interface IPatient extends IAbstractAuditing {
@@ -36,6 +37,7 @@ export const defaultValue: Readonly<IPatient> = {
     comment: "",
     declineReason: "",
     status: "",
+    standardDate: null,
     ...abstractAuditingDefaultValue,
   }
 };

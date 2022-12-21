@@ -49,7 +49,7 @@ export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
     setOpen(false);
     dispatch(updateFirstVisitDate({
       ptNo: patient.ptNo,
-      fsrMedDt: new Date(value.toString())
+      detail: {standardDate: new Date(value.toString())}
     }));
 
   }
