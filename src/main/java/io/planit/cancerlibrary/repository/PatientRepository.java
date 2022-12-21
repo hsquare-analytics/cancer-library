@@ -87,20 +87,6 @@ public class PatientRepository {
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql.toString(), Map.of("ptNo", patientNo), new PatientMapper()));
     }
 
-    public boolean partialUpdatePatient(Patient patient) {
-        SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(patient);
-        SQL sql = new SQL().UPDATE(Table.PATIENT_VIEW.getTableName());
-        sql.WHERE(PT_NO_EQUAL);
-
-        if (patient.getFsrMedDt() != null) {
-            sql.SET("FSR_MED_DT = :fsrMedDt");
-        }
-
-        namedParameters = new BeanPropertySqlParameterSource(patient);
-
-        return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
-    }
-
     private static class PatientMapper implements RowMapper<Patient> {
         public Patient mapRow(ResultSet resultSet, int i) throws SQLException {
             Patient patient = new Patient();
@@ -119,6 +105,7 @@ public class PatientRepository {
             detail.setComment(resultSet.getString("comment"));
             detail.setStatus(resultSet.getString("status"));
             if (resultSet.getTimestamp("standard_date") != null) {
+                patient.setFsrMedDt(resultSet.getTimestamp("standard_date"));
                 detail.setStandardDate(resultSet.getTimestamp("standard_date").toInstant());
             }
             detail.setCreatedBy(resultSet.getString("created_by"));
