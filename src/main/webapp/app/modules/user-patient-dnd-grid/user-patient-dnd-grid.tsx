@@ -57,7 +57,7 @@ export const UserPatientDndGrid = () => {
   useEffect(() => {
     if (updateSuccess) {
       Swal.fire({
-        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', {name: selectedUser.login}),
+        text: translate('cancerLibraryApp.userPatientDndGrid.updateAlert.description', {param: `${selectedUser.name}(${selectedUser.login})`}),
         // icon: 'success',
         customClass: 'cancer-dialog',
       });
@@ -81,7 +81,7 @@ export const UserPatientDndGrid = () => {
       return;
     }
     Swal.fire({
-      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', {name: selectedUser.login}),
+      text: translate('cancerLibraryApp.userPatientDndGrid.confirmUpdate', {param: `${selectedUser.name}(${selectedUser.login})`}),
       customClass: 'cancer-dialog',
       showCancelButton: true,
     }).then(result => {
