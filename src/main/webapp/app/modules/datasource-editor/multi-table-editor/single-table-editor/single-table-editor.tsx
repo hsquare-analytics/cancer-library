@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import DataGrid, {Button as DxButton, Column, ColumnChooser} from 'devextreme-react/data-grid';
+import DataGrid, {Button as DxButton, Column, ColumnChooser, Editing, Popup, Form} from 'devextreme-react/data-grid';
 import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -120,6 +120,71 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     }
   }
 
+
+  const getCustomEditing = () => {
+    return <Editing mode={'popup'} allowUpdating allowDeleting form={{
+      colCountByScreen: {
+        xs: 1,
+        sm: 1,
+        md: 1,
+        lg: 5
+      }
+    }}>
+      <Popup resizeEnabled={true} toolbarItems={[
+        {
+          location: 'after',
+          toolbar: 'bottom',
+          widget: 'dxButton',
+          options: {
+            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
+            onClick(e) {
+              const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              transformAsRejected(dispatch, category, row);
+              dataGrid.current.instance.cancelEditData();
+            },
+          },
+        },
+        {
+          location: 'after',
+          toolbar: 'bottom',
+          widget: 'dxButton',
+          options: {
+            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
+            onClick(e) {
+              const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              transformAsInProgress(dispatch, category, row);
+              dataGrid.current.instance.cancelEditData();
+            },
+          },
+        },
+        {
+          location: 'after',
+          toolbar: 'bottom',
+          widget: 'dxButton',
+          options: {
+            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.save'),
+            onClick() {
+              dataGrid.current.instance.saveEditData();
+            }
+          }
+        },
+        {
+          location: 'after',
+          toolbar: 'bottom',
+          widget: 'dxButton',
+          options: {
+            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.cancel'),
+            onClick() {
+              dataGrid.current.instance.cancelEditData();
+            }
+          }
+        }
+      ]}>
+
+      </Popup>
+    </Editing>
+  }
+
   return canRender() ? (
     <Accordion defaultExpanded={openAll} expanded={accordionExpanded} className={'single-table-editor-wrapper'}>
       <SingleTableEditorAccordionSummary category={category} dataGrid={dataGrid}
@@ -141,72 +206,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           filterPanel={{visible: true}}
           filterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
-          editing={{
-            mode: 'popup',
-            popup: {
-              resizeEnabled: true,
-              toolbarItems: [
-                // {
-                //   location: 'after',
-                //   toolbar: 'bottom',
-                //   widget: 'dxButton',
-                //   options: {
-                //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
-                //     onClick(e) {
-                //       const row = dataGrid.current.instance.getVisibleRows().find(row => row.data.idx == editedRow.idx).data;
-                //       transformAsRejected(dispatch, category, row);
-                //       dataGrid.current.instance.cancelEditData();
-                //     },
-                //   },
-                // },
-                // {
-                //   location: 'after',
-                //   toolbar: 'bottom',
-                //   widget: 'dxButton',
-                //   options: {
-                //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
-                //     onClick(e) {
-                //       const row = dataGrid.current.instance.getVisibleRows().find(row => row.data.idx == editedRow.idx).data;
-                //       transformAsInProgress(dispatch, category, row);
-                //       dataGrid.current.instance.cancelEditData();
-                //     },
-                //   },
-                // },
-                {
-                  location: 'after',
-                  toolbar: 'bottom',
-                  widget: 'dxButton',
-                  options: {
-                    text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.save'),
-                    onClick() {
-                      dataGrid.current.instance.saveEditData();
-                    }
-                  }
-                },
-                {
-                  location: 'after',
-                  toolbar: 'bottom',
-                  widget: 'dxButton',
-                  options: {
-                    text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.cancel'),
-                    onClick() {
-                      dataGrid.current.instance.cancelEditData();
-                    }
-                  }
-                }
-              ]
-            },
-            allowUpdating: true,
-            allowDeleting: true,
-            form: {
-              colCountByScreen: {
-                xs: 1,
-                sm: 1,
-                md: 1,
-                lg: 5,
-              },
-            },
-          }}
           onInitNewRow={e =>
             makeCallBackOnPromise(e, () => {
               dispatch(setSelectedCategory(category));
@@ -286,6 +285,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             }
           }}
         >
+          {getCustomEditing()}
           <ColumnChooser
             title={translate('cancerLibraryApp.datasource.singleTableEditor.columnList')}
             mode="select"

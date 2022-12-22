@@ -81,7 +81,7 @@
           "button": {
             "rejected": "반려",
             "pause": "임시저장",
-            "save": "완료",
+            "save": "저장",
             "cancel": "취소"
           }
         },
