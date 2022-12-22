@@ -82,9 +82,9 @@ export const AccessiblePatient = () => {
   }
 
   const userMarkingCellTemplate = (column) => (cellElement, cellInfo) => {
-    const name = users.find(user => user.login === cellInfo.data.detail[column])?.name
-    if (name) {
-      cellElement.innerText = name;
+    const foundedUser = users.find(user => user.login === cellInfo.data.detail[column])
+    if (foundedUser) {
+      cellElement.innerText = foundedUser.name || foundedUser.login;
     }
   };
 
