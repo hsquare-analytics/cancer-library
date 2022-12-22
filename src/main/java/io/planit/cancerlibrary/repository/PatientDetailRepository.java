@@ -41,6 +41,7 @@ public class PatientDetailRepository {
         if (detail.getCreatedBy() != null) {
             sql.SET("CREATED_BY = :createdBy");
         }
+
         if (detail.getCreatedDate() != null) {
             sql.SET(String.format("CREATED_DATE = '%s'", Timestamp.from(detail.getCreatedDate())));
         }
@@ -58,8 +59,11 @@ public class PatientDetailRepository {
             .VALUES("CREATED_BY", ":createdBy")
             .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
             .VALUES("COMMENT", ":comment")
-            .VALUES("DECLINE_REASON", ":declineReason")
-            .VALUES("STANDARD_DATE", ":standardDate");
+            .VALUES("DECLINE_REASON", ":declineReason");
+
+        if (detail.getStandardDate() != null) {
+            sql.VALUES("STANDARD_DATE", String.format("'%s'", Timestamp.from(detail.getStandardDate())));
+        }
 
         if (detail.getCreatedDate() != null) {
             sql.VALUES("CREATED_DATE", String.format("'%s'", Timestamp.from(detail.getCreatedDate())));
