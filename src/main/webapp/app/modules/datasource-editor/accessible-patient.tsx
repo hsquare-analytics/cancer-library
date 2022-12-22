@@ -81,6 +81,13 @@ export const AccessiblePatient = () => {
     }
   }
 
+  const userMarkingCellTemplate = (column) => (cellElement, cellInfo) => {
+    const name = users.find(user => user.login === cellInfo.data.detail[column])?.name
+    if (name) {
+      cellElement.innerText = name;
+    }
+  };
+
   return (
     <section className="wrap-page">
       <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
@@ -176,11 +183,13 @@ export const AccessiblePatient = () => {
                   caption={translate('cancerLibraryApp.patient.detail.createdBy')}
                   alignment={"center"}
                   visibleIndex={11}
+                  cellTemplate={userMarkingCellTemplate('createdBy')}
           />
           <Column dataField={"detail.lastModifiedBy"}
                   caption={translate('cancerLibraryApp.patient.detail.lastModifiedBy')}
                   alignment={"center"}
                   visibleIndex={13}
+                  cellTemplate={userMarkingCellTemplate('lastModifiedBy')}
           />
         </DataGrid>
       ) : (
