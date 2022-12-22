@@ -21,11 +21,11 @@ export const CommentDeleteDialog = () => {
     setLoadModal(true);
   }, []);
 
-  const topicEntity = useAppSelector(state => state.topic.entity);
-  const updateSuccess = useAppSelector(state => state.topic.updateSuccess);
+  const commentEntity = useAppSelector(state => state.comment.entity);
+  const updateSuccess = useAppSelector(state => state.comment.updateSuccess);
 
   const handleClose = () => {
-    navigate('/admin/topic');
+    navigate('/admin/comment');
   };
 
   useEffect(() => {
@@ -36,16 +36,16 @@ export const CommentDeleteDialog = () => {
   }, [updateSuccess]);
 
   const confirmDelete = () => {
-    dispatch(deleteEntity(topicEntity.id));
+    dispatch(deleteEntity(commentEntity.id));
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose} data-cy="topicDeleteDialogHeading">
+      <ModalHeader toggle={handleClose} data-cy="commentDeleteDialogHeading">
         <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
       </ModalHeader>
-      <ModalBody id="cancerLibraryApp.topic.delete.question">
-        <Translate contentKey="cancerLibraryApp.topic.delete.question" interpolate={{ id: topicEntity.id }}>
+      <ModalBody id="cancerLibraryApp.comment.delete.question">
+        <Translate contentKey="cancerLibraryApp.comment.delete.question" interpolate={{ id: commentEntity.id }}>
           Are you sure you want to delete this Subject?
         </Translate>
       </ModalBody>
@@ -55,7 +55,7 @@ export const CommentDeleteDialog = () => {
           &nbsp;
           <Translate contentKey="entity.action.cancel">Cancel</Translate>
         </Button>
-        <Button id="ph-confirm-delete-topic" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
+        <Button id="ph-confirm-delete-comment" data-cy="entityConfirmDeleteButton" color="danger" onClick={confirmDelete}>
           <FontAwesomeIcon icon="trash" />
           &nbsp;
           <Translate contentKey="entity.action.delete">Delete</Translate>

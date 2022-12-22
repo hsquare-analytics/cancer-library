@@ -23,7 +23,7 @@ export const CommentDetail = () => {
       <Row>
         <Col md="8">
           <h2 data-cy="libraryDetailsHeading" className="title-page">
-            <Translate contentKey="cancerLibraryApp.comment.detail.title">Topic</Translate>
+            <Translate contentKey="cancerLibraryApp.comment.detail.title">Comment</Translate>
           </h2>
           <dl className="jh-entity-details">
             <dt>
