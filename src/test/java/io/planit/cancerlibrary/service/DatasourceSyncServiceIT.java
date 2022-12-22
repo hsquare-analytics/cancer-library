@@ -17,7 +17,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @IntegrationTest
-@Transactional
+@Transactional(value = "jdbcTemplateTransactionManager")
 public class DatasourceSyncServiceIT {
 
     @Autowired
