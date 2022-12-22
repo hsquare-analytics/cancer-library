@@ -153,7 +153,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 //   options: {
                 //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
                 //     onClick(e) {
-                //       const row = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
+                //       const row = dataGrid.current.instance.getVisibleRows().find(row => row.data.idx == editedRow.idx).data;
                 //       transformAsRejected(dispatch, category, row);
                 //       dataGrid.current.instance.cancelEditData();
                 //     },
@@ -166,8 +166,8 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                 //   options: {
                 //     text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
                 //     onClick(e) {
-                //       const data = dataGrid.current.instance.getVisibleRows().find(data => data.isEditing == false).data;
-                //       transformAsInProgress(dispatch, category, data);
+                //       const row = dataGrid.current.instance.getVisibleRows().find(row => row.data.idx == editedRow.idx).data;
+                //       transformAsInProgress(dispatch, category, row);
                 //       dataGrid.current.instance.cancelEditData();
                 //     },
                 //   },
