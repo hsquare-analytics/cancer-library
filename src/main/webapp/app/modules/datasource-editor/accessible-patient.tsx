@@ -11,7 +11,6 @@ import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
 import {cleanEntity} from 'app/shared/util/entity-utils';
-import {toast} from 'react-toastify';
 import {hasAnyAuthority} from 'app/shared/auth/private-route';
 import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 import './accessible-patient.scss';
@@ -20,6 +19,7 @@ import {MultiTableEditorPopup} from 'app/modules/datasource-editor/multi-table-e
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
+import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -35,9 +35,13 @@ export const AccessiblePatient = () => {
   const patientList = useAppSelector(state => state.datasourcePatient.entities);
   const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const loading = useAppSelector(state => state.datasourcePatient.loading);
+  const users = useAppSelector(state => state.userManagement.users);
 
   useEffect(() => {
     dispatch(getAccessiblePatients());
+    if (users.length === 0) {
+      dispatch(getUsers({}));
+    }
   }, []);
 
   const onRowDblClick = e => {
@@ -63,6 +67,19 @@ export const AccessiblePatient = () => {
     }
     return <CheckBox disabled value={result} style={{backgroundColor: result ? 'var(--bs-primary)' : 'none'}}/>;
   };
+
+  const getCalculateSortValue = (data: any) => {
+    switch (data.detail.status) {
+      case  REVIEW_LIST.SUBMITTED:
+        return 1;
+      case  REVIEW_LIST.DECLINED:
+        return 2;
+      case  REVIEW_LIST.APPROVED:
+        return 3;
+      default:
+        return 4;
+    }
+  }
 
   return (
     <section className="wrap-page">
@@ -96,7 +113,8 @@ export const AccessiblePatient = () => {
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
         >
-          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}/>
+          <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
+                  visibleIndex={0}/>
           <Column
             dataField="detail.comment"
             caption={translate('cancerLibraryApp.datasource.column.comment')}
@@ -104,6 +122,7 @@ export const AccessiblePatient = () => {
             alignment={'center'}
             cellRender={commentCellRender}
             allowEditing={false}
+            visibleIndex={1}
           />
           <Column
             caption={translate('cancerLibraryApp.patient.detail.status')}
@@ -111,6 +130,10 @@ export const AccessiblePatient = () => {
             alignment={'center'}
             minWidth={150}
             allowEditing={true}
+            visibleIndex={2}
+            sortIndex={0}
+            sortOrder={'asc'}
+            calculateSortValue={getCalculateSortValue}
           >
             <Lookup
               dataSource={[
@@ -149,6 +172,16 @@ export const AccessiblePatient = () => {
               sortOrder={item.sortOrder}
             />
           ))}
+          <Column dataField={"detail.createdBy"}
+                  caption={translate('cancerLibraryApp.patient.detail.createdBy')}
+                  alignment={"center"}
+                  visibleIndex={11}
+          />
+          <Column dataField={"detail.lastModifiedBy"}
+                  caption={translate('cancerLibraryApp.patient.detail.lastModifiedBy')}
+                  alignment={"center"}
+                  visibleIndex={13}
+          />
         </DataGrid>
       ) : (
         <Box sx={{display: 'flex'}}>
