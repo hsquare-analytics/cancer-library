@@ -7,6 +7,7 @@ import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.security.SecurityUtils;
+import io.planit.cancerlibrary.service.DatasourceSyncService;
 import io.planit.cancerlibrary.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +39,16 @@ public class PatientController {
 
     private final PatientService patientService;
 
+    private final DatasourceSyncService datasourceSyncService;
+
     public PatientController(UserPatientRepository userPatientRepository,
                              PatientRepository patientRepository,
-                             PatientService patientService) {
+                             PatientService patientService,
+                             DatasourceSyncService datasourceSyncService) {
         this.userPatientRepository = userPatientRepository;
         this.patientRepository = patientRepository;
         this.patientService = patientService;
+        this.datasourceSyncService = datasourceSyncService;
     }
 
     @GetMapping("/patients/accessible-patient-list")
@@ -70,6 +75,8 @@ public class PatientController {
         log.debug("REST request to update patient medical visit info");
 
         Optional<Patient> result = patientService.updatePatient(patient);
+        datasourceSyncService.syncPatientFdx(patient);
+        datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-" + applicationName + "-alert", applicationName + "." + ENTITY_NAME + "." + "firstVisitDateUpdated");

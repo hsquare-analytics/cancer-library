@@ -66,4 +66,24 @@ public class DatasourceSyncServiceIT {
             assertThat(map.get("fdx")).isEqualTo("20190101");
         });
     }
+
+    @Test
+    @Sql(scripts = "classpath:sql/cncr_rgst.ddl.sql")
+    public void test_sync_fdx_of_only_updated_exist() {
+        // given
+        Patient patient = PatientResourceIT.createPatientDTO();
+        PatientDetail detail = patient.getDetail().standardDate(Instant.parse("2019-01-01T00:00:00Z"));
+
+        sqlExecutor.executeDML(String.format("insert into gscn.cncr_rgst_updated (idx, hosp_cd, pt_no, crtn_dt, fdx) values ('1', '1234', '%s', '2020-01-01', '20200101')", patient.getPtNo()));
+
+        // when
+        datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient.detail(detail));
+
+        // then
+        List<Map<String, Object>> result = sqlExecutor.executeSelectAll(String.format("select * from gscn.cncr_rgst_updated where pt_no = '%s'", patient.getPtNo()));
+
+        result.forEach(map -> {
+            assertThat(map.get("fdx")).isEqualTo("20190101");
+        });
+    }
 }
