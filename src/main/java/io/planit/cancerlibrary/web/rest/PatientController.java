@@ -2,7 +2,6 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
-import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -75,8 +74,7 @@ public class PatientController {
         log.debug("REST request to update patient medical visit info");
 
         Optional<Patient> result = patientService.updatePatient(patient);
-        datasourceSyncService.syncPatientFdx(patient);
-        datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient);
+        syncPatientFdx(patient);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-" + applicationName + "-alert", applicationName + "." + ENTITY_NAME + "." + "firstVisitDateUpdated");
@@ -84,5 +82,17 @@ public class PatientController {
         return ResponseEntity.ok().headers(headers).body(result.isPresent());
     }
 
+
+    private void syncPatientFdx(Patient patient) {
+        log.debug("REST request to sync patient fdx");
+
+        Runnable myRunnable = () -> {
+            datasourceSyncService.syncPatientFdx(patient);
+            datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient);
+        };
+
+        Thread thread = new Thread(myRunnable);
+        thread.start();
+    }
 
 }
