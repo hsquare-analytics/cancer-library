@@ -45,7 +45,7 @@ public class DatasourceSyncService {
                 });
                 sqlExecutor.executeDML(insertQuery.toString());
             } else {
-                String updateQuery = String.format("update gscn.cncr_rgst_updated set fdx = '%s' where idx = '%s'", patient.getDetail().getStandardDate(), target.get("idx"));
+                String updateQuery = String.format("update gscn.cncr_rgst_updated set fdx = '%s' where idx = '%s'", target.get("fdx"), target.get("idx"));
                 sqlExecutor.executeDML(updateQuery);
             }
         });
