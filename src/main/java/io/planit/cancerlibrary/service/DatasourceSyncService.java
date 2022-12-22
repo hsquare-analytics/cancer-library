@@ -11,11 +11,11 @@ import org.thymeleaf.util.MapUtils;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+
+import static io.planit.cancerlibrary.constant.DatasourceConstants.getSqlEqualSyntax;
 
 @Service
 public class DatasourceSyncService {
@@ -27,37 +27,51 @@ public class DatasourceSyncService {
         this.sqlExecutor = sqlExecutor;
     }
 
-    public void syncPatientFdx(Patient patient) {
+    public void syncPatientFdx(Patient patient, String login) {
         log.debug("Request to sync patient fdx : {}", patient);
         String selectAllQuery = String.format("select * from gscn.cncr_rgst where pt_no = '%s'", patient.getPtNo());
         List<Map<String, Object>> targetList = sqlExecutor.executeSelectAll(selectAllQuery);
 
         targetList.forEach(target -> {
-            target.put("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate()));
             String getUpdatedDataQuery = String.format("select * from gscn.cncr_rgst_updated where idx = '%s'", target.get("idx"));
             if (MapUtils.isEmpty(sqlExecutor.executeSelectOne(getUpdatedDataQuery))) {
-                SQL insertQuery = new SQL().INSERT_INTO("gscn.cncr_rgst_updated");
-                target.forEach((key, value) -> {
-                    if (value != null) {
-                        insertQuery.VALUES(key, String.format("'%s'", value));
-                    }
-                });
-                sqlExecutor.executeDML(insertQuery.toString());
+                executeFdxInsert(target, patient, login);
             } else {
-                String updateQuery = String.format("update gscn.cncr_rgst_updated set fdx = '%s' where idx = '%s'", target.get("fdx"), target.get("idx"));
-                sqlExecutor.executeDML(updateQuery);
+                executeFdxUpdate(target, patient, login);
             }
         });
     }
 
-    public void syncOnlyUpdatedExistPatientFdx(Patient patient) {
+    public void syncOnlyUpdatedExistPatientFdx(Patient patient, String login) {
         String selectAllQuery = String.format("select * from gscn.cncr_rgst_updated cru where pt_no = '%s' and pt_no not in (select pt_no from gscn.cncr_rgst cr where cr.pt_no = '%s')", patient.getPtNo(), patient.getPtNo());
         List<Map<String, Object>> targetList = sqlExecutor.executeSelectAll(selectAllQuery);
 
-        targetList.forEach(target -> {
-            String updateQuery = String.format("update gscn.cncr_rgst_updated set fdx = '%s' where idx = '%s'", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate()), target.get("idx"));
-            sqlExecutor.executeDML(updateQuery);
+        targetList.forEach(target -> executeFdxUpdate(target, patient, login));
+    }
+
+    private void executeFdxInsert(Map<String, Object> target, Patient patient, String login) {
+        target.put("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate()));
+        SQL insertQuery = new SQL().INSERT_INTO("gscn.cncr_rgst_updated");
+        target.forEach((key, value) -> {
+            if (value != null) {
+                insertQuery.VALUES(key, String.format("'%s'", value));
+            }
         });
+
+        insertQuery.VALUES("created_by", String.format("'%s'", login))
+            .VALUES("created_date", String.format("'%s'", Instant.now()))
+            .VALUES("last_modified_by", String.format("'%s'", login))
+            .VALUES("last_modified_date", String.format("'%s'", Instant.now()));
+        sqlExecutor.executeDML(insertQuery.toString());
+    }
+
+    private void executeFdxUpdate(Map<String, Object> target, Patient patient, String login) {
+        SQL updateQuery = new SQL().UPDATE("gscn.cncr_rgst_updated")
+            .SET(getSqlEqualSyntax("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate())))
+            .SET(getSqlEqualSyntax("last_modified_by", login))
+            .SET(getSqlEqualSyntax("last_modified_date", Instant.now()))
+            .WHERE(getSqlEqualSyntax("idx", target.get("idx")));
+        sqlExecutor.executeDML(updateQuery.toString());
     }
 
     private String getLocaleYYYYMMDDFromInstant(Instant instant) {

@@ -86,9 +86,11 @@ public class PatientController {
     private void syncPatientFdx(Patient patient) {
         log.debug("REST request to sync patient fdx");
 
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("No user login found"));
+
         Runnable myRunnable = () -> {
-            datasourceSyncService.syncPatientFdx(patient);
-            datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient);
+            datasourceSyncService.syncPatientFdx(patient, login);
+            datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient, login);
         };
 
         Thread thread = new Thread(myRunnable);
