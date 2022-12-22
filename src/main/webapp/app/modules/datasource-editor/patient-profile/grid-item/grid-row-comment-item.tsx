@@ -25,13 +25,15 @@ export const GridRowCommentItem = (props: IGridRowCommentITem) => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const commentEntitites = useAppSelector<IComment[]>(state => state.rowCommentReducer.entities);
   const loading = useAppSelector(state => state.rowCommentReducer.loading);
+  const users = useAppSelector(state => state.userManagement.users);
 
   const [value, setValue] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
     const result = commentEntitites?.filter(comment => comment.title).map(comment => {
-      return `* ${comment.category.attribute.caption} : ${comment.title} (by: ${comment.lastModifiedBy})`;
+      const foundedUser = users.find(user => user.login === comment.lastModifiedBy);
+      return `* ${comment.category.attribute.caption} : ${comment.title} (by ${foundedUser.name})`;
     }).join("\n\n");
 
     setValue(result);
