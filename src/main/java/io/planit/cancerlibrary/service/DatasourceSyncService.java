@@ -43,7 +43,7 @@ public class DatasourceSyncService {
     }
 
     public void syncOnlyUpdatedExistPatientFdx(Patient patient, String login) {
-        String selectAllQuery = String.format("select * from gscn.cncr_rgst_updated cru where pt_no = '%s' and pt_no not in (select pt_no from gscn.cncr_rgst cr where cr.pt_no = '%s')", patient.getPtNo(), patient.getPtNo());
+        String selectAllQuery = String.format("select * from gscn.cncr_rgst_updated cru where pt_no = '%s' and idx not in (select idx from gscn.cncr_rgst cr where cr.pt_no = '%s')", patient.getPtNo(), patient.getPtNo());
         List<Map<String, Object>> targetList = sqlExecutor.executeSelectAll(selectAllQuery);
 
         targetList.forEach(target -> executeFdxUpdate(target, patient, login));
