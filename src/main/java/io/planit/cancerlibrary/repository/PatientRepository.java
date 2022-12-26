@@ -24,16 +24,12 @@ public class PatientRepository {
 
     private static final String PT_NO_EQUAL = "PT_NO = :ptNo";
 
-    public static final String PATIENTS_CACHES = "PATIENTS_CACHES";
-
-    public static final String PATIENTS_BY_PT_NOS_CACHE = "PATIENTS_BY_PT_NOS_CACHE";
 
     public PatientRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
-    @Cacheable(cacheNames = PATIENTS_CACHES)
     public List<Patient> findAll() {
         SQL sql = getFindAllPatientWithDetailSQL();
         return jdbcTemplate.query(sql.toString(), new PatientMapper());
@@ -48,7 +44,6 @@ public class PatientRepository {
         return jdbcTemplate.query(sql.toString(), Map.of("ptNos", ptNos), new PatientMapper());
     }
 
-    @Cacheable(cacheNames = PATIENTS_BY_PT_NOS_CACHE)
     public List<Patient> findAllByPatientNos(List<String> ptNos) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO IN (:ptNos)");
 
