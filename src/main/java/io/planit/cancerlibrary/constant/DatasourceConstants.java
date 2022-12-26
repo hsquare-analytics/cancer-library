@@ -35,8 +35,14 @@ public final class DatasourceConstants {
             return String.format("%s = %s", sqlization(key), null);
         }
 
-        String escapedValue = value.toString().replaceAll("\'", "\'\'");
+        return String.format("%s = '%s'", sqlization(key), value);
+    }
 
-        return String.format("%s = '%s'", sqlization(key), escapedValue);
+    public static String getSpecialCharEscapedValue(Object value) {
+        if (ObjectUtils.isEmpty(value)) {
+            return null;
+        }
+
+        return value.toString().replaceAll("\'", "\'\'");
     }
 }
