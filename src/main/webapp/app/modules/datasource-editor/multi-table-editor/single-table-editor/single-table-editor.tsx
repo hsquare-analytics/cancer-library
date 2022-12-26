@@ -51,6 +51,7 @@ import {
 import "./single-table-editor.scss";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
+import {canEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -157,6 +158,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           toolbar: 'bottom',
           widget: 'dxButton',
           options: {
+            visible: isSudoUser || canEditDatasource(patient),
             icon: 'check',
             text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
             onClick(e) {
@@ -171,6 +173,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           toolbar: 'bottom',
           widget: 'dxButton',
           options: {
+            visible: isSudoUser || canEditDatasource(patient),
             icon: 'save',
             text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.save'),
             onClick() {
