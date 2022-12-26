@@ -14,7 +14,7 @@ import {
 } from 'app/modules/datasource-editor/stack-button/datasource.swal-fires';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {IPatient} from "app/shared/model/patient.model";
-import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.check-editable.utils";
+import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
