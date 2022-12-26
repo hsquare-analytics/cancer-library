@@ -82,7 +82,9 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
           <Card variant="outlined" className="box-patient-profile">
             <div className="d-flex align-items-center">
               <PatientProfileCalendar patient={patient}/>
-              {AccessiblePatientColumn.map(column => getTextFieldCardContent(column, patient))}
+              {AccessiblePatientColumn
+                .filter(column => column.dataField != 'fsrMedDt')
+                .map(column => getTextFieldCardContent(column, patient))}
             </div>
             <CardContent>
               <Box>
