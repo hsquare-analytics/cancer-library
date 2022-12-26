@@ -1,13 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {AUTHORITIES} from 'app/config/constants';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {hasAnyAuthority} from 'app/shared/auth/private-route';
-import {
-  getEntity,
-  updateEntity as updatePatient
-} from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
+import {updateEntity as updatePatient} from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
 import {translate} from 'react-jhipster';
 import {
   fireApprovedSwal,
@@ -17,6 +14,7 @@ import {
 } from 'app/modules/datasource-editor/stack-button/datasource.swal-fires';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {IPatient} from "app/shared/model/patient.model";
+import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.check-editable.utils";
 
 interface IPatientTableEditorStackButtonProps {
   setPopupVisible: (popupVisible: boolean) => void;
@@ -33,22 +31,6 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   };
   const patient = useAppSelector(state => state.datasourcePatient.entity);
   const login = useAppSelector(state => state.authentication.account.login);
-
-  const canSubmit = () => {
-    if (!patient.detail || !patient.detail.status) {
-      return true;
-    }
-
-    if (patient.detail.status === REVIEW_LIST.DECLINED) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const canNotSubmit = () => {
-    return !canSubmit();
-  };
 
   const getLocalPatient = (status: string) => {
     const result: IPatient = {
@@ -161,7 +143,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
         <Button
           variant="contained"
           color="info"
-          disabled={canNotSubmit()}
+          disabled={canNotEditDatasource(patient)}
           onClick={e => {
             e.stopPropagation();
             onSubmittedButtonClick();
