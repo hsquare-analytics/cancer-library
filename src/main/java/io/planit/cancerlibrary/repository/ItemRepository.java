@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.repository;
 
 import io.planit.cancerlibrary.domain.Item;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,9 +13,8 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @EntityGraph(attributePaths = {"category", "codebook.lookupList"})
-    List<Item> findAllByCategoryId(Long id);
-
+    String ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE = "itemsByActivatedTrueAndCategoryId";
+    @Cacheable(cacheNames = ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE)
     @EntityGraph(attributePaths = {"category", "codebook.lookupList"})
     List<Item> findAllByActivatedTrueAndCategoryId(Long id);
 

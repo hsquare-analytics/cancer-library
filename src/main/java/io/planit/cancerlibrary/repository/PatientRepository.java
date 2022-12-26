@@ -4,6 +4,7 @@ import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -23,11 +24,16 @@ public class PatientRepository {
 
     private static final String PT_NO_EQUAL = "PT_NO = :ptNo";
 
+    public static final String PATIENTS_CACHES = "PATIENTS_CACHES";
+
+    public static final String PATIENTS_BY_PT_NOS_CACHE = "PATIENTS_BY_PT_NOS_CACHE";
+
     public PatientRepository(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
 
+    @Cacheable(cacheNames = PATIENTS_CACHES)
     public List<Patient> findAll() {
         SQL sql = getFindAllPatientWithDetailSQL();
         return jdbcTemplate.query(sql.toString(), new PatientMapper());
@@ -42,15 +48,7 @@ public class PatientRepository {
         return jdbcTemplate.query(sql.toString(), Map.of("ptNos", ptNos), new PatientMapper());
     }
 
-    public List<Patient> findAllByPtNoNotInAndCreatedDateBetween(List<String> ptNos, Map<String, Timestamp> dateRange) {
-        SQL sql = getFindAllPatientWithDetailSQL().WHERE("CREATED_DATE BETWEEN :startDate AND :endDate");
-        if (ptNos.isEmpty()) {
-            sql.WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO NOT IN (:ptNos)");
-        }
-        Map<String, ?> params = Map.of("ptNos", ptNos, "startDate", dateRange.get("startDate"), "endDate", dateRange.get("endDate"));
-        return jdbcTemplate.query(sql.toString(), params, new PatientMapper());
-    }
-
+    @Cacheable(cacheNames = PATIENTS_BY_PT_NOS_CACHE)
     public List<Patient> findAllByPatientNos(List<String> ptNos) {
         SQL sql = getFindAllPatientWithDetailSQL().WHERE(Table.PATIENT_VIEW.getTableName() + ".PT_NO IN (:ptNos)");
 

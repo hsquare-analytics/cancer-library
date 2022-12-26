@@ -1,6 +1,8 @@
 package io.planit.cancerlibrary.config;
 
 import java.time.Duration;
+
+import io.planit.cancerlibrary.repository.PatientRepository;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,11 @@ public class CacheConfiguration {
             createCache(cm, io.planit.cancerlibrary.repository.UserRepository.USERS_BY_LOGIN_CACHE);
             createCache(cm, io.planit.cancerlibrary.repository.UserRepository.USERS_BY_EMAIL_CACHE);
             // jhipster-needle-ehcache-add-entry
+            createCache(cm, io.planit.cancerlibrary.repository.CategoryRepository.CATEGORIES_BY_ACTIVATED_TRUE_CACHE);
+            createCache(cm, io.planit.cancerlibrary.repository.ItemRepository.ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE);
+            createCache(cm, io.planit.cancerlibrary.repository.UserPatientRepository.USER_PATIENTS_BY_LOGIN_CACHE);
+            createCache(cm, PatientRepository.PATIENTS_CACHES);
+            createCache(cm, PatientRepository.PATIENTS_BY_PT_NOS_CACHE);
         };
     }
 

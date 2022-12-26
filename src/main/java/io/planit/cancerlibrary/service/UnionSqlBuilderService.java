@@ -31,7 +31,7 @@ public class UnionSqlBuilderService {
 
     public String getUnionSelectSQL(Long categoryId, String patientNo) {
         log.debug("Request to get select all query by categoryId: {}, patientNo: {}", categoryId, patientNo);
-        List<Item> itemList = itemRepository.findAllByCategoryId(categoryId);
+        List<Item> itemList = itemRepository.findAllByActivatedTrueAndCategoryId(categoryId);
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(AbnormalSetupException::new);
 
