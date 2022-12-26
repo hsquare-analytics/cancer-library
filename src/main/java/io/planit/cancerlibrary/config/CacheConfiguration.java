@@ -43,7 +43,6 @@ public class CacheConfiguration {
             // jhipster-needle-ehcache-add-entry
             createCache(cm, io.planit.cancerlibrary.repository.CategoryRepository.CATEGORIES_BY_ACTIVATED_TRUE_CACHE);
             createCache(cm, io.planit.cancerlibrary.repository.ItemRepository.ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE);
-            createCache(cm, io.planit.cancerlibrary.repository.UserPatientRepository.USER_PATIENTS_BY_LOGIN_CACHE);
             createCache(cm, PatientRepository.PATIENTS_CACHES);
             createCache(cm, PatientRepository.PATIENTS_BY_PT_NOS_CACHE);
         };

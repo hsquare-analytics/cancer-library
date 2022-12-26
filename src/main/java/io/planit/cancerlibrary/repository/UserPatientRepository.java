@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface UserPatientRepository extends JpaRepository<UserPatient, Long> {
 
-    String USER_PATIENTS_BY_LOGIN_CACHE = "userPatientsByLogin";
-    @Cacheable(cacheNames = USER_PATIENTS_BY_LOGIN_CACHE)
     List<UserPatient> findAllByUserLogin(String login);
 
     void deleteAllByUserLogin(String login);
