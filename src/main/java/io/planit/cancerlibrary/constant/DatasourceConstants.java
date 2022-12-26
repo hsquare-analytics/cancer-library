@@ -35,6 +35,8 @@ public final class DatasourceConstants {
             return String.format("%s = %s", sqlization(key), null);
         }
 
-        return String.format("%s = '%s'", sqlization(key), value);
+        String escapedValue = value.toString().replaceAll("\'", "\'\'");
+
+        return String.format("%s = '%s'", sqlization(key), escapedValue);
     }
 }
