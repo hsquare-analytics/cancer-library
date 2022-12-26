@@ -35,10 +35,15 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const login = useAppSelector(state => state.authentication.account.login);
 
   const canSubmit = () => {
-    if (!patient) {
-      return false;
+    if (!patient.detail || !patient.detail.status) {
+      return true;
     }
-    return patient.status !== REVIEW_LIST.APPROVED;
+
+    if (patient.detail.status === REVIEW_LIST.DECLINED) {
+      return true;
+    }
+
+    return false;
   };
 
   const canNotSubmit = () => {
@@ -91,7 +96,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onSubmittedButtonClick = () => {
     fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const entity =  getLocalPatient(REVIEW_LIST.SUBMITTED);
+        const entity = getLocalPatient(REVIEW_LIST.SUBMITTED);
         dispatch(updatePatient(entity));
       }
     });
