@@ -49,6 +49,8 @@ import {
   transformAsCompleted, transformAsInProgress, transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 import "./single-table-editor.scss";
+import {hasAnyAuthority} from "app/shared/auth/private-route";
+import {AUTHORITIES} from "app/config/constants";
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -74,6 +76,10 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
   const openAll = useAppSelector(state => state.datasourceStatus.openAll);
   const login = useAppSelector(state => state.authentication.account.login);
+
+  const isSudoUser = useAppSelector(state =>
+    hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
+  );
 
   const rowCommentPopupRef = useRef(null);
 
@@ -136,6 +142,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           toolbar: 'bottom',
           widget: 'dxButton',
           options: {
+            visible: isSudoUser,
             icon: 'revert',
             text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
             onClick(e) {
