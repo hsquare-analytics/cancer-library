@@ -39,7 +39,7 @@ const TextFieldCardContent = (props: { column: IDxColumn, patient: IPatient }) =
 const UserMarkingCardContent = (props: { column, users, patient }) => {
   const {column, users, patient} = props;
 
-  const foundedUser = users.find(user => user.login === patient.detail.createdBy)
+  const foundedUser = users.find(user => user.login === patient.detail[column])
   if (foundedUser) {
     return <CardContent key={column}>
       <Typography
