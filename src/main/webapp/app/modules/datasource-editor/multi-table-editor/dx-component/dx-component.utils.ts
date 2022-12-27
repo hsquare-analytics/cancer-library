@@ -23,10 +23,6 @@ export const isChangedCell = (data, originRow) => {
   const a = data.value;
   const b = originRow[data.column.dataField];
 
-  if (_.isNil(b) || b === '') {
-    return false;
-  }
-
   if (type === 'selectbox') {
     return a !== b;
   }
