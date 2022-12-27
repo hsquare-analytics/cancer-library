@@ -96,7 +96,7 @@ export const PatientProfileCard = (props: IPatientProfileCardProps) => {
       </AccordionSummary>
       <AccordionDetails sx={{padding: '0 0 8px 0'}}>
         {!loading ? (
-          <PatientProfileCardDetail patient={patient}/>
+          <PatientProfileCardDetail/>
         ) : (
           <Box
             sx={{

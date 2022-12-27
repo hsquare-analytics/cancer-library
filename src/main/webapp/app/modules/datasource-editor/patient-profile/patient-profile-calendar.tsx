@@ -5,13 +5,11 @@ import Typography from '@mui/material/Typography';
 import {translate} from 'react-jhipster';
 import './patient-profile-card-detail.scss';
 import TextField from '@mui/material/TextField';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import IconButton from '@mui/material/IconButton';
 import {IPatient} from "app/shared/model/patient.model";
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import dayjs, {Dayjs} from 'dayjs';
@@ -19,17 +17,16 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {StaticDatePicker} from '@mui/x-date-pickers/StaticDatePicker';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import {useAppDispatch} from "app/config/store";
+import {useAppDispatch, useAppSelector} from "app/config/store";
 import {updateFirstVisitDate} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 
 
 interface IPatientProfileDetailProps {
-  patient: IPatient;
 }
 
 export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
   const dispatch = useAppDispatch();
-  const {patient} = props;
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
 
   const [value, setValue] = React.useState<Dayjs | null>(dayjs('2022-04-07'));
 
