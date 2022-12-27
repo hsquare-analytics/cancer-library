@@ -125,6 +125,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               e.stopPropagation();
               onDeclinedButtonClick();
             }}
+            disabled={patient.detail.status === REVIEW_LIST.DECLINED}
           >
             {translate('cancerLibraryApp.datasource.reviewButton.decline')}
           </Button>
@@ -135,6 +136,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               e.stopPropagation();
               onApprovedButtonClick();
             }}
+            disabled={patient.detail.status === REVIEW_LIST.APPROVED}
           >
             {translate('cancerLibraryApp.datasource.reviewButton.approve')}
           </Button>{' '}
