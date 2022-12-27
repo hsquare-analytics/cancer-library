@@ -236,7 +236,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             makeCallBackOnPromise(e, () => {
               const row = Object.assign({}, e.data, {
                   [PATIENT_NO]: patient.ptNo,
-                  [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                  [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
                 }
               );
               dispatch(createDatasourceRow({categoryId: category.id, row}));
