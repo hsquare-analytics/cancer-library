@@ -2,6 +2,7 @@ import {setCategory as setSelectedCategory} from "app/modules/datasource-editor/
 import {ActionType} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor";
 import {ICategory} from "app/shared/model/category.model";
 import Swal from "sweetalert2";
+import {translate} from "react-jhipster";
 
 interface InitNewRowProps {
   e: any,
@@ -22,7 +23,7 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
   e.promise = new Promise<void>((resolve, reject) => {
     if (visibleRows.length === 0) {
       Swal.fire({
-        title: 'Please select a row to add a new row',
+        text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectMinimumRow'),
         icon: 'warning',
         confirmButtonText: 'OK'
       });
@@ -33,7 +34,7 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
       resolve();
     } else {
       Swal.fire({
-        title: 'Please select only one row to add a new row',
+        text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectOnlyOneRow'),
         icon: 'warning',
         confirmButtonText: 'OK'
       });

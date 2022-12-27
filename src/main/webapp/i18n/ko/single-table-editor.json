@@ -32,6 +32,11 @@
           "cancel": "취소"
         }
       },
+      "onInitNewRow": {
+        "status": "inProgress",
+        "plzSelectMinimumRow": "기본값 없이 추가합니다. (기본값 설정을 위해선 최소한 하나 이상의 항목을 선택해야 합니다.)",
+        "plzSelectOnlyOneRow": "기본값 설정을 위해선 하나의 항목만 선택해야 합니다."
+      },
       "transformAsCompleted": {
         "title": "확인 상태로 변경 하시겠습니까?"
       },
