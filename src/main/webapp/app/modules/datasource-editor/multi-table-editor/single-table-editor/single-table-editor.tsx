@@ -213,7 +213,13 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           filterPanel={{visible: true}}
           filterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
-          onInitNewRow={e => SingleTableEditorOnInitNewRow({e, dispatch, dataGridRef: dataGrid, category, setActionType})}
+          onInitNewRow={e => SingleTableEditorOnInitNewRow({
+            e,
+            dispatch,
+            dataGridRef: dataGrid,
+            category,
+            setActionType
+          })}
           onEditingStart={e => {
             dispatch(setSelectedCategory(category));
             setActionType(ActionType.UPDATE);
@@ -315,7 +321,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   visibleIndex={3}
                   customizeText={getCustomizeRowStatusText}
           />
-          <Column type="buttons" width={90} visibleIndex={4} alignment={"center"}
+          <Column
+            caption={translate('cancerLibraryApp.singleTableEditor.isNew')}
+            dataField={DATASOURCE_IDX}
+            alignment={"center"} formItem={{visible: false}}
+            visibleIndex={4}
+            customizeText={(cellInfo) => cellInfo.value?.indexOf(KCURE_PREFIX) === 0 ? 'Y' : 'N'}
+          />
+          <Column type="buttons" width={90} visibleIndex={5} alignment={"center"}
                   caption={translate('cancerLibraryApp.singleTableEditor.editRow')}>
             <DxButton name="comment" icon="comment"
                       hint={translate('cancerLibraryApp.singleTableEditor.editForm.button.rejected')}
