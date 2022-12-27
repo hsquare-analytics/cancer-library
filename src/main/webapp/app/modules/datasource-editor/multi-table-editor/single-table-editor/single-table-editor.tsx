@@ -157,6 +157,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             text: translate('cancerLibraryApp.singleTableEditor.editForm.button.pause'),
             onClick(e) {
               const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              row[PATIENT_NO] = patient.ptNo;
               transformAsInProgress(dispatch, category, row);
               dataGrid.current.instance.cancelEditData();
             },
