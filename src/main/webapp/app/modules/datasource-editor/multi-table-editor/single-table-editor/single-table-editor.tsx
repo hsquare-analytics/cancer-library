@@ -139,7 +139,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           options: {
             visible: isSudoUser,
             icon: 'revert',
-            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected'),
+            text: translate('cancerLibraryApp.singleTableEditor.editForm.button.rejected'),
             onClick(e) {
               const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
               transformAsRejected(dispatch, category, row);
@@ -154,7 +154,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           options: {
             visible: isSudoUser || canEditDatasource(patient),
             icon: 'check',
-            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.pause'),
+            text: translate('cancerLibraryApp.singleTableEditor.editForm.button.pause'),
             onClick(e) {
               const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
               transformAsInProgress(dispatch, category, row);
@@ -169,7 +169,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           options: {
             visible: isSudoUser || canEditDatasource(patient),
             icon: 'save',
-            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.save'),
+            text: translate('cancerLibraryApp.singleTableEditor.editForm.button.save'),
             onClick() {
               dataGrid.current.instance.saveEditData();
             }
@@ -180,7 +180,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           toolbar: 'bottom',
           widget: 'dxButton',
           options: {
-            text: translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.cancel'),
+            text: translate('cancerLibraryApp.singleTableEditor.editForm.button.cancel'),
             onClick() {
               dataGrid.current.instance.cancelEditData();
             }
@@ -289,7 +289,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
         >
           {getCustomEditing()}
           <ColumnChooser
-            title={translate('cancerLibraryApp.datasource.singleTableEditor.columnList')}
+            title={translate('cancerLibraryApp.singleTableEditor.columnList')}
             mode="select"
             allowSearch={true}
             sortOrder={'asc'}
@@ -300,7 +300,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   formItem={{visible: false}}
                   visibleIndex={1}
           />
-          <Column caption={translate('cancerLibraryApp.datasource.singleTableEditor.status')}
+          <Column caption={translate('cancerLibraryApp.singleTableEditor.status')}
                   visibleIndex={2}
                   width={90} alignment={"center"}
                   formItem={{visible: false}}
@@ -316,9 +316,9 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                   customizeText={getCustomizeRowStatusText}
           />
           <Column type="buttons" width={90} visibleIndex={4} alignment={"center"}
-                  caption={translate('cancerLibraryApp.datasource.singleTableEditor.editRow')}>
+                  caption={translate('cancerLibraryApp.singleTableEditor.editRow')}>
             <DxButton name="comment" icon="comment"
-                      hint={translate('cancerLibraryApp.datasource.singleTableEditor.editForm.button.rejected')}
+                      hint={translate('cancerLibraryApp.singleTableEditor.editForm.button.rejected')}
                       onClick={(e) => {
                         dispatch(setSelectedCategory(category));
                         dispatch(setSelectedRow(e.row.data));

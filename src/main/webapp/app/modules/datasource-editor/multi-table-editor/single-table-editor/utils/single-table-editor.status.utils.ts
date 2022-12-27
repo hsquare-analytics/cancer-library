@@ -15,8 +15,8 @@ const getSwalCommonOptions = () => {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.confirm'),
-    cancelButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.cancel')
+    confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel')
   }
 }
 
@@ -40,7 +40,7 @@ const updateRowStatus = (dispatchHook, category: ICategory, row: any, status: Ro
 
 export const transformAsInProgress = (dispatchHook, category: ICategory, row: any) => {
   Swal.fire(Object.assign({}, getSwalCommonOptions(), {
-    text: translate('cancerLibraryApp.datasource.singleTableEditor.transformAsInProgress.title'),
+    text: translate('cancerLibraryApp.singleTableEditor.transformAsInProgress.title'),
   }) as SweetAlertOptions).then((result) => {
     if (result.isConfirmed) {
       updateRowStatus(dispatchHook, category, row, RowStatus.IN_PROGRESS);
@@ -50,7 +50,7 @@ export const transformAsInProgress = (dispatchHook, category: ICategory, row: an
 
 export const transformAsCompleted = (dispatchHook, category: ICategory, row: any) => {
   Swal.fire(Object.assign({}, getSwalCommonOptions(), {
-    text: translate('cancerLibraryApp.datasource.singleTableEditor.transformAsCompleted.title'),
+    text: translate('cancerLibraryApp.singleTableEditor.transformAsCompleted.title'),
   }) as SweetAlertOptions).then((result) => {
     if (result.isConfirmed) {
       updateRowStatus(dispatchHook, category, row, RowStatus.COMPLETED);
@@ -60,7 +60,7 @@ export const transformAsCompleted = (dispatchHook, category: ICategory, row: any
 
 export const transformAsDisabled = (dispatchHook, category: ICategory, row: any) => {
   Swal.fire(Object.assign({}, getSwalCommonOptions(), {
-    text: translate('cancerLibraryApp.datasource.singleTableEditor.transformAsDisabled.title'),
+    text: translate('cancerLibraryApp.singleTableEditor.transformAsDisabled.title'),
   }) as SweetAlertOptions).then((result) => {
     if (result.isConfirmed) {
       updateRowStatus(dispatchHook, category, row, RowStatus.DISABLED);
@@ -70,7 +70,7 @@ export const transformAsDisabled = (dispatchHook, category: ICategory, row: any)
 
 export const transformAsRejected = (dispatchHook, category: ICategory, row: any) => {
   Swal.fire(Object.assign({}, getSwalCommonOptions(), {
-    text: translate('cancerLibraryApp.datasource.singleTableEditor.transformAsRejected.title'),
+    text: translate('cancerLibraryApp.singleTableEditor.transformAsRejected.title'),
   }) as SweetAlertOptions).then((result) => {
     if (result.isConfirmed) {
       updateRowStatus(dispatchHook, category, row, RowStatus.REJECTED);

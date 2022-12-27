@@ -2,15 +2,15 @@
   "cancerLibraryApp": {
     "datasource": {
       "pageTitle": "데이터 편집 모듈",
-      "created" : "새로운 행이 추가 되었습니다.",
-      "updated" : "{{ param }} 행이 수정 되었습니다.",
-      "deleted" : "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
-      "completed" : "{{ param }} 행이 완료 상태로 변경 되었습니다.",
-      "in_progress" : "{{ param }} 행이 임시저장 상태로 변경 되었습니다.",
-      "not_started" : "{{ param }} 행이 작업전 상태로 변경 되었습니다.",
-      "disabled" : "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
-      "rejected" : "{{ param }} 행이 반려 상태로 변경 되었습니다.",
-	  "updateBulkRows" : "{{ param }} 개 행이 완료 상태로 변경 되었습니다.",
+      "created": "새로운 행이 추가 되었습니다.",
+      "updated": "{{ param }} 행이 수정 되었습니다.",
+      "deleted": "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
+      "completed": "{{ param }} 행이 완료 상태로 변경 되었습니다.",
+      "in_progress": "{{ param }} 행이 임시저장 상태로 변경 되었습니다.",
+      "not_started": "{{ param }} 행이 작업전 상태로 변경 되었습니다.",
+      "disabled": "{{ param }} 행이 삭제 상태로 변경 되었습니다.",
+      "rejected": "{{ param }} 행이 반려 상태로 변경 되었습니다.",
+      "updateBulkRows": "{{ param }} 개 행이 완료 상태로 변경 되었습니다.",
       "column": {
         "createdBy": "생성자",
         "createdDate": "생성일",
@@ -51,54 +51,6 @@
         },
         "declineReasonPopup": {
           "title": "{{name}}({{no}}) 님의 데이터 반려 사유"
-        }
-      },
-      "singleTableEditor": {
-        "addRow": "행 추가",
-        "columnList": "열 목록",
-        "bulkConfirm": "일괄 확인",
-        "status": "상태",
-        "editRow": "행 편집",
-        "createSuccess": "{{ table }} 테이블에 행이 추가되었습니다.",
-        "updateSuccess": "{{ table }} 테이블의 {{ row }} 행이 수정되었습니다.",
-        "disableSuccess": "{{ table }} 테이블의 {{ row }} 행이 삭제되었습니다.",
-        "deleteFail": "{{ table }} 테이블의 {{ row }} 행을 삭제할 수 있는 권한이 없습니다.",
-        "validator": {
-          "required": "{{ field }} 필드는 필수 입력 항목입니다."
-        },
-        "rowStatus": {
-          "notStarted": "작업전",
-          "inProgress": "임시저장",
-          "completed": "완료",
-          "disabled": "삭제됨",
-          "rejected": "반려",
-          "button": {
-            "confirm": "확인",
-            "cancel": "취소"
-          }
-        },
-        "editForm": {
-          "button": {
-            "rejected": "반려",
-            "pause": "임시저장",
-            "save": "확인",
-            "cancel": "취소"
-          }
-        },
-        "transformAsCompleted": {
-          "title": "확인 상태로 변경 하시겠습니까?"
-        },
-        "transformAsInProgress": {
-          "title": "임시저장 상태로 변경 하시겠습니까?"
-        },
-        "transformAsDisabled": {
-          "title": "삭제 하시겠습니까?"
-        },
-        "transformAsRejected": {
-          "title": "반려 상태로 변경 하시겠습니까?"
-        },
-        "updateBulkDatasourceRows": {
-          "title": "일괄 확인 하시겠습니까?"
         }
       },
       "lookupEditor": {

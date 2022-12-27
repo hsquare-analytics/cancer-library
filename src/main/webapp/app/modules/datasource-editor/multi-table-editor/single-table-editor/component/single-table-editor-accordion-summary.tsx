@@ -25,11 +25,11 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
   const {category, dataGrid, accordionExpanded} = props;
   const swalUpdateBulkDatasourceRows = () => {
     Swal.fire({
-      text: translate('cancerLibraryApp.datasource.singleTableEditor.updateBulkDatasourceRows.title'),
+      text: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.title'),
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.confirm'),
-      cancelButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.cancel'),
+      confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
+      cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel'),
     }).then((result) => {
       if (result.isConfirmed) {
         dataGrid.current.instance.getSelectedRowsData();
@@ -57,7 +57,7 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           }}
         >
           <FontAwesomeIcon icon="check-double" className={'me-3'}/>
-          {translate('cancerLibraryApp.datasource.singleTableEditor.bulkConfirm')}
+          {translate('cancerLibraryApp.singleTableEditor.bulkConfirm')}
         </Button>
         <Button
           variant="outlined"
@@ -69,7 +69,7 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           }}
         >
           <FontAwesomeIcon icon="list" className={'me-3'}/>
-          {translate('cancerLibraryApp.datasource.singleTableEditor.columnList')}
+          {translate('cancerLibraryApp.singleTableEditor.columnList')}
         </Button>
         <Button
           variant="outlined"
@@ -82,7 +82,7 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           }}
         >
           <FontAwesomeIcon icon="plus" className={'me-3'}/>
-          {translate('cancerLibraryApp.datasource.singleTableEditor.addRow')}
+          {translate('cancerLibraryApp.singleTableEditor.addRow')}
         </Button>
       </div>
     </AccordionSummary>

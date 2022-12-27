@@ -39,14 +39,14 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.confirm'),
-    cancelButtonText: translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.button.cancel')
+    confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
+    cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel')
   }
 
 
   switch (row.status) {
     case RowStatus.COMPLETED:
-      return <Chip label={translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.completed')}
+      return <Chip label={translate('cancerLibraryApp.singleTableEditor.rowStatus.completed')}
                    icon={<DoneIcon/>}
                    color="success"
                    size={'small'}
@@ -54,7 +54,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                    onClick={() => transformAsInProgress(dispatch, category, row)}
       />;
     case RowStatus.IN_PROGRESS:
-      return <Chip label={translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.inProgress')}
+      return <Chip label={translate('cancerLibraryApp.singleTableEditor.rowStatus.inProgress')}
                    icon={<PauseIcon/>}
                    color="warning"
                    size={'small'}
@@ -62,7 +62,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                    onClick={() => transformAsCompleted(dispatch, category, row)}
       />;
     case RowStatus.DISABLED:
-      return <Chip label={translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.disabled')}
+      return <Chip label={translate('cancerLibraryApp.singleTableEditor.rowStatus.disabled')}
                    icon={<RemoveCircleIcon/>}
                    color="error"
                    size={'small'}
@@ -70,7 +70,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
                    onClick={() => transformAsInProgress(dispatch, category, row)}
       />;
     case RowStatus.REJECTED:
-      return <Chip label={translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.rejected')}
+      return <Chip label={translate('cancerLibraryApp.singleTableEditor.rowStatus.rejected')}
                    icon={<PauseIcon/>}
                    color="error"
                    size={'small'}
@@ -79,7 +79,7 @@ const DxRowConfirmCellRender = (props: IDxRowConfirmCellRenderProps) => {
       />;
     default:
       return <Chip
-        label={translate('cancerLibraryApp.datasource.singleTableEditor.rowStatus.notStarted')}
+        label={translate('cancerLibraryApp.singleTableEditor.rowStatus.notStarted')}
         icon={<PlayArrowIcon/>}
         color="info"
         size={'small'}
