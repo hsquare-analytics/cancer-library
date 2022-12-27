@@ -1,5 +1,4 @@
 import SelectBoxComponent from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-select-box";
-import DxTagBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-tag-box";
 import {IItem} from "app/shared/model/item.model";
 import {Column, Lookup} from 'devextreme-react/data-grid';
 import React from 'react';
@@ -14,8 +13,6 @@ const getDxEditCellComponent = (item: IItem) => {
   }
 
   switch (item.attribute?.dataType.toLowerCase()) {
-    case 'tagbox':
-      return DxTagBox;
     case 'selectbox':
       if (!canBeLookup(item)) {
         return undefined;

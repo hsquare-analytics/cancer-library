@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SelectBox from 'devextreme-react/select-box';
-import {IRootState} from "app/config/store";
+import {IRootState, useAppSelector} from "app/config/store";
 import {connect} from 'react-redux';
 import LookupEditor from "app/modules/datasource-editor/multi-table-editor/lookup-editor/lookup-editor";
 import DxRowCommentBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-row-comment-box";
@@ -10,12 +10,16 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-component.utils";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
+import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
+import {IPatient} from "app/shared/model/patient.model";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
 }
 
 const DxSelectBox = (props: ISelectBoxComponentProps) => {
+  const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+
   const [isSelectBoxOpened, setIsSelectBoxOpened] = useState<boolean>(false);
   const [showLookup, setShowLookup] = useState(false);
 
@@ -44,6 +48,7 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
                                   codebookId={data.column.lookup.dataSource[0].codebookId}
                                   dataSource={data.column.lookup.dataSource}/> : null}
       <SelectBox
+        readOnly={!isSudoUser && canNotEditDatasource(patient)}
         className={className}
         dataSource={data.column.lookup.dataSource}
         valueExpr={data.column.lookup.valueExpr}
