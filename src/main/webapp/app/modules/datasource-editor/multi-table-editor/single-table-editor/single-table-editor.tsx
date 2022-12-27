@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import DataGrid, {Button as DxButton, Column, ColumnChooser, Editing, Popup, Form} from 'devextreme-react/data-grid';
+import DataGrid, {Button as DxButton, Column, ColumnChooser, Editing, Popup} from 'devextreme-react/data-grid';
 import {ICategory} from 'app/shared/model/category.model';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -14,7 +14,6 @@ import {
   setRow as setSelectedRow,
   setValidateFailedItems,
 } from 'app/modules/datasource-editor/reducer/datasource.status.reducer';
-import Swal from 'sweetalert2';
 
 
 import {
@@ -44,7 +43,9 @@ import {
 import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
 import {
   getCustomizeRowStatusText,
-  transformAsCompleted, transformAsInProgress, transformAsRejected
+  transformAsCompleted,
+  transformAsInProgress,
+  transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.status.utils";
 import "./single-table-editor.scss";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
