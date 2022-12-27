@@ -157,6 +157,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             text: translate('cancerLibraryApp.singleTableEditor.editForm.button.pause'),
             onClick(e) {
               const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              row[PATIENT_NO] = patient.ptNo;
               transformAsInProgress(dispatch, category, row);
               dataGrid.current.instance.cancelEditData();
             },
@@ -233,7 +234,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             makeCallBackOnPromise(e, () => {
               const row = Object.assign({}, e.data, {
                   [PATIENT_NO]: patient.ptNo,
-                  [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                  [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
                 }
               );
               dispatch(createDatasourceRow({categoryId: category.id, row}));
@@ -248,14 +249,14 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
                     {
                       [DATASOURCE_IDX]: e.oldData.idx,
                       [PATIENT_NO]: patient.ptNo,
-                      [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                      [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
                     },
                     e.newData
                   );
                   dispatch(updateDatasourceRow({categoryId: category.id, row}));
                 } else {
                   const row = Object.assign({}, e.oldData, e.newData, {
-                    [DATASOURCE_ROW_STATUS]: RowStatus.IN_PROGRESS
+                    [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
                   });
                   dispatch(createDatasourceRow({categoryId: category.id, row}));
                 }
