@@ -10,7 +10,7 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
-import PatientProfileCardDetail from 'app/modules/datasource-editor/patient-profile/patient-profile-card-detail';
+import PatientProfileCardDetail from 'app/modules/datasource-editor/patient-profile/component/patient-profile-card-detail';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import DatasourceStackButton from 'app/modules/datasource-editor/stack-button/datasource-stack-button';
 import {setOpenAll} from "app/modules/datasource-editor/reducer/datasource.status.reducer";

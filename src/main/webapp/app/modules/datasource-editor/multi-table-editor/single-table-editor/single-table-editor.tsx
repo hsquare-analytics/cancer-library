@@ -36,10 +36,10 @@ import {
 import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import DxRowConfirmCellRender
-  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/dx-row-confirm-cell-render";
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/component/dx-row-confirm-cell-render";
 import {
   SingleTableEditorAccordionSummary
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/component/single-table-editor-accordion-summary";
 import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
 import {
   getCustomizeRowStatusText,

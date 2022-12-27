@@ -4,7 +4,7 @@ import {translate} from 'react-jhipster';
 import Box from '@mui/material/Box';
 import TextArea from 'devextreme-react/text-area';
 import IconButton from '@mui/material/IconButton';
-import '../patient-profile-card-detail.scss';
+import '../component/patient-profile-card-detail.scss';
 import {useAppDispatch, useAppSelector} from "app/config/store";
 import {IPatient} from "app/shared/model/patient.model";
 import Grid from '@mui/material/Grid';

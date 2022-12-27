@@ -8,8 +8,8 @@ import Grid from '@mui/material/Grid';
 import {GridCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-comment-item";
 import {GridDeclineReasonItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
 import {GridRowCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-row-comment-item";
-import {PatientProfileCalendar} from "app/modules/datasource-editor/patient-profile/patient-profile-calendar";
-import {PatientProfileCardColumns} from "app/modules/datasource-editor/patient-profile/patient-profile-card-columns";
+import {PatientProfileCalendar} from "app/modules/datasource-editor/patient-profile/component/patient-profile-calendar";
+import {PatientProfileCardColumns} from "app/modules/datasource-editor/patient-profile/component/patient-profile-card-columns";
 
 
 interface IPatientProfileDetailProps {
