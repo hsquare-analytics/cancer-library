@@ -1,40 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import {IPatient} from 'app/shared/model/patient.model';
-import {translate} from 'react-jhipster';
 import Box from '@mui/material/Box';
-import AccessiblePatientColumn from 'app/modules/datasource-editor/accessible-patient.column';
-import {IDxColumn} from 'app/shared/model/dx-column.model';
-import {convertDateFromServer, convertDateTimeFromServer} from 'app/shared/util/date-utils';
 import './patient-profile-card-detail.scss';
-import TextField from '@mui/material/TextField';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import {
-  GridCommentItem
-} from "app/modules/datasource-editor/patient-profile/grid-item/grid-comment-item";
-import {
-  GridDeclineReasonItem
-} from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
+import {GridCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-comment-item";
+import {GridDeclineReasonItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-decline-reason-item";
 import {GridRowCommentItem} from "app/modules/datasource-editor/patient-profile/grid-item/grid-row-comment-item";
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import IconButton from '@mui/material/IconButton';
 import {PatientProfileCalendar} from "app/modules/datasource-editor/patient-profile/patient-profile-calendar";
+import {PatientProfileCardColumns} from "app/modules/datasource-editor/patient-profile/patient-profile-card-columns";
 
-
-const getFormattedValue: (value: any, column: IDxColumn) => string = (value, column) => {
-  if (column.dataType === 'date') {
-    return convertDateFromServer(value);
-  } else if (column.dataType === 'datetime') {
-    return convertDateTimeFromServer(value);
-  }
-  return value;
-};
 
 interface IPatientProfileDetailProps {
-  patient: IPatient;
 }
 
 const theme = createTheme({
@@ -54,37 +32,16 @@ const theme = createTheme({
   },
 });
 
-const getTextFieldCardContent = (column: IDxColumn, patient: IPatient) => {
-  const value = patient[column.dataField] || patient.detail[column.dataField.split(".")[1]];
-  const formatted = getFormattedValue(value, column);
-  return <CardContent key={column.dataField}>
-    <Typography
-      color="text.secondary">{translate(column.caption) || column.dataField}</Typography>
-    <Typography component="span" color="text.default">
-      <TextField
-        value={formatted}
-        variant={'standard'}
-        InputProps={{readOnly: true}}
-        className="text-field"
-      />
-    </Typography>
-  </CardContent>;
-}
 
 export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
-  const {patient} = props;
-
-
   return (
     <div>
       <ThemeProvider theme={theme}>
         <Box>
           <Card variant="outlined" className="box-patient-profile">
             <div className="d-flex align-items-center">
-              <PatientProfileCalendar patient={patient}/>
-              {AccessiblePatientColumn
-                .filter(column => column.dataField != 'fsrMedDt')
-                .map(column => getTextFieldCardContent(column, patient))}
+              <PatientProfileCalendar/>
+              <PatientProfileCardColumns/>
             </div>
             <CardContent>
               <Box>
@@ -94,11 +51,9 @@ export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
                   <GridRowCommentItem xs={4}/>
                 </Grid>
               </Box>
-
             </CardContent>
           </Card>
         </Box>
-
       </ThemeProvider>
     </div>
   );
