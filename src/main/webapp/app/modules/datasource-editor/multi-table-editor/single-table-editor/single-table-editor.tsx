@@ -54,6 +54,8 @@ import {canEditDatasource} from "app/modules/datasource-editor/stack-button/data
 import {
   makeCallBackOnPromise
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.callback.utils";
+import SingleTableEditorOnInitNewRow
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.init-new-row.utils";
 
 
 export enum ActionType {
@@ -211,12 +213,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           filterPanel={{visible: true}}
           filterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
-          onInitNewRow={e =>
-            makeCallBackOnPromise(e, () => {
-              dispatch(setSelectedCategory(category));
-              setActionType(ActionType.CREATE);
-            })
-          }
+          onInitNewRow={e => SingleTableEditorOnInitNewRow({e, dispatch, dataGridRef: dataGrid, category, setActionType})}
           onEditingStart={e => {
             dispatch(setSelectedCategory(category));
             setActionType(ActionType.UPDATE);
