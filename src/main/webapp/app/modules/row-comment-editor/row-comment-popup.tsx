@@ -6,7 +6,7 @@ import {createEntity, getEntity, updateEntity} from "app/modules/row-comment-edi
 import {IPatient} from "app/shared/model/patient.model";
 import {
   transformAsRejected
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.status.utils";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import Swal from "sweetalert2";

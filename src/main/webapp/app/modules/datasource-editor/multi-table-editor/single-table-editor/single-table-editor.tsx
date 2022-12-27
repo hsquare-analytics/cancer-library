@@ -25,10 +25,8 @@ import {
 } from 'app/modules/datasource-editor/reducer/datasource.container.reducer';
 import {IPatient} from 'app/shared/model/patient.model';
 import {
-  ActionType,
-  makeCallBackOnPromise,
   onRowValidating,
-} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.utils';
+} from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.validating.utils';
 import {
   DATASOURCE_IDX,
   DATASOURCE_ROW_STATUS,
@@ -47,11 +45,21 @@ import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup"
 import {
   getCustomizeRowStatusText,
   transformAsCompleted, transformAsInProgress, transformAsRejected
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.status.utils";
 import "./single-table-editor.scss";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import {canEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
+import {
+  makeCallBackOnPromise
+} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.callback.utils";
+
+
+export enum ActionType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete'
+}
 
 export interface ISingleTableEditor {
   category: ICategory;
@@ -109,7 +117,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
     return filter;
   }
-
 
 
   const getCustomEditing = () => {

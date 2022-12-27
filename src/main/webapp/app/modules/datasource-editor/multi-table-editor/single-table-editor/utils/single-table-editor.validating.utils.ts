@@ -4,12 +4,6 @@ import _ from "lodash";
 import Swal from "sweetalert2";
 
 
-export enum ActionType {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete'
-}
-
 export const onRowValidating = (e, data: { category: ICategory, itemContainer: any }, callback: (value: string[]) => void) => {
   const {category, itemContainer} = data;
   const items = itemContainer[category.id];
@@ -44,9 +38,3 @@ export const onRowValidating = (e, data: { category: ICategory, itemContainer: a
   }
 }
 
-export const makeCallBackOnPromise = (e, callback: () => void) => {
-  e.promise = new Promise<void>((resolve) => {
-    callback();
-    resolve();
-  });
-}
