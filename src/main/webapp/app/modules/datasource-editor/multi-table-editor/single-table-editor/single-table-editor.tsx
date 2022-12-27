@@ -28,7 +28,6 @@ import {
   ActionType,
   makeCallBackOnPromise,
   onRowValidating,
-  toastApiResult,
 } from 'app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.utils';
 import {
   DATASOURCE_IDX,
@@ -46,6 +45,7 @@ import {
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/single-table-editor-accordion-summary";
 import {RowCommentPopup} from "app/modules/row-comment-editor/row-comment-popup";
 import {
+  getCustomizeRowStatusText,
   transformAsCompleted, transformAsInProgress, transformAsRejected
 } from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-status.utils";
 import "./single-table-editor.scss";
@@ -110,22 +110,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     return filter;
   }
 
-  const getCustomizeRowStatusText = (cellInfo) => {
-    switch (cellInfo.value) {
-      case RowStatus.COMPLETED:
-        return "COMP";
-      case RowStatus.DISABLED:
-        return "DEL";
-      case RowStatus.NOT_STARTED:
-        return "NEW";
-      case RowStatus.IN_PROGRESS:
-        return "WIP";
-      case RowStatus.REJECTED:
-        return "RJCT";
-      default:
-        return "NEW";
-    }
-  }
 
 
   const getCustomEditing = () => {

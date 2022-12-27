@@ -77,3 +77,21 @@ export const transformAsRejected = (dispatchHook, category: ICategory, row: any)
     }
   });
 }
+
+
+export const getCustomizeRowStatusText = (cellInfo) => {
+  switch (cellInfo.value) {
+    case RowStatus.COMPLETED:
+      return "COMP";
+    case RowStatus.DISABLED:
+      return "DEL";
+    case RowStatus.NOT_STARTED:
+      return "NEW";
+    case RowStatus.IN_PROGRESS:
+      return "WIP";
+    case RowStatus.REJECTED:
+      return "RJCT";
+    default:
+      return "NEW";
+  }
+}

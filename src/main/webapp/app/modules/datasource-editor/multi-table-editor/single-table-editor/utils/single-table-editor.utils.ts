@@ -1,5 +1,4 @@
 import {translate} from 'react-jhipster';
-import {toast} from 'react-toastify';
 import {ICategory} from "app/shared/model/category.model";
 import _ from "lodash";
 import Swal from "sweetalert2";
@@ -10,23 +9,6 @@ export enum ActionType {
   UPDATE = 'update',
   DELETE = 'delete'
 }
-
-export const toastApiResult = (type: ActionType, data: { table: string, row?: string }) => {
-  switch (type) {
-    case ActionType.CREATE:
-      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.createSuccess', data));
-      break;
-    case ActionType.UPDATE:
-      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.updateSuccess', data));
-      break;
-    case ActionType.DELETE:
-      toast.info(translate('cancerLibraryApp.datasource.singleTableEditor.disableSuccess', data));
-      break;
-    default:
-      break;
-  }
-}
-
 
 export const onRowValidating = (e, data: { category: ICategory, itemContainer: any }, callback: (value: string[]) => void) => {
   const {category, itemContainer} = data;
@@ -67,25 +49,4 @@ export const makeCallBackOnPromise = (e, callback: () => void) => {
     callback();
     resolve();
   });
-}
-
-export const onRowRemoving = (e, category: ICategory,
-                              initialize: () => void,
-                              resolveCallback: ({categoryId, row}) => void) => {
-  initialize();
-  e.cancel = new Promise<void>((resolve, reject) => {
-    const row = Object.assign({}, e.data);
-    resolveCallback({categoryId: category.id, row});
-    resolve();
-  });
-};
-
-export const toggleRowSelection = (e, dataGrid) => {
-  if (dataGrid.current.instance.getSelectedRowKeys().includes(e.key)) {
-    dataGrid.current.instance.deselectRows([e.key]);
-  } else {
-    const selectedRowKeys = dataGrid.current.instance.getSelectedRowKeys();
-    selectedRowKeys.push(e.key);
-    dataGrid.current.instance.selectRows(selectedRowKeys);
-  }
 }
