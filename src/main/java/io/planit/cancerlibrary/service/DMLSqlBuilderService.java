@@ -13,6 +13,7 @@ import org.apache.ibatis.jdbc.SQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,6 +26,7 @@ import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 import static io.planit.cancerlibrary.service.StreamUtils.distinctByKey;
 
 @Service
+@Transactional
 public class DMLSqlBuilderService {
 
     private final Logger log = LoggerFactory.getLogger(DMLSqlBuilderService.class);
@@ -78,9 +80,7 @@ public class DMLSqlBuilderService {
                         .filter(lookup -> lookup.getDescription().equals(map.get(mapKey)))
                         .findFirst()
                         .ifPresent(lookup -> sql.VALUES(sqlization(item.getProperty().getLabelColumn()), String.format("'%s'", lookup.getTitle())));
-                } else if (map.get(mapKey) == null) {
-                    sql.VALUES(sqlization(item.getTitle()), null);
-                } else {
+                } else if (map.get(mapKey) != null) {
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", getSpecialCharEscapedValue(map.get(mapKey))));
                 }
             }
