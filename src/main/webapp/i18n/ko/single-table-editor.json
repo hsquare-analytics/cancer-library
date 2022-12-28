@@ -31,7 +31,8 @@
           "pause": "임시저장",
           "save": "확인",
           "cancel": "취소"
-        }
+        },
+        "confirmDelete": "비활성화 하시겠습니까?"
       },
       "onInitNewRow": {
         "status": "inProgress",
