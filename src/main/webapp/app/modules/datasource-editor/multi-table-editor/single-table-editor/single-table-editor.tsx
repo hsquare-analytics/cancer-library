@@ -51,9 +51,6 @@ import "./single-table-editor.scss";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import {canEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
-import {
-  makeCallBackOnPromise
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.callback.utils";
 import SingleTableEditorOnInitNewRow
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.init-new-row.utils";
 import SingleTableEditorRowUpdatingUtils
