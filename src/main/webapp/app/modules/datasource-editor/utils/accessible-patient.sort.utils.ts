@@ -12,6 +12,8 @@ const getSudoUserSortValue = data => {
       return 2;
     case REVIEW_LIST.APPROVED:
       return 3;
+    default:
+      return 4;
   }
 }
 
