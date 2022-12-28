@@ -25,6 +25,7 @@ const getDxEditCellComponent = (item: IItem) => {
       return DxNumberBox;
     case 'date':
     case 'datetime':
+    case 'time':
       return DxDateBox;
     case 'textarea':
       return DxTextareaBox;
