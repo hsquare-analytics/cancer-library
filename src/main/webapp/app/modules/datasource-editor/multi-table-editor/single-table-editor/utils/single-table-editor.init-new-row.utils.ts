@@ -31,6 +31,13 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
     } else if (visibleRows.length === 1) {
       const targetRows = visibleRows[0];
       delete targetRows['idx'];
+
+      Object.keys(targetRows).forEach(key => {
+        if (targetRows[key] === null) {
+          delete targetRows[key];
+        }
+      });
+
       e.data = {...targetRows};
       resolve();
     } else {
