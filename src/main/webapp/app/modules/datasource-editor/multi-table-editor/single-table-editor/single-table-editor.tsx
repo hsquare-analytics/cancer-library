@@ -211,7 +211,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           sorting={{mode: 'multiple'}}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           filterPanel={{visible: true}}
-          filterValue={getFilterValue()}
+          defaultFilterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
           onInitNewRow={e => SingleTableEditorOnInitNewRow({
             e,
