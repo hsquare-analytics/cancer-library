@@ -6,6 +6,7 @@ import DxTextBox from "app/modules/datasource-editor/multi-table-editor/dx-compo
 import DxNumberBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-number-box";
 import DxDateBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-date-box";
 import DxTextareaBox from "app/modules/datasource-editor/multi-table-editor/dx-component/dx-textarea-box";
+import moment from "moment";
 
 const getDxEditCellComponent = (item: IItem) => {
   if (!item.attribute.dataType) {
@@ -62,6 +63,17 @@ const canBeLookup = (item: IItem) => {
   return item.codebook && item.codebook.lookupList && item.codebook.lookupList.length > 0;
 }
 
+const isCustomizableText = (item: IItem) => {
+  return item.attribute?.dataType === 'time';
+}
+
+const getCustomizedText = (item: IItem) => (cellInfo) => {
+  if (item.attribute.dataType === 'time') {
+    return moment(cellInfo.value).format('HH:mm');
+  }
+  return cellInfo.value;
+}
+
 export const getDxColumnConfig = (item: IItem) => {
   return <Column
     key={item.id}
@@ -81,6 +93,7 @@ export const getDxColumnConfig = (item: IItem) => {
       visible: item.property ? item.property.visible : true,
       visibleIndex: item.orderNo,
     }}
+    customizeText={isCustomizableText(item) ? getCustomizedText(item) : undefined}
   >
     {getDxLookupComponent(item)}
   </Column>
