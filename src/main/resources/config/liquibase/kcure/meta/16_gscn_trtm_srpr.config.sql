@@ -55,10 +55,10 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (16004
 insert into ph_item_attribute (item_id, caption, required) values (16004, 'ESD시술순번', true);
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16005, 'esd_srpr_strt_dt', 16000, 'system', 16005);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16005, 'ESD시술시작일시', true, 'yyyy/MM/dd hh:mm:ss', 'datetime');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16005, 'ESD시술시작일시', true, 'HH:mm', 'time');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16006, 'esd_srpr_end_dt', 16000, 'system', 16006);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16006, 'ESD시술종료일시', true, 'yyyy/MM/dd hh:mm:ss', 'datetime');
+insert into ph_item_attribute (item_id, caption, required, format, data_type) values (16006, 'ESD시술종료일시', true, 'HH:mm', 'time');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (16007, 'esd_lesn_size_vl', 16000, 'system', 1600);
 insert into ph_item_attribute (item_id, caption) values (16007, 'ESD병변크기값');
