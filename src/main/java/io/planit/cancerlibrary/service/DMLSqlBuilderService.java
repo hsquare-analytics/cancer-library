@@ -79,7 +79,7 @@ public class DMLSqlBuilderService {
                         .findFirst()
                         .ifPresent(lookup -> sql.VALUES(sqlization(item.getProperty().getLabelColumn()), String.format("'%s'", lookup.getTitle())));
                 } else if (map.get(mapKey) == null) {
-                    sql.VALUES(sqlization(item.getTitle()), "null");
+                    sql.VALUES(sqlization(item.getTitle()), null);
                 } else {
                     sql.VALUES(sqlization(item.getTitle()), String.format("'%s'", getSpecialCharEscapedValue(map.get(mapKey))));
                 }
