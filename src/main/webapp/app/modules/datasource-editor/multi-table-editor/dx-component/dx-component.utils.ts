@@ -43,9 +43,18 @@ export const getFormattedValue = (props: { value: any, type: any, format: any })
   const {value, type, format} = props;
   switch (type) {
     case 'date':
-    case 'datetime':
       if (Date.parse(value)) {
         return moment(value).format('yyyy/MM/DD');
+      }
+      return value;
+    case 'datetime':
+      if (Date.parse(value)) {
+        return moment(value).format('yyyy/MM/DD HH:mm:ss');
+      }
+      return value;
+    case 'time':
+      if (Date.parse(value)) {
+        return moment(value).format('HH:mm:ss');
       }
       return value;
     default:
