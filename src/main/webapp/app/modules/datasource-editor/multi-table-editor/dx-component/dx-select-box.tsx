@@ -12,6 +12,7 @@ import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
 import {IPatient} from "app/shared/model/patient.model";
+import "./dx-select-box.scss";
 
 interface ISelectBoxComponentProps extends StateProps, DispatchProps {
   data: any;
@@ -67,6 +68,9 @@ const DxSelectBox = (props: ISelectBoxComponentProps) => {
           return `<div class='item-with-tooltip' title='${label}'> ${label}</div>`;
         }}
         dropDownOptions={{
+          wrapperAttr: {
+            class: 'dx-select-box-dropdown-wrapper'
+          },
           resizeEnabled: true,
         }}
         buttons={isSudoUser && isSelectBoxOpened ? [
