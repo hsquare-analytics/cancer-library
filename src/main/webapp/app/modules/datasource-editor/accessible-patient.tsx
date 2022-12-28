@@ -20,6 +20,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
+import {getAccessiblePatientStatusSortValue} from "app/modules/datasource-editor/utils/accessible-patient.sort.utils";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -31,9 +32,7 @@ export const AccessiblePatient = () => {
   const isSudoUser = useAppSelector(state =>
     hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR])
   );
-  const patient = useAppSelector(state => state.datasourcePatient.entity);
   const patientList = useAppSelector(state => state.datasourcePatient.entities);
-  const updateSuccess = useAppSelector(state => state.datasourcePatient.updateSuccess);
   const loading = useAppSelector(state => state.datasourcePatient.loading);
   const users = useAppSelector(state => state.userManagement.users);
 
@@ -67,19 +66,6 @@ export const AccessiblePatient = () => {
     }
     return <CheckBox disabled value={result} style={{backgroundColor: result ? 'var(--bs-primary)' : 'none'}}/>;
   };
-
-  const getCalculateSortValue = (data: any) => {
-    switch (data.detail.status) {
-      case  REVIEW_LIST.DECLINED:
-        return 1;
-      case  REVIEW_LIST.SUBMITTED:
-        return 2;
-      case  REVIEW_LIST.APPROVED:
-        return 3;
-      default:
-        return 4;
-    }
-  }
 
   const userMarkingCellTemplate = (column) => (cellElement, cellInfo) => {
     const foundedUser = users.find(user => user.login === cellInfo.data.detail[column])
@@ -140,7 +126,7 @@ export const AccessiblePatient = () => {
             visibleIndex={2}
             sortIndex={0}
             sortOrder={'asc'}
-            calculateSortValue={getCalculateSortValue}
+            calculateSortValue={getAccessiblePatientStatusSortValue(isSudoUser)}
           >
             <Lookup
               dataSource={[
