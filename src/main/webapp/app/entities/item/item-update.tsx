@@ -71,7 +71,7 @@ export const ItemUpdate = () => {
           ...itemEntity,
         };
 
-  const dataTypeList = ['number', 'boolean', 'string', 'date', 'datetime', 'selectbox', 'textarea'];
+  const dataTypeList = ['number', 'boolean', 'string', 'date', 'datetime', 'time', 'selectbox', 'textarea'];
 
   return (
     <div className="wrap-page">

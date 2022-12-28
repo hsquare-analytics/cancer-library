@@ -51,11 +51,10 @@ import "./single-table-editor.scss";
 import {hasAnyAuthority} from "app/shared/auth/private-route";
 import {AUTHORITIES} from "app/config/constants";
 import {canEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
-import {
-  makeCallBackOnPromise
-} from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.callback.utils";
 import SingleTableEditorOnInitNewRow
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.init-new-row.utils";
+import SingleTableEditorRowUpdatingUtils
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-updating.utils";
 
 
 export enum ActionType {
@@ -212,7 +211,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           sorting={{mode: 'multiple'}}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           filterPanel={{visible: true}}
-          filterValue={getFilterValue()}
+          defaultFilterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
           onInitNewRow={e => SingleTableEditorOnInitNewRow({
             e,
@@ -230,39 +229,15 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
             }
           }}
-          onRowInserting={e =>
-            makeCallBackOnPromise(e, () => {
-              const row = Object.assign({}, e.data, {
-                  [PATIENT_NO]: patient.ptNo,
-                  [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
-                }
-              );
-              dispatch(createDatasourceRow({categoryId: category.id, row}));
-            })
-          }
-          onRowUpdating={e =>
-            makeCallBackOnPromise(e, () => {
-              axios.get(`/api/datasource/categories/${category.id}/rows/${e.oldData.idx}/check-updated-row-exist`).then(({data}) => {
-                if (data) {
-                  const row = Object.assign(
-                    {},
-                    {
-                      [DATASOURCE_IDX]: e.oldData.idx,
-                      [PATIENT_NO]: patient.ptNo,
-                      [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
-                    },
-                    e.newData
-                  );
-                  dispatch(updateDatasourceRow({categoryId: category.id, row}));
-                } else {
-                  const row = Object.assign({}, e.oldData, e.newData, {
-                    [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
-                  });
-                  dispatch(createDatasourceRow({categoryId: category.id, row}));
-                }
-              });
-            })
-          }
+          onRowInserting={e => {
+            const row = Object.assign({}, e.data, {
+                [PATIENT_NO]: patient.ptNo,
+                [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
+              }
+            );
+            dispatch(createDatasourceRow({categoryId: category.id, row}));
+          }}
+          onRowUpdating={e => SingleTableEditorRowUpdatingUtils({e, dispatch, category, patient})}
           onRowRemoving={e => {
             setActionType(ActionType.DELETE);
             dispatch(setSelectedCategory(category));
