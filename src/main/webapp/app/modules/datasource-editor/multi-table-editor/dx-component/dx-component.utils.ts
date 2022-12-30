@@ -23,6 +23,12 @@ export const isChangedCell = (data, originRow) => {
   const a = data.value;
   const b = originRow[data.column.dataField];
 
+  const isEmptyString = (str) => (!str?.length);
+
+  if (isEmptyString(a) && isEmptyString(b)) {
+    return false;
+  }
+
   if (type === 'selectbox') {
     return a !== b;
   }
