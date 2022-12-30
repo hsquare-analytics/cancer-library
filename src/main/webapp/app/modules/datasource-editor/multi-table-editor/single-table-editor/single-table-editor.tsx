@@ -122,8 +122,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
 
   const getCustomEditing = () => {
-    return <Editing mode={'popup'} allowUpdating allowDeleting form={{colCountByScreen: {xs: 1, sm: 1, md: 1, lg: 5}}}
-                    texts={{confirmDeleteMessage: translate('cancerLibraryApp.singleTableEditor.editForm.confirmDelete')}}>
+    return <Editing mode={'popup'} allowUpdating allowDeleting form={{colCountByScreen: {xs: 1, sm: 1, md: 1, lg: 5}}}>
       <Popup resizeEnabled={true} toolbarItems={[
         {
           location: 'after',
