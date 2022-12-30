@@ -69,7 +69,7 @@ const isCustomizableText = (item: IItem) => {
 
 const getCustomizedText = (item: IItem) => (cellInfo) => {
   if (item.attribute.dataType === 'time') {
-    return moment(cellInfo.value).format('HH:mm');
+    return moment(cellInfo.value).format('HH:mm:ss');
   }
   return cellInfo.value;
 }
