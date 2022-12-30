@@ -107,7 +107,7 @@ insert into ph_item (id, title, category_id, created_by, order_no) values (22019
 insert into ph_item_attribute (item_id, caption) values (22019, '부위별방사선총선량');
 
 insert into ph_item (id, title, category_id, created_by, order_no) values (22020, 'rdt_asmt_ymd', 22000, 'system', 22020);
-insert into ph_item_attribute (item_id, caption, format, data_type) values (22020, '방사선치료평가일자', 'yyyyMMdd', 'date');
+insert into ph_item_attribute (item_id, caption) values (22020, '방사선치료평가일자');
 
 insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (22021, 'rdt_asmt_item_cd', 22000, 'system', 22021, 40200);
 insert into ph_item_attribute (item_id, caption, data_type) values (22021, '방사선치료평가항목코드', 'selectbox');
