@@ -18,24 +18,32 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
 
   dispatch(setSelectedCategory(category));
   props.setActionType(ActionType.CREATE);
-  const visibleRows = dataGridRef.current.instance.getVisibleRows().filter(row => row.isSelected).map(row => row.data);
+  const visibleRows = dataGridRef.current.instance.getVisibleRows().map(row => row.data);
+  const selectedRows = dataGridRef.current.instance.getVisibleRows().filter(row => row.isSelected).map(row => row.data);
 
+
+  const initMaxSequence = () => {
+    if (visibleRows.length > 0) {
+      const maxSeq = _.maxBy(visibleRows, category.attribute.autoincrementField)[category.attribute.autoincrementField];
+      e.data[category.attribute.autoincrementField] = maxSeq + 1;
+    } else {
+      e.data[category.attribute.autoincrementField] = 1;
+    }
+  }
 
   e.promise = new Promise<void>((resolve, reject) => {
-    if (visibleRows.length === 0) {
+    if (selectedRows.length === 0) {
       Swal.fire({
         text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectMinimumRow'),
         icon: 'warning',
         confirmButtonText: 'OK'
       });
 
-      if (category.attribute && category.attribute.autoincrementField) {
-        e.data[category.attribute.autoincrementField] = 1;
-      }
+      initMaxSequence();
 
       resolve();
-    } else if (visibleRows.length === 1) {
-      const targetRows = visibleRows[0];
+    } else if (selectedRows.length === 1) {
+      const targetRows = selectedRows[0];
       delete targetRows['idx'];
 
       Object.keys(targetRows).forEach(key => {
@@ -44,11 +52,9 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
         }
       });
 
-      e.data = { ...targetRows };
+      e.data = {...targetRows};
 
-      if (category.attribute && category.attribute.autoincrementField) {
-        e.data[category.attribute.autoincrementField] = _.maxBy(visibleRows, category.attribute.autoincrementField)[category.attribute.autoincrementField] + 1;
-      }
+      initMaxSequence();
 
       resolve();
     } else {
