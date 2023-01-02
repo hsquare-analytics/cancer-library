@@ -17,6 +17,7 @@
             </column>
             <column name="data_type" type="varchar(30)"/>
             <column name="format" type="varchar(50)"/>
+            <column name="max_length" type="integer"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="item_id"
