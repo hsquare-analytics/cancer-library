@@ -75,7 +75,7 @@ export const AccessiblePatient = () => {
   };
 
   return (
-    <section className="wrap-page">
+    <section className="wrap-page accessible-patient-wrapper">
       <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
       <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
       {!loading || patientList.length > 0 ? (
