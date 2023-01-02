@@ -32,7 +32,9 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
   }
 
   const getMaxLength = () => {
-    return itemContainer[selectedCategory.id].find(item => item.title === data.column.name).attribute?.maxLength;
+    if (itemContainer && selectedCategory && itemContainer[selectedCategory.id]) {
+      return itemContainer[selectedCategory.id].find(item => item.title === data.column.name)?.attribute?.maxLength;
+    }
   }
 
   return <div>
