@@ -142,6 +142,13 @@ export const CategoryUpdate = () => {
                 data-cy="attribute.caption"
                 type="text"
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.category.attribute.autoincrementField')}
+                id="category-autoincrementField"
+                name="attribute.autoincrementField"
+                data-cy="attribute.autoincrementField"
+                type="text"
+              />
               <ValidatedField type="select" name="topic.id" data-cy="topic" label={translate('cancerLibraryApp.category.topic.title')}>
                 <option value="">-</option>
                 {topics.map(topic => (

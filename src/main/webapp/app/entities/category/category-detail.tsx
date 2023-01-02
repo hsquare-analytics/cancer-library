@@ -69,6 +69,12 @@ export const CategoryDetail = () => {
             </dt>
             <dd>{categoryEntity.attribute.caption}</dd>
             <dt>
+              <span id="attribute-autoincrementField">
+                <Translate contentKey="cancerLibraryApp.category.attribute.autoincrementField">Auto Increment Field</Translate>
+              </span>
+            </dt>
+            <dd>{categoryEntity.attribute.autoincrementField}</dd>
+            <dt>
               <span id="topic-name">
                 <Translate contentKey="cancerLibraryApp.category.topic.title">Topic Title</Translate>
               </span>

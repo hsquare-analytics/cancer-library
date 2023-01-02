@@ -10,7 +10,7 @@ export interface ICategory extends IAbstractAuditing {
   description?: string;
   activated?: boolean;
   orderNo?: number;
-  attribute?: { dateColumn?: string, caption?: string };
+  attribute?: { dateColumn?: string, caption?: string, autoincrementField?: string };
   topic?: ITopic;
 }
 
@@ -20,7 +20,7 @@ export const defaultValue: Readonly<ICategory> = {
   description: '',
   orderNo: 0,
   activated: false,
-  attribute: {dateColumn: '', caption: ''},
+  attribute: {dateColumn: '', caption: '', autoincrementField: ''},
   topic: null,
   ...abstractAuditingDefaultValue
 };

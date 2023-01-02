@@ -22,7 +22,8 @@
       "description": "상세 설명",
       "attribute" : {
         "dateColumn" : "날짜 기준 컬럼",
-        "caption" : "화면 표시 명칭"
+        "caption" : "화면 표시 명칭",
+        "autoincrementField" : "자동 증가 컬럼"
       },
       "activated": "활성화 여부",
       "orderNo": "정렬순서",

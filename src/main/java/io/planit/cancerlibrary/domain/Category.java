@@ -42,6 +42,7 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     @Embedded
     @AttributeOverride(name = "dateColumn", column = @Column(name = "date_column", table = "ph_category_attribute"))
     @AttributeOverride(name = "caption", column = @Column(table = "ph_category_attribute"))
+    @AttributeOverride(name = "autoincrementField", column = @Column(name = "autoincrement_field", table = "ph_category_attribute"))
     private CategoryAttribute attribute;
 
     @NotNull

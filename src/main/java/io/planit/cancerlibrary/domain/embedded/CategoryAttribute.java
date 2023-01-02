@@ -10,6 +10,8 @@ public class CategoryAttribute implements Serializable {
 
     private String caption;
 
+    private String autoincrementField;
+
     public String getDateColumn() {
         return dateColumn;
     }
@@ -33,6 +35,19 @@ public class CategoryAttribute implements Serializable {
 
     public CategoryAttribute caption(String caption) {
         this.setCaption(caption);
+        return this;
+    }
+
+    public String getAutoincrementField() {
+        return autoincrementField;
+    }
+
+    public void setAutoincrementField(String autoincrementField) {
+        this.autoincrementField = autoincrementField;
+    }
+
+    public CategoryAttribute autoincrementField(String autoincrementField) {
+        this.setAutoincrementField(autoincrementField);
         return this;
     }
 }

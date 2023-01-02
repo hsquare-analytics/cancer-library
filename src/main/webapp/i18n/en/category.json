@@ -22,7 +22,8 @@
       "description": "Description",
       "attribute" : {
         "dateColumn" : "Date Column",
-        "caption" : "Caption"
+        "caption" : "Caption",
+        "autoincrementField" : "Autoincrement Field"
       },
       "activated": "Activated",
       "orderNo": "Order No",
