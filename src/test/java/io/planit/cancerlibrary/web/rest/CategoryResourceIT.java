@@ -48,9 +48,9 @@ public class CategoryResourceIT {
     private static final Integer UPDATED_ORDER_NO = 1;
 
     private static final CategoryAttribute DEFAULT_ATTRIBUTE = new CategoryAttribute().dateColumn("AAAAAAAAA")
-        .caption("AAAAAAAAA");
+        .caption("AAAAAAAAA").autoincrementField("AAAAAAAAA");
     private static final CategoryAttribute UPDATED_ATTRIBUTE = new CategoryAttribute().dateColumn("BBBBBBBBB")
-        .caption("BBBBBBBBB");
+        .caption("BBBBBBBBB").autoincrementField("BBBBBBBBB");
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -122,6 +122,7 @@ public class CategoryResourceIT {
         assertThat(testCategory.isActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(DEFAULT_ATTRIBUTE.getDateColumn());
         assertThat(testCategory.getAttribute().getCaption()).isEqualTo(DEFAULT_ATTRIBUTE.getCaption());
+        assertThat(testCategory.getAttribute().getAutoincrementField()).isEqualTo(DEFAULT_ATTRIBUTE.getAutoincrementField());
     }
 
     @Test
@@ -177,7 +178,9 @@ public class CategoryResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_TABLE_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
             .andExpect(jsonPath("$.[*].attribute.dateColumn").value(hasItem(DEFAULT_ATTRIBUTE.getDateColumn())))
-            .andExpect(jsonPath("$.[*].attribute.caption").value(hasItem(DEFAULT_ATTRIBUTE.getCaption())));
+            .andExpect(jsonPath("$.[*].attribute.caption").value(hasItem(DEFAULT_ATTRIBUTE.getCaption())))
+            .andExpect(jsonPath("$.[*].attribute.autoincrementField").value(hasItem(DEFAULT_ATTRIBUTE.getAutoincrementField())))
+        ;
     }
 
     @Test
@@ -197,6 +200,7 @@ public class CategoryResourceIT {
             .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
             .andExpect(jsonPath("$.attribute.dateColumn").value(DEFAULT_ATTRIBUTE.getDateColumn()))
             .andExpect(jsonPath("$.attribute.caption").value(DEFAULT_ATTRIBUTE.getCaption()))
+            .andExpect(jsonPath("$.attribute.autoincrementField").value(DEFAULT_ATTRIBUTE.getAutoincrementField()))
             .andExpect(jsonPath("$.topic.id").value(topic.getId().intValue()));
     }
 
@@ -242,6 +246,7 @@ public class CategoryResourceIT {
         assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(DEFAULT_ATTRIBUTE.getDateColumn());
         assertThat(testCategory.getAttribute().getCaption()).isEqualTo(DEFAULT_ATTRIBUTE.getCaption());
+        assertThat(testCategory.getAttribute().getAutoincrementField()).isEqualTo(DEFAULT_ATTRIBUTE.getAutoincrementField());
         assertThat(testCategory.getTopic().getId()).isEqualTo(updatedTopic.getId().intValue());
     }
 
@@ -365,6 +370,7 @@ public class CategoryResourceIT {
         assertThat(testCategory.isActivated()).isEqualTo(UPDATED_ACTIVATED.booleanValue());
         assertThat(testCategory.getAttribute().getDateColumn()).isEqualTo(UPDATED_ATTRIBUTE.getDateColumn());
         assertThat(testCategory.getAttribute().getCaption()).isEqualTo(UPDATED_ATTRIBUTE.getCaption());
+        assertThat(testCategory.getAttribute().getAutoincrementField()).isEqualTo(UPDATED_ATTRIBUTE.getAutoincrementField());
     }
 
     @Test

@@ -11,6 +11,7 @@
             </column>
             <column name="date_column" type="varchar(30)"/>
             <column name="caption" type="varchar(30)"/>
+            <column name="autoincrement_field" type="varchar(30)"/>
         </createTable>
 
         <addForeignKeyConstraint baseColumnNames="category_id"

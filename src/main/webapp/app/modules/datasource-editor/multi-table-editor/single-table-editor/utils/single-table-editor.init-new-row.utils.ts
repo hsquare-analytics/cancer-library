@@ -3,6 +3,7 @@ import {ActionType} from "app/modules/datasource-editor/multi-table-editor/singl
 import {ICategory} from "app/shared/model/category.model";
 import Swal from "sweetalert2";
 import {translate} from "react-jhipster";
+import _ from "lodash";
 
 interface InitNewRowProps {
   e: any,
@@ -27,6 +28,11 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
         icon: 'warning',
         confirmButtonText: 'OK'
       });
+
+      if (category.attribute && category.attribute.autoincrementField) {
+        e.data[category.attribute.autoincrementField] = 1;
+      }
+
       resolve();
     } else if (visibleRows.length === 1) {
       const targetRows = visibleRows[0];
@@ -38,7 +44,12 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
         }
       });
 
-      e.data = {...targetRows};
+      e.data = { ...targetRows };
+
+      if (category.attribute && category.attribute.autoincrementField) {
+        e.data[category.attribute.autoincrementField] = _.maxBy(visibleRows, category.attribute.autoincrementField)[category.attribute.autoincrementField] + 1;
+      }
+
       resolve();
     } else {
       Swal.fire({
