@@ -178,10 +178,10 @@ export const ItemUpdate = () => {
                 type="number"
               />
               <ValidatedField
-                label={translate('cancerLibraryApp.item.property.allowEditing')}
+                label={translate('cancerLibraryApp.item.attribute.allowEditing')}
                 id="item-allowEditing"
-                name="property.allowEditing"
-                data-cy="property.allowEditing"
+                name="attribute.allowEditing"
+                data-cy="attribute.allowEditing"
                 check
                 type="checkbox"
               />

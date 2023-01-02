@@ -47,11 +47,11 @@ public class ItemResourceIT {
     private static final String ENTITY_API_URL = "/api/items";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
-    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("string").caption("AAAAAAAAAA").required(true).format("AAAAAAAAAA").maxLength(1);
-    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("number").caption("BBBBBBBBBB").required(false).format("BBBBBBBBBB").maxLength(2);
+    private static final ItemAttribute DEFAULT_ITEM_ATTRIBUTE = new ItemAttribute().dataType("string").caption("AAAAAAAAAA").required(true).format("AAAAAAAAAA").maxLength(1).allowEditing(true);
+    private static final ItemAttribute UPDATED_ITEM_ATTRIBUTE = new ItemAttribute().dataType("number").caption("BBBBBBBBBB").required(false).format("BBBBBBBBBB").maxLength(2).allowEditing(false);
 
-    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().allowEditing(true).sortIndex(1).sortDirection("AAAAAAAAAA").visible(true).labelColumn("AAAAAAAAAA").cssClass("AAAAAAAAAA");
-    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().allowEditing(false).sortIndex(2).sortDirection("BBBBBBBBBB").visible(false).labelColumn("BBBBBBBBBB").cssClass("BBBBBBBBBB");
+    private static final ItemProperty DEFAULT_ITEM_PROPERTY = new ItemProperty().sortIndex(1).sortDirection("AAAAAAAAAA").visible(true).labelColumn("AAAAAAAAAA").cssClass("AAAAAAAAAA");
+    private static final ItemProperty UPDATED_ITEM_PROPERTY = new ItemProperty().sortIndex(2).sortDirection("BBBBBBBBBB").visible(false).labelColumn("BBBBBBBBBB").cssClass("BBBBBBBBBB");
 
     private static final Random random = new Random();
     private static final AtomicLong count = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
@@ -126,10 +126,10 @@ public class ItemResourceIT {
         assertThat(testItem.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getDataType());
         assertThat(testItem.getAttribute().getCaption()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getCaption());
-        assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(DEFAULT_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getAttribute().isRequired()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.isRequired());
         assertThat(testItem.getAttribute().getFormat()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getFormat());
         assertThat(testItem.getAttribute().getMaxLength()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.getMaxLength());
+        assertThat(testItem.getAttribute().isAllowEditing()).isEqualTo(DEFAULT_ITEM_ATTRIBUTE.isAllowEditing());
         assertThat(testItem.getProperty().getSortIndex()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortIndex());
         assertThat(testItem.getProperty().getSortDirection()).isEqualTo(DEFAULT_ITEM_PROPERTY.getSortDirection());
         assertThat(testItem.getProperty().isVisible()).isEqualTo(DEFAULT_ITEM_PROPERTY.isVisible());
@@ -183,11 +183,11 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
             .andExpect(jsonPath("$.[*].attribute.caption").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getCaption())))
-            .andExpect(jsonPath("$.[*].property.allowEditing").value(hasItem(DEFAULT_ITEM_PROPERTY.isAllowEditing())))
             .andExpect(jsonPath("$.[*].attribute.required").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.isRequired())))
             .andExpect(jsonPath("$.[*].attribute.format").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getFormat())))
             .andExpect(jsonPath("$.[*].attribute.dataType").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getDataType())))
             .andExpect(jsonPath("$.[*].attribute.maxLength").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.getMaxLength())))
+            .andExpect(jsonPath("$.[*].attribute.allowEditing").value(hasItem(DEFAULT_ITEM_ATTRIBUTE.isAllowEditing())))
             .andExpect(jsonPath("$.[*].property.sortIndex").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortIndex())))
             .andExpect(jsonPath("$.[*].property.sortDirection").value(hasItem(DEFAULT_ITEM_PROPERTY.getSortDirection())))
             .andExpect(jsonPath("$.[*].property.visible").value(hasItem(DEFAULT_ITEM_PROPERTY.isVisible())))
@@ -209,11 +209,11 @@ public class ItemResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.orderNo").value(DEFAULT_ORDER_NO))
             .andExpect(jsonPath("$.attribute.caption").value(DEFAULT_ITEM_ATTRIBUTE.getCaption()))
-            .andExpect(jsonPath("$.property.allowEditing").value(DEFAULT_ITEM_PROPERTY.isAllowEditing()))
             .andExpect(jsonPath("$.attribute.required").value(DEFAULT_ITEM_ATTRIBUTE.isRequired()))
             .andExpect(jsonPath("$.attribute.format").value(DEFAULT_ITEM_ATTRIBUTE.getFormat()))
             .andExpect(jsonPath("$.attribute.dataType").value(DEFAULT_ITEM_ATTRIBUTE.getDataType()))
             .andExpect(jsonPath("$.attribute.maxLength").value(DEFAULT_ITEM_ATTRIBUTE.getMaxLength()))
+            .andExpect(jsonPath("$.attribute.allowEditing").value(DEFAULT_ITEM_ATTRIBUTE.isAllowEditing()))
             .andExpect(jsonPath("$.property.sortIndex").value(DEFAULT_ITEM_PROPERTY.getSortIndex()))
             .andExpect(jsonPath("$.property.sortDirection").value(DEFAULT_ITEM_PROPERTY.getSortDirection()))
             .andExpect(jsonPath("$.property.visible").value(DEFAULT_ITEM_PROPERTY.isVisible()))
@@ -255,11 +255,11 @@ public class ItemResourceIT {
         assertThat(testItem.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testItem.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
         assertThat(testItem.getAttribute().getCaption()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getCaption());
-        assertThat(testItem.getProperty().isAllowEditing()).isEqualTo(UPDATED_ITEM_PROPERTY.isAllowEditing());
         assertThat(testItem.getAttribute().isRequired()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.isRequired());
         assertThat(testItem.getAttribute().getFormat()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getFormat());
         assertThat(testItem.getAttribute().getDataType()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getDataType());
         assertThat(testItem.getAttribute().getMaxLength()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.getMaxLength());
+        assertThat(testItem.getAttribute().isAllowEditing()).isEqualTo(UPDATED_ITEM_ATTRIBUTE.isAllowEditing());
         assertThat(testItem.getProperty().getSortIndex()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortIndex());
         assertThat(testItem.getProperty().getSortDirection()).isEqualTo(UPDATED_ITEM_PROPERTY.getSortDirection());
         assertThat(testItem.getProperty().isVisible()).isEqualTo(UPDATED_ITEM_PROPERTY.isVisible());

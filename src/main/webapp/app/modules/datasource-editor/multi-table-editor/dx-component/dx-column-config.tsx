@@ -82,7 +82,7 @@ export const getDxColumnConfig = (item: IItem) => {
     caption={item.attribute?.caption}
     format={item.attribute?.format}
     dataType={item.attribute?.dataType}
-    allowEditing={item.property?.allowEditing}
+    allowEditing={item.attribute?.allowEditing}
     visible={item.property?.visible}
     cssClass={item.property?.cssClass}
     alignment={'center'}
