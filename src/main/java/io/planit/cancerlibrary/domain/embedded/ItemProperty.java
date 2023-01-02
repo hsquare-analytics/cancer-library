@@ -6,8 +6,6 @@ import java.io.Serializable;
 @Embeddable
 public class ItemProperty implements Serializable {
 
-    private Boolean allowEditing;
-
     private Integer sortIndex;
 
     private String sortDirection;
@@ -17,19 +15,6 @@ public class ItemProperty implements Serializable {
     private String labelColumn;
 
     private String cssClass;
-
-    public Boolean isAllowEditing() {
-        return allowEditing;
-    }
-
-    public void setAllowEditing(Boolean allowEditing) {
-        this.allowEditing = allowEditing;
-    }
-
-    public ItemProperty allowEditing(Boolean allowEditing) {
-        this.setAllowEditing(allowEditing);
-        return this;
-    }
 
     public Integer getSortIndex() {
         return sortIndex;

@@ -93,10 +93,10 @@ export const ItemDetail = () => {
             <dd>{itemEntity.attribute?.maxLength}</dd>
             <dt>
               <span id="allowEditing">
-                <Translate contentKey="cancerLibraryApp.item.property.allowEditing">Allow Editing</Translate>
+                <Translate contentKey="cancerLibraryApp.item.attribute.allowEditing">Allow Editing</Translate>
               </span>
             </dt>
-            <dd>{itemEntity.property?.allowEditing}</dd>
+            <dd>{itemEntity.attribute?.allowEditing}</dd>
             <dt>
               <span id="sortIndex">
                 <Translate contentKey="cancerLibraryApp.item.property.sortIndex">Sort Index</Translate>

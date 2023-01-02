@@ -13,7 +13,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "attribute.format"},
   {dataField: "attribute.maxLength"},
   {dataField: "attribute.dataType"},
-  {dataField: "property.allowEditing"},
+  {dataField: "attribute.allowEditing"},
   {dataField: "property.sortIndex"},
   {dataField: "property.sortDirection"},
   {dataField: "property.visible"},

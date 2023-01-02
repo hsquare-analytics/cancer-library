@@ -29,11 +29,11 @@
         "required": "Required",
         "format": "Format",
         "dataType": "Data Type",
-        "maxLength": "Max Length"
+        "maxLength": "Max Length",
+        "allowEditing": "Allow Editing"
       },
       "property": {
         "visible": "Visible",
-        "allowEditing": "Allow Editing",
         "sortIndex" : "Sort Index",
         "sortDirection" : "Sort Direction",
         "cssClass" : "Css Class"

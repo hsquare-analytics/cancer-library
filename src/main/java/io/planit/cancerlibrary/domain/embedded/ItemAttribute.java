@@ -15,6 +15,8 @@ public class ItemAttribute implements Serializable {
 
     private Integer maxLength;
 
+    private Boolean allowEditing;
+
     public String getCaption() {
         return caption;
     }
@@ -77,6 +79,19 @@ public class ItemAttribute implements Serializable {
 
     public ItemAttribute maxLength(Integer maxLength) {
         this.setMaxLength(maxLength);
+        return this;
+    }
+
+    public Boolean isAllowEditing() {
+        return allowEditing;
+    }
+
+    public void setAllowEditing(Boolean allowEditing) {
+        this.allowEditing = allowEditing;
+    }
+
+    public ItemAttribute allowEditing(Boolean allowEditing) {
+        this.setAllowEditing(allowEditing);
         return this;
     }
 }
