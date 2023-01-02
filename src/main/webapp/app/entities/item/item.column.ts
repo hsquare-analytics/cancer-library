@@ -11,6 +11,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "attribute.caption"},
   {dataField: "attribute.required"},
   {dataField: "attribute.format"},
+  {dataField: "attribute.maxLength"},
   {dataField: "attribute.dataType"},
   {dataField: "property.allowEditing"},
   {dataField: "property.sortIndex"},

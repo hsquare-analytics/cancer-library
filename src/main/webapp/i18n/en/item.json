@@ -28,7 +28,8 @@
         "caption": "caption",
         "required": "Required",
         "format": "Format",
-        "dataType": "Data Type"
+        "dataType": "Data Type",
+        "maxLength": "Max Length"
       },
       "property": {
         "visible": "Visible",
