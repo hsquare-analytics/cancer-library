@@ -13,6 +13,8 @@ public class ItemAttribute implements Serializable {
 
     private String dataType;
 
+    private Integer maxLength;
+
     public String getCaption() {
         return caption;
     }
@@ -62,6 +64,19 @@ public class ItemAttribute implements Serializable {
 
     public ItemAttribute dataType(String dataType) {
         this.setDataType(dataType);
+        return this;
+    }
+
+    public Integer getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(Integer maxLength) {
+        this.maxLength = maxLength;
+    }
+
+    public ItemAttribute maxLength(Integer maxLength) {
+        this.setMaxLength(maxLength);
         return this;
     }
 }

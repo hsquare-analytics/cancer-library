@@ -86,6 +86,12 @@ export const ItemDetail = () => {
             </dt>
             <dd>{itemEntity.attribute?.dataType}</dd>
             <dt>
+              <span id="maxLength">
+                <Translate contentKey="cancerLibraryApp.item.attribute.maxLength">Max Length</Translate>
+              </span>
+            </dt>
+            <dd>{itemEntity.attribute?.maxLength}</dd>
+            <dt>
               <span id="allowEditing">
                 <Translate contentKey="cancerLibraryApp.item.property.allowEditing">Allow Editing</Translate>
               </span>

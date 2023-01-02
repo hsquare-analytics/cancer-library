@@ -21,10 +21,8 @@ import {useAppDispatch, useAppSelector} from "app/config/store";
 import {updateFirstVisitDate} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 
 
-interface IPatientProfileDetailProps {
-}
 
-export const PatientProfileCalendar = (props: IPatientProfileDetailProps) => {
+export const PatientProfileCalendar = (props) => {
   const dispatch = useAppDispatch();
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
 

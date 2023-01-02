@@ -22,6 +22,9 @@ describe('AccessiblePatient', () => {
       entities: [],
       loading: false,
     },
+    userManagement: {
+      users: {},
+    },
     datasourceContainer: {
       loading: false,
       categories: [],

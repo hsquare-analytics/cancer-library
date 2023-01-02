@@ -171,6 +171,13 @@ export const ItemUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
+                label={translate('cancerLibraryApp.item.attribute.maxLength')}
+                id="item-format"
+                name="attribute.format"
+                data-cy="attribute.format"
+                type="number"
+              />
+              <ValidatedField
                 label={translate('cancerLibraryApp.item.property.allowEditing')}
                 id="item-allowEditing"
                 name="property.allowEditing"

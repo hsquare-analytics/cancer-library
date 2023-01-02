@@ -17,8 +17,10 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
   data: any;
 }
 
-const DxTextBox = (props: IDxEditCellRenderProps) => {
+const DxTextAreaBox = (props: IDxEditCellRenderProps) => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+  const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
 
   const {data, originRow, validationFailedItems, isSudoUser} = props;
 
@@ -30,6 +32,12 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
     setClassName(getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name)));
   }
 
+  const getMaxLength = () => {
+    if (itemContainer && selectedCategory && itemContainer[selectedCategory.id]) {
+      return itemContainer[selectedCategory.id].find(item => item.title === data.column.name)?.attribute?.maxLength;
+    }
+  }
+
   return <div>
     <TextArea
       readOnly={!isSudoUser && canNotEditDatasource(patient)}
@@ -39,6 +47,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
       onValueChanged={onValueChanged}
       disabled={!props.data.column.allowEditing}
       height={150}
+      maxLength={getMaxLength()}
     />
     <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
@@ -55,5 +64,5 @@ const mapDispatchToProps = {}
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(DxTextBox);
+export default connect(mapStateToProps, mapDispatchToProps)(DxTextAreaBox);
 

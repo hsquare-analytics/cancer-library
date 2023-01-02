@@ -51,6 +51,7 @@ public class Item extends AbstractAuditingEntity implements Serializable {
     @AttributeOverride(name = "required", column = @Column(name = "required", table = "ph_item_attribute"))
     @AttributeOverride(name = "dataType", column = @Column(name = "data_type", table = "ph_item_attribute"))
     @AttributeOverride(name = "format", column = @Column(name = "format", table = "ph_item_attribute"))
+    @AttributeOverride(name = "maxLength", column = @Column(name = "max_length", table = "ph_item_attribute"))
     private ItemAttribute attribute;
 
     @Embedded

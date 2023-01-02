@@ -60,8 +60,8 @@ export const PatientProfileCardColumns = () => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
   const users = useAppSelector(state => state.userManagement.users);
 
-  const result = AccessiblePatientColumn.filter(column => column.dataField != 'fsrMedDt').map(column =>
-    <TextFieldCardContent column={column} patient={patient}/>);
+  const result = AccessiblePatientColumn.filter(column => column.dataField !== 'fsrMedDt').map(column =>
+    <TextFieldCardContent key={column.dataField} column={column} patient={patient}/>);
 
   result.splice(AccessiblePatientColumn.length - 3, 0, <UserMarkingCardContent column={'createdBy'} users={users}
                                                                              patient={patient}/>);

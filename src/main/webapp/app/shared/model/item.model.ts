@@ -13,7 +13,7 @@ export interface IItem extends IAbstractAuditing {
   orderNo?: number;
   category?: ICategory;
   codebook?: ICodebook;
-  attribute?: { caption?: string, required: boolean, dataType?: string, format?: string, };
+  attribute?: { caption?: string, required: boolean, dataType?: string, format?: string, maxLength?: number };
   property?: { allowEditing: boolean, sortIndex: number, sortDirection: string, visible: boolean, labelColumn: string, cssClass: string, };
 }
 
@@ -29,7 +29,8 @@ export const defaultValue: Readonly<IItem> = {
     caption: '',
     required: true,
     dataType: '',
-    format: ''
+    format: '',
+    maxLength: 0
   },
   property: {
     allowEditing: true,

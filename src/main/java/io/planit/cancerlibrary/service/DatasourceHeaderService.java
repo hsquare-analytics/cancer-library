@@ -54,7 +54,9 @@ public class DatasourceHeaderService {
         }
         try {
             String params = (String) row.get("idx");
-            headers.add("X-" + applicationName + "-params", URLEncoder.encode(params, StandardCharsets.UTF_8.toString()));
+            if (params != null) {
+                headers.add("X-" + applicationName + "-params", URLEncoder.encode(params, StandardCharsets.UTF_8.toString()));
+            }
         } catch (UnsupportedEncodingException e) {
             log.error("Failed to encode params", e);
         }
