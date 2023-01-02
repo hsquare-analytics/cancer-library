@@ -309,7 +309,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             <DxButton name="delete"
                       visible={(e) => {
                         if (e.row.data.idx?.includes(KCURE_PREFIX)) {
-                          return e.row.data['created_by'] === login
+                          return e.row.data['created_by'] === login || isSudoUser;
                         } else {
                           return true;
                         }
