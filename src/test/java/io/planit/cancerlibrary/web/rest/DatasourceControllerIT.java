@@ -108,7 +108,7 @@ class DatasourceControllerIT {
         restDatasourceMockMvc.perform(
                 post("/api/datasource/categories/{categoryId}/rows", category.getId()).contentType(
                     MediaType.APPLICATION_JSON).content("{\"pt_no\": \"test\", \"name\":\"modified_zero\"}"))
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated());
 
         List<Map<String, Object>> result = sqlExecutor.executeSelectAll(
             "select * from ph_test_updated where idx = '" + sequence + "'");
@@ -143,7 +143,7 @@ class DatasourceControllerIT {
 
         restDatasourceMockMvc.perform(
                 put("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001).contentType(
-                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\"}"))
+                    MediaType.APPLICATION_JSON).content("{\"name\":\"modified_zero\", \"status\": \"test\"}"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(false));
 
