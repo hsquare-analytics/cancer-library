@@ -133,7 +133,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             icon: 'revert',
             text: translate('cancerLibraryApp.singleTableEditor.editForm.button.rejected'),
             onClick(e) {
-              const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              const row = dataGrid.current.instance.getVisibleRows().find(temp => temp.isEditing).data;
               transformAsRejected(dispatch, category, row);
               dataGrid.current.instance.cancelEditData();
             },
@@ -148,7 +148,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             icon: 'check',
             text: translate('cancerLibraryApp.singleTableEditor.editForm.button.pause'),
             onClick(e) {
-              const row = dataGrid.current.instance.getVisibleRows().find(row => row.isEditing).data;
+              const row = dataGrid.current.instance.getVisibleRows().find(temp => temp.isEditing).data;
               row[PATIENT_NO] = patient.ptNo;
               transformAsInProgress(dispatch, category, row);
               dataGrid.current.instance.cancelEditData();

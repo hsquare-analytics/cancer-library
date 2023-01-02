@@ -12,9 +12,6 @@ import {PatientProfileCalendar} from "app/modules/datasource-editor/patient-prof
 import {PatientProfileCardColumns} from "app/modules/datasource-editor/patient-profile/component/patient-profile-card-columns";
 
 
-interface IPatientProfileDetailProps {
-}
-
 const theme = createTheme({
   components: {
     MuiInput: {
@@ -33,7 +30,7 @@ const theme = createTheme({
 });
 
 
-export const PatientProfileCardDetail = (props: IPatientProfileDetailProps) => {
+export const PatientProfileCardDetail = (props) => {
   return (
     <div>
       <ThemeProvider theme={theme}>
