@@ -43,6 +43,8 @@ export const isChangedCell = (data, originRow) => {
       return moment(a).format('YYYY-MM-DD') !== moment(b).format('YYYY-MM-DD');
     case 'datetime':
       return moment(a).format('YYYY-MM-DD HH:mm:ss') !== moment(b).format('YYYY-MM-DD HH:mm:ss');
+    case 'time':
+      return moment(a).format('HH:mm:ss') !== moment(b).format('HH:mm:ss');
     case 'number':
       return parseFloat(a) !== parseFloat(b);
     default:
