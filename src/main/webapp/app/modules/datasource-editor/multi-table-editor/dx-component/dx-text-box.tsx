@@ -19,6 +19,8 @@ interface IDxEditCellRenderProps extends StateProps, DispatchProps {
 
 const DxTextBox = (props: IDxEditCellRenderProps) => {
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
+  const selectedCategory = useAppSelector(state => state.datasourceStatus.selected.category);
+  const itemContainer = useAppSelector(state => state.datasourceContainer.itemContainer);
 
   const {data, originRow, validationFailedItems, isSudoUser} = props;
 
@@ -29,6 +31,10 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
     setClassName(getDxCellClass(data, originRow, isValid(validationFailedItems, data.column.name)));
   }
 
+  const getMaxLength = () => {
+    return itemContainer[selectedCategory.id].find(item => item.title === data.column.name).attribute?.maxLength;
+  }
+
   return <div>
     <TextBox
       readOnly={!isSudoUser && canNotEditDatasource(patient)}
@@ -37,6 +43,7 @@ const DxTextBox = (props: IDxEditCellRenderProps) => {
       defaultValue={props.data.value}
       onValueChanged={onValueChanged}
       disabled={!props.data.column.allowEditing}
+      maxLength={getMaxLength()}
     />
     <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
