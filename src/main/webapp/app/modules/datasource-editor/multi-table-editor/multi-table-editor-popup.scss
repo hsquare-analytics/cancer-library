@@ -17,4 +17,9 @@
       background-color: lemonchiffon;
     }
   }
+
+  .dx-data-row.dx-state-hover > td:not(.dx-focused) {
+    color: mediumblue !important;
+    cursor: pointer;
+  }
 }

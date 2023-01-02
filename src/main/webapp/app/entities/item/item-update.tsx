@@ -117,6 +117,13 @@ export const ItemUpdate = () => {
                 check
                 type="checkbox"
               />
+              <ValidatedField
+                label={translate('cancerLibraryApp.item.orderNo')}
+                id="item-orderNo"
+                name="orderNo"
+                data-cy="orderNo"
+                type="number"
+              />
               <ValidatedField type="select" name="category.id" data-cy="category" label={translate('cancerLibraryApp.item.category.title')}>
                 <option value="">-</option>
                 {categories.map(category => (
