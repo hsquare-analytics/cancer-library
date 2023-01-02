@@ -5,6 +5,7 @@ const ItemColumns: IDxColumn[] = [
   {dataField: "title"},
   {dataField: "description"},
   {dataField: "activated"},
+  {dataField: "orderNo"},
   {dataField: "category.title"},
   {dataField: "attribute.dataType"},
   {dataField: "codebook.title"},

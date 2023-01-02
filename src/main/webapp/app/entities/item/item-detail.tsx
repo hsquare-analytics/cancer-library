@@ -50,6 +50,12 @@ export const ItemDetail = () => {
             </dt>
             <dd>{itemEntity.activated ? 'true' : 'false'}</dd>
             <dt>
+              <span id="orderNo">
+                <Translate contentKey="cancerLibraryApp.item.orderNo">Order No</Translate>
+              </span>
+            </dt>
+            <dd>{itemEntity.orderNo}</dd>
+            <dt>
               <span id="category">
                 <Translate contentKey="cancerLibraryApp.item.category.title">Category Title</Translate>
               </span>
@@ -129,14 +135,14 @@ export const ItemDetail = () => {
             <dd>{itemEntity.property?.sortDirection}</dd>
           </dl>
           <Button tag={Link} to="/admin/item" replace color="info" data-cy="entityDetailsBackButton">
-            <FontAwesomeIcon icon="arrow-left" />{' '}
+            <FontAwesomeIcon icon="arrow-left"/>{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
           </Button>
           &nbsp;
           <Button tag={Link} to={`/admin/item/${itemEntity.id}/edit`} replace color="primary">
-            <FontAwesomeIcon icon="pencil-alt" />{' '}
+            <FontAwesomeIcon icon="pencil-alt"/>{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.edit">Edit</Translate>
             </span>
