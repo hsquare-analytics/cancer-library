@@ -118,6 +118,7 @@ export const AccessiblePatient = () => {
                       ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
                       status: REVIEW_LIST.DECLINED
                     }));
+                    dataGrid.current.instance.clearSelection();
                   },
                   text: translate('cancerLibraryApp.datasource.bulkDecline.title'),
                 }
@@ -132,6 +133,7 @@ export const AccessiblePatient = () => {
                       ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
                       status: REVIEW_LIST.APPROVED
                     }));
+                    dataGrid.current.instance.clearSelection();
                   },
                   text: translate('cancerLibraryApp.datasource.bulkApprove.title'),
                 }
