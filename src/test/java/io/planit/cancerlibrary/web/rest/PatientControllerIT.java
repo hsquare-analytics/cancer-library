@@ -163,7 +163,7 @@ class PatientControllerIT {
         patientRepository.insert(patient2);
         patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().status(PatientConstants.SUBMITTED));
 
-        restDatasourcePatientMockMvc.perform(post("/api/patients/bulk-update-status/{status}", status)
+        restDatasourcePatientMockMvc.perform(post("/api/patients/update-bulk-status/{status}", status)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(TestUtil.convertObjectToJsonBytes(Arrays.asList(patient1.getPtNo(), patient2.getPtNo()))))
             .andExpect(status().isOk());

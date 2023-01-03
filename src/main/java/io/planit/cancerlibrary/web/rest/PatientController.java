@@ -17,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -98,7 +101,7 @@ public class PatientController {
         thread.start();
     }
 
-    @PostMapping("/patients/bulk-update-status/{status}")
+    @PostMapping("/patients/update-bulk-status/{status}")
     public ResponseEntity<Boolean> bulkUpdatePatientStatus(@RequestBody List<String> ptNos, @PathVariable String status) {
         log.debug("REST request to bulk update patient status");
 
@@ -114,7 +117,16 @@ public class PatientController {
             patientService.updatePatient(new Patient().ptNo(ptNo).detail(new PatientDetail().status(status)));
         });
 
-        return ResponseEntity.ok().body(true);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + status);
+
+        try {
+            headers.add("X-" + applicationName + "-params", URLEncoder.encode(String.valueOf(ptNos.size()), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            log.error("Failed to encode params", e);
+        }
+
+        return ResponseEntity.ok().headers(headers).body(true);
     }
 
 }
