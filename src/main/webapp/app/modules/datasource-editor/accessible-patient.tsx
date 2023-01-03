@@ -21,6 +21,7 @@ import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {getAccessiblePatientStatusSortValue} from "app/modules/datasource-editor/utils/accessible-patient.sort.utils";
+import {onClickUpdateBulkStatus} from "app/modules/datasource-editor/accessible-patient.updatebulkstatus.utils";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -114,13 +115,9 @@ export const AccessiblePatient = () => {
                 options: {
                   icon: 'revert',
                   onClick() {
-                    dispatch(updateBulkStatus({
-                      ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
-                      status: REVIEW_LIST.DECLINED
-                    }));
-                    dataGrid.current.instance.clearSelection();
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.DECLINED});
                   },
-                  text: translate('cancerLibraryApp.datasource.bulkDecline.title'),
+                  text: translate('cancerLibraryApp.patient.bulkDecline.title'),
                 }
               },
               {
@@ -130,13 +127,9 @@ export const AccessiblePatient = () => {
                 options: {
                   icon: 'check',
                   onClick() {
-                    dispatch(updateBulkStatus({
-                      ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
-                      status: REVIEW_LIST.APPROVED
-                    }));
-                    dataGrid.current.instance.clearSelection();
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.APPROVED});
                   },
-                  text: translate('cancerLibraryApp.datasource.bulkApprove.title'),
+                  text: translate('cancerLibraryApp.patient.bulkApprove.title'),
                 }
               },
               {
