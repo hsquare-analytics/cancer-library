@@ -41,6 +41,14 @@ export const updateFirstVisitDate = createAsyncThunk('datasource_patient/update_
   return result;
 });
 
+
+export const updateBulkStatus = createAsyncThunk('datasource_patient/update_bulk_status', async (data: { status: string, ptNos: string[] }, thunkAPI) => {
+  const result = await axios.post<boolean>(`api/patients/update-bulk-status/${data.status}`, data.ptNos);
+  thunkAPI.dispatch(getEntities());
+  return result;
+});
+
+
 export const DatasourcePatientSlice = createEntitySlice({
     name: 'datasource-patient',
     initialState,
@@ -65,7 +73,7 @@ export const DatasourcePatientSlice = createEntitySlice({
           state.updateSuccess = true;
           state.entity = action.payload.data;
         })
-        .addMatcher(isFulfilled(updateFirstVisitDate), (state, action) => {
+        .addMatcher(isFulfilled(updateFirstVisitDate, updateBulkStatus), (state, action) => {
           state.updating = false;
           state.loading = false;
           state.updateSuccess = true;
@@ -75,7 +83,7 @@ export const DatasourcePatientSlice = createEntitySlice({
           state.updateSuccess = false;
           state.loading = true;
         })
-        .addMatcher(isPending(updateEntity, updateFirstVisitDate), state => {
+        .addMatcher(isPending(updateEntity, updateFirstVisitDate, updateBulkStatus), state => {
           state.errorMessage = null;
           state.updateSuccess = false;
           state.updating = true;
