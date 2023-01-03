@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {
   getEntities as getAccessiblePatients,
-  getEntity as getPatient,
+  getEntity as getPatient, updateBulkStatus,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
 import {getEntities as getPatientComments} from "app/modules/row-comment-editor/row-comment.reducer";
-import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Item, Toolbar, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
@@ -93,7 +93,7 @@ export const AccessiblePatient = () => {
           allowColumnReordering={true}
           allowColumnResizing={true}
           columnResizingMode={'widget'}
-          selection={{mode: 'single'}}
+          selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
           editing={{
             mode: 'row',
@@ -105,6 +105,42 @@ export const AccessiblePatient = () => {
           height={'95vh'}
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
+          toolbar={{
+            items: [
+              {
+                location: 'after',
+                widget: 'dxButton',
+                visible: isSudoUser,
+                options: {
+                  icon: 'revert',
+                  onClick() {
+                    dispatch(updateBulkStatus({
+                      ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
+                      status: REVIEW_LIST.DECLINED
+                    }));
+                  },
+                  text: translate('cancerLibraryApp.datasource.bulkDecline.title'),
+                }
+              },
+              {
+                location: 'after',
+                widget: 'dxButton',
+                options: {
+                  icon: 'check',
+                  onClick() {
+                    dispatch(updateBulkStatus({
+                      ptNos: dataGrid.current.instance.getSelectedRowKeys().map(data => data.ptNo),
+                      status: REVIEW_LIST.APPROVED
+                    }));
+                  },
+                  text: translate('cancerLibraryApp.datasource.bulkApprove.title'),
+                }
+              },
+              {
+                name: 'searchPanel',
+              }
+            ]
+          }}
         >
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   visibleIndex={0}/>
