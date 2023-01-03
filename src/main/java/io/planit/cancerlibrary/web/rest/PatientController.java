@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
@@ -118,7 +119,12 @@ public class PatientController {
         });
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + status);
+
+        if (status.equals(PatientConstants.APPROVED)) {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "approved");
+        } else if (status.equals(PatientConstants.DECLINED)) {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "declined");
+        }
 
         try {
             headers.add("X-" + applicationName + "-params", URLEncoder.encode(String.valueOf(ptNos.size()), StandardCharsets.UTF_8.toString()));
