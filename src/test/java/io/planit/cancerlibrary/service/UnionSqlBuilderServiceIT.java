@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+import static io.planit.cancerlibrary.constant.DatasourceConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @IntegrationTest
@@ -65,18 +66,18 @@ class UnionSqlBuilderServiceIT {
 
     private void assertUpdateListSQL(String result, String updatedTableName) {
         assertThat(result).contains(String.format("SELECT %s, STATUS, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
-                DatasourceConstants.IDX_COLUMN))
+                IDX_COLUMN))
             .contains(String.format("FROM %s", updatedTableName));
     }
 
-    private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName) {
+    private void assertNotUpdatedListSQL(String result, String originTableName, String updatedTableName, String ptNo) {
         assertThat(result).contains(
                 String.format("SELECT %s, '%s' AS STATUS, NULL AS CREATED_BY, NULL AS CREATED_DATE, NULL AS LAST_MODIFIED_BY, NULL AS LAST_MODIFIED_DATE, COLUMN1, COLUMN2",
-                    DatasourceConstants.IDX_COLUMN, RowStatus.NOT_STARTED))
+                    IDX_COLUMN, RowStatus.NOT_STARTED))
             .contains(String.format("FROM %s", originTableName))
-            .contains(String.format("WHERE (%s NOT IN (SELECT %s", DatasourceConstants.IDX_COLUMN,
-                DatasourceConstants.IDX_COLUMN))
-            .contains(String.format("FROM %s)", updatedTableName));
+            .contains(String.format("WHERE (NOT EXISTS (SELECT 1"))
+            .contains(String.format("FROM %s", updatedTableName))
+            .contains(String.format("WHERE (%s = %s AND PT_NO = '%s')) AND PT_NO = '%s'", updatedTableName + "." + IDX_COLUMN, originTableName + "." + IDX_COLUMN, ptNo, ptNo));
     }
 
     @Test
@@ -88,11 +89,11 @@ class UnionSqlBuilderServiceIT {
 
         // then
         String originTableName = category.getTitle().toUpperCase();
-        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
+        String updatedTableName = category.getTitle().toUpperCase() + UPDATED_SUFFIX;
 
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
-        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
+        assertNotUpdatedListSQL(result, originTableName, updatedTableName, "test");
     }
 
 
@@ -108,18 +109,19 @@ class UnionSqlBuilderServiceIT {
         UserPatient userPatient2 = UserPatientResourceIT.createEntity(em, user).patientNo("test2");
         userPatientRepository.saveAndFlush(userPatient1);
         userPatientRepository.saveAndFlush(userPatient2);
+        String ptNo = "test1";
 
         // when
-        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), "ph_patient_no").toString();
+        String result = unionSqlBuilderService.getUnionSelectSQL(category.getId(), ptNo).toString();
 
         // then
         String originTableName = category.getTitle().toUpperCase();
-        String updatedTableName = category.getTitle().toUpperCase() + DatasourceConstants.UPDATED_SUFFIX;
+        String updatedTableName = category.getTitle().toUpperCase() + UPDATED_SUFFIX;
 
         assertUpdateListSQL(result, updatedTableName);
         assertThat(result).contains("UNION");
-        assertNotUpdatedListSQL(result, originTableName, updatedTableName);
-        assertThat(result).contains("PT_NO IN ('ph_patient_no')");
+        assertNotUpdatedListSQL(result, originTableName, updatedTableName, ptNo);
+        assertThat(result).contains(String.format("PT_NO = '%s')", ptNo));
     }
 
 }
