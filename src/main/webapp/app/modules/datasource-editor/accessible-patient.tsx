@@ -21,7 +21,7 @@ import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {getAccessiblePatientStatusSortValue} from "app/modules/datasource-editor/utils/accessible-patient.sort.utils";
-import {onClickUpdateBulkStatus} from "app/modules/datasource-editor/accessible-patient.updatebulkstatus.utils";
+import {onClickUpdateBulkStatus} from "app/modules/datasource-editor/accessible-patient.updatebulk.utils";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
