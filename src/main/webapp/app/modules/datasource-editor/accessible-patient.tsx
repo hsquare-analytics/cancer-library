@@ -126,6 +126,7 @@ export const AccessiblePatient = () => {
               {
                 location: 'after',
                 widget: 'dxButton',
+                visible: isSudoUser,
                 options: {
                   icon: 'check',
                   onClick() {
