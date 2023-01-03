@@ -62,7 +62,7 @@ export const GridDeclineReasonItem = (props: IPatientDeclineReasonarea) => {
         showCloseButton={false}
         showTitle={false}
         width={'60vw'}
-        height={'50vh'}
+        height={'80vh'}
         toolbarItems={[
           {
             disabled: !isSudoUser,

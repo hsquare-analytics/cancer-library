@@ -56,7 +56,7 @@ export const GridCommentItem = (props: IPatientProfileCardTextarea) => {
         showCloseButton={false}
         showTitle={false}
         width={'60vw'}
-        height={'50vh'}
+        height={'80vh'}
         toolbarItems={[
           {
             location: 'after',
