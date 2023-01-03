@@ -95,7 +95,6 @@ public class PatientController {
 
         Runnable myRunnable = () -> {
             datasourceSyncService.syncPatientFdx(patient, login);
-            datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient, login);
         };
 
         Thread thread = new Thread(myRunnable);

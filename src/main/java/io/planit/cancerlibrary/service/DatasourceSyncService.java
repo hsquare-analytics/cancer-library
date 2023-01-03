@@ -29,7 +29,7 @@ public class DatasourceSyncService {
 
     public void syncPatientFdx(Patient patient, String login) {
         log.debug("Request to sync patient fdx : {}", patient);
-        String selectAllQuery = String.format("select * from gscn.cncr_rgst where pt_no = '%s'", patient.getPtNo());
+        String selectAllQuery = String.format("select * from gscn.cncr_rgst where pt_no = '%s' and fdx = (select min(fdx) from gscn.cncr_rgst where pt_no = '%s')", patient.getPtNo(), patient.getPtNo());
         List<Map<String, Object>> targetList = sqlExecutor.executeSelectAll(selectAllQuery);
 
         targetList.forEach(target -> {
@@ -42,13 +42,6 @@ public class DatasourceSyncService {
         });
     }
 
-    public void syncOnlyUpdatedExistPatientFdx(Patient patient, String login) {
-        String selectAllQuery = String.format("select * from gscn.cncr_rgst_updated cru where pt_no = '%s' and idx not in (select idx from gscn.cncr_rgst cr where cr.pt_no = '%s')", patient.getPtNo(), patient.getPtNo());
-        List<Map<String, Object>> targetList = sqlExecutor.executeSelectAll(selectAllQuery);
-
-        targetList.forEach(target -> executeFdxUpdate(target, patient, login));
-    }
-
     private void executeFdxInsert(Map<String, Object> target, Patient patient, String login) {
         target.put("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate()));
         SQL insertQuery = new SQL().INSERT_INTO("gscn.cncr_rgst_updated");
@@ -58,19 +51,12 @@ public class DatasourceSyncService {
             }
         });
 
-        insertQuery.VALUES("created_by", String.format("'%s'", login))
-            .VALUES("created_date", String.format("'%s'", Instant.now()))
-            .VALUES("last_modified_by", String.format("'%s'", login))
-            .VALUES("last_modified_date", String.format("'%s'", Instant.now()));
+        insertQuery.VALUES("created_by", String.format("'%s'", login)).VALUES("created_date", String.format("'%s'", Instant.now())).VALUES("last_modified_by", String.format("'%s'", login)).VALUES("last_modified_date", String.format("'%s'", Instant.now()));
         sqlExecutor.executeDML(insertQuery.toString());
     }
 
     private void executeFdxUpdate(Map<String, Object> target, Patient patient, String login) {
-        SQL updateQuery = new SQL().UPDATE("gscn.cncr_rgst_updated")
-            .SET(getSqlEqualSyntax("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate())))
-            .SET(getSqlEqualSyntax("last_modified_by", login))
-            .SET(getSqlEqualSyntax("last_modified_date", Instant.now()))
-            .WHERE(getSqlEqualSyntax("idx", target.get("idx")));
+        SQL updateQuery = new SQL().UPDATE("gscn.cncr_rgst_updated").SET(getSqlEqualSyntax("fdx", getLocaleYYYYMMDDFromInstant(patient.getDetail().getStandardDate()))).SET(getSqlEqualSyntax("last_modified_by", login)).SET(getSqlEqualSyntax("last_modified_date", Instant.now())).WHERE(getSqlEqualSyntax("idx", target.get("idx")));
         sqlExecutor.executeDML(updateQuery.toString());
     }
 
