@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -95,6 +96,25 @@ public class PatientController {
 
         Thread thread = new Thread(myRunnable);
         thread.start();
+    }
+
+    @PostMapping("/patients/bulk-update-status/{status}")
+    public ResponseEntity<Boolean> bulkUpdatePatientStatus(@RequestBody List<String> ptNos, @PathVariable String status) {
+        log.debug("REST request to bulk update patient status");
+
+        if (ptNos == null || ptNos.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        if (status == null || status.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        ptNos.forEach(ptNo -> {
+            patientService.updatePatient(new Patient().ptNo(ptNo).detail(new PatientDetail().status(status)));
+        });
+
+        return ResponseEntity.ok().body(true);
     }
 
 }
