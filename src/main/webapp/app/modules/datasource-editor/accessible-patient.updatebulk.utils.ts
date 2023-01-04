@@ -36,7 +36,7 @@ export const onClickUpdateBulkStatus = (props: IOnClickUpdateBulkStatusProps) =>
     if (result.value) {
       dispatch(updateBulkStatus({
         ptNos: dataGridRef.current.instance.getSelectedRowKeys().map(data => data.ptNo),
-        status: status
+        status
       }));
       dataGridRef.current.instance.clearSelection();
     }
