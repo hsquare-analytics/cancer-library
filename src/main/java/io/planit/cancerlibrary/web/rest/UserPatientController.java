@@ -161,6 +161,7 @@ public class UserPatientController {
             this.ptNm(patient.getPtNm());
             this.fsrMedDt(patient.getFsrMedDt());
             this.idxDt(patient.getIdxDt());
+            this.detail(patient.getDetail());
             this.authorized = authorized;
         }
 
