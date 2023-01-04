@@ -18,7 +18,7 @@ import {
 
 import {
   createDatasourceRow,
-  deleteDatasourceRow,
+  deleteDatasourceRow, getDataSources,
   resetFlag as resetDatasourceContainerFlag,
   updateDatasourceRow,
 } from 'app/modules/datasource-editor/reducer/datasource.container.reducer';
