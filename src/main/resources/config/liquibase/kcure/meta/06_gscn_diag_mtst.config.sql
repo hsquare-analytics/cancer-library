@@ -19,66 +19,6 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_MTST (
     mdfm_nm varchar(50) null,				-- UI용 서식명
     mtst_site_nm_cnte varchar(200) NULL, 	-- UI용 전이부위명
     SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
+    free_text varchar(1000) null, 			-- UI용 검색용
     CONSTRAINT gscn_diag_mtst_pk PRIMARY KEY (hosp_cd, pt_no, mtdg_ymd, mtdg_seq)
     );
-
-INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9600, 'GSCN.GSCN_DIAG_MTST', '06.위암_진단_전이', true, 6, 999, 'system');
-
-INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (9600, 'mtdg_ymd', '06.위암_진단_전이');
-
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9601, 'hosp_cd', 9600, 'system', 9601);
--- insert into ph_item_attribute (item_id, caption, required) values (9601, '병원코드', true);
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9602, 'pt_no', 9600, 'system', 9602);
-insert into ph_item_attribute (item_id, caption) values (9602, '환자대체번호');
-insert into ph_item_property (item_id, visible) values (9602, false);
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9603, 'mtdg_ymd', 9600, 'system', 9603);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9603, '전이진단일자', true, 'yyyyMMdd', 'date');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9604, 'mtdg_seq', 9600, 'system', 9604);
-insert into ph_item_attribute (item_id, caption, required) values (9604, '전이진단순번', true);
-
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9605, 'mtdg_mtcd', 9600, 'system', 9605, 20080);
-insert into ph_item_attribute (item_id, caption, required, data_type) values (9605, '전이진단방법코드', true, 'selectbox');
-insert into ph_item_property (item_id, label_column) values (9605, 'mtdg_mtnm');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9606, 'mtdg_mtnm', 9600, 'system', 9606);
--- insert into ph_item_attribute (item_id, caption) values (9606, '전이진단방법명');
-
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9607, 'mtst_site_cd', 9600, 'system', 9607, 20060);
-insert into ph_item_attribute (item_id, caption, data_type) values (9607, '전이부위코드', 'selectbox');
-insert into ph_item_property (item_id, label_column) values (9607, 'mtst_site_nm');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9608, 'mtst_site_nm', 9600, 'system', 9608);
--- insert into ph_item_attribute (item_id, caption) values (9608, '전이부위명');
-
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9609, 'mtst_aspt_cd', 9600, 'system', 9609, 20070);
-insert into ph_item_attribute (item_id, caption, data_type) values (9609, '전이양상코드', 'selectbox');
-insert into ph_item_property (item_id, label_column) values (9609, 'mtst_aspt_nm');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9610, 'mtst_aspt_nm', 9600, 'system', 9610);
--- insert into ph_item_attribute (item_id, caption) values (9610, '전이양상명');
-
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9611, 'mtst_trtm_cd', 9600, 'system', 9611, 20090);
-insert into ph_item_attribute (item_id, caption, data_type) values (9611, '전이치료코드', 'selectbox');
-
--- -- insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'crtn_dt', 9600, 'system', 9612);
--- -- insert into ph_item_attribute (item_id, caption, format, data_type) values (9612, '생성일시', 'yyyyMMdd', 'date');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9613, 'idx', 9600, 'system', 9613);
--- insert into ph_item_attribute (item_id, caption) values (9613, 'UI용 시퀀스');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9614, 'mdfm_id', 9600, 'system', 9614);
--- insert into ph_item_attribute (item_id, caption) values (9614, 'UI용 서식ID');
---
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9615, 'mdfm_nm', 9600, 'system', 9615);
--- insert into ph_item_attribute (item_id, caption) values (9615, 'UI용 서식명');
---
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9616, 'mtst_site_nm_cnte', 9600, 'system', 9616);
--- insert into ph_item_attribute (item_id, caption) values (9616, 'UI용 전이부위명');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9612, 'sort_seq', 9600, 'system', 5);
-insert into ph_item_attribute (item_id, caption) values (9612, '정렬순번');

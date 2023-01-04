@@ -1,0 +1,611 @@
+codebook_id,title,description,order_no
+90001,Score,Score,1
+90001,%,%,2
+40110,&lt;D1,01,1
+40500,Gall Bladder,03,3
+10030,간,01,1
+10030,갑상선,02,2
+10030,골육종,03,3
+10030,구강,04,4
+10030,난소,05,5
+10030,뇌,06,6
+10030,담도,07,7
+10030,대장,08,8
+10030,신장,09,9
+10030,위,10,10
+10030,유방,11,11
+10030,자궁,12,12
+10030,전립선,13,13
+10030,췌장,14,14
+10030,폐,15,15
+10030,혈액,16,16
+10030,기타,99,17
+10040,예,Y,1
+10040,아니오,N,2
+10040,무응답,Z,3
+10050,막걸리,1,1
+10050,맥주,2,2
+10050,소주,3,3
+10050,양주,4,4
+10050,무응답,8,5
+10050,기타,9,6
+10060,가망없는퇴원,03,3
+10060,사망,04,4
+10060,악화,05,5
+10060,진단뿐,08,8
+10060,호전,09,9
+10060,호전안됨,10,10
+10060,기타,99,11
+10070,아버지,01,1
+10070,어머니,02,2
+10070,자녀,03,3
+10070,형제자매,04,4
+10070,친척,05,5
+10070,무응답,98,6
+10070,기타,99,7
+20010,제한없이 정상적이다,01,1
+20010,증상이 있으나 스스로 활동 가능하다,02,2
+20010,증상이 있으나 누워 지내는 시간은 하루의 반보다 적다,03,3
+20010,증상이 있으며 누워 지내는 시간이 하루의 절반이상이다,04,4
+20010,계속 누워 있어야 한다,05,5
+20030,Local complication,1,1
+20030,Systemic complication,2,2
+20040,Anastomotic leakage,01,1
+20040,Anastomotic stricture,02,2
+20040,Cardiovascular complications,03,3
+20040,Central nervous system complications,04,4
+20040,Chylous ascites,05,5
+20040,Delayed gastric emptying (= gastric stasis),06,6
+20040,Duodenal stump leakage,07,7
+20040,Endocrine system complications,08,8
+20040,Hepatic system complications,09,9
+20040,Intestinal obstruction (=ileus),10,10
+20040,Intra-abdominal bleeding,11,11
+20040,Intra-abdominal fluid collection,12,12
+20040,Intraluminal bleeding,13,13
+20040,Pancreatic leakage,14,14
+20040,Respiratory complications,15,15
+20040,Urinary system complications,16,16
+20040,Wound complication,17,17
+20040,기타,99,18
+20050,Primary  ,1,1
+20050,Remnant,3,3
+20050,Meta,4,4
+20050,기타  ,9,5
+20060,Bone,01,1
+20060,Liver,05,5
+20060,LN,06,6
+20060,Lung,07,7
+20060,Ovary,08,8
+20060,Peritoneum,09,9
+20060,기타,99,10
+20070,Single lesion,1,1
+20070,Multiple lesion - synchronous,2,2
+20070,Multiple lesion - metachronous,3,3
+20070,기타,9,4
+20080,영상검사,1,1
+20080,조직검사,2,2
+20080,기타,9,3
+20090,위암(C16),1,1
+20090,상피내암(D002),2,2
+20090,기타암,8,3
+20090,기타질환,9,4
+30030,M0,1,1
+30030,M1,2,2
+30030,MX,3,3
+30040,N(+),1,1
+30040,N0,2,2
+30040,NX,3,3
+30050,T1a,01,1
+30050,T1b,02,2
+30050,T2,03,3
+30050,T3,04,4
+30050,T4a,05,5
+30050,T4b,06,6
+30050,TX,07,7
+30060,None,1,1
+30060,Bleeding,2,2
+30060,Perforation,3,3
+30060,Mallory-weiss tearing,4,4
+30060,기타,9,5
+30070,EGC-I,01,1
+30070,EGC-IIa,02,2
+30070,EGC-IIb,03,3
+30070,EGC-IIc,04,4
+30070,EGC-III,05,5
+30070,AGC-Bormann type 1,06,6
+30070,AGC-Bormann type 2,07,7
+30070,AGC-Bormann type 3,08,8
+30070,AGC-Bormann type 4,09,9
+30070,AGC-Bormann type 5,10,10
+30070,Combination,11,11
+30070,기타/Unclassifiable,99,12
+30080,Negative,1,1
+30080,Positive,2,2
+30080,Not evaluable,3,3
+30090,H.pylori IgG Ab,1,1
+30090,Histology(병리검사),2,2
+30090,Rapid urease test(CLO test),3,3
+30090,Urea Breath Test,4,4
+30090,기타,9,5
+30140,Score,1,1
+30140,%,2,2
+30160,Positive,01,1
+30160,Negative,02,2
+30160,Focal positive,03,3
+30160,Equivocal,04,4
+30160,Not evaluable,05,5
+30160,기타,99,6
+30170,EBV,03,3
+30170,EGFR,04,4
+30170,HER2,06,6
+30170,hMLH1,07,7
+30170,hMSH2,08,8
+30170,MSH6,10,10
+30170,p53,11,11
+30170,PD-L1,12,12
+30170,PMS2,13,13
+30170,기타,99,16
+30220,Positive,1,1
+30220,Negative,2,2
+30220,Equivocal,3,3
+30220,Not evaluable,4,4
+30230,EBV ISH,1,1
+30230,HER-2,2,2
+30230,Microsatellite instability(MSI),3,3
+30230,기타,9,4
+30290,Endoscopic biopsy,03,3
+30290,Excision,04,4
+30290,Needle biopsy,07,7
+30290,기타,99,15
+30310,Liver,04,4
+30310,Stomach,07,7
+30310,기타,99,8
+30340,Lesser curvature,01,1
+30340,Greater curvature,02,2
+30340,Anterior wall,03,3
+30340,Posterior wall,04,4
+30340,Encircling,05,5
+30340,기타,99,6
+30640,Cardia,01,1
+30640,Fundus,02,2
+30640,Body,03,3
+30640,Angle,04,4
+30640,Antrum,05,5
+30640,Pylorus,06,6
+30640,기타,99,7
+30650,Esophagus,01,1
+30650,Upper (EGJ 포함),02,2
+30650,Middle,03,3
+30650,Lower,04,4
+30650,Duodenum,05,5
+30650,Entire (Whole),06,6
+30650,기타,99,7
+30370,Positive,Y,1
+30370,Negative,N,2
+30370,Indeterminate,Z,3
+30380,Yes,Y,1
+30380,No,N,2
+30380,Unknown,Z,3
+30410,Bone scan,01,1
+30410,CT,02,2
+30410,MRI,06,6
+30410,PET-CT,08,8
+30410,SONO,09,9
+30410,X-ray,10,10
+30410,기타,99,11
+30430,Stomach,2,2
+30430,LN,3,3
+30430,기타,9,4
+30440,EGC-I,01,1
+30440,EGC-IIa,02,2
+30440,EGC-IIb,03,3
+30440,EGC-IIc,04,4
+30440,EGC-III,05,5
+30440,AGC-Bormann type 1,06,6
+30440,AGC-Bormann type 2,07,7
+30440,AGC-Bormann type 3,08,8
+30440,AGC-Bormann type 4,09,9
+30440,AGC-Bormann type 5,10,10
+30440,Combination,11,11
+30440,기타/Unclassifiable,99,12
+30450,공단검진,01,1
+30450,내시경 시술 및 추적검사,02,2
+30450,수술후 추적검사,03,3
+30450,암예방검진센터 수검자,04,4
+30450,진단,05,5
+30450,기타,99,6
+30460,0,01,1
+30460,I,02,2
+30460,II,03,3
+30460,IIIa,04,4
+30460,IV,05,5
+30460,V,06,6
+30460,Not available,07,7
+30470,None,1,1
+30470,Bleeding,2,2
+30470,Perforation,3,3
+30470,Mallory-weiss tearing,4,4
+30470,기타,9,5
+30480,Type I,1,1
+30480,Type II,2,2
+30480,Type III,3,3
+30480,해당없음,4,4
+30530,Well differentiated,1,1
+30530,Moderately differentiated,2,2
+30530,Poorly differentiated,3,3
+30530,Combined,4,4
+30530,기타,9,5
+30540,Adenosquamous carcinoma,01,1
+30540,Carcinoma with lymphoid stroma,02,2
+30540,Gastrointestinal stromal tumor,04,4
+30540,Hepatoid adenocarcinoma,05,5
+30540,Mixed adenocarcinoma,13,13
+30540,Mucinous adenocarcinoma,14,14
+30540,Neuroendocrine tumor,16,16
+30540,Papillary adenocarcinoma,18,18
+30540,Poorly cohesive carcinoma(signet ring cell carcinoma 포함),20,20
+30540,Squamous cell carcinoma,22,22
+30540,Tubular adenocarcinoma,23,23
+30540,Undifferentiated carcinoma,25,25
+30540,기타,99,26
+30550,Present,Y,1
+30550,Absent,N,2
+30550,Not evaluable,Z,3
+30580,Albumin,01,1
+30580,CA19-9,08,8
+30580,CA72-4,09,9
+30580,CEA,11,11
+30580,Ferritin,16,16
+30580,Hb,19,19
+30580,Iron,22,22
+30580,Protein,27,27
+30580,TIBC,29,29
+30580,Total Cholesterol,30,30
+30580,Vitamin B12,31,31
+30580,기타,99,33
+30600,Abdominal wall,01,1
+30600,Adrenal gland,02,2
+30600,Colon,03,3
+30600,Diaphragm,04,4
+30600,Gallbladder,05,5
+30600,Liver,06,6
+30600,Mesocolon,07,7
+30600,Pancreas,08,8
+30600,Retroperitoneum,09,9
+30600,Spleen,10,10
+30600,기타,99,11
+30610,Mucosa,01,1
+30610,Submucosa,02,2
+30610,Proper muscle,03,3
+30610,Subseroca,04,4
+30610,Serosa,05,5
+30610,Adjacent organ,06,6
+30610,기타,99,7
+30630,Involved,Y,1
+30630,Not involved,N,2
+30630,No data,Z,3
+40010,정상의 건강한 환자,01,1
+40010,경도의 전신 질환을 가진 환자,02,2
+40010,중등도의 중증 전신질환을 가진 환자,03,3
+40010,지속적으로 생명을 위협하는 중증의 전신질환을 가진 환자,04,4
+40010,수술하지 않으면 생명을 유지할 수 없는 정도의 중증질환을 가진 환자,05,5
+40010,장기 공여를 위한 수술 예정인 뇌사자,99,6
+40020,En bloc resection,1,1
+40020,Piecemeal resection,2,2
+40020,Failure,3,3
+40030,Flat (IIb),2,2
+40030,Depressed  (IIc),3,3
+40040,Lessor curvature,1,1
+40040,Greater curvature,2,2
+40040,Posterior wall,3,3
+40040,Anterior wall,4,4
+40050,Antrum,01,1
+40050,Angle,02,2
+40050,Lowerbody,03,3
+40050,Midbody,04,4
+40050,Upperbody or cardia,05,5
+40060,수술,1,1
+40060,내시경적치료 (clipping),2,2
+40060,내시경치료 없이 보존치료 (산소투여 등),3,3
+40090,Total,1,1
+40090,Partial,2,2
+40090,Not done,3,3
+40090,Not applicable,4,4
+40100,R0 resection,1,1
+40100,R1 resection,2,2
+40100,R2 resection,3,3
+40100,Not applicable,4,4
+40110,D1,02,2
+40110,D1+,03,3
+40110,D2,04,4
+40110,D2+,05,5
+40110,Sentinel basin dissection,06,6
+40110,None,07,7
+40110,기타,99,8
+40130,Curative,1,1
+40130,Palliative,2,2
+40130,Adjuvant,3,3
+40130,Neoadjuvant,4,4
+40130,기타,9,5
+40140,Abdomen wall,01,1
+40140,Bone,02,2
+40140,Boost,03,3
+40140,Brain,04,4
+40140,Distant lymph node,06,6
+40140,Liver,07,7
+40140,Lung,09,9
+40140,Stomach,10,10
+40140,기타,99,11
+40150,Grade 1,01,1
+40150,Grade 2,02,2
+40150,Grade 3,03,3
+40150,Grade 4,04,4
+40150,Grade 5,05,5
+40160,급성(3개월 이내),1,1
+40160,만성(3개월 초과),2,2
+40170,Aches,01,1
+40170,Fatigue,02,2
+40170,Heart damage,03,3
+40170,Skin irritation,05,5
+40170,Swelling of  breast,06,6
+40180,뇌 정위적 방사선수술,01,1
+40180,밀봉소선원치료,02,2
+40180,세기변조 방사선치료,03,3
+40180,양성자 치료,04,4
+40180,입체조형치료,05,5
+40180,전신조사,06,6
+40180,정위적 방사선 분할치료,07,7
+40180,체부 정위적 방사선수술,08,8
+40180,체외조사,09,9
+40200,CR,01,1
+40200,PD,02,2
+40200,PR,03,3
+40200,SD,04,4
+40200,NE,05,5
+40200,기타,99,6
+40240,MAC,01,1
+40240,경막외,02,2
+40240,국소,03,3
+40240,신경차단,04,4
+40240,전신,05,5
+40240,정맥,06,6
+40240,척추,07,7
+40240,척추+경막외,08,8
+40240,기타,99,9
+40250,Curative,1,1
+40250,Palliative,2,2
+40250,기타,9,3
+40260,개복,01,1
+40260,내시경 복강경 협력 수술,02,2
+40260,로봇 보조,03,3
+40260,로봇-다공,04,4
+40260,로봇-단일공,05,5
+40260,복강경보조,06,6
+40260,전복강경 (다공; multi-port),07,7
+40260,전복강경 (단일공; single port),08,8
+40260,기타,99,9
+40280,No,01,1
+40280,IP chemo,02,2
+40280,HIPEC,03,3
+40280,LHIPEC,04,4
+40280,PIPAC,05,5
+40280,기타,99,6
+40290,Rt upper transverse incision & multi-ports,01,1
+40290,Short upper midline & multi-ports,02,2
+40290,Single port/ single incision,03,3
+40290,Umbilical incision & multi-ports,04,4
+40290,Upper midline,05,5
+40290,기타,99,6
+40310,Distal gastrectomy,06,6
+40310,Open and closure with biopsy,15,15
+40310,Proximal gastrectomy,18,18
+40310,Pylorus preserving gastrectomy,19,19
+40310,Segmental resection,23,23
+40310,Total gastrectomy,27,27
+40310,Wedge resection,28,28
+40310,기타,99,29
+40380,세포독성약제,01,1
+40380,항암표적약제,02,2
+40380,항암내분비약제,03,3
+40380,항암면역약제,04,4
+40380,기타항암약제,05,5
+40380,기타,99,6
+40390,항암약제,1,1
+40390,기타약제,9,2
+40400,Capecitabine,06,6
+40400,Carboplatin,07,7
+40400,Cisplatin,09,9
+40400,Docetaxel,11,11
+40400,Doxorubicin,12,12
+40400,Epirubicin,13,13
+40400,Etoposide,15,15
+40400,Fluorouracil,18,18
+40400,Irinotecan hydrochloride,24,24
+40400,Leucovorin,27,27
+40400,Methotrexate,30,30
+40400,Mitomycin C,31,31
+40400,Nivolumab,32,32
+40400,Oxaliplatin,33,33
+40030,"Elevated (I, IIa, IIa+IIc)",1,1
+40400,Paclitaxel,34,34
+40400,Pembrolizumab,36,36
+40400,Ramucirumab,38,38
+40400,Tegafur/gimeracil/oteracil(S-1),41,41
+40400,Trastuzumab,43,43
+40400,Trifluridine-tipiracil,45,45
+40400,기타,99,47
+40420,AMP,01,1
+40420,cap,02,2
+40420,dos,03,3
+40420,ea,04,4
+40420,g,05,5
+40420,g/kg,06,6
+40420,g/m2,07,7
+40420,ke,08,8
+40420,kit,09,9
+40420,mcg,10,10
+40420,mcg/kg,11,11
+40420,mcg/m2,12,12
+40420,mg,13,13
+40420,mg/kg,14,14
+40420,mg/m2,15,15
+40420,ml,16,16
+40420,pfu,17,17
+40420,pkg,18,18
+40420,set,19,19
+40420,tab,20,20
+40420,unit,21,21
+40420,기타,99,22
+40440,경구,01,1
+40440,정맥내주사,03,3
+40440,척수강내주사,04,4
+40440,기타,99,7
+40460,Hand-sewing,03,3
+40460,Not applicable,05,5
+40460,Stapler,06,6
+40460,기타,99,10
+40480,Intracorporeal,1,1
+40480,Extracorporeal,2,2
+40480,Not applicable,3,3
+40480,기타,9,4
+40490,Billroth I,01,1
+40490,Billroth II,02,2
+40490,Double tract method,03,3
+40490,Esophagogastrostomy,04,4
+40490,Gastrogastrostomy,05,5
+40490,Primary repair,06,6
+40490,Roux-en-Y,07,7
+40490,기타,99,8
+40500,None,01,1
+40500,Colon,02,2
+40500,Liver,04,4
+40500,Pancreas,05,5
+40500,Spleen,06,6
+40500,기타,99,7
+40520,I,01,1
+40520,II,02,2
+40520,III,03,3
+40520,IV,04,4
+40520,V,05,5
+40530,Alopecia,01,1
+40530,Anorexia,02,2
+40530,Dry skin,05,5
+40530,Hand-foot syndrome,07,7
+40530,Nausea/vomiting,10,10
+40530,기타,99,13
+40550,Tumor progression,1,1
+40550,사망,2,2
+40550,추적관찰 소실,3,3
+40550,항암제 부작용,4,4
+40550,기타,9,5
+40560,Adjuvant,01,1
+40560,Concurrent,02,2
+40560,Consolidation,03,3
+40560,Induction,04,4
+40560,Maintenance,05,5
+40560,Neoadjuvant,06,6
+40560,Palliative,07,7
+40560,Salvage,08,8
+40560,기타,99,9
+40570,CR,01,1
+40570,PD,02,2
+40570,PR,03,3
+40570,SD,04,4
+40570,NE,05,5
+40570,기타,99,6
+40580,Apheresis platelet,01,1
+40580,Autotransfusion,03,3
+40580,Cryoprecipitate,04,4
+40580,Fresh frozen plasma,05,5
+40580,Platelet,06,6
+40580,Pre-storage Leukocyte Filtered Red Blood Cells,08,8
+40580,Red blood cell,09,9
+40580,Washed red blood cell,10,10
+40580,기타,99,11
+50010,Bone,01,1
+50010,Distans LN,05,5
+50010,Liver,06,6
+50010,Lung,08,8
+50010,Peritoneum,09,9
+50010,기타,99,10
+50020,Both Local & Distant,1,1
+50020,Distant(Systemic),2,2
+50020,Locoregional,3,3
+50040,영상검사,1,1
+50040,조직검사,2,2
+50040,기타,9,3
+60010,남,1,1
+60010,여,2,2
+60020,간암,01,1
+60020,대장암,02,2
+60020,신장암,03,3
+60020,위암,04,4
+60020,유방암,05,5
+60020,자궁경부암,06,6
+60020,전립선,07,7
+60020,췌장암,08,8
+60020,폐암,09,9
+60020,혈액암,10,10
+60020,기타암,99,11
+60030,외국인,1,1
+60030,내국인,2,2
+60030,모름,9,3
+60040,행려환자,1,1
+60040,일반환자,2,2
+60040,모름,9,3
+60050,전문·기술직,01,1
+60050,행정 및 관리직,02,2
+60050,사무직,03,3
+60050,판매종사직,04,4
+60050,서비스직,05,5
+60050,농업; 어업; 축산업; 임업,06,6
+60050,생산직,07,7
+60050,운수업,08,8
+60050,단순노무직,09,9
+60050,분류불능,10,10
+60050,학생,11,11
+60050,군인,12,12
+60050,주부,13,13
+60050,무직,14,14
+60050,직업 모름,99,15
+60060,검진,1,1
+60060,우연한 발견(수술 시 검사하면서),2,2
+60060,증상발현(임상적 발현),3,3
+60060,미상,4,4
+60060,기타,9,5
+60070,Not a paired site,01,1
+60070,Right: origin of primary,02,2
+60070,Left: origin of primary,03,3
+60070,Only one side involved; right or left origin unspecified,04,4
+60070,Bilateral involvement at time of diagnosis; lateral origin unknown for a single primary,05,5
+60070,Paired site: midline tumor,06,6
+60070,Paired site; but no information concerning laterality,99,7
+60080,Grade I,01,1
+60080,Grade II,02,2
+60080,Grade III,03,3
+60080,Grade IV,04,4
+60080,T-cell,05,5
+60080,B-Cell,06,6
+60080,Null cell,07,7
+60080,NK cell,08,8
+60080,Not applicable,99,9
+60090,임상진단,01,1
+60090,임상검사,02,2
+60090,조직검사없는 진단적 수술/부검,03,3
+60090,특수 생화학적 또는 면역학적 검사,04,4
+60090,세포학적 또는 혈액학적 검사,05,5
+60090,전이부위 조직검사,06,6
+60090,부검,08,8
+60090,기타,99,9
+60100,시행,1,1
+60100,시행하지 않음,2,2
+60110,In situ,01,1
+60110,Localized only,02,2
+60110,Regional by direct extension only,03,3
+60110,Regional lymph nodes involved only,04,4
+60110,Regional by BOTH direct extension AND lymph node involvement,05,5
+60110,Regional; NOS (Not Otherwise Specified),06,6
+60110,Distant site(s)/node(s) involved,07,7
+60110,Unknown if extension or metastasis (unstaged; unknown; or unspecified) Death certification only case,99,8
+60090,원발부위 조직검사,07,7
