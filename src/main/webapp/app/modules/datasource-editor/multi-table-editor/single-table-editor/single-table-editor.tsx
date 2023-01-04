@@ -107,12 +107,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
     setAccordionExpanded(openAll);
   }, [openAll]);
 
-  useEffect(() => {
-    if (category && category.title === 'GSCN.CNCR_RGST') {
-      dispatch(getDataSources({categoryId: category.id, patientNo: patient.ptNo}));
-    }
-  }, [patient.fsrMedDt]);
-
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
 

@@ -53,35 +53,35 @@ export const MultiTableEditor = () => {
     return () => {
       dispatch(resetRawData());
     }
-  }, [JSON.stringify(patient?.ptNo)]);
+  }, [patient.ptNo, patient.fsrMedDt]);
 
   const containerCount = _.size(dataContainer) + _.size(itemContainer);
   const progressValue = Math.round(containerCount / (categories.length * 2) * 100);
   return (
-      <div>
+    <div>
+      <Box sx={{
+        position: 'relative',
+        flexDirection: 'row',
+        display: (progressValue === 100) ? 'none' : 'inline-flex'
+      }}>
+        <CircularProgress variant="determinate" value={progressValue}/>
         <Box sx={{
-          position: 'relative',
-          flexDirection: 'row',
-          display: (progressValue === 100) ? 'none' : 'inline-flex'
-        }}>
-          <CircularProgress variant="determinate" value={progressValue}/>
-          <Box sx={{
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            position: 'absolute',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          >
-            <Typography variant="caption" component="div" color="text.secondary">{`${progressValue}%`}</Typography>
-          </Box>
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        >
+          <Typography variant="caption" component="div" color="text.secondary">{`${progressValue}%`}</Typography>
         </Box>
-        {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
-          key={category.id} category={category}/>)}
-      </div>
+      </Box>
+      {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
+        key={category.id} category={category}/>)}
+    </div>
   );
 }
 
