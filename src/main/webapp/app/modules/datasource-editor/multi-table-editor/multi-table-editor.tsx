@@ -20,7 +20,6 @@ export const MultiTableEditor = () => {
   const dispatch = useAppDispatch();
 
   const patient = useAppSelector<IPatient>(state => state.datasourcePatient.entity);
-  const patientLoading = useAppSelector<IPatient>(state => state.datasourcePatient.loading);
 
   const categories = useAppSelector(state => state.datasourceContainer.categories);
 
@@ -59,8 +58,7 @@ export const MultiTableEditor = () => {
   const containerCount = _.size(dataContainer) + _.size(itemContainer);
   const progressValue = Math.round(containerCount / (categories.length * 2) * 100);
   return (
-    <div>
-      {!patientLoading ? <div>
+      <div>
         <Box sx={{
           position: 'relative',
           flexDirection: 'row',
@@ -83,10 +81,7 @@ export const MultiTableEditor = () => {
         </Box>
         {_.orderBy(categories, ['orderNo'], ['asc']).map(category => <SingleTableEditor
           key={category.id} category={category}/>)}
-      </div> : <Box sx={{display: 'flex'}}>
-        <CircularProgress/>
-      </Box>}
-    </div>
+      </div>
   );
 }
 
