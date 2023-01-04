@@ -18,7 +18,7 @@ import {
 
 import {
   createDatasourceRow,
-  deleteDatasourceRow,
+  deleteDatasourceRow, getDataSources,
   resetFlag as resetDatasourceContainerFlag,
   updateDatasourceRow,
 } from 'app/modules/datasource-editor/reducer/datasource.container.reducer';
@@ -106,6 +106,12 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
   useEffect(() => {
     setAccordionExpanded(openAll);
   }, [openAll]);
+
+  useEffect(() => {
+    if (category && category.title === 'GSCN.CNCR_RGST') {
+      dispatch(getDataSources({categoryId: category.id, patientNo: patient.ptNo}));
+    }
+  }, [patient.fsrMedDt]);
 
   const canRender: () => boolean = () =>
     category && itemContainer && itemContainer[category.id] && dataContainer && dataContainer[category.id];
