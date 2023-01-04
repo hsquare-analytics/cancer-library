@@ -3,8 +3,10 @@ import DataGrid, {Column, RowDragging,} from 'devextreme-react/data-grid';
 import {IRootState} from "app/config/store";
 import {connect} from 'react-redux';
 import {setPatients} from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
+import {getCustomizePatientStatusText} from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid";
 
 interface IGridProps extends StateProps, DispatchProps {
+  position: string;
   selectedRowKeys: {
     'false': any[],
     'true': any[]
@@ -93,12 +95,15 @@ export class DndGrid extends React.Component<IGridProps> {
           }}
         >
           <RowDragging data={this.props.authorized} group="tasksGroup" onAdd={this.onAdd}/>
-          <Column dataField="ptNo" dataType="string" caption="환자번호" alignment={'center'}/>
-          <Column dataField="ptNm" dataType="string" caption="환자명" alignment={'center'}/>
-          <Column dataField="fsrMedDt" dataType="date" caption="암초진일" alignment={'center'} format={'yyyy-MM-dd'} />
-          <Column dataField="idxDt" dataType="date" caption="암등록일" alignment={'center'} format={'yyyy-MM-dd'}
+          <Column dataField="ptNo" dataType="string" caption="환자번호" alignment='center'/>
+          <Column dataField="ptNm" dataType="string" caption="환자명" alignment='center'/>
+          <Column dataField="fsrMedDt" dataType="date" caption="암초진일" alignment='center' format='yyyy-MM-dd'/>
+          <Column dataField="idxDt" dataType="date" caption="암등록일" alignment='center' format='yyyy-MM-dd'
                   sortIndex={0}
-                  sortOrder={'desc'}/>
+                  sortOrder='desc'/>
+          <Column dataField="detail.status" dataType="string" caption="상태" alignment="center" customizeText={getCustomizePatientStatusText}/>
+          <Column dataField="detail.createdBy" dataType="string" caption="제출자" alignment="center"/>
+          <Column dataField="detail.createdDate" dataType="date" format='yyyy-MM-dd' caption="제출일" alignment="center"/>
           <Column dataField="authorized" dataType="boolean" visible={false}/>
         </DataGrid>
       </div>
