@@ -40,12 +40,11 @@ const DxTextAreaBox = (props: IDxEditCellRenderProps) => {
 
   return <div>
     <TextArea
-      readOnly={!isSudoUser && canNotEditDatasource(patient)}
+      readOnly={(!isSudoUser && canNotEditDatasource(patient)) || !props.data.column.allowEditing}
       className={className}
       isValid={isValid(validationFailedItems, data.column.name)}
       defaultValue={props.data.value}
       onValueChanged={onValueChanged}
-      disabled={!props.data.column.allowEditing}
       height={150}
       maxLength={getMaxLength()}
     />
