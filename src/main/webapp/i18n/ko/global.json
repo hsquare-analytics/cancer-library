@@ -106,7 +106,11 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Showing {{first}} - {{second}} of {{total}} items."
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+    "action": {
+      "confirm": "확인",
+      "cancel": "취소"
+    }
   },
   "entity": {
     "action": {

@@ -1,7 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
+import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
+import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import io.planit.cancerlibrary.repository.PatientRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
@@ -16,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -90,11 +95,43 @@ public class PatientController {
 
         Runnable myRunnable = () -> {
             datasourceSyncService.syncPatientFdx(patient, login);
-            datasourceSyncService.syncOnlyUpdatedExistPatientFdx(patient, login);
         };
 
         Thread thread = new Thread(myRunnable);
         thread.start();
+    }
+
+    @PostMapping("/patients/update-bulk-status/{status}")
+    public ResponseEntity<Boolean> bulkUpdatePatientStatus(@RequestBody List<String> ptNos, @PathVariable String status) {
+        log.debug("REST request to bulk update patient status");
+
+        if (ptNos == null || ptNos.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        if (status == null || status.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+        ptNos.forEach(ptNo -> {
+            patientService.updatePatient(new Patient().ptNo(ptNo).detail(new PatientDetail().status(status)));
+        });
+
+        HttpHeaders headers = new HttpHeaders();
+
+        if (status.equals(PatientConstants.APPROVED)) {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "approved");
+        } else if (status.equals(PatientConstants.DECLINED)) {
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "declined");
+        }
+
+        try {
+            headers.add("X-" + applicationName + "-params", URLEncoder.encode(String.valueOf(ptNos.size()), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            log.error("Failed to encode params", e);
+        }
+
+        return ResponseEntity.ok().headers(headers).body(true);
     }
 
 }

@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {
   getEntities as getAccessiblePatients,
-  getEntity as getPatient,
+  getEntity as getPatient, updateBulkStatus,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
 import {getEntities as getPatientComments} from "app/modules/row-comment-editor/row-comment.reducer";
-import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Item, Toolbar, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
@@ -21,6 +21,7 @@ import Box from '@mui/material/Box';
 import {REVIEW_LIST} from 'app/config/datasource-constants';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {getAccessiblePatientStatusSortValue} from "app/modules/datasource-editor/utils/accessible-patient.sort.utils";
+import {onClickUpdateBulkStatus} from "app/modules/datasource-editor/accessible-patient.updatebulk.utils";
 
 export const AccessiblePatient = () => {
   const dispatch = useAppDispatch();
@@ -75,7 +76,7 @@ export const AccessiblePatient = () => {
   };
 
   return (
-    <section className="wrap-page">
+    <section className="wrap-page accessible-patient-wrapper">
       <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
       <MultiTableEditorPopup ref={multiTableEditorPopupRef}/>
       {!loading || patientList.length > 0 ? (
@@ -93,7 +94,7 @@ export const AccessiblePatient = () => {
           allowColumnReordering={true}
           allowColumnResizing={true}
           columnResizingMode={'widget'}
-          selection={{mode: 'single'}}
+          selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
           editing={{
             mode: 'row',
@@ -105,6 +106,37 @@ export const AccessiblePatient = () => {
           height={'95vh'}
           hoverStateEnabled={true}
           paging={{pageSize: 30}}
+          toolbar={{
+            items: [
+              {
+                location: 'after',
+                widget: 'dxButton',
+                visible: isSudoUser,
+                options: {
+                  icon: 'revert',
+                  onClick() {
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.DECLINED});
+                  },
+                  text: translate('cancerLibraryApp.patient.bulkDecline.title'),
+                }
+              },
+              {
+                location: 'after',
+                widget: 'dxButton',
+                visible: isSudoUser,
+                options: {
+                  icon: 'check',
+                  onClick() {
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.APPROVED});
+                  },
+                  text: translate('cancerLibraryApp.patient.bulkApprove.title'),
+                }
+              },
+              {
+                name: 'searchPanel',
+              }
+            ]
+          }}
         >
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   visibleIndex={0}/>

@@ -11,3 +11,10 @@
     height: 30em;
   }
 }
+
+.accessible-patient-wrapper {
+  .dx-data-row.dx-state-hover > td:not(.dx-focused) {
+    color: mediumblue !important;
+    cursor: pointer;
+  }
+}

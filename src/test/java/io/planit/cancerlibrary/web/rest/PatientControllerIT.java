@@ -1,6 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
@@ -11,8 +12,9 @@ import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.TimeService;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,9 +25,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.hamcrest.Matchers.hasItem;
@@ -146,5 +148,30 @@ class PatientControllerIT {
 
         Instant result = patientRepository.findByPatientNo(patient.getPtNo()).map(Patient::getDetail).map(PatientDetail::getStandardDate).orElse(null);
         assertThat(result).isEqualTo(now);
+    }
+
+    @ParameterizedTest
+    @Transactional(value = "jdbcTemplateTransactionManager")
+    @WithMockUser
+    @ValueSource(strings = {PatientConstants.DECLINED, PatientConstants.APPROVED})
+    void test_bulk_update_patient_status_detail(String status) throws Exception {
+        Patient patient1 = PatientResourceIT.createPatientDTO().ptNo("patient1");
+        patientRepository.insert(patient1);
+        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().status(PatientConstants.SUBMITTED));
+
+        Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("patient2");
+        patientRepository.insert(patient2);
+        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().status(PatientConstants.SUBMITTED));
+
+        restDatasourcePatientMockMvc.perform(post("/api/patients/update-bulk-status/{status}", status)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtil.convertObjectToJsonBytes(Arrays.asList(patient1.getPtNo(), patient2.getPtNo()))))
+            .andExpect(status().isOk());
+
+        Patient result1 = patientRepository.findByPatientNo(patient1.getPtNo()).get();
+        assertThat(result1.getDetail().getStatus()).isEqualTo(status);
+
+        Patient result2 = patientRepository.findByPatientNo(patient2.getPtNo()).get();
+        assertThat(result2.getDetail().getStatus()).isEqualTo(status);
     }
 }

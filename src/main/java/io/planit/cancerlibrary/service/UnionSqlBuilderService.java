@@ -36,7 +36,7 @@ public class UnionSqlBuilderService {
             .orElseThrow(AbnormalSetupException::new);
 
         SQL updatedListSQL = getUpdatedListSQL(category, itemList, patientNo);
-        SQL notUpdatedListSQL = getNotUpdatedListSQL(category, itemList, patientNo);
+        SQL notUpdatedListSQL = getOriginListSQL(category, itemList, patientNo);
 
         SQL sql = new SQL();
         sql.SELECT("*")
@@ -55,25 +55,27 @@ public class UnionSqlBuilderService {
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
         sql.FROM(updatedTableName);
 
-        sql.WHERE(String.format("PT_NO IN ('%s')", patientNo));
+        sql.WHERE(String.format("PT_NO = '%s'", patientNo));
 
         return sql;
     }
 
-    private SQL getNotUpdatedListSQL(Category category, List<Item> itemList, String patientNo) {
+    private SQL getOriginListSQL(Category category, List<Item> itemList, String patientNo) {
         String originTableName = category.getTitle().toUpperCase();
         String updatedTableName = originTableName + UPDATED_SUFFIX;
-
-        SQL excludeIdxSubQuery = new SQL().SELECT(IDX_COLUMN).FROM(updatedTableName);
 
         SQL sql = new SQL().SELECT(IDX_COLUMN).SELECT(String.format("'%s' AS STATUS", RowStatus.NOT_STARTED));
         getMarkingColumns().stream().map(key -> String.format("NULL AS %s", key)).forEach(sql::SELECT);
 
         itemList.stream().filter(distinctByKey(Item::getTitle)).forEach(item -> sql.SELECT(item.getTitle().toUpperCase()));
-        sql.FROM(originTableName)
-            .WHERE(String.format("%s NOT IN (%s)", IDX_COLUMN, excludeIdxSubQuery));
 
-        sql.WHERE(String.format("PT_NO IN ('%s')", patientNo));
+        SQL notExistSubQuery = new SQL().SELECT("1").FROM(updatedTableName)
+            .WHERE(updatedTableName + "." + IDX_COLUMN + " = " + originTableName + "." + IDX_COLUMN)
+            .WHERE(getSqlEqualSyntax("PT_NO", patientNo));
+
+        sql.FROM(originTableName).WHERE(String.format("NOT EXISTS (%s)", notExistSubQuery));
+
+        sql.WHERE(getSqlEqualSyntax("PT_NO", patientNo));
 
         return sql;
     }

@@ -18,20 +18,20 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
 
   dispatch(setSelectedCategory(category));
   props.setActionType(ActionType.CREATE);
-  const visibleRows = dataGridRef.current.instance.getVisibleRows().map(row => row.data);
-  const selectedRows = dataGridRef.current.instance.getVisibleRows().filter(row => row.isSelected).map(row => row.data);
-
 
   const initMaxSequence = () => {
-    if (visibleRows.length > 0) {
-      const maxSeq = _.maxBy(visibleRows, category.attribute.autoincrementField)[category.attribute.autoincrementField];
-      e.data[category.attribute.autoincrementField] = maxSeq + 1;
-    } else {
-      e.data[category.attribute.autoincrementField] = 1;
-    }
+    dataGridRef.current.instance.getDataSource().store().load().done(function (originDatasource) {
+      if (originDatasource.length > 0) {
+        const maxSeq = _.maxBy(originDatasource, category.attribute.autoincrementField)[category.attribute.autoincrementField];
+        e.data[category.attribute.autoincrementField] = maxSeq + 1;
+      } else {
+        e.data[category.attribute.autoincrementField] = 1;
+      }
+    })
   }
 
   e.promise = new Promise<void>((resolve, reject) => {
+    const selectedRows = dataGridRef.current.instance.getVisibleRows().filter(row => row.isSelected).map(row => row.data);
     if (selectedRows.length === 0) {
       Swal.fire({
         text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectMinimumRow'),

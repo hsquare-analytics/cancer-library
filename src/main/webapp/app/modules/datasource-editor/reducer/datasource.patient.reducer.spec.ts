@@ -4,7 +4,14 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
 
-import reducer, {getEntities, getEntity, reset, updateEntity, updateFirstVisitDate} from './datasource.patient.reducer';
+import reducer, {
+  updateBulkStatus,
+  getEntities,
+  getEntity,
+  reset,
+  updateEntity,
+  updateFirstVisitDate
+} from './datasource.patient.reducer';
 import {EntityState} from 'app/shared/reducers/reducer.utils';
 import {defaultValue, IPatient} from "app/shared/model/patient.model";
 
@@ -62,7 +69,7 @@ describe('Entities reducer tests', () => {
 
     it('should set state to updating', () => {
       testMultipleTypes(
-        [updateEntity.pending.type, updateFirstVisitDate.pending.type],
+        [updateEntity.pending.type, updateFirstVisitDate.pending.type, updateBulkStatus.pending.type],
         {},
         state => {
           expect(state).toMatchObject({
@@ -88,7 +95,8 @@ describe('Entities reducer tests', () => {
           getEntities.rejected.type,
           getEntity.rejected.type,
           updateEntity.rejected.type,
-          updateFirstVisitDate.rejected.type
+          updateFirstVisitDate.rejected.type,
+          updateBulkStatus.rejected.type,
         ],
         'some message',
         state => {
@@ -151,6 +159,15 @@ describe('Entities reducer tests', () => {
 
     it('should update fisrt visit date', () => {
       expect(reducer(undefined, {type: updateFirstVisitDate.fulfilled.type,}))
+        .toEqual({
+          ...initialState,
+          updating: false,
+          updateSuccess: true,
+        });
+    });
+
+    it('should update bulk status of patients', () => {
+      expect(reducer(undefined, {type: updateBulkStatus.fulfilled.type,}))
         .toEqual({
           ...initialState,
           updating: false,
@@ -237,6 +254,25 @@ describe('Entities reducer tests', () => {
         },
       ];
       await store.dispatch(updateFirstVisitDate({ptNo: "1"}));
+      expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
+      expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
+    });
+
+    it('dispatches UPDATE_BULK_STATUS actions', async () => {
+      const expectedActions = [
+        {
+          type: updateBulkStatus.pending.type,
+        },
+        {
+          type: getEntities.pending.type,
+        },
+        {
+          type: updateBulkStatus.fulfilled.type,
+          payload: resolvedObject,
+        },
+      ];
+      await store.dispatch(updateBulkStatus({status: "1", ptNos: ["1"]}));
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);
       expect(store.getActions()[2]).toMatchObject(expectedActions[2]);
