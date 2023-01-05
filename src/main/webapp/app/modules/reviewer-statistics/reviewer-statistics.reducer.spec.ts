@@ -1,6 +1,11 @@
 import reducer, {getEntities, reset} from './reviewer-statistics.reducer';
+import axios from 'axios';
 
-describe('reviewerstatistics reducer tests', () => {
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import sinon from 'sinon';
+
+describe('Reviewer Statistics reducer tests', () => {
   function isEmpty(element): boolean {
     if (element instanceof Array) {
       return element.length === 0;
@@ -47,5 +52,45 @@ describe('reviewerstatistics reducer tests', () => {
       expect(reducer(initialState, {type: getEntities.rejected.type, error: {message: 'error'}}))
         .toMatchObject({errorMessage: 'error', loading: false});
     });
+  });
+
+  describe('Success', () => {
+    it('should return the list of entities', () => {
+      expect(reducer(initialState, {type: getEntities.fulfilled.type, payload: {data: [{id: 1}]}}))
+        .toEqual({...initialState, loading: false, entities: [{id: 1}]});
+    });
+  });
+
+  describe('Actions', () => {
+    let store;
+
+    const resolvedObject = {value: 'whatever'};
+    beforeEach(() => {
+      const mockStore = configureStore([thunk]);
+      store = mockStore({});
+      axios.get = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.post = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.put = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.patch = sinon.stub().returns(Promise.resolve(resolvedObject));
+      axios.delete = sinon.stub().returns(Promise.resolve(resolvedObject));
+    });
+
+
+    it('should Fetch entities', async () => {
+      const expectedAction = [
+        {
+          type: getEntities.pending.type,
+        },
+        {
+          type: getEntities.fulfilled.type,
+          payload: resolvedObject,
+        }
+      ];
+
+      await store.dispatch(getEntities());
+      expect(store.getActions()[0]).toMatchObject(expectedAction[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedAction[1]);
+    });
+
   });
 });
