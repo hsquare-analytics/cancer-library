@@ -17,26 +17,38 @@ const ReviewStatisticsDatagrid = () => {
       allowColumnResizing={true}
     >
       <SearchPanel visible={true} highlightCaseSensitive={true}/>
-      <Column dataField="login" dataType="text" alignment="center"/>
-      <Column dataField="name" dataType="text" alignment="center"/>
-      <Column dataField="assigned" dataType="string" alignment="center"/>
-      <Column
-        caption={translate('cancerLibraryApp.userPatientDndGrid.column.totalSubmitted')}
-        calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
-        alignment="center"/>
-      <Column caption={"count"}>
-        <Column dataField="submitted" dataType="string" alignment="center"/>
-        <Column dataField="declined" dataType="string" alignment="center"/>
-        <Column dataField="approved" dataType="string" alignment="center"/>
+      <Column dataField="login" dataType="text" alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.login')}/>
+      <Column dataField="name" dataType="text" alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.name')}/>
+      <Column dataField="assigned" dataType="string" alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.assigned')}/>
+      <Column calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.total')}
+              alignment="center"/>
+      <Column alignment="center" caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.count.title')}>
+        <Column dataField="submitted" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.count.submitted')}/>
+        <Column dataField="declined" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.count.declined')}/>
+        <Column dataField="approved" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.count.approved')}/>
       </Column>
-      <Column caption={"%"}>
-        <Column dataField="submitted" dataType="string" alignment="center"/>
-        <Column dataField="declined" dataType="string" alignment="center"/>
-        <Column dataField="approved" dataType="string" alignment="center"/>
+      <Column alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.percent.title')}>
+        <Column dataField="submitted" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.percent.submitted')}/>
+        <Column dataField="declined" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.percent.declined')}/>
+        <Column dataField="approved" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.percent.approved')}/>
       </Column>
-      <Column caption={"% per total patient"}>
-        <Column dataField="noaction" dataType="string" alignment="center"/>
-        <Column dataField="declined" dataType="string" alignment="center"/>
+      <Column alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.title')}>
+        <Column dataField="submitted" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.submitted')}/>
+        <Column dataField="approved" dataType="string" alignment="center"
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.approved')}/>
       </Column>
       <Paging defaultPageSize={10}/>
     </DataGrid>);
