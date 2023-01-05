@@ -12,9 +12,12 @@ export interface IDateRange {
   startDate: Date;
   endDate: Date;
 }
+
 interface ICustomDateRangePopoverProps {
   dateRange: IDateRange;
   setDateRange;
+
+  onSearchClick: () => void;
 }
 
 export const CustomDateRangePopover = (props: ICustomDateRangePopoverProps) => {
@@ -32,6 +35,7 @@ export const CustomDateRangePopover = (props: ICustomDateRangePopoverProps) => {
   }
 
   const onSearchClick = () => {
+    props.onSearchClick();
   }
 
   return <>

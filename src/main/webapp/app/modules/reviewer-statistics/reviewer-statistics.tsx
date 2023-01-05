@@ -26,7 +26,8 @@ const ReviewerStatistics = () => {
     <div className="reviewer-statistics-wrapper wrap-page">
       <h1 className="title-page">Reviewer Statistics</h1>
       <div className="m-2 mt-4 d-flex justify-content-end">
-        <DateRangePicker dateRange={dateRange} setDateRange={setDateRange}/>
+        <DateRangePicker dateRange={dateRange} setDateRange={setDateRange}
+                         onSearchClick={() => dispatch(getEntities({ startDate: moment(dateRange.startDate).toISOString(), endDate: moment(dateRange.endDate).toISOString() }))}/>
       </div>
       <article>
         <div className="left-section">
