@@ -163,16 +163,14 @@ export const UserPatientDndGrid = () => {
           <Column dataField="assigned" caption={translate('cancerLibraryApp.userPatientDndGrid.column.assigned')}
                   alignment={'center'}/>
           <Column
-            caption={translate('cancerLibraryApp.userPatientDndGrid.column.missed')}
+            caption={translate('cancerLibraryApp.userPatientDndGrid.column.totalSubmitted')}
             alignment={'center'}
-            calculateCellValue={rowData => {
-              return rowData.assigned - rowData.submitted - rowData.approved - rowData.declined;
-            }}
+            calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
           />
           <Column caption={translate('cancerLibraryApp.userPatientDndGrid.column.summary')} alignment={'center'}>
             <Column
               dataField="submitted"
-              caption={translate('cancerLibraryApp.userPatientDndGrid.column.submitted')}
+              caption={translate('cancerLibraryApp.userPatientDndGrid.column.noaction')}
               alignment={'center'}
             />
             <Column dataField="approved" caption={translate('cancerLibraryApp.userPatientDndGrid.column.approved')}
@@ -189,7 +187,8 @@ export const UserPatientDndGrid = () => {
             <span className="patient-text me-3">
             {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.description')}
           </span>
-            <Typography className={"me-3"} variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
+            <Typography className={"me-3"}
+                        variant={'h5'}> {selectedUser ? `${selectedUser.name} (${selectedUser?.login}) - ` : null}
               {translate('cancerLibraryApp.userPatientDndGrid.dndGuide.title')}
               <HelpOutlineOutlinedIcon/>
             </Typography>
