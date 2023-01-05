@@ -9,6 +9,7 @@ import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
+import io.planit.cancerlibrary.service.dto.DateRangeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping("/users/normal-authorization-list")
-    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate) {
+    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList(DateRangeDTO dateRangeDTO) {
         log.debug("REST request to get all Users with work info");
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
             .stream()
@@ -51,18 +53,19 @@ public class UserController {
             .map(user -> {
                 Specification<UserPatient> spec = Specification.where((root, query, cb) -> cb.equal(root.get("user"), user));
 
-                if (startDate != null) {
-                    spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("lastModifiedDate"), startDate));
+                if (dateRangeDTO.getStartDate() != null) {
+                    spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("lastModifiedDate"), dateRangeDTO.getStartDate()));
                 }
 
-                if (endDate != null) {
-                    spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("lastModifiedDate"), endDate));
+                if (dateRangeDTO.getEndDate() != null) {
+                    spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("lastModifiedDate"), dateRangeDTO.getEndDate()));
                 }
 
                 Integer assigned = userPatientRepository.findAll(spec).size();
-                Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.SUBMITTED);
-                Integer approved = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.APPROVED);
-                Integer declined = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.DECLINED);
+
+                Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, dateRangeDTO);
+                Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, dateRangeDTO);
+                Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, dateRangeDTO);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
             }).collect(Collectors.toList());
 
