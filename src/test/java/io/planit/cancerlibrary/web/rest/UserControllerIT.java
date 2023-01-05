@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -66,6 +68,31 @@ class UserControllerIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
             .andExpect(jsonPath("$.[*].assigned").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].submitted").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].approved").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].declined").value(hasItem(0)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testLogin")
+    void test_fetch_users_authorization_info_by_date_param() throws Exception {
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+
+        String patientNo = "ptno" + new Random().nextInt(100);
+        UserPatient userPatient = new UserPatient().user(user).patientNo(patientNo);
+        userPatientRepository.saveAndFlush(userPatient);
+
+        Instant startDate = user.getLastModifiedDate().minus(1, ChronoUnit.DAYS);
+        Instant endDate = user.getLastModifiedDate().plus(1, ChronoUnit.DAYS);
+
+        restUserMockMvc
+            .perform(get("/api/users/normal-authorization-list?startDate={startDate}&endDate={endDate}", startDate, endDate))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
+            .andExpect(jsonPath("$.[*].assigned").value(hasItem(1)))
             .andExpect(jsonPath("$.[*].submitted").value(hasItem(0)))
             .andExpect(jsonPath("$.[*].approved").value(hasItem(0)))
             .andExpect(jsonPath("$.[*].declined").value(hasItem(0)));

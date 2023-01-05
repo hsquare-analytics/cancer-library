@@ -4,18 +4,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
+import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,13 +43,23 @@ public class UserController {
     }
 
     @GetMapping("/users/normal-authorization-list")
-    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
+    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate) {
         log.debug("REST request to get all Users with work info");
         List<NormalAuthorizationUserVM> result = userRepository.findAll()
             .stream()
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR)))
             .map(user -> {
-                Integer assigned = userPatientRepository.countByUser(user);
+                Specification<UserPatient> spec = Specification.where((root, query, cb) -> cb.equal(root.get("user"), user));
+
+                if (startDate != null) {
+                    spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("lastModifiedDate"), startDate));
+                }
+
+                if (endDate != null) {
+                    spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("lastModifiedDate"), endDate));
+                }
+
+                Integer assigned = userPatientRepository.findAll(spec).size();
                 Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.SUBMITTED);
                 Integer approved = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.APPROVED);
                 Integer declined = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.DECLINED);
