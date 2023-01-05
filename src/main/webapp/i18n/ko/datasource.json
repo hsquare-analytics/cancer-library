@@ -16,8 +16,11 @@
         "createdDate": "생성일",
         "lastModifiedBy": "최종 수정자",
         "lastModifiedDate": "최종 수정일",
+        "recordStatus": "기록 여부",
+        "record": "기록",
         "status": "상태",
-        "comment": "특이사항"
+        "comment": "특이사항",
+        "declineReason": "반려사유"
       },
       "review": {
         "initial": "처리 전",
