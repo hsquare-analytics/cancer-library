@@ -106,6 +106,7 @@ export const AccessiblePatient = () => {
           showColumnHeaders={true}
           allowColumnReordering={true}
           allowColumnResizing={true}
+          columnChooser={{enabled: true, mode: 'select'}}
           columnResizingMode={'widget'}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
@@ -144,6 +145,9 @@ export const AccessiblePatient = () => {
                   },
                   text: translate('cancerLibraryApp.patient.bulkApprove.title'),
                 }
+              },
+              {
+                name: 'columnChooserButton',
               },
               {
                 name: 'searchPanel',
