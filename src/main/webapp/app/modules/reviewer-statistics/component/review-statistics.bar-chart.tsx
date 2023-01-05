@@ -40,29 +40,6 @@ export const options = {
   },
 };
 
-// const labels = ['kcure01', 'kcure02', 'kcure03', 'kcure04', 'kcure05', 'kcure06', 'kcure07', 'kcure08', 'kcure09', 'kcure10'];
-//
-// export const data = {
-//   labels,
-//   datasets: [
-//     {
-//       label: 'no action ',
-//       data: labels.map(() => faker.datatype.number({min: 0, max: 1000})),
-//       backgroundColor: 'rgba(255, 205, 86, 0.5)',
-//     },
-//     {
-//       label: 'decline',
-//       data: [10, 20, 30, 40, 50],
-//       backgroundColor: 'rgba(255, 99, 132, 0.5)',
-//     },
-//     {
-//       label: 'approve',
-//       data: labels.map(() => faker.datatype.number({min: 0, max: 1000})),
-//       backgroundColor: 'rgba(53, 162, 235, 0.5)',
-//     }
-//   ],
-// };
-
 export const ReviewStatisticsBarChart = () => {
 
   const [labels, setLabels] = useState<string[]>([]);
@@ -72,25 +49,29 @@ export const ReviewStatisticsBarChart = () => {
 
   useEffect(() => {
     if (entities.length > 0) {
-      const labels = entities.map(entity => `${entity.name}(${entity.login})`);
+      const sorted = [...entities].sort((a, b) => {
+        return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
+      });
+
+      const labels = sorted.map(entity => `${entity.name}(${entity.login})`);
       setLabels(labels);
 
       const datasets = [];
       const noActionDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.submitted'),
-        data: entities.map(entity => entity.submitted),
+        data: sorted.map(entity => entity.submitted),
         backgroundColor: 'rgba(255, 205, 86, 0.5)',
       };
 
       const declineDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.declined'),
-        data: entities.map(entity => entity.declined),
+        data: sorted.map(entity => entity.declined),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       };
 
       const approveDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.approved'),
-        data: entities.map(entity => entity.approved),
+        data: sorted.map(entity => entity.approved),
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       };
 
