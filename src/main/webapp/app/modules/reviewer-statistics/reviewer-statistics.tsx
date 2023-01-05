@@ -6,10 +6,7 @@ import "./reviewer-statistics.scss";
 import ReviewStatisticsDoughnutChart from "app/modules/reviewer-statistics/component/review-statistics.doughnut-chart";
 import ReviewStatisticsDatagrid from "app/modules/reviewer-statistics/component/review-statistics.datagrid";
 
-export interface IReviewStatisticsProps {
-}
-
-const ReviewerStatistics = (props: IReviewStatisticsProps) => {
+const ReviewerStatistics = () => {
   const [dateRange, setDateRange] = useState<IDateRange>({
     startDate: moment().subtract(1, 'days').toDate(),
     endDate: moment().subtract(1, 'days').toDate()
