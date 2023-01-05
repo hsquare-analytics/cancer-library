@@ -75,6 +75,19 @@ export const AccessiblePatient = () => {
     }
   };
 
+  const recordStatusCellTemplate = (rowData) => {
+    if (!rowData.detail) {
+      return 'No';
+    }
+    if (rowData.detail.comment && rowData.detail.comment.length > 0) {
+      return 'Yes';
+    }
+    if (rowData.detail.declineReason && rowData.detail.declineReason.length > 0) {
+      return 'Yes';
+    }
+    return 'No';
+  }
+
   return (
     <section className="wrap-page accessible-patient-wrapper">
       <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
@@ -145,9 +158,7 @@ export const AccessiblePatient = () => {
             caption={translate('cancerLibraryApp.datasource.column.recordStatus')}
             width={150}
             alignment={'center'}
-            calculateCellValue={rowData => {
-              return rowData.detail && (rowData.detail.comment && rowData.detail.comment.length > 0) || (rowData.detail.declineReason && rowData.detail.declineReason.length > 0) ? "Yes" : "No";
-            }}
+            calculateCellValue={recordStatusCellTemplate}
             allowEditing={false}
             visibleIndex={1}
           />
