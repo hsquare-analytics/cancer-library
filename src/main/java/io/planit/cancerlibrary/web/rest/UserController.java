@@ -51,17 +51,7 @@ public class UserController {
             .stream()
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR)))
             .map(user -> {
-                Specification<UserPatient> spec = Specification.where((root, query, cb) -> cb.equal(root.get("user"), user));
-
-                if (dateRangeDTO.getStartDate() != null) {
-                    spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("lastModifiedDate"), dateRangeDTO.getStartDate()));
-                }
-
-                if (dateRangeDTO.getEndDate() != null) {
-                    spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("lastModifiedDate"), dateRangeDTO.getEndDate()));
-                }
-
-                Integer assigned = userPatientRepository.findAll(spec).size();
+                Integer assigned = userPatientRepository.countByUser(user);
 
                 Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, dateRangeDTO);
                 Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, dateRangeDTO);
