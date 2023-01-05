@@ -8,11 +8,13 @@ import DataGrid, {
   Paging,
   SearchPanel,
 } from 'devextreme-react/data-grid';
+import {useAppSelector} from "app/config/store";
 
 const ReviewStatisticsDatagrid = () => {
+  const entities = useAppSelector(state => state.reviewerStatistics.entities);
   return (
     <DataGrid
-      dataSource={[]}
+      dataSource={entities}
       allowColumnReordering={true}
       rowAlternationEnabled={true}
       showBorders={true}

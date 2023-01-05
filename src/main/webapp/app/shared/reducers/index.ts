@@ -21,6 +21,7 @@ import datasourcePatient from "app/modules/datasource-editor/reducer/datasource.
 import datasourceStatus from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import userPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid.reducer";
 import rowCommentReducer from "app/modules/row-comment-editor/row-comment.reducer";
+import reviewerStatistics from "app/modules/reviewer-statistics/reviewer-statistics.reducer";
 
 const rootReducer: ReducersMapObject = {
   authentication,
@@ -42,7 +43,8 @@ const rootReducer: ReducersMapObject = {
   datasourcePatient,
   userPatientDndGrid,
   datasourceStatus,
-  rowCommentReducer
+  rowCommentReducer,
+  reviewerStatistics
 };
 
 export default rootReducer;

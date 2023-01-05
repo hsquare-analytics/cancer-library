@@ -1,14 +1,17 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from '@reduxjs/toolkit';
 import axios from "axios";
+import {IReviewerStatisticsModel} from "app/modules/reviewer-statistics/reviewer-statistics.model";
+
+import moment from "moment";
 
 const initialState = {
   loading: false,
   errorMessage: null,
-  entities: [],
+  entities: [] as any,
 };
 
-export const getEntities = createAsyncThunk('point/fetch_entity_list', async () => {
-  return axios.get<any>("test");
+export const getEntities = createAsyncThunk('point/fetch_entity_list', async (dateRange: { startDate: string, endDate: string }) => {
+  return axios.get<IReviewerStatisticsModel>(`api/users/normal-authorization-list?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`)
 });
 
 
