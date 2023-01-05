@@ -141,14 +141,35 @@ export const AccessiblePatient = () => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   visibleIndex={0}/>
           <Column
-            dataField="detail.comment"
-            caption={translate('cancerLibraryApp.datasource.column.comment')}
+            dataField={'recordStatus'}
+            caption={translate('cancerLibraryApp.datasource.column.recordStatus')}
             width={150}
             alignment={'center'}
-            cellRender={commentCellRender}
+            calculateCellValue={rowData => {
+              return rowData.detail && (rowData.detail.comment && rowData.detail.comment.length > 0) || (rowData.detail.declineReason && rowData.detail.declineReason.length > 0) ? "Yes" : "No";
+            }}
             allowEditing={false}
             visibleIndex={1}
           />
+          <Column caption={translate('cancerLibraryApp.datasource.column.record')}
+                  visibleIndex={1.1}
+                  alignment={'center'}
+          >
+            <Column
+              caption={translate('cancerLibraryApp.datasource.column.comment')}
+              dataField="detail.comment"
+              width={150}
+              alignment={'center'}
+              allowEditing={false}
+            />
+            <Column
+              caption={translate('cancerLibraryApp.datasource.column.declineReason')}
+              dataField="detail.declineReason"
+              width={150}
+              alignment={'center'}
+              allowEditing={false}
+            />
+          </Column>
           <Column
             caption={translate('cancerLibraryApp.patient.detail.status')}
             dataField={'detail.status'}
