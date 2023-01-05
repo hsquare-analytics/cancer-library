@@ -58,7 +58,7 @@ public class UserController {
                 Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, dateRangeDTO);
 
                 Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
-                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
+                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, null);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved);
             }).collect(Collectors.toList());
 
