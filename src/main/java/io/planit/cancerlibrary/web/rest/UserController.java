@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/users/normal-authorization-list")
     public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList(DateRangeDTO dateRangeDTO) {
         log.debug("REST request to get all Users with work info");
-        List<NormalAuthorizationUserVM> result = userRepository.findAll()
+        List<NormalAuthorizationUserVM> result = userRepository.findAllByActivatedTrue()
             .stream()
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR)))
             .map(user -> {
