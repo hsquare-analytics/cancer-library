@@ -15,7 +15,14 @@ const ReviewStatisticsDatagrid = () => {
       return '-';
     }
 
-    return (rowData[field] / parent) * 100 + '%'
+    return ((rowData[field] / parent) * 100).toFixed(2) + '%'
+  }
+
+  const getRatioOfTotal = (rowData: any, field: string) => {
+    if (rowData.assigned === 0) {
+      return '-';
+    }
+    return (rowData[field] / rowData.assigned * 100).toFixed(2) + '%'
   }
 
   return (
@@ -32,6 +39,8 @@ const ReviewStatisticsDatagrid = () => {
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.login')}/>
       <Column dataField="name" dataType="text" alignment="center"
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.name')}/>
+      <Column dataField="assigned" dataType="string" alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.assigned')}/>
       <Column calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.total')}
               alignment="center"/>
@@ -57,11 +66,12 @@ const ReviewStatisticsDatagrid = () => {
       </Column>
       <Column alignment="center"
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.title')}>
-        <Column dataField="assigned" dataType="string" alignment="center"
-                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.assigned')}/>
         <Column dataField="submitted" dataType="string" alignment="center"
-                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.submitted')}/>
+                calculateCellValue={rowData => getRatioOfTotal(rowData, 'totalSubmitted')}
+                caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.submitted')}
+        />
         <Column dataField="approved" dataType="string" alignment="center"
+                calculateCellValue={rowData => getRatioOfTotal(rowData, 'totalApproved')}
                 caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.totalRatio.approved')}/>
       </Column>
       <Paging defaultPageSize={10}/>

@@ -4,8 +4,8 @@
       "dataGrid": {
         "login": "로그인",
         "name": "이름",
-        "assigned": "전체 할당",
-        "total": "총제출",
+		"assigned": "총 분배 환자수", 
+        "total": "제출",
         "status": {
           "title": "상태",
           "submitted": "미처리",
@@ -19,7 +19,7 @@
           "approved": "승인"
         },
         "totalRatio": {
-          "title": "전체 환자 대비(%)",
+          "title": "전체 환자수 대비(%)",
           "submitted": "제출률",
           "approved": "승인률"
         }

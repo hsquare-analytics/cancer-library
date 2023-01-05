@@ -81,10 +81,10 @@ public class PatientDetailRepository {
 
     public Integer countByStatusAndDateRange(String login, String status, DateRangeDTO dateRangeDTO) {
         SQL sql = new SQL().SELECT("COUNT(*)").FROM(Table.PATIENT_DETAIL.getTableName()).WHERE("STATUS = :status AND CREATED_BY = :login");
-        if (dateRangeDTO.getStartDate() != null) {
+        if (dateRangeDTO != null && dateRangeDTO.getStartDate() != null) {
             sql.WHERE(String.format("LAST_MODIFIED_DATE >= '%s'", Timestamp.from(dateRangeDTO.getStartDate())));
         }
-        if (dateRangeDTO.getEndDate() != null) {
+        if (dateRangeDTO != null && dateRangeDTO.getEndDate() != null) {
             sql.WHERE(String.format("LAST_MODIFIED_DATE <= '%s'", Timestamp.from(dateRangeDTO.getEndDate())));
         }
         return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status, "login", login), Integer.class);

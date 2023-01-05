@@ -56,7 +56,10 @@ public class UserController {
                 Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, dateRangeDTO);
                 Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, dateRangeDTO);
                 Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, dateRangeDTO);
-                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
+
+                Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
+                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
+                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved);
             }).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(result);
@@ -84,10 +87,16 @@ public class UserController {
         @JsonProperty("declined")
         private Integer declined;
 
+        @JsonProperty("totalSubmitted")
+        private Integer totalSubmitted;
+
+        @JsonProperty("totalApproved")
+        private Integer totalApproved;
+
         @JsonProperty("authority")
         private String authority;
 
-        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined) {
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined, Integer totalSubmitted, Integer totalApproved) {
             this.id = user.getId();
             this.login = user.getLogin();
             this.name = user.getName();
@@ -95,6 +104,8 @@ public class UserController {
             this.submitted = submitted;
             this.approved = approved;
             this.declined = declined;
+            this.totalSubmitted = totalSubmitted;
+            this.totalApproved = totalApproved;
 
             boolean isAdmin = user.getAuthorities().stream().anyMatch(data -> data.getName().equals("ROLE_ADMIN") || data.getName().equals("ROLE_SUPERVISOR"));
             if (isAdmin) {
