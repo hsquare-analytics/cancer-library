@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import DateRangePicker, {IDateRange} from "app/modules/date-range-picker";
 import moment from "moment";
-import BarChart from "app/modules/reviewer-statistics/component/bar-chart";
+import ReviewStatisticsBarChart from "app/modules/reviewer-statistics/component/review-statistics.bar-chart";
 import "./reviewer-statistics.scss";
-import DoughnutChart from "app/modules/reviewer-statistics/component/doughnut-chart";
+import ReviewStatisticsDoughnutChart from "app/modules/reviewer-statistics/component/review-statistics.doughnut-chart";
+import ReviewStatisticsDatagrid from "app/modules/reviewer-statistics/component/review-statistics.datagrid";
 
 export interface IReviewStatisticsProps {
 }
@@ -22,13 +23,14 @@ const ReviewerStatistics = (props: IReviewStatisticsProps) => {
       </div>
       <article>
         <div className="left-section">
-          <BarChart/>
+          <ReviewStatisticsBarChart/>
         </div>
         <div className="right-section">
           <div className="top-section">
-            <DoughnutChart/>
+            <ReviewStatisticsDoughnutChart/>
           </div>
           <div className="bottom-section">
+            <ReviewStatisticsDatagrid/>
           </div>
         </div>
       </article>

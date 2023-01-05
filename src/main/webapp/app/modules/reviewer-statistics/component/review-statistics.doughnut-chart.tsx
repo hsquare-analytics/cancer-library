@@ -31,8 +31,8 @@ export const data = {
   ],
 };
 
-const DoughnutChart = () => {
+const ReviewStatisticsDoughnutChart = () => {
   return <Doughnut data={data}/>;
 }
 
-export default DoughnutChart;
+export default ReviewStatisticsDoughnutChart;

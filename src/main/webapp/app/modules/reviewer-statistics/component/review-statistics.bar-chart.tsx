@@ -62,8 +62,8 @@ export const data = {
   ],
 };
 
-export const BarChart = () => {
+export const ReviewStatisticsBarChart = () => {
   return <Bar options={options} data={data}/>;
 };
 
-export default BarChart;
+export default ReviewStatisticsBarChart;
