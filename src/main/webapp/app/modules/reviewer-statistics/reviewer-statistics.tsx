@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import DateRangePicker, {IDateRange} from "app/modules/date-range-picker";
 import moment from "moment";
-import BarChart from "app/modules/reviewer-statistics/bar-chart";
+import BarChart from "app/modules/reviewer-statistics/chart-component/bar-chart";
 import "./reviewer-statistics.scss";
 
 export interface IReviewStatisticsProps {
@@ -19,9 +19,17 @@ const ReviewerStatistics = (props: IReviewStatisticsProps) => {
       <div className="m-2 mt-4 d-flex justify-content-end">
         <DateRangePicker dateRange={dateRange} setDateRange={setDateRange}/>
       </div>
-      <div className="left-section">
-        <BarChart/>
-      </div>
+      <article>
+        <div className="left-section">
+          <BarChart/>
+        </div>
+        <div className="right-section">
+          <div className="top-section">
+          </div>
+          <div className="bottom-section">
+          </div>
+        </div>
+      </article>
     </div>
   );
 };

@@ -1,8 +1,27 @@
 .reviewer-statistics-wrapper {
+  article {
+    display: flex;
+  }
+
   .left-section {
-    width: 40vw;
+    width: 50%;
     height: 90vh;
     border-right: 1px solid #ccc;
     padding: 20px;
+  }
+
+  .right-section {
+    width: 50%;
+    height: 90vh;
+    padding: 20px;
+
+    .top-section {
+      height: 50%;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .bottom-section {
+      height: 50%;
+    }
   }
 }
