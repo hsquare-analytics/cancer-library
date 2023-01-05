@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import DateRangePicker, {IDateRange} from "app/modules/date-range-picker";
 import moment from "moment";
-import BarChart from "app/modules/reviewer-statistics/chart-component/bar-chart";
+import BarChart from "app/modules/reviewer-statistics/component/bar-chart";
 import "./reviewer-statistics.scss";
-import DoughnutChart from "app/modules/reviewer-statistics/chart-component/doughnut-chart";
+import DoughnutChart from "app/modules/reviewer-statistics/component/doughnut-chart";
 
 export interface IReviewStatisticsProps {
 }
