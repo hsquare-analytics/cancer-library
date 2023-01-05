@@ -1,15 +1,5 @@
-import React, {useState} from 'react';
-import DateRangePicker, {IDateRange} from "app/modules/date-range-picker";
-import moment from "moment";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import React from 'react';
+import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 import {Bar} from 'react-chartjs-2';
 import {faker} from '@faker-js/faker';
 
@@ -23,8 +13,22 @@ ChartJS.register(
 );
 
 export const options = {
-  responsive: true,
   maintainAspectRatio: false,
+  indexAxis: 'y' as const,
+  elements: {
+    bar: {
+      borderWidth: 2,
+    },
+  },
+  responsive: true,
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    }
+  },
   plugins: {
     legend: {
       position: 'top' as const,
@@ -41,7 +45,7 @@ export const data = {
   labels,
   datasets: [
     {
-      label: 'submit ',
+      label: 'no action ',
       data: labels.map(() => faker.datatype.number({min: 0, max: 1000})),
       backgroundColor: 'rgba(255, 205, 86, 0.5)',
     },

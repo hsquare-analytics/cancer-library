@@ -18,6 +18,9 @@
     .top-section {
       height: 50%;
       border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
     }
 
     .bottom-section {

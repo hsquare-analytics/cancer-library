@@ -3,6 +3,7 @@ import DateRangePicker, {IDateRange} from "app/modules/date-range-picker";
 import moment from "moment";
 import BarChart from "app/modules/reviewer-statistics/chart-component/bar-chart";
 import "./reviewer-statistics.scss";
+import DoughnutChart from "app/modules/reviewer-statistics/chart-component/doughnut-chart";
 
 export interface IReviewStatisticsProps {
 }
@@ -25,6 +26,7 @@ const ReviewerStatistics = (props: IReviewStatisticsProps) => {
         </div>
         <div className="right-section">
           <div className="top-section">
+            <DoughnutChart/>
           </div>
           <div className="bottom-section">
           </div>
