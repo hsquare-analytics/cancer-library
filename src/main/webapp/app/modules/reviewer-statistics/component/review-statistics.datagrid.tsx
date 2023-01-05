@@ -41,7 +41,8 @@ const ReviewStatisticsDatagrid = () => {
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.name')}/>
       <Column dataField="assigned" dataType="string" alignment="center"
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.assigned')}/>
-      <Column calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
+      <Column dataField="login"
+              calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.total')}
               alignment="center"/>
       <Column alignment="center" caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.status.title')}>

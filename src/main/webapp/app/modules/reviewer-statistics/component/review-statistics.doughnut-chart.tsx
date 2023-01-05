@@ -50,7 +50,7 @@ const ReviewStatisticsDoughnutChart = () => {
 
       const temp = [
         {
-          // label: `${totalCount} #`,
+          label: `제출: `,
           data: [],
           backgroundColor: [],
           borderColor: [ ],
@@ -85,7 +85,7 @@ const ReviewStatisticsDoughnutChart = () => {
 
   }, [JSON.stringify(entities)]);
 
-  return <Pie data={{
+  return <Doughnut data={{
     labels: labels,
     datasets: datasets
   }}/>;
