@@ -1,10 +1,15 @@
 {
   "cancerLibraryApp": {
     "reviewerStatistics": {
+      "chartLabel": {
+        "submitted": "미처리",
+        "declined": "반려",
+        "approved": "승인"
+      },
       "dataGrid": {
         "login": "로그인",
         "name": "이름",
-		"assigned": "총 분배 환자수", 
+        "assigned": "총 분배 환자수",
         "total": "제출",
         "status": {
           "title": "상태",
@@ -12,7 +17,7 @@
           "declined": "반려",
           "approved": "승인"
         },
-        "percent" : {
+        "percent": {
           "title": "%",
           "submitted": "미처리",
           "declined": "반려",
