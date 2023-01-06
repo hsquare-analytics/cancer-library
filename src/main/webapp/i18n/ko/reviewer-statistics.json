@@ -7,7 +7,7 @@
         "approved": "승인"
       },
       "dataGrid": {
-        "login": "로그인",
+        "login": "계정",
         "name": "이름",
         "assigned": "총 분배 환자수",
         "total": "제출",

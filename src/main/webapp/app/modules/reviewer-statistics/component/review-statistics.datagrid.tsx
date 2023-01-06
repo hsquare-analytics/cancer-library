@@ -3,6 +3,7 @@ import React from 'react';
 import DataGrid, {Column, Paging, SearchPanel,} from 'devextreme-react/data-grid';
 import {useAppSelector} from "app/config/store";
 import {translate} from "react-jhipster";
+import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 
 
 const ReviewStatisticsDatagrid = () => {
@@ -35,13 +36,16 @@ const ReviewStatisticsDatagrid = () => {
       allowColumnResizing={true}
     >
       <SearchPanel visible={true} highlightCaseSensitive={true}/>
-      <Column dataField="login" dataType="text" alignment="center"
-              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.login')}/>
+      <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={50}/>
       <Column dataField="name" dataType="text" alignment="center"
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.name')}/>
+      <Column dataField="login" dataType="text" alignment="center"
+              caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.login')}/>
       <Column dataField="assigned" dataType="string" alignment="center"
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.assigned')}/>
       <Column dataField="login"
+              sortIndex={0}
+              sortOrder="desc"
               calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.total')}
               alignment="center"/>
