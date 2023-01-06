@@ -162,15 +162,16 @@ public class DatasourceController {
             .body(result);
     }
 
-    @PutMapping("/datasource/categories/{categoryId}/update-bulk-datasource-rows")
+    @PutMapping("/datasource/categories/{categoryId}/update-bulk-datasource-rows/{status}")
     public ResponseEntity<Integer> updateBulkDatasourceRows(@PathVariable(value = "categoryId") final Long categoryId,
+                                                            @PathVariable(value = "status") final RowStatus status,
                                                             @RequestBody List<Map<String, Object>> rows) {
         log.debug("REST request to inert Datasource updated row by category id: {}", categoryId);
 
         Integer result = 0;
 
         for (Map<String, Object> row : rows) {
-            row.put("status", RowStatus.COMPLETED);
+            row.put("status", status);
             String sql = dmlSqlBuilderService.getReadUpdatedRowSQL(categoryId, row);
 
             String dmlSql;
