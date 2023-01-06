@@ -123,7 +123,11 @@ public class DMLSqlBuilderService {
     }
 
     private boolean isDateColumn(Item item) {
-        return ObjectUtils.isNotEmpty(item.getAttribute()) && ("date".equals(item.getAttribute().getDataType()) || "datetime".equals(item.getAttribute().getDataType())) || "time".equals(item.getAttribute().getDataType());
+        if (item.getAttribute() == null) {
+            return false;
+        }
+
+        return ("date".equals(item.getAttribute().getDataType()) || "datetime".equals(item.getAttribute().getDataType())) || "time".equals(item.getAttribute().getDataType());
     }
 
     private boolean isSelectLabelColumn(Item item) {
