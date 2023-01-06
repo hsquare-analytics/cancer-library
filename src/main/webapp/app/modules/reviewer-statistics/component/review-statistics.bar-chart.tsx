@@ -3,6 +3,7 @@ import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title,
 import {Bar} from 'react-chartjs-2';
 import {useAppSelector} from "app/config/store";
 import {translate} from "react-jhipster";
+import MuiColorPalettes from "app/modules/reviewer-statistics/component/mui-color-palettes";
 
 ChartJS.register(
   CategoryScale,
@@ -18,7 +19,7 @@ export const options = {
   indexAxis: 'y' as const,
   elements: {
     bar: {
-      borderWidth: 2,
+      borderWidth: 1,
     },
   },
   responsive: true,
@@ -60,19 +61,19 @@ export const ReviewStatisticsBarChart = () => {
       const noActionDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.submitted'),
         data: sorted.map(entity => entity.submitted),
-        backgroundColor: 'rgba(255, 205, 86, 0.5)',
+        backgroundColor: MuiColorPalettes.find(palette => palette.title === 'grey')?.data[3],
       };
 
       const declineDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.declined'),
         data: sorted.map(entity => entity.declined),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        backgroundColor: MuiColorPalettes.find(palette => palette.title === 'red')?.data[3],
       };
 
       const approveDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.approved'),
         data: sorted.map(entity => entity.approved),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        backgroundColor: MuiColorPalettes.find(palette => palette.title === 'blue')?.data[3],
       };
 
       datasets.push(noActionDataset);

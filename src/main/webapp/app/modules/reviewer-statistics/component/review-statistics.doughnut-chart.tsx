@@ -3,6 +3,7 @@ import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
 import {Doughnut} from 'react-chartjs-2';
 import {Pie} from 'react-chartjs-2';
 import {useAppSelector} from "app/config/store";
+import MuiColorPalettes from "app/modules/reviewer-statistics/component/mui-color-palettes";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -26,15 +27,15 @@ const ReviewStatisticsDoughnutChart = () => {
         },
       ];
 
-      const RandomColor = () => {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        return {
-          backgroundColor: `rgba(${r}, ${g}, ${b}, 0.2)`,
-          borderColor: `rgba(${r}, ${g}, ${b}, 0.8)`,
-        }
-      }
+      // const RandomColor = () => {
+      //   const r = Math.floor(Math.random() * 256);
+      //   const g = Math.floor(Math.random() * 256);
+      //   const b = Math.floor(Math.random() * 256);
+      //   return {
+      //     backgroundColor: `rgba(${r}, ${g}, ${b}, 0.2)`,
+      //     borderColor: `rgba(${r}, ${g}, ${b}, 0.8)`,
+      //   }
+      // }
 
       const sorted = [...entities].sort((a, b) => {
         return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
@@ -48,9 +49,9 @@ const ReviewStatisticsDoughnutChart = () => {
       const borderColor = [];
 
       sorted.forEach((entity, index) => {
-        const color = RandomColor();
-        backgroundColor.push(color.backgroundColor);
-        borderColor.push(color.borderColor);
+        const palette = MuiColorPalettes[Math.floor(Math.random() * MuiColorPalettes.length)];
+        backgroundColor.push(palette.data[3]);
+        borderColor.push(palette.data[2]);
       });
 
       temp[0].data = data;
