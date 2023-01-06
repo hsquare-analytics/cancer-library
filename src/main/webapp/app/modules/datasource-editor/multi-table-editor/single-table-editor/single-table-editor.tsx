@@ -267,7 +267,6 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
             title={translate('cancerLibraryApp.singleTableEditor.columnList')}
             mode="select"
             allowSearch={true}
-            sortOrder={'asc'}
             height={500}
           />
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={40}
