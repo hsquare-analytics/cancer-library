@@ -61,7 +61,7 @@ export const ReviewStatisticsBarChart = () => {
       const noActionDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.submitted'),
         data: sorted.map(entity => entity.submitted),
-        backgroundColor: MuiColorPalettes.find(palette => palette.title === 'grey')?.data[3],
+        backgroundColor: MuiColorPalettes.find(palette => palette.title === 'grey')?.data[4],
       };
 
       const declineDataset = {
