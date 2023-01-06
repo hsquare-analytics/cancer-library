@@ -85,6 +85,7 @@
     "@types/react-date-range": "^1.4.4",
     "axios": "0.27.2",
     "bootstrap": "5.2.0",
+    "chart.js": "^4.1.1",
     "date-fns": "^2.29.3",
     "dayjs": "1.11.4",
     "devextreme": "^22.1.5",
@@ -96,6 +97,7 @@
     "moment": "^2.29.4",
     "path-browserify": "1.0.1",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.1.0",
     "react-date-range": "^1.4.0",
     "react-diff-viewer-continued": "^3.2.3",
     "react-dnd": "^16.0.1",
@@ -120,6 +122,7 @@
     "webstomp-client": "1.2.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@testing-library/react": "13.3.0",
     "@types/jest": "28.1.6",
     "@types/lodash": "^4.14.182",

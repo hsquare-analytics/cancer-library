@@ -75,6 +75,19 @@ export const AccessiblePatient = () => {
     }
   };
 
+  const recordStatusCellTemplate = (rowData) => {
+    if (!rowData.detail) {
+      return 'No';
+    }
+    if (rowData.detail.comment && rowData.detail.comment.length > 0) {
+      return 'Yes';
+    }
+    if (rowData.detail.declineReason && rowData.detail.declineReason.length > 0) {
+      return 'Yes';
+    }
+    return 'No';
+  }
+
   return (
     <section className="wrap-page accessible-patient-wrapper">
       <h1 className="title-page">{translate('cancerLibraryApp.datasource.pageTitle')}</h1>
@@ -93,6 +106,7 @@ export const AccessiblePatient = () => {
           showColumnHeaders={true}
           allowColumnReordering={true}
           allowColumnResizing={true}
+          columnChooser={{enabled: true, mode: 'select'}}
           columnResizingMode={'widget'}
           selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
           pager={{displayMode: 'compact', showNavigationButtons: true}}
@@ -133,6 +147,9 @@ export const AccessiblePatient = () => {
                 }
               },
               {
+                name: 'columnChooserButton',
+              },
+              {
                 name: 'searchPanel',
               }
             ]
@@ -141,14 +158,33 @@ export const AccessiblePatient = () => {
           <Column caption={'#'} cellTemplate={getIndexColumnTemplate} alignment={'center'} width={80}
                   visibleIndex={0}/>
           <Column
-            dataField="detail.comment"
-            caption={translate('cancerLibraryApp.datasource.column.comment')}
+            dataField={'recordStatus'}
+            caption={translate('cancerLibraryApp.datasource.column.recordStatus')}
             width={150}
             alignment={'center'}
-            cellRender={commentCellRender}
+            calculateCellValue={recordStatusCellTemplate}
             allowEditing={false}
             visibleIndex={1}
           />
+          <Column caption={translate('cancerLibraryApp.datasource.column.record')}
+                  visibleIndex={1.1}
+                  alignment={'center'}
+          >
+            <Column
+              caption={translate('cancerLibraryApp.datasource.column.comment')}
+              dataField="detail.comment"
+              width={150}
+              alignment={'center'}
+              allowEditing={false}
+            />
+            <Column
+              caption={translate('cancerLibraryApp.datasource.column.declineReason')}
+              dataField="detail.declineReason"
+              width={150}
+              alignment={'center'}
+              allowEditing={false}
+            />
+          </Column>
           <Column
             caption={translate('cancerLibraryApp.patient.detail.status')}
             dataField={'detail.status'}

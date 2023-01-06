@@ -17,6 +17,7 @@ import {AUTHORITIES} from 'app/config/constants';
 import {sendActivity} from 'app/config/websocket-middleware';
 import AccessiblePatient from "app/modules/datasource-editor/accessible-patient";
 import UserPatientDndGrid from "app/modules/user-patient-dnd-grid/user-patient-dnd-grid";
+import ReviewerStatistics from "app/modules/reviewer-statistics/reviewer-statistics";
 
 const loading = <div>loading ...</div>;
 
@@ -80,8 +81,17 @@ const AppRoutes = () => {
         <Route
           path="user-patient-authorization-editor"
           element={
-            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER, AUTHORITIES.SUPERVISOR]}>
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]}>
               <UserPatientDndGrid/>
+            </PrivateRoute>
+          }
+        >
+        </Route>
+        <Route
+          path="reviewer-statistics"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.SUPERVISOR]}>
+              <ReviewerStatistics/>
             </PrivateRoute>
           }
         >

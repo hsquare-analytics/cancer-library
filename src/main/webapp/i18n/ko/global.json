@@ -21,6 +21,7 @@
       "userPatientAuthorizationEditor": "리뷰어 권한 설정",
       "editable-categories": "편집 테이블 목록",
       "approval-categories": "승인 테이블 목록",
+      "reviewer-statistics": "리뷰어 통계",
       "account": {
         "main": "계정",
         "settings": "설정",

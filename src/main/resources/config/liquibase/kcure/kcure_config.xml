@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20221116134901-1-data" author="jhipster" context="kcure">
+        <loadData file="config/liquibase/kcure/fake-data/ph_subject.csv" separator="," tableName="ph_subject" usePreparedStatements="true">
+            <column name="id"/>
+            <column name="title"/>
+            <column name="activated"/>
+            <column name="order_no"/>
+            <column name="created_by"/>
+            <column name="created_date"/>
+            <column name="last_modified_by"/>
+            <column name="last_modified_date"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_topic.csv" separator="," tableName="ph_topic" usePreparedStatements="true">
+            <column name="id"/>
+            <column name="title"/>
+            <column name="activated"/>
+            <column name="order_no"/>
+            <column name="subject_id"/>
+            <column name="created_by"/>
+            <column name="created_date"/>
+            <column name="last_modified_by"/>
+            <column name="last_modified_date"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_category.csv" separator="," tableName="ph_category" usePreparedStatements="true">
+            <column name="id"/>
+            <column name="title"/>
+            <column name="description"/>
+            <column name="activated"/>
+            <column name="order_no"/>
+            <column name="topic_id"/>
+            <column name="created_by"/>
+            <column name="created_date"/>
+            <column name="last_modified_by"/>
+            <column name="last_modified_date"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_category_attribute.csv" separator="," tableName="ph_category_attribute" usePreparedStatements="true">
+            <column name="category_id"/>
+            <column name="date_column"/>
+            <column name="caption"/>
+            <column name="autoincrement_field"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_item.csv" separator="," tableName="ph_item" usePreparedStatements="true">
+            <column name="id"/>
+            <column name="title"/>
+            <column name="description"/>
+            <column name="activated"/>
+            <column name="order_no"/>
+            <column name="category_id"/>
+            <column name="codebook_id"/>
+            <column name="created_by"/>
+            <column name="created_date"/>
+            <column name="last_modified_by"/>
+            <column name="last_modified_date"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_item_attribute.csv" separator="," tableName="ph_item_attribute" usePreparedStatements="true">
+            <column name="item_id"/>
+            <column name="caption"/>
+            <column name="required"/>
+            <column name="data_type" defaultValue="string"/>
+            <column name="format"/>
+            <column name="max_length"/>
+            <column name="allow_editing"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_item_property.csv" separator="," tableName="ph_item_property" usePreparedStatements="true">
+            <column name="item_id"/>
+            <column name="sort_index"/>
+            <column name="sort_direction"/>
+            <column name="visible"/>
+            <column name="label_column"/>
+            <column name="css_class"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_codebook.csv" separator="," tableName="ph_codebook" usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
+        </loadData>
+        <loadData file="config/liquibase/kcure/fake-data/ph_codebook_lookup.csv" separator="," tableName="ph_codebook_lookup" usePreparedStatements="true">
+            <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
+            <column name="description" type="string"/>
+            <column name="order_no" type="number"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

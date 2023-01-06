@@ -4,18 +4,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
+import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
+import io.planit.cancerlibrary.service.dto.DateRangeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,17 +45,21 @@ public class UserController {
     }
 
     @GetMapping("/users/normal-authorization-list")
-    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList() {
+    public ResponseEntity<List<NormalAuthorizationUserVM>> getNormalAuthorizationUserList(DateRangeDTO dateRangeDTO) {
         log.debug("REST request to get all Users with work info");
-        List<NormalAuthorizationUserVM> result = userRepository.findAll()
+        List<NormalAuthorizationUserVM> result = userRepository.findAllByActivatedTrue()
             .stream()
             .filter(user -> !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.ADMIN)) && !user.getAuthorities().contains(new Authority().name(AuthoritiesConstants.SUPERVISOR)))
             .map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
-                Integer submitted = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.SUBMITTED);
-                Integer approved = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.APPROVED);
-                Integer declined = patientDetailRepository.countByStatus(user.getLogin(), PatientConstants.DECLINED);
-                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined);
+
+                Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, dateRangeDTO);
+                Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, dateRangeDTO);
+                Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, dateRangeDTO);
+
+                Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
+                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, null);
+                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved);
             }).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(result);
@@ -77,10 +87,16 @@ public class UserController {
         @JsonProperty("declined")
         private Integer declined;
 
+        @JsonProperty("totalSubmitted")
+        private Integer totalSubmitted;
+
+        @JsonProperty("totalApproved")
+        private Integer totalApproved;
+
         @JsonProperty("authority")
         private String authority;
 
-        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined) {
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined, Integer totalSubmitted, Integer totalApproved) {
             this.id = user.getId();
             this.login = user.getLogin();
             this.name = user.getName();
@@ -88,6 +104,8 @@ public class UserController {
             this.submitted = submitted;
             this.approved = approved;
             this.declined = declined;
+            this.totalSubmitted = totalSubmitted;
+            this.totalApproved = totalApproved;
 
             boolean isAdmin = user.getAuthorities().stream().anyMatch(data -> data.getName().equals("ROLE_ADMIN") || data.getName().equals("ROLE_SUPERVISOR"));
             if (isAdmin) {

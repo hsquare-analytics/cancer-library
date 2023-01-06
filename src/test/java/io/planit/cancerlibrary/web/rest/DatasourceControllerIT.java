@@ -1,11 +1,14 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
+import io.planit.cancerlibrary.constant.RowStatus;
 import io.planit.cancerlibrary.domain.*;
 import io.planit.cancerlibrary.repository.*;
 import io.planit.cancerlibrary.service.SequenceGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -236,7 +239,7 @@ class DatasourceControllerIT {
         // then
         restDatasourceMockMvc.perform(
                 delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001)
-                    .contentType( MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"test_idx\", \"pt_no\":\"test_ptno\"}"))
             .andExpect(status().isOk());
 
@@ -245,6 +248,7 @@ class DatasourceControllerIT {
 
         assertThat(result).hasSize(1);
     }
+
     @Test
     @Transactional
     void testDeleteExistRow() throws Exception {
@@ -259,7 +263,7 @@ class DatasourceControllerIT {
         // then
         restDatasourceMockMvc.perform(
                 delete("/api/datasource/categories/{categoryId}/rows/{rowId}", category.getId(), 10001)
-                    .contentType( MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
                     .content("{\"idx\":\"10001\", \"name\":\"modified_name\"}"))
             .andExpect(status().isOk());
 
@@ -269,9 +273,10 @@ class DatasourceControllerIT {
         assertThat(result.get("status")).isEqualTo("DISABLED");
     }
 
-    @Test
-    @Transactional
-    void testUpdateBulkDatasourceRows() throws Exception {
+    @ParameterizedTest
+    @EnumSource(value = RowStatus.class, names = {"COMPLETED", "DISABLED", "IN_PROGRESS"})
+    @Transactional(value = "jdbcTemplateTransactionManager")
+    void testUpdateBulkDatasourceRows(RowStatus status) throws Exception {
         // given
         Arrays.stream(DEFAULT_COLUMN_NAME_ARRAY).forEach(columnName -> {
             Item item = new Item().category(category).title(columnName).activated(true);
@@ -283,7 +288,7 @@ class DatasourceControllerIT {
 
         // then
         restDatasourceMockMvc.perform(
-                put("/api/datasource/categories/{categoryId}/update-bulk-datasource-rows", category.getId()).contentType(
+                put("/api/datasource/categories/{categoryId}/update-bulk-datasource-rows/{status}", category.getId(), status).contentType(
                     MediaType.APPLICATION_JSON).content("[{\"idx\":\"10001\", \"name\":\"modified_one\"}, {\"idx\":\"10002\", \"name\":\"modified_two\"}, {\"idx\":\"10003\", \"name\":\"modified_three\", \"pt_no\":\"12345\"}]"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$").value(3));
@@ -292,8 +297,8 @@ class DatasourceControllerIT {
             "select * from ph_test_updated where idx in ('10001', '10002', '10003')");
 
         assertThat(result).hasSize(3);
-        assertThat(result.get(0)).containsEntry("name", "modified_one").containsEntry("status", "COMPLETED");
-        assertThat(result.get(1)).containsEntry("name", "modified_two").containsEntry("status", "COMPLETED");
-        assertThat(result.get(2)).containsEntry("name", "modified_three").containsEntry("status", "COMPLETED");
+        assertThat(result.get(0)).containsEntry("name", "modified_one").containsEntry("status", status.name());
+        assertThat(result.get(1)).containsEntry("name", "modified_two").containsEntry("status", status.name());
+        assertThat(result.get(2)).containsEntry("name", "modified_three").containsEntry("status", status.name());
     }
 }

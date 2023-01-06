@@ -24,6 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     String ALL_USERS_CACHE = "allUsers";
 
     List<User> findAll();
+
+    List<User> findAllByActivatedTrue();
     Optional<User> findOneByActivationKey(String activationKey);
     List<User> findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant dateTime);
     Optional<User> findOneByResetKey(String resetKey);

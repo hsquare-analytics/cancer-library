@@ -13,6 +13,8 @@ import Admin from 'app/shared/layout/menus/admin';
 import SideLogoutButton from 'app/shared/layout/header/side-logout-button';
 import Account from 'app/shared/layout/menus/account';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import ReviewerStatistics from "app/modules/reviewer-statistics/reviewer-statistics";
+import {ReviewerStatisticsMenu} from "app/shared/layout/menus/reviewer-statistics-menu";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
@@ -72,6 +74,7 @@ const Header = (props: IHeaderProps) => {
                 <Home />
                 {props.isAuthenticated && <DatasourceEditorMenu />}
                 {props.isAuthenticated && props.hasSuAuthority && <UserPatientDndGridMenu />}
+                {props.isAuthenticated && props.hasSuAuthority && <ReviewerStatisticsMenu />}
                 {props.isAuthenticated && props.isAdmin && (
                   <>
                     {/* <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} /> */}

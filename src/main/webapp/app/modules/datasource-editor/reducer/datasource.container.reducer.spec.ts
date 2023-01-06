@@ -17,6 +17,7 @@ import reducer, {
   updateBulkDatasourceRows,
   updateDatasourceRow,
 } from './datasource.container.reducer';
+import {RowStatus} from "app/config/datasource-constants";
 
 describe('User Patient selector module reducer tests', () => {
   function isEmpty(element): boolean {
@@ -331,7 +332,7 @@ describe('User Patient selector module reducer tests', () => {
         }
       ];
 
-      await store.dispatch(updateBulkDatasourceRows({categoryId: 1, rows: [{'pt_no': 'fake'}]}));
+      await store.dispatch(updateBulkDatasourceRows({categoryId: 1, rows: [{'pt_no': 'fake'}], status: RowStatus.DISABLED}));
 
       expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
       expect(store.getActions()[1]).toMatchObject(expectedActions[1]);

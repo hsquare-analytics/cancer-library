@@ -23,11 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -68,6 +71,38 @@ class UserControllerIT {
             .andExpect(jsonPath("$.[*].assigned").value(hasItem(0)))
             .andExpect(jsonPath("$.[*].submitted").value(hasItem(0)))
             .andExpect(jsonPath("$.[*].approved").value(hasItem(0)))
+            .andExpect(jsonPath("$.[*].declined").value(hasItem(0)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "testLogin")
+    void test_fetch_users_authorization_info_by_date_param() throws Exception {
+        User user = UserResourceIT.createEntity(em);
+        userRepository.saveAndFlush(user);
+
+        UserPatient userPatient = new UserPatient().user(user).patientNo("ptno" + new Random().nextInt(100));
+        userPatientRepository.saveAndFlush(userPatient);
+
+        Instant startDate = user.getLastModifiedDate().minus(1, ChronoUnit.DAYS);
+        Instant endDate = user.getLastModifiedDate().plus(1, ChronoUnit.DAYS);
+
+        Patient patient1 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.SUBMITTED).createdBy(user.getLogin()));
+        patientRepository.insert(patient1);
+        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().lastModifiedDate(user.getLastModifiedDate()));
+
+        Patient patient2 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.APPROVED).createdBy(user.getLogin()));
+        patientRepository.insert(patient2);
+        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().lastModifiedDate(endDate.plus(1, ChronoUnit.DAYS)));
+
+        restUserMockMvc
+            .perform(get("/api/users/normal-authorization-list?startDate={startDate}&endDate={endDate}", startDate, endDate))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
+            .andExpect(jsonPath("$.[*].assigned").value(hasItem(1)))
+            .andExpect(jsonPath("$.[*].submitted").value(hasItem(1)))
+            .andExpect(jsonPath("$.[*].approved").value(not(hasItem(1))))
             .andExpect(jsonPath("$.[*].declined").value(hasItem(0)));
     }
 

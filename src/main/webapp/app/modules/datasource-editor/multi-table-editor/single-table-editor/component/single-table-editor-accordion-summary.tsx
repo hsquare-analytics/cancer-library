@@ -11,6 +11,7 @@ import {translate} from 'react-jhipster';
 import {useAppDispatch} from "app/config/store";
 import {updateBulkDatasourceRows} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import Swal from "sweetalert2";
+import {RowStatus} from "app/config/datasource-constants";
 
 export interface SingleTableAccordionSummaryProps {
   category: ICategory
@@ -23,22 +24,40 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
   const dispatch = useAppDispatch();
 
   const {category, dataGrid, accordionExpanded} = props;
-  const swalUpdateBulkDatasourceRows = () => {
-    Swal.fire({
-      text: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.title'),
-      icon: 'warning',
+  const swalUpdateBulkDatasourceRows = async () => {
+    const {value: status} = await Swal.fire({
+      title: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.title'),
+      input: 'select',
+      inputOptions: {
+        [RowStatus.COMPLETED]: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.completed'),
+        [RowStatus.DISABLED]: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.disabled'),
+        [RowStatus.IN_PROGRESS]: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.inProgress'),
+      },
+      icon: 'info',
       showCancelButton: true,
       confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
       cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel'),
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dataGrid.current.instance.getSelectedRowsData();
-        dispatch(updateBulkDatasourceRows({
-          categoryId: category.id,
-          rows: dataGrid.current.instance.getSelectedRowsData()
-        }));
-      }
-    })
+    });
+
+    if (status) {
+      Swal.fire({
+        text: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.confirmProcessing'),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
+        cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel'),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dataGrid.current.instance.getSelectedRowsData();
+          dispatch(updateBulkDatasourceRows({
+            categoryId: category.id,
+            rows: dataGrid.current.instance.getSelectedRowsData(),
+            status
+          }));
+        }
+      });
+
+    }
   }
   return (
     <AccordionSummary expandIcon={<ExpandMoreIcon/>} aria-controls="panel1a-content" id="panel1a-header"
@@ -57,7 +76,7 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
           }}
         >
           <FontAwesomeIcon icon="check-double" className={'me-3'}/>
-          {translate('cancerLibraryApp.singleTableEditor.bulkConfirm')}
+          {translate('cancerLibraryApp.singleTableEditor.bulkUpdate')}
         </Button>
         <Button
           variant="outlined"

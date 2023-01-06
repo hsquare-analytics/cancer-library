@@ -19,59 +19,6 @@ CREATE TABLE IF NOT EXISTS GSCN.GSCN_DIAG_ANINF (
                                  ecog_dt varchar(20) null,						-- UI용 ECOG 참고일자날짜
                                  idx varchar(20) NULL, -- UI용 시퀀스
     SORT_SEQ NUMERIC(10,0) null, 			-- UI용 정렬용
+    free_text varchar(1000) null, 			-- UI용 검색용
     CONSTRAINT gscn_diag_aninf_pk PRIMARY KEY (hosp_cd, pt_no, anth_rcrd_ymd, anth_rcrd_seq)
 );
-
-
-INSERT INTO ph_category (id, title, description, activated, order_no, topic_id, created_by)
-VALUES (9300, 'GSCN.GSCN_DIAG_ANINF', '03.위암_진단_신체계측정보', true, 3, 999, 'system');
-
-INSERT INTO ph_category_attribute (category_id, date_column, caption)
-VALUES (9300, 'anth_rcrd_ymd', '03.위암_진단_신체계측정보');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9301, 'hosp_cd', 9300, 'system', 9301);
--- insert into ph_item_attribute (item_id, caption, required) values (9301, '병원코드', true);
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9302, 'pt_no', 9300, 'system', 9302);
-insert into ph_item_attribute (item_id, caption) values (9302, '환자대체번호');
-insert into ph_item_property (item_id, visible) values (9302, false);
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9303, 'anth_rcrd_ymd', 9300, 'system', 9303);
-insert into ph_item_attribute (item_id, caption, required, format, data_type) values (9303, '신체계측기록일자', true, 'yyyyMMdd', 'date');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9304, 'anth_rcrd_seq', 9300, 'system', 9304);
-insert into ph_item_attribute (item_id, caption, required) values (9304, '신체계측기록순번', true);
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9305, 'ht_msrm_vl', 9300, 'system', 9305);
-insert into ph_item_attribute (item_id, caption) values (9305, '신장측정값');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9306, 'wt_msrm_vl', 9300, 'system', 9306);
-insert into ph_item_attribute (item_id, caption) values (9306, '체중측정값');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9307, 'bmi_vl', 9300, 'system', 9307);
-insert into ph_item_attribute (item_id, caption) values (9307, 'BMI값');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9308, 'rlxt_blpr_vl', 9300, 'system', 9308);
-insert into ph_item_attribute (item_id, caption) values (9308, '이완혈압값');
-
-insert into ph_item (id, title, category_id, created_by, order_no) values (9309, 'ctrt_blpr_vl', 9300, 'system', 9309);
-insert into ph_item_attribute (item_id, caption) values (9309, '수축혈압값');
-
-insert into ph_item (id, title, category_id, created_by, order_no, codebook_id) values (9310, 'ecog_cd', 9300, 'system', 9310, 20010);
-insert into ph_item_attribute (item_id, caption, data_type) values (9310, 'ECOG코드', 'selectbox');
-insert into ph_item_property (item_id, label_column) values (9310, 'ecog_nm');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'ecog_nm', 9300, 'system', 9311);
--- insert into ph_item_attribute (item_id, caption) values (9311, 'ECOG명');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9312, 'crtn_dt', 9300, 'system', 9312);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9312, '생성일시', 'yyyyMMdd', 'date');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9313, 'ecog_dt', 9300, 'system', 9313);
--- insert into ph_item_attribute (item_id, caption, format, data_type) values (9313, 'UI용 ECOG 참고일자날짜', 'yyyyMMdd', 'date');
-
--- insert into ph_item (id, title, category_id, created_by, order_no) values (9314, 'idx', 9300, 'system', 9314);
--- insert into ph_item_attribute (item_id, caption) values (9314, 'UI용 시퀀스');
-insert into ph_item (id, title, category_id, created_by, order_no) values (9311, 'sort_seq', 9300, 'system', 5);
-insert into ph_item_attribute (item_id, caption) values (9311, '정렬순번');
-

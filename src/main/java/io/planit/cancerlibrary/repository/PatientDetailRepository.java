@@ -2,6 +2,7 @@ package io.planit.cancerlibrary.repository;
 
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
+import io.planit.cancerlibrary.service.dto.DateRangeDTO;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -9,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Map;
 
 @Repository
@@ -77,8 +79,14 @@ public class PatientDetailRepository {
         return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
     }
 
-    public Integer countByStatus(String login, String status) {
+    public Integer countByStatusAndDateRange(String login, String status, DateRangeDTO dateRangeDTO) {
         SQL sql = new SQL().SELECT("COUNT(*)").FROM(Table.PATIENT_DETAIL.getTableName()).WHERE("STATUS = :status AND CREATED_BY = :login");
+        if (dateRangeDTO != null && dateRangeDTO.getStartDate() != null) {
+            sql.WHERE(String.format("CREATED_DATE >= '%s'", Timestamp.from(dateRangeDTO.getStartDate())));
+        }
+        if (dateRangeDTO != null && dateRangeDTO.getEndDate() != null) {
+            sql.WHERE(String.format("CREATED_DATE <= '%s'", Timestamp.from(dateRangeDTO.getEndDate())));
+        }
         return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status, "login", login), Integer.class);
     }
 }

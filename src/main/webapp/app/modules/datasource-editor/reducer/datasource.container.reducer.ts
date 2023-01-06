@@ -3,6 +3,7 @@ import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected} from 
 import {IItem} from "app/shared/model/item.model";
 import {ICategory} from "app/shared/model/category.model";
 import {serializeAxiosError} from "app/shared/reducers/reducer.utils";
+import {RowStatus} from "app/config/datasource-constants";
 
 type userPatientSelectorType = {
   itemContainer: { [key: string]: IItem[] },
@@ -71,8 +72,8 @@ export const deleteDatasourceRow = createAsyncThunk('datasource_container/delete
   {serializeError: serializeAxiosError}
 );
 
-export const updateBulkDatasourceRows = createAsyncThunk('datasource_container/update_bulk_data_sources_row', async (data: { categoryId: number, rows: any[] }, thunkAPI) => {
-  const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/update-bulk-datasource-rows`, data.rows);
+export const updateBulkDatasourceRows = createAsyncThunk('datasource_container/update_bulk_data_sources_row', async (data: { categoryId: number, rows: any[], status: RowStatus }, thunkAPI) => {
+  const result = await axios.put<any>(`api/datasource/categories/${data.categoryId}/update-bulk-datasource-rows/${data.status}`, data.rows);
   thunkAPI.dispatch(getDataSources({categoryId: data.categoryId, patientNo: data.rows[0]['pt_no']}));
   return result;
 });
