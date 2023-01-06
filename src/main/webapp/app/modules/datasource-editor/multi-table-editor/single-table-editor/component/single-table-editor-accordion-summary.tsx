@@ -33,19 +33,30 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
         [RowStatus.DISABLED]: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.disabled'),
         [RowStatus.IN_PROGRESS]: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.inProgress'),
       },
-      icon: 'warning',
+      icon: 'info',
       showCancelButton: true,
       confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
       cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel'),
     });
 
     if (status) {
-      dataGrid.current.instance.getSelectedRowsData();
-      dispatch(updateBulkDatasourceRows({
-        categoryId: category.id,
-        rows: dataGrid.current.instance.getSelectedRowsData(),
-        status
-      }));
+      Swal.fire({
+        text: translate('cancerLibraryApp.singleTableEditor.updateBulkDatasourceRows.confirmProcessing'),
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.confirm'),
+        cancelButtonText: translate('cancerLibraryApp.singleTableEditor.rowStatus.button.cancel'),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dataGrid.current.instance.getSelectedRowsData();
+          dispatch(updateBulkDatasourceRows({
+            categoryId: category.id,
+            rows: dataGrid.current.instance.getSelectedRowsData(),
+            status
+          }));
+        }
+      });
+
     }
   }
   return (

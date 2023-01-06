@@ -3,7 +3,7 @@
     "singleTableEditor": {
       "addRow": "행 추가",
       "columnList": "열 목록",
-      "bulkUpdate": "일괄 변경",
+      "bulkUpdate": "상태 변경",
       "status": "상태",
       "editRow": "행 편집",
       "isNew": "신규여부",
@@ -55,8 +55,9 @@
         "title": "변경할 상태를 선택해주세요.",
 		"completed": "완료",
 		"disabled": "비활성화",
-		"inProgress": "임시저장"
-      }
+		"inProgress": "임시저장",
+		"confirmProcessing": "상태 변경을 진행하시겠습니까?"
+	  }
     }
   }
 }
