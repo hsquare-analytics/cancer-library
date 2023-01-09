@@ -1,11 +1,14 @@
 import {IDxColumn} from "app/shared/model/dx-column.model";
 
-const Audit: IDxColumn[] = [
-  {dataField: 'id'},
+const AuditColumns: IDxColumn[] = [
   {dataField: 'principal'},
-  {dataField: 'auditEventDate', dataType: 'datetime', format: 'yyyy-MM-dd HH:mm:ss'},
-  {dataField: 'auditEventType'},
-  {dataField: 'data'},
+  {
+    dataField: 'timestamp', dataType: 'datetime', format: 'yyyy-MM-dd HH:mm:ss',
+    sortIndex: 0, sortOrder: 'desc'
+  },
+  {dataField: 'type'},
+  {dataField: 'data.message'},
+  {dataField: 'data.type'}
 ];
 
-export default Audit;
+export default AuditColumns;

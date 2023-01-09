@@ -50,7 +50,8 @@
         "user-category": "사용자 카테고리 권한 설정",
         "user-patient": "사용자 리뷰어 권한 설정",
         "codebook": "코드북 관리",
-        "comment" : "Comment 관리"
+        "comment" : "Comment 관리",
+        "audit": "User Audit"
       },
       "language": "언어"
     },

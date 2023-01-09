@@ -1,0 +1,11 @@
+{
+  "audit" : {
+    "principal" : "principal",
+    "timestamp" : "timestamp",
+    "type" : "type",
+    "data" : {
+      "message" : "message",
+      "type" : "type"
+    }
+  }
+}
