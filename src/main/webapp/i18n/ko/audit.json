@@ -1,11 +1,14 @@
 {
-  "audit" : {
-    "principal" : "principal",
-    "timestamp" : "timestamp",
-    "type" : "type",
-    "data" : {
-      "message" : "message",
-      "type" : "type"
+  "audit": {
+    "home": {
+      "title": "Audit"
+    },
+    "principal": "principal",
+    "timestamp": "timestamp",
+    "type": "type",
+    "data": {
+      "message": "message",
+      "type": "type"
     }
   }
 }

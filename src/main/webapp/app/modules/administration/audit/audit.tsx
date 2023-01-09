@@ -26,7 +26,7 @@ export const Audit = () => {
   return (
     <div className="wrap-page">
       <h2 id="userManagement-heading" data-cy="CategoryHeading" className="title-page">
-        <Translate contentKey="userManagement.home.title">Categories</Translate>
+        <Translate contentKey="audit.home.title">Categories</Translate>
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={() => getAuditEntities()} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading}/>{' '}
