@@ -47,13 +47,13 @@ const ReviewStatisticsDoughnutChart = () => {
       // }
 
       const sorted = [...entities].sort((a, b) => {
-        return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
+        return (b.totalSubmitted + b.totalApproved + b.totalDeclined) - (a.totalSubmitted + a.totalApproved + a.totalDeclined);
       });
 
       const formattedLabel = sorted.map(entity => `${entity.name}(${entity.login})`);
       setLabels(formattedLabel);
 
-      const data = sorted.map(entity => entity.submitted + entity.approved + entity.declined);
+      const data = sorted.map(entity => entity.totalSubmitted + entity.totalApproved + entity.totalDeclined);
       const backgroundColor = [];
       const borderColor = [];
 
