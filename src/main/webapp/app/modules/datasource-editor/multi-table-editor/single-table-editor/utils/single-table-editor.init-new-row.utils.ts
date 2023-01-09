@@ -33,12 +33,12 @@ export const SingleTableEditorOnInitNewRow = (props: InitNewRowProps) => {
   e.promise = new Promise<void>((resolve, reject) => {
     const selectedRows = dataGridRef.current.instance.getVisibleRows().filter(row => row.isSelected).map(row => row.data);
     if (selectedRows.length === 0) {
-      Swal.fire({
-        text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectMinimumRow'),
-        icon: 'warning',
-        confirmButtonText: 'OK'
-      });
-
+      // Swal.fire({
+      //   text: translate('cancerLibraryApp.singleTableEditor.onInitNewRow.plzSelectMinimumRow'),
+      //   icon: 'warning',
+      //   confirmButtonText: 'OK'
+      // });
+      //
       initMaxSequence();
 
       resolve();
