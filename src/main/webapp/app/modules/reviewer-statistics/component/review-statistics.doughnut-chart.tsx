@@ -50,8 +50,8 @@ const ReviewStatisticsDoughnutChart = () => {
         return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
       });
 
-      const labels = sorted.map(entity => `${entity.name}(${entity.login})`);
-      setLabels(labels);
+      const formattedLabel = sorted.map(entity => `${entity.name}(${entity.login})`);
+      setLabels(formattedLabel);
 
       const data = sorted.map(entity => entity.submitted + entity.approved + entity.declined);
       const backgroundColor = [];
@@ -73,10 +73,7 @@ const ReviewStatisticsDoughnutChart = () => {
 
   return <Pie
     options={options}
-    data={{
-    labels: labels,
-    datasets: datasets
-  }}/>;
+    data={{labels, datasets}}/>;
 }
 
 export default ReviewStatisticsDoughnutChart;

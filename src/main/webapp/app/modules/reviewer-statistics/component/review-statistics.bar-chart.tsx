@@ -45,10 +45,10 @@ export const ReviewStatisticsBarChart = () => {
         return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
       });
 
-      const labels = sorted.map(entity => `${entity.name}(${entity.login})`);
-      setLabels(labels);
+      const temp = sorted.map(entity => `${entity.name}(${entity.login})`);
+      setLabels(temp);
 
-      const datasets = [];
+      const result = [];
       const noActionDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.submitted'),
         data: sorted.map(entity => entity.submitted),
@@ -67,11 +67,11 @@ export const ReviewStatisticsBarChart = () => {
         backgroundColor: MuiColorPalettes.find(palette => palette.title === 'blue')?.data[3],
       };
 
-      datasets.push(noActionDataset);
-      datasets.push(declineDataset);
-      datasets.push(approveDataset);
+      result.push(noActionDataset);
+      result.push(declineDataset);
+      result.push(approveDataset);
 
-      setDatasets(datasets);
+      setDatasets(result);
     }
 
   }, [JSON.stringify(entities)]);
