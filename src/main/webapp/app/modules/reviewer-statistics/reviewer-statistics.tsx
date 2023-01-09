@@ -48,7 +48,7 @@ const ReviewerStatistics = () => {
                 <ReviewStatisticsDoughnutChart/>
               </div>
               <div className="bottom-section">
-                <ReviewStatisticsDatagrid/>
+                <ReviewStatisticsDatagrid dateRange={dateRange}/>
               </div>
             </div>
           </article>
