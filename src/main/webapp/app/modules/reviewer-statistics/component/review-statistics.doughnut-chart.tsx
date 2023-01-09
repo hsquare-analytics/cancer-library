@@ -1,13 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {Chart as ChartJS, ArcElement, Tooltip, Legend} from 'chart.js';
-import {Doughnut} from 'react-chartjs-2';
 import {Pie} from 'react-chartjs-2';
 import {useAppSelector} from "app/config/store";
 import MuiColorPalettes from "app/modules/reviewer-statistics/component/mui-color-palettes";
 
 
-ChartJS.register(ArcElement, Tooltip, Legend);
-
+export const options = {
+  maintainAspectRatio: false,
+  indexAxis: 'y' as const,
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom' as const,
+    },
+    title: {
+      display: false,
+    },
+  },
+};
 const ReviewStatisticsDoughnutChart = () => {
   const [labels, setLabels] = useState<string[]>([]);
   const [datasets, setDatasets] = useState<any[]>([]);
@@ -62,7 +71,9 @@ const ReviewStatisticsDoughnutChart = () => {
 
   }, [JSON.stringify(entities)]);
 
-  return <Pie data={{
+  return <Pie
+    options={options}
+    data={{
     labels: labels,
     datasets: datasets
   }}/>;

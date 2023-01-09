@@ -1,18 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 import {Bar} from 'react-chartjs-2';
 import {useAppSelector} from "app/config/store";
 import {translate} from "react-jhipster";
 import MuiColorPalettes from "app/modules/reviewer-statistics/component/mui-color-palettes";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 export const options = {
   maintainAspectRatio: false,
