@@ -97,7 +97,7 @@ const ReviewStatisticsDatagrid = (props: IReviewStatisticsDatagridProps) => {
                 calculateCellValue={rowData => getRatioOfTotal(rowData, 'totalDeclined')}
         />
       </Column>
-      <Paging defaultPageSize={6}/>
+      <Paging defaultPageSize={10}/>
     </DataGrid>);
 }
 export default ReviewStatisticsDatagrid;
