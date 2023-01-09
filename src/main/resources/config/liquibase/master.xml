@@ -33,6 +33,7 @@
     <include file="config/liquibase/changelog/20221107041201_added_entity_Codebook.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221108041201_added_entity_Patient.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221215123201_added_entity_Comment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230109123201_added_entity_Audit.xml" relativeToChangelogFile="false"/>
 
     <!--sql file-->
     <include file="config/liquibase/kcure/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>

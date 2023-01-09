@@ -59,7 +59,8 @@ public class UserController {
 
                 Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
                 Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, null);
-                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved);
+                Integer totalDeclined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, null);
+                return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved, totalDeclined);
             }).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(result);
@@ -93,10 +94,15 @@ public class UserController {
         @JsonProperty("totalApproved")
         private Integer totalApproved;
 
+        @JsonProperty("totalDeclined")
+        private Integer totalDeclined;
+
         @JsonProperty("authority")
         private String authority;
 
-        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined, Integer totalSubmitted, Integer totalApproved) {
+        public NormalAuthorizationUserVM(User user, Integer assigned, Integer submitted, Integer approved, Integer declined,
+                                         Integer totalSubmitted, Integer totalApproved, Integer totalDeclined
+        ) {
             this.id = user.getId();
             this.login = user.getLogin();
             this.name = user.getName();
@@ -106,6 +112,7 @@ public class UserController {
             this.declined = declined;
             this.totalSubmitted = totalSubmitted;
             this.totalApproved = totalApproved;
+            this.totalDeclined = totalDeclined;
 
             boolean isAdmin = user.getAuthorities().stream().anyMatch(data -> data.getName().equals("ROLE_ADMIN") || data.getName().equals("ROLE_SUPERVISOR"));
             if (isAdmin) {

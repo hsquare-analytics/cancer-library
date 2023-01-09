@@ -1,0 +1,15 @@
+{
+  "audit": {
+    "home": {
+      "title": "Audit"
+    },
+    "principal": "principal",
+    "timestamp": "timestamp",
+    "type": "type",
+    "data": {
+      "remoteAddress": "remoteAddress",
+      "message": "message",
+      "type": "type"
+    }
+  }
+}

@@ -25,6 +25,18 @@ import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
 import dxPopup from "devextreme/ui/popup";
 
+import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, ArcElement} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement
+);
+
 dxPopup.defaultOptions({
   options: {animation: null}
 });

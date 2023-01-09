@@ -52,6 +52,9 @@ const AdminMenuItems = () => (
     <NavLink tag={Link} icon="tasks" to="/admin/logs">
       <Translate contentKey="global.menu.admin.logs">Logs</Translate>
     </NavLink>
+    <NavLink tag={Link} icon="tasks" to="/admin/audit">
+      <Translate contentKey="global.menu.admin.audit">Audit</Translate>
+    </NavLink>
   </>
 );
 

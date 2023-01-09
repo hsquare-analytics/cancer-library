@@ -32,10 +32,12 @@ const ReviewerStatistics = () => {
       <h1 className="title-page">Reviewer Statistics</h1>
       <div className="m-2 mt-4 d-flex justify-content-end">
         <DateRangePicker dateRange={dateRange} setDateRange={setDateRange}
-                         onSearchClick={() => dispatch(getEntities({
-                           startDate: moment(dateRange.startDate).startOf('day').toISOString(),
-                           endDate: moment(dateRange.endDate).endOf('day').toISOString()
-                         }))}/>
+                         onSearchClick={() => {
+                           dispatch(getEntities({
+                             startDate: moment(dateRange.startDate).startOf('day').toISOString(),
+                             endDate: moment(dateRange.endDate).endOf('day').toISOString()
+                           }))
+                         }}/>
       </div>
       {
         !loading ?
@@ -48,7 +50,7 @@ const ReviewerStatistics = () => {
                 <ReviewStatisticsDoughnutChart/>
               </div>
               <div className="bottom-section">
-                <ReviewStatisticsDatagrid/>
+                <ReviewStatisticsDatagrid dateRange={dateRange}/>
               </div>
             </div>
           </article>

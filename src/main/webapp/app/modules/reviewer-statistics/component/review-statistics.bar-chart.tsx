@@ -1,18 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip,} from 'chart.js';
 import {Bar} from 'react-chartjs-2';
 import {useAppSelector} from "app/config/store";
 import {translate} from "react-jhipster";
 import MuiColorPalettes from "app/modules/reviewer-statistics/component/mui-color-palettes";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 export const options = {
   maintainAspectRatio: false,
@@ -54,10 +45,10 @@ export const ReviewStatisticsBarChart = () => {
         return (b.submitted + b.approved + b.declined) - (a.submitted + a.approved + a.declined);
       });
 
-      const labels = sorted.map(entity => `${entity.name}(${entity.login})`);
-      setLabels(labels);
+      const temp = sorted.map(entity => `${entity.name}(${entity.login})`);
+      setLabels(temp);
 
-      const datasets = [];
+      const result = [];
       const noActionDataset = {
         label: translate('cancerLibraryApp.reviewerStatistics.chartLabel.submitted'),
         data: sorted.map(entity => entity.submitted),
@@ -76,11 +67,11 @@ export const ReviewStatisticsBarChart = () => {
         backgroundColor: MuiColorPalettes.find(palette => palette.title === 'blue')?.data[3],
       };
 
-      datasets.push(noActionDataset);
-      datasets.push(declineDataset);
-      datasets.push(approveDataset);
+      result.push(noActionDataset);
+      result.push(declineDataset);
+      result.push(approveDataset);
 
-      setDatasets(datasets);
+      setDatasets(result);
     }
 
   }, [JSON.stringify(entities)]);

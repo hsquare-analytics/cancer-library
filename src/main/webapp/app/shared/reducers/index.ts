@@ -7,6 +7,7 @@ import applicationProfile from './application-profile';
 
 import administration from 'app/modules/administration/administration.reducer';
 import userManagement from 'app/modules/administration/user-management/user-management.reducer';
+import audit from 'app/modules/administration/audit/audit.reducer';
 import register from 'app/modules/account/register/register.reducer';
 import activate from 'app/modules/account/activate/activate.reducer';
 import password from 'app/modules/account/password/password.reducer';
@@ -37,6 +38,7 @@ const rootReducer: ReducersMapObject = {
   loadingBar,
   navigation,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
+  audit,
   ...entitiesReducers,
   patient,
   datasourceContainer,
