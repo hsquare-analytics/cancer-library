@@ -74,6 +74,8 @@ spring:
         size: 20
   thymeleaf:
     mode: HTML
+  cache:
+    type: none
 
 server:
   port: 10344
