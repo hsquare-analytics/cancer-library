@@ -21,7 +21,7 @@ const ReviewerStatistics = () => {
     endDate: moment().endOf('day').toDate()
   });
 
-  const [dateRangeString, setDateRangeString] = useState<string>('');
+  const [dateRangeString, setDateRangeString] = useState<string>(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ~ ${moment(dateRange.endDate).format('YYYY-MM-DD')}`);
 
   useEffect(() => {
     dispatch(getEntities({
