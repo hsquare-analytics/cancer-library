@@ -39,6 +39,7 @@ const DxDateBox = (props: IDxEditCellRenderProps) => {
       type={props.data.column.dataType}
       disabled={!props.data.column.allowEditing}
       displayFormat={props.data.column.format}
+      dateSerializationFormat={'yyyy-MM-ddTHH:mm:ssZ'}
     />
     <DxRowCommentBox data={Object.assign({}, data)}/>
   </div>
