@@ -10,8 +10,9 @@ import {useAppDispatch, useAppSelector} from 'app/config/store';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import Box from '@mui/material/Box';
-import PatientProfileCardDetail from 'app/modules/datasource-editor/patient-profile/component/patient-profile-card-detail';
-import {REVIEW_LIST} from 'app/config/datasource-constants';
+import PatientProfileCardDetail
+  from 'app/modules/datasource-editor/patient-profile/component/patient-profile-card-detail';
+import {PatientStatus} from 'app/config/datasource-constants';
 import DatasourceStackButton from 'app/modules/datasource-editor/stack-button/datasource-stack-button';
 import {setOpenAll} from "app/modules/datasource-editor/reducer/datasource.status.reducer";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -21,17 +22,17 @@ import IconButton from '@mui/material/IconButton';
 
 const PatientStatusChip = (status: string) => {
   switch (status) {
-    case REVIEW_LIST.DECLINED:
+    case PatientStatus.REVIEW_DECLINED:
       return (
         // <Chip label={translate('cancerLibraryApp.datasource.review.declined')} color="error" size="small" />
         <span className="badge-chip declined">{translate('cancerLibraryApp.datasource.review.declined')}</span>
       );
-    case REVIEW_LIST.APPROVED:
+    case PatientStatus.REVIEW_APPROVED:
       return (
         // <Chip label={translate('cancerLibraryApp.datasource.review.approved')} color="success" size="small" />
         <span className="badge-chip approved">{translate('cancerLibraryApp.datasource.review.approved')}</span>
       );
-    case REVIEW_LIST.SUBMITTED:
+    case PatientStatus.REVIEW_SUBMITTED:
       return (
         // <Chip label={translate('cancerLibraryApp.datasource.review.submitted')} color="info" size="small" />
         <span className="badge-chip submitted">{translate('cancerLibraryApp.datasource.review.submitted')}</span>

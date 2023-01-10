@@ -12,7 +12,7 @@ import {
   fireDeclineSwal,
   fireSubmitSwal,
 } from 'app/modules/datasource-editor/stack-button/datasource.swal-fires';
-import {REVIEW_LIST} from 'app/config/datasource-constants';
+import {PatientStatus} from 'app/config/datasource-constants';
 import {IPatient} from "app/shared/model/patient.model";
 import {canNotEditDatasource} from "app/modules/datasource-editor/stack-button/datasource.editchecker.utils";
 
@@ -42,7 +42,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
       }
     };
 
-    if (status === REVIEW_LIST.SUBMITTED) {
+    if (status === PatientStatus.REVIEW_SUBMITTED) {
       return {
         ...result,
         detail: {
@@ -59,7 +59,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onDeclinedButtonClick = () => {
     fireDeclineSwal(patient).then(({isConfirmed, text}) => {
       if (isConfirmed) {
-        const entity = {...getLocalPatient(REVIEW_LIST.DECLINED)};
+        const entity = {...getLocalPatient(PatientStatus.REVIEW_DECLINED)};
         entity['detail']['declineReason'] = text;
         dispatch(updatePatient(entity));
       }
@@ -69,7 +69,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onApprovedButtonClick = () => {
     fireApprovedSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const entity = getLocalPatient(REVIEW_LIST.APPROVED);
+        const entity = getLocalPatient(PatientStatus.REVIEW_APPROVED);
         dispatch(updatePatient(entity));
       }
     });
@@ -78,7 +78,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
   const onSubmittedButtonClick = () => {
     fireSubmitSwal(patient).then(({isConfirmed}) => {
       if (isConfirmed) {
-        const entity = getLocalPatient(REVIEW_LIST.SUBMITTED);
+        const entity = getLocalPatient(PatientStatus.REVIEW_SUBMITTED);
         dispatch(updatePatient(entity));
       }
     });
@@ -101,7 +101,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
       >
         닫기
       </Button>
-      {patient && patient.detail.status === REVIEW_LIST.DECLINED && canNotDecline() && (
+      {patient && patient.detail.status === PatientStatus.REVIEW_DECLINED && canNotDecline() && (
         <Button
           variant="outlined"
           color="warning"
@@ -125,7 +125,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               e.stopPropagation();
               onDeclinedButtonClick();
             }}
-            disabled={patient.detail.status === REVIEW_LIST.DECLINED}
+            disabled={patient.detail.status === PatientStatus.REVIEW_DECLINED}
           >
             {translate('cancerLibraryApp.datasource.reviewButton.decline')}
           </Button>
@@ -136,7 +136,7 @@ export const DatasourceStackButton = (props: IPatientTableEditorStackButtonProps
               e.stopPropagation();
               onApprovedButtonClick();
             }}
-            disabled={patient.detail.status === REVIEW_LIST.APPROVED}
+            disabled={patient.detail.status === PatientStatus.REVIEW_APPROVED}
           >
             {translate('cancerLibraryApp.datasource.reviewButton.approve')}
           </Button>{' '}

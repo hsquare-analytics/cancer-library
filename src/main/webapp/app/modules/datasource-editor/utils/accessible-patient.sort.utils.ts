@@ -1,4 +1,4 @@
-import {REVIEW_LIST} from "app/config/datasource-constants";
+import {PatientStatus} from "app/config/datasource-constants";
 
 export const getAccessiblePatientStatusSortValue = isSudoUser => data => {
   return isSudoUser ? getSudoUserSortValue(data) : getNormalUserSortValue(data);
@@ -6,11 +6,11 @@ export const getAccessiblePatientStatusSortValue = isSudoUser => data => {
 
 const getSudoUserSortValue = data => {
   switch (data.detail.status) {
-    case REVIEW_LIST.SUBMITTED:
+    case PatientStatus.REVIEW_SUBMITTED:
       return 1;
-    case REVIEW_LIST.DECLINED:
+    case PatientStatus.REVIEW_DECLINED:
       return 2;
-    case REVIEW_LIST.APPROVED:
+    case PatientStatus.REVIEW_APPROVED:
       return 3;
     default:
       return 4;
@@ -19,11 +19,11 @@ const getSudoUserSortValue = data => {
 
 const getNormalUserSortValue = (data: any) => {
   switch (data.detail.status) {
-    case  REVIEW_LIST.DECLINED:
+    case  PatientStatus.REVIEW_DECLINED:
       return 1;
-    case  REVIEW_LIST.SUBMITTED:
+    case  PatientStatus.REVIEW_SUBMITTED:
       return 2;
-    case  REVIEW_LIST.APPROVED:
+    case  PatientStatus.REVIEW_APPROVED:
       return 3;
     default:
       return 4;

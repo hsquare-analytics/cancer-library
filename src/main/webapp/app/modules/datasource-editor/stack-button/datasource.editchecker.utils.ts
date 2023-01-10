@@ -1,4 +1,4 @@
-import {REVIEW_LIST} from "app/config/datasource-constants";
+import {PatientStatus} from "app/config/datasource-constants";
 import {IPatient} from "app/shared/model/patient.model";
 
 export const canEditDatasource = (patient: IPatient) => {
@@ -6,7 +6,7 @@ export const canEditDatasource = (patient: IPatient) => {
     return true;
   }
 
-  if (patient.detail.status === REVIEW_LIST.DECLINED) {
+  if (patient.detail.status === PatientStatus.REVIEW_DECLINED) {
     return true;
   }
 

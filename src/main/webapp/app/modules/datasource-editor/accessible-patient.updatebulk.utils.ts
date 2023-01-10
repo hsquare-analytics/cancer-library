@@ -1,7 +1,7 @@
 import {updateBulkStatus} from "app/modules/datasource-editor/reducer/datasource.patient.reducer";
 import Swal from "sweetalert2";
 import {translate} from "react-jhipster";
-import {REVIEW_LIST} from "app/config/datasource-constants";
+import {PatientStatus} from "app/config/datasource-constants";
 
 interface IOnClickUpdateBulkStatusProps {
   dispatch: any;
@@ -12,9 +12,9 @@ interface IOnClickUpdateBulkStatusProps {
 
 const getI18nKey = (status: string) => {
   switch (status) {
-    case REVIEW_LIST.APPROVED:
+    case PatientStatus.REVIEW_APPROVED:
       return "cancerLibraryApp.patient.bulkApprove";
-    case REVIEW_LIST.DECLINED:
+    case PatientStatus.REVIEW_DECLINED:
       return "cancerLibraryApp.patient.bulkDecline";
     default:
       return "";
