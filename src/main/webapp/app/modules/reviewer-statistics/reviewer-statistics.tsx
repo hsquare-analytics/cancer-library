@@ -21,6 +21,8 @@ const ReviewerStatistics = () => {
     endDate: moment().endOf('day').toDate()
   });
 
+  const [dateRangeString, setDateRangeString] = useState<string>('');
+
   useEffect(() => {
     dispatch(getEntities({
       startDate: moment(dateRange.startDate).toISOString(), endDate: moment(dateRange.endDate).toISOString()
@@ -36,7 +38,9 @@ const ReviewerStatistics = () => {
                            dispatch(getEntities({
                              startDate: moment(dateRange.startDate).startOf('day').toISOString(),
                              endDate: moment(dateRange.endDate).endOf('day').toISOString()
-                           }))
+                           }));
+
+                           setDateRangeString(moment(dateRange.startDate).format('YYYY-MM-DD') + ' ~ ' + moment(dateRange.endDate).format('YYYY-MM-DD'));
                          }}/>
       </div>
       {
@@ -50,7 +54,7 @@ const ReviewerStatistics = () => {
                 <ReviewStatisticsDoughnutChart/>
               </div>
               <div className="bottom-section">
-                <ReviewStatisticsDatagrid dateRange={dateRange}/>
+                <ReviewStatisticsDatagrid dateRangeString={dateRangeString}/>
               </div>
             </div>
           </article>

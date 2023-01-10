@@ -4,14 +4,13 @@ import DataGrid, {Column, Paging, SearchPanel,} from 'devextreme-react/data-grid
 import {useAppSelector} from "app/config/store";
 import {translate} from "react-jhipster";
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
-import moment from "moment";
 
 interface IReviewStatisticsDatagridProps {
-  dateRange: any;
+  dateRangeString: string;
 }
 
 const ReviewStatisticsDatagrid = (props: IReviewStatisticsDatagridProps) => {
-  const {dateRange} = props;
+  const {dateRangeString} = props;
   const entities = useAppSelector(state => state.reviewerStatistics.entities);
 
   const getRatioOfTerm = (rowData: any, field: string) => {
@@ -35,10 +34,6 @@ const ReviewStatisticsDatagrid = (props: IReviewStatisticsDatagridProps) => {
     (${((rowData[field] / rowData.assigned) * 100).toFixed(2) + '%'})`
   }
 
-  const getFormattedDateRange = () => {
-    return `${moment(dateRange.startDate).format('YYYY/MM/DD')} - ${moment(dateRange.endDate).format('YYYY/MM/DD')}`
-  }
-
   return (
     <DataGrid
       dataSource={entities}
@@ -60,7 +55,7 @@ const ReviewStatisticsDatagrid = (props: IReviewStatisticsDatagridProps) => {
               calculateCellValue={rowData => rowData.submitted + rowData.approved + rowData.declined}
               caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.total')}
               alignment="center"/>
-      <Column alignment="center" caption={getFormattedDateRange()}>
+      <Column alignment="center" caption={dateRangeString}>
         <Column dataField="submitted" dataType="string" alignment="center"
                 caption={translate('cancerLibraryApp.reviewerStatistics.dataGrid.status.submitted')}
                 encodeHtml={false}
