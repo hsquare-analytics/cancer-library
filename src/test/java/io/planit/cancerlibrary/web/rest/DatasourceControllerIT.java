@@ -195,6 +195,7 @@ class DatasourceControllerIT {
     @Transactional
     void testGetDatasourceOriginRow() throws Exception {
         // given
+        sqlExecutor.executeDML("delete from ph_test");
         sqlExecutor.executeDML("insert into ph_test (idx, name) values (10001, 'zero')");
 
         // then
@@ -289,6 +290,7 @@ class DatasourceControllerIT {
             itemRepository.saveAndFlush(item);
         });
 
+        sqlExecutor.executeDML("delete from ph_test_updated");
         sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10001, 'one')");
         sqlExecutor.executeDML("insert into ph_test_updated (idx, name) values (10002, 'two')");
 
