@@ -76,7 +76,7 @@ class UserControllerIT {
 
     @Test
     @Transactional
-    @WithMockUser(username = "testLogin")
+    @WithMockUser(username = "testLogin", authorities = AuthoritiesConstants.ADMIN)
     void test_fetch_users_authorization_info_by_date_param() throws Exception {
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -89,11 +89,11 @@ class UserControllerIT {
 
         Patient patient1 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.SUBMITTED).createdBy(user.getLogin()));
         patientRepository.insert(patient1);
-        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().lastModifiedDate(user.getLastModifiedDate()));
+        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().createdDate(user.getLastModifiedDate()));
 
         Patient patient2 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.APPROVED).createdBy(user.getLogin()));
         patientRepository.insert(patient2);
-        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().lastModifiedDate(endDate.plus(1, ChronoUnit.DAYS)));
+        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().createdDate(endDate.plus(1, ChronoUnit.DAYS)));
 
         restUserMockMvc
             .perform(get("/api/users/normal-authorization-list?startDate={startDate}&endDate={endDate}", startDate, endDate))

@@ -178,15 +178,14 @@ class PatientControllerIT {
     @Test
     @Transactional(value = "jdbcTemplateTransactionManager")
     void test_get_total_number_of_all_patient() throws Exception {
-        Patient patient1 = PatientResourceIT.createPatientDTO().ptNo("patient1");
-        patientRepository.insert(patient1);
+        Integer patientCountBeforeInsert = patientRepository.findAll().size();
 
-        Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("patient2");
-        patientRepository.insert(patient2);
+        Patient patient = PatientResourceIT.createPatientDTO().ptNo("patient");
+        patientRepository.insert(patient);
 
         restDatasourcePatientMockMvc.perform(get("/api/patients/total-patient-count"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$").value(2));
+            .andExpect(jsonPath("$").value(patientCountBeforeInsert + 1));
     }
 }
