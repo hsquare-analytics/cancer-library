@@ -1,12 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.constant.PatientConstants;
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
-import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.PatientRepository;
-import io.planit.cancerlibrary.security.SecurityUtils;
 import io.planit.cancerlibrary.service.PatientService;
 import io.planit.cancerlibrary.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -18,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import tech.jhipster.web.util.HeaderUtil;
 
 import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
@@ -26,7 +22,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -112,7 +107,7 @@ public class PatientResource {
     private HttpHeaders getUpdateHeader(Patient patient) {
         HttpHeaders headers = new HttpHeaders();
         if (patient.getDetail() != null && patient.getDetail().getStatus() != null) {
-            headers.add("X-" + applicationName + "-alert", applicationName + ".patient." + patient.getDetail().getStatus().toLowerCase());
+            headers.add("X-" + applicationName + "-alert", applicationName + ".patient." + patient.getDetail().getStatus().name().toLowerCase());
         } else {
             headers.add("X-" + applicationName + "-alert", applicationName + ".patient.updated");
         }

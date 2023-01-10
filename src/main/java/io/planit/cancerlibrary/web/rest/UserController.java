@@ -1,10 +1,9 @@
 package io.planit.cancerlibrary.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.User;
-import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.repository.PatientDetailRepository;
 import io.planit.cancerlibrary.repository.UserPatientRepository;
 import io.planit.cancerlibrary.repository.UserRepository;
@@ -12,16 +11,12 @@ import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.dto.DateRangeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,13 +48,13 @@ public class UserController {
             .map(user -> {
                 Integer assigned = userPatientRepository.countByUser(user);
 
-                Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, dateRangeDTO);
-                Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, dateRangeDTO);
-                Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, dateRangeDTO);
+                Integer submitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_SUBMITTED, dateRangeDTO);
+                Integer approved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_APPROVED, dateRangeDTO);
+                Integer declined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_DECLINED, dateRangeDTO);
 
-                Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.SUBMITTED, null);
-                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.APPROVED, null);
-                Integer totalDeclined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientConstants.DECLINED, null);
+                Integer totalSubmitted = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_SUBMITTED, null);
+                Integer totalApproved = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_APPROVED, null);
+                Integer totalDeclined = patientDetailRepository.countByStatusAndDateRange(user.getLogin(), PatientStatus.REVIEW_DECLINED, null);
                 return new NormalAuthorizationUserVM(user, assigned, submitted, approved, declined, totalSubmitted, totalApproved, totalDeclined);
             }).collect(Collectors.toList());
 

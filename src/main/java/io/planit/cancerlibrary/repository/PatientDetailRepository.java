@@ -1,5 +1,6 @@
 package io.planit.cancerlibrary.repository;
 
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import io.planit.cancerlibrary.service.dto.DateRangeDTO;
@@ -10,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Map;
 
 @Repository
@@ -27,7 +27,7 @@ public class PatientDetailRepository {
             .SET(String.format("LAST_MODIFIED_DATE = '%s'", Timestamp.from(detail.getLastModifiedDate())));
 
         if (detail.getStatus() != null) {
-            sql.SET("STATUS = :status");
+            sql.SET(String.format("STATUS = '%s'", detail.getStatus().name()));
         }
         if (detail.getComment() != null) {
             sql.SET("COMMENT = :comment");
@@ -57,11 +57,14 @@ public class PatientDetailRepository {
     public boolean insert(String ptNo, PatientDetail detail) {
         SQL sql = new SQL().INSERT_INTO(Table.PATIENT_DETAIL.getTableName())
             .VALUES("PT_NO", String.format("'%s'", ptNo))
-            .VALUES("STATUS", ":status")
             .VALUES("CREATED_BY", ":createdBy")
             .VALUES("LAST_MODIFIED_BY", ":lastModifiedBy")
             .VALUES("COMMENT", ":comment")
             .VALUES("DECLINE_REASON", ":declineReason");
+
+        if (detail.getStatus() != null) {
+            sql.VALUES("STATUS", String.format("'%s'", detail.getStatus().name()));
+        }
 
         if (detail.getStandardDate() != null) {
             sql.VALUES("STANDARD_DATE", String.format("'%s'", Timestamp.from(detail.getStandardDate())));
@@ -79,7 +82,7 @@ public class PatientDetailRepository {
         return jdbcTemplate.update(sql.toString(), namedParameters) > 0;
     }
 
-    public Integer countByStatusAndDateRange(String login, String status, DateRangeDTO dateRangeDTO) {
+    public Integer countByStatusAndDateRange(String login, PatientStatus status, DateRangeDTO dateRangeDTO) {
         SQL sql = new SQL().SELECT("COUNT(*)").FROM(Table.PATIENT_DETAIL.getTableName()).WHERE("STATUS = :status AND CREATED_BY = :login");
         if (dateRangeDTO != null && dateRangeDTO.getStartDate() != null) {
             sql.WHERE(String.format("CREATED_DATE >= '%s'", Timestamp.from(dateRangeDTO.getStartDate())));
@@ -87,6 +90,6 @@ public class PatientDetailRepository {
         if (dateRangeDTO != null && dateRangeDTO.getEndDate() != null) {
             sql.WHERE(String.format("CREATED_DATE <= '%s'", Timestamp.from(dateRangeDTO.getEndDate())));
         }
-        return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status, "login", login), Integer.class);
+        return jdbcTemplate.queryForObject(sql.toString(), Map.of("status", status.name(), "login", login), Integer.class);
     }
 }

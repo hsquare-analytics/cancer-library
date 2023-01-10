@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.web.rest;
 
-import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.UserPatient;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
@@ -102,14 +102,14 @@ public class PatientController {
     }
 
     @PostMapping("/patients/update-bulk-status/{status}")
-    public ResponseEntity<Boolean> bulkUpdatePatientStatus(@RequestBody List<String> ptNos, @PathVariable String status) {
+    public ResponseEntity<Boolean> bulkUpdatePatientStatus(@RequestBody List<String> ptNos, @PathVariable PatientStatus status) {
         log.debug("REST request to bulk update patient status");
 
         if (ptNos == null || ptNos.isEmpty()) {
             return ResponseEntity.badRequest().body(false);
         }
 
-        if (status == null || status.isEmpty()) {
+        if (status == null) {
             return ResponseEntity.badRequest().body(false);
         }
 
@@ -119,9 +119,9 @@ public class PatientController {
 
         HttpHeaders headers = new HttpHeaders();
 
-        if (status.equals(PatientConstants.APPROVED)) {
+        if (status.equals(PatientStatus.REVIEW_APPROVED)) {
             headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "approved");
-        } else if (status.equals(PatientConstants.DECLINED)) {
+        } else if (status.equals(PatientStatus.REVIEW_DECLINED)) {
             headers.add("X-" + applicationName + "-alert", applicationName + ".patient.bulkUpdate." + "declined");
         }
 

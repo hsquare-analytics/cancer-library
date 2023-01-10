@@ -1,6 +1,6 @@
 package io.planit.cancerlibrary.service;
 
-import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
@@ -51,7 +51,7 @@ public class PatientService {
                     existDetail.setDeclineReason(patientDTO.getDetail().getDeclineReason());
                 }
 
-                if (PatientConstants.SUBMITTED.equals(patientDTO.getDetail().getStatus())) {
+                if (PatientStatus.REVIEW_SUBMITTED.equals(patientDTO.getDetail().getStatus())) {
                     existDetail.setCreatedBy(login);
                     existDetail.setCreatedDate(Instant.now());
                 }
