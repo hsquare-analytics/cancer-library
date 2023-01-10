@@ -29,7 +29,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -173,5 +173,20 @@ class PatientControllerIT {
 
         Patient result2 = patientRepository.findByPatientNo(patient2.getPtNo()).get();
         assertThat(result2.getDetail().getStatus()).isEqualTo(status);
+    }
+
+    @Test
+    @Transactional(value = "jdbcTemplateTransactionManager")
+    void test_get_total_number_of_all_patient() throws Exception {
+        Patient patient1 = PatientResourceIT.createPatientDTO().ptNo("patient1");
+        patientRepository.insert(patient1);
+
+        Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("patient2");
+        patientRepository.insert(patient2);
+
+        restDatasourcePatientMockMvc.perform(get("/api/patients/total-patient-count"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").value(2));
     }
 }

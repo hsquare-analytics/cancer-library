@@ -134,4 +134,11 @@ public class PatientController {
         return ResponseEntity.ok().headers(headers).body(true);
     }
 
+    @GetMapping("/patients/total-patient-count")
+    public ResponseEntity<Integer> getTotalPatientCount() {
+        log.debug("REST request to get total patient count");
+
+        return ResponseEntity.ok(patientRepository.findAll().size());
+    }
+
 }
