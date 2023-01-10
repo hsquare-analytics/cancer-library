@@ -1,4 +1,4 @@
-import reducer, {getEntities, reset} from './reviewer-statistics.reducer';
+import reducer, {getEntities, getTotalPatientCount, reset} from './reviewer-statistics.reducer';
 import axios from 'axios';
 
 import configureStore from 'redux-mock-store';
@@ -18,6 +18,7 @@ describe('Reviewer Statistics reducer tests', () => {
     loading: false,
     errorMessage: null,
     entities: [],
+    totalPatientCount: 0,
   }
 
   function testInitialState(state) {
@@ -28,6 +29,14 @@ describe('Reviewer Statistics reducer tests', () => {
     expect(isEmpty(state.entities));
   }
 
+
+  function testMultipleTypes(types, payload, testFunction, error?) {
+    types.forEach(e => {
+      testFunction(reducer(undefined, {type: e, payload, error}));
+    });
+  }
+
+
   describe('Common', () => {
     it('should return the initial state', () => {
       testInitialState(reducer(undefined, {type: ''}));
@@ -36,8 +45,12 @@ describe('Reviewer Statistics reducer tests', () => {
 
   describe('Requests', () => {
     it('should set state to loading', () => {
-      expect(reducer(initialState, {type: getEntities.pending.type, payload: {}, error: false}))
-        .toMatchObject({errorMessage: null, loading: true});
+      testMultipleTypes([getEntities.pending.type, getTotalPatientCount.pending.type], null, state => {
+        expect(state).toMatchObject({
+          errorMessage: null,
+          loading: true,
+        });
+      });
     });
 
     it('should reset the state', () => {
@@ -49,15 +62,25 @@ describe('Reviewer Statistics reducer tests', () => {
 
   describe('Failures', () => {
     it('should set errorMessage to error message', () => {
-      expect(reducer(initialState, {type: getEntities.rejected.type, error: {message: 'error'}}))
-        .toMatchObject({errorMessage: 'error', loading: false});
+      testMultipleTypes([getEntities.rejected.type, getTotalPatientCount.rejected.type], null, state => {
+        expect(state).toMatchObject({
+          loading: false,
+          errorMessage: 'error'
+        });
+      }, {message: 'error'});
     });
   });
 
   describe('Success', () => {
+
     it('should return the list of entities', () => {
       expect(reducer(initialState, {type: getEntities.fulfilled.type, payload: {data: [{id: 1}]}}))
         .toEqual({...initialState, loading: false, entities: [{id: 1}]});
+    });
+
+    it('should return the total patient count', () => {
+      expect(reducer(initialState, {type: getTotalPatientCount.fulfilled.type, payload: {data: 1}}))
+        .toEqual({...initialState, loading: false, totalPatientCount: 1});
     });
   });
 
@@ -87,10 +110,26 @@ describe('Reviewer Statistics reducer tests', () => {
         }
       ];
 
-      await store.dispatch(getEntities());
+      await store.dispatch(getEntities({startDate: '2020-01-01', endDate: '2020-01-01'}));
       expect(store.getActions()[0]).toMatchObject(expectedAction[0]);
       expect(store.getActions()[1]).toMatchObject(expectedAction[1]);
     });
 
+    it('should Fetch total patient count', async () => {
+      const expectedAction = [
+        {
+          type: getTotalPatientCount.pending.type,
+        },
+        {
+          type: getTotalPatientCount.fulfilled.type,
+          payload: resolvedObject,
+        }
+      ];
+
+      await store.dispatch(getTotalPatientCount());
+      expect(store.getActions()[0]).toMatchObject(expectedAction[0]);
+      expect(store.getActions()[1]).toMatchObject(expectedAction[1]);
+
+    });
   });
 });

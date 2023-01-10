@@ -22,16 +22,16 @@ import {getIndexColumnTemplate} from 'app/shared/util/dx-utils';
 import {Typography} from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import {DATASOURCE_ROW_STATUS, REVIEW_LIST, RowStatus} from "app/config/datasource-constants";
+import {PatientStatus} from "app/config/datasource-constants";
 
 
 export const getCustomizePatientStatusText = (cellInfo) => {
   switch (cellInfo.value) {
-    case REVIEW_LIST.APPROVED:
+    case PatientStatus.REVIEW_APPROVED:
       return '승인';
-    case REVIEW_LIST.DECLINED:
+    case PatientStatus.REVIEW_DECLINED:
       return '반려';
-    case REVIEW_LIST.SUBMITTED:
+    case PatientStatus.REVIEW_SUBMITTED:
       return '제출';
     default:
       return '-'

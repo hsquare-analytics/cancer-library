@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,6 +64,8 @@ class DMLSqlBuilderServiceIT {
     @MockBean
     TimeService timeService;
 
+    @Autowired
+    CacheManager cacheManager;
     @BeforeEach
     void initTest() {
         Subject subject = SubjectResourceIT.createEntity(em);
@@ -73,6 +76,9 @@ class DMLSqlBuilderServiceIT {
 
         category = CategoryResourceIT.createEntity(em, topic);
         categoryRepository.saveAndFlush(category);
+
+        cacheManager.getCache(CategoryRepository.CATEGORIES_BY_ACTIVATED_TRUE_CACHE).clear();
+        cacheManager.getCache(ItemRepository.ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE).clear();
     }
 
     @Test

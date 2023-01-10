@@ -1,10 +1,10 @@
 package io.planit.cancerlibrary.repository;
 
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.constant.Table;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.embedded.PatientDetail;
 import org.apache.ibatis.jdbc.SQL;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -96,7 +95,9 @@ public class PatientRepository {
             PatientDetail detail = new PatientDetail();
             detail.setDeclineReason(resultSet.getString("decline_reason"));
             detail.setComment(resultSet.getString("comment"));
-            detail.setStatus(resultSet.getString("status"));
+            if (resultSet.getString("status") != null) {
+                detail.setStatus(PatientStatus.valueOf(resultSet.getString("status")));
+            }
             if (resultSet.getTimestamp("standard_date") != null) {
                 patient.setFsrMedDt(resultSet.getTimestamp("standard_date"));
                 detail.setStandardDate(resultSet.getTimestamp("standard_date").toInstant());

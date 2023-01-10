@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
 import io.planit.cancerlibrary.domain.UserPatient;
@@ -14,7 +14,7 @@ import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import io.planit.cancerlibrary.service.TimeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,7 +29,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -84,7 +84,7 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(patient.getSexTpCd())))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(patient.getPtBrdyDt())))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(patient.getHspTpCd())))
-            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(patient.getDetail().getStatus())));
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(patient.getDetail().getStatus().name())));
     }
 
     @Test
@@ -121,7 +121,7 @@ class PatientControllerIT {
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(authorizedPatient.getSexTpCd())))
             .andExpect(jsonPath("$.[*].ptBrdyDt").value(hasItem(authorizedPatient.getPtBrdyDt())))
             .andExpect(jsonPath("$.[*].hspTpCd").value(hasItem(authorizedPatient.getHspTpCd())))
-            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(authorizedPatient.getDetail().getStatus())))
+            .andExpect(jsonPath("$.[*].detail.status").value(hasItem(authorizedPatient.getDetail().getStatus().name())))
             .andExpect(jsonPath("$.[*].ptNo").value(hasItem(submittedPatient.getPtNo())))
             .andExpect(jsonPath("$.[*].ptNm").value(hasItem(submittedPatient.getPtNm())))
             .andExpect(jsonPath("$.[*].sexTpCd").value(hasItem(submittedPatient.getSexTpCd())))
@@ -153,15 +153,15 @@ class PatientControllerIT {
     @ParameterizedTest
     @Transactional(value = "jdbcTemplateTransactionManager")
     @WithMockUser
-    @ValueSource(strings = {PatientConstants.DECLINED, PatientConstants.APPROVED})
-    void test_bulk_update_patient_status_detail(String status) throws Exception {
+    @EnumSource(value = PatientStatus.class, names = {"REVIEW_SUBMITTED", "REVIEW_APPROVED", "REVIEW_DECLINED"})
+    void test_bulk_update_patient_status_detail(PatientStatus status) throws Exception {
         Patient patient1 = PatientResourceIT.createPatientDTO().ptNo("patient1");
         patientRepository.insert(patient1);
-        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().status(PatientConstants.SUBMITTED));
+        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().status(PatientStatus.REVIEW_SUBMITTED));
 
         Patient patient2 = PatientResourceIT.createPatientDTO().ptNo("patient2");
         patientRepository.insert(patient2);
-        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().status(PatientConstants.SUBMITTED));
+        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().status(PatientStatus.REVIEW_SUBMITTED));
 
         restDatasourcePatientMockMvc.perform(post("/api/patients/update-bulk-status/{status}", status)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -173,5 +173,19 @@ class PatientControllerIT {
 
         Patient result2 = patientRepository.findByPatientNo(patient2.getPtNo()).get();
         assertThat(result2.getDetail().getStatus()).isEqualTo(status);
+    }
+
+    @Test
+    @Transactional(value = "jdbcTemplateTransactionManager")
+    void test_get_total_number_of_all_patient() throws Exception {
+        Integer patientCountBeforeInsert = patientRepository.findAll().size();
+
+        Patient patient = PatientResourceIT.createPatientDTO().ptNo("patient");
+        patientRepository.insert(patient);
+
+        restDatasourcePatientMockMvc.perform(get("/api/patients/total-patient-count"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").value(patientCountBeforeInsert + 1));
     }
 }

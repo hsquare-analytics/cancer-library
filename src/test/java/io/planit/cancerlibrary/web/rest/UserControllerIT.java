@@ -1,7 +1,7 @@
 package io.planit.cancerlibrary.web.rest;
 
 import io.planit.cancerlibrary.IntegrationTest;
-import io.planit.cancerlibrary.constant.PatientConstants;
+import io.planit.cancerlibrary.constant.PatientStatus;
 import io.planit.cancerlibrary.domain.Authority;
 import io.planit.cancerlibrary.domain.Patient;
 import io.planit.cancerlibrary.domain.User;
@@ -14,7 +14,7 @@ import io.planit.cancerlibrary.repository.UserRepository;
 import io.planit.cancerlibrary.security.AuthoritiesConstants;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
@@ -76,7 +76,7 @@ class UserControllerIT {
 
     @Test
     @Transactional
-    @WithMockUser(username = "testLogin")
+    @WithMockUser(username = "testLogin", authorities = AuthoritiesConstants.ADMIN)
     void test_fetch_users_authorization_info_by_date_param() throws Exception {
         User user = UserResourceIT.createEntity(em);
         userRepository.saveAndFlush(user);
@@ -87,13 +87,13 @@ class UserControllerIT {
         Instant startDate = user.getLastModifiedDate().minus(1, ChronoUnit.DAYS);
         Instant endDate = user.getLastModifiedDate().plus(1, ChronoUnit.DAYS);
 
-        Patient patient1 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.SUBMITTED).createdBy(user.getLogin()));
+        Patient patient1 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientStatus.REVIEW_SUBMITTED).createdBy(user.getLogin()));
         patientRepository.insert(patient1);
-        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().lastModifiedDate(user.getLastModifiedDate()));
+        patientDetailRepository.insert(patient1.getPtNo(), patient1.getDetail().createdDate(user.getLastModifiedDate()));
 
-        Patient patient2 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientConstants.APPROVED).createdBy(user.getLogin()));
+        Patient patient2 = new Patient().ptNo("ptno" + new Random().nextInt(100)).detail(new PatientDetail().status(PatientStatus.REVIEW_APPROVED).createdBy(user.getLogin()));
         patientRepository.insert(patient2);
-        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().lastModifiedDate(endDate.plus(1, ChronoUnit.DAYS)));
+        patientDetailRepository.insert(patient2.getPtNo(), patient2.getDetail().createdDate(endDate.plus(1, ChronoUnit.DAYS)));
 
         restUserMockMvc
             .perform(get("/api/users/normal-authorization-list?startDate={startDate}&endDate={endDate}", startDate, endDate))
@@ -108,9 +108,9 @@ class UserControllerIT {
 
     @ParameterizedTest
     @Transactional
-    @ValueSource(strings = {PatientConstants.SUBMITTED, PatientConstants.APPROVED, PatientConstants.DECLINED})
+    @EnumSource(value = PatientStatus.class, names = {"REVIEW_SUBMITTED", "REVIEW_APPROVED", "REVIEW_DECLINED"})
     @WithMockUser(username = "testLogin")
-    void test_fetch_users_with_additional_info(String status) throws Exception {
+    void test_fetch_users_with_additional_info(PatientStatus status) throws Exception {
         User user = UserResourceIT.createEntity(em).login("testLogin").authorities(new HashSet<>(Set.of(new Authority().name(AuthoritiesConstants.USER))));
         userRepository.saveAndFlush(user);
 
@@ -128,7 +128,7 @@ class UserControllerIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())))
             .andExpect(jsonPath("$.[*].assigned").value(hasItem(1)))
-            .andExpect(jsonPath("$.[*]." + status.toLowerCase().split("_")[1]).value(hasItem(1)));
+            .andExpect(jsonPath("$.[*]." + status.name().toLowerCase().split("_")[1]).value(hasItem(1)));
     }
 }
 

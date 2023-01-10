@@ -1,5 +1,7 @@
 package io.planit.cancerlibrary.domain.embedded;
 
+import io.planit.cancerlibrary.constant.PatientStatus;
+
 import java.time.Instant;
 
 public class PatientDetail {
@@ -7,7 +9,7 @@ public class PatientDetail {
 
     private String comment;
     private String declineReason;
-    private String status;
+    private PatientStatus status;
     private Instant standardDate;
     private String createdBy;
     private Instant createdDate;
@@ -39,15 +41,15 @@ public class PatientDetail {
         this.declineReason = declineReason;
         return this;
     }
-    public String getStatus() {
+    public PatientStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PatientStatus status) {
         this.status = status;
     }
 
-    public PatientDetail status(String status) {
+    public PatientDetail status(PatientStatus status) {
         this.status = status;
         return this;
     }

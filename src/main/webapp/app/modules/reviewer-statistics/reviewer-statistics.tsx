@@ -4,7 +4,7 @@ import ReviewStatisticsBarChart from "app/modules/reviewer-statistics/component/
 import "./reviewer-statistics.scss";
 import ReviewStatisticsDoughnutChart from "app/modules/reviewer-statistics/component/review-statistics.doughnut-chart";
 import ReviewStatisticsDatagrid from "app/modules/reviewer-statistics/component/review-statistics.datagrid";
-import {getEntities} from "app/modules/reviewer-statistics/reviewer-statistics.reducer";
+import {getEntities, getTotalPatientCount} from "app/modules/reviewer-statistics/reviewer-statistics.reducer";
 import moment from "moment";
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -21,10 +21,13 @@ const ReviewerStatistics = () => {
     endDate: moment().endOf('day').toDate()
   });
 
+  const [dateRangeString, setDateRangeString] = useState<string>(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ~ ${moment(dateRange.endDate).format('YYYY-MM-DD')}`);
+
   useEffect(() => {
     dispatch(getEntities({
       startDate: moment(dateRange.startDate).toISOString(), endDate: moment(dateRange.endDate).toISOString()
     }));
+    dispatch(getTotalPatientCount());
   }, []);
 
   return (
@@ -36,7 +39,9 @@ const ReviewerStatistics = () => {
                            dispatch(getEntities({
                              startDate: moment(dateRange.startDate).startOf('day').toISOString(),
                              endDate: moment(dateRange.endDate).endOf('day').toISOString()
-                           }))
+                           }));
+
+                           setDateRangeString(moment(dateRange.startDate).format('YYYY-MM-DD') + ' ~ ' + moment(dateRange.endDate).format('YYYY-MM-DD'));
                          }}/>
       </div>
       {
@@ -50,7 +55,7 @@ const ReviewerStatistics = () => {
                 <ReviewStatisticsDoughnutChart/>
               </div>
               <div className="bottom-section">
-                <ReviewStatisticsDatagrid dateRange={dateRange}/>
+                <ReviewStatisticsDatagrid dateRangeString={dateRangeString}/>
               </div>
             </div>
           </article>

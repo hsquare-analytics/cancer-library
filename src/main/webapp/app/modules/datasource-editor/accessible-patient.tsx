@@ -2,11 +2,11 @@ import React, {useEffect, useRef} from 'react';
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import {
   getEntities as getAccessiblePatients,
-  getEntity as getPatient, updateBulkStatus,
+  getEntity as getPatient,
   updateEntity as updatePatient,
 } from 'app/modules/datasource-editor/reducer/datasource.patient.reducer';
 import {getEntities as getPatientComments} from "app/modules/row-comment-editor/row-comment.reducer";
-import DataGrid, {Column, Item, Toolbar, Lookup} from 'devextreme-react/data-grid';
+import DataGrid, {Column, Lookup} from 'devextreme-react/data-grid';
 import {AUTHORITIES} from 'app/config/constants';
 import {translate} from 'react-jhipster';
 import AccessiblePatientColumn from './accessible-patient.column';
@@ -18,7 +18,7 @@ import {CheckBox} from 'devextreme-react/check-box';
 import {MultiTableEditorPopup} from 'app/modules/datasource-editor/multi-table-editor/multi-table-editor-popup';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import {REVIEW_LIST} from 'app/config/datasource-constants';
+import {PatientStatus} from 'app/config/datasource-constants';
 import {getUsers} from "app/modules/administration/user-management/user-management.reducer";
 import {getAccessiblePatientStatusSortValue} from "app/modules/datasource-editor/utils/accessible-patient.sort.utils";
 import {onClickUpdateBulkStatus} from "app/modules/datasource-editor/accessible-patient.updatebulk.utils";
@@ -129,7 +129,7 @@ export const AccessiblePatient = () => {
                 options: {
                   icon: 'revert',
                   onClick() {
-                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.DECLINED});
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: PatientStatus.REVIEW_DECLINED});
                   },
                   text: translate('cancerLibraryApp.patient.bulkDecline.title'),
                 }
@@ -141,7 +141,7 @@ export const AccessiblePatient = () => {
                 options: {
                   icon: 'check',
                   onClick() {
-                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: REVIEW_LIST.APPROVED});
+                    onClickUpdateBulkStatus({dataGridRef: dataGrid, dispatch, status: PatientStatus.REVIEW_APPROVED});
                   },
                   text: translate('cancerLibraryApp.patient.bulkApprove.title'),
                 }
@@ -200,17 +200,17 @@ export const AccessiblePatient = () => {
               dataSource={[
                 {
                   id: 1,
-                  valueExpr: REVIEW_LIST.SUBMITTED,
+                  valueExpr: PatientStatus.REVIEW_SUBMITTED,
                   displayExpr: translate('cancerLibraryApp.datasource.review.submitted'),
                 },
                 {
                   id: 2,
-                  valueExpr: REVIEW_LIST.DECLINED,
+                  valueExpr: PatientStatus.REVIEW_DECLINED,
                   displayExpr: translate('cancerLibraryApp.datasource.review.declined'),
                 },
                 {
                   id: 3,
-                  valueExpr: REVIEW_LIST.APPROVED,
+                  valueExpr: PatientStatus.REVIEW_APPROVED,
                   displayExpr: translate('cancerLibraryApp.datasource.review.approved'),
                 },
               ]}
