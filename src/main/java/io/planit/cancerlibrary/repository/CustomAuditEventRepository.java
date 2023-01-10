@@ -24,7 +24,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     /**
      * Should be the same as in Liquibase migration.
      */
-    protected static final int EVENT_DATA_COLUMN_MAX_LENGTH = 255;
+    public static final int EVENT_DATA_COLUMN_MAX_LENGTH = 255;
 
     private final PersistenceAuditEventRepository persistenceAuditEventRepository;
 
