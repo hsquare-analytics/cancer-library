@@ -4,7 +4,7 @@ import ReviewStatisticsBarChart from "app/modules/reviewer-statistics/component/
 import "./reviewer-statistics.scss";
 import ReviewStatisticsDoughnutChart from "app/modules/reviewer-statistics/component/review-statistics.doughnut-chart";
 import ReviewStatisticsDatagrid from "app/modules/reviewer-statistics/component/review-statistics.datagrid";
-import {getEntities} from "app/modules/reviewer-statistics/reviewer-statistics.reducer";
+import {getEntities, getTotalPatientCount} from "app/modules/reviewer-statistics/reviewer-statistics.reducer";
 import moment from "moment";
 import {useAppDispatch, useAppSelector} from 'app/config/store';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -27,6 +27,7 @@ const ReviewerStatistics = () => {
     dispatch(getEntities({
       startDate: moment(dateRange.startDate).toISOString(), endDate: moment(dateRange.endDate).toISOString()
     }));
+    dispatch(getTotalPatientCount());
   }, []);
 
   return (

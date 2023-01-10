@@ -14,7 +14,7 @@ export const getEntities = createAsyncThunk('point/fetch_entity_list', async (da
 });
 
 export const getTotalPatientCount = createAsyncThunk('point/fetch_total_patient_count', async () => {
-  return axios.get<number>(`api/users/total-patient-count`)
+  return axios.get<number>(`api/patients/total-patient-count`)
 });
 
 export const ReviewerStatisticsReducer = createSlice({
