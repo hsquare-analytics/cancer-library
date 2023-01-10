@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,8 +45,14 @@ class CategoryControllerIT {
 
     private Topic topic;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     @BeforeEach
     public void initTest() {
+
+        cacheManager.getCache(CategoryRepository.CATEGORIES_BY_ACTIVATED_TRUE_CACHE).clear();
+
         Subject subject = SubjectResourceIT.createEntity(em);
         subjectRepository.saveAndFlush(subject);
 

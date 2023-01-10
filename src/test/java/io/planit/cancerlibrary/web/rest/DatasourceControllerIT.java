@@ -13,6 +13,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -81,6 +82,9 @@ class DatasourceControllerIT {
     private final String[] DEFAULT_COLUMN_NAME_ARRAY = {"name", "birth", "city", "gender", "join_dt", "mail",
         "login_ip", "pt_no"};
 
+    @Autowired
+    CacheManager cacheManager;
+
     @BeforeEach
     void initTest() {
         Subject subject = SubjectResourceIT.createEntity(em);
@@ -92,6 +96,8 @@ class DatasourceControllerIT {
         category = CategoryResourceIT.createEntity(em, topic).title(DEFAULT_TABLE);
         categoryRepository.saveAndFlush(category);
 
+        cacheManager.getCache(CategoryRepository.CATEGORIES_BY_ACTIVATED_TRUE_CACHE).clear();
+        cacheManager.getCache(ItemRepository.ITEMS_BY_ACTIVATED_TRUE_AND_CATEGORY_ID_CACHE).clear();
     }
 
     @Test
