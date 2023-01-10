@@ -9,7 +9,6 @@ export enum RowStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_STARTED = 'NOT_STARTED',
   DISABLED = 'DISABLED',
-
   REJECTED = 'REJECTED',
 }
 
