@@ -50,7 +50,19 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
     >
       {getCategoryTypography(category)}
       <div>
-
+        <Button
+          variant="outlined"
+          className={'me-2'}
+          size={'small'}
+          color={"info"}
+          onClick={e => {
+            e.stopPropagation();
+            dataGrid.current.instance.addRow();
+          }}
+        >
+          <FontAwesomeIcon icon="plus" className={'me-3'}/>
+          {translate('cancerLibraryApp.singleTableEditor.addRow')}
+        </Button>
         <Button
           variant="outlined"
           className={'me-2'}
@@ -88,19 +100,6 @@ export const SingleTableEditorAccordionSummary = (props: SingleTableAccordionSum
         >
           <FontAwesomeIcon icon="list" className={'me-3'}/>
           {translate('cancerLibraryApp.singleTableEditor.columnList')}
-        </Button>
-        <Button
-          variant="outlined"
-          className={'me-2'}
-          size={'small'}
-          color={"info"}
-          onClick={e => {
-            e.stopPropagation();
-            dataGrid.current.instance.addRow();
-          }}
-        >
-          <FontAwesomeIcon icon="plus" className={'me-3'}/>
-          {translate('cancerLibraryApp.singleTableEditor.addRow')}
         </Button>
       </div>
     </AccordionSummary>
