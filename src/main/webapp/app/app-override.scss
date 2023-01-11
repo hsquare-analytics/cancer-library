@@ -269,7 +269,7 @@
 
 // 그리드의 각종 텍스트 입력창
 .dx-texteditor-input {
-  color: var(--color-text);
+  color: var(--color-text) !important;
 }
 
 .dx-texteditor.dx-editor-filled {
