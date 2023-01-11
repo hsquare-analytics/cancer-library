@@ -17,10 +17,8 @@ import {
 
 
 import {
-  createDatasourceRow,
-  deleteDatasourceRow, getDataSources,
+  deleteDatasourceRow,
   resetFlag as resetDatasourceContainerFlag,
-  updateDatasourceRow,
 } from 'app/modules/datasource-editor/reducer/datasource.container.reducer';
 import {IPatient} from 'app/shared/model/patient.model';
 import {
@@ -33,7 +31,6 @@ import {
   PATIENT_NO,
   RowStatus
 } from 'app/config/datasource-constants';
-import axios from 'axios';
 import {getIndexColumnTemplate} from "app/shared/util/dx-utils";
 import DxRowConfirmCellRender
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/component/dx-row-confirm-cell-render";
@@ -55,6 +52,8 @@ import SingleTableEditorOnInitNewRow
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.init-new-row.utils";
 import SingleTableEditorRowUpdatingUtils
   from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-updating.utils";
+import SingleTableEditorRowInsertingUtils
+  from "app/modules/datasource-editor/multi-table-editor/single-table-editor/utils/single-table-editor.row-inserting.utils";
 
 
 export enum ActionType {
@@ -222,14 +221,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
               dispatch(getOriginRow({categoryId: category.id, rowId: e.data.idx}));
             }
           }}
-          onRowInserting={e => {
-            const row = Object.assign({}, e.data, {
-                [PATIENT_NO]: patient.ptNo,
-                [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
-              }
-            );
-            dispatch(createDatasourceRow({categoryId: category.id, row}));
-          }}
+          onRowInserting={e => SingleTableEditorRowInsertingUtils({e, dispatch, category, patient})}
           onRowUpdating={e => SingleTableEditorRowUpdatingUtils({e, dispatch, category, patient})}
           onRowRemoving={e => {
             setActionType(ActionType.DELETE);
