@@ -33,7 +33,8 @@
           "cancel": "취소"
         },
         "confirmDelete": "비활성화 하시겠습니까?",
-        "confirmInsert": "행을 추가하시겠습니까?"
+        "confirmInsert": "행을 추가하시겠습니까?",
+		"confirmUpdate": "행을 수정하시겠습니까?"
       },
       "onInitNewRow": {
         "status": "inProgress",

@@ -28,7 +28,7 @@ const SingleTableEditorRowInsertingUtils = (props: ISingleTableEditorRowInsertin
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
     }).then((result) => {
-      if (result.value) {
+      if (result.isConfirmed) {
         props.dispatch(createDatasourceRow({categoryId: category.id, row}));
         resolve();
       } else {
