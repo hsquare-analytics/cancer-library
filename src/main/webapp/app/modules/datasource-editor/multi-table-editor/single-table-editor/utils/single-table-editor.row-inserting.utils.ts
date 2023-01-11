@@ -3,6 +3,7 @@ import {IPatient} from "app/shared/model/patient.model";
 import {DATASOURCE_ROW_STATUS, PATIENT_NO, RowStatus} from "app/config/datasource-constants";
 import {createDatasourceRow} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
 import Swal from "sweetalert2";
+import {translate} from "react-jhipster";
 
 interface ISingleTableEditorRowInsertingUtilsProps {
   e: any;
@@ -20,7 +21,7 @@ const SingleTableEditorRowInsertingUtils = (props: ISingleTableEditorRowInsertin
   );
 
   Swal.fire({
-    title: 'Are you sure?',
+    text: translate('cancerLibraryApp.singleTableEditor.editForm.confirmInsert'),
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

@@ -32,7 +32,8 @@
           "save": "확인",
           "cancel": "취소"
         },
-        "confirmDelete": "비활성화 하시겠습니까?"
+        "confirmDelete": "비활성화 하시겠습니까?",
+        "confirmInsert": "행을 추가하시겠습니까?"
       },
       "onInitNewRow": {
         "status": "inProgress",
@@ -53,11 +54,11 @@
       },
       "updateBulkDatasourceRows": {
         "title": "변경할 상태를 선택해주세요.",
-		"completed": "완료",
-		"disabled": "비활성화",
-		"inProgress": "임시저장",
-		"confirmProcessing": "상태 변경을 진행하시겠습니까?"
-	  }
+        "completed": "완료",
+        "disabled": "비활성화",
+        "inProgress": "임시저장",
+        "confirmProcessing": "상태 변경을 진행하시겠습니까?"
+      }
     }
   }
 }
