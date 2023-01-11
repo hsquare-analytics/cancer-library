@@ -82,7 +82,7 @@ const DxRowCommentBox = (props: IDxRowCommentBoxProps) => {
       </div>
       <Popup
         closeOnOutsideClick={true}
-        showTitle={true}
+        showTitle={false}
         visible={popupVisible}
         dragEnabled={false}
         width={'60vw'}
