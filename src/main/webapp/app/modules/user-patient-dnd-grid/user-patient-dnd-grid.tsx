@@ -181,7 +181,7 @@ export const UserPatientDndGrid = () => {
         </DataGrid>
       </div>
 
-      <div>
+      <div className={"mt-3"}>
         <h1 className="title-page d-flex justify-content-end">
           <div className={'d-flex'}>
             <span className="patient-text me-3">
