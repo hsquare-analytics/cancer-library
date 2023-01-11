@@ -20,16 +20,21 @@ const SingleTableEditorRowInsertingUtils = (props: ISingleTableEditorRowInsertin
     }
   );
 
-  Swal.fire({
-    text: translate('cancerLibraryApp.singleTableEditor.editForm.confirmInsert'),
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-  }).then((result) => {
-    if (result.value) {
-      props.dispatch(createDatasourceRow({categoryId: category.id, row}));
-    }
+  e.cancel = new Promise<void>((resolve, reject) => {
+    Swal.fire({
+      text: translate('cancerLibraryApp.singleTableEditor.editForm.confirmInsert'),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.value) {
+        props.dispatch(createDatasourceRow({categoryId: category.id, row}));
+        resolve();
+      } else {
+        reject("canceled");
+      }
+    });
   });
 }
 
