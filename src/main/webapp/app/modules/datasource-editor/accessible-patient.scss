@@ -14,7 +14,7 @@
 
 .accessible-patient-wrapper {
   .dx-data-row.dx-state-hover > td:not(.dx-focused) {
-    color: mediumblue !important;
+    color: var(--color-text) !important;
     cursor: pointer;
   }
   .dx-pager .dx-pages {
