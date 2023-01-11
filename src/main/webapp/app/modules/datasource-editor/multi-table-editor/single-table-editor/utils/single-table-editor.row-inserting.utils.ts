@@ -2,6 +2,7 @@ import {ICategory} from "app/shared/model/category.model";
 import {IPatient} from "app/shared/model/patient.model";
 import {DATASOURCE_ROW_STATUS, PATIENT_NO, RowStatus} from "app/config/datasource-constants";
 import {createDatasourceRow} from "app/modules/datasource-editor/reducer/datasource.container.reducer";
+import Swal from "sweetalert2";
 
 interface ISingleTableEditorRowInsertingUtilsProps {
   e: any;
@@ -17,7 +18,18 @@ const SingleTableEditorRowInsertingUtils = (props: ISingleTableEditorRowInsertin
       [DATASOURCE_ROW_STATUS]: RowStatus.COMPLETED
     }
   );
-  props.dispatch(createDatasourceRow({categoryId: category.id, row}));
+
+  Swal.fire({
+    title: 'Are you sure?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+  }).then((result) => {
+    if (result.value) {
+      props.dispatch(createDatasourceRow({categoryId: category.id, row}));
+    }
+  });
 }
 
 export default SingleTableEditorRowInsertingUtils;
