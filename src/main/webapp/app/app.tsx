@@ -24,6 +24,7 @@ import {getDesignTokens} from 'app/shared/util/mui-theme';
 import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
 import dxPopup from "devextreme/ui/popup";
+import "@fontsource/roboto"; // Defaults to weight 400.
 
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, ArcElement} from 'chart.js';
 
