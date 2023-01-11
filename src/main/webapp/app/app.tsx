@@ -25,8 +25,7 @@ import {PaletteMode} from '@mui/material';
 import ToggleTheme from 'app/shared/layout/header/toggle-theme';
 import dxPopup from "devextreme/ui/popup";
 import "@fontsource/roboto"; // Defaults to weight 400.
-
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip, ArcElement} from 'chart.js';
+import {ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -39,7 +38,14 @@ ChartJS.register(
 );
 
 dxPopup.defaultOptions({
-  options: {animation: null}
+  options: {animation: {
+      show: {type: "fade", duration: 400, from: 0, to: 1},
+      hide: {type: "fade", duration: 400, from: 1, to: 0}
+      // show: {type: "slide", duration: 400, from: {position: {my: "top", at: "bottom", of: window}}},
+      // hide: {type: "slide", duration: 400, to: {position: {my: "top", at: "bottom", of: window}}}
+      // show: {type: "pop", duration: 400, from: {scale: 0}},
+      // hide: {type: "pop", duration: 400, to: {scale: 0}}
+    }}
 });
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
