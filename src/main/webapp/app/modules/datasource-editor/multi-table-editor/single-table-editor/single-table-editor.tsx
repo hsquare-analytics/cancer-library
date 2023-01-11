@@ -121,7 +121,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
 
 
   const getCustomEditing = () => {
-    return <Editing mode={'popup'} allowUpdating allowDeleting form={{colCountByScreen: {xs: 1, sm: 1, md: 1, lg: 5}}}>
+    return <Editing>
       <Popup resizeEnabled={true} toolbarItems={[
         {
           location: 'after',
@@ -205,6 +205,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           filterPanel={{visible: true}}
           defaultFilterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
+          editing={{mode: 'popup', allowUpdating: true, allowDeleting: true, form: {colCountByScreen: {xs: 1, sm: 1, md: 1, lg: 5}}}}
           onInitNewRow={e => SingleTableEditorOnInitNewRow({
             e,
             dispatch,
