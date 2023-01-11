@@ -4,8 +4,8 @@
       "addRow": "행 추가",
       "columnList": "열 목록",
       "bulkUpdate": "상태 변경",
-	  "bulkDelete": "일괄 삭제",
-	  "bulkComplete": "일괄 완료",
+	  "bulkDelete": "비활성",
+	  "bulkComplete": "완료",
       "status": "상태",
       "editRow": "행 편집",
       "isNew": "신규여부",
@@ -62,7 +62,7 @@
         "inProgress": "임시저장",
 		"confirm": {
 			"completed": "선택한 {{param}}개 행을 완료 상태로 변경 하시겠습니까?",
-			"disabled": "선택한 {{param}}개 행을 삭제 하시겠습니까?"
+			"disabled": "선택한 {{param}}개 행을 비활성 상태로 하시겠습니까?"
 		}
       }
     }
