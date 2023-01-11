@@ -85,18 +85,18 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    setMode(cookies.theme);
-    if (cookies.theme === 'dark') {
+    setCookie('theme', mode, {path: '/'});
+    if (mode === 'dark') {
       document.body.classList.add('dark');
       document.body.classList.remove('light');
     } else {
       document.body.classList.add('light');
       document.body.classList.remove('dark');
     }
-  }, [cookies.theme]);
+  }, [mode]);
 
   const onToggleMode = useCallback((value: PaletteMode) => {
-    setCookie('theme', value, {path: '/'});
+    setMode(value);
   }, [mode]);
 
   const currentLocale = useAppSelector(state => state.locale.currentLocale);
