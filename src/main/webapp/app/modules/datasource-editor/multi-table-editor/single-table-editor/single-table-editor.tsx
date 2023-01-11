@@ -201,7 +201,7 @@ export const SingleTableEditor = (props: ISingleTableEditor) => {
           allowColumnResizing={true}
           columnResizingMode={'widget'}
           sorting={{mode: 'multiple'}}
-          selection={{mode: 'multiple', selectAllMode: 'page', showCheckBoxesMode: 'always'}}
+          selection={{mode: 'multiple', selectAllMode: 'allPages', showCheckBoxesMode: 'always'}}
           filterPanel={{visible: true}}
           defaultFilterValue={getFilterValue()}
           headerFilter={{allowSearch: true, visible: true}}
